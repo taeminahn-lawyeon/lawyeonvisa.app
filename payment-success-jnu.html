@@ -316,61 +316,92 @@
         </div>
     </div>
 
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js?v=5"></script>
+    
     <script>
+        let createdThreadId = null;
+
         window.addEventListener('DOMContentLoaded', async function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const orderId = urlParams.get('orderId');
-            const amount = urlParams.get('amount');
-            const service = urlParams.get('service');
+            try {
+                // 현재 로그인 사용자 확인
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    displayError('로그인이 필요합니다.');
+                    setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+                    return;
+                }
 
-            // localStorage에서 결제 정보 가져오기
-            const pendingOrder = localStorage.getItem('pendingOrder');
-            
-            if (!pendingOrder) {
-                displayError('결제 정보를 찾을 수 없습니다.');
-                return;
+                // URL 파라미터에서 결제 정보 가져오기
+                const urlParams = new URLSearchParams(window.location.search);
+                const orderId = urlParams.get('orderId');
+                const paymentKey = urlParams.get('paymentKey');
+                const amount = urlParams.get('amount');
+
+                // Supabase에서 결제 정보 조회
+                const { data: paymentData, error: paymentError } = await supabase
+                    .from('payments')
+                    .select('*')
+                    .eq('order_id', orderId)
+                    .eq('user_id', session.user.id)
+                    .single();
+                
+                if (paymentError || !paymentData) {
+                    displayError('결제 정보를 찾을 수 없습니다.');
+                    return;
+                }
+
+                // 결제 상태 업데이트
+                const { error: updateError } = await supabase
+                    .from('payments')
+                    .update({
+                        status: 'completed',
+                        payment_key: paymentKey,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', paymentData.id);
+
+                if (updateError) {
+                    console.error('결제 상태 업데이트 오류:', updateError);
+                }
+
+                // 쓰레드 생성
+                const thread = await createThreadFromPayment(paymentData);
+
+                // 성공 화면 표시
+                displaySuccess(paymentData, thread);
+            } catch (error) {
+                console.error('결제 완료 처리 오류:', error);
+                displayError('처리 중 오류가 발생했습니다.');
             }
-
-            const orderInfo = JSON.parse(pendingOrder);
-
-            // 쓰레드 생성
-            const thread = createThread(orderInfo);
-
-            // localStorage 정리
-            localStorage.removeItem('pendingOrder');
-
-            // 성공 화면 표시
-            displaySuccess(orderInfo, thread);
         });
 
-        // 쓰레드 생성
-        function createThread(orderInfo) {
-            const threadId = 'THREAD-' + Date.now();
-            const today = new Date().toISOString().split('T')[0];
-            
-            const thread = {
-                threadId: threadId,
-                serviceName: orderInfo.orderName || '서비스',
-                applicationDate: today,
-                status: 'payment',
-                amount: orderInfo.amount || 0,
-                orderId: orderInfo.orderId || '',
-                createdAt: new Date().toISOString(),
-                messages: []
-            };
-            
-            // localStorage에 쓰레드 추가
-            const existingThreads = JSON.parse(localStorage.getItem('userThreads') || '[]');
-            existingThreads.push(thread);
-            localStorage.setItem('userThreads', JSON.stringify(existingThreads));
-            
-            // 현재 활성 쓰레드 ID 저장
-            localStorage.setItem('currentThreadId', threadId);
-            
-            return thread;
+        // Supabase에 쓰레드 생성
+        async function createThreadFromPayment(paymentData) {
+            try {
+                const threadResult = await createThread({
+                    service_name: paymentData.service_name,
+                    status: 'payment',
+                    amount: paymentData.amount,
+                    order_id: paymentData.order_id,
+                    organization: 'jnu',
+                    payment_id: paymentData.id
+                });
+                
+                if (!threadResult.success) {
+                    throw new Error('쓰레드 생성 실패');
+                }
+                
+                createdThreadId = threadResult.data.id;
+                return threadResult.data;
+            } catch (error) {
+                console.error('쓰레드 생성 오류:', error);
+                throw error;
+            }
         }
 
-        function displaySuccess(orderInfo, thread) {
+        function displaySuccess(paymentData, thread) {
             const content = document.getElementById('content');
             
             content.innerHTML = `
@@ -388,23 +419,19 @@
                     <h3><i class="fas fa-receipt"></i> 결제 정보</h3>
                     <div class="info-row">
                         <span class="info-label">신청 서비스</span>
-                        <span class="info-value">${orderInfo.orderName}</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">신청자</span>
-                        <span class="info-value">${orderInfo.customerName}</span>
+                        <span class="info-value">${paymentData.service_name}</span>
                     </div>
                     <div class="info-row">
                         <span class="info-label">주문번호</span>
-                        <span class="info-value">${orderInfo.orderId}</span>
+                        <span class="info-value">${paymentData.order_id}</span>
                     </div>
                     <div class="info-row">
                         <span class="info-label">결제 수단</span>
-                        <span class="info-value">${getPaymentMethodName(orderInfo.paymentMethod)}</span>
+                        <span class="info-value">${getPaymentMethodName(paymentData.payment_method)}</span>
                     </div>
                     <div class="info-row">
                         <span class="info-label">결제 금액</span>
-                        <span class="info-value">₩${orderInfo.amount.toLocaleString()}</span>
+                        <span class="info-value">₩${paymentData.amount.toLocaleString()}</span>
                     </div>
                 </div>
 
@@ -456,15 +483,10 @@
         }
 
         function goToThread() {
-            const threadId = localStorage.getItem('currentThreadId');
-            const userAffiliation = localStorage.getItem('userAffiliation');
-            
-            if (userAffiliation === 'jnu') {
-                window.location.href = `visa-thread-jnu.html?id=${threadId}`;
-            } else if (userAffiliation === 'snu') {
-                window.location.href = `visa-thread-snu.html?id=${threadId}`;
+            if (createdThreadId) {
+                window.location.href = `visa-thread-jnu.html?id=${createdThreadId}`;
             } else {
-                window.location.href = `visa-thread-general.html?id=${threadId}`;
+                window.location.href = 'visa-dashboard-jnu.html';
             }
         }
 
