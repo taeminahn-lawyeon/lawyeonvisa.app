@@ -229,17 +229,17 @@
     </div>
 
     <script>
-        // 알파 테스트 패스워드 (SHA-256 해시)
+        // 알파 테스트 패스워드
         // 실제 패스워드: "lawyeon2025"
-        const CORRECT_PASSWORD_HASH = 'b89d426a84843f0405e9ad618de871b5c81d10b2f067ad64d7f7f94b6d6f1e51';
+        var CORRECT_PASSWORD = 'lawyeon2025';
         
-        let attempts = 0;
-        const MAX_ATTEMPTS = 5;
+        var attempts = 0;
+        var MAX_ATTEMPTS = 5;
 
-        const authForm = document.getElementById('authForm');
-        const passwordInput = document.getElementById('password');
-        const errorMessage = document.getElementById('errorMessage');
-        const attemptCount = document.getElementById('attemptCount');
+        var authForm = document.getElementById('authForm');
+        var passwordInput = document.getElementById('password');
+        var errorMessage = document.getElementById('errorMessage');
+        var attemptCount = document.getElementById('attemptCount');
 
         // 이미 인증되었는지 확인
         if (sessionStorage.getItem('alpha_auth') === 'true') {
@@ -247,25 +247,23 @@
         }
 
         // 차단 확인
-        const blockUntil = localStorage.getItem('block_until');
+        var blockUntil = localStorage.getItem('block_until');
         if (blockUntil && Date.now() < parseInt(blockUntil)) {
-            const remainingMinutes = Math.ceil((parseInt(blockUntil) - Date.now()) / 60000);
-            errorMessage.textContent = `너무 많은 시도로 인해 ${remainingMinutes}분 동안 차단되었습니다.`;
+            var remainingMinutes = Math.ceil((parseInt(blockUntil) - Date.now()) / 60000);
+            errorMessage.textContent = '너무 많은 시도로 인해 ' + remainingMinutes + '분 동안 차단되었습니다.';
             errorMessage.classList.add('show');
             authForm.querySelector('button').disabled = true;
         }
 
-        authForm.addEventListener('submit', async function(e) {
+        authForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            const password = passwordInput.value;
+            var password = passwordInput.value;
             attempts++;
             attemptCount.textContent = attempts;
 
-            // SHA-256 해싱
-            const passwordHash = await hashPassword(password);
-
-            if (passwordHash === CORRECT_PASSWORD_HASH) {
+            // 직접 비교 (간단!)
+            if (password === CORRECT_PASSWORD) {
                 // 인증 성공
                 sessionStorage.setItem('alpha_auth', 'true');
                 errorMessage.classList.remove('show');
@@ -285,31 +283,20 @@
                 errorMessage.style.background = '#fee2e2';
                 errorMessage.style.borderColor = '#fecaca';
                 errorMessage.style.color = '#dc2626';
-                errorMessage.textContent = `잘못된 패스워드입니다. (${attempts}/${MAX_ATTEMPTS})`;
+                errorMessage.textContent = '잘못된 패스워드입니다. (' + attempts + '/' + MAX_ATTEMPTS + ')';
                 errorMessage.classList.add('show');
                 passwordInput.value = '';
                 passwordInput.focus();
 
                 // 최대 시도 횟수 초과
                 if (attempts >= MAX_ATTEMPTS) {
-                    const blockTime = Date.now() + (30 * 60 * 1000); // 30분
+                    var blockTime = Date.now() + (30 * 60 * 1000); // 30분
                     localStorage.setItem('block_until', blockTime.toString());
                     errorMessage.textContent = '너무 많은 시도로 인해 30분 동안 차단되었습니다.';
                     authForm.querySelector('button').disabled = true;
                 }
             }
         });
-
-        // SHA-256 해싱 함수
-        async function hashPassword(password) {
-            const encoder = new TextEncoder();
-            const data = encoder.encode(password);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(function(b) {
-                return b.toString(16).padStart(2, '0');
-            }).join('');
-        }
 
         // Enter 키 처리
         passwordInput.addEventListener('keypress', function(e) {
