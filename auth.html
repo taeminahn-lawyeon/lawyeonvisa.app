@@ -231,7 +231,6 @@
     <script>
         // 알파 테스트 패스워드 (SHA-256 해시)
         // 실제 패스워드: "lawyeon2025"
-        // SHA-256: echo -n "lawyeon2025" | sha256sum
         const CORRECT_PASSWORD_HASH = '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8';
         
         let attempts = 0;
@@ -244,7 +243,7 @@
 
         // 이미 인증되었는지 확인
         if (sessionStorage.getItem('alpha_auth') === 'true') {
-            window.location.href = 'index.html';
+            window.location.href = '/index.html';
         }
 
         // 차단 확인
@@ -254,7 +253,6 @@
             errorMessage.textContent = `너무 많은 시도로 인해 ${remainingMinutes}분 동안 차단되었습니다.`;
             errorMessage.classList.add('show');
             authForm.querySelector('button').disabled = true;
-            return;
         }
 
         authForm.addEventListener('submit', async function(e) {
@@ -264,7 +262,7 @@
             attempts++;
             attemptCount.textContent = attempts;
 
-            // 간단한 해싱 (실제 프로덕션에서는 서버 검증 필요)
+            // SHA-256 해싱
             const passwordHash = await hashPassword(password);
 
             if (passwordHash === CORRECT_PASSWORD_HASH) {
@@ -279,11 +277,14 @@
                 errorMessage.textContent = '✅ 인증 성공! 리디렉션 중...';
                 errorMessage.classList.add('show');
 
-                setTimeout(() => {
-                    window.location.href = 'index.html';
+                setTimeout(function() {
+                    window.location.href = '/index.html';
                 }, 1000);
             } else {
                 // 인증 실패
+                errorMessage.style.background = '#fee2e2';
+                errorMessage.style.borderColor = '#fecaca';
+                errorMessage.style.color = '#dc2626';
                 errorMessage.textContent = `잘못된 패스워드입니다. (${attempts}/${MAX_ATTEMPTS})`;
                 errorMessage.classList.add('show');
                 passwordInput.value = '';
@@ -299,18 +300,21 @@
             }
         });
 
-        // 간단한 SHA-256 해싱 함수
+        // SHA-256 해싱 함수
         async function hashPassword(password) {
             const encoder = new TextEncoder();
             const data = encoder.encode(password);
             const hashBuffer = await crypto.subtle.digest('SHA-256', data);
             const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hashArray.map(function(b) {
+                return b.toString(16).padStart(2, '0');
+            }).join('');
         }
 
         // Enter 키 처리
         passwordInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
+                e.preventDefault();
                 authForm.dispatchEvent(new Event('submit'));
             }
         });
