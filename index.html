@@ -1109,17 +1109,19 @@
             });
 
             // 긴급 구제 카드 클릭 이벤트
-            document.getElementById('emergencyLegalCard').addEventListener('click', function() {
-                const user = localStorage.getItem('user');
-                const profile = localStorage.getItem('userProfile');
+            document.getElementById('emergencyLegalCard').addEventListener('click', async function() {
+                // ✅ Supabase 세션 체크
+                const session = await checkSession();
                 
-                if (!user) {
+                if (!session || !session.user) {
                     alert('로그인이 필요합니다.');
                     document.getElementById('googleLoginBtn').scrollIntoView({ behavior: 'smooth' });
                     return;
                 }
                 
-                if (!profile) {
+                // ✅ 프로필 체크
+                const profileResult = await getUserProfile(session.user.id);
+                if (!profileResult.success || !profileResult.data) {
                     alert('프로필 설정이 필요합니다.');
                     window.location.href = 'profile-setup.html';
                     return;
@@ -1129,17 +1131,19 @@
                 window.location.href = 'service-apply-general.html?service=emergency-legal';
             });
 
-            document.getElementById('visaDiagnosisCard').addEventListener('click', function() {
-                const user = localStorage.getItem('user');
-                const profile = localStorage.getItem('userProfile');
+            document.getElementById('visaDiagnosisCard').addEventListener('click', async function() {
+                // ✅ Supabase 세션 체크
+                const session = await checkSession();
                 
-                if (!user) {
+                if (!session || !session.user) {
                     alert('로그인이 필요합니다.');
                     document.getElementById('googleLoginBtn').scrollIntoView({ behavior: 'smooth' });
                     return;
                 }
                 
-                if (!profile) {
+                // ✅ 프로필 체크
+                const profileResult = await getUserProfile(session.user.id);
+                if (!profileResult.success || !profileResult.data) {
                     alert('프로필 설정이 필요합니다.');
                     window.location.href = 'profile-setup.html';
                     return;
