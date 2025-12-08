@@ -1064,15 +1064,11 @@
             
             // Google Login Button
             document.getElementById('googleLoginBtn').addEventListener('click', async function() {
-                const result = await signInWithGoogle();
-                if (result.success) {
-                    console.log('Google 로그인 성공');
-                    // 프로필 설정 페이지로 이동
-                    window.location.href = 'profile-setup.html';
-                } else {
-                    alert('로그인에 실패했습니다: ' + result.error);
-                }
+                console.log('Google 로그인 시작...');
+                await signInWithGoogle();
+                // OAuth 리디렉션이 자동으로 처리됨
             });
+
 
             // Logout Button
             const logoutBtn = document.getElementById('logoutBtn');
