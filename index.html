@@ -1601,19 +1601,31 @@
 
 
         // 서비스 신청 - 로그인 필요
-        function goToConsent(service) {
-            const user = localStorage.getItem('user');
+        async function goToConsent(service) {
+            console.log('👉 민원 신청 카드 클릭:', service);
             
-            if (!user) {
+            // ✅ Supabase 세션 체크
+            const session = await checkSession();
+            console.log('🔍 세션:', session);
+            
+            if (!session || !session.user) {
                 alert('서비스 신청은 로그인이 필요합니다.');
-                // Google 로그인 버튼 클릭 유도
                 document.getElementById('googleLoginBtn').scrollIntoView({ behavior: 'smooth' });
                 return;
             }
             
-            // 로그인되어 있으면 프로필 확인
-            const profile = localStorage.getItem('userProfile');
-            if (!profile) {
+            // ✅ 프로필 체크 (캐시 우선)
+            const cachedProfile = sessionStorage.getItem('userProfileCache');
+            if (cachedProfile) {
+                console.log('✅ 캐시된 프로필 사용');
+                window.location.href = 'service-apply-general.html?service=' + service.id;
+                return;
+            }
+            
+            const profileResult = await getUserProfile(session.user.id);
+            console.log('🔍 프로필 조회:', profileResult);
+            
+            if (!profileResult.success || !profileResult.data) {
                 alert('프로필 설정이 필요합니다.');
                 window.location.href = 'profile-setup.html';
                 return;
