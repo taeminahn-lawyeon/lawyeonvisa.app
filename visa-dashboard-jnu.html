@@ -1170,32 +1170,54 @@
         }
 
         // 사용자 쓰레드 로드 (활성 + 아카이브)
-        function loadUserThreads() {
-            const threads = JSON.parse(localStorage.getItem('userThreads') || '[]');
+        async function loadUserThreads() {
             const applicationCards = document.getElementById('applicationCards');
             
             if (!applicationCards) return;
             
-            applicationCards.innerHTML = '';
+            applicationCards.innerHTML = '<div style="text-align:center; padding:40px;"><i class="fas fa-spinner fa-spin"></i> 로딩 중...</div>';
             
-            if (threads.length === 0) {
-                // 쓰레드 없을 때
-                applicationCards.innerHTML = `
-                    <div style="text-align: center; padding: 40px 20px; color: #9CA3AF;">
-                        <div style="font-size: 48px; margin-bottom: 16px;">📄</div>
-                        <p style="font-size: 16px; font-weight: 600;">아직 신청하신 서비스가 없습니다.</p>
-                    </div>
-                `;
+            try {
+                // 현재 사용자 확인
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    applicationCards.innerHTML = '<div style="text-align:center; padding:40px; color:#EF4444;">로그인이 필요합니다.</div>';
+                    return;
+                }
+                
+                // Supabase에서 쓰레드 가져오기
+                const result = await getUserThreads(session.user.id);
+                let threads = [];
+                
+                if (result.success && result.data) {
+                    threads = result.data;
+                }
+                
+                if (threads.length === 0) {
+                    // 쓰레드 없을 때
+                    applicationCards.innerHTML = `
+                        <div style="text-align: center; padding: 40px 20px; color: #9CA3AF;">
+                            <div style="font-size: 48px; margin-bottom: 16px;">📄</div>
+                            <p style="font-size: 16px; font-weight: 600;">아직 신청하신 서비스가 없습니다.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                applicationCards.innerHTML = '';
+            } catch (error) {
+                console.error('쓰레드 로드 오류:', error);
+                applicationCards.innerHTML = '<div style="text-align:center; padding:40px; color:#EF4444;">데이터를 불러오는 중 오류가 발생했습니다.</div>';
                 return;
             }
             
             // 활성 쓰레드 먼저, 아카이브는 나중에
-            const activeThreads = threads.filter(t => t.status !== 'archived');
-            const archivedThreads = threads.filter(t => t.status === 'archived');
+            const activeThreads = threads.filter(t => !t.is_active || t.status !== 'archived');
+            const archivedThreads = threads.filter(t => t.is_active === false || t.status === 'archived');
             
             [...activeThreads, ...archivedThreads].forEach(thread => {
                 const card = document.createElement('div');
-                const isArchived = thread.status === 'archived';
+                const isArchived = thread.status === 'archived' || !thread.is_active;
                 
                 // 상태 텍스트 및 색상
                 let statusBg = '#FEF3C7';
@@ -1230,6 +1252,9 @@
                 let progress3 = thread.status === 'processing' || thread.status === 'completed' || thread.status === 'archived';
                 let progress4 = thread.status === 'completed' || thread.status === 'archived';
                 
+                // 신청일 포맷팅
+                const applicationDate = thread.created_at ? new Date(thread.created_at).toISOString().split('T')[0] : '알 수 없음';
+                
                 card.style.cssText = `
                     background: white; 
                     border: 2px solid ${isArchived ? '#E5E7EB' : '#00A651'}; 
@@ -1243,9 +1268,9 @@
                     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
                         <div>
                             <div style="font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 8px;">
-                                ${thread.serviceName}
+                                ${thread.service_name || '서비스'}
                             </div>
-                            <div style="font-size: 14px; color: #64748b;">신청일: ${thread.applicationDate}</div>
+                            <div style="font-size: 14px; color: #64748b;">신청일: ${applicationDate}</div>
                         </div>
                         <div style="background: ${statusBg}; color: ${statusColor}; padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 700;">
                             ${statusText}
@@ -1266,7 +1291,7 @@
                             <span>승인</span>
                         </div>
                     </div>
-                    <button onclick="openThread('${thread.threadId}')" style="width: 100%; padding: 14px; background: linear-gradient(135deg, ${isArchived ? '#9CA3AF' : '#00A651'} 0%, ${isArchived ? '#6B7280' : '#007A33'} 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
+                    <button onclick="openThread('${thread.id}')" style="width: 100%; padding: 14px; background: linear-gradient(135deg, ${isArchived ? '#9CA3AF' : '#00A651'} 0%, ${isArchived ? '#6B7280' : '#007A33'} 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
                         <i class="fas fa-comments"></i> ${isArchived ? '완료된 쓰레드 보기' : '쓰레드 열기'}
                     </button>
                 `;
@@ -1276,15 +1301,32 @@
         }
 
         // 쓰레드 열기
-        function openThread(threadId) {
-            const userAffiliation = localStorage.getItem('userAffiliation');
-            if (userAffiliation === 'jnu') {
+        async function openThread(threadId) {
+            try {
+                // 현재 사용자 확인
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    alert('로그인이 필요합니다.');
+                    return;
+                }
+
+                // 프로필에서 organization 확인
+                const profileResult = await getUserProfile(session.user.id);
+                const organization = profileResult.data?.organization;
+
+                // organization에 따라 쓰레드 페이지 이동
+                if (organization === 'jnu') {
+                    window.location.href = `visa-thread-jnu.html?id=${threadId}`;
+                } else if (organization === 'snu') {
+                    window.location.href = `visa-thread-snu.html?id=${threadId}`;
+                } else {
+                    // 일반 회원은 일반 쓰레드로
+                    window.location.href = `visa-thread-general.html?id=${threadId}`;
+                }
+            } catch (error) {
+                console.error('쓰레드 열기 오류:', error);
+                // 기본값으로 전남대 쓰레드로 이동 (전남대 대시보드이므로)
                 window.location.href = `visa-thread-jnu.html?id=${threadId}`;
-            } else if (userAffiliation === 'snu') {
-                window.location.href = `visa-thread-snu.html?id=${threadId}`;
-            } else {
-                // 일반 회원은 일반 쓰레드로
-                window.location.href = `visa-thread-general.html?id=${threadId}`;
             }
         }
 
@@ -1397,5 +1439,9 @@
 
         // Main page - no logout function needed
     </script>
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js?v=5"></script>
 </body>
 </html>
