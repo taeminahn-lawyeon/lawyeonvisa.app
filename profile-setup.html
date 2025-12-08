@@ -985,8 +985,7 @@
                     passport_number: formData.get('foreignerNumber'),
                     visa_type: formData.get('visaType'),
                     visa_expiry_date: formData.get('stayExpiry'),
-                    address: formData.get('address') + ' ' + formData.get('detailAddress'),
-                    address_postcode: formData.get('postcode'),
+                    address: formData.get('address') + ' ' + formData.get('detailAddress') + ' (' + formData.get('postcode') + ')',
                     role: 'customer'
                 };
 
