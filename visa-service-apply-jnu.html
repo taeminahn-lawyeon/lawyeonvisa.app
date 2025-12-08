@@ -834,52 +834,73 @@
             btn.classList.add('loading');
             btn.innerHTML = '<i class="fas fa-spinner"></i> 결제 진행 중...';
 
-            const orderInfo = {
-                orderId: 'ORD' + Date.now(),
-                orderName: selectedService.name,
-                amount: selectedService.totalPrice,
-                agencyFee: selectedService.agencyFee,
-                govtFee: selectedService.govtFee,
-                customerName: getUserName(),
-                customerEmail: getUserEmail(),
-                paymentMethod: selectedPaymentMethod,
-                timestamp: new Date().toISOString()
-            };
-
-            // localStorage에 결제 정보 임시 저장
-            localStorage.setItem('pendingOrder', JSON.stringify(orderInfo));
-
             try {
-                if (selectedPaymentMethod === 'card') {
-                    // 개발 환경에서는 바로 성공 페이지로 이동
-                    // 실제 배포 시 Toss Payments 활성화
-                    const isDevelopment = window.location.hostname === 'www.genspark.ai' || 
-                                         window.location.hostname === 'localhost' ||
-                                         !tossPayments;
-                    
-                    if (isDevelopment) {
-                        // 개발/테스트 모드: 바로 성공 페이지로
-                        console.log('개발 모드: 결제 시뮬레이션');
-                        window.location.href = `payment-success-jnu.html?orderId=${orderInfo.orderId}&amount=${orderInfo.amount}&service=${encodeURIComponent(orderInfo.orderName)}`;
-                        return;
-                    }
+                // 현재 로그인 사용자 확인
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    alert('로그인이 필요합니다.');
+                    window.location.href = 'index.html';
+                    return;
+                }
 
-                    // 프로덕션 모드: 실제 Toss Payments 호출
-                    const currentUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/'));
+                // 사용자 프로필 가져오기
+                const profileResult = await getUserProfile(session.user.id);
+                if (!profileResult.success || !profileResult.data) {
+                    alert('사용자 정보를 불러올 수 없습니다.');
+                    btn.disabled = false;
+                    btn.classList.remove('loading');
+                    btn.innerHTML = '<i class="fas fa-lock"></i> <span id="total-price-text">₩' + selectedService.totalPrice.toLocaleString() + '</span> 결제하기';
+                    return;
+                }
+
+                const profile = profileResult.data;
+
+                const orderInfo = {
+                    orderId: 'ORD' + Date.now(),
+                    orderName: selectedService.name,
+                    amount: selectedService.totalPrice,
+                    agencyFee: selectedService.agencyFee,
+                    govtFee: selectedService.govtFee,
+                    customerName: profile.name || session.user.email,
+                    customerEmail: profile.email || session.user.email,
+                    paymentMethod: selectedPaymentMethod,
+                    timestamp: new Date().toISOString()
+                };
+
+                // Supabase에 결제 정보 임시 저장
+                const pendingPaymentResult = await createPayment({
+                    order_id: orderInfo.orderId,
+                    service_name: orderInfo.orderName,
+                    amount: orderInfo.amount,
+                    agency_fee: orderInfo.agencyFee,
+                    govt_fee: orderInfo.govtFee,
+                    payment_method: orderInfo.paymentMethod,
+                    status: 'pending'
+                });
+
+                if (!pendingPaymentResult.success) {
+                    throw new Error('결제 정보 저장 실패');
+                }
+
+                if (selectedPaymentMethod === 'card') {
+                    // Toss Payments 실제 결제 호출
+                    const currentUrl = window.location.origin;
                     
                     await tossPayments.requestPayment('카드', {
                         amount: orderInfo.amount,
                         orderId: orderInfo.orderId,
                         orderName: orderInfo.orderName,
                         customerName: orderInfo.customerName,
-                        customerEmail: orderInfo.customerEmail || 'test@example.com',
+                        customerEmail: orderInfo.customerEmail,
                         successUrl: currentUrl + '/payment-success-jnu.html',
                         failUrl: currentUrl + '/payment-fail-jnu.html',
                     });
                 } else if (selectedPaymentMethod === 'paypal') {
-                    // PayPal 결제는 임시로 성공 페이지로 이동
-                    alert('PayPal 결제는 준비 중입니다.\n테스트를 위해 결제 완료 페이지로 이동합니다.');
-                    window.location.href = `payment-success-jnu.html?orderId=${orderInfo.orderId}&amount=${orderInfo.amount}&service=${encodeURIComponent(orderInfo.orderName)}`;
+                    // PayPal 결제는 준비 중
+                    alert('PayPal 결제는 준비 중입니다.');
+                    btn.disabled = false;
+                    btn.classList.remove('loading');
+                    btn.innerHTML = '<i class="fas fa-lock"></i> <span id="total-price-text">₩' + selectedService.totalPrice.toLocaleString() + '</span> 결제하기';
                 }
             } catch (error) {
                 console.error('결제 오류:', error);
@@ -887,7 +908,6 @@
                 btn.classList.remove('loading');
                 btn.innerHTML = '<i class="fas fa-lock"></i> <span id="total-price-text">₩' + selectedService.totalPrice.toLocaleString() + '</span> 결제하기';
                 
-                // 오류 메시지 상세화
                 let errorMessage = '결제 처리 중 오류가 발생했습니다.';
                 if (error.message) {
                     errorMessage += '\n\n오류 내용: ' + error.message;
@@ -898,39 +918,35 @@
             }
         }
 
-        function applyForConsulting() {
-            // 견적 상담용 쓰레드 생성
-            const threadId = 'THREAD-' + Date.now();
-            const today = new Date().toISOString().split('T')[0];
-            
-            const thread = {
-                threadId: threadId,
-                serviceName: selectedService.name + ' (견적 상담)',
-                applicationDate: today,
-                status: 'document', // 상담은 바로 서류/상담 단계
-                amount: 0,
-                orderId: 'CONSULT-' + Date.now(),
-                createdAt: new Date().toISOString(),
-                messages: [],
-                isConsulting: true
-            };
-            
-            // localStorage에 쓰레드 추가
-            const existingThreads = JSON.parse(localStorage.getItem('userThreads') || '[]');
-            existingThreads.push(thread);
-            localStorage.setItem('userThreads', JSON.stringify(existingThreads));
-            localStorage.setItem('currentThreadId', threadId);
-            
-            alert('견적 상담 신청이 완료되었습니다!\n\n센터 담당자가 쓰레드에서 곧 연락드릴게요!');
-            
-            const userAffiliation = 'jnu'; // 전남대 전용
-            if (userAffiliation === 'jnu') {
-                window.location.href = `visa-thread-jnu.html?id=${threadId}`;
-            } else if (userAffiliation === 'snu') {
-                window.location.href = `visa-thread-snu.html?id=${threadId}`;
-            } else {
-                // 일반 회원은 일반 쓰레드로
-                window.location.href = `visa-thread-general.html?id=${threadId}`;
+        async function applyForConsulting() {
+            try {
+                // 현재 로그인 사용자 확인
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    alert('로그인이 필요합니다.');
+                    window.location.href = 'index.html';
+                    return;
+                }
+
+                // Supabase에 견적 상담용 쓰레드 생성
+                const threadResult = await createThread({
+                    service_name: selectedService.name + ' (견적 상담)',
+                    status: 'document',
+                    amount: 0,
+                    order_id: 'CONSULT-' + Date.now(),
+                    is_consulting: true,
+                    organization: 'jnu'
+                });
+                
+                if (!threadResult.success) {
+                    throw new Error('쓰레드 생성 실패');
+                }
+                
+                alert('견적 상담 신청이 완료되었습니다!\n\n센터 담당자가 쓰레드에서 곧 연락드릴게요!');
+                window.location.href = `visa-thread-jnu.html?id=${threadResult.data.id}`;
+            } catch (error) {
+                console.error('상담 신청 오류:', error);
+                alert('상담 신청 중 오류가 발생했습니다.\n다시 시도해주세요.');
             }
         }
 
@@ -946,5 +962,9 @@
             return user.email || profile.email || '';
         }
     </script>
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js?v=5"></script>
 </body>
 </html>
