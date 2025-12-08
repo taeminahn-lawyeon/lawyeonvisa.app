@@ -376,17 +376,34 @@ async function createPayment(paymentData) {
         const user = await getCurrentUser();
         if (!user) throw new Error('로그인이 필요합니다');
         
+        console.log('💳 결제 정보 저장 시도:', {
+            user_id: user.id,
+            ...paymentData
+        });
+        
         const { data, error } = await supabase
             .from('payments')
-            .insert([{
+            .insert({
                 user_id: user.id,
-                ...paymentData,
+                order_id: paymentData.order_id,
+                service_name: paymentData.service_name,
+                amount: paymentData.amount,
+                agency_fee: paymentData.agency_fee || 0,
+                govt_fee: paymentData.govt_fee || 0,
+                payment_method: paymentData.payment_method,
+                status: paymentData.status || 'pending',
+                organization: paymentData.organization || null,
                 created_at: new Date().toISOString()
-            }])
+            })
             .select()
             .single();
         
-        if (error) throw error;
+        if (error) {
+            console.error('❌ Supabase 오류:', error);
+            throw error;
+        }
+        
+        console.log('✅ 결제 정보 저장 성공:', data);
         return { success: true, data };
     } catch (error) {
         console.error('결제 기록 저장 오류:', error);
