@@ -944,7 +944,7 @@
         }
 
         // 폼 제출
-        document.getElementById('profileForm').addEventListener('submit', function(e) {
+        document.getElementById('profileForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             // 서명 확인
@@ -953,39 +953,66 @@
                 return;
             }
 
-            // 폼 데이터 수집
-            const formData = new FormData(this);
-            
-            // 서명 데이터 추가
-            const signatureData = signaturePad.toDataURL();
-            formData.append('signature', signatureData);
+            // 로딩 표시
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = '저장 중...';
 
-            // 데이터 저장
-            const profileData = {
-                lastName: formData.get('lastName'),
-                firstName: formData.get('firstName'),
-                birthDate: formData.get('birthDate'),
-                gender: formData.get('gender'),
-                email: formData.get('email'),
-                phone: formData.get('phone'),
-                nationality: formData.get('nationality'),
-                visaType: formData.get('visaType'),
-                stayExpiry: formData.get('stayExpiry'),
-                foreignerNumber: formData.get('foreignerNumber'),
-                address: {
-                    postcode: formData.get('postcode'),
-                    address: formData.get('address'),
-                    detailAddress: formData.get('detailAddress')
-                },
-                signature: signatureData,
-                completedAt: new Date().toISOString()
-            };
+            try {
+                // 현재 사용자 확인
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    alert('로그인이 필요합니다.');
+                    window.location.href = 'index.html';
+                    return;
+                }
 
-            localStorage.setItem('userProfile', JSON.stringify(profileData));
+                // 폼 데이터 수집
+                const formData = new FormData(this);
+                
+                // 서명 데이터 추가
+                const signatureData = signaturePad.toDataURL();
 
-            alert('기본 사항 제출이 완료되었습니다!\n\n이제 서비스를 이용하실 수 있습니다.');
-            window.location.href = 'index.html';
+                // Supabase에 저장할 프로필 데이터
+                const profileData = {
+                    name: formData.get('lastName') + formData.get('firstName'),
+                    email: session.user.email,
+                    phone: formData.get('phone'),
+                    nationality: formData.get('nationality'),
+                    birth_date: formData.get('birthDate'),
+                    gender: formData.get('gender'),
+                    passport_number: formData.get('foreignerNumber'),
+                    visa_type: formData.get('visaType'),
+                    visa_expiry_date: formData.get('stayExpiry'),
+                    address: formData.get('address') + ' ' + formData.get('detailAddress'),
+                    address_postcode: formData.get('postcode'),
+                    role: 'customer'
+                };
+
+                // Supabase에 프로필 생성
+                const result = await createUserProfile(session.user.id, profileData);
+                
+                if (result.success) {
+                    // ✅ 프로필 생성 완료 플래그 저장 (무한 루프 방지)
+                    sessionStorage.setItem('profileCreated', 'true');
+                    
+                    alert('기본 사항 제출이 완료되었습니다!\n\n이제 서비스를 이용하실 수 있습니다.');
+                    window.location.href = 'index.html';
+                } else {
+                    throw new Error(result.error);
+                }
+            } catch (error) {
+                console.error('프로필 저장 오류:', error);
+                alert('저장 중 오류가 발생했습니다: ' + error.message);
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
         });
     </script>
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js?v=5"></script>
 </body>
 </html>
