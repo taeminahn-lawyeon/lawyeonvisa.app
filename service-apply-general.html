@@ -738,11 +738,16 @@
         window.addEventListener('DOMContentLoaded', async function() {
             // ✅ 1. 로그인 세션 확인
             const session = await checkSession();
+            console.log('🔍 [결제 페이지] 세션 확인:', session);
+            
             if (!session || !session.user) {
+                console.log('❌ [결제 페이지] 세션 없음');
                 alert('로그인이 필요합니다.\n\n먼저 로그인 후 이용해주세요.');
                 window.location.href = 'index.html';
                 return;
             }
+            
+            console.log('✅ [결제 페이지] 세션 존재:', session.user.email);
 
             // ✅ 2. 프로필 확인
             const profileResult = await getUserProfile(session.user.id);
@@ -965,6 +970,6 @@
     
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-client.js?v=5"></script>
+    <script src="js/supabase-client.js?v=7"></script>
 </body>
 </html>
