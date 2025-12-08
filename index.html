@@ -1050,7 +1050,7 @@
 
     <!-- 알파 테스트 보호 -->
     <script src="js/alpha-auth.js"></script>
-    
+
     <!-- Supabase 라이브러리 -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=4"></script>
@@ -1068,7 +1068,6 @@
                 await signInWithGoogle();
                 // OAuth 리디렉션이 자동으로 처리됨
             });
-
 
             // Logout Button
             const logoutBtn = document.getElementById('logoutBtn');
@@ -1228,7 +1227,7 @@
                 // Supabase에서 프로필 가져오기
                 const profileResult = await getUserProfile(session.user.id);
                 
-                if (profileResult.success) {
+                if (profileResult.success && profileResult.data) {
                     const profileData = profileResult.data;
                     
                     // 헤더에 사용자 이름 표시
@@ -1280,6 +1279,10 @@
                     
                     // 쓰레드 정보 로드
                     loadUserThreads(session.user.id);
+                } else {
+                    // 프로필이 없으면 기본사항 제출로 이동
+                    console.log('프로필 없음 - profile-setup.html로 이동');
+                    window.location.href = 'profile-setup.html';
                 }
             } else {
                 // 로그아웃 상태
@@ -1369,13 +1372,16 @@
                     opacity: ${isArchived ? '0.7' : '1'};
                 `;
                 
+                // 신청일 포맷팅
+                const applicationDate = thread.created_at ? new Date(thread.created_at).toISOString().split('T')[0] : '알 수 없음';
+                
                 card.innerHTML = `
                     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
                         <div>
                             <div style="font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 8px;">
-                                ${thread.serviceName}
+                                ${thread.service_name || '서비스'}
                             </div>
-                            <div style="font-size: 14px; color: #64748b;">신청일: ${thread.applicationDate}</div>
+                            <div style="font-size: 14px; color: #64748b;">신청일: ${applicationDate}</div>
                         </div>
                         <div style="background: ${statusBg}; color: ${statusColor}; padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 700;">
                             ${statusText}
@@ -1396,7 +1402,7 @@
                             <span>승인</span>
                         </div>
                     </div>
-                    <button onclick="openThread('${thread.threadId}')" style="width: 100%; padding: 14px; background: linear-gradient(135deg, ${isArchived ? '#9CA3AF' : '#3182F6'} 0%, ${isArchived ? '#6B7280' : '#2563EB'} 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
+                    <button onclick="openThread('${thread.id}')" style="width: 100%; padding: 14px; background: linear-gradient(135deg, ${isArchived ? '#9CA3AF' : '#3182F6'} 0%, ${isArchived ? '#6B7280' : '#2563EB'} 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
                         <i class="fas fa-comments"></i> ${isArchived ? '완료된 쓰레드 보기' : '쓰레드 열기'}
                     </button>
                 `;
@@ -1406,14 +1412,31 @@
         }
 
         // 쓰레드 열기
-        function openThread(threadId) {
-            const userAffiliation = localStorage.getItem('userAffiliation');
-            if (userAffiliation === 'jnu') {
-                window.location.href = `visa-thread-jnu.html?id=${threadId}`;
-            } else if (userAffiliation === 'snu') {
-                window.location.href = `visa-thread-snu.html?id=${threadId}`;
-            } else {
-                // 일반 회원은 일반 쓰레드로
+        async function openThread(threadId) {
+            try {
+                // 현재 사용자 확인
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    alert('로그인이 필요합니다.');
+                    return;
+                }
+
+                // 프로필에서 organization 확인
+                const profileResult = await getUserProfile(session.user.id);
+                const organization = profileResult.data?.organization;
+
+                // organization에 따라 쓰레드 페이지 이동
+                if (organization === 'jnu') {
+                    window.location.href = `visa-thread-jnu.html?id=${threadId}`;
+                } else if (organization === 'snu') {
+                    window.location.href = `visa-thread-snu.html?id=${threadId}`;
+                } else {
+                    // 일반 회원은 일반 쓰레드로
+                    window.location.href = `visa-thread-general.html?id=${threadId}`;
+                }
+            } catch (error) {
+                console.error('쓰레드 열기 오류:', error);
+                // 기본값으로 일반 쓰레드로 이동
                 window.location.href = `visa-thread-general.html?id=${threadId}`;
             }
         }
