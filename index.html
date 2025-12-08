@@ -1057,16 +1057,16 @@
     
     <script src="js/ui-components.js"></script>
     <script>
+        // 페이지 로드 시 초기화
         window.addEventListener('DOMContentLoaded', function() {
             loadServices();
-            loadPartners(); // 협약 단체 로드
+            loadPartners();
             checkUserLogin();
             
             // Google Login Button
             document.getElementById('googleLoginBtn').addEventListener('click', async function() {
                 console.log('Google 로그인 시작...');
                 await signInWithGoogle();
-                // OAuth 리디렉션이 자동으로 처리됨
             });
 
             // Logout Button
@@ -1085,7 +1085,7 @@
                     }
                 });
             }
-
+            
             // Category Tab Events (출입국 민원 대행)
             const serviceTabs = document.querySelectorAll('.service-categories .category-tab[data-category]');
             serviceTabs.forEach(tab => {
