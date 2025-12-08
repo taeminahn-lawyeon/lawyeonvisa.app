@@ -1110,8 +1110,11 @@
 
             // 긴급 구제 카드 클릭 이벤트
             document.getElementById('emergencyLegalCard').addEventListener('click', async function() {
+                console.log('👉 긴급 구제 카드 클릭');
+                
                 // ✅ Supabase 세션 체크
                 const session = await checkSession();
+                console.log('🔍 세션:', session);
                 
                 if (!session || !session.user) {
                     alert('로그인이 필요합니다.');
@@ -1119,8 +1122,17 @@
                     return;
                 }
                 
-                // ✅ 프로필 체크
+                // ✅ 프로필 체크 (캐시 우선)
+                const cachedProfile = sessionStorage.getItem('userProfileCache');
+                if (cachedProfile) {
+                    console.log('✅ 캐시된 프로필 사용');
+                    window.location.href = 'service-apply-general.html?service=emergency-legal';
+                    return;
+                }
+                
                 const profileResult = await getUserProfile(session.user.id);
+                console.log('🔍 프로필 조회:', profileResult);
+                
                 if (!profileResult.success || !profileResult.data) {
                     alert('프로필 설정이 필요합니다.');
                     window.location.href = 'profile-setup.html';
@@ -1132,8 +1144,11 @@
             });
 
             document.getElementById('visaDiagnosisCard').addEventListener('click', async function() {
+                console.log('👉 비자 사전진단 카드 클릭');
+                
                 // ✅ Supabase 세션 체크
                 const session = await checkSession();
+                console.log('🔍 세션:', session);
                 
                 if (!session || !session.user) {
                     alert('로그인이 필요합니다.');
@@ -1141,8 +1156,17 @@
                     return;
                 }
                 
-                // ✅ 프로필 체크
+                // ✅ 프로필 체크 (캐시 우선)
+                const cachedProfile = sessionStorage.getItem('userProfileCache');
+                if (cachedProfile) {
+                    console.log('✅ 캐시된 프로필 사용');
+                    window.location.href = 'service-apply-general.html?service=visa-prediagnosis';
+                    return;
+                }
+                
                 const profileResult = await getUserProfile(session.user.id);
+                console.log('🔍 프로필 조회:', profileResult);
+                
                 if (!profileResult.success || !profileResult.data) {
                     alert('프로필 설정이 필요합니다.');
                     window.location.href = 'profile-setup.html';
@@ -1230,20 +1254,37 @@
             
             if (session && session.user) {
                 console.log('✅ 세션 존재:', session.user.email);
-                // Supabase에서 프로필 가져오기
-                const profileResult = await getUserProfile(session.user.id);
-                console.log('🔍 프로필 조회 결과:', profileResult);
                 
-                // ✅ 프로필 생성 완료 플래그 확인 (무한 루프 방지)
+                // ✅ 프로필 생성 완료 플래그 확인
                 const profileCreatedFlag = sessionStorage.getItem('profileCreated');
                 console.log('🔍 프로필 생성 플래그:', profileCreatedFlag);
                 
-                if ((profileResult.success && profileResult.data) || profileCreatedFlag === 'true') {
-                    console.log('✅ 프로필 존재 또는 플래그 확인');
-                    // 플래그 사용 후 제거
-                    if (profileCreatedFlag) sessionStorage.removeItem('profileCreated');
+                let profileData = null;
+                
+                // 플래그가 있으면 캐시된 프로필 사용
+                if (profileCreatedFlag === 'true') {
+                    const cachedProfile = sessionStorage.getItem('userProfileCache');
+                    if (cachedProfile) {
+                        profileData = JSON.parse(cachedProfile);
+                        console.log('✅ 캐시된 프로필 사용:', profileData);
+                        sessionStorage.removeItem('profileCreated');
+                        sessionStorage.removeItem('userProfileCache');
+                    }
+                }
+                
+                // 캐시가 없으면 Supabase에서 조회
+                if (!profileData) {
+                    const profileResult = await getUserProfile(session.user.id);
+                    console.log('🔍 프로필 조회 결과:', profileResult);
                     
-                    const profileData = profileResult.data || {};
+                    if (profileResult.success && profileResult.data) {
+                        profileData = profileResult.data;
+                        console.log('✅ Supabase에서 프로필 조회 성공');
+                    }
+                }
+                
+                if (profileData) {
+                    console.log('✅ 프로필 데이터 확인 완료');
                     
                     // 헤더에 사용자 이름 표시
                     const userName = profileData.name || session.user.email.split('@')[0];
