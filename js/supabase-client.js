@@ -437,11 +437,35 @@ async function getUserDiagnosisRecords(userId) {
 // ============================================
 
 // 인증 상태 변경 감지
-supabase.auth.onAuthStateChange((event, session) => {
+supabase.auth.onAuthStateChange(async (event, session) => {
     console.log('인증 상태 변경:', event, session);
     
-    if (event === 'SIGNED_IN') {
+    if (event === 'SIGNED_IN' && session && session.user) {
         console.log('로그인 성공:', session.user.email);
+        
+        // Google OAuth 리다이렉트 후 프로필 체크
+        const profileResult = await getUserProfile(session.user.id);
+        
+        if (!profileResult.success || !profileResult.data) {
+            console.log('프로필 없음 - profile-setup.html로 리다이렉트');
+            // 현재 페이지가 profile-setup.html이 아닐 때만 리다이렉트
+            if (!window.location.pathname.includes('profile-setup.html')) {
+                setTimeout(() => {
+                    window.location.href = 'profile-setup.html';
+                }, 500);
+            }
+        } else {
+            console.log('프로필 존재 - 로그인 완료');
+            // index.html이 아닌 페이지에서 로그인한 경우 index.html로 리다이렉트
+            if (!window.location.pathname.includes('index.html') && 
+                !window.location.pathname.includes('profile-setup.html') &&
+                window.location.pathname !== '/' && 
+                window.location.pathname !== '') {
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 500);
+            }
+        }
     } else if (event === 'SIGNED_OUT') {
         console.log('로그아웃 완료');
     }
