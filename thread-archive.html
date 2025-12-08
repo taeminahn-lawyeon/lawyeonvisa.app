@@ -343,49 +343,42 @@
         }
 
         // 아카이브된 쓰레드 로드
-        function loadArchivedThreads() {
-            // 실제 환경에서는 Supabase에서 데이터 가져옴
-            // const { data } = await supabase
-            //   .from('threads')
-            //   .select('*')
-            //   .eq('status', 'archived')
-            //   .eq('user_id', userId);
+        async function loadArchivedThreads() {
+            try {
+                // 현재 사용자 확인
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    alert('로그인이 필요합니다.');
+                    window.location.href = 'index.html';
+                    return;
+                }
 
-            // 개발용: 샘플 데이터 생성
-            archivedThreads = generateSampleArchivedThreads();
-            filteredThreads = [...archivedThreads];
-            renderThreads();
-        }
+                // Supabase에서 아카이브된 쓰레드 가져오기
+                const { data, error } = await supabase
+                    .from('threads')
+                    .select('*')
+                    .eq('user_id', session.user.id)
+                    .or('status.eq.archived,is_active.eq.false')
+                    .order('updated_at', { ascending: false });
 
-        // 샘플 데이터 생성 (개발용)
-        function generateSampleArchivedThreads() {
-            const services = [
-                'D-2 비자 신청', 'D-10 구직비자 전환', 'F-2 체류자격 변경', 
-                '비자 연장', '귀화 신청'
-            ];
-            
-            const threads = [];
-            for (let i = 1; i <= 8; i++) {
-                const completedDate = new Date(Date.now() - Math.random() * 180 * 24 * 60 * 60 * 1000);
-                const startDate = new Date(completedDate.getTime() - 20 * 24 * 60 * 60 * 1000);
-                
-                threads.push({
-                    id: `archived-${i}`,
-                    service_name: services[Math.floor(Math.random() * services.length)],
-                    status: 'archived',
-                    amount: Math.floor(Math.random() * 500000 + 300000),
-                    created_at: startDate.getTime(),
-                    completed_at: completedDate.getTime(),
-                    documents: [
-                        { name: '여권 사본.pdf', size: '1.2MB', url: '#' },
-                        { name: '외국인등록증.pdf', size: '850KB', url: '#' },
-                        { name: '재직증명서.pdf', size: '420KB', url: '#' }
-                    ]
-                });
+                if (error) {
+                    console.error('아카이브 쓰레드 로드 오류:', error);
+                    archivedThreads = [];
+                } else {
+                    archivedThreads = data;
+                }
+
+                filteredThreads = [...archivedThreads];
+                renderThreads();
+            } catch (error) {
+                console.error('데이터 로드 오류:', error);
+                archivedThreads = [];
+                filteredThreads = [];
+                renderThreads();
             }
-            
-            return threads;
         }
+
+
 
         // 쓰레드 렌더링
         function renderThreads() {
