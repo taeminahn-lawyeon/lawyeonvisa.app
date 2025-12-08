@@ -1222,15 +1222,20 @@
         async function checkUserLogin() {
             // Supabase 세션 확인
             const session = await checkSession();
+            console.log('🔍 checkUserLogin - 세션:', session);
             
             if (session && session.user) {
+                console.log('✅ 세션 존재:', session.user.email);
                 // Supabase에서 프로필 가져오기
                 const profileResult = await getUserProfile(session.user.id);
+                console.log('🔍 프로필 조회 결과:', profileResult);
                 
                 // ✅ 프로필 생성 완료 플래그 확인 (무한 루프 방지)
                 const profileCreatedFlag = sessionStorage.getItem('profileCreated');
+                console.log('🔍 프로필 생성 플래그:', profileCreatedFlag);
                 
                 if ((profileResult.success && profileResult.data) || profileCreatedFlag === 'true') {
+                    console.log('✅ 프로필 존재 또는 플래그 확인');
                     // 플래그 사용 후 제거
                     if (profileCreatedFlag) sessionStorage.removeItem('profileCreated');
                     
