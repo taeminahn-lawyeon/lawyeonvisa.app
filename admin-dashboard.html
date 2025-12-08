@@ -9,7 +9,7 @@
     
     <!-- Supabase 라이브러리 (head에서 먼저 로드) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-client.js?v=6"></script>
+    <script src="js/supabase-client.js?v=7"></script>
     <style>
         * {
             margin: 0;
@@ -725,44 +725,50 @@
         }
 
         // 대시보드 데이터 로드
-        function loadDashboardData() {
-            // 실제 환경에서는 Supabase에서 데이터를 가져옴
-            // 여기서는 localStorage의 모든 유저 쓰레드를 수집
-            
-            // 개발 모드: 샘플 데이터 생성
-            allThreads = generateSampleThreads();
-            filteredThreads = [...allThreads];
-            
-            updateStatistics();
-            renderThreadsTable();
+        async function loadDashboardData() {
+            try {
+                // Supabase에서 모든 쓰레드 가져오기 (관리자는 전체 조회 가능)
+                const { data: threads, error } = await supabase
+                    .from('threads')
+                    .select(`
+                        *,
+                        profiles!threads_user_id_fkey (
+                            name,
+                            email
+                        )
+                    `)
+                    .order('created_at', { ascending: false });
+                
+                if (error) {
+                    console.error('쓰레드 로드 오류:', error);
+                    allThreads = [];
+                } else {
+                    // 데이터 포맷 변환
+                    allThreads = threads.map(thread => ({
+                        id: thread.id,
+                        customer_name: thread.profiles?.name || '알 수 없음',
+                        customer_email: thread.profiles?.email || '',
+                        service_name: thread.service_name,
+                        status: thread.status,
+                        priority: thread.priority || 'normal',
+                        amount: thread.amount,
+                        created_at: new Date(thread.created_at).getTime(),
+                        updated_at: new Date(thread.updated_at).getTime(),
+                        organization: thread.organization
+                    }));
+                }
+                
+                filteredThreads = [...allThreads];
+                
+                updateStatistics();
+                renderThreadsTable();
+            } catch (error) {
+                console.error('대시보드 데이터 로드 오류:', error);
+                alert('데이터를 불러오는 중 오류가 발생했습니다.');
+            }
         }
 
-        // 샘플 데이터 생성 (개발용)
-        function generateSampleThreads() {
-            const services = [
-                'D-2 비자 신청', 'D-10 구직비자 전환', 'F-2 체류자격 변경', 
-                '비자 연장', '귀화 신청', '불법체류 사전진단'
-            ];
-            const statuses = ['payment', 'document', 'processing', 'completed', 'archived'];
-            const priorities = ['normal', 'high', 'urgent'];
-            const customers = ['김민수', '이지은', '박서준', '최유진', '정대현'];
-            
-            const threads = [];
-            for (let i = 1; i <= 20; i++) {
-                threads.push({
-                    id: `thread-${i}`,
-                    customer_name: customers[Math.floor(Math.random() * customers.length)],
-                    service_name: services[Math.floor(Math.random() * services.length)],
-                    status: statuses[Math.floor(Math.random() * statuses.length)],
-                    priority: priorities[Math.floor(Math.random() * priorities.length)],
-                    amount: Math.floor(Math.random() * 500000 + 300000),
-                    created_at: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).getTime(),
-                    updated_at: Date.now()
-                });
-            }
-            
-            return threads;
-        }
+
 
         // 통계 업데이트
         function updateStatistics() {
