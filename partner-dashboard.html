@@ -696,18 +696,30 @@
         });
 
         // 담당자 권한 확인
-        function checkPartnerAccess() {
-            const user = JSON.parse(localStorage.getItem('user') || '{}');
+        async function checkPartnerAccess() {
+            const session = await checkSession();
             
-            // 개발 모드: @jnu.ac.kr 또는 @snu.ac.kr 이메일이면 담당자로 인정
-            const validDomains = ['@jnu.ac.kr', '@snu.ac.kr'];
-            const isValidPartner = validDomains.some(domain => user.email && user.email.includes(domain));
+            if (!session || !session.user) {
+                alert('로그인이 필요합니다.');
+                location.href = 'admin-login.html';
+                return false;
+            }
             
-            if (!isValidPartner) {
+            // 프로필에서 role과 organization 확인
+            const { data: profile, error } = await supabase
+                .from('profiles')
+                .select('role, organization')
+                .eq('id', session.user.id)
+                .single();
+            
+            if (error || !profile || profile.role !== 'partner_admin') {
                 alert('담당자 권한이 없습니다.');
                 location.href = 'index.html';
                 return false;
             }
+            
+            // organization 설정
+            orgCode = profile.organization || 'jnu';
             
             return true;
         }
@@ -724,47 +736,57 @@
         }
 
         // 회원 데이터 로드
-        function loadMembersData() {
-            // 개발 모드: 샘플 데이터 생성
-            allMembers = generateSampleMembers();
-            filteredMembers = [...allMembers];
-            
-            updateStatistics();
-            updateDiagnosisStats();
-            renderMembersTable();
+        async function loadMembersData() {
+            try {
+                // Supabase에서 해당 organization 회원 가져오기
+                const { data: members, error } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('organization', orgCode)
+                    .eq('role', 'customer')
+                    .order('created_at', { ascending: false });
+                
+                if (error) {
+                    console.error('회원 로드 오류:', error);
+                    allMembers = [];
+                } else {
+                    // 비자 만료일 상태 계산
+                    allMembers = members.map(member => {
+                        const visaExpiry = member.visa_expiry_date ? new Date(member.visa_expiry_date) : null;
+                        const daysUntilExpiry = visaExpiry ? Math.floor((visaExpiry - new Date()) / (24 * 60 * 60 * 1000)) : null;
+                        
+                        let status = 'normal';
+                        if (daysUntilExpiry !== null) {
+                            if (daysUntilExpiry <= 15) status = 'danger';
+                            else if (daysUntilExpiry <= 30) status = 'warning';
+                        }
+                        
+                        return {
+                            id: member.id,
+                            name: member.name,
+                            nationality: member.nationality,
+                            visa_type: member.visa_type,
+                            visa_expiry: visaExpiry,
+                            status: status,
+                            diagnosis_completed: false, // 추후 diagnosis_records 테이블과 연동
+                            student_id: member.student_id || '미등록',
+                            major: member.major || '미등록'
+                        };
+                    });
+                }
+                
+                filteredMembers = [...allMembers];
+                
+                updateStatistics();
+                updateDiagnosisStats();
+                renderMembersTable();
+            } catch (error) {
+                console.error('회원 데이터 로드 오류:', error);
+                alert('데이터를 불러오는 중 오류가 발생했습니다.');
+            }
         }
 
-        // 샘플 데이터 생성 (개발용)
-        function generateSampleMembers() {
-            const names = ['리웨이', '마이클 존슨', '사라 김', '알리 하산', '유키 타나카', '마리아 로드리게스'];
-            const nationalities = ['중국', '미국', '베트남', '파키스탄', '일본', '멕시코'];
-            const visaTypes = ['D-2', 'D-10', 'F-2'];
-            const statuses = ['normal', 'warning', 'danger'];
-            
-            const members = [];
-            for (let i = 1; i <= 20; i++) {
-                const visaExpiry = new Date(Date.now() + (Math.random() * 365 - 30) * 24 * 60 * 60 * 1000);
-                const daysUntilExpiry = Math.floor((visaExpiry - Date.now()) / (24 * 60 * 60 * 1000));
-                
-                let status = 'normal';
-                if (daysUntilExpiry <= 15) status = 'danger';
-                else if (daysUntilExpiry <= 30) status = 'warning';
-                
-                members.push({
-                    id: `member-${i}`,
-                    name: names[Math.floor(Math.random() * names.length)],
-                    nationality: nationalities[Math.floor(Math.random() * nationalities.length)],
-                    visa_type: visaTypes[Math.floor(Math.random() * visaTypes.length)],
-                    visa_expiry: visaExpiry,
-                    status: status,
-                    diagnosis_completed: Math.random() > 0.3, // 70% 완료율
-                    student_id: `2023${Math.floor(Math.random() * 9000 + 1000)}`,
-                    major: '컴퓨터공학과'
-                });
-            }
-            
-            return members;
-        }
+
 
         // 통계 업데이트
         function updateStatistics() {
