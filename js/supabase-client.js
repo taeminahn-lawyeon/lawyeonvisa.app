@@ -376,41 +376,38 @@ async function createPayment(paymentData) {
         const user = await getCurrentUser();
         if (!user) throw new Error('로그인이 필요합니다');
         
-        console.log('💳 결제 정보 저장 시도:', {
+        console.log('💳 결제 정보 저장 시도:', paymentData);
+        
+        const paymentRecord = {
             user_id: user.id,
-            ...paymentData
-        });
+            order_id: paymentData.order_id,
+            service_name: paymentData.service_name,
+            amount: paymentData.amount,
+            agency_fee: paymentData.agency_fee || 0,
+            govt_fee: paymentData.govt_fee || 0,
+            payment_method: paymentData.payment_method,
+            status: paymentData.status || 'pending',
+            organization: paymentData.organization || null
+        };
+        
+        console.log('📝 저장할 데이터:', paymentRecord);
         
         const { data, error } = await supabase
             .from('payments')
-            .insert({
-                user_id: user.id,
-                order_id: paymentData.order_id,
-                service_name: paymentData.service_name,
-                amount: paymentData.amount,
-                agency_fee: paymentData.agency_fee || 0,
-                govt_fee: paymentData.govt_fee || 0,
-                payment_method: paymentData.payment_method,
-                status: paymentData.status || 'pending',
-                organization: paymentData.organization || null,
-                created_at: new Date().toISOString()
-            })
-            .select()
-            .single();
+            .insert(paymentRecord);
         
         if (error) {
             console.error('❌ Supabase 오류:', error);
             throw error;
         }
         
-        console.log('✅ 결제 정보 저장 성공:', data);
-        return { success: true, data };
+        console.log('✅ 결제 정보 저장 성공');
+        return { success: true, data: paymentRecord };
     } catch (error) {
-        console.error('결제 기록 저장 오류:', error);
+        console.error('❌ 결제 기록 저장 실패:', error);
         return { success: false, error: error.message };
     }
 }
-
 // ============================================
 // 진단 관련 함수
 // ============================================
