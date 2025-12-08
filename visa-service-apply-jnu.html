@@ -758,12 +758,9 @@
                 return;
             }
 
-            // ✅ 2. 프로필 확인 (관리자 계정 예외)
+            // ✅ 2. 프로필 확인
             const profileResult = await getUserProfile(session.user.id);
-            const isAdmin = session.user.email === 'taemin.ahn@lawyeon.com' || 
-                           (profileResult.data && profileResult.data.role === 'admin');
-            
-            if (!isAdmin && (!profileResult.success || !profileResult.data)) {
+            if (!profileResult.success || !profileResult.data) {
                 alert('사용자 프로필이 없습니다.\n\n먼저 기본사항을 제출해주세요.');
                 window.location.href = 'profile-setup.html';
                 return;
@@ -863,12 +860,9 @@
                     return;
                 }
 
-                // 사용자 프로필 가져오기 (관리자 계정 예외)
+                // 사용자 프로필 가져오기
                 const profileResult = await getUserProfile(session.user.id);
-                const isAdmin = session.user.email === 'taemin.ahn@lawyeon.com' || 
-                               (profileResult.data && profileResult.data.role === 'admin');
-                
-                if (!isAdmin && (!profileResult.success || !profileResult.data)) {
+                if (!profileResult.success || !profileResult.data) {
                     alert('사용자 정보를 불러올 수 없습니다.');
                     btn.disabled = false;
                     btn.classList.remove('loading');
@@ -876,11 +870,7 @@
                     return;
                 }
 
-                // 관리자는 임시 프로필 사용, 일반 사용자는 실제 프로필 사용
-                const profile = profileResult.data || {
-                    name: '관리자',
-                    email: session.user.email
-                };
+                const profile = profileResult.data;
 
                 const orderInfo = {
                     orderId: 'ORD' + Date.now(),
