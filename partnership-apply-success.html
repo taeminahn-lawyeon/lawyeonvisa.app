@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제휴 신청 완료 - 법무법인 로연</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+            overflow: hidden;
+            animation: slideUp 0.6s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-header {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            padding: 50px 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            animation: scaleIn 0.5s ease 0.3s both;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .success-icon i {
+            font-size: 50px;
+            color: #10b981;
+        }
+
+        .success-header h1 {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .success-header p {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .info-box h3 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .info-item .label {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        .info-item .value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .timeline {
+            margin-bottom: 30px;
+        }
+
+        .timeline h3 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .timeline-item .icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .timeline-item .content {
+            flex: 1;
+            padding: 0;
+        }
+
+        .timeline-item .title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .timeline-item .desc {
+            font-size: 13px;
+            color: #7f8c8d;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn.secondary {
+            background: #f1f3f5;
+            color: #555;
+        }
+
+        .btn.secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .contact-info {
+            background: #e7f3ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .contact-info h4 {
+            font-size: 16px;
+            color: #0066cc;
+            margin-bottom: 10px;
+        }
+
+        .contact-info p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .success-header h1 {
+                font-size: 24px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .info-item {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-header">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h1>제휴 신청이 완료되었습니다!</h1>
+            <p>빠른 시일 내에 연락드리겠습니다</p>
+        </div>
+
+        <div class="content">
+            <div class="info-box">
+                <h3><i class="fas fa-file-alt"></i> 신청 정보</h3>
+                <div class="info-item">
+                    <span class="label">기관명</span>
+                    <span class="value" id="orgName">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">담당자명</span>
+                    <span class="value" id="managerName">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">이메일</span>
+                    <span class="value" id="email">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">연락처</span>
+                    <span class="value" id="phone">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">신청일</span>
+                    <span class="value" id="applyDate">-</span>
+                </div>
+            </div>
+
+            <div class="timeline">
+                <h3>
+                    <i class="fas fa-stream"></i> 처리 절차
+                </h3>
+                <div class="timeline-item">
+                    <div class="icon">1</div>
+                    <div class="content">
+                        <div class="title">신청 접수 완료</div>
+                        <div class="desc">귀하의 제휴 신청이 정상적으로 접수되었습니다.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="icon">2</div>
+                    <div class="content">
+                        <div class="title">내부 검토 (1-2 영업일)</div>
+                        <div class="desc">담당자가 신청 내용을 검토하고 추가 자료를 요청할 수 있습니다.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="icon">3</div>
+                    <div class="content">
+                        <div class="title">제휴 협의 (2-3 영업일)</div>
+                        <div class="desc">제휴 조건 및 할인율을 협의합니다.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="icon">4</div>
+                    <div class="content">
+                        <div class="title">제휴 계약 체결</div>
+                        <div class="desc">최종 승인 후 제휴 서비스가 시작됩니다.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-info">
+                <h4><i class="fas fa-phone-alt"></i> 문의 사항이 있으신가요?</h4>
+                <p><strong>전화:</strong> 02-2039-0544 (평일 09:00~18:00)</p>
+                <p><strong>이메일:</strong> taemin.ahn@lawyeon.com</p>
+            </div>
+
+            <div class="actions">
+                <button class="btn secondary" onclick="location.href='partnership-apply.html'">
+                    <i class="fas fa-plus"></i> 다른 기관 추가 신청
+                </button>
+                <button class="btn primary" onclick="location.href='index.html'">
+                    <i class="fas fa-home"></i> 홈으로 돌아가기
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 페이지 로드 시 신청 정보 표시
+        window.addEventListener('DOMContentLoaded', function() {
+            loadApplicationData();
+        });
+
+        function loadApplicationData() {
+            // sessionStorage에서 신청 데이터 가져오기
+            const applicationData = JSON.parse(sessionStorage.getItem('partnershipApplication') || '{}');
+            
+            if (applicationData.orgName) {
+                document.getElementById('orgName').textContent = applicationData.orgName;
+                document.getElementById('managerName').textContent = applicationData.managerName || '-';
+                document.getElementById('email').textContent = applicationData.email || '-';
+                document.getElementById('phone').textContent = applicationData.phone || '-';
+                document.getElementById('applyDate').textContent = new Date().toLocaleDateString('ko-KR');
+            }
+
+            // 실제 환경에서는 Supabase에 신청 데이터 저장
+            // await supabase.from('partnership_applications').insert(applicationData);
+
+            // localStorage에 저장 (개발용)
+            const applications = JSON.parse(localStorage.getItem('partnershipApplications') || '[]');
+            applications.push({
+                ...applicationData,
+                id: Date.now(),
+                status: 'pending',
+                created_at: Date.now()
+            });
+            localStorage.setItem('partnershipApplications', JSON.stringify(applications));
+
+            // sessionStorage 정리
+            sessionStorage.removeItem('partnershipApplication');
+        }
+    </script>
+</body>
+</html>

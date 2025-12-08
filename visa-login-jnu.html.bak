@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - 법무법인 로연 출입국이민지원센터 x 전남대학교</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/ui-components.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 전남대학교 메인 컬러: Pantone 356C (녹색) */
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #007A33 0%, #005A25 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 500px;
+            padding: 50px 40px;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            color: #007A33;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .logo .subtitle {
+            font-size: 16px;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            color: #6b7280;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .university-badge {
+            background: linear-gradient(135deg, #007A33 0%, #005A25 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0, 122, 51, 0.3);
+        }
+
+        .university-badge i {
+            margin-right: 8px;
+        }
+
+        /* 서비스 소개 섹션 (NEW) */
+        .service-intro {
+            background: linear-gradient(135deg, #e8f8f0 0%, #f0fdf4 100%);
+            border: 2px solid #007A33;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .service-intro h3 {
+            font-size: 18px;
+            color: #007A33;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .intro-subtitle {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 15px;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .feature-list li {
+            font-size: 14px;
+            line-height: 2;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-list li i {
+            color: #007A33;
+            font-size: 16px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 14px;
+            text-align: center;
+            background: #f3f4f6;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            color: #6b7280;
+            transition: all 0.3s ease;
+        }
+
+        .tab:hover {
+            background: #e5e7eb;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #007A33 0%, #005A25 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 122, 51, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #374151;
+            font-size: 14px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #007A33;
+            box-shadow: 0 0 0 3px rgba(0, 122, 51, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #007A33 0%, #005A25 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 122, 51, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+            background: #e5e7eb;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 15px;
+            position: relative;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .social-login {
+            margin-top: 20px;
+        }
+
+        .google-btn {
+            width: 100%;
+            padding: 14px;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .google-btn:hover {
+            background: #f9fafb;
+            border-color: #007A33;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .google-btn img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .info-box {
+            background: #e8f8f0;
+            border: 2px solid #007A33;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        .info-box strong {
+            color: #007A33;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* 일반 페이지 안내 (NEW) */
+        .footer-notice {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: #374151;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .footer-text i {
+            color: #6b7280;
+        }
+
+        .footer-text strong {
+            color: #1f2937;
+        }
+
+        .footer-subtitle {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .link-general {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #007A33;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .link-general:hover {
+            gap: 12px;
+            color: #005A25;
+        }
+
+        .link-general i {
+            transition: transform 0.3s ease;
+        }
+
+        .link-general:hover i {
+            transform: translateX(4px);
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 40px 30px;
+            }
+
+            .logo h1 {
+                font-size: 20px;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .service-intro {
+                padding: 20px;
+            }
+
+            .service-intro h3 {
+                font-size: 16px;
+            }
+
+            .feature-list li {
+                font-size: 13px;
+            }
+
+            .footer-notice {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <h1>법무법인 로연</h1>
+            <div class="subtitle">출입국이민지원센터</div>
+            <p>Visa & Immigration Center</p>
+        </div>
+
+        <div class="university-badge" id="universityBadge">
+            <i class="fas fa-university"></i>
+            <span>전남대학교</span>
+        </div>
+
+        <!-- 서비스 소개 섹션 (NEW) -->
+        <div class="service-intro">
+            <h3>📚 전남대 유학생을 위한 특별 서비스</h3>
+            <p class="intro-subtitle">Special Services for CNU International Students</p>
+            <ul class="feature-list">
+                <li><i class="fas fa-check-circle"></i> D-2 → D-10 구직비자 전환 사전진단</li>
+                <li><i class="fas fa-check-circle"></i> 불법체류 리스크 무료 점검</li>
+                <li><i class="fas fa-check-circle"></i> 긴급 소명/구제 법률 지원</li>
+                <li><i class="fas fa-check-circle"></i> 전남대 국제교류팀 직접 협력</li>
+            </ul>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('student')">
+                <i class="fas fa-user-graduate"></i> 학생
+            </button>
+            <button class="tab" onclick="switchTab('admin')">
+                <i class="fas fa-user-tie"></i> 관리자
+            </button>
+        </div>
+
+        <!-- 학생 로그인 -->
+        <div class="tab-content active" id="studentTab">
+            <div class="social-login">
+                <button class="google-btn" onclick="googleLogin('student')">
+                    <svg width="20" height="20" viewBox="0 0 48 48">
+                        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                    </svg>
+                    Google로 학생 로그인
+                </button>
+            </div>
+
+            <div class="info-box">
+                <strong><i class="fas fa-info-circle"></i> 학생 로그인 안내</strong>
+                Google 계정으로 간편하게 로그인하세요. 
+                최초 로그인 시 기본 정보를 입력해야 합니다.
+            </div>
+        </div>
+
+        <!-- 관리자 로그인 -->
+        <div class="tab-content" id="adminTab">
+            <form onsubmit="adminLogin(event)">
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> 관리자 이메일</label>
+                    <input type="email" id="adminEmail" placeholder="admin@jnu.ac.kr" required>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> 비밀번호</label>
+                    <input type="password" id="adminPassword" placeholder="비밀번호를 입력하세요" required>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-sign-in-alt"></i> 관리자 로그인
+                </button>
+            </form>
+
+            <div class="info-box">
+                <strong><i class="fas fa-shield-alt"></i> 관리자 전용</strong>
+                학교 담당자만 접근 가능합니다. 
+                계정이 없으신 경우 법무법인 로연에 문의하세요.
+            </div>
+        </div>
+
+        <!-- 일반 페이지 안내 (NEW) -->
+        <div class="footer-notice">
+            <p class="footer-text">
+                <i class="fas fa-question-circle"></i> 
+                <strong>전남대학교 학생이 아니신가요?</strong><br>
+                <span class="footer-subtitle">Not a CNU student?</span>
+            </p>
+            <a href="index.html" class="link-general">
+                일반 페이지로 이동 <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <script src="js/ui-components.js"></script>
+    <script>
+        // 전남대학교 고정
+        const universityCode = 'jnu';
+        const currentUniversity = { 
+            name: '전남대학교', 
+            id: 'UNI_JNU',
+            code: 'jnu'
+        };
+
+        // localStorage에 학교 정보 저장
+        localStorage.setItem('universityCode', universityCode);
+        localStorage.setItem('universityId', currentUniversity.id);
+        localStorage.setItem('universityName', currentUniversity.name);
+
+        // 탭 전환
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+
+            if (tab === 'student') {
+                tabs[0].classList.add('active');
+                document.getElementById('studentTab').classList.add('active');
+            } else {
+                tabs[1].classList.add('active');
+                document.getElementById('adminTab').classList.add('active');
+            }
+        }
+
+        // Google 소셜 로그인 (학생용)
+        function googleLogin(userType) {
+            showToast('Google 로그인을 진행합니다...', 'info', 3000);
+            
+            setTimeout(() => {
+                const tempUser = {
+                    id: 'STUDENT_' + Date.now(),
+                    email: 'student@gmail.com',
+                    userType: 'student',
+                    universityId: currentUniversity.id,
+                    universityCode: currentUniversity.code,
+                    profileCompleted: false,
+                    loginTime: new Date().toISOString()
+                };
+
+                localStorage.setItem('currentUser', JSON.stringify(tempUser));
+                
+                showToast('로그인 성공! 프로필 설정 페이지로 이동합니다.', 'success', 2000);
+                
+                setTimeout(() => {
+                    window.location.href = 'visa-profile-setup-jnu.html';
+                }, 2000);
+            }, 1500);
+        }
+
+        // 관리자 로그인
+        function adminLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+
+            if (email.includes('admin') && password.length >= 4) {
+                const adminUser = {
+                    id: 'ADMIN_' + Date.now(),
+                    email: email,
+                    userType: 'admin',
+                    universityId: currentUniversity.id,
+                    universityCode: currentUniversity.code,
+                    loginTime: new Date().toISOString()
+                };
+
+                localStorage.setItem('currentUser', JSON.stringify(adminUser));
+                
+                showToast('관리자 로그인 성공!', 'success', 2000);
+                
+                setTimeout(() => {
+                    window.location.href = 'visa-admin-dashboard-jnu.html';
+                }, 2000);
+            } else {
+                showToast('이메일 또는 비밀번호가 올바르지 않습니다.', 'error');
+            }
+        }
+
+        // 페이지 로드 시 이미 로그인된 경우 체크
+        window.addEventListener('DOMContentLoaded', function() {
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                const user = JSON.parse(currentUser);
+                if (user.userType === 'student') {
+                    if (user.profileCompleted) {
+                        window.location.href = 'visa-dashboard-jnu.html';
+                    } else {
+                        window.location.href = 'visa-profile-setup-jnu.html';
+                    }
+                } else if (user.userType === 'admin') {
+                    window.location.href = 'visa-admin-dashboard-jnu.html';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

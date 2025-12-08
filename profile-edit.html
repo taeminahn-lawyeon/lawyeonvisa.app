@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로필 수정 - 법무법인 로연</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .form-section {
+            margin-bottom: 35px;
+        }
+
+        .form-section h2 {
+            font-size: 20px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .form-group label .required {
+            color: #ef4444;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: 'Noto Sans KR', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group input:disabled {
+            background: #f5f5f5;
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        .form-group .hint {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .profile-photo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-photo img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #667eea;
+            margin-bottom: 15px;
+        }
+
+        .profile-photo input[type="file"] {
+            display: none;
+        }
+
+        .profile-photo label {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .profile-photo label:hover {
+            background: #5568d3;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn.secondary {
+            background: #f1f3f5;
+            color: #555;
+        }
+
+        .btn.secondary:hover {
+            background: #e0e0e0;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-user-edit"></i> 프로필 수정</h1>
+            <p>개인정보를 최신 상태로 유지하세요</p>
+        </div>
+
+        <div class="content">
+            <form id="profileForm">
+                <!-- 프로필 사진 -->
+                <div class="profile-photo">
+                    <img id="profileImage" src="https://ui-avatars.com/api/?name=User&background=667eea&color=fff&size=120" alt="프로필">
+                    <br>
+                    <label for="photoUpload">
+                        <i class="fas fa-camera"></i> 사진 변경
+                    </label>
+                    <input type="file" id="photoUpload" accept="image/*">
+                </div>
+
+                <!-- 기본 정보 -->
+                <div class="form-section">
+                    <h2><i class="fas fa-info-circle"></i> 기본 정보</h2>
+                    
+                    <div class="form-group">
+                        <label>이름 <span class="required">*</span></label>
+                        <input type="text" id="name" disabled>
+                        <div class="hint">이름은 변경할 수 없습니다.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>이메일 <span class="required">*</span></label>
+                        <input type="email" id="email" disabled>
+                        <div class="hint">이메일은 변경할 수 없습니다.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>전화번호</label>
+                        <input type="tel" id="phone" placeholder="010-1234-5678">
+                    </div>
+                </div>
+
+                <!-- 체류 정보 -->
+                <div class="form-section">
+                    <h2><i class="fas fa-passport"></i> 체류 정보</h2>
+                    
+                    <div class="form-group">
+                        <label>거주지 주소 <span class="required">*</span></label>
+                        <input type="text" id="address" placeholder="서울특별시 강남구...">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>비자 종류 <span class="required">*</span></label>
+                            <select id="visaType">
+                                <option value="">선택</option>
+                                <option value="D-2">D-2 (유학)</option>
+                                <option value="D-10">D-10 (구직)</option>
+                                <option value="F-2">F-2 (거주)</option>
+                                <option value="F-5">F-5 (영주)</option>
+                                <option value="F-6">F-6 (결혼이민)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>비자 만료일 <span class="required">*</span></label>
+                            <input type="date" id="visaExpiry">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 소속 정보 (제휴 회원만) -->
+                <div class="form-section" id="affiliationSection" style="display: none;">
+                    <h2><i class="fas fa-university"></i> 소속 정보</h2>
+                    
+                    <div class="form-group">
+                        <label>학교명</label>
+                        <input type="text" id="school" disabled>
+                        <div class="hint">소속 기관은 변경할 수 없습니다.</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>학번</label>
+                            <input type="text" id="studentId" placeholder="20231234">
+                        </div>
+
+                        <div class="form-group">
+                            <label>전공</label>
+                            <input type="text" id="major" placeholder="컴퓨터공학과">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 버튼 -->
+                <div class="actions">
+                    <button type="button" class="btn secondary" onclick="goBack()">
+                        <i class="fas fa-times"></i> 취소
+                    </button>
+                    <button type="submit" class="btn primary">
+                        <i class="fas fa-save"></i> 저장
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentProfile = {};
+
+        // 페이지 로드 시 프로필 데이터 불러오기
+        window.addEventListener('DOMContentLoaded', function() {
+            loadProfile();
+            setupPhotoUpload();
+        });
+
+        // 프로필 데이터 로드
+        function loadProfile() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+            
+            if (!user.email) {
+                alert('로그인이 필요합니다.');
+                location.href = 'index.html';
+                return;
+            }
+
+            currentProfile = { ...user, ...userProfile };
+
+            // 기본 정보
+            document.getElementById('name').value = currentProfile.name || '';
+            document.getElementById('email').value = currentProfile.email || '';
+            document.getElementById('phone').value = currentProfile.phone || '';
+
+            // 체류 정보
+            document.getElementById('address').value = currentProfile.address || '';
+            document.getElementById('visaType').value = currentProfile.visaType || '';
+            document.getElementById('visaExpiry').value = currentProfile.visaExpiry || '';
+
+            // 소속 정보 (제휴 회원)
+            if (currentProfile.affiliation) {
+                document.getElementById('affiliationSection').style.display = 'block';
+                const orgNames = {
+                    'jnu': '전남대학교',
+                    'snu': '서울대학교'
+                };
+                document.getElementById('school').value = orgNames[currentProfile.affiliation] || '';
+                document.getElementById('studentId').value = currentProfile.studentId || '';
+                document.getElementById('major').value = currentProfile.major || '';
+            }
+
+            // 프로필 이미지
+            if (currentProfile.profileImage) {
+                document.getElementById('profileImage').src = currentProfile.profileImage;
+            } else {
+                document.getElementById('profileImage').src = 
+                    `https://ui-avatars.com/api/?name=${encodeURIComponent(currentProfile.name || 'User')}&background=667eea&color=fff&size=120`;
+            }
+        }
+
+        // 프로필 사진 업로드 설정
+        function setupPhotoUpload() {
+            document.getElementById('photoUpload').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        document.getElementById('profileImage').src = event.target.result;
+                        currentProfile.profileImage = event.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // 폼 제출
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // 필수 입력 체크
+            const address = document.getElementById('address').value.trim();
+            const visaType = document.getElementById('visaType').value;
+            const visaExpiry = document.getElementById('visaExpiry').value;
+
+            if (!address || !visaType || !visaExpiry) {
+                alert('필수 항목을 모두 입력해주세요.');
+                return;
+            }
+
+            // 프로필 업데이트
+            const updatedProfile = {
+                ...currentProfile,
+                phone: document.getElementById('phone').value.trim(),
+                address: address,
+                visaType: visaType,
+                visaExpiry: visaExpiry,
+                studentId: document.getElementById('studentId').value.trim(),
+                major: document.getElementById('major').value.trim(),
+                updated_at: Date.now()
+            };
+
+            // 실제 환경에서는 Supabase 업데이트
+            // await supabase.from('users').update(updatedProfile).eq('id', user.id);
+
+            // localStorage 업데이트 (개발용)
+            localStorage.setItem('userProfile', JSON.stringify(updatedProfile));
+
+            alert('프로필이 성공적으로 업데이트되었습니다!');
+            
+            // 이전 페이지로 돌아가기
+            goBack();
+        });
+
+        // 이전 페이지로 돌아가기
+        function goBack() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            // 제휴 회원이면 해당 대시보드로
+            if (user.affiliation === 'jnu') {
+                location.href = 'visa-dashboard-jnu.html';
+            } else if (user.affiliation === 'snu') {
+                location.href = 'visa-dashboard-snu.html';
+            } else {
+                location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>

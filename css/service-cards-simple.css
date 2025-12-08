@@ -1,0 +1,153 @@
+/* ================================================
+   SIMPLE SERVICE CARDS - 무엇이 필요하신가요?
+   ================================================ */
+
+/* Main Service Selector Section */
+.service-selector-main {
+    padding: 60px 0;
+    background-color: #f9fafb;
+}
+
+.service-selector-main .section-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 12px;
+}
+
+.service-selector-main .section-subtitle {
+    text-align: center;
+    font-size: 1.125rem;
+    color: #6b7280;
+    margin-bottom: 48px;
+}
+
+/* Service Cards Grid */
+.service-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Individual Service Card */
+.service-card-simple {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 32px 24px;
+    text-align: left;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-card-simple:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    border-color: #2563eb;
+}
+
+/* Card Icon */
+.service-card-icon {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+/* Card Title */
+.service-card-title {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 16px;
+}
+
+/* Card List */
+.service-card-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px 0;
+    flex-grow: 1;
+}
+
+.service-card-list li {
+    font-size: 0.9375rem;
+    color: #4b5563;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+/* Card Button */
+.service-card-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #2563eb;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.service-card-btn:hover {
+    color: #1e40af;
+    gap: 12px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .service-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .service-selector-main {
+        padding: 40px 0;
+    }
+    
+    .service-selector-main .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .service-selector-main .section-subtitle {
+        font-size: 1rem;
+        margin-bottom: 32px;
+    }
+    
+    .service-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .service-card-simple {
+        padding: 24px 20px;
+    }
+    
+    .service-card-title {
+        font-size: 1.25rem;
+    }
+    
+    .service-card-list li {
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .service-selector-main .section-title {
+        font-size: 1.25rem;
+    }
+    
+    .service-card-icon span {
+        font-size: 40px !important;
+    }
+    
+    .service-card-title {
+        font-size: 1.125rem;
+    }
+}

@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상담 쓰레드 - 법무법인 로연</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/ui-components.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #f5f5f5;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .thread-container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            height: 100vh;
+            background: white;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Thread Header */
+        .thread-header {
+            padding: 20px 24px;
+            border-bottom: 2px solid #f3f4f6;
+            background: white;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .back-btn {
+            background: #f3f4f6;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #374151;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .thread-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .service-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .service-meta {
+            color: #6b7280;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .status-badge.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-badge.processing {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-badge.completed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        /* Thread Main */
+        .thread-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Messages Area */
+        .messages-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            background: #f9fafb;
+        }
+
+        .message {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+            font-size: 16px;
+        }
+
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .message-content {
+            max-width: 65%;
+        }
+
+        .message-sender {
+            font-size: 13px;
+            font-weight: 600;
+            color: #6b7280;
+            margin-bottom: 6px;
+        }
+
+        .message-bubble {
+            background: white;
+            padding: 14px 18px;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            line-height: 1.6;
+            color: #374151;
+        }
+
+        .message.user .message-bubble {
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            color: white;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-top: 4px;
+        }
+
+        .message-file {
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .message-file:hover {
+            background: #e5e7eb;
+        }
+
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            background: #3182F6;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .file-info {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 600;
+            font-size: 14px;
+            color: #374151;
+        }
+
+        .file-size {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        /* System Message */
+        .system-message {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .system-message-content {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Input Area */
+        .input-area {
+            padding: 20px 24px;
+            background: white;
+            border-top: 2px solid #f3f4f6;
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .input-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .input-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .input-btn:hover {
+            background: #f3f4f6;
+            border-color: #3182F6;
+            color: #3182F6;
+        }
+
+        .message-input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .message-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            resize: none;
+            max-height: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: #3182F6;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .send-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .send-btn:disabled {
+            background: #e5e7eb;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Sidebar */
+        .thread-sidebar {
+            width: 320px;
+            background: #f9fafb;
+            border-left: 2px solid #f3f4f6;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        .sidebar-section {
+            margin-bottom: 30px;
+        }
+
+        .sidebar-section h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 15px;
+        }
+
+        .info-item {
+            padding: 12px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .document-item {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .document-item:hover {
+            border-color: #3182F6;
+            background: #f0f4ff;
+        }
+
+        .document-icon {
+            width: 36px;
+            height: 36px;
+            background: #3182F6;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .document-name {
+            flex: 1;
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        @media (max-width: 968px) {
+            .thread-sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="thread-container">
+        <div class="thread-main">
+            <div class="thread-header">
+                <div class="header-top">
+                    <button class="back-btn" onclick="window.location.href='index.html'">
+                        <i class="fas fa-arrow-left"></i> 메인으로
+                    </button>
+                    <div class="status-badge processing" id="statusBadge">진행중</div>
+                </div>
+                <div class="thread-info">
+                    <div>
+                        <div class="service-title" id="serviceTitle">D-10 비자 사전진단</div>
+                        <div class="service-meta">
+                            <span><i class="fas fa-calendar"></i> 2025-12-02</span>
+                            <span><i class="fas fa-building"></i> 센터 담당자</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="messages-area" id="messagesArea">
+                <div class="system-message">
+                    <div class="system-message-content">
+                        <i class="fas fa-check-circle"></i> 상담이 시작되었습니다
+                    </div>
+                </div>
+
+                <!-- 메시지는 JavaScript로 동적 생성 -->
+            </div>
+
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <div class="input-controls">
+                        <button class="input-btn" onclick="attachFile()">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <button class="input-btn" onclick="attachImage()">
+                            <i class="fas fa-image"></i>
+                        </button>
+                    </div>
+                    <div class="message-input-wrapper">
+                        <textarea 
+                            class="message-input" 
+                            id="messageInput" 
+                            placeholder="메시지를 입력하세요..."
+                            rows="1"
+                        ></textarea>
+                    </div>
+                    <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="thread-sidebar">
+            <div class="sidebar-section">
+                <h3><i class="fas fa-info-circle"></i> 신청 정보</h3>
+                <div class="info-item">
+                    <div class="info-label">신청 번호</div>
+                    <div class="info-value" id="applicationId">DIAG_123456</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">신청일</div>
+                    <div class="info-value" id="applicationDate">2025-12-02</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">결제 금액</div>
+                    <div class="info-value" id="amount">무료 (2026년 2월 졸업자 혜택)</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">센터 담당자</div>
+                    <div class="info-value">법무법인 로연</div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3><i class="fas fa-file-alt"></i> 첨부 서류</h3>
+                <div class="document-item">
+                    <div class="document-icon"><i class="fas fa-file-pdf"></i></div>
+                    <div class="document-name">성적증명서.pdf</div>
+                </div>
+                <div class="document-item">
+                    <div class="document-icon"><i class="fas fa-file-image"></i></div>
+                    <div class="document-name">외국인등록증.jpg</div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3><i class="fas fa-clock"></i> 진행 현황</h3>
+                <div class="info-item">
+                    <div class="info-label">현재 단계</div>
+                    <div class="info-value">서류 검토 중</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">예상 완료일</div>
+                    <div class="info-value">2025-12-05</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload(event)">
+
+    <script src="js/ui-components.js"></script>
+    <script>
+        // 페이지 로드
+        let threadId = null;
+        let currentUser = null;
+
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            threadId = urlParams.get('id');
+
+            // 일반 회원은 user로 확인
+            const user = localStorage.getItem('user');
+            if (!user) {
+                alert('로그인이 필요합니다.');
+                window.location.href = 'index.html';
+                return;
+            }
+            currentUser = JSON.parse(user);
+
+            loadThread();
+            loadMessages();
+            
+            // 자동 리사이즈
+            const messageInput = document.getElementById('messageInput');
+            messageInput.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+            });
+        });
+
+        // 쓰레드 정보 로드
+        function loadThread() {
+            if (!threadId) return;
+            
+            // localStorage에서 쓰레드 정보 가져오기
+            const threads = JSON.parse(localStorage.getItem('userThreads') || '[]');
+            const thread = threads.find(t => t.threadId === threadId);
+            
+            if (!thread) {
+                alert('쓰레드를 찾을 수 없습니다.');
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // UI 업데이트
+            document.getElementById('serviceTitle').textContent = thread.serviceName;
+            document.getElementById('applicationId').textContent = thread.orderId || thread.threadId;
+            document.getElementById('applicationDate').textContent = thread.applicationDate;
+            
+            if (thread.amount > 0) {
+                document.getElementById('amount').textContent = '₩' + thread.amount.toLocaleString();
+            } else if (thread.isConsulting) {
+                document.getElementById('amount').textContent = '견적 협의 중';
+            } else {
+                document.getElementById('amount').textContent = '-';
+            }
+            
+            // 상태 배지 업데이트
+            const statusBadge = document.getElementById('statusBadge');
+            const statusMap = {
+                'payment': { text: '결제 완료', class: 'processing' },
+                'document': { text: '서류 수집 중', class: 'pending' },
+                'processing': { text: '신청 진행 중', class: 'processing' },
+                'completed': { text: '처리 완료', class: 'completed' },
+                'archived': { text: '완료 (보관)', class: 'completed' }
+            };
+            
+            const status = statusMap[thread.status] || { text: '진행 중', class: 'processing' };
+            statusBadge.textContent = status.text;
+            statusBadge.className = 'status-badge ' + status.class;
+        }
+
+        // 메시지 로드
+        function loadMessages() {
+            const messagesArea = document.getElementById('messagesArea');
+            
+            // localStorage에서 쓰레드 정보 가져오기
+            const threads = JSON.parse(localStorage.getItem('userThreads') || '[]');
+            const thread = threads.find(t => t.threadId === threadId);
+            
+            if (!thread) return;
+            
+            // 저장된 메시지가 있으면 표시, 없으면 환영 메시지
+            const savedMessages = thread.messages || [];
+            
+            if (savedMessages.length === 0) {
+                // 초기 환영 메시지
+                const welcomeMessage = {
+                    sender: 'admin',
+                    name: '법무법인 로연',
+                    content: `안녕하세요! 법무법인 로연 출입국이민지원센터입니다.\n\n${thread.serviceName} 신청이 접수되었습니다.\n센터 담당자가 곧 연락드리겠습니다.`,
+                    time: new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' }),
+                    avatar: '로'
+                };
+                addMessageToUI(welcomeMessage);
+                return;
+            }
+            
+            // 저장된 메시지 표시
+            const sampleMessages = [
+                {
+                    sender: 'user',
+                    name: '본인',
+                    content: '네, 알겠습니다. 내일 중으로 서류를 제출하겠습니다.',
+                    time: '14:20',
+                    avatar: '나'
+                },
+                {
+                    sender: 'admin',
+                    name: '출입국이민지원센터',
+                    content: '감사합니다. 서류 확인 후 상세한 진단 결과를 안내드리겠습니다.',
+                    time: '14:25',
+                    avatar: '남'
+                }
+            ];
+
+            sampleMessages.forEach(msg => {
+                appendMessage(msg);
+            });
+
+            scrollToBottom();
+        }
+
+        // 메시지 추가
+        function appendMessage(msg) {
+            const messagesArea = document.getElementById('messagesArea');
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${msg.sender}`;
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${msg.avatar}</div>
+                <div class="message-content">
+                    <div class="message-sender">${msg.name}</div>
+                    <div class="message-bubble">${msg.content}</div>
+                    <div class="message-time">${msg.time}</div>
+                </div>
+            `;
+            
+            messagesArea.appendChild(messageDiv);
+        }
+
+        // 메시지 전송
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const content = input.value.trim();
+
+            if (!content) {
+                showToast('메시지를 입력하세요.', 'warning');
+                return;
+            }
+
+            const now = new Date();
+            const time = now.getHours().toString().padStart(2, '0') + ':' + 
+                        now.getMinutes().toString().padStart(2, '0');
+
+            const message = {
+                sender: 'user',
+                name: '본인',
+                content: content,
+                time: time,
+                avatar: '나'
+            };
+
+            appendMessage(message);
+            input.value = '';
+            input.style.height = 'auto';
+            scrollToBottom();
+
+            showToast('메시지가 전송되었습니다.', 'success', 2000);
+
+            // 실제로는 API로 전송
+            // sendMessageToServer(message);
+        }
+
+        // 파일 첨부
+        function attachFile() {
+            document.getElementById('fileInput').click();
+        }
+
+        function attachImage() {
+            const input = document.getElementById('fileInput');
+            input.accept = 'image/*';
+            input.click();
+        }
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                showToast(`${file.name} 파일이 첨부되었습니다.`, 'success', 2000);
+                // 실제로는 서버에 업로드
+            }
+        }
+
+        // 스크롤 하단으로
+        function scrollToBottom() {
+            const messagesArea = document.getElementById('messagesArea');
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+        }
+
+        // Enter 키 전송
+        document.getElementById('messageInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>

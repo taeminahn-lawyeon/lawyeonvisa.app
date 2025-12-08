@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 로그인 - 법무법인 로연</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #3182F6 0%, #1B64DA 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 450px;
+            overflow: hidden;
+        }
+
+        .login-header {
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
+            padding: 40px 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .login-header .logo {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .login-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .login-body {
+            padding: 40px 30px;
+        }
+
+        .admin-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #3182F6 0%, #1B64DA 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-group label i {
+            margin-right: 8px;
+            color: #3182F6;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: 'Noto Sans KR', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #3182F6;
+            box-shadow: 0 0 0 3px rgba(49, 130, 246, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #9ca3af;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #9ca3af;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: #3182F6;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .forgot-password {
+            color: #3182F6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: #3182F6;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .login-btn:hover {
+            background: #1B64DA;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(49, 130, 246, 0.4);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e5e7eb;
+        }
+
+        .divider span {
+            padding: 0 15px;
+        }
+
+        .back-home {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #3182F6;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .back-home:hover {
+            gap: 12px;
+        }
+
+        .error-message {
+            background: #fee2e2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .success-message {
+            background: #d1fae5;
+            border: 1px solid #a7f3d0;
+            color: #065f46;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spinner 0.6s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spinner {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 모바일 대응 */
+        @media (max-width: 480px) {
+            .login-container {
+                border-radius: 0;
+            }
+
+            .login-header {
+                padding: 30px 20px;
+            }
+
+            .login-header h1 {
+                font-size: 20px;
+            }
+
+            .login-body {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="logo">🔐</div>
+            <h1>관리자 로그인</h1>
+            <p>법무법인 로연 출입국이민지원센터</p>
+        </div>
+
+        <div class="login-body">
+            <div style="text-align: center;">
+                <span class="admin-badge">
+                    <i class="fas fa-shield-alt"></i> ADMIN ACCESS
+                </span>
+            </div>
+
+            <div id="errorMessage" class="error-message">
+                <i class="fas fa-exclamation-circle"></i> 로그인 실패
+            </div>
+
+            <div id="successMessage" class="success-message">
+                <i class="fas fa-check-circle"></i> 로그인 성공! 리디렉션 중...
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i> 이메일
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder="admin@lawyeon.com"
+                        required
+                        autocomplete="email"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i> 비밀번호
+                    </label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            placeholder="비밀번호를 입력하세요"
+                            required
+                            autocomplete="current-password"
+                        >
+                        <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                    </div>
+                </div>
+
+                <div class="remember-forgot">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <span>로그인 상태 유지</span>
+                    </label>
+                    <a href="#" class="forgot-password" id="forgotPassword">
+                        비밀번호 찾기
+                    </a>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i> 로그인
+                </button>
+            </form>
+
+            <div class="divider">
+                <span>또는</span>
+            </div>
+
+            <a href="index.html" class="back-home">
+                <i class="fas fa-arrow-left"></i>
+                <span>홈으로 돌아가기</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Supabase 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js?v=4"></script>
+
+    <script>
+        // 비밀번호 표시/숨기기 토글
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            // 아이콘 변경
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        // 비밀번호 찾기
+        document.getElementById('forgotPassword').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('비밀번호 재설정은 관리자에게 문의해주세요.\n\n연락처: taemin.ahn@lawyeon.com');
+        });
+
+        // 로그인 폼 제출
+        const loginForm = document.getElementById('loginForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+
+        loginForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // 에러/성공 메시지 숨기기
+            errorMessage.classList.remove('show');
+            successMessage.classList.remove('show');
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+
+            // 버튼 비활성화 및 로딩 표시
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<span class="loading"></span> 로그인 중...';
+
+            try {
+                // Supabase 로그인
+                const result = await signInWithEmail(email, password);
+
+                if (result.success) {
+                    // 프로필 확인 (관리자 권한 체크)
+                    console.log('로그인 성공! User ID:', result.data.user.id);
+                    const profileResult = await getUserProfile(result.data.user.id);
+                    console.log('프로필 조회 결과:', profileResult);
+
+                    if (profileResult.success) {
+                        const profile = profileResult.data;
+
+                        // 관리자 또는 담당자 권한 확인
+                        if (profile.role === 'super_admin') {
+                            // 성공 메시지 표시
+                            successMessage.textContent = '✅ 관리자 로그인 성공! 대시보드로 이동합니다...';
+                            successMessage.classList.add('show');
+
+                            // 로그인 상태 유지 설정
+                            if (rememberMe) {
+                                localStorage.setItem('rememberAdmin', 'true');
+                            }
+
+                            // 2초 후 관리자 대시보드로 리디렉션
+                            setTimeout(() => {
+                                window.location.href = 'admin-dashboard.html';
+                            }, 1500);
+
+                        } else if (profile.role === 'partner_admin') {
+                            // 담당자 계정
+                            successMessage.textContent = '✅ 담당자 로그인 성공! 대시보드로 이동합니다...';
+                            successMessage.classList.add('show');
+
+                            setTimeout(() => {
+                                window.location.href = `partner-dashboard.html?org=${profile.organization}`;
+                            }, 1500);
+
+                        } else {
+                            // 일반 사용자
+                            throw new Error('관리자 권한이 없습니다. 일반 사용자는 메인 페이지에서 로그인해주세요.');
+                        }
+                    } else {
+                        throw new Error('프로필 정보를 불러올 수 없습니다.');
+                    }
+                } else {
+                    throw new Error(result.error || '로그인에 실패했습니다.');
+                }
+
+            } catch (error) {
+                console.error('로그인 오류:', error);
+                
+                // 에러 메시지 표시
+                errorMessage.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${error.message}`;
+                errorMessage.classList.add('show');
+
+                // 버튼 활성화
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> 로그인';
+            }
+        });
+
+        // 페이지 로드 시 이미 로그인되어 있는지 확인
+        window.addEventListener('DOMContentLoaded', async function() {
+            const session = await checkSession();
+            
+            if (session && session.user) {
+                // 이미 로그인되어 있으면 프로필 확인
+                const profileResult = await getUserProfile(session.user.id);
+                
+                if (profileResult.success) {
+                    const profile = profileResult.data;
+                    
+                    if (profile.role === 'super_admin') {
+                        // 자동으로 관리자 대시보드로 리디렉션
+                        window.location.href = 'admin-dashboard.html';
+                    } else if (profile.role === 'partner_admin') {
+                        // 담당자 대시보드로 리디렉션
+                        window.location.href = `partner-dashboard.html?org=${profile.organization}`;
+                    }
+                }
+            }
+        });
+
+        // Enter 키로도 로그인 가능
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                loginForm.dispatchEvent(new Event('submit'));
+            }
+        });
+    </script>
+</body>
+</html>

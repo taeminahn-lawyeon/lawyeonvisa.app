@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>협약 신청 - 법무법인 로연 출입국이민지원센터</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #F9FAFB;
+            min-height: 100vh;
+        }
+
+        /* 헤더 */
+        .header {
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
+            padding: 25px;
+            color: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border-bottom: 3px solid #3182F6;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h2 {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .back-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background: white;
+            color: #2c3e50;
+        }
+
+        /* 메인 컨테이너 */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 40% 60%;
+            gap: 32px;
+            align-items: start;
+        }
+
+        /* 좌측: 혜택 카드 */
+        .benefits-card {
+            background: white;
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 20px;
+        }
+
+        .benefits-card h3 {
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 32px;
+            color: #191F28;
+            letter-spacing: -1px;
+        }
+
+        .benefit-item {
+            margin-bottom: 32px;
+            padding-bottom: 32px;
+            border-bottom: 2px solid #F3F4F6;
+        }
+
+        .benefit-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .benefit-item h4 {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: #191F28;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .benefit-item h4 .icon {
+            font-size: 24px;
+        }
+
+        .benefit-item ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .benefit-item ul li {
+            font-size: 15px;
+            color: #4B5563;
+            line-height: 1.8;
+            padding-left: 24px;
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .benefit-item ul li:before {
+            content: "•";
+            position: absolute;
+            left: 8px;
+            color: #00C73C;
+            font-weight: 900;
+            font-size: 18px;
+        }
+
+        /* 우측: 신청 폼 */
+        .form-card {
+            background: white;
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-card h3 {
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 32px;
+            color: #191F28;
+            letter-spacing: -1px;
+        }
+
+        .form-section {
+            margin-bottom: 40px;
+        }
+
+        .form-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-section-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: #191F28;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 15px;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-group label .required {
+            color: #EF4444;
+            margin-left: 4px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group textarea {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: 'Noto Sans KR', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3182F6;
+            background: #F0F9FF;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .radio-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .radio-option {
+            position: relative;
+        }
+
+        .radio-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .radio-option label {
+            display: block;
+            padding: 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .radio-option input[type="radio"]:checked + label {
+            border-color: #3182F6;
+            background: #EBF4FF;
+            color: #3182F6;
+        }
+
+        .radio-option label:hover {
+            border-color: #3182F6;
+        }
+
+        /* 동의 섹션 */
+        .consent-section {
+            background: #F9FAFB;
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 32px;
+        }
+
+        .consent-item {
+            margin-bottom: 16px;
+        }
+
+        .consent-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .consent-item label {
+            display: flex;
+            align-items: start;
+            cursor: pointer;
+            font-size: 15px;
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        .consent-item input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            cursor: pointer;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .consent-all {
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #E5E7EB;
+        }
+
+        .consent-all label {
+            font-weight: 700;
+            font-size: 16px;
+            color: #191F28;
+        }
+
+        /* 제출 버튼 */
+        .submit-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #2563EB 0%, #1e40af 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3);
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(37, 99, 235, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-info {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 14px;
+            color: #6B7280;
+            line-height: 1.6;
+        }
+
+        /* 모바일 반응형 */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .benefits-card {
+                position: static;
+                padding: 32px 24px;
+            }
+
+            .form-card {
+                padding: 32px 24px;
+            }
+
+            .benefits-card h3,
+            .form-card h3 {
+                font-size: 24px;
+            }
+
+            .benefit-item h4,
+            .form-section-title {
+                font-size: 18px;
+            }
+
+            .radio-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h2>협약 단체 신청</h2>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> 돌아가기
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-wrapper">
+            <!-- 좌측: 혜택 카드 -->
+            <div class="benefits-card">
+                <h3>🎁 협약 단체 베네핏</h3>
+
+                <div class="benefit-item">
+                    <h4><span class="icon">💰</span> 모든 서비스 30% 할인</h4>
+                    <ul>
+                        <li>일반 80,000원 → 56,000원</li>
+                        <li>모든 출입국 민원 대행 서비스 적용</li>
+                    </ul>
+                </div>
+
+                <div class="benefit-item">
+                    <h4><span class="icon">🎓</span> 현장 세미나 진행</h4>
+                    <ul>
+                        <li>연 2회 현장 세미나</li>
+                        <li>비자/체류 관리 실무 교육</li>
+                        <li>Q&A 세션 포함</li>
+                    </ul>
+                </div>
+
+                <div class="benefit-item">
+                    <h4><span class="icon">📊</span> 단체 관리자 대시보드</h4>
+                    <ul>
+                        <li>소속 외국인 일괄 관리</li>
+                        <li>체류기간 만료 알림</li>
+                        <li>월별 통계 리포트 제공</li>
+                    </ul>
+                </div>
+
+                <div class="benefit-item">
+                    <h4><span class="icon">📄</span> 단체 서류 간소화</h4>
+                    <ul>
+                        <li>소속 증명 1회만 제출</li>
+                        <li>개별 서류 요구 최소화</li>
+                        <li>일괄 신청 시스템 제공</li>
+                    </ul>
+                </div>
+
+                <div class="benefit-item">
+                    <h4><span class="icon">🚨</span> 긴급 출국 사안 전담 대응</h4>
+                    <ul>
+                        <li>사범심사 동행 우선 배정</li>
+                        <li>소송 건 협약가 적용</li>
+                        <li>긴급 상황 신속 대응</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 우측: 신청 폼 -->
+            <div class="form-card">
+                <h3>📝 협약 신청서</h3>
+
+                <form id="partnershipForm">
+                    <!-- 단체 정보 -->
+                    <div class="form-section">
+                        <div class="form-section-title">🏢 단체 정보</div>
+
+                        <div class="form-group">
+                            <label>단체명 <span class="required">*</span></label>
+                            <input type="text" name="organizationName" required placeholder="예) 한국외국어대학교, (주)글로벌테크">
+                        </div>
+
+                        <div class="form-group">
+                            <label>단체 유형 <span class="required">*</span></label>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" id="type1" name="organizationType" value="university" required>
+                                    <label for="type1">대학/어학원</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="type2" name="organizationType" value="company" required>
+                                    <label for="type2">기업</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="type3" name="organizationType" value="public" required>
+                                    <label for="type3">공공기관</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="type4" name="organizationType" value="nonprofit" required>
+                                    <label for="type4">비영리단체</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="type5" name="organizationType" value="other" required>
+                                    <label for="type5">기타</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 소속 외국인 규모 -->
+                    <div class="form-section">
+                        <div class="form-section-title">👥 소속 외국인 현황</div>
+
+                        <div class="form-group">
+                            <label>현재 소속 외국인 인원 <span class="required">*</span></label>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" id="count1" name="memberCount" value="under10" required>
+                                    <label for="count1">10인 미만</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="count2" name="memberCount" value="10-30" required>
+                                    <label for="count2">10~30인</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="count3" name="memberCount" value="30-100" required>
+                                    <label for="count3">30~100인</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="count4" name="memberCount" value="100-300" required>
+                                    <label for="count4">100~300인</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="count5" name="memberCount" value="over300" required>
+                                    <label for="count5">300인 이상</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 담당자 정보 -->
+                    <div class="form-section">
+                        <div class="form-section-title">📞 협약 담당자 정보</div>
+
+                        <div class="form-group">
+                            <label>담당자명 <span class="required">*</span></label>
+                            <input type="text" name="managerName" required placeholder="홍길동">
+                        </div>
+
+                        <div class="form-group">
+                            <label>직책/부서 <span class="required">*</span></label>
+                            <input type="text" name="managerPosition" required placeholder="예) 국제교류팀 팀장, 인사팀 과장">
+                        </div>
+
+                        <div class="form-group">
+                            <label>이메일 <span class="required">*</span></label>
+                            <input type="email" name="managerEmail" required placeholder="example@company.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label>연락처 <span class="required">*</span></label>
+                            <input type="tel" name="managerPhone" required placeholder="010-0000-0000">
+                        </div>
+
+                        <div class="form-group">
+                            <label>추가 요청사항 (선택)</label>
+                            <textarea name="additionalRequest" placeholder="협약 관련 특별히 문의하실 사항이나 요청사항을 자유롭게 작성해주세요."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- 동의 섹션 -->
+                    <div class="form-section">
+                        <div class="form-section-title">✅ 협약 신청 동의</div>
+
+                        <div class="consent-section">
+                            <div class="consent-all">
+                                <label>
+                                    <input type="checkbox" id="agreeAll">
+                                    전체 동의
+                                </label>
+                            </div>
+
+                            <div class="consent-item">
+                                <label>
+                                    <input type="checkbox" name="consent1" required class="consent-checkbox">
+                                    <span>(필수) 개인정보 수집 및 이용 동의<br>
+                                    <small style="color: #9CA3AF;">수집 항목: 단체명, 담당자 정보, 소속 외국인 현황 / 이용 목적: 협약 체결 및 서비스 제공 / 보유 기간: 협약 종료 후 3년</small>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <div class="consent-item">
+                                <label>
+                                    <input type="checkbox" name="consent2" required class="consent-checkbox">
+                                    <span>(필수) 협약 체결 조건 확인<br>
+                                    <small style="color: #9CA3AF;">할인율: 30% (모든 서비스) / 협약 해지 시 1개월 전 통보</small>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <div class="consent-item">
+                                <label>
+                                    <input type="checkbox" name="consent3" class="consent-checkbox">
+                                    <span>(선택) 마케팅 정보 수신 동의<br>
+                                    <small style="color: #9CA3AF;">출입국 법령 변경 안내, 신규 서비스 소개</small>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> 협약 신청하기
+                    </button>
+
+                    <div class="submit-info">
+                        예상 처리 기간: 영업일 기준 3~5일<br>
+                        센터 담당자가 연락드립니다.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 전체 동의 체크박스
+        document.getElementById('agreeAll').addEventListener('change', function(e) {
+            const checkboxes = document.querySelectorAll('.consent-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = e.target.checked;
+            });
+        });
+
+        // 개별 체크박스 변경 시 전체 동의 상태 업데이트
+        document.querySelectorAll('.consent-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const allCheckboxes = document.querySelectorAll('.consent-checkbox');
+                const allChecked = Array.from(allCheckboxes).every(cb => cb.checked);
+                document.getElementById('agreeAll').checked = allChecked;
+            });
+        });
+
+        // 폼 제출
+        document.getElementById('partnershipForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // 필수 동의 항목 확인
+            const requiredConsents = document.querySelectorAll('input[name="consent1"], input[name="consent2"]');
+            const allRequiredChecked = Array.from(requiredConsents).every(cb => cb.checked);
+
+            if (!allRequiredChecked) {
+                alert('필수 동의 항목을 모두 체크해주세요.');
+                return;
+            }
+
+            // 폼 데이터 수집
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            console.log('협약 신청 데이터:', data);
+
+            // 성공 알림
+            alert('협약 신청이 완료되었습니다!\n\n센터 담당자가 3~5일 이내에 연락드리겠습니다.\n\n감사합니다.');
+
+            // 메인 페이지로 이동
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

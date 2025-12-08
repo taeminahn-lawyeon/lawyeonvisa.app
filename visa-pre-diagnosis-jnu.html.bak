@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비자 사전진단 - 법무법인 로연 x 전남대학교</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/ui-components.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #007A33 0%, #005A25 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: white;
+            color: #007A33;
+        }
+
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .header .visa-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+
+        .free-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 15px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .info-section {
+            background: #f0f4ff;
+            border: 2px solid #007A33;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .info-section h3 {
+            font-size: 18px;
+            color: #007A33;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-list {
+            list-style: none;
+            margin-bottom: 0;
+        }
+
+        .info-list li {
+            padding: 8px 0 8px 25px;
+            position: relative;
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        .info-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #007A33;
+            font-weight: 700;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section h3 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f3f4f6;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .form-grid.full {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #374151;
+            font-size: 14px;
+        }
+
+        .form-group label .required {
+            color: #ef4444;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #007A33;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group input:disabled {
+            background: #f9fafb;
+            color: #6b7280;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+
+        .file-upload-box {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .file-upload-box input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .file-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 30px 20px;
+            background: #f8f9fa;
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .file-label:hover {
+            background: #e8f4ff;
+            border-color: #007A33;
+        }
+
+        .file-label i {
+            font-size: 32px;
+            color: #007A33;
+        }
+
+        .file-label span {
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .info-box {
+            background: #e8f4ff;
+            border: 2px solid #007A33;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            gap: 12px;
+            align-items: start;
+        }
+
+        .info-box i {
+            color: #007A33;
+            font-size: 20px;
+            margin-top: 2px;
+        }
+
+        .info-box strong {
+            color: #1e40af;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .info-box p {
+            font-size: 13px;
+            color: #374151;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .radio-option {
+            flex: 1;
+        }
+
+        .radio-option input[type="radio"] {
+            display: none;
+        }
+
+        .radio-option label {
+            display: block;
+            padding: 15px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .radio-option input[type="radio"]:checked + label {
+            background: #f0f4ff;
+            border-color: #007A33;
+            color: #007A33;
+        }
+
+        .price-section {
+            background: #fef3c7;
+            border: 2px solid #fbbf24;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .price-section h3 {
+            font-size: 18px;
+            color: #78350f;
+            margin-bottom: 15px;
+        }
+
+        .price-display {
+            font-size: 36px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .price-display.free {
+            color: #10b981;
+        }
+
+        .price-display .original-price {
+            font-size: 20px;
+            text-decoration: line-through;
+            color: #9ca3af;
+            margin-right: 10px;
+        }
+
+        .price-note {
+            font-size: 14px;
+            color: #92400e;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #007A33 0%, #005A25 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header, .content {
+                padding: 25px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .radio-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-btn" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i> 돌아가기
+        </button>
+
+        <div class="header">
+            <div class="visa-icon" id="visaIcon">🔍</div>
+            <h1 id="visaTitle">D-10 비자 사전진단</h1>
+            <div class="subtitle" id="visaSubtitle">출입국법 위반사실 확인 및 구직 비자 전환 가능성 평가</div>
+            <div class="free-badge" id="freeBadge" style="display: none;">
+                <i class="fas fa-gift"></i> 2026년 2월 졸업자 무료 혜택
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="info-section">
+                <h3><i class="fas fa-info-circle"></i> 사전진단 서비스란?</h3>
+                <ul class="info-list" id="serviceInfo">
+                    <li><strong>출입국관리법 위반사실 확인</strong> (불법 시간제취업 등)</li>
+                    <li>D-10 비자 전환 가능성을 사전에 평가합니다</li>
+                    <li>점수제 평가 기준 충족 여부를 검토합니다</li>
+                    <li>서류 미비 및 리스크 요인을 파악합니다</li>
+                    <li>승인율을 높이기 위한 맞춤 전략을 제시합니다</li>
+                    <li>법무법인 로연 센터에서 직접 검토합니다</li>
+                    <li>출입국이민지원센터에서 상담 및 진행을 관리합니다</li>
+                </ul>
+            </div>
+
+            <form id="diagnosisForm">
+                <div class="form-section">
+                    <h3><i class="fas fa-user"></i> 기본 정보</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>성명 <span class="required">*</span></label>
+                            <input type="text" id="fullName" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>현재 체류자격 <span class="required">*</span></label>
+                            <input type="text" id="currentVisa" disabled>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>졸업 예정일 <span class="required">*</span></label>
+                            <input type="text" id="graduationDate" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>전공 분야</label>
+                            <input type="text" id="major" placeholder="컴퓨터공학">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3><i class="fas fa-graduation-cap"></i> 학업 정보</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>학점 (GPA) <span class="required">*</span></label>
+                            <select id="gpa" required>
+                                <option value="">선택하세요</option>
+                                <option value="4.0-4.5">4.0~4.5 (A+~A)</option>
+                                <option value="3.5-3.9">3.5~3.9 (B+~A-)</option>
+                                <option value="3.0-3.4">3.0~3.4 (B-~B)</option>
+                                <option value="2.5-2.9">2.5~2.9 (C+~C)</option>
+                                <option value="below-2.5">2.5 미만</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>한국어 능력 (TOPIK) <span class="required">*</span></label>
+                            <select id="topik" required>
+                                <option value="">선택하세요</option>
+                                <option value="TOPIK 6급">TOPIK 6급</option>
+                                <option value="TOPIK 5급">TOPIK 5급</option>
+                                <option value="TOPIK 4급">TOPIK 4급</option>
+                                <option value="TOPIK 3급">TOPIK 3급</option>
+                                <option value="TOPIK 1-2급">TOPIK 1-2급</option>
+                                <option value="없음">응시 안 함</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3><i class="fas fa-briefcase"></i> 취업 준비 상황</h3>
+                    <div class="form-group">
+                        <label>구직 제안 여부 <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="jobOffer1" name="jobOffer" value="yes" required>
+                                <label for="jobOffer1">있음</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="jobOffer2" name="jobOffer" value="preparing">
+                                <label for="jobOffer2">준비 중</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="jobOffer3" name="jobOffer" value="no">
+                                <label for="jobOffer3">없음</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid full" id="jobOfferDetails" style="display: none;">
+                        <div class="form-group">
+                            <label>기업명 및 직무</label>
+                            <input type="text" id="companyName" placeholder="예: 삼성전자 - 소프트웨어 개발">
+                        </div>
+                    </div>
+
+                    <div class="form-grid full">
+                        <div class="form-group">
+                            <label>추가 사항 (선택)</label>
+                            <textarea id="additionalInfo" placeholder="기타 고려사항이나 질문사항을 자유롭게 입력하세요"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3><i class="fas fa-file-upload"></i> 사전진단 필수 서류</h3>
+                    <p style="color: #6b7280; font-size: 14px; margin-bottom: 20px;">
+                        출입국청 심사 기준에 따라 아래 서류를 첨부해주세요. 법무법인 로연이 출입국과 동일한 기준으로 사전 심사합니다.
+                    </p>
+                    
+                    <div class="form-group">
+                        <label>주거래 통장 최근 1년 이체내역 <span class="required">*</span></label>
+                        <div class="file-upload-box">
+                            <input type="file" id="bankStatement" accept=".xls,.xlsx" required>
+                            <label for="bankStatement" class="file-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>파일 선택 (EXCEL)</span>
+                            </label>
+                        </div>
+                        <div class="help-text">💡 은행 앱에서 1년치 거래내역을 EXCEL로 발급받아 첨부하세요</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>졸업증명서 또는 재학증명서 <span class="required">*</span></label>
+                        <div class="file-upload-box">
+                            <input type="file" id="diplomaCert" accept=".pdf,.jpg,.jpeg,.png" required>
+                            <label for="diplomaCert" class="file-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>파일 선택 (PDF, JPG, PNG)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>성적증명서 <span class="required">*</span></label>
+                        <div class="file-upload-box">
+                            <input type="file" id="transcript" accept=".pdf,.jpg,.jpeg,.png" required>
+                            <label for="transcript" class="file-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>파일 선택 (PDF, JPG, PNG)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="jobOfferFileGroup" style="display: none;">
+                        <label>채용제안서 또는 구직활동 증빙서류 (해당시)</label>
+                        <div class="file-upload-box">
+                            <input type="file" id="jobOfferDoc" accept=".pdf,.jpg,.jpeg,.png">
+                            <label for="jobOfferDoc" class="file-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>파일 선택 (PDF, JPG, PNG)</span>
+                            </label>
+                        </div>
+                        <div class="help-text">채용제안서, 면접확인서, 구인공고 등</div>
+                    </div>
+
+                    <div class="form-group" id="topikFileGroup">
+                        <label>TOPIK 성적표 (해당시)</label>
+                        <div class="file-upload-box">
+                            <input type="file" id="topikCert" accept=".pdf,.jpg,.jpeg,.png">
+                            <label for="topikCert" class="file-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>파일 선택 (PDF, JPG, PNG)</span>
+                            </label>
+                        </div>
+                        <div class="help-text">💡 D-10 점수제 평가 시 TOPIK 4급 이상은 가점 항목입니다</div>
+                    </div>
+
+                    <div class="form-group" id="workExperienceGroup">
+                        <label>경력 증빙서류 (해당시)</label>
+                        <div class="file-upload-box">
+                            <input type="file" id="workExperience" accept=".pdf,.jpg,.jpeg,.png">
+                            <label for="workExperience" class="file-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>파일 선택 (PDF, JPG, PNG)</span>
+                            </label>
+                        </div>
+                        <div class="help-text">💡 국내외 관련 업무 경력증명서 (인턴십 포함)</div>
+                    </div>
+
+                    <div class="form-group" id="policeCheckGroup">
+                        <label>신원조사 증명서 (해당시)</label>
+                        <div class="file-upload-box">
+                            <input type="file" id="policeCheckD10" accept=".pdf,.jpg,.jpeg,.png">
+                            <label for="policeCheckD10" class="file-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>파일 선택 (PDF, JPG, PNG)</span>
+                            </label>
+                        </div>
+                        <div class="help-text">💡 범죄경력조회서 또는 신원조사 증명서</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>여권 사본 <span class="required">*</span></label>
+                        <div class="file-upload-box">
+                            <input type="file" id="passport" accept=".pdf,.jpg,.jpeg,.png" required>
+                            <label for="passport" class="file-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>파일 선택 (PDF, JPG, PNG)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>외국인등록증 사본 <span class="required">*</span></label>
+                        <div class="file-upload-box">
+                            <input type="file" id="arc" accept=".pdf,.jpg,.jpeg,.png" required>
+                            <label for="arc" class="file-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>파일 선택 (PDF, JPG, PNG)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="info-box" style="margin-top: 20px;">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <strong>서류 보안</strong>
+                            <p style="margin-top: 5px;">제출하신 모든 서류는 암호화되어 안전하게 보관되며, 사전진단 완료 후 즉시 파기됩니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="price-section">
+                    <h3><i class="fas fa-tag"></i> 서비스 비용</h3>
+                    <div class="price-display" id="priceDisplay">
+                        <span class="original-price" id="originalPrice">55,000원</span>
+                        <span id="finalPrice">무료</span>
+                    </div>
+                    <div class="price-note" id="priceNote">2026년 2월 졸업 예정자 특별 혜택 적용</div>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-check-circle"></i> 사전진단 신청하기
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/ui-components.js"></script>
+    <script>
+        // URL에서 비자 타입 추출
+        const urlParams = new URLSearchParams(window.location.search);
+        const visaType = urlParams.get('type') || 'D-10';
+
+        // 페이지 로드
+        window.addEventListener('DOMContentLoaded', function() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const studentProfile = JSON.parse(localStorage.getItem('studentProfile'));
+
+            if (!currentUser || !studentProfile) {
+                window.location.href = 'visa-login-jnu.html';
+                return;
+            }
+
+            // 비자 타입에 따른 설정
+            if (visaType === 'E-7') {
+                document.getElementById('visaIcon').textContent = '💼';
+                document.getElementById('visaTitle').textContent = 'E-7 비자 사전진단';
+                document.getElementById('visaSubtitle').textContent = '취업 비자 신청 전 출입국법 위반사실 확인 및 자격 검토';
+                
+                const serviceInfo = document.getElementById('serviceInfo');
+                serviceInfo.innerHTML = `
+                    <li><strong>출입국관리법 위반사실 확인</strong> (불법 시간제취업 등)</li>
+                    <li>E-7 비자 신청 자격 요건을 검토합니다</li>
+                    <li>고용계약서 및 기업 서류를 사전 점검합니다</li>
+                    <li>학력·경력·급여 기준 적합성을 확인합니다</li>
+                    <li>법무부 심사 기준에 맞는 전략을 제시합니다</li>
+                `;
+                
+                // E-7 전용 서류 항목으로 변경
+                document.getElementById('topikFileGroup').style.display = 'none';
+                document.getElementById('policeCheckGroup').style.display = 'none';
+                document.getElementById('workExperienceGroup').style.display = 'block';
+                document.querySelector('label[for="workExperience"]').innerHTML = '경력증명서';
+                document.getElementById('workExperience').required = false;
+            } else {
+                // D-10은 TOPIK 보이기, 경력은 선택사항
+                document.getElementById('topikFileGroup').style.display = 'block';
+                document.getElementById('workExperienceGroup').style.display = 'block';
+            }
+
+            // 기본 정보 자동 입력
+            document.getElementById('fullName').value = studentProfile.full_name;
+            document.getElementById('currentVisa').value = studentProfile.current_visa;
+            document.getElementById('graduationDate').value = studentProfile.expected_graduation;
+            document.getElementById('major').value = studentProfile.major || '';
+
+            // 무료 혜택 체크
+            checkFreeEligibility(studentProfile.expected_graduation);
+        });
+
+        // 무료 혜택 체크
+        function checkFreeEligibility(graduationDate) {
+            const isFree = graduationDate === '2026-02';
+            
+            if (isFree) {
+                document.getElementById('freeBadge').style.display = 'inline-block';
+                document.getElementById('finalPrice').textContent = '무료';
+                document.getElementById('finalPrice').classList.add('free');
+                document.getElementById('priceNote').textContent = '2026년 2월 졸업 예정자 특별 혜택 적용';
+            } else {
+                document.getElementById('freeBadge').style.display = 'none';
+                document.getElementById('originalPrice').style.display = 'none';
+                document.getElementById('finalPrice').textContent = '55,000원';
+                document.getElementById('finalPrice').classList.remove('free');
+                document.getElementById('priceNote').textContent = '법무법인 로연 민준우 변호사 직접 검토';
+            }
+        }
+
+        // 구직 제안 여부에 따른 세부 항목 표시
+        document.querySelectorAll('input[name="jobOffer"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const detailsSection = document.getElementById('jobOfferDetails');
+                const jobOfferFileGroup = document.getElementById('jobOfferFileGroup');
+                if (this.value === 'yes' || this.value === 'preparing') {
+                    detailsSection.style.display = 'grid';
+                    if (jobOfferFileGroup) jobOfferFileGroup.style.display = 'block';
+                } else {
+                    detailsSection.style.display = 'none';
+                    if (jobOfferFileGroup) jobOfferFileGroup.style.display = 'none';
+                }
+            });
+        });
+
+        // 파일 업로드 UI 처리
+        document.querySelectorAll('.file-upload-box input[type="file"]').forEach(input => {
+            input.addEventListener('change', function() {
+                const label = this.nextElementSibling;
+                const span = label.querySelector('span');
+                if (this.files && this.files[0]) {
+                    span.textContent = '✓ ' + this.files[0].name;
+                    label.style.borderColor = '#10b981';
+                    label.style.background = '#d1fae5';
+                    const icon = label.querySelector('i');
+                    icon.className = 'fas fa-check-circle';
+                    icon.style.color = '#10b981';
+                } else {
+                    span.textContent = '파일 선택 (PDF, JPG, PNG)';
+                    label.style.borderColor = '#cbd5e1';
+                    label.style.background = '#f8f9fa';
+                    const icon = label.querySelector('i');
+                    icon.className = 'fas fa-cloud-upload-alt';
+                    icon.style.color = '#007A33';
+                }
+            });
+        });
+
+        // 폼 제출
+        document.getElementById('diagnosisForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            // 필수 입력 검증
+            const gpa = document.getElementById('gpa').value;
+            const topik = document.getElementById('topik').value;
+            const jobOffer = document.querySelector('input[name="jobOffer"]:checked');
+
+            if (!gpa || !topik || !jobOffer) {
+                showToast('모든 필수 항목을 입력해주세요.', 'warning');
+                return;
+            }
+
+            const loadingBtn = new LoadingButton(event.target.querySelector('.btn-submit'));
+            loadingBtn.setLoading('신청 처리 중...');
+
+            // 진단 데이터 수집
+            const studentProfile = JSON.parse(localStorage.getItem('studentProfile'));
+            const diagnosisData = {
+                id: 'DIAG_' + Date.now(),
+                student_id: studentProfile.id,
+                target_visa: visaType,
+                graduation_date: studentProfile.expected_graduation,
+                major: document.getElementById('major').value,
+                gpa: gpa,
+                topik_level: topik,
+                job_offer: jobOffer.value,
+                company_name: document.getElementById('companyName').value,
+                additional_info: document.getElementById('additionalInfo').value,
+                is_free: studentProfile.expected_graduation === '2026-02',
+                application_date: new Date().toISOString()
+            };
+
+            // 실제로는 API 호출
+            setTimeout(() => {
+                // 쓰레드 생성
+                const threadId = 'THREAD_' + Date.now();
+                const thread = {
+                    id: threadId,
+                    diagnosis_id: diagnosisData.id,
+                    student_id: diagnosisData.student_id,
+                    service_name: `${visaType} 비자 사전진단`,
+                    status: 'active',
+                    created_at: new Date().toISOString()
+                };
+
+                // 저장 (실제로는 API)
+                localStorage.setItem('diagnosis_' + diagnosisData.id, JSON.stringify(diagnosisData));
+                
+                // 신청 내역에 추가
+                const applications = JSON.parse(localStorage.getItem('applications') || '[]');
+                applications.push({
+                    id: diagnosisData.id,
+                    service_name: `${visaType} 비자 사전진단`,
+                    application_type: '로연고유서비스',
+                    amount: diagnosisData.is_free ? 0 : 150000,
+                    status: 'processing',
+                    thread_id: threadId,
+                    application_date: new Date().toLocaleDateString('ko-KR')
+                });
+                localStorage.setItem('applications', JSON.stringify(applications));
+
+                loadingBtn.setSuccess('완료!');
+                showToast('사전진단 신청이 완료되었습니다!', 'success', 2000);
+
+                setTimeout(() => {
+                    window.location.href = `visa-thread-jnu.html?id=${threadId}`;
+                }, 2000);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
