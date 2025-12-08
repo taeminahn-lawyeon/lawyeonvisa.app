@@ -993,10 +993,19 @@
                 const result = await createUserProfile(session.user.id, profileData);
                 
                 if (result.success) {
+                    console.log('✅ 프로필 생성 성공:', result.data);
+                    
                     // ✅ 프로필 생성 완료 플래그 저장 (무한 루프 방지)
                     sessionStorage.setItem('profileCreated', 'true');
                     
+                    // ✅ 프로필 데이터를 sessionStorage에 캐싱
+                    sessionStorage.setItem('userProfileCache', JSON.stringify(profileData));
+                    
                     alert('기본 사항 제출이 완료되었습니다!\n\n이제 서비스를 이용하실 수 있습니다.');
+                    
+                    // ✅ 1초 대기 후 리다이렉트 (Supabase 동기화 시간)
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    
                     window.location.href = 'index.html';
                 } else {
                     throw new Error(result.error);
