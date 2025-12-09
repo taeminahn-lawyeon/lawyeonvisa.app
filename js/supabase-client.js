@@ -261,6 +261,7 @@ async function getUserThreads(userId) {
             .select('*')
             .eq('user_id', userId)
             .eq('is_active', true)
+            .neq('status', 'archived')  // 🔥 보관된 쓰레드 제외
             .order('created_at', { ascending: false });
         
         if (error) throw error;
