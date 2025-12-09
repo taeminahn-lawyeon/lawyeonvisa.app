@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자 대시보드 - 법무법인 로연</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
     
     <!-- Supabase 라이브러리 (head에서 먼저 로드) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -18,18 +17,19 @@
         }
 
         body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background: #f5f7fa;
+            font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background: #F9FAFB;
             min-height: 100vh;
+            color: #191F28;
         }
 
-        /* 헤더 */
+        /* 헤더 - 토스 스타일 */
         .header {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            padding: 25px;
-            color: white;
-            box-shadow: 0 4px 20px rgba(44,62,80,0.3);
-            border-bottom: 3px solid #e74c3c;
+            background: white;
+            padding: 20px 24px;
+            color: #191F28;
+            box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.05);
+            border-bottom: none;
         }
 
         .header-content {
@@ -42,24 +42,21 @@
 
         .admin-title {
             display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .admin-title i {
-            font-size: 32px;
-            color: #e74c3c;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .admin-title h1 {
-            font-size: 28px;
-            font-weight: 900;
+            font-size: 24px;
+            font-weight: 700;
+            color: #191F28;
+            letter-spacing: -0.02em;
         }
 
         .admin-title p {
             font-size: 14px;
-            opacity: 0.8;
-            margin-top: 5px;
+            color: #4E5968;
+            margin-top: 0;
         }
 
         .header-actions {
@@ -68,20 +65,19 @@
         }
 
         .header-btn {
-            background: rgba(255,255,255,0.2);
-            border: 2px solid white;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 10px;
+            background: #F2F4F6;
+            border: none;
+            color: #191F28;
+            padding: 10px 16px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             font-size: 14px;
         }
 
         .header-btn:hover {
-            background: white;
-            color: #2c3e50;
+            background: #E5E8EB;
         }
 
         /* 메인 컨테이너 */
@@ -101,75 +97,49 @@
 
         .stat-card {
             background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            border: 1px solid #E5E8EB;
             display: flex;
-            align-items: center;
-            gap: 20px;
-            transition: all 0.3s ease;
+            flex-direction: column;
+            gap: 8px;
+            transition: all 0.2s ease;
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
         }
 
-        .stat-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-        }
-
-        .stat-icon.blue {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .stat-icon.green {
-            background: linear-gradient(135deg, #00A651 0%, #007A33 100%);
-            color: white;
-        }
-
-        .stat-icon.orange {
-            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
-            color: white;
-        }
-
-        .stat-icon.red {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            color: white;
+        .stat-content p {
+            font-size: 14px;
+            color: #4E5968;
+            font-weight: 500;
         }
 
         .stat-content h3 {
             font-size: 32px;
             font-weight: 700;
-            color: #2c3e50;
-            margin-bottom: 5px;
-        }
-
-        .stat-content p {
-            font-size: 14px;
-            color: #7f8c8d;
+            color: #191F28;
+            letter-spacing: -0.02em;
         }
 
         /* 필터 섹션 */
         .filter-section {
             background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            border: 1px solid #E5E8EB;
+            margin-bottom: 24px;
         }
 
         .filter-section h2 {
-            font-size: 20px;
+            font-size: 18px;
             margin-bottom: 20px;
-            color: #2c3e50;
+            color: #191F28;
+            font-weight: 700;
+            letter-spacing: -0.02em;
         }
 
         .filter-grid {
@@ -213,46 +183,48 @@
         }
 
         .filter-btn {
-            padding: 12px 30px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             font-weight: 600;
             font-size: 14px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .filter-btn.primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #3182F6;
             color: white;
         }
 
         .filter-btn.primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            background: #1B64DA;
         }
 
         .filter-btn.secondary {
-            background: #f1f3f5;
-            color: #555;
+            background: #F2F4F6;
+            color: #191F28;
         }
 
         .filter-btn.secondary:hover {
-            background: #e0e0e0;
+            background: #E5E8EB;
         }
 
-        /* 쓰레드 테이블 */
+        /* 쓰레드 테이블 - 토스 스타일 */
         .threads-section {
             background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            border: 1px solid #E5E8EB;
         }
 
         .threads-section h2 {
-            font-size: 22px;
+            font-size: 18px;
             margin-bottom: 20px;
-            color: #2c3e50;
+            color: #191F28;
+            font-weight: 700;
+            letter-spacing: -0.02em;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -260,8 +232,8 @@
 
         .thread-count {
             font-size: 14px;
-            color: #7f8c8d;
-            font-weight: 400;
+            color: #4E5968;
+            font-weight: 500;
         }
 
         .threads-table {
@@ -271,59 +243,61 @@
         }
 
         .threads-table thead {
-            background: #f8f9fa;
+            background: #F9FAFB;
+            border-top: 1px solid #E5E8EB;
+            border-bottom: 1px solid #E5E8EB;
         }
 
         .threads-table th {
-            padding: 15px;
+            padding: 12px 16px;
             text-align: left;
             font-weight: 600;
-            color: #555;
-            font-size: 14px;
-            border-bottom: 2px solid #e0e0e0;
+            color: #4E5968;
+            font-size: 13px;
         }
 
         .threads-table td {
-            padding: 15px;
-            border-bottom: 1px solid #f0f0f0;
+            padding: 16px;
+            border-bottom: 1px solid #F2F4F6;
             font-size: 14px;
+            color: #191F28;
         }
 
         .threads-table tr:hover {
-            background: #f8f9fa;
+            background: #F9FAFB;
         }
 
         .status-badge {
             display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 13px;
             font-weight: 600;
         }
 
         .status-badge.payment {
-            background: #fef3c7;
-            color: #92400e;
+            background: #E8F3FF;
+            color: #1B64DA;
         }
 
         .status-badge.document {
-            background: #dbeafe;
-            color: #1e40af;
+            background: #FFF4E8;
+            color: #F59638;
         }
 
         .status-badge.processing {
-            background: #fce7f3;
-            color: #9f1239;
+            background: #F0F4FF;
+            color: #3182F6;
         }
 
         .status-badge.completed {
-            background: #d1fae5;
-            color: #065f46;
+            background: #E8FAF0;
+            color: #00A651;
         }
 
         .status-badge.archived {
-            background: #e5e7eb;
-            color: #374151;
+            background: #F2F4F6;
+            color: #6B7684;
         }
 
         .priority-badge {
@@ -363,21 +337,21 @@
         }
 
         .action-btn.view {
-            background: #667eea;
+            background: #3182F6;
             color: white;
         }
 
         .action-btn.view:hover {
-            background: #5568d3;
+            background: #1B64DA;
         }
 
         .action-btn.edit {
-            background: #10b981;
-            color: white;
+            background: #F2F4F6;
+            color: #191F28;
         }
 
         .action-btn.edit:hover {
-            background: #059669;
+            background: #E5E8EB;
         }
 
         /* 모달 */
@@ -656,18 +630,15 @@
     <div class="header">
         <div class="header-content">
             <div class="admin-title">
-                <i class="fas fa-user-shield"></i>
-                <div>
-                    <h1>관리자 대시보드</h1>
-                    <p>법무법인 로연 출입국이민지원센터</p>
-                </div>
+                <h1>관리자 대시보드</h1>
+                <p>법무법인 로연 출입국이민지원센터</p>
             </div>
             <div class="header-actions">
                 <button class="header-btn" onclick="location.reload()">
-                    <i class="fas fa-sync"></i> 새로고침
+                    새로고침
                 </button>
                 <button class="header-btn" onclick="logout()">
-                    <i class="fas fa-sign-out-alt"></i> 로그아웃
+                    로그아웃
                 </button>
             </div>
         </div>
@@ -677,49 +648,37 @@
         <!-- 통계 카드 -->
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-icon blue">
-                    <i class="fas fa-users"></i>
-                </div>
                 <div class="stat-content">
-                    <h3 id="totalCustomers">0</h3>
                     <p>전체 고객</p>
+                    <h3 id="totalCustomers">0</h3>
                 </div>
             </div>
 
             <div class="stat-card">
-                <div class="stat-icon green">
-                    <i class="fas fa-comments"></i>
-                </div>
                 <div class="stat-content">
-                    <h3 id="activeThreads">0</h3>
                     <p>진행 중 쓰레드</p>
+                    <h3 id="activeThreads">0</h3>
                 </div>
             </div>
 
             <div class="stat-card">
-                <div class="stat-icon orange">
-                    <i class="fas fa-exclamation-triangle"></i>
-                </div>
                 <div class="stat-content">
-                    <h3 id="urgentCases">0</h3>
                     <p>긴급 케이스</p>
+                    <h3 id="urgentCases">0</h3>
                 </div>
             </div>
 
             <div class="stat-card">
-                <div class="stat-icon red">
-                    <i class="fas fa-won-sign"></i>
-                </div>
                 <div class="stat-content">
-                    <h3 id="monthlyRevenue">₩0</h3>
                     <p>이번 달 매출</p>
+                    <h3 id="monthlyRevenue">₩0</h3>
                 </div>
             </div>
         </div>
 
         <!-- 필터 섹션 -->
         <div class="filter-section">
-            <h2><i class="fas fa-filter"></i> 필터</h2>
+            <h2>필터</h2>
             <div class="filter-grid">
                 <div class="filter-item">
                     <label>고객명</label>
@@ -752,10 +711,10 @@
             </div>
             <div class="filter-actions">
                 <button class="filter-btn primary" onclick="applyFilters()">
-                    <i class="fas fa-search"></i> 검색
+                    검색
                 </button>
                 <button class="filter-btn secondary" onclick="resetFilters()">
-                    <i class="fas fa-redo"></i> 초기화
+                    초기화
                 </button>
             </div>
         </div>
@@ -764,10 +723,10 @@
         <div class="tabs-container">
             <div class="tabs">
                 <button class="tab active" onclick="switchTab('threads')">
-                    <i class="fas fa-comments"></i> 쓰레드 목록
+                    쓰레드 목록
                 </button>
                 <button class="tab" onclick="switchTab('customers')">
-                    <i class="fas fa-users"></i> 고객 명단
+                    고객 명단
                 </button>
             </div>
         </div>
@@ -775,7 +734,7 @@
         <!-- 쓰레드 탭 -->
         <div id="threadsTab" class="tab-content active threads-section">
             <h2>
-                <span><i class="fas fa-list"></i> 쓰레드 목록</span>
+                <span>쓰레드 목록</span>
                 <span class="thread-count" id="threadCount">총 0건</span>
             </h2>
             <div id="threadsTableContainer">
@@ -786,7 +745,7 @@
         <!-- 고객 명단 탭 -->
         <div id="customersTab" class="tab-content threads-section">
             <h2>
-                <span><i class="fas fa-users"></i> 고객 명단</span>
+                <span>고객 명단</span>
                 <span class="thread-count" id="customerCount">총 0명</span>
             </h2>
             
@@ -842,10 +801,10 @@
             
             <div class="filter-actions">
                 <button class="filter-btn primary" onclick="applyCustomerFilters()">
-                    <i class="fas fa-search"></i> 검색
+                    검색
                 </button>
                 <button class="filter-btn secondary" onclick="resetCustomerFilters()">
-                    <i class="fas fa-redo"></i> 초기화
+                    초기화
                 </button>
             </div>
             
@@ -1004,8 +963,8 @@
             // 긴급 케이스 (긴급 구제, 사전 진단 포함)
             const urgentCases = allThreads.filter(t => 
                 t.priority === 'urgent' || 
-                t.service_name.includes('긴급 구제') || 
-                t.service_name.includes('사전 진단')
+                (t.service_name && t.service_name.includes('긴급 구제')) || 
+                (t.service_name && t.service_name.includes('사전 진단'))
             );
             document.getElementById('urgentCases').textContent = urgentCases.length;
             
@@ -1015,8 +974,7 @@
             const monthlyRevenue = allThreads
                 .filter(t => 
                     t.status === 'completed' && 
-                    t.created_at >= thisMonthStart &&
-                    t.status !== 'archived'
+                    t.created_at >= thisMonthStart
                 )
                 .reduce((sum, t) => {
                     const netAmount = (t.amount || 0) - (t.government_fee || 0);
