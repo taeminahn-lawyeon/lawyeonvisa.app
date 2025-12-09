@@ -457,6 +457,10 @@
         </div>
     </div>
 
+    <!-- Supabase 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js?v=7"></script>
+    
     <script src="js/ui-components.js"></script>
     <script>
         // 전남대학교 고정
@@ -489,85 +493,82 @@
             }
         }
 
-        // Google 소셜 로그인 (학생용)
-        function googleLogin(userType) {
+        // Google 소셜 로그인 (학생용) - 실제 Supabase Auth
+        async function googleLogin(userType) {
             showToast('Google 로그인을 진행합니다...', 'info', 2000);
             
-            setTimeout(() => {
-                // Mock Google User
-                const tempUser = {
-                    email: 'student@jnu.ac.kr',
-                    name: '홍길동',
-                    displayName: '홍길동',
-                    photoURL: null,
-                    affiliation: 'jnu'
-                };
-
-                localStorage.setItem('currentUser', JSON.stringify(tempUser));
-                localStorage.setItem('userAffiliation', 'jnu');
+            try {
+                // Supabase Google OAuth 로그인
+                const result = await signInWithGoogle();
                 
-                // 프로필 확인
-                const userProfile = localStorage.getItem('userProfile');
-                
-                if (!userProfile) {
-                    // 프로필 없으면 설정 페이지로
-                    showToast('프로필 설정 페이지로 이동합니다.', 'success', 1000);
-                    setTimeout(() => {
-                        window.location.href = 'visa-profile-setup-jnu.html';
-                    }, 1000);
+                if (result.success) {
+                    console.log('✅ Google 로그인 성공');
+                    // Supabase가 자동으로 리디렉션 처리
                 } else {
-                    // 프로필 있으면 대시보드로
-                    showToast('로그인 성공! 대시보드로 이동합니다.', 'success', 1000);
-                    setTimeout(() => {
-                        window.location.href = 'visa-dashboard-jnu.html';
-                    }, 1000);
+                    console.error('❌ Google 로그인 실패:', result.error);
+                    showToast('로그인에 실패했습니다: ' + result.error, 'error');
                 }
-            }, 1500);
+            } catch (error) {
+                console.error('Google 로그인 오류:', error);
+                showToast('로그인 중 오류가 발생했습니다.', 'error');
+            }
         }
 
-        // 관리자 로그인
-        function adminLogin(event) {
+        // 관리자 로그인 - 실제 Supabase Auth
+        async function adminLogin(event) {
             event.preventDefault();
             
             const email = document.getElementById('adminEmail').value;
             const password = document.getElementById('adminPassword').value;
 
-            if (email.includes('admin') && password.length >= 4) {
-                const adminUser = {
-                    id: 'ADMIN_' + Date.now(),
-                    email: email,
-                    userType: 'admin',
-                    universityId: currentUniversity.id,
-                    universityCode: currentUniversity.code,
-                    loginTime: new Date().toISOString()
-                };
+            showToast('로그인 중...', 'info');
 
-                localStorage.setItem('currentUser', JSON.stringify(adminUser));
+            try {
+                // Supabase 이메일/비밀번호 로그인
+                const result = await signInWithEmail(email, password);
                 
-                showToast('관리자 로그인 성공!', 'success', 2000);
-                
-                setTimeout(() => {
-                    window.location.href = 'visa-admin-dashboard-jnu.html';
-                }, 2000);
-            } else {
-                showToast('이메일 또는 비밀번호가 올바르지 않습니다.', 'error');
+                if (result.success) {
+                    console.log('✅ 관리자 로그인 성공');
+                    showToast('관리자 로그인 성공!', 'success', 2000);
+                    
+                    // Partner Dashboard로 이동
+                    setTimeout(() => {
+                        window.location.href = 'partner-dashboard.html?org=jnu';
+                    }, 2000);
+                } else {
+                    console.error('❌ 로그인 실패:', result.error);
+                    showToast('이메일 또는 비밀번호가 올바르지 않습니다.', 'error');
+                }
+            } catch (error) {
+                console.error('로그인 오류:', error);
+                showToast('로그인 중 오류가 발생했습니다.', 'error');
             }
         }
 
-        // 페이지 로드 시 이미 로그인된 경우 체크
-        window.addEventListener('DOMContentLoaded', function() {
-            const currentUser = localStorage.getItem('currentUser');
-            if (currentUser) {
-                const user = JSON.parse(currentUser);
-                if (user.userType === 'student') {
-                    if (user.profileCompleted) {
+        // 페이지 로드 시 이미 로그인된 경우 체크 - 실제 Supabase Auth
+        window.addEventListener('DOMContentLoaded', async function() {
+            try {
+                // Supabase 세션 확인
+                const session = await checkSession();
+                
+                if (session && session.user) {
+                    console.log('✅ 이미 로그인된 사용자:', session.user.email);
+                    
+                    // 프로필 확인
+                    const profileResult = await getUserProfile(session.user.id);
+                    
+                    if (profileResult.success && profileResult.data) {
+                        // 프로필 있으면 대시보드로
+                        console.log('✅ 프로필 존재 - 대시보드로 이동');
                         window.location.href = 'visa-dashboard-jnu.html';
                     } else {
+                        // 프로필 없으면 프로필 설정 페이지로
+                        console.log('⚠️ 프로필 없음 - 프로필 설정 페이지로 이동');
                         window.location.href = 'visa-profile-setup-jnu.html';
                     }
-                } else if (user.userType === 'admin') {
-                    window.location.href = 'visa-admin-dashboard-jnu.html';
                 }
+            } catch (error) {
+                console.error('세션 확인 오류:', error);
             }
         });
     </script>
