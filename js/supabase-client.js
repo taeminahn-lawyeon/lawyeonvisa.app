@@ -295,35 +295,8 @@ async function updateThreadStatus(threadId, status) {
 // 메시지 관련 함수
 // ============================================
 
-// 메시지 전송
-async function sendMessage(threadId, content, attachments = []) {
-    try {
-        const user = await getCurrentUser();
-        if (!user) throw new Error('로그인이 필요합니다');
-        
-        const profile = await getUserProfile(user.id);
-        
-        const { data, error } = await supabase
-            .from('messages')
-            .insert([{
-                thread_id: threadId,
-                sender_type: 'user',
-                sender_id: user.id,
-                sender_name: profile.data?.name || user.email,
-                content,
-                attachments,
-                created_at: new Date().toISOString()
-            }])
-            .select()
-            .single();
-        
-        if (error) throw error;
-        return { success: true, data };
-    } catch (error) {
-        console.error('메시지 전송 오류:', error);
-        return { success: false, error: error.message };
-    }
-}
+// 메시지 전송 (구버전 - 삭제됨, createMessage() 사용)
+// async function sendMessage() - DEPRECATED, use createMessage() instead
 
 // 쓰레드 메시지 조회
 async function getThreadMessages(threadId) {
