@@ -213,22 +213,41 @@ async function updateUserProfile(userId, updates) {
 async function createThread(threadData) {
     try {
         const user = await getCurrentUser();
-        if (!user) throw new Error('로그인이 필요합니다');
+        if (!user) {
+            console.error('❌ 사용자 없음 - 로그인 필요');
+            throw new Error('로그인이 필요합니다');
+        }
+        
+        const threadRecord = {
+            user_id: user.id,
+            service_name: threadData.service_name,
+            status: threadData.status || 'document',
+            amount: threadData.amount || 0,
+            order_id: threadData.order_id || null,
+            payment_id: threadData.payment_id || null,
+            organization: threadData.organization || null,
+            is_active: true,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+        };
+        
+        console.log('🔄 쓰레드 생성 시도:', threadRecord);
         
         const { data, error } = await supabase
             .from('threads')
-            .insert([{
-                user_id: user.id,
-                ...threadData,
-                created_at: new Date().toISOString()
-            }])
+            .insert(threadRecord)
             .select()
             .single();
         
-        if (error) throw error;
+        if (error) {
+            console.error('❌ Supabase 쓰레드 생성 오류:', error);
+            throw error;
+        }
+        
+        console.log('✅ 쓰레드 생성 성공:', data);
         return { success: true, data };
     } catch (error) {
-        console.error('쓰레드 생성 오류:', error);
+        console.error('❌ 쓰레드 생성 실패:', error);
         return { success: false, error: error.message };
     }
 }
@@ -602,6 +621,125 @@ async function updateApplicationStatus(applicationId, status) {
         return { success: true, data };
     } catch (error) {
         console.error('신청 상태 업데이트 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// ============================================
+// 파일 업로드/다운로드 고급 함수
+// ============================================
+
+// 쓰레드 문서 업로드 (메시지와 함께)
+async function uploadThreadDocument(threadId, file) {
+    try {
+        const user = await getCurrentUser();
+        if (!user) throw new Error('로그인이 필요합니다');
+        
+        // 파일명 생성: {threadId}/{timestamp}_{originalName}
+        const timestamp = Date.now();
+        const sanitizedFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+        const filePath = `${threadId}/${timestamp}_${sanitizedFileName}`;
+        
+        console.log('📤 파일 업로드 시작:', filePath);
+        
+        // Supabase Storage에 업로드
+        const { data: uploadData, error: uploadError } = await supabase.storage
+            .from('thread_documents')
+            .upload(filePath, file, {
+                cacheControl: '3600',
+                upsert: false
+            });
+        
+        if (uploadError) {
+            console.error('업로드 오류:', uploadError);
+            throw uploadError;
+        }
+        
+        console.log('✅ 파일 업로드 성공:', uploadData);
+        
+        // 서명된 URL 생성 (1년 유효)
+        const { data: urlData, error: urlError } = await supabase.storage
+            .from('thread_documents')
+            .createSignedUrl(filePath, 31536000); // 1년
+        
+        if (urlError) throw urlError;
+        
+        return {
+            success: true,
+            data: {
+                path: filePath,
+                fullPath: uploadData.path,
+                signedUrl: urlData.signedUrl,
+                fileName: file.name,
+                fileSize: file.size,
+                fileType: file.type
+            }
+        };
+    } catch (error) {
+        console.error('문서 업로드 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// 파일 다운로드 URL 생성 (서명된 URL)
+async function getThreadDocumentUrl(filePath) {
+    try {
+        const { data, error } = await supabase.storage
+            .from('thread_documents')
+            .createSignedUrl(filePath, 3600); // 1시간 유효
+        
+        if (error) throw error;
+        return { success: true, url: data.signedUrl };
+    } catch (error) {
+        console.error('다운로드 URL 생성 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// 파일 삭제
+async function deleteThreadDocument(filePath) {
+    try {
+        const { data, error } = await supabase.storage
+            .from('thread_documents')
+            .remove([filePath]);
+        
+        if (error) throw error;
+        return { success: true, data };
+    } catch (error) {
+        console.error('파일 삭제 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// ============================================
+// 메시지 관련 함수 (파일 포함)
+// ============================================
+
+// 메시지 생성 (파일 첨부 지원)
+async function createMessage(messageData) {
+    try {
+        const user = await getCurrentUser();
+        if (!user) throw new Error('로그인이 필요합니다');
+        
+        const { data, error } = await supabase
+            .from('messages')
+            .insert({
+                thread_id: messageData.thread_id,
+                sender_id: user.id,
+                sender_type: messageData.sender_type || 'user',
+                content: messageData.content,
+                file_url: messageData.file_url || null,
+                file_name: messageData.file_name || null,
+                file_type: messageData.file_type || null,
+                created_at: new Date().toISOString()
+            })
+            .select()
+            .single();
+        
+        if (error) throw error;
+        return { success: true, data };
+    } catch (error) {
+        console.error('메시지 생성 오류:', error);
         return { success: false, error: error.message };
     }
 }
