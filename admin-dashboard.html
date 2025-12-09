@@ -968,13 +968,14 @@
             );
             document.getElementById('urgentCases').textContent = urgentCases.length;
             
-            // 이번 달 매출 (completed 상태만, archived 제외, 정부 관납료 제외)
+            // 이번 달 매출 (payment, processing, completed 상태, archived 제외, 정부 관납료 제외)
             const now = new Date();
             const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
             const monthlyRevenue = allThreads
                 .filter(t => 
-                    t.status === 'completed' && 
-                    t.created_at >= thisMonthStart
+                    ['payment', 'processing', 'completed'].includes(t.status) && 
+                    t.created_at >= thisMonthStart &&
+                    t.amount > 0
                 )
                 .reduce((sum, t) => {
                     const netAmount = (t.amount || 0) - (t.government_fee || 0);
@@ -1112,8 +1113,8 @@
 
         // 쓰레드 상세보기
         function viewThread(threadId) {
-            // 쓰레드 상세 페이지로 이동
-            window.location.href = `visa-thread-general.html?thread_id=${threadId}`;
+            // 쓰레드 상세 페이지로 이동 (from=admin 파라미터 추가)
+            window.location.href = `visa-thread-general.html?thread_id=${threadId}&from=admin`;
         }
 
         // 상태 변경 모달 열기
