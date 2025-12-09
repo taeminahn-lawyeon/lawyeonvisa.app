@@ -849,14 +849,14 @@
                 <!-- 로그인 전 -->
                 <div id="loginButtons" style="display: none;">
                     <button class="header-btn" id="googleLoginBtn">
-                        <i class="fab fa-google"></i> Google 로그인
+                        Google 로그인
                     </button>
                 </div>
                 <!-- 로그인 후 -->
                 <div id="userGreeting" class="user-greeting" style="display: none;">
                     <span id="userGreetingName">환영합니다!</span>
                     <button class="logout-btn" id="logoutBtn">
-                        <i class="fas fa-sign-out-alt"></i> 로그아웃
+                        로그아웃
                     </button>
                 </div>
             </div>
@@ -918,7 +918,7 @@
                         로그인하시면 나의 체류현황, 서비스 신청, 진행 현황을 확인하실 수 있습니다.
                     </p>
                     <button onclick="document.getElementById('googleLoginBtn').click()" style="padding: 16px 32px; background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%); color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 8px 24px rgba(49, 130, 246, 0.25);">
-                        <i class="fas fa-sign-in-alt"></i> 로그인하기
+                        Google 로그인
                     </button>
                 </div>
                 
@@ -929,11 +929,11 @@
                         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
                             <div style="font-size: 32px;">📝</div>
                             <div>
-                                <div style="font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 4px;">MY 체류 현황</div>
+                                <div style="font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 4px;">체류 현황</div>
                                 <div style="font-size: 14px; color: #64748b;" id="userNameDisplay"></div>
                             </div>
                         </div>
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
                             <div style="background: white; padding: 16px; border-radius: 12px;">
                                 <div style="font-size: 13px; color: #64748b; margin-bottom: 6px;">체류자격</div>
                                 <div style="font-size: 17px; font-weight: 700; color: #2563EB;" id="userVisaType">D-2 유학</div>
@@ -1007,7 +1007,7 @@
             <!-- 협약 신청 CTA -->
             <div style="border-top: 2px solid #e5e7eb; padding-top: 24px; margin-top: 24px;">
                 <a href="partnership-apply.html" style="display: inline-block; background: linear-gradient(135deg, #2563EB 0%, #1e40af 100%); color: white; border-radius: 14px; padding: 18px 32px; text-align: center; text-decoration: none; transition: all 0.3s; box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3); font-size: 17px; font-weight: 800;">
-                    <i class="fas fa-plus-circle" style="margin-right: 10px;"></i>우리 단체도 제휴하기
+                    우리 단체도 제휴하기
                 </a>
                 <p style="margin-top: 12px; font-size: 14px; color: #6b7280; line-height: 1.6;">모든 서비스 30% 할인 및 관리자 전용 소속 외국인 체류 현황 대시보드 제공</p>
             </div>
@@ -1020,30 +1020,34 @@
             <!-- 공식 정보 -->
             <div class="info-box" style="background: rgba(255, 255, 255, 0.08); padding: 20px; border-radius: 14px; margin-bottom: 20px; font-size: 14px; line-height: 1.9; color: rgba(255, 255, 255, 0.9);">
                 <div style="margin-bottom: 8px;">
-                    <strong style="color: white; font-weight: 700;">신고번호</strong> 제 2025-서울강서-3193 호
+                    <strong style="color: white; font-weight: 700;">회사명</strong> 법무법인 로연
                 </div>
                 <div style="margin-bottom: 8px;">
-                    <strong style="color: white; font-weight: 700;">상호</strong> 법무법인 로연 | <strong style="color: white; font-weight: 700;">대표자</strong> 민준우
+                    <strong style="color: white; font-weight: 700;">서울사무소</strong> 서울특별시 강서구 공항대로 164, 5층 503호 (마곡동, 류마타워) | 대표: 민준우
                 </div>
                 <div style="margin-bottom: 8px;">
-                    <strong style="color: white; font-weight: 700;">소재지</strong> 서울특별시 강서구 공항대로 164, 류마타워 5층 503호 (마곡동)
+                    <strong style="color: white; font-weight: 700;">광주사무소</strong> 광주광역시 동구 준법로 1, 3층(지산동, 초석빌딩) | 대표: 봉세환
+                </div>
+                <div style="margin-bottom: 8px;">
+                    <strong style="color: white; font-weight: 700;">사업자등록번호</strong> 391-85-03007 (서울사무소)
+                </div>
+                <div style="margin-bottom: 8px;">
+                    <strong style="color: white; font-weight: 700;">통신판매업 신고번호</strong> 제 2025-서울강서-3193호
+                </div>
+                <div style="margin-bottom: 8px;">
+                    <strong style="color: white; font-weight: 700;">광고책임변호사</strong> 남도현, 민준우
                 </div>
                 <div>
-                    <strong style="color: white; font-weight: 700;">전화</strong> 02-2039-0544 | <strong style="color: white; font-weight: 700;">팩스</strong> 070-8230-0545
+                    <strong style="color: white; font-weight: 700;">연락처</strong> 02-2039-0544 | <strong style="color: white; font-weight: 700;">팩스</strong> 070-8230-0545
                 </div>
             </div>
             
             <p style="font-size: 13px; color: rgba(255, 255, 255, 0.65); line-height: 1.7; margin-bottom: 16px;">
-                법무법인 로연에서 운영하는 사이트에서 서비스 되는 모든 상품은 법무법인 로연에서 책임지고 있습니다.
+                본 사이트에서 제공되는 모든 법률 서비스는 법무법인 로연에서 제공합니다.
             </p>
             
-            <div style="font-size: 13px; color: rgba(255, 255, 255, 0.65); line-height: 1.7; padding: 16px; background: rgba(255, 255, 255, 0.05); border-radius: 12px;">
-                <strong style="color: white; font-weight: 700;">대표변호사</strong> 민준우<br>
-                <strong style="color: white; font-weight: 700;">연락처</strong> 02-2039-0544
-            </div>
-            
             <div class="copyright" style="margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.15); font-size: 12px; color: rgba(255, 255, 255, 0.5); text-align: center;">
-                Copyright © 법무법인 로연
+                Copyright © 법무법인 로연 출입국이민지원센터
             </div>
         </div>
     </div>
@@ -1459,7 +1463,7 @@
                         </div>
                     </div>
                     <button onclick="openThread('${thread.id}')" style="width: 100%; padding: 14px; background: linear-gradient(135deg, ${isArchived ? '#9CA3AF' : '#3182F6'} 0%, ${isArchived ? '#6B7280' : '#2563EB'} 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
-                        <i class="fas fa-comments"></i> ${isArchived ? '완료된 쓰레드 보기' : '쓰레드 열기'}
+                        ${isArchived ? '완료된 쓰레드' : '쓰레드 열기'}
                     </button>
                 `;
                 
