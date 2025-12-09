@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>기본 사항 제출 - 법무법인 로연 x 전남대학교</title>
+    <title>기본 사항 제출 - 전남대학교 출입국이민지원센터</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
@@ -34,21 +34,8 @@
             padding: 40px;
             margin-bottom: 24px;
             text-align: center;
-            box-shadow: 0 4px 24px rgba(0,122,51,0.3);
+            box-shadow: 0 4px 24px rgba(0,122,51,0.15);
             border-bottom: 3px solid #FFD700;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            border-radius: 50%;
         }
 
         .header h1 {
@@ -97,7 +84,7 @@
             top: 20px;
             left: 0;
             height: 4px;
-            background: linear-gradient(135deg, #007A33 0%, #1e40af 100%);
+            background: linear-gradient(135deg, #007A33 0%, #005A25 100%);
             transition: width 0.3s ease;
             z-index: 2;
         }
@@ -127,7 +114,7 @@
         }
 
         .step.active .step-circle {
-            background: linear-gradient(135deg, #007A33 0%, #1e40af 100%);
+            background: linear-gradient(135deg, #007A33 0%, #005A25 100%);
             color: white;
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
@@ -249,7 +236,7 @@
 
         .address-search button {
             padding: 16px 24px;
-            background: linear-gradient(135deg, #007A33 0%, #1e40af 100%);
+            background: linear-gradient(135deg, #007A33 0%, #005A25 100%);
             color: white;
             border: none;
             border-radius: 12px;
@@ -391,7 +378,7 @@
             width: 100%;
             max-width: 400px;
             padding: 20px;
-            background: linear-gradient(135deg, #007A33 0%, #1e40af 100%);
+            background: linear-gradient(135deg, #007A33 0%, #005A25 100%);
             color: white;
             border: none;
             border-radius: 14px;
@@ -545,6 +532,25 @@
                         <div class="form-group">
                             <label>전화번호 <span class="required">*</span></label>
                             <input type="tel" name="phone" required placeholder="010-0000-0000">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>선호 메신저 <span class="required">*</span></label>
+                            <select name="preferredMessenger" required>
+                                <option value="">메신저를 선택하세요</option>
+                                <option value="whatsapp">WhatsApp (왓츠앱)</option>
+                                <option value="wechat">WeChat (위챗)</option>
+                                <option value="telegram">Telegram (텔레그램)</option>
+                                <option value="kakaotalk">KakaoTalk (카카오톡)</option>
+                                <option value="line">LINE (라인)</option>
+                                <option value="zalo">Zalo (잘로)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>메신저 ID/전화번호 <span class="required">*</span></label>
+                            <input type="text" name="messengerId" required placeholder="메신저 ID 또는 전화번호">
                         </div>
                     </div>
 
@@ -957,7 +963,7 @@
         }
 
         // 폼 제출
-        document.getElementById('profileForm').addEventListener('submit', function(e) {
+        document.getElementById('profileForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             // 서명 확인
@@ -966,39 +972,77 @@
                 return;
             }
 
-            // 폼 데이터 수집
-            const formData = new FormData(this);
-            
-            // 서명 데이터 추가
-            const signatureData = signaturePad.toDataURL();
-            formData.append('signature', signatureData);
+            // 로딩 표시
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = '저장 중...';
 
-            // 데이터 저장
-            const profileData = {
-                lastName: formData.get('lastName'),
-                firstName: formData.get('firstName'),
-                birthDate: formData.get('birthDate'),
-                gender: formData.get('gender'),
-                email: formData.get('email'),
-                phone: formData.get('phone'),
-                nationality: formData.get('nationality'),
-                visaType: formData.get('visaType'),
-                stayExpiry: formData.get('stayExpiry'),
-                foreignerNumber: formData.get('foreignerNumber'),
-                address: {
-                    postcode: formData.get('postcode'),
-                    address: formData.get('address'),
-                    detailAddress: formData.get('detailAddress')
-                },
-                signature: signatureData,
-                completedAt: new Date().toISOString()
-            };
+            try {
+                // 현재 사용자 확인
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    alert('로그인이 필요합니다.');
+                    window.location.href = 'visa-dashboard-jnu.html';
+                    return;
+                }
 
-            localStorage.setItem('userProfile', JSON.stringify(profileData));
+                // 폼 데이터 수집
+                const formData = new FormData(this);
+                
+                // 서명 데이터 추가
+                const signatureData = signaturePad.toDataURL();
 
-            alert('기본 사항 제출이 완료되었습니다!\n\n이제 서비스를 이용하실 수 있습니다.');
-            window.location.href = 'visa-dashboard-jnu.html';
+                // Supabase에 저장할 프로필 데이터
+                const profileData = {
+                    name: formData.get('lastName') + formData.get('firstName'),
+                    email: session.user.email,
+                    phone: formData.get('phone'),
+                    nationality: formData.get('nationality'),
+                    birth_date: formData.get('birthDate'),
+                    gender: formData.get('gender'),
+                    passport_number: formData.get('foreignerNumber'),
+                    visa_type: formData.get('visaType'),
+                    visa_expiry_date: formData.get('stayExpiry'),
+                    address: formData.get('address') + ' ' + formData.get('detailAddress') + ' (' + formData.get('postcode') + ')',
+                    preferred_messenger: formData.get('preferredMessenger'),
+                    messenger_id: formData.get('messengerId'),
+                    organization: 'jnu',  // JNU 전용
+                    role: 'customer'
+                };
+
+                // Supabase에 프로필 생성
+                const result = await createUserProfile(session.user.id, profileData);
+                
+                if (result.success) {
+                    console.log('✅ 프로필 생성 성공:', result.data);
+                    
+                    // ✅ 프로필 생성 완료 플래그 저장 (무한 루프 방지)
+                    sessionStorage.setItem('profileCreated', 'true');
+                    
+                    // ✅ 프로필 데이터를 sessionStorage에 캐싱
+                    sessionStorage.setItem('userProfileCache', JSON.stringify(profileData));
+                    
+                    alert('기본 사항 제출이 완료되었습니다!\n\n이제 서비스를 이용하실 수 있습니다.');
+                    
+                    // ✅ 1초 대기 후 리다이렉트 (Supabase 동기화 시간)
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    
+                    window.location.href = 'visa-dashboard-jnu.html';
+                } else {
+                    throw new Error(result.error);
+                }
+            } catch (error) {
+                console.error('프로필 저장 오류:', error);
+                alert('저장 중 오류가 발생했습니다: ' + error.message);
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
         });
     </script>
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js?v=7"></script>
 </body>
 </html>
