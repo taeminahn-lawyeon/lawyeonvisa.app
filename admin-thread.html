@@ -853,7 +853,7 @@
                         <span class="fee-value" id="governmentFee">₩0</span>
                     </div>
                     <div class="fee-row">
-                        <span class="fee-label">순수익</span>
+                        <span class="fee-label">센터 서비스 대행료</span>
                         <span class="fee-value" id="netRevenue">₩0</span>
                     </div>
                 </div>
@@ -1082,9 +1082,12 @@
         function appendMessage(msg) {
             const container = document.getElementById('messagesContainer');
             const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${msg.sender}`;
+            
+            // sender_type 또는 sender 필드 모두 지원
+            const senderType = msg.sender_type || msg.sender || 'user';
+            messageDiv.className = `message ${senderType}`;
 
-            const senderName = msg.sender === 'admin' ? '관리자' : customerData?.name || '고객';
+            const senderName = senderType === 'admin' ? '관리자' : customerData?.name || '고객';
             const senderInitial = senderName.charAt(0);
 
             let fileHtml = '';
@@ -1148,6 +1151,7 @@
 
                 if (result.success) {
                     appendMessage({
+                        sender_type: 'admin',
                         sender: 'admin',
                         content: content,
                         created_at: new Date().toISOString()
