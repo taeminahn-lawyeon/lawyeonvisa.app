@@ -503,6 +503,113 @@
             font-size: 16px;
         }
 
+        /* 탭 UI 스타일 */
+        .tabs-container {
+            background: white;
+            padding: 0 25px;
+            border-radius: 15px 15px 0 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: -15px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 5px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .tab {
+            padding: 15px 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            color: #7f8c8d;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            background: none;
+            border: none;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .tab:hover {
+            color: #2c3e50;
+            background: #f8f9fa;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            background: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* 고객 명단 테이블 스타일 */
+        .customers-table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+        }
+
+        .customers-table thead {
+            background: #f8f9fa;
+        }
+
+        .customers-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #555;
+            font-size: 14px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .customers-table td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+
+        .customers-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .visa-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .expiry-warning {
+            color: #f44336;
+            font-weight: 600;
+        }
+
+        .expiry-normal {
+            color: #4caf50;
+        }
+
+        /* 고객 필터 */
+        .customer-filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
         /* 반응형 */
         @media (max-width: 768px) {
             .header-content {
@@ -519,7 +626,7 @@
                 grid-template-columns: 1fr;
             }
 
-            .threads-table {
+            .threads-table, .customers-table {
                 display: block;
                 overflow-x: auto;
             }
@@ -528,6 +635,19 @@
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 10px;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+            }
+
+            .tab {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+
+            .customer-filter-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -640,8 +760,20 @@
             </div>
         </div>
 
-        <!-- 쓰레드 목록 -->
-        <div class="threads-section">
+        <!-- 탭 UI -->
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('threads')">
+                    <i class="fas fa-comments"></i> 쓰레드 목록
+                </button>
+                <button class="tab" onclick="switchTab('customers')">
+                    <i class="fas fa-users"></i> 고객 명단
+                </button>
+            </div>
+        </div>
+
+        <!-- 쓰레드 탭 -->
+        <div id="threadsTab" class="tab-content active threads-section">
             <h2>
                 <span><i class="fas fa-list"></i> 쓰레드 목록</span>
                 <span class="thread-count" id="threadCount">총 0건</span>
@@ -649,6 +781,75 @@
             <div id="threadsTableContainer">
                 <!-- 테이블이 여기에 동적으로 생성됨 -->
             </div>
+        </div>
+
+        <!-- 고객 명단 탭 -->
+        <div id="customersTab" class="tab-content threads-section">
+            <h2>
+                <span><i class="fas fa-users"></i> 고객 명단</span>
+                <span class="thread-count" id="customerCount">총 0명</span>
+            </h2>
+            
+            <!-- 고객 필터 -->
+            <div class="customer-filter-grid">
+                <div class="filter-item">
+                    <label>고객명</label>
+                    <input type="text" id="customerFilterName" placeholder="이름 검색...">
+                </div>
+                <div class="filter-item">
+                    <label>소속 단체</label>
+                    <select id="customerFilterOrg">
+                        <option value="">전체</option>
+                        <option value="lawyeon">법무법인 로연</option>
+                        <option value="jnu">전남대학교</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label>비자 종류</label>
+                    <select id="customerFilterVisa">
+                        <option value="">전체</option>
+                        <option value="F-4">F-4 (재외동포)</option>
+                        <option value="E-7">E-7 (특정활동)</option>
+                        <option value="D-2">D-2 (유학)</option>
+                        <option value="D-10">D-10 (구직)</option>
+                        <option value="E-9">E-9 (비전문취업)</option>
+                        <option value="H-2">H-2 (방문취업)</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label>국적</label>
+                    <select id="customerFilterNationality">
+                        <option value="">전체</option>
+                        <option value="KR">한국</option>
+                        <option value="CN">중국</option>
+                        <option value="VN">베트남</option>
+                        <option value="US">미국</option>
+                        <option value="JP">일본</option>
+                        <option value="PH">필리핀</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label>체류 만료 기간</label>
+                    <select id="customerFilterExpiry">
+                        <option value="">전체</option>
+                        <option value="expired">만료됨</option>
+                        <option value="30days">30일 이내</option>
+                        <option value="60days">60일 이내</option>
+                        <option value="90days">90일 이내</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="filter-actions">
+                <button class="filter-btn primary" onclick="applyCustomerFilters()">
+                    <i class="fas fa-search"></i> 검색
+                </button>
+                <button class="filter-btn secondary" onclick="resetCustomerFilters()">
+                    <i class="fas fa-redo"></i> 초기화
+                </button>
+            </div>
+            
+            <div id="customersTableContainer"></div>
         </div>
     </div>
 
@@ -1011,6 +1212,184 @@
                     window.location.href = 'admin-login.html';
                 }
             }
+        }
+
+        // ========================================
+        // 고객 명단 탭 함수
+        // ========================================
+
+        // 전역 변수
+        let allCustomers = [];
+        let filteredCustomers = [];
+
+        // 탭 전환 함수
+        function switchTab(tabName) {
+            // 탭 버튼 활성화
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.closest('.tab').classList.add('active');
+            
+            // 탭 콘텐츠 표시
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            if (tabName === 'threads') {
+                document.getElementById('threadsTab').classList.add('active');
+            } else if (tabName === 'customers') {
+                document.getElementById('customersTab').classList.add('active');
+                loadCustomersData();
+            }
+        }
+
+        // 고객 데이터 로드
+        async function loadCustomersData() {
+            try {
+                // Supabase에서 프로필 정보 가져오기
+                const { data: profiles, error } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                
+                if (error) {
+                    console.error('❌ 고객 로드 오류:', error);
+                    allCustomers = [];
+                } else {
+                    console.log('✅ 고객 로드 성공:', profiles.length, '명');
+                    allCustomers = profiles;
+                }
+                
+                filteredCustomers = [...allCustomers];
+                renderCustomersTable();
+            } catch (error) {
+                console.error('고객 데이터 로드 오류:', error);
+            }
+        }
+
+        // 고객 테이블 렌더링
+        function renderCustomersTable() {
+            const container = document.getElementById('customersTableContainer');
+            document.getElementById('customerCount').textContent = `총 ${filteredCustomers.length}명`;
+            
+            if (filteredCustomers.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-user-slash"></i>
+                        <p>검색 결과가 없습니다.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let tableHTML = `
+                <table class="customers-table">
+                    <thead>
+                        <tr>
+                            <th>고객명</th>
+                            <th>이메일</th>
+                            <th>연락처</th>
+                            <th>소속 단체</th>
+                            <th>비자</th>
+                            <th>국적</th>
+                            <th>체류 만료일</th>
+                            <th>등록일</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            filteredCustomers.forEach(customer => {
+                const stayExpiry = customer.stay_expiry 
+                    ? new Date(customer.stay_expiry)
+                    : null;
+                
+                let expiryDisplay = '-';
+                let expiryClass = 'expiry-normal';
+                
+                if (stayExpiry) {
+                    const now = new Date();
+                    const diffDays = Math.floor((stayExpiry - now) / (1000 * 60 * 60 * 24));
+                    
+                    if (diffDays < 0) {
+                        expiryDisplay = `만료됨 (${Math.abs(diffDays)}일 전)`;
+                        expiryClass = 'expiry-warning';
+                    } else if (diffDays <= 30) {
+                        expiryDisplay = `${diffDays}일 남음`;
+                        expiryClass = 'expiry-warning';
+                    } else {
+                        expiryDisplay = stayExpiry.toLocaleDateString('ko-KR');
+                    }
+                }
+                
+                const phoneDisplay = customer.phone || '-';
+                const phoneLink = customer.phone 
+                    ? `<a href="tel:${customer.phone}" style="color: #3182F6; text-decoration: none;">${customer.phone}</a>`
+                    : '-';
+                
+                tableHTML += `
+                    <tr>
+                        <td><strong>${customer.name || '알 수 없음'}</strong></td>
+                        <td>${customer.email || '-'}</td>
+                        <td>${phoneLink}</td>
+                        <td>${customer.organization || '-'}</td>
+                        <td>${customer.visa_type ? `<span class="visa-badge">${customer.visa_type}</span>` : '-'}</td>
+                        <td>${customer.nationality || '-'}</td>
+                        <td class="${expiryClass}">${expiryDisplay}</td>
+                        <td>${new Date(customer.created_at).toLocaleDateString('ko-KR')}</td>
+                    </tr>
+                `;
+            });
+            
+            tableHTML += `
+                    </tbody>
+                </table>
+            `;
+            
+            container.innerHTML = tableHTML;
+        }
+
+        // 고객 필터 적용
+        function applyCustomerFilters() {
+            const nameFilter = document.getElementById('customerFilterName').value.toLowerCase();
+            const orgFilter = document.getElementById('customerFilterOrg').value;
+            const visaFilter = document.getElementById('customerFilterVisa').value;
+            const nationalityFilter = document.getElementById('customerFilterNationality').value;
+            const expiryFilter = document.getElementById('customerFilterExpiry').value;
+            
+            filteredCustomers = allCustomers.filter(customer => {
+                if (nameFilter && !customer.name?.toLowerCase().includes(nameFilter)) return false;
+                if (orgFilter && customer.organization !== orgFilter) return false;
+                if (visaFilter && customer.visa_type !== visaFilter) return false;
+                if (nationalityFilter && customer.nationality !== nationalityFilter) return false;
+                
+                if (expiryFilter && customer.stay_expiry) {
+                    const stayExpiry = new Date(customer.stay_expiry);
+                    const now = new Date();
+                    const diffDays = Math.floor((stayExpiry - now) / (1000 * 60 * 60 * 24));
+                    
+                    if (expiryFilter === 'expired' && diffDays >= 0) return false;
+                    if (expiryFilter === '30days' && (diffDays < 0 || diffDays > 30)) return false;
+                    if (expiryFilter === '60days' && (diffDays < 0 || diffDays > 60)) return false;
+                    if (expiryFilter === '90days' && (diffDays < 0 || diffDays > 90)) return false;
+                }
+                
+                return true;
+            });
+            
+            renderCustomersTable();
+        }
+
+        // 고객 필터 초기화
+        function resetCustomerFilters() {
+            document.getElementById('customerFilterName').value = '';
+            document.getElementById('customerFilterOrg').value = '';
+            document.getElementById('customerFilterVisa').value = '';
+            document.getElementById('customerFilterNationality').value = '';
+            document.getElementById('customerFilterExpiry').value = '';
+            
+            filteredCustomers = [...allCustomers];
+            renderCustomersTable();
         }
 
         // 페이지 로드 시 - 권한 체크는 로그인 페이지에서 이미 완료됨
