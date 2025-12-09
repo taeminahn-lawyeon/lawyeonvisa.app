@@ -477,42 +477,45 @@
             font-size: 16px;
         }
 
-        /* 탭 UI 스타일 */
+        /* 탭 UI 스타일 - 토스 디자인 */
         .tabs-container {
             background: white;
-            padding: 0 25px;
-            border-radius: 15px 15px 0 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 0 24px;
+            border-radius: 16px 16px 0 0;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            border: 1px solid #E5E8EB;
+            border-bottom: none;
             margin-bottom: 0;
         }
 
         .tabs {
             display: flex;
-            gap: 5px;
-            border-bottom: 2px solid #f0f0f0;
+            gap: 0;
+            border-bottom: 2px solid #E5E8EB;
         }
 
         .tab {
-            padding: 15px 30px;
+            padding: 16px 24px;
             cursor: pointer;
             font-weight: 600;
             font-size: 15px;
-            color: #7f8c8d;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s ease;
+            color: #6B7684;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
             background: none;
             border: none;
-            border-radius: 10px 10px 0 0;
+            border-radius: 0;
+            margin-bottom: -2px;
         }
 
         .tab:hover {
-            color: #2c3e50;
-            background: #f8f9fa;
+            color: #191F28;
+            background: #F9FAFB;
         }
 
         .tab.active {
-            color: #667eea;
-            border-bottom-color: #667eea;
+            color: #3182F6;
+            border-bottom-color: #3182F6;
             background: white;
         }
 
@@ -524,7 +527,7 @@
             display: block;
         }
 
-        /* 고객 명단 테이블 스타일 */
+        /* 고객 명단 테이블 스타일 - 토스 디자인 */
         .customers-table {
             width: 100%;
             border-collapse: collapse;
@@ -532,56 +535,59 @@
         }
 
         .customers-table thead {
-            background: #f8f9fa;
+            background: #F9FAFB;
+            border-top: 1px solid #E5E8EB;
+            border-bottom: 1px solid #E5E8EB;
         }
 
         .customers-table th {
-            padding: 15px;
+            padding: 12px 16px;
             text-align: left;
             font-weight: 600;
-            color: #555;
-            font-size: 14px;
-            border-bottom: 2px solid #e0e0e0;
+            color: #4E5968;
+            font-size: 13px;
         }
 
         .customers-table td {
-            padding: 15px;
-            border-bottom: 1px solid #f0f0f0;
+            padding: 16px;
+            border-bottom: 1px solid #F2F4F6;
             font-size: 14px;
+            color: #191F28;
         }
 
         .customers-table tr:hover {
-            background: #f8f9fa;
+            background: #F9FAFB;
         }
 
         .visa-badge {
             display: inline-block;
             padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 12px;
+            border-radius: 6px;
+            font-size: 13px;
             font-weight: 600;
-            background: #e3f2fd;
-            color: #1976d2;
+            background: #E8F3FF;
+            color: #1B64DA;
         }
 
         .expiry-warning {
-            color: #f44336;
+            color: #F04452;
             font-weight: 600;
         }
 
         .expiry-normal {
-            color: #4caf50;
+            color: #00A651;
         }
 
-        /* 고객 필터 */
+        /* 고객 필터 - 토스 디자인 */
         .customer-filter-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
             margin-bottom: 20px;
             padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
+            background: #F9FAFB;
+            border-radius: 12px;
+            border: 1px solid #E5E8EB;
         }
 
         /* 반응형 */
