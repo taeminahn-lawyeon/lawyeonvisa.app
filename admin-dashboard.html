@@ -747,21 +747,31 @@
                     console.log('✅ 쓰레드 로드 성공:', threads.length, '개');
                     
                     // 데이터 포맷 변환
-                    allThreads = threads.map(thread => ({
-                        id: thread.id,
-                        customer_name: thread.profiles?.name || '알 수 없음',
-                        customer_email: thread.profiles?.email || '',
-                        customer_phone: thread.profiles?.phone || '',
-                        service_name: thread.service_name,
-                        status: thread.status,
-                        priority: thread.priority || 'normal',
-                        amount: thread.amount,
-                        order_id: thread.order_id,
-                        payment_id: thread.payment_id,
-                        created_at: new Date(thread.created_at).getTime(),
-                        updated_at: new Date(thread.updated_at).getTime(),
-                        organization: thread.organization
-                    }));
+                    allThreads = threads.map(thread => {
+                        // 긴급 케이스 자동 판별
+                        let priority = thread.priority || 'normal';
+                        if (thread.service_name && 
+                            (thread.service_name.includes('긴급 구제') || thread.service_name.includes('사전 진단'))) {
+                            priority = 'urgent';
+                        }
+                        
+                        return {
+                            id: thread.id,
+                            customer_name: thread.profiles?.name || '알 수 없음',
+                            customer_email: thread.profiles?.email || '',
+                            customer_phone: thread.profiles?.phone || '',
+                            service_name: thread.service_name,
+                            status: thread.status,
+                            priority: priority,
+                            amount: thread.amount || 0,
+                            government_fee: thread.government_fee || 0,
+                            order_id: thread.order_id,
+                            payment_id: thread.payment_id,
+                            created_at: new Date(thread.created_at).getTime(),
+                            updated_at: new Date(thread.updated_at).getTime(),
+                            organization: thread.organization
+                        };
+                    });
                     
                     console.log('📊 변환된 쓰레드 데이터:', allThreads);
                 }
@@ -790,16 +800,27 @@
             );
             document.getElementById('activeThreads').textContent = activeThreads.length;
             
-            // 긴급 케이스
-            const urgentCases = allThreads.filter(t => t.priority === 'urgent');
+            // 긴급 케이스 (긴급 구제, 사전 진단 포함)
+            const urgentCases = allThreads.filter(t => 
+                t.priority === 'urgent' || 
+                t.service_name.includes('긴급 구제') || 
+                t.service_name.includes('사전 진단')
+            );
             document.getElementById('urgentCases').textContent = urgentCases.length;
             
-            // 이번 달 매출 (completed 상태만)
+            // 이번 달 매출 (completed 상태만, archived 제외, 정부 관납료 제외)
             const now = new Date();
             const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
             const monthlyRevenue = allThreads
-                .filter(t => t.status === 'completed' && t.created_at >= thisMonthStart)
-                .reduce((sum, t) => sum + t.amount, 0);
+                .filter(t => 
+                    t.status === 'completed' && 
+                    t.created_at >= thisMonthStart &&
+                    t.status !== 'archived'
+                )
+                .reduce((sum, t) => {
+                    const netAmount = (t.amount || 0) - (t.government_fee || 0);
+                    return sum + netAmount;
+                }, 0);
             
             document.getElementById('monthlyRevenue').textContent = 
                 '₩' + monthlyRevenue.toLocaleString();
@@ -932,8 +953,8 @@
 
         // 쓰레드 상세보기
         function viewThread(threadId) {
-            // 실제 환경에서는 쓰레드 상세 페이지로 이동
-            alert(`쓰레드 ${threadId} 상세보기 기능은 추후 구현됩니다.`);
+            // 쓰레드 상세 페이지로 이동
+            window.location.href = `visa-thread-general.html?thread_id=${threadId}`;
         }
 
         // 상태 변경 모달 열기
