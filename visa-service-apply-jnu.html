@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>결제 - 법무법인 로연 x 전남대학교</title>
+    <title>결제 - 전남대학교 출입국이뮼지원센터</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     
@@ -23,25 +23,11 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* 헤더 */
+        /* 헤더 - JNU Green */
         .header {
             background: linear-gradient(135deg, #00A651 0%, #007A33 50%, #005A25 100%);
             padding: 20px 0;
             border-bottom: 3px solid #FFD700;
-            box-shadow: 0 4px 20px rgba(0,122,51,0.4);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            border-radius: 50%;
         }
 
         .header-inner {
@@ -164,7 +150,7 @@
             font-weight: 900;
         }
 
-        /* 정부 수수료 안내 */
+        /* 정부 관납료 안내 */
         .govt-fee-notice {
             background: #FEF3C7;
             border: 2px solid #F59E0B;
@@ -307,7 +293,7 @@
 
         .notice-text {
             font-size: 14px;
-            color: #007A33;
+            color: #005A25;
             font-weight: 600;
             line-height: 1.6;
         }
@@ -354,12 +340,12 @@
             cursor: pointer;
             transition: all 0.2s;
             margin-top: 32px;
-            box-shadow: 0 4px 12px rgba(0, 122, 51, 0.3);
+            box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
         }
 
         .btn-primary:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 122, 51, 0.4);
+            box-shadow: 0 8px 20px rgba(49, 130, 246, 0.4);
         }
 
         .btn-primary:disabled {
@@ -550,11 +536,11 @@
                 <!-- 금액 상세 -->
                 <div class="price-breakdown">
                     <div class="price-row">
-                        <div class="price-label">센터 수수료</div>
+                        <div class="price-label">센터 서비스 대행료</div>
                         <div class="price-value" id="agency-fee">₩550,000</div>
                     </div>
                     <div class="price-row" id="govt-fee-row" style="display: none;">
-                        <div class="price-label">정부 수수료</div>
+                        <div class="price-label">정부 관납료</div>
                         <div class="price-value" id="govt-fee">₩50,000</div>
                     </div>
                     <div class="price-row total">
@@ -563,12 +549,12 @@
                     </div>
                 </div>
 
-                <!-- 정부 수수료 안내 -->
+                <!-- 정부 관납료 안내 -->
                 <div class="govt-fee-notice" id="govt-fee-notice" style="display: none;">
                     <i class="fas fa-info-circle"></i>
                     <div class="govt-fee-notice-text">
-                        <strong>정부 수수료 포함</strong><br>
-                        정부 수수료는 센터가 대신 납부하며, 총 결제 금액에 포함되어 있습니다
+                        <strong>정부 관납료 포함</strong><br>
+                        정부 관납료는 센터가 대신 납부하며, 총 결제 금액에 포함되어 있습니다
                     </div>
                 </div>
             </div>
@@ -682,7 +668,7 @@
     </div>
 
     <script>
-        // 정부 수수료 매핑 (출입국관리법 시행규칙 기준)
+        // 정부 관납료 매핑 (출입국관리법 시행규칙 기준)
         const govtFees = {
             'visa-extension': 50000,
             'visa-change': 119000,
@@ -707,7 +693,7 @@
             'cert-nationality': 2000
         };
 
-        // 서비스 가격 정보 (센터 수수료, 부가세 포함)
+        // 서비스 가격 정보 (센터 서비스 대행료, 부가세 포함)
         const servicePricing = {
             'visa-issue': { name: '비자 발급', price: 880000, desc: '신규 비자 발급 신청을 센터에서 대행합니다', icon: '🛂' },
             'visa-extension': { name: '비자 연장', price: 550000, desc: '현재 체류자격의 기간 연장을 대행합니다', icon: '📅' },
@@ -750,13 +736,26 @@
         let selectedPaymentMethod = 'card';
 
         window.addEventListener('DOMContentLoaded', async function() {
-            // ✅ 1. 로그인 세션 확인
-            const session = await checkSession();
+            // ✅ 1. 로그인 세션 확인 (재시도 포함)
+            let session = await checkSession();
+            console.log('🔍 [결제 페이지] 세션 확인 (1차):', session);
+            
+            // OAuth 리다이렉트 직후 세션 초기화 지연 대응: 1초 후 재시도
             if (!session || !session.user) {
+                console.log('⏳ [결제 페이지] 세션 없음 - 1초 후 재시도...');
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                session = await checkSession();
+                console.log('🔍 [결제 페이지] 세션 확인 (2차):', session);
+            }
+            
+            if (!session || !session.user) {
+                console.log('❌ [결제 페이지] 세션 없음 (최종)');
                 alert('로그인이 필요합니다.\n\n먼저 로그인 후 이용해주세요.');
-                window.location.href = 'visa-login-jnu.html';
+                window.location.href = 'index.html';
                 return;
             }
+            
+            console.log('✅ [결제 페이지] 세션 존재:', session.user.email);
 
             // ✅ 2. 프로필 확인
             const profileResult = await getUserProfile(session.user.id);
@@ -802,7 +801,7 @@
             document.getElementById('service-name').textContent = selectedService.name;
             document.getElementById('service-desc').textContent = selectedService.desc;
             
-            // 전남대 30% 할인 (천원 단위 반올림)
+            // JNU 전용: 30% 할인 (천원 단위 반올림)
             const originalPrice = selectedService.price;
             const discountedPrice = Math.round((originalPrice * 0.7) / 1000) * 1000;
             const agencyFee = discountedPrice;
@@ -899,6 +898,14 @@
                     throw new Error('결제 정보 저장 실패');
                 }
 
+                // 🎯 데모 모드: 모든 사용자에 대해 결제 스킵하고 바로 성공 페이지로 이동
+                console.log('🎯 데모 모드 - 결제 스킵 (모든 사용자)');
+                const currentUrl = window.location.origin;
+                window.location.href = `${currentUrl}/payment-success-jnu.html?orderId=${orderInfo.orderId}&amount=${orderInfo.amount}&paymentKey=DEMO_${Date.now()}&v=${Date.now()}`;
+                return;
+                
+                // 아래 코드는 실제 결제 연동 시 활성화
+                /*
                 if (selectedPaymentMethod === 'card') {
                     // Toss Payments 실제 결제 호출
                     const currentUrl = window.location.origin;
@@ -909,8 +916,8 @@
                         orderName: orderInfo.orderName,
                         customerName: orderInfo.customerName,
                         customerEmail: orderInfo.customerEmail,
-                        successUrl: currentUrl + '/payment-success-jnu.html',
-                        failUrl: currentUrl + '/payment-fail-jnu.html',
+                        successUrl: currentUrl + '/payment-success.html',
+                        failUrl: currentUrl + '/payment-fail.html',
                     });
                 } else if (selectedPaymentMethod === 'paypal') {
                     // PayPal 결제는 준비 중
@@ -919,6 +926,7 @@
                     btn.classList.remove('loading');
                     btn.innerHTML = '<i class="fas fa-lock"></i> <span id="total-price-text">₩' + selectedService.totalPrice.toLocaleString() + '</span> 결제하기';
                 }
+                */
             } catch (error) {
                 console.error('결제 오류:', error);
                 btn.disabled = false;
@@ -952,7 +960,7 @@
                     amount: 0,
                     order_id: 'CONSULT-' + Date.now(),
                     is_consulting: true,
-                    organization: 'jnu'
+                    organization: null
                 });
                 
                 if (!threadResult.success) {
@@ -960,7 +968,7 @@
                 }
                 
                 alert('견적 상담 신청이 완료되었습니다!\n\n센터 담당자가 쓰레드에서 곧 연락드릴게요!');
-                window.location.href = `visa-thread-jnu.html?id=${threadResult.data.id}`;
+                window.location.href = `visa-thread-general.html?id=${threadResult.data.id}`;
             } catch (error) {
                 console.error('상담 신청 오류:', error);
                 alert('상담 신청 중 오류가 발생했습니다.\n다시 시도해주세요.');
@@ -982,6 +990,6 @@
     
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-client.js?v=7"></script>
+    <script src="js/supabase-client.js?v=8"></script>
 </body>
 </html>
