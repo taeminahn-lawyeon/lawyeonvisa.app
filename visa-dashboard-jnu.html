@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>대시보드 - 법무법인 로연 x 전남대학교</title>
+    <title>전남대학교 출입국이민지원센터 - 법무법인 로연</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/ui-components.css">
@@ -20,26 +20,13 @@
             min-height: 100vh;
         }
 
-        /* 헤더 */
+        /* 헤더 - JNU Green */
         .header {
             background: linear-gradient(135deg, #00A651 0%, #007A33 50%, #005A25 100%);
             padding: 25px;
             color: white;
-            box-shadow: 0 4px 20px rgba(0,122,51,0.4), 0 8px 40px rgba(0,122,51,0.15);
+            box-shadow: 0 4px 20px rgba(0,122,51,0.3);
             border-bottom: 3px solid #FFD700;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            border-radius: 50%;
         }
 
         .header-content {
@@ -91,6 +78,35 @@
         .header-btn:hover {
             background: white;
             color: #2c3e50;
+        }
+
+        .logout-btn {
+            background: rgba(239, 68, 68, 0.2);
+            border: 2px solid #EF4444;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background: #EF4444;
+            color: white;
+        }
+
+        .user-greeting {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-greeting span {
+            font-size: 15px;
+            font-weight: 500;
+            opacity: 0.95;
         }
 
         /* 메인 컨테이너 */
@@ -172,7 +188,7 @@
         .emergency-btn.line i { color: #00B900; }
         .emergency-btn.line:hover { border-color: #00B900; background: #f0fdf4; }
 
-        /* 출국 긴급 대응 섹션 */
+        /* 출국 긴급 대응 섹션 - JNU Orange */
         .premium-service-banner {
             background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
             border-radius: 24px;
@@ -246,7 +262,7 @@
             content: '';
             width: 6px;
             height: 6px;
-            background: #f59e0b;
+            background: #00A651;
             border-radius: 50%;
             flex-shrink: 0;
         }
@@ -384,7 +400,7 @@
             color: #8B95A1;
             transition: all 0.2s ease;
             touch-action: manipulation;
-            -webkit-tap-highlight-color: rgba(0, 122, 51, 0.2);
+            -webkit-tap-highlight-color: rgba(49, 130, 246, 0.2);
             user-select: none;
             -webkit-user-select: none;
             white-space: nowrap;
@@ -392,9 +408,9 @@
         }
 
         .category-tab.active {
-            background: linear-gradient(135deg, #00A651 0%, #007A33 100%);
+            background: #00A651;
             color: white;
-            box-shadow: 0 4px 12px rgba(0, 122, 51, 0.3);
+            box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
         }
 
         .service-grid {
@@ -421,14 +437,14 @@
             justify-content: center;
             gap: 8px;
             touch-action: manipulation;
-            -webkit-tap-highlight-color: rgba(0, 122, 51, 0.2);
+            -webkit-tap-highlight-color: rgba(49, 130, 246, 0.2);
         }
 
         .service-item:hover {
             border-color: #00A651;
             background: #E8F5E9;
             transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 122, 51, 0.12);
+            box-shadow: 0 8px 24px rgba(49, 130, 246, 0.12);
         }
 
         .service-item .title {
@@ -515,8 +531,8 @@
         }
 
         .status-badge.processing {
-            background: #d1fae5;
-            color: #007A33;
+            background: #dbeafe;
+            color: #005A25;
         }
 
         .status-badge.completed {
@@ -826,13 +842,23 @@
     <div class="header">
         <div class="header-content">
             <div class="user-info">
-                <h2 style="word-break: keep-all;">법무법인&nbsp;로연 출입국이민지원센터</h2>
-                <p style="margin: 0; opacity: 0.8; font-size: 15px; font-weight: 600;">전남대학교 전용사이트</p>
+                <h2 style="word-break: keep-all;">전남대학교 출입국이민지원센터</h2>
+                <p style="margin: 0; opacity: 0.8;">Chonnam National University · Visa & Immigration</p>
             </div>
-            <div class="header-actions" style="display: none;">
-                <button class="header-btn" id="googleLoginBtn">
-                    <i class="fab fa-google"></i> Google 로그인
-                </button>
+            <div class="header-actions">
+                <!-- 로그인 전 -->
+                <div id="loginButtons" style="display: none;">
+                    <button class="header-btn" id="googleLoginBtn">
+                        Google 로그인
+                    </button>
+                </div>
+                <!-- 로그인 후 -->
+                <div id="userGreeting" class="user-greeting" style="display: none;">
+                    <span id="userGreetingName">환영합니다!</span>
+                    <button class="logout-btn" id="logoutBtn">
+                        로그아웃
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -891,23 +917,23 @@
                     <p style="font-size: 17px; margin-bottom: 24px; line-height: 1.6; font-weight: 500;">
                         로그인하시면 나의 체류현황, 서비스 신청, 진행 현황을 확인하실 수 있습니다.
                     </p>
-                    <button onclick="document.getElementById('googleLoginBtn').click()" style="padding: 16px 32px; background: linear-gradient(135deg, #00A651 0%, #007A33 100%); color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 8px 24px rgba(0, 122, 51, 0.25);">
-                        <i class="fas fa-sign-in-alt"></i> 로그인하기
+                    <button onclick="document.getElementById('googleLoginBtn').click()" style="padding: 16px 32px; background: linear-gradient(135deg, #00A651 0%, #007A33 100%); color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 8px 24px rgba(49, 130, 246, 0.25);">
+                        Google 로그인
                     </button>
                 </div>
                 
                 <!-- 로그인 후: 체류 정보 및 신청 내역 -->
                 <div id="userInfo" style="display: none;">
                     <!-- 체류 정보 카드 -->
-                    <div style="background: linear-gradient(135deg, #E8F5E9 0%, #F0F9FF 100%); border: 2px solid #00A651; border-radius: 16px; padding: 24px; margin-bottom: 24px;">
+                    <div style="background: linear-gradient(135deg, #E8F5E9 0%, #F1F8E9 100%); border: 2px solid #00A651; border-radius: 16px; padding: 24px; margin-bottom: 24px;">
                         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
                             <div style="font-size: 32px;">📝</div>
                             <div>
-                                <div style="font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 4px;">MY 체류 현황</div>
+                                <div style="font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 4px;">체류 현황</div>
                                 <div style="font-size: 14px; color: #64748b;" id="userNameDisplay"></div>
                             </div>
                         </div>
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
                             <div style="background: white; padding: 16px; border-radius: 12px;">
                                 <div style="font-size: 13px; color: #64748b; margin-bottom: 6px;">체류자격</div>
                                 <div style="font-size: 17px; font-weight: 700; color: #007A33;" id="userVisaType">D-2 유학</div>
@@ -962,6 +988,31 @@
             </div>
         </div>
 
+        <!-- 협약 단체 전용 -->
+        <div class="services-section">
+            <h3>협약 단체 전용</h3>
+            
+            <div class="service-categories">
+                <div class="category-tab active" data-partner-category="university">대학교·어학원</div>
+                <div class="category-tab" data-partner-category="company">기업</div>
+                <div class="category-tab" data-partner-category="union">조합·법인</div>
+                <div class="category-tab" data-partner-category="public">공공기관</div>
+            </div>
+
+            <!-- 협약 단체 버튼 -->
+            <div id="partnerGrid" style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; justify-content: flex-start;">
+                <!-- JavaScript로 동적 생성 -->
+            </div>
+            
+            <!-- 협약 신청 CTA -->
+            <div style="border-top: 2px solid #e5e7eb; padding-top: 24px; margin-top: 24px;">
+                <a href="partnership-apply.html" style="display: inline-block; background: linear-gradient(135deg, #007A33 0%, #005A25 100%); color: white; border-radius: 14px; padding: 18px 32px; text-align: center; text-decoration: none; transition: all 0.3s; box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3); font-size: 17px; font-weight: 800;">
+                    우리 단체도 제휴하기
+                </a>
+                <p style="margin-top: 12px; font-size: 14px; color: #6b7280; line-height: 1.6;">모든 서비스 30% 할인 및 관리자 전용 소속 외국인 체류 현황 대시보드 제공</p>
+            </div>
+        </div>
+
         <!-- 법무법인 로연 출입국이민지원센터 소개 -->
         <div class="stay-status" style="padding: 48px; background: #1e293b; color: white; border-radius: 24px;">
             <h3 style="color: white; font-size: 24px; font-weight: 800; margin-bottom: 24px;">법무법인 로연 출입국이민지원센터</h3>
@@ -969,112 +1020,186 @@
             <!-- 공식 정보 -->
             <div class="info-box" style="background: rgba(255, 255, 255, 0.08); padding: 20px; border-radius: 14px; margin-bottom: 20px; font-size: 14px; line-height: 1.9; color: rgba(255, 255, 255, 0.9);">
                 <div style="margin-bottom: 8px;">
-                    <strong style="color: white; font-weight: 700;">신고번호</strong> 제 2025-서울강서-3193 호
+                    <strong style="color: white; font-weight: 700;">회사명</strong> 법무법인 로연
                 </div>
                 <div style="margin-bottom: 8px;">
-                    <strong style="color: white; font-weight: 700;">상호</strong> 법무법인 로연 | <strong style="color: white; font-weight: 700;">대표자</strong> 민준우
+                    <strong style="color: white; font-weight: 700;">서울사무소</strong> 서울특별시 강서구 공항대로 164, 5층 503호 (마곡동, 류마타워) | 대표: 민준우
                 </div>
                 <div style="margin-bottom: 8px;">
-                    <strong style="color: white; font-weight: 700;">소재지</strong> 서울특별시 강서구 공항대로 164, 류마타워 5층 503호 (마곡동)
+                    <strong style="color: white; font-weight: 700;">광주사무소</strong> 광주광역시 동구 준법로 1, 3층(지산동, 초석빌딩) | 대표: 봉세환
+                </div>
+                <div style="margin-bottom: 8px;">
+                    <strong style="color: white; font-weight: 700;">사업자등록번호</strong> 391-85-03007 (서울사무소)
+                </div>
+                <div style="margin-bottom: 8px;">
+                    <strong style="color: white; font-weight: 700;">통신판매업 신고번호</strong> 제 2025-서울강서-3193호
+                </div>
+                <div style="margin-bottom: 8px;">
+                    <strong style="color: white; font-weight: 700;">광고책임변호사</strong> 남도현, 민준우
                 </div>
                 <div>
-                    <strong style="color: white; font-weight: 700;">전화</strong> 02-2039-0544 | <strong style="color: white; font-weight: 700;">팩스</strong> 070-8230-0545
+                    <strong style="color: white; font-weight: 700;">연락처</strong> 02-2039-0544 | <strong style="color: white; font-weight: 700;">팩스</strong> 070-8230-0545
                 </div>
             </div>
             
             <p style="font-size: 13px; color: rgba(255, 255, 255, 0.65); line-height: 1.7; margin-bottom: 16px;">
-                법무법인 로연에서 운영하는 사이트에서 서비스 되는 모든 상품은 법무법인 로연에서 책임지고 있습니다.
+                본 사이트에서 제공되는 모든 법률 서비스는 법무법인 로연에서 제공합니다.
             </p>
             
-            <div style="font-size: 13px; color: rgba(255, 255, 255, 0.65); line-height: 1.7; padding: 16px; background: rgba(255, 255, 255, 0.05); border-radius: 12px;">
-                <strong style="color: white; font-weight: 700;">대표변호사</strong> 민준우<br>
-                <strong style="color: white; font-weight: 700;">연락처</strong> 02-2039-0544
-            </div>
-            
             <div class="copyright" style="margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.15); font-size: 12px; color: rgba(255, 255, 255, 0.5); text-align: center;">
-                Copyright © 법무법인 로연
+                Copyright © 법무법인 로연 출입국이민지원센터
             </div>
         </div>
     </div>
 
+    <!-- 알파 테스트 보호 -->
+    <script src="js/alpha-auth.js"></script>
+
+    <!-- Supabase 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js?v=7"></script>
+    
     <script src="js/ui-components.js"></script>
     <script>
+        // 페이지 로드 시 초기화
         window.addEventListener('DOMContentLoaded', function() {
             loadServices();
+            loadPartners();
             checkUserLogin();
             
             // Google Login Button
-            document.getElementById('googleLoginBtn').addEventListener('click', function() {
-                // Mock Google Login
-                const mockUser = {
-                    email: 'testuser@gmail.com',
-                    name: 'Test User',
-                    picture: 'https://via.placeholder.com/150',
-                    id: 'google_' + Date.now()
-                };
-
-                localStorage.setItem('user', JSON.stringify(mockUser));
-                localStorage.setItem('loginMethod', 'google');
-                localStorage.setItem('loginTime', new Date().toISOString());
-
-                // 프로필 설정 페이지로 이동 (프로필 없으면 새로 작성, 있으면 대시보드로)
-                window.location.href = 'visa-profile-setup-jnu.html';
+            document.getElementById('googleLoginBtn').addEventListener('click', async function() {
+                console.log('Google 로그인 시작...');
+                await signInWithGoogle();
             });
 
-            // Category Tab Events
-            const tabs = document.querySelectorAll('.category-tab');
-            tabs.forEach(tab => {
+            // Logout Button
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', async function() {
+                    if (confirm('로그아웃 하시겠습니까?')) {
+                        const result = await signOut();
+                        if (result.success) {
+                            console.log('로그아웃 성공');
+                            // 페이지 새로고침
+                            window.location.reload();
+                        } else {
+                            alert('로그아웃 실패: ' + result.error);
+                        }
+                    }
+                });
+            }
+            
+            // Category Tab Events (출입국 민원 대행)
+            const serviceTabs = document.querySelectorAll('.service-categories .category-tab[data-category]');
+            serviceTabs.forEach(tab => {
                 tab.addEventListener('click', function() {
-                    tabs.forEach(t => t.classList.remove('active'));
+                    serviceTabs.forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
                     const category = this.dataset.category;
                     loadServices(category);
                 });
             });
 
+            // Partnership Tab Events (협약 단체 전용)
+            const partnerTabs = document.querySelectorAll('.service-categories .category-tab[data-partner-category]');
+            partnerTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    partnerTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    const category = this.dataset.partnerCategory;
+                    loadPartners(category);
+                });
+            });
+
             // 긴급 구제 카드 클릭 이벤트
-            document.getElementById('emergencyLegalCard').addEventListener('click', function() {
-                const user = localStorage.getItem('user');
-                const profile = localStorage.getItem('userProfile');
+            document.getElementById('emergencyLegalCard').addEventListener('click', async function() {
+                console.log('👉 긴급 구제 카드 클릭');
                 
-                if (!user) {
+                // ✅ Supabase 세션 체크
+                const session = await checkSession();
+                console.log('🔍 세션:', session);
+                
+                if (!session || !session.user) {
                     alert('로그인이 필요합니다.');
                     document.getElementById('googleLoginBtn').scrollIntoView({ behavior: 'smooth' });
                     return;
                 }
                 
-                if (!profile) {
+                // ✅ 프로필 체크 (캐시 우선)
+                const cachedProfile = sessionStorage.getItem('userProfileCache');
+                if (cachedProfile) {
+                    console.log('✅ 캐시된 프로필 사용');
+                    window.location.href = 'visa-service-apply-jnu.html?service=emergency-legal';
+                    return;
+                }
+                
+                const profileResult = await getUserProfile(session.user.id);
+                console.log('🔍 프로필 조회:', profileResult);
+                
+                if (!profileResult.success || !profileResult.data) {
                     alert('프로필 설정이 필요합니다.');
                     window.location.href = 'visa-profile-setup-jnu.html';
                     return;
                 }
                 
-                // 전남대 전용 서비스 신청 페이지로
+                // 변호사 전담 대응 서비스로 이동
                 window.location.href = 'visa-service-apply-jnu.html?service=emergency-legal';
             });
 
-            document.getElementById('visaDiagnosisCard').addEventListener('click', function() {
-                const user = localStorage.getItem('user');
-                const profile = localStorage.getItem('userProfile');
+            document.getElementById('visaDiagnosisCard').addEventListener('click', async function() {
+                console.log('👉 비자 사전진단 카드 클릭');
                 
-                if (!user) {
+                // ✅ Supabase 세션 체크
+                const session = await checkSession();
+                console.log('🔍 세션:', session);
+                
+                if (!session || !session.user) {
                     alert('로그인이 필요합니다.');
                     document.getElementById('googleLoginBtn').scrollIntoView({ behavior: 'smooth' });
                     return;
                 }
                 
-                if (!profile) {
+                // ✅ 프로필 체크 (캐시 우선)
+                const cachedProfile = sessionStorage.getItem('userProfileCache');
+                if (cachedProfile) {
+                    console.log('✅ 캐시된 프로필 사용');
+                    window.location.href = 'visa-service-apply-jnu.html?service=visa-prediagnosis';
+                    return;
+                }
+                
+                const profileResult = await getUserProfile(session.user.id);
+                console.log('🔍 프로필 조회:', profileResult);
+                
+                if (!profileResult.success || !profileResult.data) {
                     alert('프로필 설정이 필요합니다.');
                     window.location.href = 'visa-profile-setup-jnu.html';
                     return;
                 }
                 
-                // 전남대 전용 서비스 신청 페이지로
+                // 비자 사전진단 서비스로 이동
                 window.location.href = 'visa-service-apply-jnu.html?service=visa-prediagnosis';
             });
         });
 
         // Main page - no login required
+
+        // 협약 단체 (4개 카테고리)
+        const partners = {
+            university: [
+                { id: 'jnu', name: '전남대학교', link: 'visa-login-jnu.html', color: 'linear-gradient(135deg, #007A33 0%, #005A25 100%)', shadow: 'rgba(0, 122, 51, 0.25)', icon: 'fa-university', active: true },
+                { id: 'snu', name: '서울대학교', link: '#', color: 'linear-gradient(135deg, #1D2088 0%, #0d1147 100%)', shadow: 'rgba(29, 32, 136, 0.25)', icon: 'fa-university', active: false }
+            ],
+            company: [
+                { id: 'brookfield', name: '(유)브룩필드코리아', link: '#', color: 'linear-gradient(135deg, #1e3a8a 0%, #005A25 100%)', shadow: 'rgba(30, 58, 138, 0.25)', icon: 'fa-building', active: false }
+            ],
+            union: [
+                { id: 'migrant-union', name: '전국외국인다문화노동조합', link: '#', color: 'linear-gradient(135deg, #DC143C 0%, #C41E3A 100%)', shadow: 'rgba(220, 20, 60, 0.25)', icon: 'fa-handshake', active: false }
+            ],
+            public: [
+                { id: 'support-center', name: '외국인근로자지원센터', link: '#', color: 'linear-gradient(135deg, #0891B2 0%, #0E7490 100%)', shadow: 'rgba(8, 145, 178, 0.25)', icon: 'fa-landmark', active: false }
+            ]
+        };
 
         // 출입국 민원 서비스 (6개 카테고리)
         const services = {
@@ -1126,98 +1251,144 @@
         };
 
         // 사용자 로그인 체크 및 정보 표시
-        function checkUserLogin() {
-            const user = localStorage.getItem('user');
-            const profile = localStorage.getItem('userProfile');
+        async function checkUserLogin() {
+            // Supabase 세션 확인
+            const session = await checkSession();
+            console.log('🔍 checkUserLogin - 세션:', session);
             
-            if (user && profile) {
-                const userData = JSON.parse(user);
-                const profileData = JSON.parse(profile);
+            if (session && session.user) {
+                console.log('✅ 세션 존재:', session.user.email);
                 
-                // 로그인 프롬프트 숨기기
-                document.getElementById('loginPrompt').style.display = 'none';
+                // ✅ 프로필 생성 완료 플래그 확인
+                const profileCreatedFlag = sessionStorage.getItem('profileCreated');
+                console.log('🔍 프로필 생성 플래그:', profileCreatedFlag);
                 
-                // 사용자 정보 표시
-                document.getElementById('userInfo').style.display = 'block';
+                let profileData = null;
                 
-                // 사용자 이름 표시
-                document.getElementById('userNameDisplay').textContent = 
-                    `${profileData.firstName} ${profileData.lastName} (${profileData.nationality})`;
-                
-                // 체류자격 표시
-                document.getElementById('userVisaType').textContent = profileData.visaType || 'D-2 유학';
-                
-                // 만료일 표시
-                document.getElementById('userExpiry').textContent = profileData.stayExpiry || '2025-06-30';
-                
-                // 만료일까지 남은 일수 계산하여 색상 변경
-                const today = new Date();
-                const expiry = new Date(profileData.stayExpiry);
-                const daysLeft = Math.floor((expiry - today) / (1000 * 60 * 60 * 24));
-                
-                const expiryElement = document.getElementById('userExpiry');
-                if (daysLeft < 30) {
-                    expiryElement.style.color = '#EF4444'; // 빨강
-                } else if (daysLeft < 60) {
-                    expiryElement.style.color = '#F59E0B'; // 주황
-                } else {
-                    expiryElement.style.color = '#10B981'; // 초록
+                // 플래그가 있으면 캐시된 프로필 사용
+                if (profileCreatedFlag === 'true') {
+                    const cachedProfile = sessionStorage.getItem('userProfileCache');
+                    if (cachedProfile) {
+                        profileData = JSON.parse(cachedProfile);
+                        console.log('✅ 캐시된 프로필 사용:', profileData);
+                        sessionStorage.removeItem('profileCreated');
+                        sessionStorage.removeItem('userProfileCache');
+                    }
                 }
                 
-                // 쓰레드 정보 로드
-                loadUserThreads();
+                // 캐시가 없으면 Supabase에서 조회
+                if (!profileData) {
+                    const profileResult = await getUserProfile(session.user.id);
+                    console.log('🔍 프로필 조회 결과:', profileResult);
+                    
+                    if (profileResult.success && profileResult.data) {
+                        profileData = profileResult.data;
+                        console.log('✅ Supabase에서 프로필 조회 성공');
+                    }
+                }
+                
+                if (profileData) {
+                    console.log('✅ 프로필 데이터 확인 완료');
+                    
+                    // 헤더에 사용자 이름 표시
+                    const userName = profileData.name || session.user.email.split('@')[0];
+                    document.getElementById('userGreetingName').textContent = `${userName}님`;
+                    document.getElementById('userGreeting').style.display = 'flex';
+                    document.getElementById('loginButtons').style.display = 'none';
+                    
+                    // 로그인 프롬프트 숨기기
+                    const loginPrompt = document.getElementById('loginPrompt');
+                    if (loginPrompt) loginPrompt.style.display = 'none';
+                    
+                    // 사용자 정보 표시
+                    const userInfo = document.getElementById('userInfo');
+                    if (userInfo) {
+                        userInfo.style.display = 'block';
+                        
+                        // 사용자 이름 표시
+                        const userNameDisplay = document.getElementById('userNameDisplay');
+                        if (userNameDisplay) {
+                            userNameDisplay.textContent = `${profileData.name || session.user.email} (${profileData.nationality || '국적 미설정'})`;
+                        }
+                        
+                        // 체류자격 표시
+                        const userVisaType = document.getElementById('userVisaType');
+                        if (userVisaType) {
+                            userVisaType.textContent = profileData.visa_type || 'D-2 유학';
+                        }
+                        
+                        // 만료일 표시
+                        const userExpiry = document.getElementById('userExpiry');
+                        if (userExpiry && profileData.visa_expiry_date) {
+                            userExpiry.textContent = profileData.visa_expiry_date;
+                            
+                            // 만료일까지 남은 일수 계산하여 색상 변경
+                            const today = new Date();
+                            const expiry = new Date(profileData.visa_expiry_date);
+                            const daysLeft = Math.floor((expiry - today) / (1000 * 60 * 60 * 24));
+                            
+                            if (daysLeft < 30) {
+                                userExpiry.style.color = '#EF4444'; // 빨강
+                            } else if (daysLeft < 60) {
+                                userExpiry.style.color = '#F59E0B'; // 주황
+                            } else {
+                                userExpiry.style.color = '#10B981'; // 초록
+                            }
+                        }
+                    }
+                    
+                    // 쓰레드 정보 로드
+                    loadUserThreads(session.user.id);
+                } else {
+                    // 프로필이 없으면 기본사항 제출로 이동
+                    console.log('프로필 없음 - visa-profile-setup-jnu.html로 이동');
+                    window.location.href = 'visa-profile-setup-jnu.html';
+                }
+            } else {
+                // 로그아웃 상태
+                document.getElementById('loginButtons').style.display = 'flex';
+                document.getElementById('userGreeting').style.display = 'none';
             }
         }
 
         // 사용자 쓰레드 로드 (활성 + 아카이브)
-        async function loadUserThreads() {
+        async function loadUserThreads(userId) {
+            let threads = [];
+            
+            if (userId) {
+                // Supabase에서 쓰레드 가져오기
+                const result = await getUserThreads(userId);
+                if (result.success) {
+                    threads = result.data;
+                }
+            } else {
+                // 로컬 스토리지에서 가져오기 (백업)
+                threads = JSON.parse(localStorage.getItem('userThreads') || '[]');
+            }
             const applicationCards = document.getElementById('applicationCards');
             
             if (!applicationCards) return;
             
-            applicationCards.innerHTML = '<div style="text-align:center; padding:40px;"><i class="fas fa-spinner fa-spin"></i> 로딩 중...</div>';
+            applicationCards.innerHTML = '';
             
-            try {
-                // 현재 사용자 확인
-                const session = await checkSession();
-                if (!session || !session.user) {
-                    applicationCards.innerHTML = '<div style="text-align:center; padding:40px; color:#EF4444;">로그인이 필요합니다.</div>';
-                    return;
-                }
-                
-                // Supabase에서 쓰레드 가져오기
-                const result = await getUserThreads(session.user.id);
-                let threads = [];
-                
-                if (result.success && result.data) {
-                    threads = result.data;
-                }
-                
-                if (threads.length === 0) {
-                    // 쓰레드 없을 때
-                    applicationCards.innerHTML = `
-                        <div style="text-align: center; padding: 40px 20px; color: #9CA3AF;">
-                            <div style="font-size: 48px; margin-bottom: 16px;">📄</div>
-                            <p style="font-size: 16px; font-weight: 600;">아직 신청하신 서비스가 없습니다.</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                applicationCards.innerHTML = '';
-            } catch (error) {
-                console.error('쓰레드 로드 오류:', error);
-                applicationCards.innerHTML = '<div style="text-align:center; padding:40px; color:#EF4444;">데이터를 불러오는 중 오류가 발생했습니다.</div>';
+            if (threads.length === 0) {
+                // 쓰레드 없을 때
+                applicationCards.innerHTML = `
+                    <div style="text-align: center; padding: 40px 20px; color: #9CA3AF;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">📄</div>
+                        <p style="font-size: 16px; font-weight: 600;">아직 신청하신 서비스가 없습니다.</p>
+                    </div>
+                `;
                 return;
             }
             
             // 활성 쓰레드 먼저, 아카이브는 나중에
-            const activeThreads = threads.filter(t => !t.is_active || t.status !== 'archived');
-            const archivedThreads = threads.filter(t => t.is_active === false || t.status === 'archived');
+            const activeThreads = threads.filter(t => t.status !== 'archived');
+            const archivedThreads = threads.filter(t => t.status === 'archived');
             
             [...activeThreads, ...archivedThreads].forEach(thread => {
                 const card = document.createElement('div');
-                const isArchived = thread.status === 'archived' || !thread.is_active;
+                const isArchived = thread.status === 'archived';
                 
                 // 상태 텍스트 및 색상
                 let statusBg = '#FEF3C7';
@@ -1252,9 +1423,6 @@
                 let progress3 = thread.status === 'processing' || thread.status === 'completed' || thread.status === 'archived';
                 let progress4 = thread.status === 'completed' || thread.status === 'archived';
                 
-                // 신청일 포맷팅
-                const applicationDate = thread.created_at ? new Date(thread.created_at).toISOString().split('T')[0] : '알 수 없음';
-                
                 card.style.cssText = `
                     background: white; 
                     border: 2px solid ${isArchived ? '#E5E7EB' : '#00A651'}; 
@@ -1263,6 +1431,9 @@
                     margin-bottom: 16px;
                     opacity: ${isArchived ? '0.7' : '1'};
                 `;
+                
+                // 신청일 포맷팅
+                const applicationDate = thread.created_at ? new Date(thread.created_at).toISOString().split('T')[0] : '알 수 없음';
                 
                 card.innerHTML = `
                     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
@@ -1292,7 +1463,7 @@
                         </div>
                     </div>
                     <button onclick="openThread('${thread.id}')" style="width: 100%; padding: 14px; background: linear-gradient(135deg, ${isArchived ? '#9CA3AF' : '#00A651'} 0%, ${isArchived ? '#6B7280' : '#007A33'} 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
-                        <i class="fas fa-comments"></i> ${isArchived ? '완료된 쓰레드 보기' : '쓰레드 열기'}
+                        ${isArchived ? '완료된 쓰레드' : '쓰레드 열기'}
                     </button>
                 `;
                 
@@ -1310,24 +1481,65 @@
                     return;
                 }
 
-                // 프로필에서 organization 확인
-                const profileResult = await getUserProfile(session.user.id);
-                const organization = profileResult.data?.organization;
-
-                // organization에 따라 쓰레드 페이지 이동
-                if (organization === 'jnu') {
-                    window.location.href = `visa-thread-jnu.html?id=${threadId}`;
-                } else if (organization === 'snu') {
-                    window.location.href = `visa-thread-snu.html?id=${threadId}`;
-                } else {
-                    // 일반 회원은 일반 쓰레드로
-                    window.location.href = `visa-thread-general.html?id=${threadId}`;
-                }
+                // JNU 전용 대시보드이므로 바로 JNU 쓰레드로 이동
+                window.location.href = `visa-thread-jnu.html?id=${threadId}`;
             } catch (error) {
                 console.error('쓰레드 열기 오류:', error);
-                // 기본값으로 전남대 쓰레드로 이동 (전남대 대시보드이므로)
                 window.location.href = `visa-thread-jnu.html?id=${threadId}`;
             }
+        }
+
+        // 협약 단체 로드 함수 (기존 버튼 스타일 유지)
+        function loadPartners(category = 'university') {
+            const grid = document.getElementById('partnerGrid');
+            if (!grid) {
+                return;
+            }
+            
+            grid.innerHTML = '';
+
+            const partnerList = partners[category] || partners.university;
+
+            partnerList.forEach(partner => {
+                const link = document.createElement('a');
+                link.href = partner.active ? partner.link : '#';
+                link.style.cssText = `
+                    display: inline-block;
+                    background: ${partner.color};
+                    color: white;
+                    border-radius: 12px;
+                    padding: 20px 32px;
+                    text-align: center;
+                    text-decoration: none;
+                    transition: all 0.2s;
+                    box-shadow: 0 8px 24px ${partner.shadow};
+                `;
+                
+                if (!partner.active) {
+                    link.onclick = (e) => {
+                        e.preventDefault();
+                        alert('준비중입니다');
+                        return false;
+                    };
+                }
+                
+                const span = document.createElement('span');
+                span.style.cssText = `
+                    font-size: 18px;
+                    font-weight: 800;
+                    white-space: nowrap;
+                `;
+                
+                const icon = document.createElement('i');
+                icon.className = `fas ${partner.icon}`;
+                icon.style.marginRight = '8px';
+                
+                span.appendChild(icon);
+                span.appendChild(document.createTextNode(partner.name));
+                link.appendChild(span);
+                
+                grid.appendChild(link);
+            });
         }
 
         function loadServices(category = 'visa') {
@@ -1380,27 +1592,38 @@
         }
 
 
-
         // 서비스 신청 - 로그인 필요
-        function goToConsent(service) {
-            const user = localStorage.getItem('user');
+        async function goToConsent(service) {
+            console.log('👉 민원 신청 카드 클릭:', service);
             
-            if (!user) {
+            // ✅ Supabase 세션 체크
+            const session = await checkSession();
+            console.log('🔍 세션:', session);
+            
+            if (!session || !session.user) {
                 alert('서비스 신청은 로그인이 필요합니다.');
-                // Google 로그인 버튼 클릭 유도
                 document.getElementById('googleLoginBtn').scrollIntoView({ behavior: 'smooth' });
                 return;
             }
             
-            // 로그인되어 있으면 프로필 확인
-            const profile = localStorage.getItem('userProfile');
-            if (!profile) {
+            // ✅ 프로필 체크 (캐시 우선)
+            const cachedProfile = sessionStorage.getItem('userProfileCache');
+            if (cachedProfile) {
+                console.log('✅ 캐시된 프로필 사용');
+                window.location.href = 'visa-service-apply-jnu.html?service=' + service.id;
+                return;
+            }
+            
+            const profileResult = await getUserProfile(session.user.id);
+            console.log('🔍 프로필 조회:', profileResult);
+            
+            if (!profileResult.success || !profileResult.data) {
                 alert('프로필 설정이 필요합니다.');
                 window.location.href = 'visa-profile-setup-jnu.html';
                 return;
             }
             
-            // 프로필까지 있으면 전남대 전용 서비스 신청 페이지로
+            // 프로필까지 있으면 서비스 신청 페이지로
             window.location.href = 'visa-service-apply-jnu.html?service=' + service.id;
         }
 
@@ -1439,9 +1662,5 @@
 
         // Main page - no logout function needed
     </script>
-    
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-client.js?v=5"></script>
 </body>
 </html>
