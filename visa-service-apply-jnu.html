@@ -891,7 +891,8 @@
                     agency_fee: orderInfo.agencyFee,
                     govt_fee: orderInfo.govtFee,
                     payment_method: orderInfo.paymentMethod,
-                    status: 'pending'
+                    status: 'pending',
+                    organization: 'jnu'
                 });
 
                 if (!pendingPaymentResult.success) {
@@ -960,7 +961,7 @@
                     amount: 0,
                     order_id: 'CONSULT-' + Date.now(),
                     is_consulting: true,
-                    organization: null
+                    organization: 'jnu'
                 });
                 
                 if (!threadResult.success) {
