@@ -721,17 +721,23 @@ async function createMessage(messageData) {
         const user = await getCurrentUser();
         if (!user) throw new Error('로그인이 필요합니다');
         
+        // 프로필 정보 가져오기 (sender_name 용)
+        const profileResult = await getUserProfile(user.id);
+        const senderName = profileResult.success && profileResult.data 
+            ? profileResult.data.name 
+            : user.email;
+        
         const { data, error } = await supabase
             .from('messages')
             .insert({
                 thread_id: messageData.thread_id,
                 sender_id: user.id,
                 sender_type: messageData.sender_type || 'user',
+                sender_name: senderName,
                 content: messageData.content,
                 file_url: messageData.file_url || null,
                 file_name: messageData.file_name || null,
-                file_type: messageData.file_type || null,
-                created_at: new Date().toISOString()
+                file_type: messageData.file_type || null
             })
             .select()
             .single();
