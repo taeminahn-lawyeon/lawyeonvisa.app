@@ -1017,6 +1017,7 @@
                             <th>고객명</th>
                             <th>연락처</th>
                             <th>서비스명</th>
+                            <th>협약단체</th>
                             <th>주문번호</th>
                             <th>상태</th>
                             <th>금액</th>
@@ -1059,6 +1060,13 @@
                     ? `<code style="font-size: 11px; background: #f3f4f6; padding: 2px 6px; border-radius: 4px;">${thread.order_id}</code>`
                     : '-';
                 
+                // 협약단체 표시
+                const organizationBadge = thread.organization === 'jnu' 
+                    ? `<span class="org-badge" style="background: linear-gradient(135deg, #00A651 0%, #007A33 100%); color: white; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block;"><i class="fas fa-university"></i> 전남대</span>`
+                    : thread.organization === 'snu'
+                    ? `<span class="org-badge" style="background: linear-gradient(135deg, #1D2088 0%, #0d1147 100%); color: white; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block;"><i class="fas fa-university"></i> 서울대</span>`
+                    : `<span style="color: #9CA3AF; font-size: 12px;">일반</span>`;
+                
                 tableHTML += `
                     <tr>
                         <td>
@@ -1067,6 +1075,7 @@
                         </td>
                         <td>${phoneDisplay}</td>
                         <td>${thread.service_name}</td>
+                        <td>${organizationBadge}</td>
                         <td>${orderDisplay}</td>
                         <td><span class="status-badge ${thread.status}">${statusLabel}</span></td>
                         <td><strong>₩${thread.amount.toLocaleString()}</strong></td>
