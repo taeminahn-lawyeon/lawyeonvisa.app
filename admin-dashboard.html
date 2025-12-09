@@ -9,7 +9,7 @@
     
     <!-- Supabase 라이브러리 (head에서 먼저 로드) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-client.js?v=7"></script>
+    <script src="js/supabase-client.js?v=8"></script>
     <style>
         * {
             margin: 0;
@@ -825,9 +825,10 @@
                     <thead>
                         <tr>
                             <th>고객명</th>
+                            <th>연락처</th>
                             <th>서비스명</th>
+                            <th>주문번호</th>
                             <th>상태</th>
-                            <th>우선순위</th>
                             <th>금액</th>
                             <th>신청일</th>
                             <th>작업</th>
@@ -857,12 +858,27 @@
                     'urgent': '<i class="fas fa-fire"></i>'
                 }[thread.priority];
                 
+                // 연락처 포맷팅
+                const phone = thread.customer_phone || '-';
+                const phoneDisplay = phone !== '-' 
+                    ? `<a href="tel:${phone}" style="color: #3182F6; text-decoration: none;">${phone}</a>`
+                    : '-';
+                
+                // 주문번호 표시 (order_id 또는 payment_id)
+                const orderDisplay = thread.order_id 
+                    ? `<code style="font-size: 11px; background: #f3f4f6; padding: 2px 6px; border-radius: 4px;">${thread.order_id}</code>`
+                    : '-';
+                
                 tableHTML += `
                     <tr>
-                        <td><strong>${thread.customer_name}</strong></td>
+                        <td>
+                            <div><strong>${thread.customer_name}</strong></div>
+                            <div style="font-size: 12px; color: #6B7280;">${thread.customer_email}</div>
+                        </td>
+                        <td>${phoneDisplay}</td>
                         <td>${thread.service_name}</td>
+                        <td>${orderDisplay}</td>
                         <td><span class="status-badge ${thread.status}">${statusLabel}</span></td>
-                        <td><span class="priority-badge ${thread.priority}">${priorityIcon} ${priorityLabel}</span></td>
                         <td><strong>₩${thread.amount.toLocaleString()}</strong></td>
                         <td>${new Date(thread.created_at).toLocaleDateString()}</td>
                         <td>
