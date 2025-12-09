@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 쓰레드 - 법무법인 로연</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js?v=8"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background: #F9FAFB;
+            height: 100vh;
+            overflow: hidden;
+            color: #191F28;
+        }
+
+        /* 레이아웃 */
+        .admin-thread-container {
+            display: grid;
+            grid-template-columns: 320px 1fr 380px;
+            height: 100vh;
+            max-width: 1800px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 헤더 */
+        .thread-header {
+            grid-column: 1 / -1;
+            padding: 20px 24px;
+            border-bottom: 1px solid #E5E8EB;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            background: #F2F4F6;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            color: #191F28;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background: #E5E8EB;
+        }
+
+        .thread-title-section h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #191F28;
+            margin-bottom: 4px;
+        }
+
+        .thread-meta {
+            font-size: 13px;
+            color: #6B7684;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 12px;
+        }
+
+        .header-btn {
+            background: #F2F4F6;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            color: #191F28;
+            transition: all 0.2s ease;
+        }
+
+        .header-btn:hover {
+            background: #E5E8EB;
+        }
+
+        .header-btn.primary {
+            background: #3182F6;
+            color: white;
+        }
+
+        .header-btn.primary:hover {
+            background: #1B64DA;
+        }
+
+        /* 왼쪽 사이드바 - 고객 정보 */
+        .left-sidebar {
+            border-right: 1px solid #E5E8EB;
+            overflow-y: auto;
+            height: calc(100vh - 81px);
+        }
+
+        .sidebar-section {
+            padding: 20px;
+            border-bottom: 1px solid #E5E8EB;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #191F28;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-item {
+            margin-bottom: 16px;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #6B7684;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-size: 14px;
+            color: #191F28;
+            font-weight: 600;
+        }
+
+        .info-value a {
+            color: #3182F6;
+            text-decoration: none;
+        }
+
+        .info-value a:hover {
+            text-decoration: underline;
+        }
+
+        /* 상태/우선순위 */
+        .status-priority-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .status-select, .priority-select {
+            padding: 10px 12px;
+            border: 2px solid #E5E8EB;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .status-select:focus, .priority-select:focus {
+            outline: none;
+            border-color: #3182F6;
+        }
+
+        /* 메신저 알림 버튼 */
+        .messenger-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .messenger-btn {
+            padding: 10px;
+            border: 2px solid #E5E8EB;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: #191F28;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .messenger-btn:hover {
+            background: #F9FAFB;
+            border-color: #3182F6;
+            color: #3182F6;
+        }
+
+        .messenger-btn.active {
+            background: #E8F3FF;
+            border-color: #3182F6;
+            color: #3182F6;
+        }
+
+        /* 가운데 메시지 영역 */
+        .message-area {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 81px);
+            background: #FAFBFC;
+        }
+
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .message.admin {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3182F6 0%, #1B64DA 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .message.customer .message-avatar {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        }
+
+        .message-content {
+            max-width: 60%;
+        }
+
+        .message-sender {
+            font-size: 12px;
+            color: #6B7684;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .message-bubble {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            border: 1px solid #E5E8EB;
+        }
+
+        .message.admin .message-bubble {
+            background: #3182F6;
+            color: white;
+            border: none;
+        }
+
+        .message-text {
+            font-size: 14px;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: #6B7684;
+            margin-top: 6px;
+        }
+
+        .message.admin .message-time {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .message-file {
+            margin-top: 8px;
+            padding: 10px 12px;
+            background: #F9FAFB;
+            border-radius: 8px;
+            border: 1px solid #E5E8EB;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .message-file:hover {
+            background: #F2F4F6;
+        }
+
+        .message.admin .message-file {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .message.admin .message-file:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* 메시지 입력 */
+        .message-input-container {
+            padding: 20px 24px;
+            border-top: 1px solid #E5E8EB;
+            background: white;
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .message-input {
+            flex: 1;
+            min-height: 48px;
+            max-height: 120px;
+            padding: 12px 16px;
+            border: 2px solid #E5E8EB;
+            border-radius: 12px;
+            font-size: 14px;
+            resize: none;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: #3182F6;
+        }
+
+        .input-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .attach-btn, .send-btn {
+            width: 48px;
+            height: 48px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            font-size: 18px;
+        }
+
+        .attach-btn {
+            background: #F2F4F6;
+            color: #6B7684;
+        }
+
+        .attach-btn:hover {
+            background: #E5E8EB;
+            color: #191F28;
+        }
+
+        .send-btn {
+            background: #3182F6;
+            color: white;
+        }
+
+        .send-btn:hover {
+            background: #1B64DA;
+        }
+
+        .send-btn:disabled {
+            background: #E5E8EB;
+            color: #6B7684;
+            cursor: not-allowed;
+        }
+
+        /* 오른쪽 관리 패널 */
+        .right-panel {
+            border-left: 1px solid #E5E8EB;
+            overflow-y: auto;
+            height: calc(100vh - 81px);
+            background: #FAFBFC;
+        }
+
+        .panel-section {
+            padding: 20px;
+            border-bottom: 1px solid #E5E8EB;
+            background: white;
+            margin-bottom: 1px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-label {
+            font-size: 12px;
+            color: #6B7684;
+            margin-bottom: 6px;
+            font-weight: 600;
+            display: block;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #E5E8EB;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #3182F6;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .save-btn {
+            width: 100%;
+            padding: 12px;
+            background: #3182F6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 12px;
+        }
+
+        .save-btn:hover {
+            background: #1B64DA;
+        }
+
+        /* 관납료 표시 */
+        .fee-breakdown {
+            background: #F9FAFB;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid #E5E8EB;
+        }
+
+        .fee-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .fee-row:last-child {
+            margin-bottom: 0;
+            padding-top: 12px;
+            border-top: 2px solid #E5E8EB;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .fee-label {
+            color: #6B7684;
+        }
+
+        .fee-value {
+            color: #191F28;
+            font-weight: 600;
+        }
+
+        .fee-row:last-child .fee-value {
+            color: #3182F6;
+        }
+
+        /* 내부 메모 */
+        .admin-note {
+            background: #FFF9E6;
+            border: 2px solid #FFC107;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 12px;
+        }
+
+        .admin-note-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #F59E0B;
+        }
+
+        .admin-note-text {
+            font-size: 13px;
+            color: #92400E;
+            line-height: 1.5;
+        }
+
+        /* 상태 배지 */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-badge.payment {
+            background: #E8F3FF;
+            color: #1B64DA;
+        }
+
+        .status-badge.document {
+            background: #FFF4E8;
+            color: #F59638;
+        }
+
+        .status-badge.processing {
+            background: #F0F4FF;
+            color: #3182F6;
+        }
+
+        .status-badge.completed {
+            background: #E8FAF0;
+            color: #00A651;
+        }
+
+        .status-badge.archived {
+            background: #F2F4F6;
+            color: #6B7684;
+        }
+
+        .priority-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .priority-badge.urgent {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+
+        .priority-badge.high {
+            background: #FED7AA;
+            color: #9A3412;
+        }
+
+        .priority-badge.normal {
+            background: #E0E7FF;
+            color: #3730A3;
+        }
+
+        /* 반응형 */
+        @media (max-width: 1400px) {
+            .admin-thread-container {
+                grid-template-columns: 280px 1fr 340px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .admin-thread-container {
+                grid-template-columns: 1fr;
+            }
+
+            .left-sidebar, .right-panel {
+                display: none;
+            }
+        }
+
+        /* 로딩 */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-size: 18px;
+            color: #6B7684;
+        }
+
+        /* 스크롤바 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F9FAFB;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #E5E8EB;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D1D5DB;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading" id="loading">
+        <i class="fas fa-spinner fa-spin"></i> 로딩 중...
+    </div>
+
+    <div class="admin-thread-container" id="mainContainer" style="display: none;">
+        <!-- 헤더 -->
+        <div class="thread-header">
+            <div class="header-left">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i> 돌아가기
+                </button>
+                <div class="thread-title-section">
+                    <h1 id="threadTitle">로딩 중...</h1>
+                    <div class="thread-meta">
+                        <span id="threadId"></span> • 
+                        <span id="threadDate"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="header-btn">
+                    <i class="fas fa-download"></i> 문서 다운로드
+                </button>
+                <button class="header-btn primary" onclick="sendEmailNotification()">
+                    <i class="fas fa-envelope"></i> 이메일 발송
+                </button>
+            </div>
+        </div>
+
+        <!-- 왼쪽 사이드바: 고객 정보 -->
+        <div class="left-sidebar">
+            <!-- 고객 정보 -->
+            <div class="sidebar-section">
+                <div class="section-title">
+                    <i class="fas fa-user"></i> 고객 정보
+                </div>
+                <div class="info-item">
+                    <div class="info-label">이름</div>
+                    <div class="info-value" id="customerName">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">이메일</div>
+                    <div class="info-value">
+                        <a href="#" id="customerEmail">-</a>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">전화번호</div>
+                    <div class="info-value">
+                        <a href="#" id="customerPhone">-</a>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">국적</div>
+                    <div class="info-value" id="customerNationality">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">비자 종류</div>
+                    <div class="info-value" id="customerVisa">-</div>
+                </div>
+            </div>
+
+            <!-- 쓰레드 정보 -->
+            <div class="sidebar-section">
+                <div class="section-title">
+                    <i class="fas fa-tasks"></i> 쓰레드 관리
+                </div>
+                <div class="info-item">
+                    <div class="info-label">서비스명</div>
+                    <div class="info-value" id="serviceName">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">주문번호</div>
+                    <div class="info-value" id="orderId">-</div>
+                </div>
+                
+                <div class="status-priority-grid">
+                    <div>
+                        <div class="info-label">상태</div>
+                        <select class="status-select" id="threadStatus" onchange="updateThreadStatus()">
+                            <option value="payment">결제 완료</option>
+                            <option value="document">서류 수집</option>
+                            <option value="processing">진행 중</option>
+                            <option value="completed">완료</option>
+                            <option value="archived">보관됨</option>
+                        </select>
+                    </div>
+                    <div>
+                        <div class="info-label">우선순위</div>
+                        <select class="priority-select" id="threadPriority" onchange="updateThreadPriority()">
+                            <option value="normal">보통</option>
+                            <option value="high">높음</option>
+                            <option value="urgent">긴급</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 메신저 알림 -->
+            <div class="sidebar-section">
+                <div class="section-title">
+                    <i class="fas fa-bell"></i> 메신저 알림
+                </div>
+                <div class="info-item">
+                    <div class="info-label">선호 메신저</div>
+                    <div class="info-value" id="preferredMessenger">-</div>
+                </div>
+                <div class="messenger-grid">
+                    <button class="messenger-btn" onclick="sendMessenger('whatsapp')">
+                        💬 WhatsApp
+                    </button>
+                    <button class="messenger-btn" onclick="sendMessenger('wechat')">
+                        💚 WeChat
+                    </button>
+                    <button class="messenger-btn" onclick="sendMessenger('telegram')">
+                        ✈️ Telegram
+                    </button>
+                    <button class="messenger-btn" onclick="sendMessenger('kakaotalk')">
+                        💛 KakaoTalk
+                    </button>
+                    <button class="messenger-btn" onclick="sendMessenger('line')">
+                        🟢 LINE
+                    </button>
+                    <button class="messenger-btn" onclick="sendMessenger('zalo')">
+                        🔵 Zalo
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 가운데: 메시지 영역 -->
+        <div class="message-area">
+            <div class="messages-container" id="messagesContainer">
+                <!-- 메시지가 동적으로 추가됨 -->
+            </div>
+
+            <!-- 메시지 입력 -->
+            <div class="message-input-container">
+                <div class="input-wrapper">
+                    <textarea 
+                        class="message-input" 
+                        id="messageInput" 
+                        placeholder="메시지를 입력하세요..."
+                        rows="1"
+                    ></textarea>
+                    <div class="input-actions">
+                        <button class="attach-btn" onclick="attachFile()">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+                <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload(event)">
+            </div>
+        </div>
+
+        <!-- 오른쪽: 관리 패널 -->
+        <div class="right-panel">
+            <!-- 출입국 정보 -->
+            <div class="panel-section">
+                <div class="section-title">
+                    <i class="fas fa-landmark"></i> 출입국 정보
+                </div>
+                <div class="form-group">
+                    <label class="form-label">관할 출입국사무소</label>
+                    <select class="form-select" id="immigrationOffice">
+                        <option value="">선택하세요</option>
+                        <option value="서울">서울출입국·외국인청</option>
+                        <option value="부산">부산출입국·외국인청</option>
+                        <option value="인천">인천출입국·외국인청</option>
+                        <option value="대구">대구출입국·외국인청</option>
+                        <option value="광주">광주출입국·외국인청</option>
+                        <option value="대전">대전출입국·외국인청</option>
+                        <option value="울산">울산출입국·외국인청</option>
+                        <option value="수원">수원출입국·외국인청</option>
+                        <option value="청주">청주출입국·외국인청</option>
+                        <option value="전주">전주출입국·외국인청</option>
+                        <option value="창원">창원출입국·외국인청</option>
+                        <option value="제주">제주출입국·외국인청</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">제출 방법</label>
+                    <select class="form-select" id="submissionMethod">
+                        <option value="">선택하세요</option>
+                        <option value="online">전자민원 (온라인)</option>
+                        <option value="visit">방문 제출</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">제출 마감일</label>
+                    <input type="date" class="form-input" id="submissionDeadline">
+                </div>
+                <button class="save-btn" onclick="saveImmigrationInfo()">
+                    <i class="fas fa-save"></i> 저장
+                </button>
+            </div>
+
+            <!-- 관납료 정보 -->
+            <div class="panel-section">
+                <div class="section-title">
+                    <i class="fas fa-won-sign"></i> 금액 정보
+                </div>
+                <div class="fee-breakdown">
+                    <div class="fee-row">
+                        <span class="fee-label">총 서비스 금액</span>
+                        <span class="fee-value" id="totalAmount">₩0</span>
+                    </div>
+                    <div class="fee-row">
+                        <span class="fee-label">정부 관납료</span>
+                        <span class="fee-value" id="governmentFee">₩0</span>
+                    </div>
+                    <div class="fee-row">
+                        <span class="fee-label">순수익</span>
+                        <span class="fee-value" id="netRevenue">₩0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 내부 메모 -->
+            <div class="panel-section">
+                <div class="section-title">
+                    <i class="fas fa-sticky-note"></i> 내부 관리 메모
+                </div>
+                <div class="admin-note-header">
+                    <i class="fas fa-lock"></i> 고객에게 보이지 않음
+                </div>
+                <div class="form-group">
+                    <textarea 
+                        class="form-textarea" 
+                        id="adminNotes" 
+                        placeholder="관리자 메모를 입력하세요..."
+                    ></textarea>
+                </div>
+                <button class="save-btn" onclick="saveAdminNotes()">
+                    <i class="fas fa-save"></i> 메모 저장
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 전역 변수
+        let threadId = null;
+        let threadData = null;
+        let customerData = null;
+        let currentUser = null;
+
+        // 페이지 로드
+        window.addEventListener('DOMContentLoaded', async function() {
+            try {
+                // URL에서 thread_id 가져오기
+                const urlParams = new URLSearchParams(window.location.search);
+                threadId = urlParams.get('thread_id');
+
+                if (!threadId) {
+                    alert('유효하지 않은 쓰레드 ID입니다.');
+                    window.location.href = 'admin-dashboard.html';
+                    return;
+                }
+
+                // 관리자 권한 확인
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    alert('로그인이 필요합니다.');
+                    window.location.href = 'admin-login.html';
+                    return;
+                }
+
+                // 관리자 프로필 확인
+                currentUser = await getUserProfile();
+                if (!currentUser || !['super_admin', 'partner_admin'].includes(currentUser.role)) {
+                    alert('관리자 권한이 필요합니다.');
+                    window.location.href = 'index.html';
+                    return;
+                }
+
+                // 쓰레드 데이터 로드
+                await loadThreadData();
+                await loadMessages();
+
+                // 로딩 완료
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'grid';
+
+                // 메시지 입력 자동 높이 조절
+                setupMessageInput();
+
+            } catch (error) {
+                console.error('페이지 로드 오류:', error);
+                alert('페이지 로드 중 오류가 발생했습니다.');
+                window.location.href = 'admin-dashboard.html';
+            }
+        });
+
+        // 쓰레드 데이터 로드
+        async function loadThreadData() {
+            try {
+                const { data: thread, error } = await supabase
+                    .from('threads')
+                    .select(`
+                        *,
+                        profiles!threads_user_id_fkey (
+                            name,
+                            email,
+                            phone,
+                            nationality,
+                            visa_type,
+                            preferred_messenger,
+                            messenger_id
+                        )
+                    `)
+                    .eq('id', threadId)
+                    .single();
+
+                if (error) throw error;
+                if (!thread) throw new Error('쓰레드를 찾을 수 없습니다.');
+
+                threadData = thread;
+                customerData = thread.profiles;
+
+                // UI 업데이트
+                updateThreadUI();
+
+            } catch (error) {
+                console.error('쓰레드 로드 오류:', error);
+                throw error;
+            }
+        }
+
+        // UI 업데이트
+        function updateThreadUI() {
+            // 헤더
+            document.getElementById('threadTitle').textContent = threadData.service_name || '상담 쓰레드';
+            document.getElementById('threadId').textContent = `#${threadData.order_id || threadData.id.substring(0, 8)}`;
+            document.getElementById('threadDate').textContent = new Date(threadData.created_at).toLocaleDateString('ko-KR');
+
+            // 고객 정보
+            document.getElementById('customerName').textContent = customerData?.name || '알 수 없음';
+            document.getElementById('customerEmail').textContent = customerData?.email || '-';
+            document.getElementById('customerEmail').href = `mailto:${customerData?.email}`;
+            document.getElementById('customerPhone').textContent = customerData?.phone || '-';
+            document.getElementById('customerPhone').href = `tel:${customerData?.phone}`;
+            document.getElementById('customerNationality').textContent = customerData?.nationality || '-';
+            document.getElementById('customerVisa').textContent = customerData?.visa_type || '-';
+
+            // 쓰레드 정보
+            document.getElementById('serviceName').textContent = threadData.service_name || '-';
+            document.getElementById('orderId').textContent = threadData.order_id || '-';
+            document.getElementById('threadStatus').value = threadData.status || 'payment';
+            document.getElementById('threadPriority').value = threadData.priority || 'normal';
+
+            // 메신저 정보
+            const messengerNames = {
+                'whatsapp': 'WhatsApp',
+                'wechat': 'WeChat',
+                'telegram': 'Telegram',
+                'kakaotalk': 'KakaoTalk',
+                'line': 'LINE',
+                'zalo': 'Zalo'
+            };
+            document.getElementById('preferredMessenger').textContent = 
+                messengerNames[customerData?.preferred_messenger] || '없음';
+
+            // 선호 메신저 강조
+            if (customerData?.preferred_messenger) {
+                const messengerButtons = document.querySelectorAll('.messenger-btn');
+                messengerButtons.forEach(btn => {
+                    const messengerType = btn.getAttribute('onclick').match(/'(.+)'/)[1];
+                    if (messengerType === customerData.preferred_messenger) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+
+            // 출입국 정보
+            if (threadData.immigration_office) {
+                document.getElementById('immigrationOffice').value = threadData.immigration_office;
+            }
+            if (threadData.submission_method) {
+                document.getElementById('submissionMethod').value = threadData.submission_method;
+            }
+            if (threadData.submission_deadline) {
+                document.getElementById('submissionDeadline').value = threadData.submission_deadline;
+            }
+
+            // 금액 정보
+            const totalAmount = threadData.amount || 0;
+            const governmentFee = threadData.government_fee || 0;
+            const netRevenue = totalAmount - governmentFee;
+
+            document.getElementById('totalAmount').textContent = '₩' + totalAmount.toLocaleString();
+            document.getElementById('governmentFee').textContent = '₩' + governmentFee.toLocaleString();
+            document.getElementById('netRevenue').textContent = '₩' + netRevenue.toLocaleString();
+
+            // 내부 메모
+            if (threadData.admin_notes) {
+                document.getElementById('adminNotes').value = threadData.admin_notes;
+            }
+        }
+
+        // 메시지 로드
+        async function loadMessages() {
+            try {
+                const messages = await getThreadMessages(threadId);
+                const container = document.getElementById('messagesContainer');
+                container.innerHTML = '';
+
+                if (!messages || messages.length === 0) {
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 60px 20px; color: #6B7684;">
+                            <i class="fas fa-comments" style="font-size: 48px; opacity: 0.3; margin-bottom: 16px;"></i>
+                            <p>아직 메시지가 없습니다.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                messages.forEach(msg => {
+                    appendMessage(msg);
+                });
+
+                // 스크롤 맨 아래로
+                container.scrollTop = container.scrollHeight;
+
+            } catch (error) {
+                console.error('메시지 로드 오류:', error);
+            }
+        }
+
+        // 메시지 추가
+        function appendMessage(msg) {
+            const container = document.getElementById('messagesContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${msg.sender}`;
+
+            const senderName = msg.sender === 'admin' ? '관리자' : customerData?.name || '고객';
+            const senderInitial = senderName.charAt(0);
+
+            let fileHtml = '';
+            if (msg.file_url && msg.file_name) {
+                fileHtml = `
+                    <div class="message-file" onclick="window.open('${msg.file_url}', '_blank')">
+                        <i class="fas fa-file"></i>
+                        <span>${msg.file_name}</span>
+                        <i class="fas fa-download"></i>
+                    </div>
+                `;
+            }
+
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${senderInitial}</div>
+                <div class="message-content">
+                    <div class="message-sender">${senderName}</div>
+                    <div class="message-bubble">
+                        <div class="message-text">${msg.content}</div>
+                        ${fileHtml}
+                    </div>
+                    <div class="message-time">${formatMessageTime(msg.created_at)}</div>
+                </div>
+            `;
+
+            container.appendChild(messageDiv);
+        }
+
+        // 메시지 시간 포맷
+        function formatMessageTime(timestamp) {
+            const date = new Date(timestamp);
+            const now = new Date();
+            const diff = now - date;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+
+            if (minutes < 1) return '방금 전';
+            if (minutes < 60) return `${minutes}분 전`;
+            if (hours < 24) return `${hours}시간 전`;
+            if (days < 7) return `${days}일 전`;
+            return date.toLocaleDateString('ko-KR');
+        }
+
+        // 메시지 전송
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const content = input.value.trim();
+
+            if (!content) return;
+
+            try {
+                const sendBtn = document.getElementById('sendBtn');
+                sendBtn.disabled = true;
+
+                const result = await createMessage(threadId, {
+                    sender: 'admin',
+                    content: content
+                });
+
+                if (result.success) {
+                    appendMessage({
+                        sender: 'admin',
+                        content: content,
+                        created_at: new Date().toISOString()
+                    });
+
+                    input.value = '';
+                    input.style.height = 'auto';
+
+                    // 스크롤 맨 아래로
+                    const container = document.getElementById('messagesContainer');
+                    container.scrollTop = container.scrollHeight;
+                }
+
+                sendBtn.disabled = false;
+
+            } catch (error) {
+                console.error('메시지 전송 오류:', error);
+                alert('메시지 전송 중 오류가 발생했습니다.');
+            }
+        }
+
+        // 메시지 입력 자동 높이
+        function setupMessageInput() {
+            const input = document.getElementById('messageInput');
+            input.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+            });
+
+            // Enter 키로 전송
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+        }
+
+        // 파일 첨부
+        function attachFile() {
+            document.getElementById('fileInput').click();
+        }
+
+        async function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // 파일 크기 제한 (10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                alert('파일 크기는 10MB 이하여야 합니다.');
+                return;
+            }
+
+            try {
+                // 파일 업로드 로직 (기존 visa-thread-general.html과 동일)
+                console.log('파일 업로드:', file.name);
+                alert('파일 업로드 기능은 개발 중입니다.');
+
+            } catch (error) {
+                console.error('파일 업로드 오류:', error);
+                alert('파일 업로드 중 오류가 발생했습니다.');
+            }
+        }
+
+        // 상태 업데이트
+        async function updateThreadStatus() {
+            const status = document.getElementById('threadStatus').value;
+            
+            try {
+                const { error } = await supabase
+                    .from('threads')
+                    .update({ status: status })
+                    .eq('id', threadId);
+
+                if (error) throw error;
+
+                threadData.status = status;
+                alert('상태가 업데이트되었습니다.');
+
+            } catch (error) {
+                console.error('상태 업데이트 오류:', error);
+                alert('상태 업데이트 중 오류가 발생했습니다.');
+            }
+        }
+
+        // 우선순위 업데이트
+        async function updateThreadPriority() {
+            const priority = document.getElementById('threadPriority').value;
+            
+            try {
+                const { error } = await supabase
+                    .from('threads')
+                    .update({ priority: priority })
+                    .eq('id', threadId);
+
+                if (error) throw error;
+
+                threadData.priority = priority;
+                alert('우선순위가 업데이트되었습니다.');
+
+            } catch (error) {
+                console.error('우선순위 업데이트 오류:', error);
+                alert('우선순위 업데이트 중 오류가 발생했습니다.');
+            }
+        }
+
+        // 출입국 정보 저장
+        async function saveImmigrationInfo() {
+            const immigrationOffice = document.getElementById('immigrationOffice').value;
+            const submissionMethod = document.getElementById('submissionMethod').value;
+            const submissionDeadline = document.getElementById('submissionDeadline').value;
+
+            try {
+                const { error } = await supabase
+                    .from('threads')
+                    .update({
+                        immigration_office: immigrationOffice,
+                        submission_method: submissionMethod,
+                        submission_deadline: submissionDeadline
+                    })
+                    .eq('id', threadId);
+
+                if (error) throw error;
+
+                alert('출입국 정보가 저장되었습니다.');
+
+            } catch (error) {
+                console.error('출입국 정보 저장 오류:', error);
+                alert('저장 중 오류가 발생했습니다.');
+            }
+        }
+
+        // 내부 메모 저장
+        async function saveAdminNotes() {
+            const notes = document.getElementById('adminNotes').value;
+
+            try {
+                const { error } = await supabase
+                    .from('threads')
+                    .update({ admin_notes: notes })
+                    .eq('id', threadId);
+
+                if (error) throw error;
+
+                alert('메모가 저장되었습니다.');
+
+            } catch (error) {
+                console.error('메모 저장 오류:', error);
+                alert('메모 저장 중 오류가 발생했습니다.');
+            }
+        }
+
+        // 메신저 알림
+        function sendMessenger(messengerType) {
+            const messengerId = customerData?.messenger_id;
+            const customerName = customerData?.name || '고객';
+            const message = `안녕하세요, ${customerName}님. 법무법인 로연 출입국이민지원센터입니다.`;
+
+            let url = '';
+            
+            switch(messengerType) {
+                case 'whatsapp':
+                    // WhatsApp URL: https://wa.me/82xxxxxxxxx?text=메시지
+                    const whatsappPhone = messengerId?.replace(/[^0-9]/g, '');
+                    url = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(message)}`;
+                    break;
+                
+                case 'telegram':
+                    // Telegram URL: https://t.me/username 또는 tg://msg?to=phone&text=메시지
+                    url = `https://t.me/${messengerId}`;
+                    break;
+                
+                case 'kakaotalk':
+                    // KakaoTalk: 브라우저에서 직접 열기 어려움, URL 복사
+                    navigator.clipboard.writeText(`카카오톡 ID: ${messengerId}\n메시지: ${message}`);
+                    alert('카카오톡 정보가 클립보드에 복사되었습니다!');
+                    return;
+                
+                case 'line':
+                    // LINE URL: https://line.me/R/ti/p/@lineId
+                    url = `https://line.me/R/ti/p/@${messengerId}`;
+                    break;
+                
+                case 'wechat':
+                    // WeChat: 브라우저에서 직접 열기 어려움, ID 복사
+                    navigator.clipboard.writeText(`WeChat ID: ${messengerId}\n메시지: ${message}`);
+                    alert('WeChat 정보가 클립보드에 복사되었습니다!');
+                    return;
+                
+                case 'zalo':
+                    // Zalo URL: https://zalo.me/phone
+                    const zaloPhone = messengerId?.replace(/[^0-9]/g, '');
+                    url = `https://zalo.me/${zaloPhone}`;
+                    break;
+            }
+
+            if (url) {
+                window.open(url, '_blank');
+            } else {
+                alert('메신저 URL을 생성할 수 없습니다.');
+            }
+        }
+
+        // 이메일 발송
+        async function sendEmailNotification() {
+            const customerEmail = customerData?.email;
+            if (!customerEmail) {
+                alert('고객 이메일이 없습니다.');
+                return;
+            }
+
+            const subject = `[법무법인 로연] ${threadData.service_name} 진행 안내`;
+            const body = `안녕하세요, ${customerData.name}님.\n\n법무법인 로연 출입국이민지원센터입니다.\n\n신청하신 ${threadData.service_name} 서비스가 진행 중입니다.\n\n감사합니다.`;
+
+            const mailtoUrl = `mailto:${customerEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoUrl;
+        }
+
+        // 뒤로 가기
+        function goBack() {
+            window.location.href = 'admin-dashboard.html';
+        }
+    </script>
+</body>
+</html>
