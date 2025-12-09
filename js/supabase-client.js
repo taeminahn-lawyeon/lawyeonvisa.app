@@ -410,46 +410,198 @@ async function createPayment(paymentData) {
 }
 
 // ============================================
-// 진단 관련 함수
+// 결제 관련 추가 함수
 // ============================================
 
-// 진단 기록 저장
-async function createDiagnosisRecord(diagnosisData) {
+// 결제 정보 조회 (단건)
+async function getPayment(orderId) {
     try {
-        const user = await getCurrentUser();
-        if (!user) throw new Error('로그인이 필요합니다');
+        const { data, error } = await supabase
+            .from('payments')
+            .select('*')
+            .eq('order_id', orderId)
+            .single();
+        
+        if (error) throw error;
+        return { success: true, data };
+    } catch (error) {
+        console.error('결제 정보 조회 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// 사용자 결제 내역 조회
+async function getUserPayments(userId) {
+    try {
+        const { data, error } = await supabase
+            .from('payments')
+            .select('*')
+            .eq('user_id', userId)
+            .order('created_at', { ascending: false });
+        
+        if (error) throw error;
+        return { success: true, data };
+    } catch (error) {
+        console.error('사용자 결제 내역 조회 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// 결제 상태 업데이트
+async function updatePaymentStatus(paymentId, status, paymentKey = null) {
+    try {
+        const updateData = {
+            status,
+            updated_at: new Date().toISOString()
+        };
+        
+        if (paymentKey) {
+            updateData.payment_key = paymentKey;
+        }
         
         const { data, error } = await supabase
-            .from('diagnosis_records')
-            .insert([{
-                user_id: user.id,
-                ...diagnosisData,
-                created_at: new Date().toISOString()
-            }])
+            .from('payments')
+            .update(updateData)
+            .eq('id', paymentId)
             .select()
             .single();
         
         if (error) throw error;
         return { success: true, data };
     } catch (error) {
-        console.error('진단 기록 저장 오류:', error);
+        console.error('결제 상태 업데이트 오류:', error);
         return { success: false, error: error.message };
     }
 }
 
-// 사용자 진단 기록 조회
-async function getUserDiagnosisRecords(userId) {
+// ============================================
+// 쓰레드 관련 추가 함수
+// ============================================
+
+// 쓰레드 상세 조회
+async function getThread(threadId) {
     try {
         const { data, error } = await supabase
-            .from('diagnosis_records')
+            .from('threads')
             .select('*')
-            .eq('user_id', userId)
-            .order('diagnosis_date', { ascending: false });
+            .eq('id', threadId)
+            .single();
         
         if (error) throw error;
         return { success: true, data };
     } catch (error) {
-        console.error('진단 기록 조회 오류:', error);
+        console.error('쓰레드 조회 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// 모든 쓰레드 조회 (관리자용)
+async function getAllThreads() {
+    try {
+        const { data, error } = await supabase
+            .from('threads')
+            .select(`
+                *,
+                profiles:user_id (
+                    name,
+                    email,
+                    phone
+                )
+            `)
+            .eq('is_active', true)
+            .order('created_at', { ascending: false });
+        
+        if (error) throw error;
+        return { success: true, data };
+    } catch (error) {
+        console.error('전체 쓰레드 조회 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// 쓰레드 삭제 (소프트 삭제)
+async function deleteThread(threadId) {
+    try {
+        const { data, error } = await supabase
+            .from('threads')
+            .update({
+                is_active: false,
+                updated_at: new Date().toISOString()
+            })
+            .eq('id', threadId)
+            .select()
+            .single();
+        
+        if (error) throw error;
+        return { success: true, data };
+    } catch (error) {
+        console.error('쓰레드 삭제 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// ============================================
+// 신청 내역 관련 함수
+// ============================================
+
+// 신청 내역 생성
+async function createApplication(applicationData) {
+    try {
+        const user = await getCurrentUser();
+        if (!user) throw new Error('로그인이 필요합니다');
+        
+        const { data, error } = await supabase
+            .from('applications')
+            .insert({
+                user_id: user.id,
+                ...applicationData,
+                created_at: new Date().toISOString()
+            })
+            .select()
+            .single();
+        
+        if (error) throw error;
+        return { success: true, data };
+    } catch (error) {
+        console.error('신청 내역 생성 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// 사용자 신청 내역 조회
+async function getUserApplications(userId) {
+    try {
+        const { data, error } = await supabase
+            .from('applications')
+            .select('*')
+            .eq('user_id', userId)
+            .order('submitted_at', { ascending: false });
+        
+        if (error) throw error;
+        return { success: true, data };
+    } catch (error) {
+        console.error('신청 내역 조회 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// 신청 상태 업데이트
+async function updateApplicationStatus(applicationId, status) {
+    try {
+        const { data, error } = await supabase
+            .from('applications')
+            .update({
+                status,
+                updated_at: new Date().toISOString()
+            })
+            .eq('id', applicationId)
+            .select()
+            .single();
+        
+        if (error) throw error;
+        return { success: true, data };
+    } catch (error) {
+        console.error('신청 상태 업데이트 오류:', error);
         return { success: false, error: error.message };
     }
 }
