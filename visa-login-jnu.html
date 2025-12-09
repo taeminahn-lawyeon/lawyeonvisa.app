@@ -403,7 +403,7 @@
             <form onsubmit="verifyAndLogin(event)">
                 <div class="form-group">
                     <label><i class="fas fa-id-card"></i> 학번 (Student Number)</label>
-                    <input type="text" id="studentNumber" placeholder="예: 215012345" required pattern="[0-9]{9}" maxlength="9">
+                    <input type="text" id="studentNumber" placeholder="예: 215012345 또는 ADMIN001" required maxlength="20">
                     <div id="studentVerifyResult" style="margin-top: 8px; font-size: 13px;"></div>
                 </div>
 
@@ -640,9 +640,12 @@
                             console.log('✅ JNU 계정 - 대시보드로 자동 이동');
                             window.location.href = 'visa-dashboard-jnu.html';
                         } else {
-                            console.log('⚠️ 다른 organization 계정 - 로그인 필요');
-                            // 세션 종료하고 로그인 화면 유지
+                            console.log('⚠️ 다른 organization 계정 - 강제 로그아웃');
+                            // 다른 organization 계정은 강제 로그아웃
                             await signOut();
+                            alert('전남대학교 학생 전용 페이지입니다.\n일반 계정은 로그아웃됩니다.');
+                            // 페이지 새로고침하여 로그인 화면 표시
+                            window.location.reload();
                         }
                     } else {
                         // 프로필 없으면 로그인 화면 유지
