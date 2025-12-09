@@ -1350,11 +1350,10 @@
                 return;
             }
             
-            // 활성 쓰레드 먼저, 아카이브는 나중에
+            // 활성 쓰레드만 표시 (archived 제외)
             const activeThreads = threads.filter(t => t.status !== 'archived');
-            const archivedThreads = threads.filter(t => t.status === 'archived');
             
-            [...activeThreads, ...archivedThreads].forEach(thread => {
+            activeThreads.forEach(thread => {
                 const card = document.createElement('div');
                 const isArchived = thread.status === 'archived';
                 
