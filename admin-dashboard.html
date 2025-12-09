@@ -483,7 +483,7 @@
             padding: 0 25px;
             border-radius: 15px 15px 0 0;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-bottom: -15px;
+            margin-bottom: 0;
         }
 
         .tabs {
@@ -911,7 +911,9 @@
                         // 긴급 케이스 자동 판별
                         let priority = thread.priority || 'normal';
                         if (thread.service_name && 
-                            (thread.service_name.includes('긴급 구제') || thread.service_name.includes('사전 진단'))) {
+                            (thread.service_name.includes('긴급 구제') || 
+                             thread.service_name.includes('사전 진단') ||
+                             thread.service_name.includes('변호사 전담 대응'))) {
                             priority = 'urgent';
                         }
                         
@@ -960,11 +962,12 @@
             );
             document.getElementById('activeThreads').textContent = activeThreads.length;
             
-            // 긴급 케이스 (긴급 구제, 사전 진단 포함)
+            // 긴급 케이스 (긴급 구제, 사전 진단, 변호사 전담 대응 포함)
             const urgentCases = allThreads.filter(t => 
                 t.priority === 'urgent' || 
                 (t.service_name && t.service_name.includes('긴급 구제')) || 
-                (t.service_name && t.service_name.includes('사전 진단'))
+                (t.service_name && t.service_name.includes('사전 진단')) ||
+                (t.service_name && t.service_name.includes('변호사 전담 대응'))
             );
             document.getElementById('urgentCases').textContent = urgentCases.length;
             
