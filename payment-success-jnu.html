@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>결제 완료 - 법무법인 로연 x 전남대학교</title>
+    <title>결제 완료 - 전남대학교 출입국이민지원센터</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     
@@ -32,24 +32,11 @@
 
         /* 헤더 */
         .header {
-            background: linear-gradient(135deg, #00A651 0%, #007A33 50%, #005A25 100%);
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
             padding: 20px;
             border-radius: 16px 16px 0 0;
             text-align: center;
-            border-bottom: 3px solid #FFD700;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 70%);
-            border-radius: 50%;
+            border-bottom: 3px solid #00A651;
         }
 
         .header-title {
@@ -70,14 +57,13 @@
         .success-icon {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, #00A651 0%, #007A33 100%);
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 24px;
             animation: scaleIn 0.5s ease;
-            box-shadow: 0 4px 12px rgba(0, 122, 51, 0.3);
         }
 
         @keyframes scaleIn {
@@ -128,7 +114,7 @@
         }
 
         .order-card h3 i {
-            color: #007A33;
+            color: #00A651;
         }
 
         .info-row {
@@ -164,13 +150,13 @@
 
         .info-row:last-child .info-value {
             font-size: 24px;
-            color: #007A33;
+            color: #00A651;
             font-weight: 900;
         }
 
         /* 다음 단계 안내 */
         .next-steps {
-            background: #E8F5E9;
+            background: #F0F7FF;
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 24px;
@@ -179,7 +165,7 @@
         .next-steps h3 {
             font-size: 16px;
             font-weight: 800;
-            color: #005A25;
+            color: #1E40AF;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
@@ -187,7 +173,7 @@
         }
 
         .next-steps h3 i {
-            color: #007A33;
+            color: #00A651;
         }
 
         .next-steps-list {
@@ -197,7 +183,7 @@
 
         .next-steps-list li {
             padding: 10px 0;
-            color: #005A25;
+            color: #1E40AF;
             font-size: 14px;
             font-weight: 600;
             display: flex;
@@ -207,7 +193,7 @@
         }
 
         .next-steps-list li i {
-            color: #007A33;
+            color: #00A651;
             margin-top: 3px;
             flex-shrink: 0;
         }
@@ -231,13 +217,13 @@
         .btn-primary {
             background: linear-gradient(135deg, #00A651 0%, #007A33 100%);
             color: white;
-            box-shadow: 0 4px 12px rgba(0, 122, 51, 0.3);
+            box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
             margin-bottom: 12px;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 122, 51, 0.4);
+            box-shadow: 0 8px 20px rgba(49, 130, 246, 0.4);
         }
 
         .btn-secondary {
@@ -261,7 +247,7 @@
             width: 48px;
             height: 48px;
             border: 4px solid #E5E7EB;
-            border-top-color: #007A33;
+            border-top-color: #00A651;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin: 0 auto 24px;
@@ -316,10 +302,6 @@
         </div>
     </div>
 
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-client.js?v=5"></script>
-    
     <script>
         let createdThreadId = null;
 
@@ -329,7 +311,7 @@
                 const session = await checkSession();
                 if (!session || !session.user) {
                     displayError('로그인이 필요합니다.');
-                    setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+                    setTimeout(() => { window.location.href = 'visa-dashboard-jnu.html'; }, 2000);
                     return;
                 }
 
@@ -368,41 +350,66 @@
 
                 // 쓰레드 생성
                 const thread = await createThreadFromPayment(paymentData);
+                
+                if (thread) {
+                    console.log('✅ 결제 완료 + 쓰레드 생성 성공');
+                } else {
+                    console.warn('⚠️ 결제는 완료되었지만 쓰레드 생성 실패');
+                }
 
-                // 성공 화면 표시
+                // 성공 화면 표시 (쓰레드 생성 실패해도 결제는 완료)
                 displaySuccess(paymentData, thread);
             } catch (error) {
-                console.error('결제 완료 처리 오류:', error);
-                displayError('처리 중 오류가 발생했습니다.');
+                console.error('❌ 결제 완료 처리 오류:', error);
+                displayError('처리 중 오류가 발생했습니다. 결제는 완료되었으니 고객센터로 문의해주세요.');
             }
         });
 
         // Supabase에 쓰레드 생성
         async function createThreadFromPayment(paymentData) {
             try {
+                console.log('🔄 쓰레드 생성 시작:', {
+                    service_name: paymentData.service_name,
+                    amount: paymentData.amount,
+                    order_id: paymentData.order_id,
+                    payment_id: paymentData.id
+                });
+                
                 const threadResult = await createThread({
                     service_name: paymentData.service_name,
                     status: 'payment',
                     amount: paymentData.amount,
+                    government_fee: paymentData.govt_fee || 0,
                     order_id: paymentData.order_id,
-                    organization: 'jnu',
+                    organization: paymentData.organization || null,
                     payment_id: paymentData.id
                 });
                 
+                console.log('📋 쓰레드 생성 결과:', threadResult);
+                
                 if (!threadResult.success) {
-                    throw new Error('쓰레드 생성 실패');
+                    console.error('❌ 쓰레드 생성 실패:', threadResult.error);
+                    throw new Error(threadResult.error || '쓰레드 생성 실패');
                 }
                 
                 createdThreadId = threadResult.data.id;
+                console.log('✅ 쓰레드 생성 완료. ID:', createdThreadId);
+                
                 return threadResult.data;
             } catch (error) {
-                console.error('쓰레드 생성 오류:', error);
-                throw error;
+                console.error('❌ 쓰레드 생성 오류:', error);
+                // 에러를 다시 던지지 않고 null 반환 (결제는 완료되었으므로)
+                return null;
             }
         }
 
         function displaySuccess(paymentData, thread) {
             const content = document.getElementById('content');
+            
+            // 쓰레드 생성 여부에 따른 메시지
+            const threadMessage = thread 
+                ? '신청이 정상적으로 접수되었습니다.<br>센터 담당자가 쓰레드를 통해 안내드리겠습니다.'
+                : '결제가 완료되었습니다.<br>담당자 배정 중이며, 곧 연락드리겠습니다.';
             
             content.innerHTML = `
                 <div class="success-icon">
@@ -411,8 +418,7 @@
 
                 <h1>결제가 완료되었습니다!</h1>
                 <p class="message">
-                    신청이 정상적으로 접수되었습니다.<br>
-                    센터 담당자가 쓰레드를 통해 안내드리겠습니다.
+                    ${threadMessage}
                 </p>
 
                 <div class="order-card">
@@ -427,7 +433,7 @@
                     </div>
                     <div class="info-row">
                         <span class="info-label">결제 수단</span>
-                        <span class="info-value">${getPaymentMethodName(paymentData.payment_method)}</span>
+                        <span class="info-value">${getPaymentMethodName(paymentData.payment_method || 'card')}</span>
                     </div>
                     <div class="info-row">
                         <span class="info-label">결제 금액</span>
@@ -444,9 +450,11 @@
                     </ul>
                 </div>
 
-                <button class="btn btn-primary" onclick="goToThread()">
-                    <i class="fas fa-comments"></i> 쓰레드로 이동
-                </button>
+                ${thread ? `
+                    <button class="btn btn-primary" onclick="goToThread()">
+                        <i class="fas fa-comments"></i> 쓰레드로 이동
+                    </button>
+                ` : ''}
 
                 <button class="btn btn-secondary" onclick="goToHome()">
                     <i class="fas fa-home"></i> 메인으로 이동
@@ -494,5 +502,9 @@
             window.location.href = 'index.html';
         }
     </script>
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js?v=5"></script>
 </body>
 </html>
