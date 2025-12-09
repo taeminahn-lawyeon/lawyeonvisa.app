@@ -1156,28 +1156,46 @@
         }
 
         // 쓰레드 상태 업데이트
-        function updateThreadStatus() {
+        async function updateThreadStatus() {
             if (!currentThreadId) return;
             
             const newStatus = document.getElementById('newStatus').value;
             const newPriority = document.getElementById('newPriority').value;
             const memo = document.getElementById('statusMemo').value;
             
-            // 실제 환경에서는 Supabase 업데이트
-            const thread = allThreads.find(t => t.id === currentThreadId);
-            if (thread) {
-                thread.status = newStatus;
-                thread.priority = newPriority;
-                thread.updated_at = Date.now();
+            try {
+                // 🔥 Supabase에 실제 업데이트
+                const { data, error } = await supabase
+                    .from('threads')
+                    .update({
+                        status: newStatus,
+                        priority: newPriority,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', currentThreadId)
+                    .select()
+                    .single();
                 
-                // localStorage에 저장 (개발용)
-                localStorage.setItem('adminThreads', JSON.stringify(allThreads));
+                if (error) throw error;
+                
+                console.log('✅ 쓰레드 상태 업데이트 성공:', data);
+                
+                // 로컬 배열도 업데이트
+                const thread = allThreads.find(t => t.id === currentThreadId);
+                if (thread) {
+                    thread.status = newStatus;
+                    thread.priority = newPriority;
+                    thread.updated_at = new Date().toISOString();
+                }
                 
                 updateStatistics();
                 applyFilters();
                 closeStatusModal();
                 
                 alert('쓰레드 상태가 업데이트되었습니다!');
+            } catch (error) {
+                console.error('❌ 쓰레드 상태 업데이트 실패:', error);
+                alert('상태 업데이트 중 오류가 발생했습니다: ' + error.message);
             }
         }
 
