@@ -487,12 +487,15 @@
             font-size: 14px;
         }
 
-        .fee-row:last-child {
-            margin-bottom: 0;
-            padding-top: 12px;
-            border-top: 2px solid #E5E8EB;
+        .fee-row:first-child {
+            padding-bottom: 12px;
+            border-bottom: 2px solid #E5E8EB;
             font-weight: 700;
             font-size: 16px;
+        }
+
+        .fee-row:first-child .fee-value {
+            color: #3182F6;
         }
 
         .fee-label {
@@ -502,10 +505,6 @@
         .fee-value {
             color: #191F28;
             font-weight: 600;
-        }
-
-        .fee-row:last-child .fee-value {
-            color: #3182F6;
         }
 
         /* 내부 메모 */
@@ -747,22 +746,22 @@
                 </div>
                 <div class="messenger-grid">
                     <button class="messenger-btn" onclick="sendMessenger('whatsapp')">
-                        💬 WhatsApp
+                        WhatsApp
                     </button>
                     <button class="messenger-btn" onclick="sendMessenger('wechat')">
-                        💚 WeChat
+                        WeChat
                     </button>
                     <button class="messenger-btn" onclick="sendMessenger('telegram')">
-                        ✈️ Telegram
+                        Telegram
                     </button>
                     <button class="messenger-btn" onclick="sendMessenger('kakaotalk')">
-                        💛 KakaoTalk
+                        KakaoTalk
                     </button>
                     <button class="messenger-btn" onclick="sendMessenger('line')">
-                        🟢 LINE
+                        LINE
                     </button>
                     <button class="messenger-btn" onclick="sendMessenger('zalo')">
-                        🔵 Zalo
+                        Zalo
                     </button>
                 </div>
             </div>
@@ -849,12 +848,12 @@
                         <span class="fee-value" id="totalAmount">₩0</span>
                     </div>
                     <div class="fee-row">
-                        <span class="fee-label">정부 관납료</span>
-                        <span class="fee-value" id="governmentFee">₩0</span>
-                    </div>
-                    <div class="fee-row">
                         <span class="fee-label">센터 서비스 대행료</span>
                         <span class="fee-value" id="netRevenue">₩0</span>
+                    </div>
+                    <div class="fee-row">
+                        <span class="fee-label">정부 관납료</span>
+                        <span class="fee-value" id="governmentFee">₩0</span>
                     </div>
                 </div>
             </div>
