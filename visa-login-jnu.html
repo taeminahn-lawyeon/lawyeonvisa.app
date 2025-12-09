@@ -507,8 +507,8 @@
             const resultDiv = document.getElementById('studentVerifyResult');
             const googleLoginBtn = document.getElementById('googleLoginBtn');
             
-            if (!studentNumber || studentNumber.length !== 9) {
-                resultDiv.innerHTML = '<span style="color: #EF4444;"><i class="fas fa-times-circle"></i> 학번은 9자리 숫자입니다.</span>';
+            if (!studentNumber) {
+                resultDiv.innerHTML = '<span style="color: #EF4444;"><i class="fas fa-times-circle"></i> 학번을 입력해주세요.</span>';
                 return;
             }
             
@@ -635,13 +635,18 @@
                     const profileResult = await getUserProfile(session.user.id);
                     
                     if (profileResult.success && profileResult.data) {
-                        // 프로필 있으면 대시보드로
-                        console.log('✅ 프로필 존재 - 대시보드로 이동');
-                        window.location.href = 'visa-dashboard-jnu.html';
+                        // organization='jnu'인 경우에만 자동 로그인
+                        if (profileResult.data.organization === 'jnu') {
+                            console.log('✅ JNU 계정 - 대시보드로 자동 이동');
+                            window.location.href = 'visa-dashboard-jnu.html';
+                        } else {
+                            console.log('⚠️ 다른 organization 계정 - 로그인 필요');
+                            // 세션 종료하고 로그인 화면 유지
+                            await signOut();
+                        }
                     } else {
-                        // 프로필 없으면 프로필 설정 페이지로
-                        console.log('⚠️ 프로필 없음 - 프로필 설정 페이지로 이동');
-                        window.location.href = 'visa-profile-setup-jnu.html';
+                        // 프로필 없으면 로그인 화면 유지
+                        console.log('⚠️ 프로필 없음 - 로그인 필요');
                     }
                 }
             } catch (error) {
