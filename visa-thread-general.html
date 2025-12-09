@@ -615,19 +615,24 @@
                     expectedDate.textContent = '-';
                 }
             
-            // 상태 배지 업데이트
-            const statusBadge = document.getElementById('statusBadge');
-            const statusMap = {
-                'payment': { text: '결제 완료', class: 'processing' },
-                'document': { text: '서류 수집 중', class: 'pending' },
-                'processing': { text: '신청 진행 중', class: 'processing' },
-                'completed': { text: '처리 완료', class: 'completed' },
-                'archived': { text: '완료 (보관)', class: 'completed' }
-            };
-            
-            const status = statusMap[thread.status] || { text: '진행 중', class: 'processing' };
-            statusBadge.textContent = status.text;
-            statusBadge.className = 'status-badge ' + status.class;
+                // 상태 배지 업데이트
+                const statusBadge = document.getElementById('statusBadge');
+                const statusMapBadge = {
+                    'payment': { text: '결제 완료', class: 'processing' },
+                    'document': { text: '서류 수집 중', class: 'pending' },
+                    'processing': { text: '신청 진행 중', class: 'processing' },
+                    'completed': { text: '처리 완료', class: 'completed' },
+                    'archived': { text: '완료 (보관)', class: 'completed' }
+                };
+                
+                const status = statusMapBadge[thread.status] || { text: '진행 중', class: 'processing' };
+                statusBadge.textContent = status.text;
+                statusBadge.className = 'status-badge ' + status.class;
+            } catch (error) {
+                console.error('❌ 쓰레드 로드 실패:', error);
+                alert('쓰레드 정보를 불러올 수 없습니다.');
+                window.location.href = 'index.html';
+            }
         }
 
         // 메시지 로드
@@ -743,7 +748,7 @@
         }
 
         // 메시지 전송
-        function sendMessage() {
+        async function sendMessage() {
             const input = document.getElementById('messageInput');
             const content = input.value.trim();
 
