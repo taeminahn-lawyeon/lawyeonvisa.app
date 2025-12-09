@@ -379,6 +379,7 @@
                     service_name: paymentData.service_name,
                     status: 'payment',
                     amount: paymentData.amount,
+                    government_fee: paymentData.govt_fee || 0,
                     order_id: paymentData.order_id,
                     organization: paymentData.organization || null,
                     payment_id: paymentData.id
