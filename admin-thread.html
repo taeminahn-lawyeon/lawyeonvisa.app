@@ -910,10 +910,17 @@
                 }
 
                 // 관리자 프로필 확인
-                currentUser = await getUserProfile();
-                if (!currentUser || !['super_admin', 'partner_admin'].includes(currentUser.role)) {
+                const profileResult = await getUserProfile(session.user.id);
+                if (!profileResult.success || !profileResult.data) {
+                    alert('프로필 정보를 찾을 수 없습니다.');
+                    window.location.href = 'admin-login.html';
+                    return;
+                }
+                
+                currentUser = profileResult.data;
+                if (!['super_admin', 'partner_admin'].includes(currentUser.role)) {
                     alert('관리자 권한이 필요합니다.');
-                    window.location.href = 'index.html';
+                    window.location.href = 'admin-dashboard.html';
                     return;
                 }
 
@@ -1044,7 +1051,8 @@
         // 메시지 로드
         async function loadMessages() {
             try {
-                const messages = await getThreadMessages(threadId);
+                const result = await getThreadMessages(threadId);
+                const messages = result.success ? result.data : [];
                 const container = document.getElementById('messagesContainer');
                 container.innerHTML = '';
 
@@ -1132,8 +1140,9 @@
                 const sendBtn = document.getElementById('sendBtn');
                 sendBtn.disabled = true;
 
-                const result = await createMessage(threadId, {
-                    sender: 'admin',
+                const result = await createMessage({
+                    thread_id: threadId,
+                    sender_type: 'admin',
                     content: content
                 });
 
