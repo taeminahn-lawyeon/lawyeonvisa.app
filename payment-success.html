@@ -409,11 +409,11 @@
                     </div>
                     <div class="info-row">
                         <span class="info-label">결제 수단</span>
-                        <span class="info-value">${getPaymentMethodName(orderInfo.paymentMethod)}</span>
+                        <span class="info-value">${getPaymentMethodName(paymentData.payment_method || 'card')}</span>
                     </div>
                     <div class="info-row">
                         <span class="info-label">결제 금액</span>
-                        <span class="info-value">₩${orderInfo.amount.toLocaleString()}</span>
+                        <span class="info-value">₩${paymentData.amount.toLocaleString()}</span>
                     </div>
                 </div>
 
