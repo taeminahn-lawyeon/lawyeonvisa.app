@@ -223,6 +223,7 @@ async function createThread(threadData) {
             service_name: threadData.service_name,
             status: threadData.status || 'document',
             amount: threadData.amount || 0,
+            government_fee: threadData.government_fee || 0,
             order_id: threadData.order_id || null,
             payment_id: threadData.payment_id || null,
             organization: threadData.organization || null,
