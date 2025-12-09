@@ -646,10 +646,27 @@
                 const result = await getThreadMessages(threadId);
                 
                 if (result.success && result.data && result.data.length > 0) {
-                    // 메시지 영역 초기화
+                    // 시스템 메시지 제외하고 동적 메시지만 제거
+                    const systemMessage = messagesArea.querySelector('.system-message');
                     messagesArea.innerHTML = '';
+                    if (systemMessage) {
+                        messagesArea.appendChild(systemMessage);
+                    }
                     
-                    // 메시지 표시
+                    // 환영 메시지 추가 (첫 메시지로)
+                    const welcomeMessage = {
+                        sender: 'admin',
+                        name: '법무법인 로연',
+                        content: '안녕하세요! 법무법인 로연 출입국이민지원센터입니다.\n\n신청이 접수되었습니다.\n센터 담당자가 곧 연락드리겠습니다.',
+                        time: new Date(result.data[0].created_at).toLocaleTimeString('ko-KR', { 
+                            hour: '2-digit', 
+                            minute: '2-digit' 
+                        }),
+                        avatar: '로'
+                    };
+                    appendMessage(welcomeMessage);
+                    
+                    // 나머지 메시지 표시
                     result.data.forEach(msg => {
                         const messageData = {
                             sender: msg.sender_type,
@@ -667,7 +684,7 @@
                         appendMessage(messageData);
                     });
                 } else {
-                    // 메시지 없을 때 환영 메시지
+                    // 메시지 없을 때도 환영 메시지 추가
                     const welcomeMessage = {
                         sender: 'admin',
                         name: '법무법인 로연',
