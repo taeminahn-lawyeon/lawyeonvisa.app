@@ -408,6 +408,7 @@ async function createPayment(paymentData) {
         return { success: false, error: error.message };
     }
 }
+
 // ============================================
 // 진단 관련 함수
 // ============================================
