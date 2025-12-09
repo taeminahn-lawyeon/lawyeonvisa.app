@@ -736,12 +736,20 @@
         let selectedPaymentMethod = 'card';
 
         window.addEventListener('DOMContentLoaded', async function() {
-            // ✅ 1. 로그인 세션 확인
-            const session = await checkSession();
-            console.log('🔍 [결제 페이지] 세션 확인:', session);
+            // ✅ 1. 로그인 세션 확인 (재시도 포함)
+            let session = await checkSession();
+            console.log('🔍 [결제 페이지] 세션 확인 (1차):', session);
+            
+            // OAuth 리다이렉트 직후 세션 초기화 지연 대응: 1초 후 재시도
+            if (!session || !session.user) {
+                console.log('⏳ [결제 페이지] 세션 없음 - 1초 후 재시도...');
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                session = await checkSession();
+                console.log('🔍 [결제 페이지] 세션 확인 (2차):', session);
+            }
             
             if (!session || !session.user) {
-                console.log('❌ [결제 페이지] 세션 없음');
+                console.log('❌ [결제 페이지] 세션 없음 (최종)');
                 alert('로그인이 필요합니다.\n\n먼저 로그인 후 이용해주세요.');
                 window.location.href = 'index.html';
                 return;
@@ -885,6 +893,17 @@
 
                 if (!pendingPaymentResult.success) {
                     throw new Error('결제 정보 저장 실패');
+                }
+
+                // 관리자 계정 확인
+                const isAdmin = session.user.email === 'taemin.ahn@lawyeon.com';
+                
+                if (isAdmin) {
+                    // 🎯 관리자 데모용: 결제 화면 스킵하고 바로 성공 페이지로 이동
+                    console.log('🔑 관리자 계정 - 결제 스킵 모드');
+                    const currentUrl = window.location.origin;
+                    window.location.href = `${currentUrl}/payment-success.html?orderId=${orderInfo.orderId}&amount=${orderInfo.amount}&paymentKey=DEMO_${Date.now()}`;
+                    return;
                 }
 
                 if (selectedPaymentMethod === 'card') {
