@@ -1157,11 +1157,21 @@
 
         // 쓰레드 상태 업데이트
         async function updateThreadStatus() {
-            if (!currentThreadId) return;
+            if (!currentThreadId) {
+                console.error('❌ currentThreadId가 없습니다');
+                return;
+            }
             
             const newStatus = document.getElementById('newStatus').value;
             const newPriority = document.getElementById('newPriority').value;
             const memo = document.getElementById('statusMemo').value;
+            
+            console.log('🔄 상태 업데이트 시작:', {
+                threadId: currentThreadId,
+                newStatus,
+                newPriority,
+                memo
+            });
             
             try {
                 // 🔥 Supabase에 실제 업데이트
@@ -1176,9 +1186,15 @@
                     .select()
                     .single();
                 
-                if (error) throw error;
+                if (error) {
+                    console.error('❌ Supabase 업데이트 에러:', error);
+                    throw error;
+                }
                 
-                console.log('✅ 쓰레드 상태 업데이트 성공:', data);
+                console.log('✅ Supabase 상태 업데이트 성공:', data);
+                console.log('  - Thread ID:', data.id);
+                console.log('  - New Status:', data.status);
+                console.log('  - Updated At:', data.updated_at);
                 
                 // 로컬 배열도 업데이트
                 const thread = allThreads.find(t => t.id === currentThreadId);
@@ -1186,6 +1202,9 @@
                     thread.status = newStatus;
                     thread.priority = newPriority;
                     thread.updated_at = new Date().toISOString();
+                    console.log('✅ 로컬 배열 업데이트 완료');
+                } else {
+                    console.warn('⚠️ 로컬 배열에서 쓰레드를 찾을 수 없음');
                 }
                 
                 updateStatistics();
@@ -1193,8 +1212,17 @@
                 closeStatusModal();
                 
                 alert('쓰레드 상태가 업데이트되었습니다!');
+                
+                // 🔥 즉시 새로고침하여 DB 상태 재확인
+                setTimeout(() => {
+                    console.log('🔄 데이터 새로고침 중...');
+                    loadThreadsData();
+                }, 500);
+                
             } catch (error) {
                 console.error('❌ 쓰레드 상태 업데이트 실패:', error);
+                console.error('  - Error name:', error.name);
+                console.error('  - Error message:', error.message);
                 alert('상태 업데이트 중 오류가 발생했습니다: ' + error.message);
             }
         }
