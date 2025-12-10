@@ -605,12 +605,29 @@
                 const result = await signInWithEmail(email, password);
                 
                 if (result.success) {
-                    console.log('✅ 관리자 로그인 성공');
+                    console.log('✅ 관리자 로그인 성공:', result.user.email);
+                    
+                    // admins 테이블에서 partner_jnu 권한 확인
+                    const { data: adminData, error: adminError } = await supabase
+                        .from('admins')
+                        .select('*')
+                        .eq('email', result.user.email)
+                        .eq('role', 'partner_jnu')
+                        .single();
+                    
+                    if (adminError || !adminData) {
+                        console.error('❌ 담당자 권한 없음:', result.user.email);
+                        await signOut();
+                        showToast('담당자 권한이 없습니다. 관리자에게 문의하세요.', 'error');
+                        return;
+                    }
+                    
+                    console.log('✅ 담당자 권한 확인 완료');
                     showToast('관리자 로그인 성공!', 'success', 2000);
                     
-                    // Partner Dashboard로 이동
+                    // JNU 담당자 대시보드로 이동
                     setTimeout(() => {
-                        window.location.href = 'partner-dashboard.html?org=jnu';
+                        window.location.href = 'partner-dashboard-jnu.html';
                     }, 2000);
                 } else {
                     console.error('❌ 로그인 실패:', result.error);
