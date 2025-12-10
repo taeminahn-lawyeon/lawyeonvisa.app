@@ -595,6 +595,9 @@
         async function adminLogin(event) {
             event.preventDefault();
             
+            // 수동 로그인 플래그 설정
+            isManualLogin = true;
+            
             const email = document.getElementById('adminEmail').value;
             const password = document.getElementById('adminPassword').value;
 
@@ -657,12 +660,9 @@
                 }
                 
                 console.log('✅ 담당자 권한 확인 완료:', adminData);
-                showToast('관리자 로그인 성공!', 'success', 2000);
                 
-                // JNU 담당자 대시보드로 이동
-                setTimeout(() => {
-                    window.location.href = 'partner-dashboard-jnu.html';
-                }, 2000);
+                // 즉시 이동 (토스트 메시지 제거)
+                window.location.href = 'partner-dashboard-jnu.html';
             } catch (error) {
                 console.error('❌ 로그인 중 예외 발생:', error);
                 console.error('❌ 에러 스택:', error.stack);
@@ -670,8 +670,17 @@
             }
         }
 
+        // 페이지 로드 시 자동 리디렉션 방지 플래그
+        let isManualLogin = false;
+
         // 페이지 로드 시 이미 로그인된 경우 체크 - 실제 Supabase Auth
         window.addEventListener('DOMContentLoaded', async function() {
+            // 수동 로그인 중이면 자동 체크 건너뛰기
+            if (isManualLogin) {
+                console.log('⏭️ 수동 로그인 진행 중 - 자동 체크 건너뛰기');
+                return;
+            }
+
             try {
                 // Supabase 세션 확인
                 const { data: { session }, error } = await supabase.auth.getSession();
@@ -690,7 +699,7 @@
                         .select('*')
                         .eq('email', session.user.email)
                         .eq('role', 'partner_jnu')
-                        .maybeSingle(); // single 대신 maybeSingle 사용 (결과 없어도 에러 안남)
+                        .maybeSingle();
                     
                     if (adminData) {
                         // 담당자 계정 → partner-dashboard-jnu.html로 이동
