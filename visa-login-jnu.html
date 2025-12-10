@@ -604,25 +604,42 @@
                 // Supabase 이메일/비밀번호 로그인
                 const result = await signInWithEmail(email, password);
                 
-                if (result.success) {
-                    console.log('✅ 관리자 로그인 성공:', result.user.email);
+                console.log('🔍 signInWithEmail 결과:', result);
+                
+                if (result.success && result.data && result.data.user) {
+                    const userEmail = result.data.user.email;
+                    console.log('✅ 관리자 로그인 성공:', userEmail);
                     
                     // admins 테이블에서 partner_jnu 권한 확인
+                    console.log('🔍 admins 테이블 조회 시작:', userEmail);
                     const { data: adminData, error: adminError } = await supabase
                         .from('admins')
                         .select('*')
-                        .eq('email', result.user.email)
+                        .eq('email', userEmail)
                         .eq('role', 'partner_jnu')
                         .single();
                     
-                    if (adminError || !adminData) {
-                        console.error('❌ 담당자 권한 없음:', result.user.email);
-                        await signOut();
+                    console.log('📊 admins 테이블 조회 결과:', { adminData, adminError });
+                    
+                    if (adminError) {
+                        if (adminError.code === 'PGRST116') {
+                            console.error('❌ admins 테이블에 해당 이메일 없음:', userEmail);
+                        } else {
+                            console.error('❌ admins 테이블 조회 오류:', adminError);
+                        }
+                        await supabase.auth.signOut();
                         showToast('담당자 권한이 없습니다. 관리자에게 문의하세요.', 'error');
                         return;
                     }
                     
-                    console.log('✅ 담당자 권한 확인 완료');
+                    if (!adminData) {
+                        console.error('❌ 담당자 권한 없음 (data is null)');
+                        await supabase.auth.signOut();
+                        showToast('담당자 권한이 없습니다. 관리자에게 문의하세요.', 'error');
+                        return;
+                    }
+                    
+                    console.log('✅ 담당자 권한 확인 완료:', adminData);
                     showToast('관리자 로그인 성공!', 'success', 2000);
                     
                     // JNU 담당자 대시보드로 이동
@@ -634,7 +651,7 @@
                     showToast('이메일 또는 비밀번호가 올바르지 않습니다.', 'error');
                 }
             } catch (error) {
-                console.error('로그인 오류:', error);
+                console.error('❌ 로그인 중 예외 발생:', error);
                 showToast('로그인 중 오류가 발생했습니다.', 'error');
             }
         }
