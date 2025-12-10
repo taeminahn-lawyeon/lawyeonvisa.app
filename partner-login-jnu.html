@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>담당자 로그인 - 전남대학교 출입국이민지원센터</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js?v=8"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background: linear-gradient(135deg, #007A33 0%, #005A25 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 500px;
+            padding: 50px 40px;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo i {
+            font-size: 48px;
+            color: #007A33;
+            margin-bottom: 20px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            color: #191F28;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .logo .subtitle {
+            font-size: 16px;
+            color: #007A33;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            color: #6B7684;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .university-badge {
+            background: linear-gradient(135deg, #007A33 0%, #005A25 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0, 122, 51, 0.3);
+        }
+
+        .university-badge i {
+            margin-right: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #191F28;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #E5E8EB;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            font-family: "Pretendard", sans-serif;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #007A33;
+            box-shadow: 0 0 0 4px rgba(0, 122, 51, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #007A33 0%, #005A25 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 122, 51, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+            background: #E5E8EB;
+        }
+
+        .divider span {
+            position: relative;
+            background: white;
+            padding: 0 15px;
+            color: #6B7684;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .google-login-btn {
+            width: 100%;
+            padding: 14px 16px;
+            background: white;
+            border: 2px solid #E5E8EB;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .google-login-btn:hover {
+            background: #F9FAFB;
+            border-color: #007A33;
+        }
+
+        .google-login-btn img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .info-box {
+            background: #F0FDF4;
+            border: 2px solid #007A33;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #191F28;
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #007A33;
+            font-size: 14px;
+        }
+
+        .info-box i {
+            margin-right: 6px;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .back-link a {
+            color: #007A33;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #FEE2E2;
+            border: 2px solid #EF4444;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-top: 15px;
+            color: #B91C1C;
+            font-size: 14px;
+            display: none;
+        }
+
+        .error-message i {
+            margin-right: 8px;
+        }
+
+        @media (max-width: 576px) {
+            .login-container {
+                padding: 40px 30px;
+            }
+
+            .logo h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <i class="fas fa-university"></i>
+            <h1>전남대학교</h1>
+            <p class="subtitle">출입국이민지원센터</p>
+            <p>담당자 전용 로그인</p>
+        </div>
+
+        <div class="university-badge">
+            <i class="fas fa-user-tie"></i>
+            국제교류팀 담당자
+        </div>
+
+        <!-- 이메일/비밀번호 로그인 -->
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="email">
+                    <i class="fas fa-envelope"></i> 이메일
+                </label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    placeholder="담당자 이메일을 입력하세요"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">
+                    <i class="fas fa-lock"></i> 비밀번호
+                </label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    placeholder="비밀번호를 입력하세요"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="login-btn" id="loginBtn">
+                <i class="fas fa-sign-in-alt"></i> 로그인
+            </button>
+        </form>
+
+        <div class="error-message" id="errorMessage">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="errorText"></span>
+        </div>
+
+        <div class="divider">
+            <span>또는</span>
+        </div>
+
+        <!-- Google 로그인 -->
+        <button class="google-login-btn" onclick="handleGoogleLogin()">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+            Google 계정으로 로그인
+        </button>
+
+        <div class="info-box">
+            <strong><i class="fas fa-info-circle"></i> 담당자 권한 안내</strong>
+            전남대학교 국제교류팀 담당자만 접근 가능합니다. 
+            권한이 없는 경우 관리자에게 문의하세요.
+        </div>
+
+        <div class="back-link">
+            <a href="index.html">
+                <i class="fas fa-arrow-left"></i> 메인 페이지로 돌아가기
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 에러 메시지 표시
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            errorText.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // 이메일/비밀번호 로그인
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 로그인 중...';
+            
+            try {
+                const result = await signInWithEmail(email, password);
+                
+                if (result.success) {
+                    // 권한 확인
+                    const hasAccess = await checkPartnerAccess(result.user);
+                    
+                    if (hasAccess) {
+                        window.location.href = 'partner-dashboard-jnu.html';
+                    } else {
+                        await signOut();
+                        showError('담당자 권한이 없습니다. 관리자에게 문의하세요.');
+                        loginBtn.disabled = false;
+                        loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> 로그인';
+                    }
+                } else {
+                    showError(result.error || '로그인에 실패했습니다.');
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> 로그인';
+                }
+            } catch (error) {
+                console.error('로그인 오류:', error);
+                showError('로그인 중 오류가 발생했습니다.');
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> 로그인';
+            }
+        }
+
+        // Google 로그인
+        async function handleGoogleLogin() {
+            try {
+                const result = await signInWithGoogle();
+                
+                if (result.success) {
+                    // 권한 확인
+                    const hasAccess = await checkPartnerAccess(result.user);
+                    
+                    if (hasAccess) {
+                        window.location.href = 'partner-dashboard-jnu.html';
+                    } else {
+                        await signOut();
+                        showError('담당자 권한이 없습니다. 관리자에게 문의하세요.');
+                    }
+                } else {
+                    showError(result.error || 'Google 로그인에 실패했습니다.');
+                }
+            } catch (error) {
+                console.error('Google 로그인 오류:', error);
+                showError('Google 로그인 중 오류가 발생했습니다.');
+            }
+        }
+
+        // 담당자 권한 확인
+        async function checkPartnerAccess(user) {
+            if (!user || !user.email) return false;
+            
+            try {
+                // admins 테이블에서 role='partner_jnu' 확인
+                const { data, error } = await supabase
+                    .from('admins')
+                    .select('*')
+                    .eq('email', user.email)
+                    .eq('role', 'partner_jnu')
+                    .single();
+                
+                if (error) {
+                    console.error('권한 확인 오류:', error);
+                    return false;
+                }
+                
+                return data !== null;
+            } catch (error) {
+                console.error('권한 확인 실패:', error);
+                return false;
+            }
+        }
+
+        // 페이지 로드 시 세션 확인
+        window.addEventListener('DOMContentLoaded', async function() {
+            const session = await checkSession();
+            
+            if (session && session.user) {
+                // 이미 로그인된 경우, 권한 확인 후 대시보드로 이동
+                const hasAccess = await checkPartnerAccess(session.user);
+                
+                if (hasAccess) {
+                    window.location.href = 'partner-dashboard-jnu.html';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
