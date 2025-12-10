@@ -674,34 +674,56 @@
         window.addEventListener('DOMContentLoaded', async function() {
             try {
                 // Supabase 세션 확인
-                const session = await checkSession();
+                const { data: { session }, error } = await supabase.auth.getSession();
+                
+                if (error) {
+                    console.error('❌ 세션 확인 오류:', error);
+                    return;
+                }
                 
                 if (session && session.user) {
                     console.log('✅ 이미 로그인된 사용자:', session.user.email);
                     
-                    // 프로필 확인
-                    const profileResult = await getUserProfile(session.user.id);
+                    // 먼저 admins 테이블에서 partner_jnu 권한 확인
+                    const { data: adminData, error: adminError } = await supabase
+                        .from('admins')
+                        .select('*')
+                        .eq('email', session.user.email)
+                        .eq('role', 'partner_jnu')
+                        .maybeSingle(); // single 대신 maybeSingle 사용 (결과 없어도 에러 안남)
                     
-                    if (profileResult.success && profileResult.data) {
+                    if (adminData) {
+                        // 담당자 계정 → partner-dashboard-jnu.html로 이동
+                        console.log('✅ 담당자 계정 확인 - partner-dashboard-jnu.html로 이동');
+                        window.location.href = 'partner-dashboard-jnu.html';
+                        return;
+                    }
+                    
+                    // admins 테이블에 없으면 profiles 테이블 확인 (학생 계정)
+                    const { data: profileData, error: profileError } = await supabase
+                        .from('profiles')
+                        .select('*')
+                        .eq('id', session.user.id)
+                        .maybeSingle();
+                    
+                    if (profileData) {
                         // organization='jnu'인 경우에만 자동 로그인
-                        if (profileResult.data.organization === 'jnu') {
-                            console.log('✅ JNU 계정 - 대시보드로 자동 이동');
+                        if (profileData.organization === 'jnu') {
+                            console.log('✅ JNU 학생 계정 - visa-dashboard-jnu.html로 이동');
                             window.location.href = 'visa-dashboard-jnu.html';
                         } else {
                             console.log('⚠️ 다른 organization 계정 - 강제 로그아웃');
-                            // 다른 organization 계정은 강제 로그아웃
-                            await signOut();
+                            await supabase.auth.signOut();
                             alert('전남대학교 학생 전용 페이지입니다.\n일반 계정은 로그아웃됩니다.');
-                            // 페이지 새로고침하여 로그인 화면 표시
                             window.location.reload();
                         }
                     } else {
-                        // 프로필 없으면 로그인 화면 유지
-                        console.log('⚠️ 프로필 없음 - 로그인 필요');
+                        // profiles도 없으면 로그인 화면 유지 (신규 사용자)
+                        console.log('ℹ️ 프로필 없음 - 로그인 화면 유지');
                     }
                 }
             } catch (error) {
-                console.error('세션 확인 오류:', error);
+                console.error('❌ 세션 확인 중 예외 발생:', error);
             }
         });
     </script>
