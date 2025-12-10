@@ -397,20 +397,18 @@
         // Google 로그인
         async function handleGoogleLogin() {
             try {
-                const result = await signInWithGoogle();
+                // Google OAuth는 리디렉션 방식이므로, 로그인 전 플래그 저장
+                sessionStorage.setItem('partner_login_redirect', 'partner-dashboard-jnu.html');
                 
-                if (result.success) {
-                    // 권한 확인
-                    const hasAccess = await checkPartnerAccess(result.user);
-                    
-                    if (hasAccess) {
-                        window.location.href = 'partner-dashboard-jnu.html';
-                    } else {
-                        await signOut();
-                        showError('담당자 권한이 없습니다. 관리자에게 문의하세요.');
+                const { data, error } = await supabase.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: window.location.origin + '/partner-login-jnu.html'
                     }
-                } else {
-                    showError(result.error || 'Google 로그인에 실패했습니다.');
+                });
+                
+                if (error) {
+                    showError('Google 로그인에 실패했습니다: ' + error.message);
                 }
             } catch (error) {
                 console.error('Google 로그인 오류:', error);
@@ -448,11 +446,22 @@
             const session = await checkSession();
             
             if (session && session.user) {
-                // 이미 로그인된 경우, 권한 확인 후 대시보드로 이동
+                console.log('✅ 로그인된 사용자:', session.user.email);
+                
+                // 권한 확인
                 const hasAccess = await checkPartnerAccess(session.user);
                 
                 if (hasAccess) {
-                    window.location.href = 'partner-dashboard-jnu.html';
+                    console.log('✅ 권한 확인 완료 - 대시보드로 이동');
+                    
+                    // Google 로그인 후 리디렉션 확인
+                    const redirectUrl = sessionStorage.getItem('partner_login_redirect');
+                    sessionStorage.removeItem('partner_login_redirect');
+                    
+                    window.location.href = redirectUrl || 'partner-dashboard-jnu.html';
+                } else {
+                    console.log('❌ 권한 없음');
+                    showError('담당자 권한이 없습니다. admins 테이블을 확인하세요.');
                 }
             }
         });
