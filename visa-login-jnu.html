@@ -421,7 +421,7 @@
             <div class="info-box">
                 <strong><i class="fas fa-info-circle"></i> 전남대학교 학생 인증</strong>
                 전남대학교에 등록된 유학생 학번을 입력하신 후 Google 계정으로 로그인하세요. 
-                학번이 확인되지 않으면 국제교류팀에 문의하세요.
+                학번이 확인되지 않으면 <a href="index.html" style="color: #007A33; font-weight: 600; text-decoration: underline;">일반 페이지</a>에서 가입한 후 관리자에게 문의해 주세요.
             </div>
         </div>
 
@@ -528,7 +528,7 @@
                 
                 if (error || !student) {
                     console.error('❌ 학번 검증 실패:', error);
-                    resultDiv.innerHTML = '<span style="color: #EF4444;"><i class="fas fa-times-circle"></i> 등록되지 않은 학번입니다. 국제교류팀에 문의하세요.</span>';
+                    resultDiv.innerHTML = '<span style="color: #EF4444;"><i class="fas fa-times-circle"></i> 등록되지 않은 학번입니다. <a href="index.html" style="color: #007A33; font-weight: 600; text-decoration: underline;">일반 페이지</a>에서 가입한 후 관리자에게 문의해 주세요.</span>';
                     googleLoginBtn.disabled = false;
                     googleLoginBtn.style.opacity = '1';
                     googleLoginBtn.innerHTML = '학번 확인 후 Google 로그인';
