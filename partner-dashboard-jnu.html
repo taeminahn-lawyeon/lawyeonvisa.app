@@ -541,33 +541,45 @@
 
         // 담당자 권한 확인
         async function checkPartnerAccess() {
-            const session = await checkSession();
-            
-            if (!session || !session.user) {
-                alert('로그인이 필요합니다.');
-                location.href = 'partner-login-jnu.html';
-                return false;
-            }
-            
             try {
-                // admins 테이블에서 role='partner_jnu' 확인
-                const { data, error } = await supabase
+                // Supabase 세션 확인
+                const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+                
+                if (sessionError || !session || !session.user) {
+                    console.error('❌ 로그인 세션 없음');
+                    alert('로그인이 필요합니다.');
+                    location.href = 'partner-login-jnu.html';
+                    return false;
+                }
+                
+                console.log('✅ 로그인된 사용자:', session.user.email);
+                
+                // admins 테이블에서 role='partner_jnu' 확인 (profiles 테이블 조회 생략)
+                const { data: adminData, error: adminError } = await supabase
                     .from('admins')
                     .select('*')
                     .eq('email', session.user.email)
                     .eq('role', 'partner_jnu')
                     .single();
                 
-                if (error || !data) {
+                if (adminError) {
+                    console.error('❌ admins 테이블 조회 오류:', adminError);
                     alert('담당자 권한이 없습니다.');
                     location.href = 'partner-login-jnu.html';
                     return false;
                 }
                 
-                console.log('담당자 접근 허용:', session.user.email);
+                if (!adminData) {
+                    console.error('❌ partner_jnu 역할 없음');
+                    alert('담당자 권한이 없습니다.');
+                    location.href = 'partner-login-jnu.html';
+                    return false;
+                }
+                
+                console.log('✅ 담당자 접근 허용:', session.user.email);
                 return true;
             } catch (error) {
-                console.error('권한 확인 오류:', error);
+                console.error('❌ 권한 확인 중 예외 발생:', error);
                 alert('권한 확인 중 오류가 발생했습니다.');
                 location.href = 'partner-login-jnu.html';
                 return false;
