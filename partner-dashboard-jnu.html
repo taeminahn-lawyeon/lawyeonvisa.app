@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>담당자 대시보드 - 전남대학교 출입국이민지원센터</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js?v=8"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background: #F9FAFB;
+            min-height: 100vh;
+            color: #191F28;
+        }
+
+        /* 헤더 - 전남대 컬러 */
+        .header {
+            background: linear-gradient(135deg, #007A33 0%, #005A25 100%);
+            padding: 20px 24px;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 122, 51, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-title {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .admin-title h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+
+        .admin-title p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 0;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .header-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            font-size: 14px;
+        }
+
+        .header-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* 메인 컨테이너 */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* 통계 카드 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            border: 1px solid #E5E8EB;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .stat-card:hover {
+            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-content p {
+            font-size: 14px;
+            color: #4E5968;
+            font-weight: 500;
+        }
+
+        .stat-content h3 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #191F28;
+            letter-spacing: -0.02em;
+        }
+
+        .stat-card.warning .stat-content h3 {
+            color: #EF4444;
+        }
+
+        .stat-card.success .stat-content h3 {
+            color: #00A651;
+        }
+
+        /* 필터 섹션 */
+        .filter-section {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            border: 1px solid #E5E8EB;
+            margin-bottom: 24px;
+        }
+
+        .filter-section h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #191F28;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-item label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #191F28;
+        }
+
+        .filter-item input,
+        .filter-item select {
+            padding: 10px 15px;
+            border: 2px solid #E5E8EB;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-item input:focus,
+        .filter-item select:focus {
+            outline: none;
+            border-color: #007A33;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .filter-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn.primary {
+            background: #007A33;
+            color: white;
+        }
+
+        .filter-btn.primary:hover {
+            background: #005A25;
+        }
+
+        .filter-btn.secondary {
+            background: #F2F4F6;
+            color: #191F28;
+        }
+
+        .filter-btn.secondary:hover {
+            background: #E5E8EB;
+        }
+
+        /* 학생 테이블 */
+        .students-section {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            border: 1px solid #E5E8EB;
+        }
+
+        .students-section h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #191F28;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .student-count {
+            font-size: 14px;
+            color: #4E5968;
+            font-weight: 500;
+        }
+
+        .students-table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+        }
+
+        .students-table thead {
+            background: #F9FAFB;
+            border-top: 1px solid #E5E8EB;
+            border-bottom: 1px solid #E5E8EB;
+        }
+
+        .students-table th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #4E5968;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .students-table td {
+            padding: 16px;
+            border-bottom: 1px solid #F2F4F6;
+            font-size: 14px;
+            color: #191F28;
+        }
+
+        .students-table tr:hover {
+            background: #F9FAFB;
+        }
+
+        .visa-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            background: #E8F3FF;
+            color: #1B64DA;
+        }
+
+        .diagnosis-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .diagnosis-badge.completed {
+            background: #E8FAF0;
+            color: #00A651;
+        }
+
+        .diagnosis-badge.pending {
+            background: #FFF4E8;
+            color: #F59638;
+        }
+
+        .expiry-warning {
+            color: #EF4444;
+            font-weight: 600;
+        }
+
+        .expiry-normal {
+            color: #00A651;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 3px;
+        }
+
+        .action-btn.view {
+            background: #007A33;
+            color: white;
+        }
+
+        .action-btn.view:hover {
+            background: #005A25;
+        }
+
+        /* 빈 상태 */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .students-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .students-section h2 {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="admin-title">
+                <h1><i class="fas fa-university"></i> 전남대학교 담당자 대시보드</h1>
+                <p>유학생 출입국이민 관리 시스템</p>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn" onclick="exportToExcel()">
+                    <i class="fas fa-file-excel"></i> Excel 내보내기
+                </button>
+                <button class="header-btn" onclick="location.reload()">
+                    <i class="fas fa-sync-alt"></i> 새로고침
+                </button>
+                <button class="header-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> 로그아웃
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 통계 카드 -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-content">
+                    <p>전체 학생 수</p>
+                    <h3 id="totalStudents">0</h3>
+                </div>
+            </div>
+
+            <div class="stat-card warning">
+                <div class="stat-content">
+                    <p>체류만료 임박 (30일 이내)</p>
+                    <h3 id="expiringStudents">0</h3>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-content">
+                    <p>사전진단 미완료</p>
+                    <h3 id="pendingDiagnosis">0</h3>
+                </div>
+            </div>
+
+            <div class="stat-card success">
+                <div class="stat-content">
+                    <p>예정 졸업 (이번 학기)</p>
+                    <h3 id="graduatingStudents">0</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- 필터 섹션 -->
+        <div class="filter-section">
+            <h2>학생 검색 및 필터</h2>
+            <div class="filter-grid">
+                <div class="filter-item">
+                    <label>학생명</label>
+                    <input type="text" id="filterName" placeholder="이름 검색...">
+                </div>
+                <div class="filter-item">
+                    <label>학번</label>
+                    <input type="text" id="filterStudentNumber" placeholder="학번 검색...">
+                </div>
+                <div class="filter-item">
+                    <label>학과</label>
+                    <input type="text" id="filterDepartment" placeholder="학과 검색...">
+                </div>
+                <div class="filter-item">
+                    <label>국적</label>
+                    <select id="filterNationality">
+                        <option value="">전체</option>
+                        <option value="중국">중국</option>
+                        <option value="베트남">베트남</option>
+                        <option value="미국">미국</option>
+                        <option value="일본">일본</option>
+                        <option value="몽골">몽골</option>
+                        <option value="필리핀">필리핀</option>
+                        <option value="기타">기타</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label>비자 종류</label>
+                    <select id="filterVisa">
+                        <option value="">전체</option>
+                        <option value="D-2">D-2 (유학)</option>
+                        <option value="D-10">D-10 (구직)</option>
+                        <option value="F-4">F-4 (재외동포)</option>
+                        <option value="E-7">E-7 (특정활동)</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label>사전진단 여부</label>
+                    <select id="filterDiagnosis">
+                        <option value="">전체</option>
+                        <option value="completed">완료</option>
+                        <option value="pending">미완료</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label>체류만료</label>
+                    <select id="filterExpiry">
+                        <option value="">전체</option>
+                        <option value="expired">만료됨</option>
+                        <option value="30days">30일 이내</option>
+                        <option value="60days">60일 이내</option>
+                        <option value="90days">90일 이내</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label>예정 졸업</label>
+                    <select id="filterGraduation">
+                        <option value="">전체</option>
+                        <option value="2025-02">2025년 2월</option>
+                        <option value="2025-08">2025년 8월</option>
+                        <option value="2026-02">2026년 2월</option>
+                        <option value="2026-08">2026년 8월</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-actions">
+                <button class="filter-btn primary" onclick="applyFilters()">
+                    <i class="fas fa-search"></i> 검색
+                </button>
+                <button class="filter-btn secondary" onclick="resetFilters()">
+                    <i class="fas fa-redo"></i> 초기화
+                </button>
+            </div>
+        </div>
+
+        <!-- 학생 목록 -->
+        <div class="students-section">
+            <h2>
+                <span>학생 목록</span>
+                <span class="student-count" id="studentCount">총 0명</span>
+            </h2>
+            <div id="studentsTableContainer">
+                <!-- 테이블이 여기에 동적으로 생성됨 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 전역 변수
+        let allStudents = [];
+        let filteredStudents = [];
+
+        // 페이지 로드 시 초기화
+        window.addEventListener('DOMContentLoaded', async function() {
+            // 담당자 권한 확인
+            const hasAccess = await checkPartnerAccess();
+            
+            if (!hasAccess) return;
+            
+            // 데이터 로드
+            loadStudentsData();
+        });
+
+        // 담당자 권한 확인
+        async function checkPartnerAccess() {
+            const session = await checkSession();
+            
+            if (!session || !session.user) {
+                alert('로그인이 필요합니다.');
+                location.href = 'partner-login-jnu.html';
+                return false;
+            }
+            
+            try {
+                // admins 테이블에서 role='partner_jnu' 확인
+                const { data, error } = await supabase
+                    .from('admins')
+                    .select('*')
+                    .eq('email', session.user.email)
+                    .eq('role', 'partner_jnu')
+                    .single();
+                
+                if (error || !data) {
+                    alert('담당자 권한이 없습니다.');
+                    location.href = 'partner-login-jnu.html';
+                    return false;
+                }
+                
+                console.log('담당자 접근 허용:', session.user.email);
+                return true;
+            } catch (error) {
+                console.error('권한 확인 오류:', error);
+                alert('권한 확인 중 오류가 발생했습니다.');
+                location.href = 'partner-login-jnu.html';
+                return false;
+            }
+        }
+
+        // 학생 데이터 로드
+        async function loadStudentsData() {
+            try {
+                const { data: students, error } = await supabase
+                    .from('jnu_students')
+                    .select('*')
+                    .order('name', { ascending: true });
+                
+                if (error) {
+                    console.error('❌ 학생 데이터 로드 오류:', error);
+                    allStudents = [];
+                } else {
+                    console.log('✅ 학생 데이터 로드 성공:', students.length, '명');
+                    allStudents = students;
+                }
+                
+                filteredStudents = [...allStudents];
+                
+                updateStatistics();
+                renderStudentsTable();
+            } catch (error) {
+                console.error('학생 데이터 로드 오류:', error);
+                alert('데이터를 불러오는 중 오류가 발생했습니다.');
+            }
+        }
+
+        // 통계 업데이트
+        function updateStatistics() {
+            // 전체 학생 수
+            document.getElementById('totalStudents').textContent = allStudents.length;
+            
+            // 체류만료 임박 (30일 이내)
+            const now = new Date();
+            const expiringCount = allStudents.filter(s => {
+                if (!s.stay_expiry) return false;
+                const expiry = new Date(s.stay_expiry);
+                const diffDays = Math.floor((expiry - now) / (1000 * 60 * 60 * 24));
+                return diffDays >= 0 && diffDays <= 30;
+            }).length;
+            document.getElementById('expiringStudents').textContent = expiringCount;
+            
+            // 사전진단 미완료 (현재 반기 기준)
+            const currentSemester = getCurrentSemester();
+            const pendingCount = allStudents.filter(s => 
+                !s.diagnosis_completed || s.diagnosis_semester !== currentSemester
+            ).length;
+            document.getElementById('pendingDiagnosis').textContent = pendingCount;
+            
+            // 예정 졸업 (이번 학기)
+            const graduatingCount = allStudents.filter(s => 
+                s.expected_graduation && s.expected_graduation.startsWith(currentSemester.split('-')[0])
+            ).length;
+            document.getElementById('graduatingStudents').textContent = graduatingCount;
+        }
+
+        // 현재 반기 계산
+        function getCurrentSemester() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1;
+            
+            // 1월~7월: 1학기, 8월~12월: 2학기
+            return month <= 7 ? `${year}-1` : `${year}-2`;
+        }
+
+        // 학생 테이블 렌더링
+        function renderStudentsTable() {
+            const container = document.getElementById('studentsTableContainer');
+            document.getElementById('studentCount').textContent = `총 ${filteredStudents.length}명`;
+            
+            if (filteredStudents.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-user-graduate"></i>
+                        <p>검색 결과가 없습니다.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const currentSemester = getCurrentSemester();
+            
+            let tableHTML = `
+                <table class="students-table">
+                    <thead>
+                        <tr>
+                            <th>학번</th>
+                            <th>학생명 (여권상)</th>
+                            <th>학과</th>
+                            <th>국적</th>
+                            <th>비자</th>
+                            <th>체류만료일</th>
+                            <th>외국인등록번호</th>
+                            <th>사전진단</th>
+                            <th>예정 졸업</th>
+                            <th>작업</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            filteredStudents.forEach(student => {
+                // 체류만료일 계산
+                let expiryDisplay = '-';
+                let expiryClass = 'expiry-normal';
+                if (student.stay_expiry) {
+                    const expiry = new Date(student.stay_expiry);
+                    const now = new Date();
+                    const diffDays = Math.floor((expiry - now) / (1000 * 60 * 60 * 24));
+                    
+                    if (diffDays < 0) {
+                        expiryDisplay = `만료됨 (${Math.abs(diffDays)}일 전)`;
+                        expiryClass = 'expiry-warning';
+                    } else if (diffDays <= 30) {
+                        expiryDisplay = `${diffDays}일 남음`;
+                        expiryClass = 'expiry-warning';
+                    } else {
+                        expiryDisplay = expiry.toLocaleDateString('ko-KR');
+                    }
+                }
+                
+                // 사전진단 여부
+                const needsDiagnosis = !student.diagnosis_completed || 
+                                      student.diagnosis_semester !== currentSemester;
+                const diagnosisDisplay = needsDiagnosis 
+                    ? '<span class="diagnosis-badge pending"><i class="fas fa-exclamation-circle"></i> 미완료</span>'
+                    : '<span class="diagnosis-badge completed"><i class="fas fa-check-circle"></i> 완료</span>';
+                
+                tableHTML += `
+                    <tr>
+                        <td><code style="font-size: 11px; background: #f3f4f6; padding: 2px 6px; border-radius: 4px;">${student.student_number}</code></td>
+                        <td>
+                            <div><strong>${student.name || '알 수 없음'}</strong></div>
+                            <div style="font-size: 12px; color: #6B7280;">${student.passport_name || '-'}</div>
+                        </td>
+                        <td>${student.department || '-'}</td>
+                        <td>${student.nationality || '-'}</td>
+                        <td>${student.visa_type ? `<span class="visa-badge">${student.visa_type}</span>` : '-'}</td>
+                        <td class="${expiryClass}">${expiryDisplay}</td>
+                        <td>${student.alien_registration_number || '-'}</td>
+                        <td>${diagnosisDisplay}</td>
+                        <td>${student.expected_graduation || '-'}</td>
+                        <td>
+                            <button class="action-btn view" onclick="viewStudent('${student.student_number}')">
+                                <i class="fas fa-eye"></i> 상세
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tableHTML += `
+                    </tbody>
+                </table>
+            `;
+            
+            container.innerHTML = tableHTML;
+        }
+
+        // 필터 적용
+        function applyFilters() {
+            const nameFilter = document.getElementById('filterName').value.toLowerCase();
+            const studentNumberFilter = document.getElementById('filterStudentNumber').value.toLowerCase();
+            const departmentFilter = document.getElementById('filterDepartment').value.toLowerCase();
+            const nationalityFilter = document.getElementById('filterNationality').value;
+            const visaFilter = document.getElementById('filterVisa').value;
+            const diagnosisFilter = document.getElementById('filterDiagnosis').value;
+            const expiryFilter = document.getElementById('filterExpiry').value;
+            const graduationFilter = document.getElementById('filterGraduation').value;
+            
+            const currentSemester = getCurrentSemester();
+            
+            filteredStudents = allStudents.filter(student => {
+                if (nameFilter && !student.name?.toLowerCase().includes(nameFilter)) return false;
+                if (studentNumberFilter && !student.student_number?.toLowerCase().includes(studentNumberFilter)) return false;
+                if (departmentFilter && !student.department?.toLowerCase().includes(departmentFilter)) return false;
+                if (nationalityFilter && student.nationality !== nationalityFilter) return false;
+                if (visaFilter && student.visa_type !== visaFilter) return false;
+                
+                // 사전진단 필터
+                if (diagnosisFilter) {
+                    const needsDiagnosis = !student.diagnosis_completed || 
+                                          student.diagnosis_semester !== currentSemester;
+                    if (diagnosisFilter === 'completed' && needsDiagnosis) return false;
+                    if (diagnosisFilter === 'pending' && !needsDiagnosis) return false;
+                }
+                
+                // 체류만료 필터
+                if (expiryFilter && student.stay_expiry) {
+                    const expiry = new Date(student.stay_expiry);
+                    const now = new Date();
+                    const diffDays = Math.floor((expiry - now) / (1000 * 60 * 60 * 24));
+                    
+                    if (expiryFilter === 'expired' && diffDays >= 0) return false;
+                    if (expiryFilter === '30days' && (diffDays < 0 || diffDays > 30)) return false;
+                    if (expiryFilter === '60days' && (diffDays < 0 || diffDays > 60)) return false;
+                    if (expiryFilter === '90days' && (diffDays < 0 || diffDays > 90)) return false;
+                }
+                
+                // 예정 졸업 필터
+                if (graduationFilter && student.expected_graduation !== graduationFilter) return false;
+                
+                return true;
+            });
+            
+            renderStudentsTable();
+        }
+
+        // 필터 초기화
+        function resetFilters() {
+            document.getElementById('filterName').value = '';
+            document.getElementById('filterStudentNumber').value = '';
+            document.getElementById('filterDepartment').value = '';
+            document.getElementById('filterNationality').value = '';
+            document.getElementById('filterVisa').value = '';
+            document.getElementById('filterDiagnosis').value = '';
+            document.getElementById('filterExpiry').value = '';
+            document.getElementById('filterGraduation').value = '';
+            
+            filteredStudents = [...allStudents];
+            renderStudentsTable();
+        }
+
+        // 학생 상세보기 (추후 구현)
+        function viewStudent(studentNumber) {
+            alert(`학생 상세 페이지 (${studentNumber}) - 추후 구현 예정`);
+        }
+
+        // Excel 내보내기
+        function exportToExcel() {
+            alert('Excel 내보내기 기능은 추후 구현 예정입니다.');
+        }
+
+        // 로그아웃
+        async function logout() {
+            if (confirm('로그아웃하시겠습니까?')) {
+                const result = await signOut();
+                if (result.success) {
+                    window.location.href = 'partner-login-jnu.html';
+                }
+            }
+        }
+
+        console.log('전남대학교 담당자 대시보드 로드 완료');
+    </script>
+</body>
+</html>
