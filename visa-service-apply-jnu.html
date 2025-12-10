@@ -75,16 +75,7 @@
 
         /* 서비스 정보 */
         .service-header {
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
             margin-bottom: 24px;
-        }
-
-        .service-icon {
-            font-size: 56px;
-            line-height: 1;
-            flex-shrink: 0;
         }
 
         .service-info h1 {
@@ -150,7 +141,7 @@
             font-weight: 900;
         }
 
-        /* 정부 관납료 안내 */
+        /* 출입국 관서 수수료 안내 */
         .govt-fee-notice {
             background: #FEF3C7;
             border: 2px solid #F59E0B;
@@ -526,7 +517,6 @@
             <!-- 서비스 정보 -->
             <div class="card">
                 <div class="service-header">
-                    <div class="service-icon" id="service-icon">📄</div>
                     <div class="service-info">
                         <h1 id="service-name">비자 연장</h1>
                         <p id="service-desc">현재 체류자격의 기간 연장을 대행합니다</p>
@@ -536,11 +526,11 @@
                 <!-- 금액 상세 -->
                 <div class="price-breakdown">
                     <div class="price-row">
-                        <div class="price-label">센터 서비스 대행료</div>
+                        <div class="price-label">민원 대행 보수</div>
                         <div class="price-value" id="agency-fee">₩550,000</div>
                     </div>
                     <div class="price-row" id="govt-fee-row" style="display: none;">
-                        <div class="price-label">정부 관납료</div>
+                        <div class="price-label">출입국 관서 수수료</div>
                         <div class="price-value" id="govt-fee">₩50,000</div>
                     </div>
                     <div class="price-row total">
@@ -549,12 +539,12 @@
                     </div>
                 </div>
 
-                <!-- 정부 관납료 안내 -->
+                <!-- 출입국 관서 수수료 안내 -->
                 <div class="govt-fee-notice" id="govt-fee-notice" style="display: none;">
                     <i class="fas fa-info-circle"></i>
                     <div class="govt-fee-notice-text">
-                        <strong>정부 관납료 포함</strong><br>
-                        정부 관납료는 센터가 대신 납부하며, 총 결제 금액에 포함되어 있습니다
+                        <strong>출입국 관서 수수료 포함</strong><br>
+                        출입국 관서 수수료는 센터가 대신 납부하며 총 결제 금액에 포함되어 있습니다.
                     </div>
                 </div>
             </div>
@@ -602,8 +592,7 @@
 
             <!-- 결제 버튼 -->
             <button class="btn-primary" id="payBtn" onclick="processPayment()">
-                <i class="fas fa-lock"></i>
-                <span id="total-price-text">₩600,000</span> 결제하기
+                결제하기
             </button>
         </div>
 
@@ -621,7 +610,6 @@
             <!-- 서비스 정보 -->
             <div class="card">
                 <div class="service-header">
-                    <div class="service-icon" id="consulting-icon">💬</div>
                     <div class="service-info">
                         <h1 id="consulting-name">비자 자문</h1>
                         <p id="consulting-desc">개인·기업 비자 전략 컨설팅</p>
@@ -668,7 +656,7 @@
     </div>
 
     <script>
-        // 정부 관납료 매핑 (출입국관리법 시행규칙 기준)
+        // 출입국 관서 수수료 매핑 (출입국관리법 시행규칙 기준)
         const govtFees = {
             'visa-extension': 50000,
             'visa-change': 119000,
@@ -693,7 +681,7 @@
             'cert-nationality': 2000
         };
 
-        // 서비스 가격 정보 (센터 서비스 대행료, 부가세 포함)
+        // 서비스 가격 정보 (민원 대행 보수, 부가세 포함)
         const servicePricing = {
             'visa-issue': { name: '비자 발급', price: 880000, desc: '신규 비자 발급 신청을 센터에서 대행합니다', icon: '🛂' },
             'visa-extension': { name: '비자 연장', price: 550000, desc: '현재 체류자격의 기간 연장을 대행합니다', icon: '📅' },
@@ -797,7 +785,6 @@
         });
 
         function showPayment(serviceId) {
-            document.getElementById('service-icon').textContent = selectedService.icon;
             document.getElementById('service-name').textContent = selectedService.name;
             document.getElementById('service-desc').textContent = selectedService.desc;
             
@@ -817,7 +804,6 @@
             }
             
             document.getElementById('total-price').textContent = '₩' + totalPrice.toLocaleString();
-            document.getElementById('total-price-text').textContent = '₩' + totalPrice.toLocaleString();
             
             // 결제 데이터 저장
             selectedService.totalPrice = totalPrice;
@@ -828,7 +814,6 @@
         }
 
         function showConsulting() {
-            document.getElementById('consulting-icon').textContent = selectedService.icon;
             document.getElementById('consulting-name').textContent = selectedService.name;
             document.getElementById('consulting-desc').textContent = selectedService.desc;
             document.getElementById('consulting-content').style.display = 'block';
@@ -865,7 +850,7 @@
                     alert('사용자 정보를 불러올 수 없습니다.');
                     btn.disabled = false;
                     btn.classList.remove('loading');
-                    btn.innerHTML = '<i class="fas fa-lock"></i> <span id="total-price-text">₩' + selectedService.totalPrice.toLocaleString() + '</span> 결제하기';
+                    btn.textContent = '결제하기';
                     return;
                 }
 
@@ -925,7 +910,7 @@
                     alert('PayPal 결제는 준비 중입니다.');
                     btn.disabled = false;
                     btn.classList.remove('loading');
-                    btn.innerHTML = '<i class="fas fa-lock"></i> <span id="total-price-text">₩' + selectedService.totalPrice.toLocaleString() + '</span> 결제하기';
+                    btn.textContent = '결제하기';
                 }
                 */
             } catch (error) {
