@@ -697,7 +697,7 @@
                     <thead>
                         <tr>
                             <th>학번</th>
-                            <th>학생명 (여권상)</th>
+                            <th>학생명 (영문)</th>
                             <th>학과</th>
                             <th>국적</th>
                             <th>비자</th>
@@ -705,7 +705,7 @@
                             <th>외국인등록번호</th>
                             <th>사전진단</th>
                             <th>예정 졸업</th>
-                            <th>작업</th>
+                            <th>진단결과</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -720,14 +720,20 @@
                     const now = new Date();
                     const diffDays = Math.floor((expiry - now) / (1000 * 60 * 60 * 24));
                     
+                    // 날짜 포맷: 2025. 12. 31.
+                    const year = expiry.getFullYear();
+                    const month = String(expiry.getMonth() + 1).padStart(2, '0');
+                    const day = String(expiry.getDate()).padStart(2, '0');
+                    const formattedDate = `${year}. ${month}. ${day}.`;
+                    
                     if (diffDays < 0) {
-                        expiryDisplay = `⚠️ 만료됨 (${Math.abs(diffDays)}일 전)`;
+                        expiryDisplay = `${formattedDate} <span style="color: #EF4444; font-weight: 600;">(만료됨)</span>`;
                         expiryClass = 'expiry-warning';
                     } else if (diffDays <= 30) {
-                        expiryDisplay = `⚠️ ${diffDays}일 남음`;
+                        expiryDisplay = `${formattedDate} <span style="color: #EF4444; font-weight: 600;">(${diffDays}일 남음)</span>`;
                         expiryClass = 'expiry-warning';
                     } else {
-                        expiryDisplay = expiry.toLocaleDateString('ko-KR');
+                        expiryDisplay = formattedDate;
                     }
                 }
                 
@@ -738,13 +744,28 @@
                     ? '<span class="diagnosis-badge pending">미완료</span>'
                     : '<span class="diagnosis-badge completed">✓ 완료</span>';
                 
+                // 사전진단 결과 샘플
+                const diagnosisResults = [
+                    '✅ 정상 - 문제없음',
+                    '⚠️ 시간제 취업 신고 없이 불법취업 활동 의심',
+                    '⚠️ 체류자격 변경 민원 신청 전 해당 부분 소명 및 자진신고 권고',
+                    '⚠️ 학업 성적 불량으로 인한 체류자격 유지 위험',
+                    '⚠️ 출석률 저조 (70% 미만) - 체류자격 취소 위험',
+                    '✅ 정상 - 문제없음',
+                    '⚠️ 미등록 아르바이트 활동 의심 - 소명 필요',
+                    '✅ 정상 - 문제없음'
+                ];
+                
+                // 학생마다 고정된 결과를 보여주기 위해 학번 기반으로 인덱스 계산
+                const studentIndex = parseInt(student.student_number.replace(/\D/g, '')) || 0;
+                const diagnosisResult = needsDiagnosis 
+                    ? '<span style="color: #999;">-</span>'
+                    : diagnosisResults[studentIndex % diagnosisResults.length];
+                
                 tableHTML += `
                     <tr>
                         <td><code style="font-size: 11px; background: #f3f4f6; padding: 2px 6px; border-radius: 4px;">${student.student_number}</code></td>
-                        <td>
-                            <div><strong>${student.name || '알 수 없음'}</strong></div>
-                            <div style="font-size: 12px; color: #6B7280;">${student.passport_name || '-'}</div>
-                        </td>
+                        <td><strong>${student.passport_name || student.name || '알 수 없음'}</strong></td>
                         <td>${student.department || '-'}</td>
                         <td>${student.nationality || '-'}</td>
                         <td>${student.visa_type ? `<span class="visa-badge">${student.visa_type}</span>` : '-'}</td>
@@ -752,11 +773,7 @@
                         <td>${student.alien_registration_number || '-'}</td>
                         <td>${diagnosisDisplay}</td>
                         <td>${student.expected_graduation || '-'}</td>
-                        <td>
-                            <button class="action-btn view" onclick="viewStudent('${student.student_number}')">
-                                👁️ 상세
-                            </button>
-                        </td>
+                        <td style="max-width: 300px; font-size: 13px;">${diagnosisResult}</td>
                     </tr>
                 `;
             });
