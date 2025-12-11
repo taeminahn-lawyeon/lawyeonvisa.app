@@ -1227,6 +1227,21 @@
             if (session && session.user) {
                 console.log('✅ 세션 존재:', session.user.email);
                 
+                // 🔥 organization 체크: 일반 사용자 계정으로 JNU 전용 페이지 접근 시 로그아웃
+                const quickProfileCheck = await getUserProfile(session.user.id);
+                if (quickProfileCheck.success && quickProfileCheck.data) {
+                    const userOrg = quickProfileCheck.data.organization;
+                    console.log('🔍 사용자 organization:', userOrg);
+                    
+                    if (userOrg !== 'jnu') {
+                        console.log('⚠️ 일반 계정으로 JNU 전용 페이지 접근 시도');
+                        alert('전남대 전용 페이지입니다.\n\n일반 페이지에서 로그인해주세요.');
+                        await signOut();
+                        window.location.href = 'visa-login-jnu.html';
+                        return;
+                    }
+                }
+                
                 // ✅ 프로필 생성 완료 플래그 확인
                 const profileCreatedFlag = sessionStorage.getItem('profileCreated');
                 console.log('🔍 프로필 생성 플래그:', profileCreatedFlag);
