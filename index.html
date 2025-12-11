@@ -1262,6 +1262,21 @@
             if (session && session.user) {
                 console.log('✅ 세션 존재:', session.user.email);
                 
+                // 🔥 organization 체크: JNU/SNU 프로필로 로그인한 경우 자동 로그아웃
+                const quickProfileCheck = await getUserProfile(session.user.id);
+                if (quickProfileCheck.success && quickProfileCheck.data) {
+                    const userOrg = quickProfileCheck.data.organization;
+                    console.log('🔍 사용자 organization:', userOrg);
+                    
+                    if (userOrg === 'jnu' || userOrg === 'snu') {
+                        console.log('⚠️ 협약 단체 전용 계정으로 일반 페이지 접근 시도');
+                        alert('협약 단체 전용 계정입니다.\n\n해당 단체 전용 페이지에서 로그인해주세요.');
+                        await signOut();
+                        window.location.reload();
+                        return;
+                    }
+                }
+                
                 // ✅ 프로필 생성 완료 플래그 확인
                 const profileCreatedFlag = sessionStorage.getItem('profileCreated');
                 console.log('🔍 프로필 생성 플래그:', profileCreatedFlag);
