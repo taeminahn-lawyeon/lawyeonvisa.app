@@ -1072,6 +1072,23 @@
             
             loadServices();
             loadPartners();
+            
+            // 🌍 언어 변경 이벤트 리스너 추가
+            window.addEventListener('languageChanged', function(event) {
+                console.log('🌍 언어 변경 감지:', event.detail.language);
+                
+                // 현재 활성화된 카테고리 찾기
+                const activeServiceTab = document.querySelector('.service-categories .category-tab[data-category].active');
+                const activeCategory = activeServiceTab ? activeServiceTab.dataset.category : 'visa';
+                
+                const activePartnerTab = document.querySelector('.service-categories .category-tab[data-partner-category].active');
+                const activePartnerCategory = activePartnerTab ? activePartnerTab.dataset.partnerCategory : 'university';
+                
+                // 서비스 및 파트너 카드 다시 로드
+                loadServices(activeCategory);
+                loadPartners(activePartnerCategory);
+            });
+            
             checkUserLogin();
             
             // Google Login Button
