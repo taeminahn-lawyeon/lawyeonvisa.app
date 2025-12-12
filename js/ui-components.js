@@ -1,526 +1,874 @@
 /**
- * UI Components Library
- * 재사용 가능한 UI 컴포넌트 및 유틸리티 함수
+ * UI Components Styles
+ * 재사용 가능한 UI 컴포넌트 스타일
  */
 
-// ========================================
-// 1. 토스트 알림 시스템
-// ========================================
+/* ========================================
+   0. 언어 선택기 (Language Selector)
+   ======================================== */
 
-class ToastNotification {
-    constructor() {
-        this.container = this.createContainer();
-    }
-
-    createContainer() {
-        let container = document.getElementById('toast-container');
-        if (!container) {
-            container = document.createElement('div');
-            container.id = 'toast-container';
-            container.className = 'toast-container';
-            document.body.appendChild(container);
-        }
-        return container;
-    }
-
-    show(message, type = 'info', duration = 4000) {
-        const toast = document.createElement('div');
-        toast.className = `toast toast-${type}`;
-        
-        const icons = {
-            'success': 'fa-check-circle',
-            'error': 'fa-exclamation-circle',
-            'warning': 'fa-exclamation-triangle',
-            'info': 'fa-info-circle'
-        };
-        
-        toast.innerHTML = `
-            <i class="fas ${icons[type]}"></i>
-            <span class="toast-message">${message}</span>
-            <button class="toast-close" onclick="closeToast(this)">
-                <i class="fas fa-times"></i>
-            </button>
-        `;
-        
-        this.container.appendChild(toast);
-        
-        // 애니메이션 시작
-        setTimeout(() => toast.classList.add('show'), 10);
-        
-        // 자동 제거
-        if (duration > 0) {
-            setTimeout(() => {
-                this.hide(toast);
-            }, duration);
-        }
-        
-        return toast;
-    }
-
-    hide(toast) {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            if (toast.parentElement) {
-                toast.remove();
-            }
-        }, 300);
-    }
+.language-selector {
+    position: relative;
+    display: inline-block;
 }
 
-// 전역 인스턴스
-const toast = new ToastNotification();
-
-// 편의 함수
-function showToast(message, type = 'info', duration = 4000) {
-    return toast.show(message, type, duration);
+#language-selector-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1f2937;
+    transition: all 0.2s;
 }
 
-function closeToast(button) {
-    const toastElement = button.closest('.toast');
-    toast.hide(toastElement);
+#language-selector-btn:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
 }
 
-// ========================================
-// 2. 폼 검증 시스템
-// ========================================
-
-class FormValidator {
-    constructor() {
-        this.rules = {
-            required: (value) => value.trim() !== '',
-            email: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
-            phone: (value) => /^010-\d{4}-\d{4}$/.test(value),
-            phoneRaw: (value) => /^010\d{8}$/.test(value.replace(/\D/g, '')),
-            minLength: (value, min) => value.length >= min,
-            maxLength: (value, max) => value.length <= max,
-            number: (value) => !isNaN(value) && value !== '',
-            min: (value, min) => parseFloat(value) >= min,
-            max: (value, max) => parseFloat(value) <= max
-        };
-
-        this.messages = {
-            required: '필수 입력 항목입니다',
-            email: '올바른 이메일 형식이 아닙니다',
-            phone: '올바른 전화번호 형식이 아닙니다 (예: 010-1234-5678)',
-            phoneRaw: '올바른 전화번호 형식이 아닙니다',
-            minLength: (min) => `최소 ${min}자 이상 입력해주세요`,
-            maxLength: (max) => `최대 ${max}자까지 입력 가능합니다`,
-            number: '숫자만 입력 가능합니다',
-            min: (min) => `${min} 이상의 값을 입력해주세요`,
-            max: (max) => `${max} 이하의 값을 입력해주세요`
-        };
-    }
-
-    validate(input, rules) {
-        const value = input.value;
-        
-        for (let rule of rules) {
-            let ruleName, ruleParam;
-            
-            if (typeof rule === 'string') {
-                ruleName = rule;
-            } else {
-                ruleName = rule.name;
-                ruleParam = rule.param;
-            }
-            
-            const validator = this.rules[ruleName];
-            if (!validator) continue;
-            
-            const isValid = ruleParam !== undefined 
-                ? validator(value, ruleParam)
-                : validator(value);
-            
-            if (!isValid) {
-                const message = typeof this.messages[ruleName] === 'function'
-                    ? this.messages[ruleName](ruleParam)
-                    : this.messages[ruleName];
-                
-                this.showError(input, message);
-                return false;
-            }
-        }
-        
-        this.showSuccess(input);
-        return true;
-    }
-
-    showError(input, message) {
-        input.classList.remove('success');
-        input.classList.add('error');
-        
-        let errorDiv = input.parentElement.querySelector('.field-error');
-        if (!errorDiv) {
-            errorDiv = document.createElement('div');
-            errorDiv.className = 'field-error';
-            input.parentElement.appendChild(errorDiv);
-        }
-        
-        errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
-        errorDiv.style.display = 'flex';
-    }
-
-    showSuccess(input) {
-        input.classList.remove('error');
-        input.classList.add('success');
-        
-        const errorDiv = input.parentElement.querySelector('.field-error');
-        if (errorDiv) {
-            errorDiv.style.display = 'none';
-        }
-    }
-
-    clearValidation(input) {
-        input.classList.remove('error', 'success');
-        const errorDiv = input.parentElement.querySelector('.field-error');
-        if (errorDiv) {
-            errorDiv.style.display = 'none';
-        }
-    }
+.language-btn-content {
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-const formValidator = new FormValidator();
+.language-flag {
+    font-size: 18px;
+    line-height: 1;
+}
 
-// ========================================
-// 3. 전화번호 자동 포맷팅
-// ========================================
+.language-name {
+    font-size: 14px;
+}
 
-function formatPhoneNumber(input) {
-    let value = input.value.replace(/\D/g, '');
+#language-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 200px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    z-index: 1000;
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.2s;
+}
+
+#language-dropdown.hidden {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+}
+
+.language-option {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+    text-align: left;
+}
+
+.language-option:hover {
+    background: #f3f4f6;
+}
+
+.language-option .language-flag {
+    font-size: 20px;
+}
+
+.language-option .language-name {
+    flex: 1;
+    font-weight: 500;
+    color: #374151;
+}
+
+.language-option .checkmark {
+    color: #10b981;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+    #language-selector-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
     
-    if (value.length <= 3) {
-        input.value = value;
-    } else if (value.length <= 7) {
-        input.value = value.slice(0, 3) + '-' + value.slice(3);
-    } else {
-        input.value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
+    .language-flag {
+        font-size: 16px;
     }
-}
-
-function setupPhoneInput(inputId) {
-    const input = document.getElementById(inputId);
-    if (!input) return;
     
-    input.addEventListener('input', function() {
-        formatPhoneNumber(this);
-    });
+    .language-name {
+        display: none; /* 모바일에서는 국기만 표시 */
+    }
     
-    input.addEventListener('blur', function() {
-        formValidator.validate(this, ['phone']);
-    });
-}
-
-// ========================================
-// 4. 로딩 버튼 상태 관리
-// ========================================
-
-class LoadingButton {
-    constructor(button) {
-        this.button = button;
-        this.originalHTML = button.innerHTML;
-        this.originalDisabled = button.disabled;
-    }
-
-    setLoading(message = '처리 중...') {
-        this.button.disabled = true;
-        this.button.classList.add('loading');
-        this.button.innerHTML = `
-            <i class="fas fa-spinner fa-spin"></i>
-            <span>${message}</span>
-        `;
-    }
-
-    setSuccess(message = '완료!', duration = 1000) {
-        this.button.classList.remove('loading');
-        this.button.classList.add('success');
-        this.button.innerHTML = `
-            <i class="fas fa-check"></i>
-            <span>${message}</span>
-        `;
-        
-        if (duration > 0) {
-            setTimeout(() => this.reset(), duration);
-        }
-    }
-
-    setError(message = '오류 발생', duration = 2000) {
-        this.button.classList.remove('loading');
-        this.button.classList.add('error');
-        this.button.innerHTML = `
-            <i class="fas fa-exclamation-circle"></i>
-            <span>${message}</span>
-        `;
-        
-        if (duration > 0) {
-            setTimeout(() => this.reset(), duration);
-        }
-    }
-
-    reset() {
-        this.button.disabled = this.originalDisabled;
-        this.button.classList.remove('loading', 'success', 'error');
-        this.button.innerHTML = this.originalHTML;
+    #language-dropdown {
+        right: -20px;
+        min-width: 180px;
     }
 }
 
-// ========================================
-// 5. 모달/다이얼로그 시스템
-// ========================================
+/* ========================================
+   1. 토스트 알림
+   ======================================== */
 
-class Modal {
-    constructor() {
-        this.modal = null;
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    pointer-events: none;
+}
+
+.toast {
+    min-width: 320px;
+    max-width: 500px;
+    padding: 16px 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transform: translateX(400px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    pointer-events: all;
+}
+
+.toast.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.toast-success {
+    border-left: 4px solid #10b981;
+}
+
+.toast-error {
+    border-left: 4px solid #ef4444;
+}
+
+.toast-warning {
+    border-left: 4px solid #f59e0b;
+}
+
+.toast-info {
+    border-left: 4px solid #3b82f6;
+}
+
+.toast > i:first-child {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.toast-success > i:first-child {
+    color: #10b981;
+}
+
+.toast-error > i:first-child {
+    color: #ef4444;
+}
+
+.toast-warning > i:first-child {
+    color: #f59e0b;
+}
+
+.toast-info > i:first-child {
+    color: #3b82f6;
+}
+
+.toast-message {
+    flex: 1;
+    color: #111827;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 4px;
+    transition: all 0.3s;
+    flex-shrink: 0;
+}
+
+.toast-close:hover {
+    color: #111827;
+    transform: scale(1.2);
+}
+
+/* ========================================
+   2. 폼 검증 스타일
+   ======================================== */
+
+.form-group input.error,
+.form-group select.error,
+.form-group textarea.error {
+    border-color: #ef4444 !important;
+    background-color: #fef2f2;
+}
+
+.form-group input.success,
+.form-group select.success,
+.form-group textarea.success {
+    border-color: #10b981 !important;
+    background-color: #ecfdf5;
+}
+
+.field-error {
+    display: none;
+    margin-top: 8px;
+    padding: 8px 12px;
+    background-color: #fef2f2;
+    border-left: 4px solid #ef4444;
+    border-radius: 4px;
+    color: #991b1b;
+    font-size: 0.875rem;
+    align-items: center;
+    gap: 8px;
+    animation: slideDown 0.3s ease-out;
+}
+
+.field-error i {
+    flex-shrink: 0;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
     }
-
-    show(content, options = {}) {
-        const {
-            title = '',
-            confirmText = '확인',
-            cancelText = '취소',
-            onConfirm = null,
-            onCancel = null,
-            showCancel = true
-        } = options;
-
-        // 모달 HTML 생성
-        this.modal = document.createElement('div');
-        this.modal.className = 'modal-overlay';
-        this.modal.innerHTML = `
-            <div class="modal-container">
-                ${title ? `<div class="modal-header"><h3>${title}</h3></div>` : ''}
-                <div class="modal-body">${content}</div>
-                <div class="modal-footer">
-                    ${showCancel ? `<button class="btn btn-secondary modal-cancel">${cancelText}</button>` : ''}
-                    <button class="btn btn-primary modal-confirm">${confirmText}</button>
-                </div>
-            </div>
-        `;
-
-        document.body.appendChild(this.modal);
-
-        // 애니메이션
-        setTimeout(() => this.modal.classList.add('show'), 10);
-
-        // 이벤트 리스너
-        const confirmBtn = this.modal.querySelector('.modal-confirm');
-        const cancelBtn = this.modal.querySelector('.modal-cancel');
-
-        confirmBtn.addEventListener('click', () => {
-            if (onConfirm) onConfirm();
-            this.hide();
-        });
-
-        if (cancelBtn) {
-            cancelBtn.addEventListener('click', () => {
-                if (onCancel) onCancel();
-                this.hide();
-            });
-        }
-
-        // 오버레이 클릭 시 닫기
-        this.modal.addEventListener('click', (e) => {
-            if (e.target === this.modal) {
-                if (onCancel) onCancel();
-                this.hide();
-            }
-        });
-    }
-
-    hide() {
-        if (!this.modal) return;
-        
-        this.modal.classList.remove('show');
-        setTimeout(() => {
-            if (this.modal && this.modal.parentElement) {
-                this.modal.remove();
-            }
-            this.modal = null;
-        }, 300);
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-const modal = new Modal();
+/* ========================================
+   3. 버튼 개선
+   ======================================== */
 
-function showModal(content, options) {
-    return modal.show(content, options);
+.btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
-function showConfirm(message, onConfirm, onCancel) {
-    return modal.show(message, {
-        title: '확인',
-        confirmText: '확인',
-        cancelText: '취소',
-        onConfirm,
-        onCancel,
-        showCancel: true
-    });
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
 }
 
-// ========================================
-// 6. 툴팁 시스템
-// ========================================
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
 
-function initTooltips() {
-    const tooltipElements = document.querySelectorAll('[data-tooltip]');
+.btn-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background-color: #f3f4f6;
+    color: #374151;
+}
+
+.btn-secondary:hover {
+    background-color: #e5e7eb;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+}
+
+/* 버튼 로딩 상태 */
+.btn.loading {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.btn.loading i.fa-spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.btn.success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.btn.error {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+/* 버튼 아이콘 애니메이션 */
+.btn i.fa-arrow-right {
+    transition: transform 0.3s;
+}
+
+.btn:hover i.fa-arrow-right {
+    transform: translateX(4px);
+}
+
+.btn:disabled {
+    background: #9ca3af !important;
+    cursor: not-allowed;
+    transform: none !important;
+    opacity: 0.6;
+}
+
+/* ========================================
+   4. 모달/다이얼로그
+   ======================================== */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.3s;
+    backdrop-filter: blur(4px);
+}
+
+.modal-overlay.show {
+    opacity: 1;
+}
+
+.modal-container {
+    background: white;
+    border-radius: 16px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s;
+}
+
+.modal-overlay.show .modal-container {
+    transform: scale(1) translateY(0);
+}
+
+.modal-header {
+    padding: 24px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #111827;
+    font-weight: 700;
+}
+
+.modal-body {
+    padding: 24px;
+    color: #374151;
+    line-height: 1.6;
+    overflow-y: auto;
+    max-height: 60vh;
+}
+
+.modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.modal-footer .btn {
+    min-width: 100px;
+}
+
+/* ========================================
+   5. 툴팁
+   ======================================== */
+
+.tooltip {
+    position: fixed;
+    background-color: #1f2937;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    z-index: 10001;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: all 0.2s;
+    max-width: 250px;
+    line-height: 1.4;
+}
+
+.tooltip.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #1f2937;
+}
+
+/* ========================================
+   6. Progress Bar 개선
+   ======================================== */
+
+.progress-bar-wrapper {
+    position: relative;
+    background: white;
+    padding: 32px 40px;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.progress-track {
+    position: absolute;
+    top: 50%;
+    left: 40px;
+    right: 40px;
+    height: 4px;
+    background: #e5e7eb;
+    transform: translateY(-50%);
+    z-index: 0;
+    border-radius: 2px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #10b981 0%, #3b82f6 100%);
+    border-radius: 2px;
+    transition: width 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.3), 
+        transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.step-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: #9ca3af;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.progress-step.completed .step-circle {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-color: #10b981;
+    color: white;
+    animation: bounceIn 0.5s;
+}
+
+.progress-step.active .step-circle {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    border-color: #3b82f6;
+    color: white;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 12px rgba(59, 130, 246, 0);
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.step-label {
+    font-size: 0.875rem;
+    color: #9ca3af;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.progress-step.completed .step-label,
+.progress-step.active .step-label {
+    color: #111827;
+    font-weight: 600;
+}
+
+/* ========================================
+   7. 카드 개선
+   ======================================== */
+
+.card-enhanced {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s;
+    border: 1px solid transparent;
+}
+
+.card-enhanced:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+    border-color: #e5e7eb;
+}
+
+/* ========================================
+   8. 배지
+   ======================================== */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.badge-required {
+    background-color: #fecaca;
+    color: #991b1b;
+}
+
+.badge-optional {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.badge-premium {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    color: #92400e;
+}
+
+.badge-new {
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    color: #1e40af;
+}
+
+/* ========================================
+   9. 스크롤 애니메이션
+   ======================================== */
+
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+}
+
+.animate-on-scroll.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ========================================
+   10. 로딩 스피너
+   ======================================== */
+
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9998;
+    backdrop-filter: blur(4px);
+}
+
+.loading-content {
+    background: white;
+    padding: 32px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.loading-content .loading-spinner {
+    width: 48px;
+    height: 48px;
+    border-width: 4px;
+    border-top-color: #3b82f6;
+}
+
+/* ========================================
+   11. 모바일 반응형
+   ======================================== */
+
+@media (max-width: 768px) {
+    .toast-container {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+    }
     
-    tooltipElements.forEach(element => {
-        element.addEventListener('mouseenter', function() {
-            const tooltipText = this.getAttribute('data-tooltip');
-            const tooltip = document.createElement('div');
-            tooltip.className = 'tooltip';
-            tooltip.textContent = tooltipText;
-            
-            document.body.appendChild(tooltip);
-            
-            const rect = this.getBoundingClientRect();
-            tooltip.style.top = (rect.top - tooltip.offsetHeight - 8) + 'px';
-            tooltip.style.left = (rect.left + (rect.width - tooltip.offsetWidth) / 2) + 'px';
-            
-            setTimeout(() => tooltip.classList.add('show'), 10);
-            
-            this._tooltip = tooltip;
-        });
-        
-        element.addEventListener('mouseleave', function() {
-            if (this._tooltip) {
-                this._tooltip.classList.remove('show');
-                setTimeout(() => {
-                    if (this._tooltip && this._tooltip.parentElement) {
-                        this._tooltip.remove();
-                    }
-                }, 200);
-            }
-        });
-    });
-}
-
-// ========================================
-// 7. 스크롤 애니메이션
-// ========================================
-
-function initScrollAnimations() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
-            }
-        });
-    }, {
-        threshold: 0.1
-    });
-
-    document.querySelectorAll('.animate-on-scroll').forEach(el => {
-        observer.observe(el);
-    });
-}
-
-// ========================================
-// 8. 유틸리티 함수
-// ========================================
-
-// 디바운스
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// 쓰로틀
-function throttle(func, limit) {
-    let inThrottle;
-    return function(...args) {
-        if (!inThrottle) {
-            func.apply(this, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
-    };
-}
-
-// 애니메이션 딜레이
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-// 로컬 스토리지 헬퍼
-const storage = {
-    set: (key, value) => {
-        try {
-            localStorage.setItem(key, JSON.stringify(value));
-            return true;
-        } catch (e) {
-            console.error('Storage set error:', e);
-            return false;
-        }
-    },
-    get: (key, defaultValue = null) => {
-        try {
-            const item = localStorage.getItem(key);
-            return item ? JSON.parse(item) : defaultValue;
-        } catch (e) {
-            console.error('Storage get error:', e);
-            return defaultValue;
-        }
-    },
-    remove: (key) => {
-        try {
-            localStorage.removeItem(key);
-            return true;
-        } catch (e) {
-            console.error('Storage remove error:', e);
-            return false;
-        }
+    .toast {
+        min-width: auto;
+        width: 100%;
     }
-};
-
-// ========================================
-// 9. 페이지 로드 시 초기화
-// ========================================
-
-document.addEventListener('DOMContentLoaded', function() {
-    // 툴팁 초기화
-    initTooltips();
     
-    // 스크롤 애니메이션 초기화
-    initScrollAnimations();
+    .modal-container {
+        width: 95%;
+        margin: 10px;
+    }
     
-    // 모든 전화번호 입력 필드 자동 포맷팅
-    document.querySelectorAll('input[type="tel"]').forEach(input => {
-        input.addEventListener('input', function() {
-            formatPhoneNumber(this);
-        });
-    });
+    .progress-bar-wrapper {
+        padding: 20px 16px;
+    }
     
-    // 숫자만 입력 가능한 필드
-    document.querySelectorAll('input[data-number-only]').forEach(input => {
-        input.addEventListener('input', function() {
-            this.value = this.value.replace(/\D/g, '');
-        });
-    });
-});
+    .progress-steps {
+        gap: 4px;
+    }
+    
+    .step-circle {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .step-label {
+        font-size: 0.75rem;
+        max-width: 70px;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+    
+    .modal-footer {
+        flex-direction: column-reverse;
+    }
+    
+    .modal-footer .btn {
+        width: 100%;
+    }
+}
 
-// ========================================
-// Export (전역 사용)
-// ========================================
+/* ========================================
+   12. 다크모드 지원
+   ======================================== */
 
-window.UIComponents = {
-    toast,
-    showToast,
-    formValidator,
-    formatPhoneNumber,
-    setupPhoneInput,
-    LoadingButton,
-    modal,
-    showModal,
-    showConfirm,
-    debounce,
-    throttle,
-    sleep,
-    storage
-};
+@media (prefers-color-scheme: dark) {
+    .toast,
+    .modal-container,
+    .card-enhanced {
+        background-color: #1f2937;
+        color: #e5e7eb;
+    }
+    
+    .toast-message,
+    .modal-body {
+        color: #e5e7eb;
+    }
+    
+    .modal-header {
+        border-bottom-color: #374151;
+    }
+    
+    .modal-footer {
+        border-top-color: #374151;
+    }
+    
+    .btn-secondary {
+        background-color: #374151;
+        color: #e5e7eb;
+    }
+    
+    .btn-secondary:hover {
+        background-color: #4b5563;
+    }
+    
+    .progress-bar-wrapper {
+        background-color: #1f2937;
+        border-bottom-color: #374151;
+    }
+    
+    .step-circle {
+        background-color: #1f2937;
+        border-color: #4b5563;
+    }
+    
+    .progress-step.completed .step-label,
+    .progress-step.active .step-label {
+        color: #e5e7eb;
+    }
+}
+
+/* ========================================
+   13. 접근성 개선
+   ======================================== */
+
+.btn:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* ========================================
+   14. 프린트 스타일
+   ======================================== */
+
+@media print {
+    .toast-container,
+    .modal-overlay,
+    .btn,
+    .tooltip {
+        display: none !important;
+    }
+}
