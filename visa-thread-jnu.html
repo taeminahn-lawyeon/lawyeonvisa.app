@@ -43,6 +43,58 @@
             align-items: center;
             margin-bottom: 15px;
         }
+        
+        /* 언어 선택 버튼 */
+        .language-selector {
+            position: relative;
+        }
+        
+        #language-selector-btn:hover {
+            background: rgba(255,255,255,0.3) !important;
+            border-color: rgba(255,255,255,0.8) !important;
+        }
+        
+        #language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            min-width: 160px;
+            z-index: 1000;
+            padding: 8px;
+        }
+        
+        #language-dropdown.hidden {
+            display: none;
+        }
+        
+        .language-option {
+            width: 100%;
+            padding: 10px 12px;
+            border: none;
+            background: white;
+            cursor: pointer;
+            border-radius: 8px;
+            text-align: left;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        .language-option:hover {
+            background: #f3f4f6;
+        }
+        
+        .language-option .checkmark {
+            color: #00A651;
+            font-weight: bold;
+        }
 
         .back-btn {
             background: #f3f4f6;
@@ -651,16 +703,28 @@
             <div class="thread-header">
                 <div class="header-top">
                     <button class="back-btn" onclick="goBack()">
-                        <i class="fas fa-arrow-left"></i> 돌아가기
+                        <i class="fas fa-arrow-left"></i> <span data-i18n="thread.back">돌아가기</span>
                     </button>
-                    <div class="status-badge processing" id="statusBadge">진행중</div>
+                    
+                    <!-- 언어 선택 버튼 -->
+                    <div class="language-selector" style="margin-left: auto; margin-right: 10px;">
+                        <button id="language-selector-btn" title="언어 선택 / Select Language" type="button" style="background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.5); color: white; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; transition: all 0.3s ease; display: flex; align-items: center; gap: 6px; height: 36px;">
+                            <span class="language-btn-content">
+                                <span class="language-name">한국어</span>
+                            </span>
+                            <span style="margin-left: 4px; font-size: 11px;">▼</span>
+                        </button>
+                        <div id="language-dropdown" class="hidden" style="position: absolute; top: 100%; right: 0; margin-top: 8px; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); min-width: 160px; z-index: 1000;"></div>
+                    </div>
+                    
+                    <div class="status-badge processing" id="statusBadge" data-i18n="thread.status.processing">진행중</div>
                 </div>
                 <div class="thread-info">
                     <div>
                         <div class="service-title" id="serviceTitle">로딩 중...</div>
                         <div class="service-meta">
                             <span><i class="fas fa-calendar"></i> <span id="threadDate">-</span></span>
-                            <span><i class="fas fa-building"></i> 센터 담당자</span>
+                            <span><i class="fas fa-building"></i> <span data-i18n="thread.centerStaff">센터 담당자</span></span>
                         </div>
                     </div>
                 </div>
@@ -669,7 +733,7 @@
             <div class="messages-area" id="messagesArea">
                 <div class="system-message">
                     <div class="system-message-content">
-                        <i class="fas fa-check-circle"></i> 상담이 시작되었습니다
+                        <i class="fas fa-check-circle"></i> <span data-i18n="thread.systemMessage.started">상담이 시작되었습니다</span>
                     </div>
                 </div>
 
@@ -690,6 +754,7 @@
                         <textarea 
                             class="message-input" 
                             id="messageInput" 
+                            data-i18n-placeholder="thread.input.placeholder"
                             placeholder="메시지를 입력하세요 (Shift+Enter: 줄바꿈, Enter: 전송)"
                             rows="1"
                             style="width: 100%; min-height: 42px; max-height: 120px; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 15px; font-family: 'Noto Sans KR', sans-serif; resize: none;"
@@ -705,40 +770,40 @@
 
         <div class="thread-sidebar">
             <div class="sidebar-section">
-                <h3><i class="fas fa-info-circle"></i> 신청 정보</h3>
+                <h3><i class="fas fa-info-circle"></i> <span data-i18n="thread.info.title">신청 정보</span></h3>
                 <div class="info-item">
-                    <div class="info-label">신청 번호</div>
+                    <div class="info-label" data-i18n="thread.info.applicationNumber">신청 번호</div>
                     <div class="info-value" id="applicationId">-</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">신청일</div>
+                    <div class="info-label" data-i18n="thread.info.applicationDate">신청일</div>
                     <div class="info-value" id="applicationDate">-</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">결제 금액</div>
+                    <div class="info-label" data-i18n="thread.info.paymentAmount">결제 금액</div>
                     <div class="info-value" id="amount">-</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">센터 담당자</div>
-                    <div class="info-value">법무법인 로연</div>
+                    <div class="info-label" data-i18n="thread.info.staff">센터 담당자</div>
+                    <div class="info-value" data-i18n="thread.info.lawFirm">법무법인 로연</div>
                 </div>
             </div>
 
             <div class="sidebar-section">
-                <h3><i class="fas fa-file-alt"></i> 첨부 서류</h3>
+                <h3><i class="fas fa-file-alt"></i> <span data-i18n="thread.documents.title">첨부 서류</span></h3>
                 <div id="documentsList">
-                    <p style="color: #6B7280; font-size: 14px; padding: 12px 0;">아직 첨부된 서류가 없습니다.</p>
+                    <p style="color: #6B7280; font-size: 14px; padding: 12px 0;" data-i18n="thread.documents.empty">아직 첨부된 서류가 없습니다.</p>
                 </div>
             </div>
 
             <div class="sidebar-section">
-                <h3><i class="fas fa-clock"></i> 진행 현황</h3>
+                <h3><i class="fas fa-clock"></i> <span data-i18n="thread.progress.title">진행 현황</span></h3>
                 <div class="info-item">
-                    <div class="info-label">현재 단계</div>
-                    <div class="info-value" id="currentStatus">접수 완료</div>
+                    <div class="info-label" data-i18n="thread.progress.currentStatus">현재 단계</div>
+                    <div class="info-value" id="currentStatus" data-i18n="thread.progress.status.received">접수 완료</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">예상 완료일</div>
+                    <div class="info-label" data-i18n="thread.progress.expectedDate">예상 완료일</div>
                     <div class="info-value" id="expectedDate">-</div>
                 </div>
             </div>
@@ -754,6 +819,11 @@
         let currentUser = null;
 
         window.addEventListener('DOMContentLoaded', async function() {
+            // i18n 초기화
+            if (window.i18n) {
+                window.i18n.init();
+            }
+            
             const urlParams = new URLSearchParams(window.location.search);
             threadId = urlParams.get('thread_id') || urlParams.get('id');
 
