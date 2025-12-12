@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>법무법인 로연 출입국이민지원센터</title>
+    <title data-i18n="site.title">법무법인 로연 출입국이민지원센터</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/ui-components.css">
@@ -27,6 +27,8 @@
             color: white;
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
             border-bottom: 3px solid #3182F6;
+            position: relative;
+            z-index: 50;
         }
 
         .header-content {
@@ -64,8 +66,8 @@
         }
 
         .header-btn {
-            background: rgba(255,255,255,0.2);
-            border: 2px solid white;
+            background: #3182F6;
+            border: 2px solid #3182F6;
             color: white;
             padding: 10px 20px;
             border-radius: 10px;
@@ -73,11 +75,13 @@
             font-weight: 600;
             transition: all 0.3s ease;
             font-size: 14px;
+            height: 42px;
         }
 
         .header-btn:hover {
-            background: white;
-            color: #2c3e50;
+            background: #2563EB;
+            border-color: #2563EB;
+            color: white;
         }
 
         .logout-btn {
@@ -90,6 +94,7 @@
             font-weight: 600;
             transition: all 0.3s ease;
             font-size: 14px;
+            height: 42px;
         }
 
         .logout-btn:hover {
@@ -843,16 +848,16 @@
         <div class="header-content">
             <div class="user-info">
                 <h2 style="word-break: keep-all;" data-i18n="site.name">법무법인&nbsp;로연 출입국이민지원센터</h2>
-                <p style="margin: 0; opacity: 0.8;" data-i18n="site.slogan">Visa & Immigration Center</p>
+                <p style="margin: 0; opacity: 0.8;"><span data-i18n="site.visa">Visa</span> <span data-i18n="site.immigration">& Immigration Center</span></p>
             </div>
             <div class="header-actions">
                 <!-- 언어 선택기 -->
                 <div class="language-selector">
-                    <button id="language-selector-btn">
+                    <button id="language-selector-btn" title="언어 선택 / Select Language" type="button">
                         <span class="language-btn-content">
-                            <span class="language-flag">🇰🇷</span>
                             <span class="language-name">한국어</span>
                         </span>
+                        <span style="margin-left: 4px; font-size: 12px;">▼</span>
                     </button>
                     <div id="language-dropdown" class="hidden"></div>
                 </div>
@@ -865,7 +870,7 @@
                 </div>
                 <!-- 로그인 후 -->
                 <div id="userGreeting" class="user-greeting" style="display: none;">
-                    <span id="userGreetingName">환영합니다!</span>
+                    <span id="userGreetingName" data-i18n="header.welcome">환영합니다!</span>
                     <button class="logout-btn" id="logoutBtn" data-i18n="common.logout">
                         로그아웃
                     </button>
@@ -877,25 +882,25 @@
     <div class="container">
         <!-- 강제출국·비자거절 긴급 구제 -->
         <div class="premium-service-banner">
-            <h3>강제출국·비자거절 긴급 구제</h3>
+            <h3 data-i18n="emergency.title">강제출국·비자거절 긴급 구제</h3>
             <div class="premium-service-grid">
                 <div class="premium-service-card" id="emergencyLegalCard" style="cursor: pointer;">
                     <div class="icon">🚨</div>
-                    <div class="title">변호사 전담 대응</div>
+                    <div class="title" data-i18n="emergency.legal.title">변호사 전담 대응</div>
                     <div class="desc">
-                        <div class="desc-item">사범심사 동행</div>
-                        <div class="desc-item">처분 취소소송</div>
-                        <div class="desc-item">형사 사건 변호</div>
+                        <div class="desc-item" data-i18n="emergency.legal.item1">사범심사 동행</div>
+                        <div class="desc-item" data-i18n="emergency.legal.item2">처분 취소소송</div>
+                        <div class="desc-item" data-i18n="emergency.legal.item3">형사 사건 변호</div>
                     </div>
                 </div>
                 <div class="premium-service-card diagnostic" id="visaDiagnosisCard" style="cursor: pointer;">
                     <div class="icon">🔍</div>
-                    <div class="title">비자 사전진단</div>
+                    <div class="title" data-i18n="emergency.diagnosis.title">비자 사전진단</div>
                     <div class="desc">
-                        <div class="desc-item">비자 변경 가능성</div>
-                        <div class="desc-item">불법체류 위험도</div>
-                        <div class="desc-item">출입국법 위반 여부</div>
-                        <div class="desc-item">전환 가능 비자</div>
+                        <div class="desc-item" data-i18n="emergency.diagnosis.item1">비자 변경 가능성</div>
+                        <div class="desc-item" data-i18n="emergency.diagnosis.item2">불법체류 위험도</div>
+                        <div class="desc-item" data-i18n="emergency.diagnosis.item3">출입국법 위반 여부</div>
+                        <div class="desc-item" data-i18n="emergency.diagnosis.item4">전환 가능 비자</div>
                     </div>
                 </div>
             </div>
@@ -906,12 +911,12 @@
             <h3 data-i18n="services.title">출입국 민원 대행</h3>
             
             <div class="service-categories">
-                <div class="category-tab active" data-category="visa" data-i18n="services.visa">비자</div>
-                <div class="category-tab" data-category="residence-report">체류 신고</div>
-                <div class="category-tab" data-category="immigration" data-i18n="services.immigration">이민·국적·난민</div>
-                <div class="category-tab" data-category="alien-registration" data-i18n="services.alienReg">외국인 등록</div>
-                <div class="category-tab" data-category="consulting" data-i18n="services.consulting">자문</div>
-                <div class="category-tab" data-category="certificate" data-i18n="services.certificate">증명서</div>
+                <div class="category-tab active" data-category="visa" data-i18n="services.tab.visa">비자</div>
+                <div class="category-tab" data-category="residence-report" data-i18n="services.tab.residenceReport">체류 신고</div>
+                <div class="category-tab" data-category="immigration" data-i18n="services.tab.immigration">이민·국적·난민</div>
+                <div class="category-tab" data-category="alien-registration" data-i18n="services.tab.alienReg">외국인 등록</div>
+                <div class="category-tab" data-category="consulting" data-i18n="services.tab.consulting">자문</div>
+                <div class="category-tab" data-category="certificate" data-i18n="services.tab.certificate">증명서</div>
             </div>
 
             <div class="service-grid" id="serviceGrid">
@@ -921,14 +926,14 @@
 
         <!-- 나의 신청 내역 -->
         <div class="applications-section">
-            <h3 data-i18n="dashboard.myApplications">나의 신청 내역</h3>
+            <h3 data-i18n="dashboard.title">나의 신청 내역</h3>
             <div id="applicationsList">
                 <!-- 로그인 전: 로그인 버튼 -->
                 <div id="loginPrompt" style="text-align: center; padding: 40px 20px; color: #6B7684;">
-                    <p style="font-size: 17px; margin-bottom: 24px; line-height: 1.6; font-weight: 500;">
+                    <p style="font-size: 17px; margin-bottom: 24px; line-height: 1.6; font-weight: 500;" data-i18n="dashboard.loginPrompt">
                         로그인하시면 나의 체류현황, 서비스 신청, 진행 현황을 확인하실 수 있습니다.
                     </p>
-                    <button onclick="document.getElementById('googleLoginBtn').click()" style="padding: 16px 32px; background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%); color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 8px 24px rgba(49, 130, 246, 0.25);">
+                    <button onclick="document.getElementById('googleLoginBtn').click()" style="padding: 16px 32px; background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%); color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 8px 24px rgba(49, 130, 246, 0.25);" data-i18n="dashboard.loginButton">
                         Google 로그인
                     </button>
                 </div>
@@ -940,17 +945,17 @@
                         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
                             <div style="font-size: 32px;">📝</div>
                             <div>
-                                <div style="font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 4px;">체류 현황</div>
+                                <div style="font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 4px;" data-i18n="dashboard.residence.title">체류 현황</div>
                                 <div style="font-size: 14px; color: #64748b;" id="userNameDisplay"></div>
                             </div>
                         </div>
                         <div style="display: flex; flex-direction: column; gap: 12px;">
                             <div style="background: white; padding: 16px; border-radius: 12px;">
-                                <div style="font-size: 13px; color: #64748b; margin-bottom: 6px;">체류자격</div>
+                                <div style="font-size: 13px; color: #64748b; margin-bottom: 6px;" data-i18n="dashboard.residence.visaType">체류자격</div>
                                 <div style="font-size: 17px; font-weight: 700; color: #2563EB;" id="userVisaType">D-2 유학</div>
                             </div>
                             <div style="background: white; padding: 16px; border-radius: 12px;">
-                                <div style="font-size: 13px; color: #64748b; margin-bottom: 6px;">만료일</div>
+                                <div style="font-size: 13px; color: #64748b; margin-bottom: 6px;" data-i18n="dashboard.residence.expiry">만료일</div>
                                 <div style="font-size: 17px; font-weight: 700; color: #EF4444;" id="userExpiry">2025-06-30</div>
                             </div>
                         </div>
@@ -965,12 +970,12 @@
                                     <div style="font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 8px;">체류기간 연장허가 (D-2)</div>
                                     <div style="font-size: 14px; color: #64748b;">신청일: 2024-12-05</div>
                                 </div>
-                                <div style="background: #FEF3C7; color: #92400E; padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 700;">
+                                <div style="background: #FEF3C7; color: #92400E; padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 700;" data-i18n="dashboard.application.status.document">
                                     서류 수집 중
                                 </div>
                             </div>
                             <div style="margin-bottom: 16px;">
-                                <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;">진행 단계</div>
+                                <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;" data-i18n="dashboard.application.progress">진행 단계</div>
                                 <div style="display: flex; gap: 8px;">
                                     <div style="flex: 1; height: 8px; background: #3182F6; border-radius: 4px;"></div>
                                     <div style="flex: 1; height: 8px; background: #3182F6; border-radius: 4px;"></div>
@@ -978,21 +983,21 @@
                                     <div style="flex: 1; height: 8px; background: #E5E7EB; border-radius: 4px;"></div>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: #64748b;">
-                                    <span>결제</span>
-                                    <span>서류수집</span>
-                                    <span>신청중</span>
-                                    <span>승인</span>
+                                    <span data-i18n="dashboard.application.step.payment">결제</span>
+                                    <span data-i18n="dashboard.application.step.documents">서류수집</span>
+                                    <span data-i18n="dashboard.application.step.processing">신청중</span>
+                                    <span data-i18n="dashboard.application.step.approval">승인</span>
                                 </div>
                             </div>
                             <button onclick="window.location.href='visa-thread-jnu.html'" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
-                                <i class="fas fa-comments"></i> 쓰레드 열기
+                                <i class="fas fa-comments"></i> <span data-i18n="dashboard.application.openThread">쓰레드 열기</span>
                             </button>
                         </div>
                         
                         <!-- 내역 없을 때 -->
                         <div id="noApplications" style="display: none; text-align: center; padding: 40px 20px; color: #9CA3AF;">
                             <div style="font-size: 48px; margin-bottom: 16px;">📄</div>
-                            <p style="font-size: 16px; font-weight: 600;">아직 신청하신 서비스가 없습니다.</p>
+                            <p style="font-size: 16px; font-weight: 600;" data-i18n="dashboard.noApplications">아직 신청하신 서비스가 없습니다.</p>
                         </div>
                     </div>
                 </div>
@@ -1001,13 +1006,13 @@
 
         <!-- 협약 단체 전용 -->
         <div class="services-section">
-            <h3>협약 단체 전용 <span style="font-size: 14px; font-weight: 500; color: #6B7280; margin-left: 8px;">(테스트 진행 중입니다. 실제 협약 중인 단체가 아닙니다.)</span></h3>
+            <h3><span data-i18n="partner.title">협약 단체 전용</span> <span style="font-size: 14px; font-weight: 500; color: #6B7280; margin-left: 8px;" data-i18n="partner.testNote">(테스트 진행 중입니다. 실제 협약 중인 단체가 아닙니다.)</span></h3>
             
             <div class="service-categories">
-                <div class="category-tab active" data-partner-category="university">대학교·어학원</div>
-                <div class="category-tab" data-partner-category="company">기업</div>
-                <div class="category-tab" data-partner-category="union">조합·법인</div>
-                <div class="category-tab" data-partner-category="public">공공기관</div>
+                <div class="category-tab active" data-partner-category="university" data-i18n="partner.tab.university">대학교·어학원</div>
+                <div class="category-tab" data-partner-category="company" data-i18n="partner.tab.company">기업</div>
+                <div class="category-tab" data-partner-category="union" data-i18n="partner.tab.union">조합·법인</div>
+                <div class="category-tab" data-partner-category="public" data-i18n="partner.tab.public">공공기관</div>
             </div>
 
             <!-- 협약 단체 버튼 -->
@@ -1017,10 +1022,10 @@
             
             <!-- 협약 신청 CTA -->
             <div style="border-top: 2px solid #e5e7eb; padding-top: 24px; margin-top: 24px;">
-                <a href="partnership-apply.html" style="display: inline-block; background: linear-gradient(135deg, #2563EB 0%, #1e40af 100%); color: white; border-radius: 14px; padding: 18px 32px; text-align: center; text-decoration: none; transition: all 0.3s; box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3); font-size: 17px; font-weight: 800;">
+                <a href="partnership-apply.html" style="display: inline-block; background: linear-gradient(135deg, #2563EB 0%, #1e40af 100%); color: white; border-radius: 14px; padding: 18px 32px; text-align: center; text-decoration: none; transition: all 0.3s; box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3); font-size: 17px; font-weight: 800;" data-i18n="partner.apply.button">
                     우리 단체도 제휴하기
                 </a>
-                <p style="margin-top: 12px; font-size: 14px; color: #6b7280; line-height: 1.6;">모든 서비스 30% 할인 및 관리자 전용 소속 외국인 체류 현황 대시보드 제공</p>
+                <p style="margin-top: 12px; font-size: 14px; color: #6b7280; line-height: 1.6;" data-i18n="partner.apply.desc">모든 서비스 30% 할인 및 관리자 전용 소속 외국인 체류 현황 대시보드 제공</p>
             </div>
         </div>
 
@@ -1031,40 +1036,40 @@
             <!-- 공식 정보 -->
             <div class="info-box" style="background: rgba(255, 255, 255, 0.08); padding: 20px; border-radius: 14px; margin-bottom: 20px; font-size: 14px; line-height: 1.9; color: rgba(255, 255, 255, 0.9);">
                 <div style="margin-bottom: 8px;">
-                    <strong style="color: white; font-weight: 700;" data-i18n="footer.company">(상호명)</strong> <span data-i18n="footer.lawFirm">법무법인 로연</span>
+                    <strong style="color: white; font-weight: 700;" data-i18n="footer.company.label">(상호명)</strong> <span data-i18n="footer.company.name">법무법인 로연</span>
                 </div>
                 <div style="margin-bottom: 8px;">
-                    <strong style="color: white; font-weight: 700;">서울사무소</strong> 서울특별시 강서구 공항대로 164, 5층 503호 (마곡동, 류마타워) | 대표: 민준우
+                    <strong style="color: white; font-weight: 700;" data-i18n="footer.office.seoul">서울사무소</strong> 서울특별시 강서구 공항대로 164, 5층 503호 (마곡동, 류마타워) | 대표: 민준우
                 </div>
                 <div style="margin-bottom: 8px;">
-                    <strong style="color: white; font-weight: 700;">광주사무소</strong> 광주광역시 동구 준법로 1, 3층(지산동, 초석빌딩) | 대표: 봉세환
+                    <strong style="color: white; font-weight: 700;" data-i18n="footer.office.gwangju">광주사무소</strong> 광주광역시 동구 준법로 1, 3층(지산동, 초석빌딩) | 대표: 봉세환
                 </div>
                 <div style="margin-bottom: 8px;">
-                    <strong style="color: white; font-weight: 700;">사업자등록번호</strong> 391-85-03007 (서울사무소)
+                    <strong style="color: white; font-weight: 700;" data-i18n="footer.businessNumber">사업자등록번호</strong> 391-85-03007 (서울사무소)
                 </div>
                 <div style="margin-bottom: 8px;">
-                    <strong style="color: white; font-weight: 700;">통신판매업 신고번호</strong> 제 2025-서울강서-3193호
+                    <strong style="color: white; font-weight: 700;" data-i18n="footer.ecommerce">통신판매업 신고번호</strong> 제 2025-서울강서-3193호
                 </div>
                 <div style="margin-bottom: 8px;">
-                    <strong style="color: white; font-weight: 700;">광고책임변호사</strong> 남도현, 민준우
+                    <strong style="color: white; font-weight: 700;" data-i18n="footer.adLawyers">광고책임변호사</strong> 남도현, 민준우
                 </div>
                 <div>
-                    <strong style="color: white; font-weight: 700;">연락처</strong> 02-2039-0544 | <strong style="color: white; font-weight: 700;">팩스</strong> 070-8230-0545
+                    <strong style="color: white; font-weight: 700;" data-i18n="footer.contact">연락처</strong> 02-2039-0544 | <strong style="color: white; font-weight: 700;" data-i18n="footer.fax">팩스</strong> 070-8230-0545
                 </div>
             </div>
             
             <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center;">
-                <p style="font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-bottom: 12px;">
+                <p style="font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-bottom: 12px;" data-i18n="footer.legalNotice">
                     본 사이트에서 제공되는 모든 법률 서비스는 법무법인 로연에서 제공합니다.
                 </p>
                 <div style="margin-bottom: 12px;">
-                    <a href="privacy-policy.html" style="color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 12px; margin: 0 10px; transition: color 0.2s;" data-i18n="footer.privacyPolicy">개인정보 처리방침</a>
+                    <a href="privacy-policy.html" style="color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 12px; margin: 0 10px; transition: color 0.2s;" data-i18n="footer.privacy">개인정보 처리방침</a>
                     <span style="color: rgba(255, 255, 255, 0.3); font-size: 12px;">|</span>
-                    <a href="terms-of-service.html" style="color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 12px; margin: 0 10px; transition: color 0.2s;" data-i18n="footer.termsOfService">서비스 이용약관</a>
+                    <a href="terms-of-service.html" style="color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 12px; margin: 0 10px; transition: color 0.2s;" data-i18n="footer.terms">서비스 이용약관</a>
                     <span style="color: rgba(255, 255, 255, 0.3); font-size: 12px;">|</span>
                     <a href="https://lawyeon.com/" target="_blank" style="color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 12px; margin: 0 10px; transition: color 0.2s;" data-i18n="footer.lawFirm">법무법인 로연</a>
                 </div>
-                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.4);">
+                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.4);" data-i18n="footer.copyright">
                     Copyright © 법무법인 로연 출입국이민지원센터
                 </p>
             </div>
@@ -1084,8 +1089,17 @@
     <script>
         // 페이지 로드 시 초기화
         window.addEventListener('DOMContentLoaded', function() {
-            loadServices();
-            loadPartners();
+            // 🌍 다국어 시스템 초기화 (최우선)
+            if (window.i18n && typeof window.i18n.init === 'function') {
+                window.i18n.init();
+            }
+            
+            // 서비스 및 파트너 로드 (다국어 시스템 초기화 후)
+            setTimeout(() => {
+                loadServices();
+                loadPartners();
+            }, 100);
+            
             checkUserLogin();
             
             // Google Login Button
@@ -1142,7 +1156,7 @@
                 console.log('🔍 세션:', session);
                 
                 if (!session || !session.user) {
-                    alert('로그인이 필요합니다.');
+                    alert(window.i18n.translate('common.loginRequired'));
                     document.getElementById('googleLoginBtn').scrollIntoView({ behavior: 'smooth' });
                     return;
                 }
@@ -1176,7 +1190,7 @@
                 console.log('🔍 세션:', session);
                 
                 if (!session || !session.user) {
-                    alert('로그인이 필요합니다.');
+                    alert(window.i18n.translate('common.loginRequired'));
                     document.getElementById('googleLoginBtn').scrollIntoView({ behavior: 'smooth' });
                     return;
                 }
@@ -1221,52 +1235,52 @@
             ]
         };
 
-        // 출입국 민원 서비스 (6개 카테고리)
+        // 출입국 민원 서비스 (6개 카테고리) - 번역 키 기반
         const services = {
             visa: [
-                { id: 'visa-issue', title: '비자 발급', desc: '사증발급인정서 발급 신청' },
-                { id: 'visa-extension', title: '비자 연장', desc: '체류기간 연장허가 신청' },
-                { id: 'visa-change', title: '비자 변경', desc: '체류자격 변경허가 신청' },
-                { id: 'visa-grant', title: '비자 부여', desc: '체류자격 부여 신청' }
+                { id: 'visa-issue', titleKey: 'service.visa_issue', descKey: 'service.visa_issue.desc' },
+                { id: 'visa-extension', titleKey: 'service.visa_extension', descKey: 'service.visa_extension.desc' },
+                { id: 'visa-change', titleKey: 'service.visa_change', descKey: 'service.visa_change.desc' },
+                { id: 'visa-grant', titleKey: 'service.visa_grant', descKey: 'service.visa_grant.desc' }
             ],
             'residence-report': [
-                { id: 'parttime-report', title: '시간제 취업 신고', desc: '유학생 시간제취업 허가/신고 (D-2, D-4-1)' },
-                { id: 'workplace-change', title: '근무회사 변경 신고', desc: 'E-9 근무처 변경허가' },
-                { id: 'employment-report', title: '취업 신고', desc: 'H-2 근로개시·취업개시 통합신고' },
-                { id: 'employment-change', title: '고용변동 신고', desc: 'H-2, E-9 통합 및 기타 체류자격 고용변동신고' },
-                { id: 'address-change', title: '체류지·거소 변경 신고', desc: '주소 이전 신고' },
-                { id: 'f4-residence', title: '재외동포 국내거소 신고', desc: 'F-4 국내거소 신고' },
-                { id: 'c3-report', title: 'C-3 재입국자 체류지 신고', desc: 'C-3 비자 재입국 후 체류지 신고' },
-                { id: 'outside-activity', title: '체류자격 외 활동 허가', desc: '본래 체류자격 외 활동 허가 신청' }
+                { id: 'parttime-report', titleKey: 'service.parttime_report', descKey: 'service.parttime_report.desc' },
+                { id: 'workplace-change', titleKey: 'service.workplace_change', descKey: 'service.workplace_change.desc' },
+                { id: 'employment-report', titleKey: 'service.employment_report', descKey: 'service.employment_report.desc' },
+                { id: 'employment-change', titleKey: 'service.employment_change', descKey: 'service.employment_change.desc' },
+                { id: 'address-change', titleKey: 'service.address_change', descKey: 'service.address_change.desc' },
+                { id: 'f4-residence', titleKey: 'service.f4_residence', descKey: 'service.f4_residence.desc' },
+                { id: 'c3-report', titleKey: 'service.c3_report', descKey: 'service.c3_report.desc' },
+                { id: 'outside-activity', titleKey: 'service.outside_activity', descKey: 'service.outside_activity.desc' }
             ],
             immigration: [
-                { id: 'naturalization', title: '귀화허가 신청', desc: '일반귀화, 간이귀화, 특별귀화' },
-                { id: 'nationality-recovery', title: '국적회복허가 신청', desc: '상실한 국적 회복 신청' },
-                { id: 'nationality-acquisition', title: '국적취득 신고', desc: '신고에 의한 국적 취득' },
-                { id: 'nationality-selection', title: '국적선택 신고', desc: '복수국적자 국적 선택' },
-                { id: 'nationality-loss', title: '국적상실 신고', desc: '외국 국적 취득으로 인한 상실 신고' },
-                { id: 'nationality-retention', title: '국적보유 신고', desc: '국적 보유 의사 신고' },
-                { id: 'refugee-application', title: '난민 신청', desc: '난민 인정 신청' },
-                { id: 'refugee-appeal', title: '난민 이의 신청', desc: '난민 불인정 결정 이의신청' },
-                { id: 'refugee-travel', title: '난민여행증명서 발급', desc: '난민인정자 여행증명서' }
+                { id: 'naturalization', titleKey: 'service.naturalization', descKey: 'service.naturalization.desc' },
+                { id: 'nationality-recovery', titleKey: 'service.nationality_recovery', descKey: 'service.nationality_recovery.desc' },
+                { id: 'nationality-acquisition', titleKey: 'service.nationality_acquisition', descKey: 'service.nationality_acquisition.desc' },
+                { id: 'nationality-selection', titleKey: 'service.nationality_selection', descKey: 'service.nationality_selection.desc' },
+                { id: 'nationality-loss', titleKey: 'service.nationality_loss', descKey: 'service.nationality_loss.desc' },
+                { id: 'nationality-retention', titleKey: 'service.nationality_retention', descKey: 'service.nationality_retention.desc' },
+                { id: 'refugee-application', titleKey: 'service.refugee_application', descKey: 'service.refugee_application.desc' },
+                { id: 'refugee-appeal', titleKey: 'service.refugee_appeal', descKey: 'service.refugee_appeal.desc' },
+                { id: 'refugee-travel', titleKey: 'service.refugee_travel', descKey: 'service.refugee_travel.desc' }
             ],
             'alien-registration': [
-                { id: 'arc-application', title: '외국인등록 신청', desc: '입국 후 외국인등록 신청 (90일 이상 체류)' },
-                { id: 'arc-reissue', title: '외국인등록증 재발급', desc: '분실·훼손 시 재발급' },
-                { id: 'arc-change', title: '외국인등록사항 변경 신고', desc: '여권변경, 소속기관 변경 등' }
+                { id: 'arc-application', titleKey: 'service.arc_application', descKey: 'service.arc_application.desc' },
+                { id: 'arc-reissue', titleKey: 'service.arc_reissue', descKey: 'service.arc_reissue.desc' },
+                { id: 'arc-change', titleKey: 'service.arc_change', descKey: 'service.arc_change.desc' }
             ],
             consulting: [
-                { id: 'visa-consulting', title: '비자 자문', desc: '개인·기업 비자 전략 컨설팅' },
-                { id: 'education-consulting', title: '교육 자문', desc: 'TOPIK, OASIS, 사회통합프로그램 가이드' },
-                { id: 'organization-consulting', title: '외국인 소속 단체 자문', desc: '대학, 기업 외국인 관리 컨설팅' }
+                { id: 'visa-consulting', titleKey: 'service.visa_consulting', descKey: 'service.visa_consulting.desc' },
+                { id: 'education-consulting', titleKey: 'service.education_consulting', descKey: 'service.education_consulting.desc' },
+                { id: 'organization-consulting', titleKey: 'service.organization_consulting', descKey: 'service.organization_consulting.desc' }
             ],
             certificate: [
-                { id: 'cert-entry-exit', title: '출입국사실 증명서', desc: '출입국 기록 증명' },
-                { id: 'cert-arc', title: '외국인등록사실 증명서', desc: '외국인등록 내역 증명' },
-                { id: 'cert-residence', title: '국내거소신고사실 증명서', desc: 'F-4 거소신고 증명' },
-                { id: 'cert-realestate', title: '부동산등기용 외국인등록번호부여 증명서', desc: '부동산 거래용' },
-                { id: 'cert-number-change', title: '외국인등록번호변경 확인서', desc: '등록번호 변경 확인' },
-                { id: 'cert-nationality', title: '국적 관련 증명서', desc: '국적상실, 국적보유 증명서' }
+                { id: 'cert-entry-exit', titleKey: 'service.cert_entry_exit', descKey: 'service.cert_entry_exit.desc' },
+                { id: 'cert-arc', titleKey: 'service.cert_arc', descKey: 'service.cert_arc.desc' },
+                { id: 'cert-residence', titleKey: 'service.cert_residence', descKey: 'service.cert_residence.desc' },
+                { id: 'cert-realestate', titleKey: 'service.cert_realestate', descKey: 'service.cert_realestate.desc' },
+                { id: 'cert-number-change', titleKey: 'service.cert_number_change', descKey: 'service.cert_number_change.desc' },
+                { id: 'cert-nationality', titleKey: 'service.cert_nationality', descKey: 'service.cert_nationality.desc' }
             ]
         };
 
@@ -1429,29 +1443,31 @@
                 // 상태 텍스트 및 색상
                 let statusBg = '#FEF3C7';
                 let statusColor = '#92400E';
-                let statusText = '서류 수집 중';
+                let statusTextKey = 'dashboard.application.status.document';
                 
                 if (thread.status === 'payment') {
                     statusBg = '#DBEAFE';
                     statusColor = '#1E40AF';
-                    statusText = '결제 완료';
+                    statusTextKey = 'dashboard.application.status.payment';
                 } else if (thread.status === 'document') {
                     statusBg = '#FEF3C7';
                     statusColor = '#92400E';
-                    statusText = '서류 수집 중';
+                    statusTextKey = 'dashboard.application.status.document';
                 } else if (thread.status === 'processing') {
                     statusBg = '#E0E7FF';
                     statusColor = '#4338CA';
-                    statusText = '신청 진행 중';
+                    statusTextKey = 'dashboard.application.status.processing';
                 } else if (thread.status === 'completed') {
                     statusBg = '#D1FAE5';
                     statusColor = '#065F46';
-                    statusText = '처리 완료';
+                    statusTextKey = 'dashboard.application.status.completed';
                 } else if (thread.status === 'archived') {
                     statusBg = '#F3F4F6';
                     statusColor = '#6B7280';
-                    statusText = '완료 (보관)';
+                    statusTextKey = 'dashboard.application.status.archived';
                 }
+                
+                const statusText = window.i18n.translate(statusTextKey);
                 
                 // 진행 단계 계산
                 let progress1 = thread.status === 'payment' || thread.status === 'document' || thread.status === 'processing' || thread.status === 'completed' || thread.status === 'archived';
@@ -1469,22 +1485,30 @@
                 `;
                 
                 // 신청일 포맷팅
-                const applicationDate = thread.created_at ? new Date(thread.created_at).toISOString().split('T')[0] : '알 수 없음';
+                const applicationDate = thread.created_at ? new Date(thread.created_at).toISOString().split('T')[0] : window.i18n.translate('dashboard.application.unknown');
+                const serviceName = thread.service_name || window.i18n.translate('dashboard.application.serviceName');
+                const dateLabel = window.i18n.translate('dashboard.application.date');
+                const progressLabel = window.i18n.translate('dashboard.application.progress');
+                const step1 = window.i18n.translate('dashboard.application.step.payment');
+                const step2 = window.i18n.translate('dashboard.application.step.documents');
+                const step3 = window.i18n.translate('dashboard.application.step.processing');
+                const step4 = window.i18n.translate('dashboard.application.step.approval');
+                const buttonText = isArchived ? window.i18n.translate('dashboard.application.archivedThread') : window.i18n.translate('dashboard.application.openThread');
                 
                 card.innerHTML = `
                     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
                         <div>
                             <div style="font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 8px;">
-                                ${thread.service_name || '서비스'}
+                                ${serviceName}
                             </div>
-                            <div style="font-size: 14px; color: #64748b;">신청일: ${applicationDate}</div>
+                            <div style="font-size: 14px; color: #64748b;">${dateLabel} ${applicationDate}</div>
                         </div>
                         <div style="background: ${statusBg}; color: ${statusColor}; padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 700;">
                             ${statusText}
                         </div>
                     </div>
                     <div style="margin-bottom: 16px;">
-                        <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;">진행 단계</div>
+                        <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;">${progressLabel}</div>
                         <div style="display: flex; gap: 8px;">
                             <div style="flex: 1; height: 8px; background: ${progress1 ? '#3182F6' : '#E5E7EB'}; border-radius: 4px;"></div>
                             <div style="flex: 1; height: 8px; background: ${progress2 ? '#3182F6' : '#E5E7EB'}; border-radius: 4px;"></div>
@@ -1492,14 +1516,14 @@
                             <div style="flex: 1; height: 8px; background: ${progress4 ? '#3182F6' : '#E5E7EB'}; border-radius: 4px;"></div>
                         </div>
                         <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: #64748b;">
-                            <span>결제</span>
-                            <span>서류수집</span>
-                            <span>신청중</span>
-                            <span>승인</span>
+                            <span>${step1}</span>
+                            <span>${step2}</span>
+                            <span>${step3}</span>
+                            <span>${step4}</span>
                         </div>
                     </div>
                     <button onclick="openThread('${thread.id}')" style="width: 100%; padding: 14px; background: linear-gradient(135deg, ${isArchived ? '#9CA3AF' : '#3182F6'} 0%, ${isArchived ? '#6B7280' : '#2563EB'} 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
-                        ${isArchived ? '완료된 쓰레드' : '쓰레드 열기'}
+                        ${buttonText}
                     </button>
                 `;
                 
@@ -1513,7 +1537,7 @@
                 // 현재 사용자 확인
                 const session = await checkSession();
                 if (!session || !session.user) {
-                    alert('로그인이 필요합니다.');
+                    alert(window.i18n.translate('common.loginRequired'));
                     return;
                 }
 
@@ -1531,7 +1555,7 @@
                     window.location.href = `visa-thread-general.html?id=${threadId}`;
                 }
             } catch (error) {
-                console.error('쓰레드 열기 오류:', error);
+                console.error('Thread open error:', error);
                 // 기본값으로 일반 쓰레드로 이동
                 window.location.href = `visa-thread-general.html?id=${threadId}`;
             }
@@ -1566,7 +1590,7 @@
                 if (!partner.active) {
                     link.onclick = (e) => {
                         e.preventDefault();
-                        alert('준비중입니다');
+                        alert(window.i18n.translate('common.comingSoon'));
                         return false;
                     };
                 }
@@ -1631,9 +1655,13 @@
                 
                 card.onclick = handleClick;
                 
+                // 🌍 번역 키를 사용하여 동적으로 번역 적용
+                const title = window.i18n ? window.i18n.translate(service.titleKey) : service.titleKey;
+                const desc = window.i18n ? window.i18n.translate(service.descKey) : service.descKey;
+                
                 card.innerHTML = `
-                    <div class="title">${service.title}</div>
-                    <div class="desc">${service.desc}</div>
+                    <div class="title">${title}</div>
+                    <div class="desc">${desc}</div>
                 `;
                 grid.appendChild(card);
             });
@@ -1649,7 +1677,7 @@
             console.log('🔍 세션:', session);
             
             if (!session || !session.user) {
-                alert('서비스 신청은 로그인이 필요합니다.');
+                alert(window.i18n.translate('common.serviceLoginRequired'));
                 document.getElementById('googleLoginBtn').scrollIntoView({ behavior: 'smooth' });
                 return;
             }
