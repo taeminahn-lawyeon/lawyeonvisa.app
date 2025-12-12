@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>기본 사항 제출 - 법무법인 로연 출입국이민지원센터</title>
+    <title data-i18n="profile.title">기본 사항 제출</title> - <span data-i18n="site.name">법무법인 로연 출입국이민지원센터</span>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
@@ -486,15 +486,15 @@
                 <div class="progress-line" id="progressLine" style="width: 0%;"></div>
                 <div class="step active" data-step="1">
                     <div class="step-circle">1</div>
-                    <div class="step-label">기본정보</div>
+                    <div class="step-label" data-i18n="profile.step1">기본정보</div>
                 </div>
                 <div class="step" data-step="2">
                     <div class="step-circle">2</div>
-                    <div class="step-label">체류정보</div>
+                    <div class="step-label" data-i18n="profile.step2">체류정보</div>
                 </div>
                 <div class="step" data-step="3">
                     <div class="step-circle">3</div>
-                    <div class="step-label">서류등록</div>
+                    <div class="step-label" data-i18n="profile.step3">서류등록</div>
                 </div>
             </div>
         </div>
@@ -506,51 +506,51 @@
                 <div class="form-section">
                     <div class="section-title">
                         <span class="icon">👤</span>
-                        기본 정보
+                        <span data-i18n="profile.basicInfo">기본 정보</span>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label>영문 성 (Last Name) <span class="required">*</span></label>
-                            <input type="text" name="lastName" required placeholder="예) KIM">
+                            <label><span data-i18n="profile.lastName">영문 성 (Last Name)</span> <span class="required" data-i18n="profile.required">*</span></label>
+                            <input type="text" name="lastName" required data-i18n-placeholder="profile.lastNamePlaceholder" placeholder="예) KIM">
                         </div>
                         <div class="form-group">
-                            <label>영문 이름 (First Name) <span class="required">*</span></label>
-                            <input type="text" name="firstName" required placeholder="예) MINHO">
+                            <label><span data-i18n="profile.firstName">영문 이름 (First Name)</span> <span class="required" data-i18n="profile.required">*</span></label>
+                            <input type="text" name="firstName" required data-i18n-placeholder="profile.firstNamePlaceholder" placeholder="예) MINHO">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label>생년월일 <span class="required">*</span></label>
+                            <label><span data-i18n="profile.birthDate">생년월일</span> <span class="required" data-i18n="profile.required">*</span></label>
                             <input type="date" name="birthDate" value="2000-01-01" required>
                         </div>
                         <div class="form-group">
-                            <label>성별 <span class="required">*</span></label>
+                            <label><span data-i18n="profile.gender">성별</span> <span class="required" data-i18n="profile.required">*</span></label>
                             <select name="gender" required>
-                                <option value="">선택하세요</option>
-                                <option value="male">남성</option>
-                                <option value="female">여성</option>
+                                <option value="" data-i18n="profile.selectGender">선택하세요</option>
+                                <option value="male" data-i18n="profile.male">남성</option>
+                                <option value="female" data-i18n="profile.female">여성</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label>이메일 <span class="required">*</span></label>
-                            <input type="email" name="email" required placeholder="example@email.com">
+                            <label><span data-i18n="profile.email">이메일</span> <span class="required" data-i18n="profile.required">*</span></label>
+                            <input type="email" name="email" required data-i18n-placeholder="profile.emailPlaceholder" placeholder="example@email.com">
                         </div>
                         <div class="form-group">
-                            <label>전화번호 <span class="required">*</span></label>
-                            <input type="tel" name="phone" required placeholder="010-0000-0000">
+                            <label><span data-i18n="profile.phone">전화번호</span> <span class="required" data-i18n="profile.required">*</span></label>
+                            <input type="tel" name="phone" required data-i18n-placeholder="profile.phonePlaceholder" placeholder="010-0000-0000">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label>선호 메신저 <span class="required">*</span></label>
+                            <label><span data-i18n="profile.messenger">선호 메신저</span> <span class="required" data-i18n="profile.required">*</span></label>
                             <select name="preferredMessenger" required>
-                                <option value="">메신저를 선택하세요</option>
+                                <option value="" data-i18n="profile.selectMessenger">메신저를 선택하세요</option>
                                 <option value="whatsapp">WhatsApp (왓츠앱)</option>
                                 <option value="wechat">WeChat (위챗)</option>
                                 <option value="telegram">Telegram (텔레그램)</option>
@@ -560,15 +560,15 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>메신저 ID/전화번호 <span class="required">*</span></label>
-                            <input type="text" name="messengerId" required placeholder="메신저 ID 또는 전화번호">
+                            <label><span data-i18n="profile.messengerId">메신저 ID/전화번호</span> <span class="required" data-i18n="profile.required">*</span></label>
+                            <input type="text" name="messengerId" required data-i18n-placeholder="profile.messengerPlaceholder" placeholder="메신저 ID 또는 전화번호">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>국적 <span class="required">*</span></label>
+                        <label><span data-i18n="profile.nationality">국적</span> <span class="required" data-i18n="profile.required">*</span></label>
                         <select name="nationality" required>
-                            <option value="">국적을 선택하세요</option>
+                            <option value="" data-i18n="profile.selectNationality">국적을 선택하세요</option>
                             <optgroup label="아시아">
                                 <option value="CN">중국</option>
                                 <option value="VN">베트남</option>
@@ -611,7 +611,7 @@
 
                 <div class="submit-section">
                     <button type="button" class="submit-btn" onclick="goToStep(2)">
-                        다음 단계 <i class="fas fa-arrow-right"></i>
+                        <span data-i18n="profile.next">다음 단계</span> <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
@@ -621,13 +621,13 @@
                 <div class="form-section">
                     <div class="section-title">
                         <span class="icon">📋</span>
-                        체류 정보
+                        <span data-i18n="profile.residenceInfo">체류 정보</span>
                     </div>
 
                     <div class="form-group">
-                        <label>체류자격 <span class="required">*</span></label>
+                        <label><span data-i18n="profile.visaType">체류자격</span> <span class="required" data-i18n="profile.required">*</span></label>
                         <select name="visaType" required>
-                            <option value="">체류자격을 선택하세요</option>
+                            <option value="" data-i18n="profile.selectVisa">체류자격을 선택하세요</option>
                             <optgroup label="단기체류 (C)">
                                 <option value="C-1">C-1 일시취재</option>
                                 <option value="C-3">C-3 단기방문</option>
@@ -678,34 +678,34 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label>체류기간 만료일 <span class="required">*</span></label>
+                            <label><span data-i18n="profile.visaExpiry">체류기간 만료일</span> <span class="required" data-i18n="profile.required">*</span></label>
                             <input type="date" name="stayExpiry" required>
                         </div>
                         <div class="form-group">
-                            <label>외국인등록번호 <span class="required">*</span></label>
-                            <input type="text" name="foreignerNumber" required placeholder="000000-0000000">
+                            <label><span data-i18n="profile.foreignerNumber">외국인등록번호</span> <span class="required" data-i18n="profile.required">*</span></label>
+                            <input type="text" name="foreignerNumber" required data-i18n-placeholder="profile.foreignerPlaceholder" placeholder="000000-0000000">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>국내 거주지 <span class="required">*</span></label>
+                        <label><span data-i18n="profile.address">국내 거주지</span> <span class="required" data-i18n="profile.required">*</span></label>
                         <div class="address-search">
-                            <input type="text" id="postcode" name="postcode" placeholder="우편번호" readonly required>
+                            <input type="text" id="postcode" name="postcode" data-i18n-placeholder="profile.postcodePlaceholder" placeholder="우편번호" readonly required>
                             <button type="button" onclick="execDaumPostcode()">
-                                <i class="fas fa-search"></i> 주소 검색
+                                <i class="fas fa-search"></i> <span data-i18n="profile.searchAddress">주소 검색</span>
                             </button>
                         </div>
-                        <input type="text" id="address" name="address" placeholder="주소" readonly required style="margin-bottom: 12px;">
-                        <input type="text" name="detailAddress" placeholder="상세주소 (동/호수)" required>
+                        <input type="text" id="address" name="address" data-i18n-placeholder="profile.addressPlaceholder" placeholder="주소" readonly required style="margin-bottom: 12px;">
+                        <input type="text" name="detailAddress" data-i18n-placeholder="profile.addressDetailPlaceholder" placeholder="상세주소 (동/호수)" required>
                     </div>
                 </div>
 
                 <div class="submit-section">
                     <button type="button" class="submit-btn" style="background: #9CA3AF; margin-bottom: 12px;" onclick="goToStep(1)">
-                        <i class="fas fa-arrow-left"></i> 이전 단계
+                        <i class="fas fa-arrow-left"></i> <span data-i18n="profile.prev">이전 단계</span>
                     </button>
                     <button type="button" class="submit-btn" onclick="goToStep(3)">
-                        다음 단계 <i class="fas fa-arrow-right"></i>
+                        <span data-i18n="profile.next">다음 단계</span> <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
@@ -715,7 +715,7 @@
                 <div class="form-section">
                     <div class="section-title">
                         <span class="icon">📄</span>
-                        필수 서류 등록
+                        <span data-i18n="profile.documents">필수 서류 등록</span>
                     </div>
 
                     <div class="form-group">
