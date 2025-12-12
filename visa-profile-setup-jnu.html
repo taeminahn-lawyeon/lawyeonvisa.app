@@ -993,6 +993,11 @@
                 // 서명 데이터 추가
                 const signatureData = signaturePad.toDataURL();
 
+                // 학번 정보 가져오기 (로그인 시 저장한 값)
+                const jnuStudentNumber = sessionStorage.getItem('jnuStudentNumber');
+                const jnuStudentName = sessionStorage.getItem('jnuStudentName');
+                const jnuStudentDept = sessionStorage.getItem('jnuStudentDept');
+
                 // Supabase에 저장할 프로필 데이터
                 const profileData = {
                     name: formData.get('lastName') + formData.get('firstName'),
@@ -1008,6 +1013,7 @@
                     preferred_messenger: formData.get('preferredMessenger'),
                     messenger_id: formData.get('messengerId'),
                     organization: 'jnu',  // JNU 전용
+                    student_number: jnuStudentNumber,  // 학번 저장
                     role: 'customer'
                 };
 
@@ -1016,6 +1022,32 @@
                 
                 if (result.success) {
                     console.log('✅ 프로필 생성 성공:', result.data);
+                    
+                    // jnu_students 테이블에 user_id 업데이트 (학번-계정 연동)
+                    if (jnuStudentNumber) {
+                        try {
+                            const { error: updateError } = await supabase
+                                .from('jnu_students')
+                                .update({ 
+                                    user_id: session.user.id,
+                                    registered_at: new Date().toISOString()
+                                })
+                                .eq('student_number', jnuStudentNumber);
+                            
+                            if (updateError) {
+                                console.error('⚠️ 학번 연동 실패:', updateError);
+                            } else {
+                                console.log('✅ 학번-계정 연동 완료');
+                            }
+                        } catch (err) {
+                            console.error('학번 연동 오류:', err);
+                        }
+                        
+                        // sessionStorage 정리
+                        sessionStorage.removeItem('jnuStudentNumber');
+                        sessionStorage.removeItem('jnuStudentName');
+                        sessionStorage.removeItem('jnuStudentDept');
+                    }
                     
                     // ✅ 프로필 생성 완료 플래그 저장 (무한 루프 방지)
                     sessionStorage.setItem('profileCreated', 'true');
@@ -1044,5 +1076,9 @@
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=7"></script>
+    
+    <!-- 다국어 시스템 -->
+    <script src="js/translations.js"></script>
+    <script src="js/i18n.js"></script>
 </body>
 </html>
