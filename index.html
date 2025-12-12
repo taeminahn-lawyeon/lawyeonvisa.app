@@ -842,20 +842,31 @@
     <div class="header">
         <div class="header-content">
             <div class="user-info">
-                <h2 style="word-break: keep-all;">법무법인&nbsp;로연 출입국이민지원센터</h2>
-                <p style="margin: 0; opacity: 0.8;">Visa & Immigration Center</p>
+                <h2 style="word-break: keep-all;" data-i18n="site.name">법무법인&nbsp;로연 출입국이민지원센터</h2>
+                <p style="margin: 0; opacity: 0.8;" data-i18n="site.slogan">Visa & Immigration Center</p>
             </div>
             <div class="header-actions">
+                <!-- 언어 선택기 -->
+                <div class="language-selector">
+                    <button id="language-selector-btn">
+                        <span class="language-btn-content">
+                            <span class="language-flag">🇰🇷</span>
+                            <span class="language-name">한국어</span>
+                        </span>
+                    </button>
+                    <div id="language-dropdown" class="hidden"></div>
+                </div>
+                
                 <!-- 로그인 전 -->
                 <div id="loginButtons" style="display: none;">
-                    <button class="header-btn" id="googleLoginBtn">
+                    <button class="header-btn" id="googleLoginBtn" data-i18n="login.google">
                         Google 로그인
                     </button>
                 </div>
                 <!-- 로그인 후 -->
                 <div id="userGreeting" class="user-greeting" style="display: none;">
                     <span id="userGreetingName">환영합니다!</span>
-                    <button class="logout-btn" id="logoutBtn">
+                    <button class="logout-btn" id="logoutBtn" data-i18n="common.logout">
                         로그아웃
                     </button>
                 </div>
@@ -892,15 +903,15 @@
 
         <!-- 출입국 민원 대행 -->
         <div class="services-section">
-            <h3>출입국 민원 대행</h3>
+            <h3 data-i18n="services.title">출입국 민원 대행</h3>
             
             <div class="service-categories">
-                <div class="category-tab active" data-category="visa">비자</div>
+                <div class="category-tab active" data-category="visa" data-i18n="services.visa">비자</div>
                 <div class="category-tab" data-category="residence-report">체류 신고</div>
-                <div class="category-tab" data-category="immigration">이민·국적·난민</div>
-                <div class="category-tab" data-category="alien-registration">외국인 등록</div>
-                <div class="category-tab" data-category="consulting">자문</div>
-                <div class="category-tab" data-category="certificate">증명서</div>
+                <div class="category-tab" data-category="immigration" data-i18n="services.immigration">이민·국적·난민</div>
+                <div class="category-tab" data-category="alien-registration" data-i18n="services.alienReg">외국인 등록</div>
+                <div class="category-tab" data-category="consulting" data-i18n="services.consulting">자문</div>
+                <div class="category-tab" data-category="certificate" data-i18n="services.certificate">증명서</div>
             </div>
 
             <div class="service-grid" id="serviceGrid">
@@ -910,7 +921,7 @@
 
         <!-- 나의 신청 내역 -->
         <div class="applications-section">
-            <h3>나의 신청 내역</h3>
+            <h3 data-i18n="dashboard.myApplications">나의 신청 내역</h3>
             <div id="applicationsList">
                 <!-- 로그인 전: 로그인 버튼 -->
                 <div id="loginPrompt" style="text-align: center; padding: 40px 20px; color: #6B7684;">
@@ -1015,12 +1026,12 @@
 
         <!-- 법무법인 로연 출입국이민지원센터 소개 -->
         <div class="stay-status" style="padding: 48px; background: #1e293b; color: white; border-radius: 24px;">
-            <h3 style="color: white; font-size: 24px; font-weight: 800; margin-bottom: 24px;">법무법인 로연 출입국이민지원센터</h3>
+            <h3 style="color: white; font-size: 24px; font-weight: 800; margin-bottom: 24px;" data-i18n="site.name">법무법인 로연 출입국이민지원센터</h3>
             
             <!-- 공식 정보 -->
             <div class="info-box" style="background: rgba(255, 255, 255, 0.08); padding: 20px; border-radius: 14px; margin-bottom: 20px; font-size: 14px; line-height: 1.9; color: rgba(255, 255, 255, 0.9);">
                 <div style="margin-bottom: 8px;">
-                    <strong style="color: white; font-weight: 700;">상호명</strong> 법무법인 로연
+                    <strong style="color: white; font-weight: 700;" data-i18n="footer.company">(상호명)</strong> <span data-i18n="footer.lawFirm">법무법인 로연</span>
                 </div>
                 <div style="margin-bottom: 8px;">
                     <strong style="color: white; font-weight: 700;">서울사무소</strong> 서울특별시 강서구 공항대로 164, 5층 503호 (마곡동, 류마타워) | 대표: 민준우
@@ -1047,11 +1058,11 @@
                     본 사이트에서 제공되는 모든 법률 서비스는 법무법인 로연에서 제공합니다.
                 </p>
                 <div style="margin-bottom: 12px;">
-                    <a href="privacy-policy.html" style="color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 12px; margin: 0 10px; transition: color 0.2s;">개인정보 처리방침</a>
+                    <a href="privacy-policy.html" style="color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 12px; margin: 0 10px; transition: color 0.2s;" data-i18n="footer.privacyPolicy">개인정보 처리방침</a>
                     <span style="color: rgba(255, 255, 255, 0.3); font-size: 12px;">|</span>
-                    <a href="terms-of-service.html" style="color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 12px; margin: 0 10px; transition: color 0.2s;">서비스 이용약관</a>
+                    <a href="terms-of-service.html" style="color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 12px; margin: 0 10px; transition: color 0.2s;" data-i18n="footer.termsOfService">서비스 이용약관</a>
                     <span style="color: rgba(255, 255, 255, 0.3); font-size: 12px;">|</span>
-                    <a href="https://lawyeon.com/" target="_blank" style="color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 12px; margin: 0 10px; transition: color 0.2s;">법무법인 로연</a>
+                    <a href="https://lawyeon.com/" target="_blank" style="color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 12px; margin: 0 10px; transition: color 0.2s;" data-i18n="footer.lawFirm">법무법인 로연</a>
                 </div>
                 <p style="font-size: 11px; color: rgba(255, 255, 255, 0.4);">
                     Copyright © 법무법인 로연 출입국이민지원센터
@@ -1065,6 +1076,11 @@
     <script src="js/supabase-client.js?v=7"></script>
     
     <script src="js/ui-components.js"></script>
+    
+    <!-- 다국어 시스템 -->
+    <script src="js/translations.js"></script>
+    <script src="js/i18n.js"></script>
+    
     <script>
         // 페이지 로드 시 초기화
         window.addEventListener('DOMContentLoaded', function() {
@@ -1263,17 +1279,19 @@
             if (session && session.user) {
                 console.log('✅ 세션 존재:', session.user.email);
                 
-                // 🔥 organization 체크: JNU/SNU 프로필로 로그인한 경우 자동 로그아웃
+                // 🔥 organization 체크: JNU/SNU 프로필로 로그인한 경우 전용 페이지로 리다이렉트
                 const quickProfileCheck = await getUserProfile(session.user.id);
                 if (quickProfileCheck.success && quickProfileCheck.data) {
                     const userOrg = quickProfileCheck.data.organization;
                     console.log('🔍 사용자 organization:', userOrg);
                     
-                    if (userOrg === 'jnu' || userOrg === 'snu') {
-                        console.log('⚠️ 협약 단체 전용 계정으로 일반 페이지 접근 시도');
-                        alert('협약 단체 전용 계정입니다.\n\n해당 단체 전용 페이지에서 로그인해주세요.');
-                        await signOut();
-                        window.location.reload();
+                    if (userOrg === 'jnu') {
+                        console.log('✅ JNU 계정 감지 - visa-dashboard-jnu.html로 리다이렉트');
+                        window.location.href = 'visa-dashboard-jnu.html';
+                        return;
+                    } else if (userOrg === 'snu') {
+                        console.log('✅ SNU 계정 감지 - visa-dashboard-snu.html로 리다이렉트');
+                        window.location.href = 'visa-dashboard-snu.html';
                         return;
                     }
                 }
