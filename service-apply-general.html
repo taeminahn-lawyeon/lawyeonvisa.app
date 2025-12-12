@@ -512,7 +512,17 @@
     <!-- 헤더 -->
     <div class="header">
         <div class="header-inner">
-            <div class="header-title">결제</div>
+            <div class="header-title" data-i18n="payment.title">결제</div>
+            <!-- 언어 선택기 -->
+            <div class="language-selector" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%);">
+                <button id="language-selector-btn">
+                    <span class="language-btn-content">
+                        <span class="language-flag">🇰🇷</span>
+                        <span class="language-name">한국어</span>
+                    </span>
+                </button>
+                <div id="language-dropdown" class="hidden"></div>
+            </div>
             <a href="javascript:history.back()" class="btn-back">
                 <i class="fas fa-times"></i>
             </a>
@@ -988,5 +998,9 @@
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=8"></script>
+    
+    <!-- 다국어 시스템 -->
+    <script src="js/translations.js"></script>
+    <script src="js/i18n.js"></script>
 </body>
 </html>
