@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>상담 쓰레드 - 법무법인 로연</title>
+    <title>상담 쓰레드 - 법무법인 로연 출입국이민지원센터 전남대학교 전용 페이지</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/ui-components.css">
@@ -94,7 +94,7 @@
 
         .status-badge.processing {
             background: #dbeafe;
-            color: #1e40af;
+            color: #005A25;
         }
 
         .status-badge.completed {
@@ -143,7 +143,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            background: linear-gradient(135deg, #00A651 0%, #007A33 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -183,7 +183,7 @@
         }
 
         .message.user .message-bubble {
-            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            background: linear-gradient(135deg, #00A651 0%, #007A33 100%);
             color: white;
             border-bottom-right-radius: 4px;
         }
@@ -217,7 +217,7 @@
         .file-icon {
             width: 44px;
             height: 44px;
-            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            background: linear-gradient(135deg, #00A651 0%, #007A33 100%);
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -297,8 +297,8 @@
 
         .input-btn:hover {
             background: #f3f4f6;
-            border-color: #3182F6;
-            color: #3182F6;
+            border-color: #00A651;
+            color: #00A651;
         }
 
         .message-input-wrapper {
@@ -320,7 +320,7 @@
 
         .message-input:focus {
             outline: none;
-            border-color: #3182F6;
+            border-color: #00A651;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
@@ -329,7 +329,7 @@
             height: 42px;
             border-radius: 10px;
             border: none;
-            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            background: linear-gradient(135deg, #00A651 0%, #007A33 100%);
             color: white;
             font-size: 18px;
             cursor: pointer;
@@ -403,14 +403,14 @@
         }
 
         .document-item:hover {
-            border-color: #3182F6;
+            border-color: #00A651;
             background: #f0f4ff;
         }
 
         .document-icon {
             width: 36px;
             height: 36px;
-            background: #3182F6;
+            background: #00A651;
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -759,7 +759,7 @@
 
             if (!threadId) {
                 alert('쓰레드 ID가 없습니다.');
-                window.location.href = 'index.html';
+                window.location.href = 'visa-dashboard-jnu.html';
                 return;
             }
 
@@ -767,7 +767,7 @@
             const session = await checkSession();
             if (!session || !session.user) {
                 alert('로그인이 필요합니다.');
-                window.location.href = 'index.html';
+                window.location.href = 'visa-dashboard-jnu.html';
                 return;
             }
             
@@ -834,7 +834,7 @@
                 if (error || !thread) {
                     console.error('쓰레드 조회 오류:', error);
                     alert('쓰레드를 찾을 수 없습니다.');
-                    window.location.href = isAdmin ? 'admin-dashboard.html' : 'index.html';
+                    window.location.href = isAdmin ? 'admin-dashboard.html' : 'visa-dashboard-jnu.html';
                     return;
                 }
                 
@@ -883,7 +883,7 @@
             } catch (error) {
                 console.error('❌ 쓰레드 로드 실패:', error);
                 alert('쓰레드 정보를 불러올 수 없습니다.');
-                window.location.href = 'index.html';
+                window.location.href = 'visa-dashboard-jnu.html';
             }
         }
 
@@ -969,7 +969,7 @@
             }
             
             // 그렇지 않으면 일반 사용자 페이지로 이동
-            window.location.href = 'index.html';
+            window.location.href = 'visa-dashboard-jnu.html';
         }
 
         // 메시지 추가
