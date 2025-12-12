@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>전남대학교 출입국이민지원센터 - 법무법인 로연</title>
+    <title>법무법인 로연 출입국이민지원센터 전남대학교 전용 페이지</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/ui-components.css">
@@ -73,11 +73,25 @@
             font-weight: 600;
             transition: all 0.3s ease;
             font-size: 14px;
+            height: 42px;
         }
 
         .header-btn:hover {
             background: white;
             color: #2c3e50;
+        }
+
+        /* 전남대 그린 버튼 */
+        .jnu-green-btn {
+            background: #007A33 !important;
+            border: 2px solid #007A33 !important;
+            color: white !important;
+        }
+
+        .jnu-green-btn:hover {
+            background: #005A25 !important;
+            border-color: #005A25 !important;
+            color: white !important;
         }
 
         .logout-btn {
@@ -842,20 +856,31 @@
     <div class="header">
         <div class="header-content">
             <div class="user-info">
-                <h2 style="word-break: keep-all;">전남대학교 출입국이민지원센터</h2>
+                <h2 style="word-break: keep-all;">법무법인 로연 출입국이민지원센터<br><span style="font-size: 0.7em; font-weight: 600; opacity: 0.9;">전남대학교 전용 페이지</span></h2>
                 <p style="margin: 0; opacity: 0.8;">Chonnam National University · Visa & Immigration</p>
             </div>
             <div class="header-actions">
+                <!-- 언어 선택기 -->
+                <div class="language-selector">
+                    <button id="language-selector-btn" title="언어 선택 / Select Language" type="button">
+                        <span class="language-btn-content">
+                            <span class="language-name">한국어</span>
+                        </span>
+                        <span style="margin-left: 4px; font-size: 12px;">▼</span>
+                    </button>
+                    <div id="language-dropdown" class="hidden"></div>
+                </div>
+                
                 <!-- 로그인 전 -->
                 <div id="loginButtons" style="display: none;">
-                    <button class="header-btn" id="googleLoginBtn">
+                    <button class="header-btn jnu-green-btn" id="googleLoginBtn" data-i18n="login.google">
                         Google 로그인
                     </button>
                 </div>
                 <!-- 로그인 후 -->
                 <div id="userGreeting" class="user-greeting" style="display: none;">
-                    <span id="userGreetingName">환영합니다!</span>
-                    <button class="logout-btn" id="logoutBtn">
+                    <span id="userGreetingName" data-i18n="header.welcome">환영합니다!</span>
+                    <button class="logout-btn" id="logoutBtn" data-i18n="common.logout">
                         로그아웃
                     </button>
                 </div>
@@ -866,25 +891,25 @@
     <div class="container">
         <!-- 강제출국·비자거절 긴급 구제 -->
         <div class="premium-service-banner">
-            <h3>강제출국·비자거절 긴급 구제</h3>
+            <h3 data-i18n="emergency.title">강제출국·비자거절 긴급 구제</h3>
             <div class="premium-service-grid">
                 <div class="premium-service-card" id="emergencyLegalCard" style="cursor: pointer;">
                     <div class="icon">🚨</div>
-                    <div class="title">변호사 전담 대응</div>
+                    <div class="title" data-i18n="emergency.legal.title">변호사 전담 대응</div>
                     <div class="desc">
-                        <div class="desc-item">사범심사 동행</div>
-                        <div class="desc-item">처분 취소소송</div>
-                        <div class="desc-item">형사 사건 변호</div>
+                        <div class="desc-item" data-i18n="emergency.legal.item1">사범심사 동행</div>
+                        <div class="desc-item" data-i18n="emergency.legal.item2">처분 취소소송</div>
+                        <div class="desc-item" data-i18n="emergency.legal.item3">형사 사건 변호</div>
                     </div>
                 </div>
                 <div class="premium-service-card diagnostic" id="visaDiagnosisCard" style="cursor: pointer;">
                     <div class="icon">🔍</div>
-                    <div class="title">비자 사전진단</div>
+                    <div class="title" data-i18n="emergency.diagnosis.title">비자 사전진단</div>
                     <div class="desc">
-                        <div class="desc-item">비자 변경 가능성</div>
-                        <div class="desc-item">불법체류 위험도</div>
-                        <div class="desc-item">출입국법 위반 여부</div>
-                        <div class="desc-item">전환 가능 비자</div>
+                        <div class="desc-item" data-i18n="emergency.diagnosis.item1">비자 변경 가능성</div>
+                        <div class="desc-item" data-i18n="emergency.diagnosis.item2">불법체류 위험도</div>
+                        <div class="desc-item" data-i18n="emergency.diagnosis.item3">출입국법 위반 여부</div>
+                        <div class="desc-item" data-i18n="emergency.diagnosis.item4">전환 가능 비자</div>
                     </div>
                 </div>
             </div>
@@ -892,15 +917,15 @@
 
         <!-- 출입국 민원 대행 -->
         <div class="services-section">
-            <h3>출입국 민원 대행</h3>
+            <h3 data-i18n="services.title">출입국 민원 대행</h3>
             
             <div class="service-categories">
-                <div class="category-tab active" data-category="visa">비자</div>
-                <div class="category-tab" data-category="residence-report">체류 신고</div>
-                <div class="category-tab" data-category="immigration">이민·국적·난민</div>
-                <div class="category-tab" data-category="alien-registration">외국인 등록</div>
-                <div class="category-tab" data-category="consulting">자문</div>
-                <div class="category-tab" data-category="certificate">증명서</div>
+                <div class="category-tab active" data-category="visa" data-i18n="services.tab.visa">비자</div>
+                <div class="category-tab" data-category="residence-report" data-i18n="services.tab.residenceReport">체류 신고</div>
+                <div class="category-tab" data-category="immigration" data-i18n="services.tab.immigration">이민·국적·난민</div>
+                <div class="category-tab" data-category="alien-registration" data-i18n="services.tab.alienReg">외국인 등록</div>
+                <div class="category-tab" data-category="consulting" data-i18n="services.tab.consulting">자문</div>
+                <div class="category-tab" data-category="certificate" data-i18n="services.tab.certificate">증명서</div>
             </div>
 
             <div class="service-grid" id="serviceGrid">
@@ -910,11 +935,11 @@
 
         <!-- 나의 신청 내역 -->
         <div class="applications-section">
-            <h3>나의 신청 내역</h3>
+            <h3 data-i18n="dashboard.title">나의 신청 내역</h3>
             <div id="applicationsList">
                 <!-- 로그인 전: 로그인 버튼 -->
                 <div id="loginPrompt" style="text-align: center; padding: 40px 20px; color: #6B7684;">
-                    <p style="font-size: 17px; margin-bottom: 24px; line-height: 1.6; font-weight: 500;">
+                    <p style="font-size: 17px; margin-bottom: 24px; line-height: 1.6; font-weight: 500;" data-i18n="dashboard.loginPrompt">
                         로그인하시면 나의 체류현황, 서비스 신청, 진행 현황을 확인하실 수 있습니다.
                     </p>
                     <button onclick="document.getElementById('googleLoginBtn').click()" style="padding: 16px 32px; background: linear-gradient(135deg, #00A651 0%, #007A33 100%); color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 8px 24px rgba(49, 130, 246, 0.25);">
@@ -1040,6 +1065,11 @@
     <script>
         // 페이지 로드 시 초기화
         window.addEventListener('DOMContentLoaded', function() {
+            // 다국어 시스템 초기화
+            if (window.i18n) {
+                window.i18n.init();
+            }
+            
             loadServices();
             loadPartners();
             checkUserLogin();
