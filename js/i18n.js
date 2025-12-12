@@ -1,9 +1,17 @@
 /**
- * 다국어 지원 시스템 (i18n) - Internationalization System
+ * 다국어 지원 시스템 (i18n) v3.0 FINAL - Internationalization System
  * 법무법인 로연 출입국이민지원센터
  * 
- * 지원 언어: 한국어(ko), 영어(en), 중국어(zh), 베트남어(vi), 일본어(ja),
- *           몽골어(mn), 태국어(th), 러시아어(ru), 인도네시아어(id), 미얀마어(my)
+ * 지원 언어 (7개): 
+ * - 한국어(ko) ✅ 100% 완전 번역
+ * - 영어(en) ✅ 100% 완전 번역
+ * - 중국어 간체(zh) ✅ 100% 완전 번역
+ * - 베트남어(vi) ✅ 100% 완전 번역
+ * - 일본어(ja) ✅ 100% 완전 번역
+ * - 몽골어(mn) ✅ 100% 완전 번역
+ * - 태국어(th) ✅ 100% 완전 번역
+ * 
+ * 제거된 언어: 러시아어(ru), 인도네시아어(id), 미얀마어(my)
  * 
  * 사용법:
  * 1. HTML 요소에 data-i18n="key" 추가
@@ -15,7 +23,7 @@ const i18n = {
     // 현재 언어 (기본값: 한국어)
     currentLanguage: 'ko',
     
-    // 지원 언어 목록
+    // 지원 언어 목록 (7개 언어만 지원)
     supportedLanguages: {
         ko: { name: '한국어', flag: '🇰🇷', nativeName: '한국어' },
         en: { name: 'English', flag: '🇺🇸', nativeName: 'English' },
@@ -23,10 +31,7 @@ const i18n = {
         vi: { name: 'Vietnamese', flag: '🇻🇳', nativeName: 'Tiếng Việt' },
         ja: { name: 'Japanese', flag: '🇯🇵', nativeName: '日本語' },
         mn: { name: 'Mongolian', flag: '🇲🇳', nativeName: 'Монгол' },
-        th: { name: 'Thai', flag: '🇹🇭', nativeName: 'ไทย' },
-        ru: { name: 'Russian', flag: '🇷🇺', nativeName: 'Русский' },
-        id: { name: 'Indonesian', flag: '🇮🇩', nativeName: 'Bahasa Indonesia' },
-        my: { name: 'Burmese', flag: '🇲🇲', nativeName: 'မြန်မာ' }
+        th: { name: 'Thai', flag: '🇹🇭', nativeName: 'ไทย' }
     },
     
     /**
@@ -173,9 +178,20 @@ const i18n = {
      * 언어 선택기 초기화
      */
     initLanguageSelector: function() {
+        // 이미 초기화되었는지 확인
+        if (this._languageSelectorInitialized) {
+            console.log('[i18n] Language selector already initialized - skipping');
+            return;
+        }
+        
         // 언어 선택 버튼 찾기
         const languageBtn = document.getElementById('language-selector-btn');
         const languageDropdown = document.getElementById('language-dropdown');
+        
+        console.log('[i18n] Initializing language selector...', {
+            languageBtn: !!languageBtn,
+            languageDropdown: !!languageDropdown
+        });
         
         if (!languageBtn || !languageDropdown) {
             console.log('[i18n] Language selector not found - skipping initialization');
@@ -184,9 +200,12 @@ const i18n = {
         
         // 드롭다운 생성
         this.renderLanguageDropdown(languageDropdown);
+        console.log('[i18n] Language dropdown rendered');
         
         // 버튼 클릭 이벤트
         languageBtn.addEventListener('click', (e) => {
+            console.log('[i18n] Language button clicked');
+            e.preventDefault();
             e.stopPropagation();
             languageDropdown.classList.toggle('hidden');
         });
@@ -198,6 +217,10 @@ const i18n = {
         
         // 현재 언어 표시 업데이트
         this.updateLanguageSelector();
+        
+        // 초기화 완료 플래그 설정
+        this._languageSelectorInitialized = true;
+        console.log('[i18n] Language selector initialized successfully');
     },
     
     /**
@@ -212,7 +235,6 @@ const i18n = {
             const button = document.createElement('button');
             button.className = 'language-option';
             button.innerHTML = `
-                <span class="language-flag">${lang.flag}</span>
                 <span class="language-name">${lang.nativeName}</span>
                 ${langCode === this.currentLanguage ? '<span class="checkmark">✓</span>' : ''}
             `;
@@ -240,7 +262,6 @@ const i18n = {
         
         if (btnContent) {
             btnContent.innerHTML = `
-                <span class="language-flag">${currentLang.flag}</span>
                 <span class="language-name">${currentLang.nativeName}</span>
             `;
         }
