@@ -4,6 +4,140 @@
  */
 
 /* ========================================
+   0. 언어 선택기 (Language Selector)
+   ======================================== */
+
+.language-selector {
+    position: relative;
+    display: inline-block;
+    z-index: 100;
+}
+
+#language-selector-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: white;
+    border: 2px solid white;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2937;
+    transition: all 0.3s ease;
+    height: 42px;
+    position: relative;
+    z-index: 100;
+    pointer-events: auto;
+}
+
+#language-selector-btn:hover {
+    background: #f3f4f6;
+    border-color: #e5e7eb;
+}
+
+.language-btn-content {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.language-flag {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.language-name {
+    font-size: 14px;
+}
+
+#language-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 200px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    z-index: 10000;
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.2s;
+    display: block;
+}
+
+#language-dropdown.hidden {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+}
+
+.language-option {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+    text-align: left;
+}
+
+.language-option:hover {
+    background: #f3f4f6;
+}
+
+.language-option .language-flag {
+    font-size: 20px;
+}
+
+.language-option .language-name {
+    flex: 1;
+    font-weight: 500;
+    color: #374151;
+}
+
+.language-option .checkmark {
+    color: #3182F6;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.language-option .checkmark {
+    color: #10b981;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+    #language-selector-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+    
+    .language-flag {
+        font-size: 16px;
+    }
+    
+    .language-name {
+        display: none; /* 모바일에서는 국기만 표시 */
+    }
+    
+    #language-dropdown {
+        right: -20px;
+        min-width: 180px;
+    }
+}
+
+/* ========================================
    1. 토스트 알림
    ======================================== */
 
