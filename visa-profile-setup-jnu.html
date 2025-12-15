@@ -465,6 +465,12 @@
     <div class="container">
         <!-- 헤더 -->
         <div class="header">
+            <!-- 뒤로가기 버튼 -->
+            <button id="backButton" style="position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); color: white; padding: 10px 20px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s;">
+                <i class="fas fa-arrow-left"></i>
+                <span>뒤로가기</span>
+            </button>
+            
             <h1>기본 사항 제출</h1>
             <p>모든 서비스 이용을 위해 필요한 기본 정보를 입력해주세요</p>
         </div>
@@ -1070,6 +1076,25 @@
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalText;
             }
+        });
+        
+        // 뒤로가기 버튼 이벤트 리스너
+        document.getElementById('backButton').addEventListener('click', function() {
+            // 프로필 작성을 건너뛴다는 플래그 설정
+            sessionStorage.setItem('skipProfileSetup', 'true');
+            // visa-dashboard-jnu 페이지로 이동
+            window.location.href = 'visa-dashboard-jnu.html';
+        });
+        
+        // 마우스 호버 효과
+        const backBtn = document.getElementById('backButton');
+        backBtn.addEventListener('mouseenter', function() {
+            this.style.background = 'rgba(255,255,255,0.3)';
+            this.style.borderColor = 'rgba(255,255,255,0.5)';
+        });
+        backBtn.addEventListener('mouseleave', function() {
+            this.style.background = 'rgba(255,255,255,0.2)';
+            this.style.borderColor = 'rgba(255,255,255,0.3)';
         });
     </script>
     
