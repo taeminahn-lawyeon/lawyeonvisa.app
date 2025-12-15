@@ -769,7 +769,9 @@
 
             // ✅ 3. Toss Payments SDK 초기화
             try {
-                tossPayments = TossPayments(clientKey);
+                tossPayments = TossPayments(clientKey, {
+                    language: 'ko_KR'  // 언어를 한국어로 고정
+                });
                 console.log('Toss Payments SDK 초기화 성공');
             } catch (error) {
                 console.error('Toss Payments SDK 초기화 실패:', error);
@@ -988,9 +990,5 @@
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=8"></script>
-    
-    <!-- 다국어 시스템 -->
-    <script src="js/translations.js"></script>
-    <script src="js/i18n.js"></script>
 </body>
 </html>
