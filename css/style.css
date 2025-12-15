@@ -78,6 +78,13 @@ a {
     transition: color var(--transition-base);
 }
 
+/* Footer 내부 전화번호, 팩스번호 등 하이퍼링크 스타일 제거 */
+.stay-status a,
+.info-box a {
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
 ul {
     list-style: none;
 }
