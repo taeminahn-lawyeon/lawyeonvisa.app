@@ -693,9 +693,39 @@ const translations = {
         'login.google': 'Google 登录',
         'site.name': '律渊律师事务所 出入境移民支援中心',
         'site.company': '律渊律师事务所',
+        
+        // === Emergency Relief Section ===
         'emergency.title': '强制出境·签证拒签紧急救济',
+        'emergency.legal.title': '律师专责应对',
+        'emergency.legal.item1': '司法审查陪同',
+        'emergency.legal.item2': '处分撤销诉讼',
+        'emergency.legal.item3': '刑事案件辩护',
+        'emergency.diagnosis.title': '签证预诊断',
+        'emergency.diagnosis.item1': '签证变更可能性',
+        'emergency.diagnosis.item2': '非法滞留风险度',
+        'emergency.diagnosis.item3': '出入境法违反与否',
+        'emergency.diagnosis.item4': '可转换签证',
+        
+        // === Services Section ===
+        'services.title': '出入境事务代理',
+        'services.subtitle': '专业律师处理的出入境服务',
+        'services.tab.visa': '签证',
+        'services.tab.residenceReport': '居留申报',
+        'services.tab.immigration': '移民·国籍·难民',
+        'services.tab.alienReg': '外国人登记',
+        'services.tab.consulting': '咨询',
+        'services.tab.certificate': '证明',
         'services.title': '出入境事务代理',
         'dashboard.title': '我的申请历史',
+        'dashboard.loginPrompt': '登录后即可查看您的居留状态、服务申请和办理进度。',
+        'dashboard.loginButton': 'Google 登录',
+        
+        // Residence Status Card
+        'dashboard.residence.title': '居留状态',
+        'dashboard.residence.visaType': '居留资格',
+        'dashboard.residence.expiry': '到期日',
+        
+        // Application Card
         'dashboard.application.date': '申请日期：',
         'dashboard.application.status.payment': '支付完成',
         'dashboard.application.status.document': '正在收集文件',
@@ -836,9 +866,39 @@ const translations = {
         'login.google': 'Đăng nhập Google',
         'site.name': 'Trung Tâm Hỗ Trợ Xuất Nhập Cảnh Lawyeon',
         'site.company': 'Công Ty Luật Lawyeon',
+        
+        // === Emergency Relief Section ===
         'emergency.title': 'Cứu Trợ Khẩn Cấp Trục Xuất & Từ Chối Visa',
+        'emergency.legal.title': 'Luật Sư Đại Diện',
+        'emergency.legal.item1': 'Hỗ trợ điều tra Văn phòng Xuất nhập cảnh',
+        'emergency.legal.item2': 'Vụ kiện hành chính (Hủy bỏ quyết định)',
+        'emergency.legal.item3': 'Biện hộ hình sự vi phạm xuất nhập cảnh',
+        'emergency.diagnosis.title': 'Đánh Giá Tình Trạng Xuất Nhập Cảnh',
+        'emergency.diagnosis.item1': 'Khả năng thay đổi tư cách lưu trú',
+        'emergency.diagnosis.item2': 'Phân tích rủi ro lưu trú bất hợp pháp',
+        'emergency.diagnosis.item3': 'Xem xét tuân thủ Luật Xuất nhập cảnh',
+        'emergency.diagnosis.item4': 'Lựa chọn visa thay thế',
+        
+        // === Services Section ===
+        'services.title': 'Dịch Vụ Xuất Nhập Cảnh',
+        'services.subtitle': 'Dịch vụ xuất nhập cảnh chuyên nghiệp do luật sư xử lý',
+        'services.tab.visa': 'Visa',
+        'services.tab.residenceReport': 'Báo Cáo Cư Trú',
+        'services.tab.immigration': 'Di Trú·Quốc Tịch·Tị Nạn',
+        'services.tab.alienReg': 'Đăng Ký Người Nước Ngoài',
+        'services.tab.consulting': 'Tư Vấn',
+        'services.tab.certificate': 'Chứng Nhận',
         'services.title': 'Dịch Vụ Xuất Nhập Cảnh',
         'dashboard.title': 'Đơn Của Tôi',
+        'dashboard.loginPrompt': 'Đăng nhập để xem tình trạng cư trú, đơn xin dịch vụ và tiến độ xử lý của bạn.',
+        'dashboard.loginButton': 'Đăng nhập Google',
+        
+        // Residence Status Card
+        'dashboard.residence.title': 'Tình Trạng Cư Trú',
+        'dashboard.residence.visaType': 'Tư Cách Lưu Trú',
+        'dashboard.residence.expiry': 'Ngày Hết Hạn',
+        
+        // Application Card
         'dashboard.application.date': 'Ngày đăng ký:',
         'dashboard.application.status.payment': 'Đã thanh toán',
         'dashboard.application.status.document': 'Đang thu thập tài liệu',
@@ -979,9 +1039,39 @@ const translations = {
         'login.google': 'Google ログイン',
         'site.name': 'ロヨン法律事務所出入国移民支援センター',
         'site.company': 'ロヨン法律事務所',
+        
+        // === Emergency Relief Section ===
         'emergency.title': '強制出国・ビザ拒否緊急救済',
+        'emergency.legal.title': '弁護士専担対応',
+        'emergency.legal.item1': '司法審査同行',
+        'emergency.legal.item2': '処分取消訴訟',
+        'emergency.legal.item3': '刑事事件弁護',
+        'emergency.diagnosis.title': 'ビザ事前診断',
+        'emergency.diagnosis.item1': 'ビザ変更可能性',
+        'emergency.diagnosis.item2': '不法滞在リスク度',
+        'emergency.diagnosis.item3': '出入国法違反有無',
+        'emergency.diagnosis.item4': '転換可能ビザ',
+        
+        // === Services Section ===
+        'services.title': '出入国民願代行',
+        'services.subtitle': '専門弁護士が処理する出入国サービス',
+        'services.tab.visa': 'ビザ',
+        'services.tab.residenceReport': '滞在申告',
+        'services.tab.immigration': '移民・国籍・難民',
+        'services.tab.alienReg': '外国人登録',
+        'services.tab.consulting': 'コンサルティング',
+        'services.tab.certificate': '証明書',
         'services.title': '出入国民願代行',
         'dashboard.title': '私の申請履歴',
+        'dashboard.loginPrompt': 'ログインすると、滞在状況、サービス申請、処理状況をご確認いただけます。',
+        'dashboard.loginButton': 'Google ログイン',
+        
+        // Residence Status Card
+        'dashboard.residence.title': '滞在状況',
+        'dashboard.residence.visaType': '滞在資格',
+        'dashboard.residence.expiry': '有効期限',
+        
+        // Application Card
         'dashboard.application.date': '申請日：',
         'dashboard.application.status.payment': '支払い完了',
         'dashboard.application.status.document': '書類収集中',
@@ -1122,9 +1212,39 @@ const translations = {
         'login.google': 'Google нэвтрэх',
         'site.name': 'Lawyeon Хуулийн Фирм Цагаачлалын Тусламжийн Төв',
         'site.company': 'Lawyeon Хуулийн Фирм',
+        
+        // === Emergency Relief Section ===
         'emergency.title': 'Албадан гаргах, Виз татгалзах Яаралтай тусламж',
+        'emergency.legal.title': 'Өмгөөлөгчийн төлөөлөл',
+        'emergency.legal.item1': 'Цагаачлалын албаны мөрдөн байцаалтын дэмжлэг',
+        'emergency.legal.item2': 'Захиргааны нэхэмжлэл (Шийдвэр хүчингүй болгох)',
+        'emergency.legal.item3': 'Цагаачлалын зөрчлийн эрүүгийн хамгаалалт',
+        'emergency.diagnosis.title': 'Цагаачлалын Статусын Үнэлгээ',
+        'emergency.diagnosis.item1': 'Статус өөрчлөх эрх',
+        'emergency.diagnosis.item2': 'Хууль бус оршин суух эрсдлийн шинжилгээ',
+        'emergency.diagnosis.item3': 'Цагаачлалын хуулийн дагуу шалгалт',
+        'emergency.diagnosis.item4': 'Өөр визний сонголтууд',
+        
+        // === Services Section ===
+        'services.title': 'Цагаачлалын үйлчилгээ',
+        'services.subtitle': 'Хуульчдын гүйцэтгэсэн мэргэжлийн цагаачлалын үйлчилгээ',
+        'services.tab.visa': 'Виз',
+        'services.tab.residenceReport': 'Оршин суух мэдэгдэл',
+        'services.tab.immigration': 'Цагаачлал·Иргэншил·Дүрвэгсэд',
+        'services.tab.alienReg': 'Гадаадын Иргэний Бүртгэл',
+        'services.tab.consulting': 'Зөвлөгөө',
+        'services.tab.certificate': 'Гэрчилгээ',
         'services.title': 'Цагаачлалын үйлчилгээ',
         'dashboard.title': 'Миний өргөдлүүд',
+        'dashboard.loginPrompt': 'Нэвтрэх үед таны оршин суух байдал, үйлчилгээний өргөдөл, боловсруулалтын явцыг харах боломжтой.',
+        'dashboard.loginButton': 'Google нэвтрэх',
+        
+        // Residence Status Card
+        'dashboard.residence.title': 'Оршин Суух Байдал',
+        'dashboard.residence.visaType': 'Оршин Суух Статус',
+        'dashboard.residence.expiry': 'Дуусах Огноо',
+        
+        // Application Card
         'dashboard.application.date': 'Өргөдлийн огноо:',
         'dashboard.application.status.payment': 'Төлбөр төлсөн',
         'dashboard.application.status.document': 'Баримт бичиг цуглуулж байна',
@@ -1268,6 +1388,15 @@ const translations = {
         'emergency.title': 'การช่วยเหลือฉุกเฉินการเนรเทศและการปฏิเสธวีซ่า',
         'services.title': 'บริการตรวจคนเข้าเมือง',
         'dashboard.title': 'คำขอของฉัน',
+        'dashboard.loginPrompt': 'เข้าสู่ระบบเพื่อดูสถานะการพำนัก คำขอบริการ และความคืบหน้าในการดำเนินการของคุณ',
+        'dashboard.loginButton': 'เข้าสู่ระบบด้วย Google',
+        
+        // Residence Status Card
+        'dashboard.residence.title': 'สถานะการพำนัก',
+        'dashboard.residence.visaType': 'ประเภทการพำนัก',
+        'dashboard.residence.expiry': 'วันหมดอายุ',
+        
+        // Application Card
         'dashboard.application.date': 'วันที่ยื่นคำขอ:',
         'dashboard.application.status.payment': 'ชำระเงินแล้ว',
         'dashboard.application.status.document': 'กำลังรวบรวมเอกสาร',
