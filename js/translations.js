@@ -308,6 +308,8 @@ const translations = {
         // === 프로필 설정 페이지 (Profile Setup) ===
         'profile.title': '기본 사항 제출',
         'profile.subtitle': '모든 서비스 이용을 위해 필요한 기본 정보를 입력해주세요',
+        'profile.create': '기본정보 작성',
+        'profile.edit': '기본정보 수정',
         'profile.step1': '기본정보',
         'profile.step2': '체류정보',
         'profile.step3': '서류등록',
@@ -702,6 +704,10 @@ const translations = {
         'paymentFail.retry': 'Try Again',
         'paymentFail.goToHome': 'Go to Home',
         
+        // === Profile ===
+        'profile.create': 'Create Profile',
+        'profile.edit': 'Edit Profile',
+        
         // === Thread Page ===
         'thread.back': 'Back',
         'thread.status.processing': 'In Progress',
@@ -923,6 +929,10 @@ const translations = {
         'paymentFail.useOtherMethod': '如问题持续，请使用其他支付方式',
         'paymentFail.retry': '重试',
         'paymentFail.goToHome': '前往主页',
+        
+        // === Profile ===
+        'profile.create': '填写基本信息',
+        'profile.edit': '修改基本信息',
         
         // === Thread Page ===
         'thread.back': '返回',
@@ -1146,6 +1156,10 @@ const translations = {
         'paymentFail.retry': 'Thử Lại',
         'paymentFail.goToHome': 'Về Trang Chủ',
         
+        // === Profile ===
+        'profile.create': 'Tạo Hồ Sơ',
+        'profile.edit': 'Chỉnh Sửa Hồ Sơ',
+        
         // === Thread Page ===
         'thread.back': 'Quay lại',
         'thread.status.processing': 'Đang xử lý',
@@ -1367,6 +1381,10 @@ const translations = {
         'paymentFail.useOtherMethod': '問題が続く場合は他の決済手段をご利用ください',
         'paymentFail.retry': '再試行',
         'paymentFail.goToHome': 'ホームへ移動',
+        
+        // === Profile ===
+        'profile.create': '基本情報を入力',
+        'profile.edit': '基本情報を編集',
         
         // === Thread Page ===
         'thread.back': '戻る',
@@ -1590,6 +1608,10 @@ const translations = {
         'paymentFail.retry': 'Дахин Оролдох',
         'paymentFail.goToHome': 'Нүүр руу Очих',
         
+        // === Profile ===
+        'profile.create': 'Үндсэн мэдээлэл бүртгэх',
+        'profile.edit': 'Үндсэн мэдээлэл засах',
+        
         // === Thread Page ===
         'thread.back': 'Буцах',
         'thread.status.processing': 'Явагдаж байна',
@@ -1790,6 +1812,10 @@ const translations = {
         'paymentFail.useOtherMethod': 'หากปัญหายังคงมีอยู่ ให้ใช้วิธีการชำระเงินอื่น',
         'paymentFail.retry': 'ลองอีกครั้ง',
         'paymentFail.goToHome': 'ไปที่หน้าแรก',
+        
+        // === Profile ===
+        'profile.create': 'สร้างโปรไฟล์',
+        'profile.edit': 'แก้ไขโปรไฟล์',
         
         // === Thread Page ===
         'thread.back': 'กลับ',
