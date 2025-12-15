@@ -1209,13 +1209,12 @@ button {
     }
     
     .header-content {
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
     }
     
     .language-selector {
-        order: 3;
-        width: 100%;
-        justify-content: center;
+        /* 모바일에서도 헤더 우측에 유지 */
+        margin-left: auto;
     }
     
     .hero-title {
