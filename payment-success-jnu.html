@@ -408,8 +408,8 @@
             
             // 쓰레드 생성 여부에 따른 메시지
             const threadMessage = thread 
-                ? '신청이 정상적으로 접수되었습니다.<br>센터 담당자가 쓰레드를 통해 안내드리겠습니다.'
-                : '결제가 완료되었습니다.<br>담당자 배정 중이며, 곧 연락드리겠습니다.';
+                ? window.i18n.translate('paymentSuccess.message')
+                : window.i18n.translate('paymentSuccess.messageAlt');
             
             content.innerHTML = `
                 <div class="success-icon">
