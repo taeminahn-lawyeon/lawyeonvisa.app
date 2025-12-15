@@ -1044,7 +1044,7 @@
             <!-- 공식 정보 -->
             <div class="info-box" style="background: rgba(255, 255, 255, 0.08); padding: 20px; border-radius: 14px; margin-bottom: 20px; font-size: 14px; line-height: 1.9; color: rgba(255, 255, 255, 0.9);">
                 <div style="margin-bottom: 8px;">
-                    <strong style="color: white; font-weight: 700;">상호명</strong> <span style="color: rgba(255, 255, 255, 0.9);">법무법인 로연</span>
+                    <strong style="color: white; font-weight: 700;">(상호명)</strong> <span style="color: rgba(255, 255, 255, 0.9);">법무법인 로연</span>
                 </div>
                 <div style="margin-bottom: 8px;">
                     <strong style="color: white; font-weight: 700;">서울사무소</strong> <span style="color: rgba(255, 255, 255, 0.9);">서울특별시 강서구 공항대로 164, 5층 503호 (마곡동, 류마타워) | 대표: 민준우</span>
@@ -1246,16 +1246,16 @@
         // 협약 단체 (4개 카테고리)
         const partners = {
             university: [
-                { id: 'jnu', name: '전남대학교', link: 'visa-login-jnu.html', color: 'linear-gradient(135deg, #007A33 0%, #005A25 100%)', shadow: 'rgba(0, 122, 51, 0.25)', icon: 'fa-university', active: true }
+                { id: 'jnu', name: '전남대학교', color: 'linear-gradient(135deg, #007A33 0%, #005A25 100%)', shadow: 'rgba(0, 122, 51, 0.25)', icon: 'fa-university' }
             ],
             company: [
-                { id: 'brookfield', name: '(유)브룩필드코리아', link: '#', color: 'linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%)', shadow: 'rgba(30, 58, 138, 0.25)', icon: 'fa-building', active: false }
+                { id: 'brookfield', name: '(유)브룩필드코리아', color: 'linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%)', shadow: 'rgba(30, 58, 138, 0.25)', icon: 'fa-building' }
             ],
             union: [
-                { id: 'migrant-union', name: '한국외국인근로자노동조합', link: '#', color: 'linear-gradient(135deg, #DC143C 0%, #C41E3A 100%)', shadow: 'rgba(220, 20, 60, 0.25)', icon: 'fa-handshake', active: false }
+                { id: 'migrant-union', name: '한국외국인근로자노동조합', color: 'linear-gradient(135deg, #DC143C 0%, #C41E3A 100%)', shadow: 'rgba(220, 20, 60, 0.25)', icon: 'fa-handshake' }
             ],
             public: [
-                { id: 'support-center', name: '외국인근로자지원센터', link: '#', color: 'linear-gradient(135deg, #0891B2 0%, #0E7490 100%)', shadow: 'rgba(8, 145, 178, 0.25)', icon: 'fa-landmark', active: false }
+                { id: 'support-center', name: '외국인근로자지원센터', color: 'linear-gradient(135deg, #0891B2 0%, #0E7490 100%)', shadow: 'rgba(8, 145, 178, 0.25)', icon: 'fa-landmark' }
             ]
         };
 
@@ -1316,23 +1316,6 @@
             
             if (session && session.user) {
                 console.log('✅ 세션 존재:', session.user.email);
-                
-                // 🔥 organization 체크: JNU/SNU 프로필로 로그인한 경우 전용 페이지로 리다이렉트
-                const quickProfileCheck = await getUserProfile(session.user.id);
-                if (quickProfileCheck.success && quickProfileCheck.data) {
-                    const userOrg = quickProfileCheck.data.organization;
-                    console.log('🔍 사용자 organization:', userOrg);
-                    
-                    if (userOrg === 'jnu') {
-                        console.log('✅ JNU 계정 감지 - visa-dashboard-jnu.html로 리다이렉트');
-                        window.location.href = 'visa-dashboard-jnu.html';
-                        return;
-                    } else if (userOrg === 'snu') {
-                        console.log('✅ SNU 계정 감지 - visa-dashboard-snu.html로 리다이렉트');
-                        window.location.href = 'visa-dashboard-snu.html';
-                        return;
-                    }
-                }
                 
                 // ✅ 프로필 생성 완료 플래그 확인
                 const profileCreatedFlag = sessionStorage.getItem('profileCreated');
@@ -1594,7 +1577,7 @@
             }
         }
 
-        // 협약 단체 로드 함수 (기존 버튼 스타일 유지)
+        // 협약 단체 로드 함수 (소개 전용 버튼으로 변경)
         function loadPartners(category = 'university') {
             const grid = document.getElementById('partnerGrid');
             if (!grid) {
@@ -1606,27 +1589,28 @@
             const partnerList = partners[category] || partners.university;
 
             partnerList.forEach(partner => {
-                const link = document.createElement('a');
-                link.href = partner.active ? partner.link : '#';
-                link.style.cssText = `
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.style.cssText = `
                     display: inline-block;
                     background: ${partner.color};
                     color: white;
+                    border: none;
                     border-radius: 12px;
                     padding: 20px 32px;
                     text-align: center;
-                    text-decoration: none;
+                    cursor: pointer;
                     transition: all 0.2s;
                     box-shadow: 0 8px 24px ${partner.shadow};
+                    font-family: inherit;
                 `;
                 
-                if (!partner.active) {
-                    link.onclick = (e) => {
-                        e.preventDefault();
-                        alert(window.i18n.translate('common.comingSoon'));
-                        return false;
-                    };
-                }
+                // 모든 협약 기관 버튼은 클릭 시 안내 메시지만 표시
+                button.onclick = (e) => {
+                    e.preventDefault();
+                    alert('협약 단체 소개 버튼입니다.\n\n실제 서비스 이용을 원하시면 아래 "우리 단체도 제휴하기" 버튼을 통해 문의해주세요.');
+                    return false;
+                };
                 
                 const span = document.createElement('span');
                 span.style.cssText = `
@@ -1641,9 +1625,9 @@
                 
                 span.appendChild(icon);
                 span.appendChild(document.createTextNode(partner.name));
-                link.appendChild(span);
+                button.appendChild(span);
                 
-                grid.appendChild(link);
+                grid.appendChild(button);
             });
         }
 
