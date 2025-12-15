@@ -465,6 +465,12 @@
     <div class="container">
         <!-- 헤더 -->
         <div class="header">
+            <!-- 뒤로가기 버튼 -->
+            <button id="backButton" style="position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); color: white; padding: 10px 20px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s;">
+                <i class="fas fa-arrow-left"></i>
+                <span data-i18n="common.back">뒤로가기</span>
+            </button>
+            
             <!-- 언어 선택기 -->
             <div class="language-selector" style="position: absolute; top: 20px; right: 20px;">
                 <button id="language-selector-btn">
@@ -1048,6 +1054,25 @@
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalText;
             }
+        });
+        
+        // 뒤로가기 버튼 이벤트 리스너
+        document.getElementById('backButton').addEventListener('click', function() {
+            // 프로필 작성을 건너뛴다는 플래그 설정
+            sessionStorage.setItem('skipProfileSetup', 'true');
+            // index 페이지로 이동
+            window.location.href = 'index.html';
+        });
+        
+        // 마우스 호버 효과
+        const backBtn = document.getElementById('backButton');
+        backBtn.addEventListener('mouseenter', function() {
+            this.style.background = 'rgba(255,255,255,0.3)';
+            this.style.borderColor = 'rgba(255,255,255,0.5)';
+        });
+        backBtn.addEventListener('mouseleave', function() {
+            this.style.background = 'rgba(255,255,255,0.2)';
+            this.style.borderColor = 'rgba(255,255,255,0.3)';
         });
     </script>
     
