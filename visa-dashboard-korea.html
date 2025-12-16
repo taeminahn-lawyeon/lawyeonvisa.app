@@ -942,7 +942,7 @@
                     <p style="font-size: 17px; margin-bottom: 24px; line-height: 1.6; font-weight: 500;" data-i18n="dashboard.loginPrompt">
                         로그인하시면 나의 체류현황, 서비스 신청, 진행 현황을 확인하실 수 있습니다.
                     </p>
-                    <button onclick="document.getElementById('googleLoginBtn').click()" style="padding: 16px 32px; background: linear-gradient(135deg, #00A651 0%, #007A33 100%); color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 8px 24px rgba(49, 130, 246, 0.25);" data-i18n="dashboard.loginButton">
+                    <button onclick="document.getElementById('googleLoginBtn').click()" style="padding: 16px 32px; background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%); color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 8px 24px rgba(49, 130, 246, 0.25);" data-i18n="dashboard.loginButton">
                         Google 로그인
                     </button>
                 </div>
@@ -950,7 +950,7 @@
                 <!-- 로그인 후: 체류 정보 및 신청 내역 -->
                 <div id="userInfo" style="display: none;">
                     <!-- 체류 정보 카드 -->
-                    <div style="background: linear-gradient(135deg, #E8F5E9 0%, #F1F8E9 100%); border: 2px solid #00A651; border-radius: 16px; padding: 24px; margin-bottom: 24px;">
+                    <div style="background: linear-gradient(135deg, #EBF4FF 0%, #F0F9FF 100%); border: 2px solid #3182F6; border-radius: 16px; padding: 24px; margin-bottom: 24px;">
                         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
                             <div style="font-size: 32px;">📝</div>
                             <div>
@@ -961,7 +961,7 @@
                         <div style="display: flex; flex-direction: column; gap: 12px;">
                             <div style="background: white; padding: 16px; border-radius: 12px;">
                                 <div style="font-size: 13px; color: #64748b; margin-bottom: 6px;" data-i18n="dashboard.residence.visaType">체류자격</div>
-                                <div style="font-size: 17px; font-weight: 700; color: #007A33;" id="userVisaType">D-2 유학</div>
+                                <div style="font-size: 17px; font-weight: 700; color: #2563EB;" id="userVisaType">D-2 유학</div>
                             </div>
                             <div style="background: white; padding: 16px; border-radius: 12px;">
                                 <div style="font-size: 13px; color: #64748b; margin-bottom: 6px;" data-i18n="dashboard.residence.expiry">만료일</div>
@@ -986,8 +986,8 @@
                             <div style="margin-bottom: 16px;">
                                 <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;" data-i18n="dashboard.application.progress">진행 단계</div>
                                 <div style="display: flex; gap: 8px;">
-                                    <div style="flex: 1; height: 8px; background: #00A651; border-radius: 4px;"></div>
-                                    <div style="flex: 1; height: 8px; background: #00A651; border-radius: 4px;"></div>
+                                    <div style="flex: 1; height: 8px; background: #3182F6; border-radius: 4px;"></div>
+                                    <div style="flex: 1; height: 8px; background: #3182F6; border-radius: 4px;"></div>
                                     <div style="flex: 1; height: 8px; background: #E5E7EB; border-radius: 4px;"></div>
                                     <div style="flex: 1; height: 8px; background: #E5E7EB; border-radius: 4px;"></div>
                                 </div>
@@ -998,7 +998,7 @@
                                     <span data-i18n="dashboard.application.step.approval">승인</span>
                                 </div>
                             </div>
-                            <button onclick="window.location.href='visa-thread-jnu.html'" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #00A651 0%, #007A33 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
+                            <button onclick="window.location.href='visa-thread-korea.html'" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
                                 <i class="fas fa-comments"></i> <span data-i18n="dashboard.application.openThread">쓰레드 열기</span>
                             </button>
                         </div>
@@ -1448,7 +1448,7 @@
                 
                 card.style.cssText = `
                     background: white; 
-                    border: 2px solid ${isArchived ? '#E5E7EB' : '#00A651'}; 
+                    border: 2px solid ${isArchived ? '#E5E7EB' : '#3182F6'}; 
                     border-radius: 16px; 
                     padding: 24px; 
                     margin-bottom: 16px;
@@ -1482,10 +1482,10 @@
                     <div style="margin-bottom: 16px;">
                         <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;">${progressLabel}</div>
                         <div style="display: flex; gap: 8px;">
-                            <div style="flex: 1; height: 8px; background: ${progress1 ? '#00A651' : '#E5E7EB'}; border-radius: 4px;"></div>
-                            <div style="flex: 1; height: 8px; background: ${progress2 ? '#00A651' : '#E5E7EB'}; border-radius: 4px;"></div>
-                            <div style="flex: 1; height: 8px; background: ${progress3 ? '#00A651' : '#E5E7EB'}; border-radius: 4px;"></div>
-                            <div style="flex: 1; height: 8px; background: ${progress4 ? '#00A651' : '#E5E7EB'}; border-radius: 4px;"></div>
+                            <div style="flex: 1; height: 8px; background: ${progress1 ? '#3182F6' : '#E5E7EB'}; border-radius: 4px;"></div>
+                            <div style="flex: 1; height: 8px; background: ${progress2 ? '#3182F6' : '#E5E7EB'}; border-radius: 4px;"></div>
+                            <div style="flex: 1; height: 8px; background: ${progress3 ? '#3182F6' : '#E5E7EB'}; border-radius: 4px;"></div>
+                            <div style="flex: 1; height: 8px; background: ${progress4 ? '#3182F6' : '#E5E7EB'}; border-radius: 4px;"></div>
                         </div>
                         <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: #64748b;">
                             <span>${paymentLabel}</span>
@@ -1494,7 +1494,7 @@
                             <span>${approvalLabel}</span>
                         </div>
                     </div>
-                    <button onclick="openThread('${thread.id}')" style="width: 100%; padding: 14px; background: linear-gradient(135deg, ${isArchived ? '#9CA3AF' : '#00A651'} 0%, ${isArchived ? '#6B7280' : '#007A33'} 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
+                    <button onclick="openThread('${thread.id}')" style="width: 100%; padding: 14px; background: linear-gradient(135deg, ${isArchived ? '#9CA3AF' : '#3182F6'} 0%, ${isArchived ? '#6B7280' : '#2563EB'} 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
                         ${isArchived ? archivedThreadLabel : openThreadLabel}
                     </button>
                 `;
