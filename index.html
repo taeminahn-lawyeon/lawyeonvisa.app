@@ -63,6 +63,13 @@
         .header-actions {
             display: flex;
             gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        #loginButtons {
+            display: flex;
+            align-items: center;
         }
 
         .header-btn {
@@ -871,7 +878,7 @@
                 </button>
                 
                 <!-- 로그인 전 -->
-                <div id="loginButtons" style="display: none;">
+                <div id="loginButtons" style="display: flex;">
                     <button class="header-btn" id="googleLoginBtn" data-i18n="login.google">
                         Google 로그인
                     </button>
@@ -1090,7 +1097,7 @@
 
     <!-- Supabase 라이브러리 -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-client.js?v=7"></script>
+    <script src="js/supabase-client.js?v=8"></script>
     
     <script src="js/ui-components.js"></script>
     
