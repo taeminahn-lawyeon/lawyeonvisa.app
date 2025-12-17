@@ -8,8 +8,10 @@
 const SUPABASE_URL = 'https://gqistzsergddnpcvuzba.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxaXN0enNlcmdkZG5wY3Z1emJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNTEyMjEsImV4cCI6MjA4MDcyNzIyMX0.X_GgShObq9OJ6z7aEKdUCoyHYo-OJL-I5hcIDt4komg';
 
-// Supabase 클라이언트 초기화
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Supabase 클라이언트 초기화 (전역 변수 사용하여 중복 선언 방지)
+if (typeof supabase === 'undefined') {
+    var supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+}
 
 // ============================================
 // 인증 관련 함수
@@ -18,7 +20,7 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // Google 로그인
 async function signInWithGoogle() {
     try {
-        const { data, error } = await supabase.auth.signInWithOAuth({
+        const { data, error } = await supabaseClient.auth.signInWithOAuth({
             provider: 'google',
             options: {
                 redirectTo: window.location.origin + '/index.html'
@@ -36,7 +38,7 @@ async function signInWithGoogle() {
 // 이메일 로그인
 async function signInWithEmail(email, password) {
     try {
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
             email,
             password
         });
@@ -52,7 +54,7 @@ async function signInWithEmail(email, password) {
 // 회원가입
 async function signUpWithEmail(email, password, userData = {}) {
     try {
-        const { data, error } = await supabase.auth.signUp({
+        const { data, error } = await supabaseClient.auth.signUp({
             email,
             password,
             options: {
@@ -82,7 +84,7 @@ async function signUpWithEmail(email, password, userData = {}) {
 // 로그아웃
 async function signOut() {
     try {
-        const { error } = await supabase.auth.signOut();
+        const { error } = await supabaseClient.auth.signOut();
         if (error) throw error;
         
         // 로컬 스토리지 정리
@@ -101,7 +103,7 @@ async function signOut() {
 // 현재 사용자 정보 가져오기
 async function getCurrentUser() {
     try {
-        const { data: { user }, error } = await supabase.auth.getUser();
+        const { data: { user }, error } = await supabaseClient.auth.getUser();
         if (error) throw error;
         return user;
     } catch (error) {
@@ -113,7 +115,7 @@ async function getCurrentUser() {
 // 세션 확인
 async function checkSession() {
     try {
-        const { data: { session }, error } = await supabase.auth.getSession();
+        const { data: { session }, error } = await supabaseClient.auth.getSession();
         if (error) throw error;
         return session;
     } catch (error) {
@@ -129,7 +131,7 @@ async function checkSession() {
 // 프로필 생성
 async function createUserProfile(userId, profileData) {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('profiles')
             .insert([{
                 id: userId,
@@ -152,7 +154,7 @@ async function getUserProfile(userId) {
     try {
         console.log('프로필 조회 시도 - User ID:', userId);
         
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('profiles')
             .select('*')
             .eq('id', userId)
@@ -187,7 +189,7 @@ async function getUserProfile(userId) {
 // 프로필 업데이트
 async function updateUserProfile(userId, updates) {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('profiles')
             .update({
                 ...updates,
@@ -234,7 +236,7 @@ async function createThread(threadData) {
         
         console.log('🔄 쓰레드 생성 시도:', threadRecord);
         
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('threads')
             .insert(threadRecord)
             .select()
@@ -256,7 +258,7 @@ async function createThread(threadData) {
 // 사용자 쓰레드 목록 조회
 async function getUserThreads(userId) {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('threads')
             .select('*')
             .eq('user_id', userId)
@@ -275,7 +277,7 @@ async function getUserThreads(userId) {
 // 쓰레드 상태 업데이트
 async function updateThreadStatus(threadId, status) {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('threads')
             .update({
                 status,
@@ -303,7 +305,7 @@ async function updateThreadStatus(threadId, status) {
 // 쓰레드 메시지 조회
 async function getThreadMessages(threadId) {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('messages')
             .select('*')
             .eq('thread_id', threadId)
@@ -324,7 +326,7 @@ async function getThreadMessages(threadId) {
 // 파일 업로드
 async function uploadFile(bucket, filePath, file) {
     try {
-        const { data, error } = await supabase.storage
+        const { data, error } = await supabaseClient.storage
             .from(bucket)
             .upload(filePath, file, {
                 cacheControl: '3600',
@@ -334,7 +336,7 @@ async function uploadFile(bucket, filePath, file) {
         if (error) throw error;
         
         // 공개 URL 가져오기 (avatars만 공개)
-        const { data: urlData } = supabase.storage
+        const { data: urlData } = supabaseClient.storage
             .from(bucket)
             .getPublicUrl(filePath);
         
@@ -348,7 +350,7 @@ async function uploadFile(bucket, filePath, file) {
 // 파일 다운로드 URL 생성 (서명된 URL)
 async function getSignedUrl(bucket, filePath, expiresIn = 3600) {
     try {
-        const { data, error } = await supabase.storage
+        const { data, error } = await supabaseClient.storage
             .from(bucket)
             .createSignedUrl(filePath, expiresIn);
         
@@ -386,7 +388,7 @@ async function createPayment(paymentData) {
         
         console.log('📝 저장할 데이터:', paymentRecord);
         
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('payments')
             .insert(paymentRecord);
         
@@ -410,7 +412,7 @@ async function createPayment(paymentData) {
 // 결제 정보 조회 (단건)
 async function getPayment(orderId) {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('payments')
             .select('*')
             .eq('order_id', orderId)
@@ -427,7 +429,7 @@ async function getPayment(orderId) {
 // 사용자 결제 내역 조회
 async function getUserPayments(userId) {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('payments')
             .select('*')
             .eq('user_id', userId)
@@ -453,7 +455,7 @@ async function updatePaymentStatus(paymentId, status, paymentKey = null) {
             updateData.payment_key = paymentKey;
         }
         
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('payments')
             .update(updateData)
             .eq('id', paymentId)
@@ -475,7 +477,7 @@ async function updatePaymentStatus(paymentId, status, paymentKey = null) {
 // 쓰레드 상세 조회
 async function getThread(threadId) {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('threads')
             .select('*')
             .eq('id', threadId)
@@ -492,7 +494,7 @@ async function getThread(threadId) {
 // 모든 쓰레드 조회 (관리자용)
 async function getAllThreads() {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('threads')
             .select(`
                 *,
@@ -516,7 +518,7 @@ async function getAllThreads() {
 // 쓰레드 삭제 (소프트 삭제)
 async function deleteThread(threadId) {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('threads')
             .update({
                 is_active: false,
@@ -544,7 +546,7 @@ async function createApplication(applicationData) {
         const user = await getCurrentUser();
         if (!user) throw new Error('로그인이 필요합니다');
         
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('applications')
             .insert({
                 user_id: user.id,
@@ -565,7 +567,7 @@ async function createApplication(applicationData) {
 // 사용자 신청 내역 조회
 async function getUserApplications(userId) {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('applications')
             .select('*')
             .eq('user_id', userId)
@@ -582,7 +584,7 @@ async function getUserApplications(userId) {
 // 신청 상태 업데이트
 async function updateApplicationStatus(applicationId, status) {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('applications')
             .update({
                 status,
@@ -618,7 +620,7 @@ async function uploadThreadDocument(threadId, file) {
         console.log('📤 파일 업로드 시작:', filePath);
         
         // Supabase Storage에 업로드
-        const { data: uploadData, error: uploadError } = await supabase.storage
+        const { data: uploadData, error: uploadError } = await supabaseClient.storage
             .from('thread_documents')
             .upload(filePath, file, {
                 cacheControl: '3600',
@@ -633,7 +635,7 @@ async function uploadThreadDocument(threadId, file) {
         console.log('✅ 파일 업로드 성공:', uploadData);
         
         // 서명된 URL 생성 (1년 유효)
-        const { data: urlData, error: urlError } = await supabase.storage
+        const { data: urlData, error: urlError } = await supabaseClient.storage
             .from('thread_documents')
             .createSignedUrl(filePath, 31536000); // 1년
         
@@ -659,7 +661,7 @@ async function uploadThreadDocument(threadId, file) {
 // 파일 다운로드 URL 생성 (서명된 URL)
 async function getThreadDocumentUrl(filePath) {
     try {
-        const { data, error } = await supabase.storage
+        const { data, error } = await supabaseClient.storage
             .from('thread_documents')
             .createSignedUrl(filePath, 3600); // 1시간 유효
         
@@ -674,7 +676,7 @@ async function getThreadDocumentUrl(filePath) {
 // 파일 삭제
 async function deleteThreadDocument(filePath) {
     try {
-        const { data, error } = await supabase.storage
+        const { data, error } = await supabaseClient.storage
             .from('thread_documents')
             .remove([filePath]);
         
@@ -702,7 +704,7 @@ async function createMessage(messageData) {
             ? profileResult.data.name 
             : user.email;
         
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('messages')
             .insert({
                 thread_id: messageData.thread_id,
@@ -730,7 +732,7 @@ async function createMessage(messageData) {
 // ============================================
 
 // 인증 상태 변경 감지
-supabase.auth.onAuthStateChange((event, session) => {
+supabaseClient.auth.onAuthStateChange((event, session) => {
     console.log('인증 상태 변경:', event, session);
     
     if (event === 'SIGNED_IN') {
