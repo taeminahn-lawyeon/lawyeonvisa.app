@@ -9,7 +9,23 @@ const SUPABASE_URL = 'https://gqistzsergddnpcvuzba.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxaXN0enNlcmdkZG5wY3Z1emJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNTEyMjEsImV4cCI6MjA4MDcyNzIyMX0.X_GgShObq9OJ6z7aEKdUCoyHYo-OJL-I5hcIDt4komg';
 
 // Supabase 클라이언트 초기화
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let supabaseClient;
+
+// Supabase CDN 로드 대기
+if (window.supabase) {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    console.log('✅ Supabase 클라이언트 즉시 초기화');
+} else {
+    console.warn('⚠️ Supabase CDN이 아직 로드되지 않음 - DOMContentLoaded 이벤트 대기');
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.supabase) {
+            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            console.log('✅ Supabase 클라이언트 지연 초기화');
+        } else {
+            console.error('❌ Supabase CDN 로드 실패');
+        }
+    });
+}
 
 // ============================================
 // 인증 관련 함수
@@ -730,15 +746,17 @@ async function createMessage(messageData) {
 // ============================================
 
 // 인증 상태 변경 감지
-supabaseClient.auth.onAuthStateChange((event, session) => {
-    console.log('인증 상태 변경:', event, session);
-    
-    if (event === 'SIGNED_IN') {
-        console.log('로그인 성공:', session?.user?.email);
-        // 프로필 체크는 각 페이지의 checkUserLogin()에서 처리
-    } else if (event === 'SIGNED_OUT') {
-        console.log('로그아웃 완료');
-    }
-});
+if (supabaseClient) {
+    supabaseClient.auth.onAuthStateChange((event, session) => {
+        console.log('인증 상태 변경:', event, session);
+        
+        if (event === 'SIGNED_IN') {
+            console.log('로그인 성공:', session?.user?.email);
+            // 프로필 체크는 각 페이지의 checkUserLogin()에서 처리
+        } else if (event === 'SIGNED_OUT') {
+            console.log('로그아웃 완료');
+        }
+    });
+}
 
-console.log('✅ Supabase 클라이언트 초기화 완료');
+console.log('✅ Supabase 클라이언트 스크립트 로드 완료');
