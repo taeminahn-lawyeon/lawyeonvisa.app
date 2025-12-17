@@ -64,9 +64,10 @@
             display: flex;
             gap: 10px;
         }
-
+        
         #loginButtons {
-            display: block;
+            position: relative;
+            z-index: 1000;
         }
 
         .header-btn {
@@ -82,6 +83,8 @@
             height: 42px;
             touch-action: manipulation;
             -webkit-tap-highlight-color: rgba(49, 130, 246, 0.3);
+            position: relative;
+            z-index: 1000;
         }
 
         .header-btn:hover {
@@ -895,7 +898,7 @@
                 </button>
                 
                 <!-- 로그인 전 -->
-                <div id="loginButtons">
+                <div id="loginButtons" style="display: flex;">
                     <button class="header-btn" id="googleLoginBtn" data-i18n="login.google">
                         Google 로그인
                     </button>
