@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>출입국 민원대행 서비스 가격표 - 법무법인 로연</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #f9fafb;
+            line-height: 1.6;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+
+        .header p {
+            font-size: 18px;
+            color: #6b7280;
+            line-height: 1.8;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 12px 24px;
+            background: #f3f4f6;
+            color: #374151;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #e5e7eb;
+        }
+
+        .price-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #3182F6;
+        }
+
+        .price-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .price-table thead {
+            background: #f9fafb;
+        }
+
+        .price-table th {
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .price-table td {
+            padding: 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .price-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .service-name {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .service-price {
+            font-weight: 700;
+            color: #3182F6;
+            font-size: 18px;
+        }
+
+        .gov-fee {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .total-price {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .notice-box {
+            background: #eff6ff;
+            border: 2px solid #3182F6;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 40px;
+        }
+
+        .notice-box h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e40af;
+            margin-bottom: 16px;
+        }
+
+        .notice-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .notice-box li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+            color: #374151;
+        }
+
+        .notice-box li:before {
+            content: "•";
+            position: absolute;
+            left: 8px;
+            color: #3182F6;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: #fef3c7;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 16px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .header p {
+                font-size: 16px;
+            }
+
+            .price-section {
+                padding: 24px 16px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .price-table {
+                font-size: 14px;
+            }
+
+            .price-table th,
+            .price-table td {
+                padding: 12px 8px;
+            }
+
+            .service-price {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">← 메인으로 돌아가기</a>
+
+        <div class="header">
+            <h1>출입국 민원대행 서비스 가격표</h1>
+            <p>법무법인 로연 출입국이민지원센터의 모든 서비스 요금을 투명하게 공개합니다</p>
+        </div>
+
+        <!-- 비자 서비스 -->
+        <div class="price-section">
+            <h2 class="section-title">📋 비자 서비스 (Visa Services)</h2>
+            <table class="price-table">
+                <thead>
+                    <tr>
+                        <th>서비스명</th>
+                        <th>법무법인 수수료</th>
+                        <th>정부 수수료</th>
+                        <th>총 금액</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="service-name">비자 발급</td>
+                        <td class="service-price">₩880,000</td>
+                        <td class="gov-fee">₩50,000 ~ ₩300,000</td>
+                        <td class="total-price">₩930,000 ~ ₩1,180,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">비자 연장</td>
+                        <td class="service-price">₩550,000</td>
+                        <td class="gov-fee">₩50,000 ~ ₩300,000</td>
+                        <td class="total-price">₩600,000 ~ ₩850,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">비자 변경</td>
+                        <td class="service-price">₩880,000</td>
+                        <td class="gov-fee">₩50,000 ~ ₩300,000</td>
+                        <td class="total-price">₩930,000 ~ ₩1,180,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">비자 부여 (재입국허가)</td>
+                        <td class="service-price">₩880,000</td>
+                        <td class="gov-fee">₩30,000 ~ ₩50,000</td>
+                        <td class="total-price">₩910,000 ~ ₩930,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 체류 신고 서비스 -->
+        <div class="price-section">
+            <h2 class="section-title">📝 체류 신고 서비스 (Residence Report)</h2>
+            <table class="price-table">
+                <thead>
+                    <tr>
+                        <th>서비스명</th>
+                        <th>법무법인 수수료</th>
+                        <th>정부 수수료</th>
+                        <th>총 금액</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="service-name">시간제취업 신고</td>
+                        <td class="service-price">₩110,000</td>
+                        <td class="gov-fee">없음</td>
+                        <td class="total-price">₩110,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">근무처 변경·추가 신고</td>
+                        <td class="service-price">₩110,000</td>
+                        <td class="gov-fee">없음</td>
+                        <td class="total-price">₩110,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">고용·위탁교육 신고</td>
+                        <td class="service-price">₩110,000</td>
+                        <td class="gov-fee">없음</td>
+                        <td class="total-price">₩110,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">고용·위탁교육 변경 신고</td>
+                        <td class="service-price">₩110,000</td>
+                        <td class="gov-fee">없음</td>
+                        <td class="total-price">₩110,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">근무처 변경 허가</td>
+                        <td class="service-price">₩110,000</td>
+                        <td class="gov-fee">₩50,000</td>
+                        <td class="total-price">₩160,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">체류지 변경 신고</td>
+                        <td class="service-price">₩110,000</td>
+                        <td class="gov-fee">없음</td>
+                        <td class="total-price">₩110,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">통합신고</td>
+                        <td class="service-price">₩110,000</td>
+                        <td class="gov-fee">없음</td>
+                        <td class="total-price">₩110,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">가족관계 변경 신고</td>
+                        <td class="service-price">₩110,000</td>
+                        <td class="gov-fee">없음</td>
+                        <td class="total-price">₩110,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 이민·국적·난민 서비스 -->
+        <div class="price-section">
+            <h2 class="section-title">🏛️ 이민·국적·난민 서비스</h2>
+            <table class="price-table">
+                <thead>
+                    <tr>
+                        <th>서비스명</th>
+                        <th>법무법인 수수료</th>
+                        <th>정부 수수료</th>
+                        <th>총 금액</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="service-name">귀화 신청</td>
+                        <td class="service-price">₩1,100,000</td>
+                        <td class="gov-fee">₩300,000</td>
+                        <td class="total-price">₩1,400,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">국적회복 신청</td>
+                        <td class="service-price">₩330,000</td>
+                        <td class="gov-fee">₩200,000</td>
+                        <td class="total-price">₩530,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">국적이탈 신고</td>
+                        <td class="service-price">₩330,000</td>
+                        <td class="gov-fee">₩300,000</td>
+                        <td class="total-price">₩630,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">국적상실 신고</td>
+                        <td class="service-price">₩330,000</td>
+                        <td class="gov-fee">없음</td>
+                        <td class="total-price">₩330,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">국적보유 확인</td>
+                        <td class="service-price">₩330,000</td>
+                        <td class="gov-fee">없음</td>
+                        <td class="total-price">₩330,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">국적선택 신고</td>
+                        <td class="service-price">₩330,000</td>
+                        <td class="gov-fee">없음</td>
+                        <td class="total-price">₩330,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">복수국적자 국적이탈 신고</td>
+                        <td class="service-price">₩330,000</td>
+                        <td class="gov-fee">₩300,000</td>
+                        <td class="total-price">₩630,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">난민 신청</td>
+                        <td class="service-price">₩1,100,000</td>
+                        <td class="gov-fee">없음</td>
+                        <td class="total-price">₩1,100,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">난민 이의신청</td>
+                        <td class="service-price">₩1,100,000</td>
+                        <td class="gov-fee">없음</td>
+                        <td class="total-price">₩1,100,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 외국인 등록 서비스 -->
+        <div class="price-section">
+            <h2 class="section-title">🆔 외국인 등록 서비스</h2>
+            <table class="price-table">
+                <thead>
+                    <tr>
+                        <th>서비스명</th>
+                        <th>법무법인 수수료</th>
+                        <th>정부 수수료</th>
+                        <th>총 금액</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="service-name">외국인 등록 신청</td>
+                        <td class="service-price">₩220,000</td>
+                        <td class="gov-fee">₩30,000</td>
+                        <td class="total-price">₩250,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">외국인 등록증 재발급</td>
+                        <td class="service-price">₩110,000</td>
+                        <td class="gov-fee">₩30,000</td>
+                        <td class="total-price">₩140,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">외국인 등록 사항 변경</td>
+                        <td class="service-price">₩110,000</td>
+                        <td class="gov-fee">없음</td>
+                        <td class="total-price">₩110,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 자문 서비스 -->
+        <div class="price-section">
+            <h2 class="section-title">💼 자문 서비스 (Consulting)</h2>
+            <table class="price-table">
+                <thead>
+                    <tr>
+                        <th>서비스명</th>
+                        <th>법무법인 수수료</th>
+                        <th>정부 수수료</th>
+                        <th>총 금액</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="service-name">비자 컨설팅</td>
+                        <td class="service-price">견적 협의</td>
+                        <td class="gov-fee">없음</td>
+                        <td class="total-price">견적 협의</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">단체 교육</td>
+                        <td class="service-price">견적 협의</td>
+                        <td class="gov-fee">없음</td>
+                        <td class="total-price">견적 협의</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">제휴 단체 자문</td>
+                        <td class="service-price">견적 협의</td>
+                        <td class="gov-fee">없음</td>
+                        <td class="total-price">견적 협의</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 증명서 발급 서비스 -->
+        <div class="price-section">
+            <h2 class="section-title">📜 증명서 발급 서비스</h2>
+            <table class="price-table">
+                <thead>
+                    <tr>
+                        <th>서비스명</th>
+                        <th>법무법인 수수료</th>
+                        <th>정부 수수료</th>
+                        <th>총 금액</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="service-name">출입국사실증명서 발급</td>
+                        <td class="service-price">₩55,000</td>
+                        <td class="gov-fee">₩1,000</td>
+                        <td class="total-price">₩56,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">외국인등록사실증명 발급</td>
+                        <td class="service-price">₩55,000</td>
+                        <td class="gov-fee">�w1,000</td>
+                        <td class="total-price">₩56,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">체류지 확인서 발급</td>
+                        <td class="service-price">₩55,000</td>
+                        <td class="gov-fee">없음</td>
+                        <td class="total-price">₩55,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">국적상실확인서 발급</td>
+                        <td class="service-price">₩55,000</td>
+                        <td class="gov-fee">₩1,000</td>
+                        <td class="total-price">₩56,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">사증발급인정서 발급</td>
+                        <td class="service-price">₩55,000</td>
+                        <td class="gov-fee">없음</td>
+                        <td class="total-price">₩55,000</td>
+                    </tr>
+                    <tr>
+                        <td class="service-name">기타 증명서 발급</td>
+                        <td class="service-price">₩55,000</td>
+                        <td class="gov-fee">₩1,000</td>
+                        <td class="total-price">₩56,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 안내 사항 -->
+        <div class="notice-box">
+            <h3>📌 가격 안내 사항</h3>
+            <ul>
+                <li>정부 수수료는 비자 종류 및 체류 자격에 따라 달라질 수 있습니다</li>
+                <li>복잡한 케이스의 경우 추가 비용이 발생할 수 있습니다</li>
+                <li>모든 가격은 부가가치세(VAT) 포함 금액입니다</li>
+                <li>견적 협의 서비스는 사전 상담 후 개별 견적을 제공합니다</li>
+                <li>긴급 처리가 필요한 경우 추가 비용이 발생할 수 있습니다</li>
+                <li>가격은 정책에 따라 변동될 수 있으며, 신청 시점의 가격이 적용됩니다</li>
+            </ul>
+        </div>
+
+        <div class="notice-box" style="background: #fef3c7; border-color: #f59e0b; margin-top: 20px;">
+            <h3 style="color: #92400e;">⚠️ 환불 규정</h3>
+            <ul>
+                <li style="color: #78350f;">환불 규정은 <a href="refund-policy.html" style="color: #f59e0b; font-weight: 700; text-decoration: underline;">환불 규정 페이지</a>에서 확인하실 수 있습니다</li>
+                <li style="color: #78350f;">서비스 이용 전 반드시 환불 규정을 확인해 주세요</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
