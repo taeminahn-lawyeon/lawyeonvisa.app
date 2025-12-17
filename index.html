@@ -1128,22 +1128,7 @@
                 loadPartners(activePartnerCategory);
             });
             
-            // Supabase가 로드될 때까지 대기 후 checkUserLogin 실행
-            if (typeof checkSession === 'function') {
-                checkUserLogin();
-            } else {
-                // supabase-client.js 로드 대기
-                setTimeout(() => {
-                    if (typeof checkSession === 'function') {
-                        checkUserLogin();
-                    } else {
-                        console.error('checkSession 함수를 찾을 수 없습니다');
-                        // 로그인 버튼 기본 표시
-                        document.getElementById('loginButtons').style.display = 'flex';
-                        document.getElementById('userGreeting').style.display = 'none';
-                    }
-                }, 500);
-            }
+            checkUserLogin();
             
             // Google Login Button
             document.getElementById('googleLoginBtn').addEventListener('click', async function() {
