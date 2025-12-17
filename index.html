@@ -870,10 +870,12 @@
                     기본정보 수정
                 </button>
                 
-                <!-- 로그인 버튼 -->
-                <button class="header-btn" id="googleLoginBtn" style="display: inline-flex; align-items: center; justify-content: center;" data-i18n="login.google">
-                    Google 로그인
-                </button>
+                <!-- 로그인 전 -->
+                <div id="loginButtons" style="display: none;">
+                    <button class="header-btn" id="googleLoginBtn" data-i18n="login.google">
+                        Google 로그인
+                    </button>
+                </div>
                 
                 <!-- 로그인 후 -->
                 <div id="userGreeting" class="user-greeting" style="display: none;">
@@ -1089,7 +1091,7 @@
 
     <!-- Supabase 라이브러리 -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-client.js?v=101"></script>
+    <script src="js/supabase-client.js?v=7"></script>
     
     <script src="js/ui-components.js"></script>
     
@@ -1355,7 +1357,7 @@
                     const userName = profileData.name || session.user.email.split('@')[0];
                     document.getElementById('userGreetingName').textContent = `${userName}님`;
                     document.getElementById('userGreeting').style.display = 'flex';
-                    document.getElementById('googleLoginBtn').style.display = 'none';
+                    document.getElementById('loginButtons').style.display = 'none';
                     
                     // 로그인 프롬프트 숨기기
                     const loginPrompt = document.getElementById('loginPrompt');
@@ -1415,8 +1417,8 @@
                     }
                 }
             } else {
-                // 로그아웃 상태 - 로그인 버튼 표시
-                document.getElementById('googleLoginBtn').style.display = 'inline-flex';
+                // 로그아웃 상태
+                document.getElementById('loginButtons').style.display = 'flex';
                 document.getElementById('userGreeting').style.display = 'none';
             }
         }
