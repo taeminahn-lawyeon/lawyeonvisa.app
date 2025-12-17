@@ -83,6 +83,8 @@
             transition: all 0.3s ease;
             font-size: 14px;
             height: 42px;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(49, 130, 246, 0.3);
         }
 
         .header-btn:hover {
@@ -630,6 +632,24 @@
             
             .header p {
                 font-size: 13px;
+            }
+            
+            /* 모바일 버튼 터치 개선 */
+            .header-btn {
+                padding: 12px 24px;
+                font-size: 15px;
+                height: 48px;
+                min-width: 120px;
+            }
+            
+            #loginButtons {
+                width: 100%;
+            }
+            
+            #loginButtons .header-btn {
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
             }
 
             .container {
