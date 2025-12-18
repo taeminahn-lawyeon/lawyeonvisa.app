@@ -1095,7 +1095,7 @@
 
     <!-- Supabase 라이브러리 -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-client.js?v=20251217002"></script>
+    <script src="js/supabase-client.js?v=20251218001"></script>
     
     <script src="js/ui-components.js?v=20251217002" onerror="console.warn('ui-components.js 로드 실패 - 계속 진행')"></script>
     
@@ -1104,6 +1104,31 @@
     <script src="js/i18n.js"></script>
     
     <script>
+        // 🚨 OAuth 콜백 즉시 리디렉션 (최우선 실행)
+        (async function() {
+            // URL에 OAuth 파라미터가 있는지 확인
+            const urlParams = new URLSearchParams(window.location.search);
+            const hasOAuthCallback = urlParams.has('code') || window.location.hash.includes('access_token');
+            
+            if (hasOAuthCallback) {
+                console.log('🔄 OAuth 콜백 감지 - 대학 코드 확인 중...');
+                
+                // localStorage에서 대학 코드 확인
+                const universityCode = localStorage.getItem('universityCode');
+                console.log('🎓 대학 코드:', universityCode);
+                
+                if (universityCode === 'jnu') {
+                    console.log('➡️ 전남대 학생 - visa-login-jnu.html로 즉시 리디렉션');
+                    window.location.replace('visa-login-jnu.html' + window.location.search + window.location.hash);
+                    return;
+                } else if (universityCode === 'korea') {
+                    console.log('➡️ 한국대 학생 - visa-login-korea.html로 즉시 리디렉션');
+                    window.location.replace('visa-login-korea.html' + window.location.search + window.location.hash);
+                    return;
+                }
+            }
+        })();
+        
         // 페이지 로드 시 초기화
         window.addEventListener('DOMContentLoaded', function() {
             // 🌍 다국어 시스템 초기화 (최우선)
@@ -1335,6 +1360,21 @@
             
             if (session && session.user) {
                 console.log('✅ 세션 존재:', session.user.email);
+                
+                // 🚨 OAuth 콜백 후 대학 코드 확인 (즉시 리디렉션)
+                const universityCode = localStorage.getItem('universityCode');
+                console.log('🎓 universityCode:', universityCode);
+                
+                // 대학 학생이 OAuth 콜백으로 index.html에 왔다면 즉시 로그인 페이지로 리디렉션
+                if (universityCode === 'jnu') {
+                    console.log('🔄 전남대 OAuth 콜백 감지 - visa-login-jnu.html로 즉시 리디렉션');
+                    window.location.replace('visa-login-jnu.html');
+                    return;
+                } else if (universityCode === 'korea') {
+                    console.log('🔄 한국대 OAuth 콜백 감지 - visa-login-korea.html로 즉시 리디렉션');
+                    window.location.replace('visa-login-korea.html');
+                    return;
+                }
                 
                 // ✅ 프로필 생성 완료 플래그 확인
                 const profileCreatedFlag = sessionStorage.getItem('profileCreated');
