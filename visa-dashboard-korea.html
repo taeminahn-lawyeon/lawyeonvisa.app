@@ -1145,7 +1145,7 @@
                 const cachedProfile = sessionStorage.getItem('userProfileCache');
                 if (cachedProfile) {
                     console.log('✅ 캐시된 프로필 사용');
-                    window.location.href = 'visa-service-apply-jnu.html?service=emergency-legal';
+                    window.location.href = 'service-apply-general.html?service=emergency-legal&org=korea';
                     return;
                 }
                 
@@ -1154,7 +1154,7 @@
                 
                 if (!profileResult.success || !profileResult.data) {
                     alert('프로필 설정이 필요합니다.');
-                    window.location.href = 'visa-profile-setup-jnu.html';
+                    window.location.href = 'profile-setup.html';
                     return;
                 }
                 
@@ -1179,7 +1179,7 @@
                 const cachedProfile = sessionStorage.getItem('userProfileCache');
                 if (cachedProfile) {
                     console.log('✅ 캐시된 프로필 사용');
-                    window.location.href = 'visa-service-apply-jnu.html?service=visa-prediagnosis';
+                    window.location.href = 'service-apply-general.html?service=visa-prediagnosis&org=korea';
                     return;
                 }
                 
@@ -1188,12 +1188,12 @@
                 
                 if (!profileResult.success || !profileResult.data) {
                     alert('프로필 설정이 필요합니다.');
-                    window.location.href = 'visa-profile-setup-jnu.html';
+                    window.location.href = 'profile-setup.html';
                     return;
                 }
                 
                 // 비자 사전진단 서비스로 이동
-                window.location.href = 'visa-service-apply-jnu.html?service=visa-prediagnosis';
+                window.location.href = 'service-apply-general.html?service=visa-prediagnosis&org=korea';
             });
         });
 
@@ -1363,7 +1363,7 @@
                         sessionStorage.removeItem('skipProfileSetup');
                     } else {
                         console.log('프로필 없음 - visa-profile-setup-jnu.html로 이동');
-                        window.location.href = 'visa-profile-setup-jnu.html';
+                        window.location.href = 'profile-setup.html';
                     }
                 }
             } else {
@@ -1513,11 +1513,11 @@
                     return;
                 }
 
-                // JNU 전용 대시보드이므로 바로 JNU 쓰레드로 이동
-                window.location.href = `visa-thread-jnu.html?id=${threadId}`;
+                // 한국대학교 전용 대시보드이므로 일반 쓰레드로 이동
+                window.location.href = `visa-thread-general.html?id=${threadId}`;
             } catch (error) {
                 console.error('쓰레드 열기 오류:', error);
-                window.location.href = `visa-thread-jnu.html?id=${threadId}`;
+                window.location.href = `visa-thread-general.html?id=${threadId}`;
             }
         }
 
