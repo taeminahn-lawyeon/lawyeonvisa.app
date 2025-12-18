@@ -734,7 +734,7 @@
             <!-- 신청 버튼 -->
             <button class="btn-primary" onclick="applyForConsulting()">
                 <i class="fas fa-paper-plane"></i>
-                견적 상담 신청하기
+                상담 신청하기
             </button>
         </div>
     </div>
@@ -942,7 +942,7 @@
             // 사전진단 안내 문구 변경
             const noticeTextElement = document.getElementById('service-notice-text');
             if (noticeTextElement) {
-                noticeTextElement.textContent = '사전 진단을 위한 쓰레드에서 필요 서류와 진단 결과를 안내 드립니다.';
+                noticeTextElement.textContent = '쓰레드에서 필요 서류와 진단 결과를 안내 드립니다.';
             }
             
             document.getElementById('payment-content').style.display = 'block';
@@ -1082,7 +1082,7 @@
                     throw new Error('쓰레드 생성 실패');
                 }
                 
-                alert('견적 상담 신청이 완료되었습니다!\n\n센터 담당자가 쓰레드에서 곧 연락드릴게요!');
+                alert('상담 신청이 완료되었습니다!\n\n센터 담당자가 쓰레드에서 곧 연락드릴게요!');
                 window.location.href = `visa-thread-general.html?id=${threadResult.data.id}`;
             } catch (error) {
                 console.error('상담 신청 오류:', error);
