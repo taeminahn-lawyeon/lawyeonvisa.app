@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>상담 쓰레드 - 법무법인 로연 출입국이민지원센터 전남대학교 전용 페이지</title>
+    <title>상담 쓰레드 - 법무법인 로연 | 전남대학교</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/ui-components.css">
@@ -42,58 +42,6 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
-        }
-        
-        /* 언어 선택 버튼 */
-        .language-selector {
-            position: relative;
-        }
-        
-        #language-selector-btn:hover {
-            background: rgba(255,255,255,0.3) !important;
-            border-color: rgba(255,255,255,0.8) !important;
-        }
-        
-        #language-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            margin-top: 8px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            min-width: 160px;
-            z-index: 1000;
-            padding: 8px;
-        }
-        
-        #language-dropdown.hidden {
-            display: none;
-        }
-        
-        .language-option {
-            width: 100%;
-            padding: 10px 12px;
-            border: none;
-            background: white;
-            cursor: pointer;
-            border-radius: 8px;
-            text-align: left;
-            transition: all 0.2s ease;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 500;
-            color: #374151;
-        }
-        
-        .language-option:hover {
-            background: #f3f4f6;
-        }
-        
-        .language-option .checkmark {
-            color: #00A651;
-            font-weight: bold;
         }
 
         .back-btn {
@@ -146,7 +94,7 @@
 
         .status-badge.processing {
             background: #dbeafe;
-            color: #005A25;
+            color: #1e40af;
         }
 
         .status-badge.completed {
@@ -349,8 +297,8 @@
 
         .input-btn:hover {
             background: #f3f4f6;
-            border-color: #00A651;
-            color: #00A651;
+            border-color: #3182F6;
+            color: #3182F6;
         }
 
         .message-input-wrapper {
@@ -372,7 +320,7 @@
 
         .message-input:focus {
             outline: none;
-            border-color: #00A651;
+            border-color: #3182F6;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
@@ -455,7 +403,7 @@
         }
 
         .document-item:hover {
-            border-color: #00A651;
+            border-color: #3182F6;
             background: #f0f4ff;
         }
 
@@ -703,28 +651,16 @@
             <div class="thread-header">
                 <div class="header-top">
                     <button class="back-btn" onclick="goBack()">
-                        <i class="fas fa-arrow-left"></i> <span data-i18n="thread.back">돌아가기</span>
+                        <i class="fas fa-arrow-left"></i> 돌아가기
                     </button>
-                    
-                    <!-- 언어 선택 버튼 -->
-                    <div class="language-selector" style="margin-left: auto; margin-right: 10px;">
-                        <button id="language-selector-btn" title="언어 선택 / Select Language" type="button" style="background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.5); color: white; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; transition: all 0.3s ease; display: flex; align-items: center; gap: 6px; height: 36px;">
-                            <span class="language-btn-content">
-                                <span class="language-name">한국어</span>
-                            </span>
-                            <span style="margin-left: 4px; font-size: 11px;">▼</span>
-                        </button>
-                        <div id="language-dropdown" class="hidden" style="position: absolute; top: 100%; right: 0; margin-top: 8px; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); min-width: 160px; z-index: 1000;"></div>
-                    </div>
-                    
-                    <div class="status-badge processing" id="statusBadge" data-i18n="thread.status.processing">진행중</div>
+                    <div class="status-badge processing" id="statusBadge">진행중</div>
                 </div>
                 <div class="thread-info">
                     <div>
                         <div class="service-title" id="serviceTitle">로딩 중...</div>
                         <div class="service-meta">
                             <span><i class="fas fa-calendar"></i> <span id="threadDate">-</span></span>
-                            <span><i class="fas fa-building"></i> <span data-i18n="thread.centerStaff">센터 담당자</span></span>
+                            <span><i class="fas fa-building"></i> 센터 담당자</span>
                         </div>
                     </div>
                 </div>
@@ -733,7 +669,7 @@
             <div class="messages-area" id="messagesArea">
                 <div class="system-message">
                     <div class="system-message-content">
-                        <i class="fas fa-check-circle"></i> <span data-i18n="thread.systemMessage.started">상담이 시작되었습니다</span>
+                        <i class="fas fa-check-circle"></i> 상담이 시작되었습니다
                     </div>
                 </div>
 
@@ -754,7 +690,6 @@
                         <textarea 
                             class="message-input" 
                             id="messageInput" 
-                            data-i18n-placeholder="thread.input.placeholder"
                             placeholder="메시지를 입력하세요 (Shift+Enter: 줄바꿈, Enter: 전송)"
                             rows="1"
                             style="width: 100%; min-height: 42px; max-height: 120px; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 15px; font-family: 'Noto Sans KR', sans-serif; resize: none;"
@@ -770,40 +705,40 @@
 
         <div class="thread-sidebar">
             <div class="sidebar-section">
-                <h3><i class="fas fa-info-circle"></i> <span data-i18n="thread.info.title">신청 정보</span></h3>
+                <h3><i class="fas fa-info-circle"></i> 신청 정보</h3>
                 <div class="info-item">
-                    <div class="info-label" data-i18n="thread.info.applicationNumber">신청 번호</div>
+                    <div class="info-label">신청 번호</div>
                     <div class="info-value" id="applicationId">-</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label" data-i18n="thread.info.applicationDate">신청일</div>
+                    <div class="info-label">신청일</div>
                     <div class="info-value" id="applicationDate">-</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label" data-i18n="thread.info.paymentAmount">결제 금액</div>
+                    <div class="info-label">결제 금액</div>
                     <div class="info-value" id="amount">-</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label" data-i18n="thread.info.staff">센터 담당자</div>
-                    <div class="info-value" data-i18n="thread.info.lawFirm">법무법인 로연</div>
+                    <div class="info-label">센터 담당자</div>
+                    <div class="info-value">법무법인 로연</div>
                 </div>
             </div>
 
             <div class="sidebar-section">
-                <h3><i class="fas fa-file-alt"></i> <span data-i18n="thread.documents.title">첨부 서류</span></h3>
+                <h3><i class="fas fa-file-alt"></i> 첨부 서류</h3>
                 <div id="documentsList">
-                    <p style="color: #6B7280; font-size: 14px; padding: 12px 0;" data-i18n="thread.documents.empty">아직 첨부된 서류가 없습니다.</p>
+                    <p style="color: #6B7280; font-size: 14px; padding: 12px 0;">아직 첨부된 서류가 없습니다.</p>
                 </div>
             </div>
 
             <div class="sidebar-section">
-                <h3><i class="fas fa-clock"></i> <span data-i18n="thread.progress.title">진행 현황</span></h3>
+                <h3><i class="fas fa-clock"></i> 진행 현황</h3>
                 <div class="info-item">
-                    <div class="info-label" data-i18n="thread.progress.currentStatus">현재 단계</div>
-                    <div class="info-value" id="currentStatus" data-i18n="thread.progress.status.received">접수 완료</div>
+                    <div class="info-label">현재 단계</div>
+                    <div class="info-value" id="currentStatus">접수 완료</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label" data-i18n="thread.progress.expectedDate">예상 완료일</div>
+                    <div class="info-label">예상 완료일</div>
                     <div class="info-value" id="expectedDate">-</div>
                 </div>
             </div>
@@ -812,34 +747,67 @@
 
     <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload(event)">
 
-    <script src="js/ui-components.js"></script>
+    <script src="js/ui-components.js?v=20251218"></script>
     <script>
+        // Toast 알림 함수 (ui-components.js 로드 실패 대비)
+        function showToast(message, type = 'info', duration = 3000) {
+            // 간단한 alert로 대체 (ui-components.js 로드 실패 시)
+            if (typeof ToastNotification === 'undefined') {
+                console.log(`[Toast ${type}] ${message}`);
+                return;
+            }
+            
+            // 실제 Toast 표시
+            const toast = new ToastNotification();
+            toast.show(message, type, duration);
+        }
+        
         // 페이지 로드
         let threadId = null;
         let currentUser = null;
 
         window.addEventListener('DOMContentLoaded', async function() {
-            // i18n 초기화
-            if (window.i18n) {
-                window.i18n.init();
+            console.log('🔍 [쓰레드] 페이지 로드 시작');
+            
+            // Supabase 클라이언트 확인
+            if (typeof supabaseClient === 'undefined') {
+                console.error('❌ [쓰레드] supabaseClient가 정의되지 않았습니다');
+                alert('시스템 초기화 중 오류가 발생했습니다.\n\n페이지를 새로고침해주세요.');
+                return;
             }
+            console.log('✅ [쓰레드] supabaseClient 확인됨');
             
             const urlParams = new URLSearchParams(window.location.search);
             threadId = urlParams.get('thread_id') || urlParams.get('id');
+            console.log('🔍 [쓰레드] URL 파라미터:', { thread_id: threadId });
 
             if (!threadId) {
-                alert('쓰레드 ID가 없습니다.');
-                window.location.href = 'visa-dashboard-jnu.html';
+                console.error('❌ [쓰레드] 쓰레드 ID가 없습니다');
+                alert('쓰레드 ID가 없습니다.\n\n메인 페이지로 이동합니다.');
+                window.location.href = 'index.html';
                 return;
             }
 
             // Supabase 세션 확인
-            const session = await checkSession();
-            if (!session || !session.user) {
-                alert('로그인이 필요합니다.');
-                window.location.href = 'visa-dashboard-jnu.html';
+            console.log('🔍 [쓰레드] 세션 확인 중...');
+            let session;
+            try {
+                session = await checkSession();
+                console.log('✅ [쓰레드] 세션 확인 완료:', session ? '로그인됨' : '로그아웃됨');
+            } catch (error) {
+                console.error('❌ [쓰레드] 세션 확인 실패:', error);
+                alert('로그인 확인 중 오류가 발생했습니다.\n\n다시 로그인해주세요.');
+                window.location.href = 'index.html';
                 return;
             }
+            
+            if (!session || !session.user) {
+                console.error('❌ [쓰레드] 세션 없음');
+                alert('로그인이 필요합니다.\n\n로그인 후 다시 시도해주세요.');
+                window.location.href = 'index.html';
+                return;
+            }
+            console.log('✅ [쓰레드] 사용자 이메일:', session.user.email);
             
             // 프로필 정보 가져오기
             const profileResult = await getUserProfile(session.user.id);
@@ -870,17 +838,25 @@
 
         // 쓰레드 정보 로드
         async function loadThread() {
-            if (!threadId) return;
+            if (!threadId) {
+                console.error('❌ [loadThread] threadId가 없습니다');
+                return;
+            }
+            
+            console.log('🔍 [loadThread] 쓰레드 로드 시작, ID:', threadId);
             
             try {
                 // 현재 사용자 프로필 확인 (관리자 권한 체크)
+                console.log('🔍 [loadThread] 프로필 확인 중...');
                 const profileResult = await getUserProfile(currentUser.id);
                 const isAdmin = profileResult.success && 
                                profileResult.data && 
                                (profileResult.data.role === 'super_admin' || profileResult.data.role === 'partner_admin');
+                console.log('✅ [loadThread] 관리자 권한:', isAdmin);
                 
                 // Supabase에서 쓰레드 정보 가져오기
-                let query = supabase
+                console.log('🔍 [loadThread] Supabase에서 쓰레드 조회 중...');
+                let query = supabaseClient
                     .from('threads')
                     .select(`
                         *,
@@ -897,18 +873,49 @@
                     query = query
                         .eq('user_id', currentUser.id)
                         .neq('status', 'archived'); // 고객은 보관된 쓰레드 볼 수 없음
+                    console.log('🔍 [loadThread] 일반 사용자 필터 적용');
                 }
                 
                 const { data: thread, error } = await query.single();
                 
                 if (error || !thread) {
-                    console.error('쓰레드 조회 오류:', error);
-                    alert('쓰레드를 찾을 수 없습니다.');
-                    window.location.href = isAdmin ? 'admin-dashboard.html' : 'visa-dashboard-jnu.html';
+                    console.error('❌ [loadThread] 쓰레드 조회 오류:', error);
+                    console.error('❌ [loadThread] 에러 상세:', {
+                        code: error?.code,
+                        message: error?.message,
+                        details: error?.details,
+                        hint: error?.hint
+                    });
+                    console.error('❌ [loadThread] 쿼리 정보:', {
+                        threadId: threadId,
+                        currentUserId: currentUser.id,
+                        isAdmin: isAdmin
+                    });
+                    
+                    let errorMessage = '쓰레드 정보를 불러올 수 없습니다.\n\n';
+                    let redirectUrl = 'index.html';
+                    
+                    if (error?.code === 'PGRST116') {
+                        errorMessage += '이유: 쓰레드를 찾을 수 없습니다.\n';
+                        errorMessage += '• 쓰레드가 삭제되었거나\n';
+                        errorMessage += '• 잘못된 쓰레드 ID일 수 있습니다.\n\n';
+                        errorMessage += '신청 내역 페이지로 이동합니다.';
+                    } else if (error?.message) {
+                        errorMessage += '오류 내용: ' + error.message + '\n\n';
+                        errorMessage += '신청 내역 페이지로 이동합니다.';
+                    } else {
+                        errorMessage += '알 수 없는 오류가 발생했습니다.\n\n';
+                        errorMessage += '신청 내역 페이지로 이동합니다.';
+                    }
+                    
+                    alert(errorMessage);
+                    
+                    // 일반 사용자용 index.html로 이동
+                    window.location.href = redirectUrl;
                     return;
                 }
                 
-                console.log('✅ 쓰레드 정보:', thread);
+                console.log('✅ [loadThread] 쓰레드 조회 성공:', thread);
                 
                 // UI 업데이트
                 document.getElementById('serviceTitle').textContent = thread.service_name || '서비스명 없음';
@@ -953,7 +960,7 @@
             } catch (error) {
                 console.error('❌ 쓰레드 로드 실패:', error);
                 alert('쓰레드 정보를 불러올 수 없습니다.');
-                window.location.href = 'visa-dashboard-jnu.html';
+                window.location.href = 'index.html';
             }
         }
 
@@ -1038,8 +1045,23 @@
                 return;
             }
             
+            // 현재 사용자가 전남대 관리자인지 확인
+            const session = await checkSession();
+            if (session && session.user) {
+                const { data: adminData } = await supabaseClient
+                    .from('admins')
+                    .select('role')
+                    .eq('email', session.user.email)
+                    .maybeSingle();
+                
+                if (adminData && adminData.role === 'partner_jnu') {
+                    window.location.href = 'partner-dashboard-jnu.html';
+                    return;
+                }
+            }
+            
             // 그렇지 않으면 일반 사용자 페이지로 이동
-            window.location.href = 'visa-dashboard-jnu.html';
+            window.location.href = 'index.html';
         }
 
         // 메시지 추가
@@ -1227,7 +1249,7 @@
     
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-client.js?v=8"></script>
+    <script src="js/supabase-client.js?v=20251218001"></script>
     
     <!-- 다국어 시스템 -->
     <script src="js/translations.js"></script>
