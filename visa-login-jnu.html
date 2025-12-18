@@ -568,6 +568,11 @@
                 // 2초 후 Google 로그인
                 setTimeout(async () => {
                     try {
+                        // Google 로그인 전에 다시 한 번 대학 코드 저장
+                        localStorage.setItem('universityCode', 'jnu');
+                        localStorage.setItem('universityName', '전남대학교');
+                        console.log('🎓 전남대 학생 로그인 - universityCode 저장:', localStorage.getItem('universityCode'));
+                        
                         const result = await signInWithGoogle();
                         
                         if (result.success) {
