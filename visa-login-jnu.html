@@ -733,6 +733,10 @@
                         if (profileData.organization === 'jnu') {
                             console.log('✅ JNU 학생 계정 - visa-dashboard-jnu.html로 이동');
                             window.location.href = 'visa-dashboard-jnu.html';
+                        } else if (profileData.organization === null || profileData.organization === '') {
+                            // organization이 없는 일반 계정 - 로그인 화면 유지
+                            console.log('ℹ️ 일반 계정 (organization 없음) - 전남대 학번 등록 필요');
+                            await supabaseClient.auth.signOut();
                         } else {
                             console.log('⚠️ 다른 organization 계정 - 강제 로그아웃');
                             await supabaseClient.auth.signOut();
