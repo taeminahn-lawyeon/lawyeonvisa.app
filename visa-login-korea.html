@@ -469,12 +469,12 @@
     
     <script src="js/ui-components.js"></script>
     <script>
-        // 전남대학교 고정
-        const universityCode = 'jnu';
+        // 한국대학교 고정
+        const universityCode = 'korea';
         const currentUniversity = { 
-            name: '전남대학교', 
-            id: 'UNI_JNU',
-            code: 'jnu'
+            name: '한국대학교', 
+            id: 'UNI_KOREA',
+            code: 'korea'
         };
 
         // localStorage에 학교 정보 저장
@@ -520,7 +520,7 @@
             try {
                 // Supabase에서 학번 검증
                 const { data: student, error } = await supabase
-                    .from('jnu_students')
+                    .from('korea_students')
                     .select('*')
                     .eq('student_number', studentNumber)
                     .eq('status', 'active')
@@ -551,9 +551,9 @@
                 resultDiv.innerHTML = `<span style="color: #10B981;"><i class="fas fa-check-circle"></i> 학번 확인 완료: ${student.name || '학생'} (${student.department || '학과'})</span>`;
                 
                 // 학번을 sessionStorage에 저장 (프로필 생성 시 사용)
-                sessionStorage.setItem('jnuStudentNumber', studentNumber);
-                sessionStorage.setItem('jnuStudentName', student.name || '');
-                sessionStorage.setItem('jnuStudentDept', student.department || '');
+                sessionStorage.setItem('koreaStudentNumber', studentNumber);
+                sessionStorage.setItem('koreaStudentName', student.name || '');
+                sessionStorage.setItem('koreaStudentDept', student.department || '');
                 
                 showToast('학번이 확인되었습니다. Google 로그인을 진행합니다...', 'success', 2000);
                 
@@ -630,13 +630,13 @@
                 const userEmail = user.email;
                 console.log('✅ 관리자 로그인 성공:', userEmail);
                 
-                // admins 테이블에서 partner_jnu 권한 확인
+                // admins 테이블에서 partner_korea 권한 확인
                 console.log('🔍 admins 테이블 조회 시작:', userEmail);
                 const { data: adminData, error: adminError } = await supabase
                     .from('admins')
                     .select('*')
                     .eq('email', userEmail)
-                    .eq('role', 'partner_jnu')
+                    .eq('role', 'partner_korea')
                     .maybeSingle();
                 
                 console.log('📊 admins 테이블 조회 결과:', { adminData, adminError });
@@ -647,14 +647,14 @@
                     } else {
                         console.error('❌ admins 테이블 조회 오류:', adminError);
                     }
-                    await supabase.auth.signOut();
+                    await supabaseClient.auth.signOut();
                     showToast('담당자 권한이 없습니다. 관리자에게 문의하세요.', 'error');
                     return;
                 }
                 
                 if (!adminData) {
                     console.error('❌ 담당자 권한 없음 (data is null)');
-                    await supabase.auth.signOut();
+                    await supabaseClient.auth.signOut();
                     showToast('담당자 권한이 없습니다. 관리자에게 문의하세요.', 'error');
                     return;
                 }
@@ -662,7 +662,7 @@
                 console.log('✅ 담당자 권한 확인 완료:', adminData);
                 
                 // 즉시 이동 (토스트 메시지 제거)
-                window.location.href = 'partner-dashboard-jnu.html';
+                window.location.href = 'partner-dashboard-korea.html';
             } catch (error) {
                 console.error('❌ 로그인 중 예외 발생:', error);
                 console.error('❌ 에러 스택:', error.stack);
@@ -683,7 +683,7 @@
 
             try {
                 // Supabase 세션 확인
-                const { data: { session }, error } = await supabase.auth.getSession();
+                const { data: { session }, error } = await supabaseClient.auth.getSession();
                 
                 if (error) {
                     console.error('❌ 세션 확인 오류:', error);
@@ -693,18 +693,18 @@
                 if (session && session.user) {
                     console.log('✅ 이미 로그인된 사용자:', session.user.email);
                     
-                    // 먼저 admins 테이블에서 partner_jnu 권한 확인
+                    // 먼저 admins 테이블에서 partner_korea 권한 확인
                     const { data: adminData, error: adminError } = await supabase
                         .from('admins')
                         .select('*')
                         .eq('email', session.user.email)
-                        .eq('role', 'partner_jnu')
+                        .eq('role', 'partner_korea')
                         .maybeSingle();
                     
                     if (adminData) {
-                        // 담당자 계정 → partner-dashboard-jnu.html로 이동
-                        console.log('✅ 담당자 계정 확인 - partner-dashboard-jnu.html로 이동');
-                        window.location.href = 'partner-dashboard-jnu.html';
+                        // 담당자 계정 → partner-dashboard-korea.html로 이동
+                        console.log('✅ 담당자 계정 확인 - partner-dashboard-korea.html로 이동');
+                        window.location.href = 'partner-dashboard-korea.html';
                         return;
                     }
                     
@@ -716,14 +716,14 @@
                         .maybeSingle();
                     
                     if (profileData) {
-                        // organization='jnu'인 경우에만 자동 로그인
-                        if (profileData.organization === 'jnu') {
-                            console.log('✅ JNU 학생 계정 - visa-dashboard-jnu.html로 이동');
-                            window.location.href = 'visa-dashboard-jnu.html';
+                        // organization='korea'인 경우에만 자동 로그인
+                        if (profileData.organization === 'korea') {
+                            console.log('✅ 한국대학교 학생 계정 - visa-dashboard-korea.html로 이동');
+                            window.location.href = 'visa-dashboard-korea.html';
                         } else {
                             console.log('⚠️ 다른 organization 계정 - 강제 로그아웃');
-                            await supabase.auth.signOut();
-                            alert('전남대학교 학생 전용 페이지입니다.\n일반 계정은 로그아웃됩니다.');
+                            await supabaseClient.auth.signOut();
+                            alert('한국대학교 학생 전용 페이지입니다.\n일반 계정은 로그아웃됩니다.');
                             window.location.reload();
                         }
                     } else {
