@@ -1109,11 +1109,17 @@
                             
                             console.log('✅ 로그아웃 성공');
                             
-                            // localStorage 정리
+                            // sessionStorage와 localStorage 정리
+                            sessionStorage.clear();
                             localStorage.clear();
                             
-                            // 전남대 로그인 페이지로 이동
-                            window.location.href = 'visa-login-jnu.html';
+                            // 로그아웃 플래그 설정 (자동 로그인 방지)
+                            sessionStorage.setItem('justLoggedOut', 'true');
+                            
+                            // 세션 정리를 위해 짧은 지연 후 리디렉션
+                            setTimeout(() => {
+                                window.location.href = 'visa-login-jnu.html';
+                            }, 100);
                         } catch (error) {
                             console.error('❌ 로그아웃 실패:', error);
                             alert('로그아웃 실패: ' + error.message);
