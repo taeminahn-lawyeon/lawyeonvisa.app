@@ -706,25 +706,88 @@
                 if (session && session.user) {
                     console.log('✅ 이미 로그인된 사용자:', session.user.email);
                     
-                    // Google OAuth 콜백 후 프로필 업데이트 체크
+                    // Google OAuth 콜백 후 프로필 생성/업데이트 체크
                     const jnuStudentNumber = sessionStorage.getItem('jnuStudentNumber');
+                    const jnuStudentName = sessionStorage.getItem('jnuStudentName');
+                    const jnuStudentDept = sessionStorage.getItem('jnuStudentDept');
+                    
                     if (jnuStudentNumber) {
-                        console.log('🔄 전남대 학생 로그인 완료 - 프로필 업데이트 시작');
+                        console.log('🔄 전남대 학생 로그인 완료 - 프로필 생성/업데이트 시작');
+                        console.log('📋 학번:', jnuStudentNumber, '이름:', jnuStudentName, '학과:', jnuStudentDept);
                         
-                        // profiles 테이블 업데이트 (organization='jnu' 설정)
-                        const { error: updateError } = await supabaseClient
+                        // 먼저 프로필이 존재하는지 확인
+                        const { data: existingProfile, error: checkError } = await supabaseClient
                             .from('profiles')
+                            .select('*')
+                            .eq('id', session.user.id)
+                            .maybeSingle();
+                        
+                        console.log('🔍 기존 프로필 확인:', existingProfile);
+                        
+                        if (existingProfile) {
+                            // 프로필이 있으면 업데이트
+                            console.log('📝 기존 프로필 업데이트 중...');
+                            const { error: updateError } = await supabaseClient
+                                .from('profiles')
+                                .update({
+                                    organization: 'jnu',
+                                    student_number: jnuStudentNumber,
+                                    name: jnuStudentName || existingProfile.name,
+                                    department: jnuStudentDept || existingProfile.department,
+                                    updated_at: new Date().toISOString()
+                                })
+                                .eq('id', session.user.id);
+                            
+                            if (updateError) {
+                                console.error('❌ 프로필 업데이트 실패:', updateError);
+                                alert('프로필 업데이트에 실패했습니다. 다시 시도해주세요.');
+                                await supabaseClient.auth.signOut();
+                                window.location.reload();
+                                return;
+                            } else {
+                                console.log('✅ 프로필 업데이트 성공');
+                            }
+                        } else {
+                            // 프로필이 없으면 새로 생성
+                            console.log('✨ 새 프로필 생성 중...');
+                            const { error: insertError } = await supabaseClient
+                                .from('profiles')
+                                .insert({
+                                    id: session.user.id,
+                                    email: session.user.email,
+                                    organization: 'jnu',
+                                    student_number: jnuStudentNumber,
+                                    name: jnuStudentName || '',
+                                    department: jnuStudentDept || '',
+                                    created_at: new Date().toISOString(),
+                                    updated_at: new Date().toISOString()
+                                });
+                            
+                            if (insertError) {
+                                console.error('❌ 프로필 생성 실패:', insertError);
+                                alert('프로필 생성에 실패했습니다. 다시 시도해주세요.');
+                                await supabaseClient.auth.signOut();
+                                window.location.reload();
+                                return;
+                            } else {
+                                console.log('✅ 프로필 생성 성공');
+                            }
+                        }
+                        
+                        // jnu_students 테이블에 user_id 업데이트
+                        console.log('📝 jnu_students 테이블 업데이트 중...');
+                        const { error: studentUpdateError } = await supabaseClient
+                            .from('jnu_students')
                             .update({
-                                organization: 'jnu',
-                                student_number: jnuStudentNumber,
+                                user_id: session.user.id,
                                 updated_at: new Date().toISOString()
                             })
-                            .eq('id', session.user.id);
+                            .eq('student_number', jnuStudentNumber);
                         
-                        if (updateError) {
-                            console.error('❌ 프로필 업데이트 실패:', updateError);
+                        if (studentUpdateError) {
+                            console.error('❌ jnu_students 업데이트 실패:', studentUpdateError);
                         } else {
-                            console.log('✅ 프로필 업데이트 성공 - organization=jnu');
+                            console.log('✅ jnu_students 업데이트 성공');
                         }
                         
                         // sessionStorage 정리
@@ -766,13 +829,28 @@
                             console.log('✅ JNU 학생 계정 - visa-dashboard-jnu.html로 이동');
                             window.location.href = 'visa-dashboard-jnu.html';
                         } else if (profileData.organization === null || profileData.organization === '') {
-                            // organization이 없는 일반 계정 - 로그인 화면 유지
+                            // organization이 없는 일반 계정 - 안내 메시지 표시 후 로그아웃
                             console.log('ℹ️ 일반 계정 (organization 없음) - 전남대 학번 등록 필요');
-                            await supabaseClient.auth.signOut();
+                            
+                            // 사용자에게 알림
+                            const confirmUpdate = confirm(
+                                '전남대학교 학생 전용 페이지입니다.\n\n' +
+                                '전남대 학생이신 경우, 로그아웃 후 학번을 입력하여 다시 로그인해주세요.\n\n' +
+                                '일반 사용자는 메인 페이지(index.html)를 이용해주세요.\n\n' +
+                                '로그아웃하시겠습니까?'
+                            );
+                            
+                            if (confirmUpdate) {
+                                await supabaseClient.auth.signOut();
+                                window.location.reload();
+                            } else {
+                                // 취소하면 index.html로 이동
+                                window.location.href = 'index.html';
+                            }
                         } else {
                             console.log('⚠️ 다른 organization 계정 - 강제 로그아웃');
                             await supabaseClient.auth.signOut();
-                            alert('전남대학교 학생 전용 페이지입니다.\n일반 계정은 로그아웃됩니다.');
+                            alert('전남대학교 학생 전용 페이지입니다.\n' + profileData.organization + ' 계정은 해당 대학 페이지를 이용해주세요.');
                             window.location.reload();
                         }
                     } else {
