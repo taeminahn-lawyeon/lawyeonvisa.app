@@ -916,10 +916,13 @@
                 document.getElementById('applicationId').textContent = thread.order_id || thread.id;
                 document.getElementById('applicationDate').textContent = new Date(thread.created_at).toLocaleDateString('ko-KR');
                 
-                if (thread.amount > 0) {
+                // 비자 사전진단의 경우 55,000원으로 고정 표시
+                if (thread.service_name && thread.service_name.includes('비자 사전진단')) {
+                    document.getElementById('amount').textContent = '₩55,000';
+                } else if (thread.amount > 0) {
                     document.getElementById('amount').textContent = '₩' + thread.amount.toLocaleString();
                 } else {
-                    document.getElementById('amount').textContent = '견적 협의 중';
+                    document.getElementById('amount').textContent = '-';
                 }
                 
                 // 상태 업데이트
