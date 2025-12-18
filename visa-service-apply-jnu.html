@@ -1016,7 +1016,7 @@
                 // 🎯 데모 모드: 모든 사용자에 대해 결제 스킵하고 바로 성공 페이지로 이동
                 console.log('🎯 데모 모드 - 결제 스킵 (모든 사용자)');
                 const currentUrl = window.location.origin;
-                window.location.href = `${currentUrl}/payment-success.html?orderId=${orderInfo.orderId}&amount=${orderInfo.amount}&paymentKey=DEMO_${Date.now()}&v=${Date.now()}`;
+                window.location.href = `${currentUrl}/payment-success-jnu.html?orderId=${orderInfo.orderId}&amount=${orderInfo.amount}&paymentKey=DEMO_${Date.now()}&v=${Date.now()}`;
                 return;
                 
                 // 아래 코드는 실제 결제 연동 시 활성화
@@ -1031,7 +1031,7 @@
                         orderName: orderInfo.orderName,
                         customerName: orderInfo.customerName,
                         customerEmail: orderInfo.customerEmail,
-                        successUrl: currentUrl + '/payment-success.html',
+                        successUrl: currentUrl + '/payment-success-jnu.html',
                         failUrl: currentUrl + '/payment-fail.html',
                     });
                 } else if (selectedPaymentMethod === 'paypal') {
