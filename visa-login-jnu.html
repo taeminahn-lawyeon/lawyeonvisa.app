@@ -706,6 +706,38 @@
                 if (session && session.user) {
                     console.log('✅ 이미 로그인된 사용자:', session.user.email);
                     
+                    // Google OAuth 콜백 후 프로필 업데이트 체크
+                    const jnuStudentNumber = sessionStorage.getItem('jnuStudentNumber');
+                    if (jnuStudentNumber) {
+                        console.log('🔄 전남대 학생 로그인 완료 - 프로필 업데이트 시작');
+                        
+                        // profiles 테이블 업데이트 (organization='jnu' 설정)
+                        const { error: updateError } = await supabaseClient
+                            .from('profiles')
+                            .update({
+                                organization: 'jnu',
+                                student_number: jnuStudentNumber,
+                                updated_at: new Date().toISOString()
+                            })
+                            .eq('id', session.user.id);
+                        
+                        if (updateError) {
+                            console.error('❌ 프로필 업데이트 실패:', updateError);
+                        } else {
+                            console.log('✅ 프로필 업데이트 성공 - organization=jnu');
+                        }
+                        
+                        // sessionStorage 정리
+                        sessionStorage.removeItem('jnuStudentNumber');
+                        sessionStorage.removeItem('jnuStudentName');
+                        sessionStorage.removeItem('jnuStudentDept');
+                        
+                        // 대시보드로 리디렉션
+                        console.log('✅ visa-dashboard-jnu.html로 이동');
+                        window.location.href = 'visa-dashboard-jnu.html';
+                        return;
+                    }
+                    
                     // 먼저 admins 테이블에서 partner_jnu 권한 확인
                     const { data: adminData, error: adminError } = await supabaseClient
                         .from('admins')
