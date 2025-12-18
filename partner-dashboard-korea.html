@@ -51,17 +51,23 @@
             font-weight: 700;
             color: #191F28;
             letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            line-height: 1.2;
         }
 
-        .admin-title .jnu-badge {
-            display: inline-block;
+        .admin-title .korea-badge {
+            display: inline-flex;
+            align-items: center;
             background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
             color: white;
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 13px;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 14px;
             font-weight: 600;
-            margin-left: 10px;
+            margin-left: 12px;
+            line-height: 1;
+            vertical-align: middle;
         }
 
         .admin-title p {
@@ -394,7 +400,7 @@
     <div class="header">
         <div class="header-content">
             <div class="admin-title">
-                <h1>담당자 대시보드 <span class="jnu-badge">전남대학교</span></h1>
+                <h1>담당자 대시보드 <span class="korea-badge">한국대학교</span></h1>
                 <p>유학생 출입국이민 관리 시스템</p>
             </div>
             <div class="header-actions">
@@ -865,12 +871,12 @@
             if (confirm('로그아웃하시겠습니까?')) {
                 const result = await signOut();
                 if (result.success) {
-                    window.location.href = 'partner-login-jnu.html';
+                    window.location.href = 'admin-login.html';
                 }
             }
         }
 
-        console.log('✅ 전남대학교 담당자 대시보드 초기화 완료');
+        console.log('✅ 한국대학교 담당자 대시보드 초기화 완료');
     </script>
 </body>
 </html>
