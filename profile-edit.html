@@ -410,16 +410,8 @@
 
         // 이전 페이지로 돌아가기
         function goBack() {
-            const user = JSON.parse(localStorage.getItem('user') || '{}');
-            
-            // 제휴 회원이면 해당 대시보드로
-            if (user.affiliation === 'jnu') {
-                location.href = 'visa-dashboard-jnu.html';
-            } else if (user.affiliation === 'snu') {
-                location.href = 'visa-dashboard-snu.html';
-            } else {
-                location.href = 'index.html';
-            }
+            // 모든 사용자는 일반 페이지로 이동
+            location.href = 'index.html';
         }
     </script>
 </body>
