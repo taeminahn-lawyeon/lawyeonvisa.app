@@ -688,6 +688,14 @@
 
         // 페이지 로드 시 이미 로그인된 경우 체크 - 실제 Supabase Auth
         window.addEventListener('DOMContentLoaded', async function() {
+            // 로그아웃 직후에는 자동 체크 건너뛰기
+            const justLoggedOut = sessionStorage.getItem('justLoggedOut');
+            if (justLoggedOut === 'true') {
+                console.log('🚪 로그아웃 직후 - 자동 체크 건너뛰기');
+                sessionStorage.removeItem('justLoggedOut');
+                return;
+            }
+            
             // 수동 로그인 중이면 자동 체크 건너뛰기
             if (isManualLogin) {
                 console.log('⏭️ 수동 로그인 진행 중 - 자동 체크 건너뛰기');
