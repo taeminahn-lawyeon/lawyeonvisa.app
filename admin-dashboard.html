@@ -894,7 +894,7 @@
         async function loadDashboardData() {
             try {
                 // Supabase에서 모든 쓰레드 + 결제 정보 가져오기 (관리자는 전체 조회 가능)
-                const { data: threads, error } = await supabase
+                const { data: threads, error } = await supabaseClient
                     .from('threads')
                     .select(`
                         *,
@@ -1175,7 +1175,7 @@
             
             try {
                 // 🔥 Supabase에 실제 업데이트
-                const { data, error } = await supabase
+                const { data, error } = await supabaseClient
                     .from('threads')
                     .update({
                         status: newStatus,
@@ -1270,7 +1270,7 @@
         async function loadCustomersData() {
             try {
                 // Supabase에서 프로필 정보 가져오기
-                const { data: profiles, error } = await supabase
+                const { data: profiles, error } = await supabaseClient
                     .from('profiles')
                     .select('*')
                     .order('created_at', { ascending: false });
