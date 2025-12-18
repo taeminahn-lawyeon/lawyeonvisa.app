@@ -32,7 +32,7 @@
 
         /* 헤더 */
         .header {
-            background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
+            background: linear-gradient(135deg, #007A33 0%, #005A25 100%);
             padding: 20px;
             border-radius: 16px 16px 0 0;
             text-align: center;
@@ -322,7 +322,7 @@
                 const amount = urlParams.get('amount');
 
                 // Supabase에서 결제 정보 조회
-                const { data: paymentData, error: paymentError } = await supabase
+                const { data: paymentData, error: paymentError } = await supabaseClient
                     .from('payments')
                     .select('*')
                     .eq('order_id', orderId)
@@ -335,7 +335,7 @@
                 }
 
                 // 결제 상태 업데이트
-                const { error: updateError } = await supabase
+                const { error: updateError } = await supabaseClient
                     .from('payments')
                     .update({
                         status: 'completed',
