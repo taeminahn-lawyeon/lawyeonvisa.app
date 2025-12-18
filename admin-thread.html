@@ -991,19 +991,37 @@
                         .from('profiles')
                         .select('name, email, phone, nationality, visa_type, preferred_messenger, messenger_id')
                         .eq('id', thread.user_id)
-                        .single();
+                        .maybeSingle();
                     
                     console.log('✅ Profile 쿼리 결과:', { profile, profileError });
                     
-                    if (!profileError) {
+                    if (profile) {
                         customerData = profile;
+                        console.log('✅ 고객 데이터 설정 완료:', customerData);
                     } else {
-                        console.warn('⚠️ 프로필 조회 실패:', profileError);
-                        customerData = null;
+                        console.warn('⚠️ 프로필을 찾을 수 없음 (user_id:', thread.user_id, ')');
+                        // 프로필이 없어도 쓰레드는 표시 (기본 정보로 대체)
+                        customerData = {
+                            name: '정보 없음',
+                            email: thread.user_email || '-',
+                            phone: '-',
+                            nationality: '-',
+                            visa_type: '-'
+                        };
+                    }
+                    
+                    if (profileError) {
+                        console.error('❌ 프로필 조회 에러:', profileError);
                     }
                 } else {
                     console.warn('⚠️ Thread에 user_id가 없습니다.');
-                    customerData = null;
+                    customerData = {
+                        name: '정보 없음',
+                        email: '-',
+                        phone: '-',
+                        nationality: '-',
+                        visa_type: '-'
+                    };
                 }
                 
                 console.log('📊 Thread Data:', threadData);
@@ -1021,72 +1039,91 @@
 
         // UI 업데이트
         function updateThreadUI() {
-            // 헤더
-            document.getElementById('threadTitle').textContent = threadData.service_name || '상담 쓰레드';
-            document.getElementById('threadId').textContent = `#${threadData.order_id || threadData.id.substring(0, 8)}`;
-            document.getElementById('threadDate').textContent = new Date(threadData.created_at).toLocaleDateString('ko-KR');
+            try {
+                console.log('🎨 UI 업데이트 시작');
+                console.log('📊 threadData:', threadData);
+                console.log('👤 customerData:', customerData);
+                
+                // 헤더
+                document.getElementById('threadTitle').textContent = threadData.service_name || '상담 쓰레드';
+                document.getElementById('threadId').textContent = `#${threadData.order_id || threadData.id.substring(0, 8)}`;
+                document.getElementById('threadDate').textContent = new Date(threadData.created_at).toLocaleDateString('ko-KR');
+                console.log('✅ 헤더 업데이트 완료');
 
-            // 고객 정보
-            document.getElementById('customerName').textContent = customerData?.name || '알 수 없음';
-            document.getElementById('customerEmail').textContent = customerData?.email || '-';
-            document.getElementById('customerEmail').href = `mailto:${customerData?.email}`;
-            document.getElementById('customerPhone').textContent = customerData?.phone || '-';
-            document.getElementById('customerPhone').href = `tel:${customerData?.phone}`;
-            document.getElementById('customerNationality').textContent = customerData?.nationality || '-';
-            document.getElementById('customerVisa').textContent = customerData?.visa_type || '-';
+                // 고객 정보
+                document.getElementById('customerName').textContent = customerData?.name || '알 수 없음';
+                document.getElementById('customerEmail').textContent = customerData?.email || '-';
+                document.getElementById('customerEmail').href = `mailto:${customerData?.email || ''}`;
+                document.getElementById('customerPhone').textContent = customerData?.phone || '-';
+                document.getElementById('customerPhone').href = `tel:${customerData?.phone || ''}`;
+                document.getElementById('customerNationality').textContent = customerData?.nationality || '-';
+                document.getElementById('customerVisa').textContent = customerData?.visa_type || '-';
+                console.log('✅ 고객 정보 업데이트 완료');
 
-            // 쓰레드 정보
-            document.getElementById('serviceName').textContent = threadData.service_name || '-';
-            document.getElementById('orderId').textContent = threadData.order_id || '-';
-            document.getElementById('threadStatus').value = threadData.status || 'payment';
-            document.getElementById('threadPriority').value = threadData.priority || 'normal';
+                // 쓰레드 정보
+                document.getElementById('serviceName').textContent = threadData.service_name || '-';
+                document.getElementById('orderId').textContent = threadData.order_id || '-';
+                document.getElementById('threadStatus').value = threadData.status || 'payment';
+                document.getElementById('threadPriority').value = threadData.priority || 'normal';
+                console.log('✅ 쓰레드 정보 업데이트 완료');
 
-            // 메신저 정보
-            const messengerNames = {
-                'whatsapp': 'WhatsApp',
-                'wechat': 'WeChat',
-                'telegram': 'Telegram',
-                'kakaotalk': 'KakaoTalk',
-                'line': 'LINE',
-                'zalo': 'Zalo'
-            };
-            document.getElementById('preferredMessenger').textContent = 
-                messengerNames[customerData?.preferred_messenger] || '없음';
+                // 메신저 정보
+                const messengerNames = {
+                    'whatsapp': 'WhatsApp',
+                    'wechat': 'WeChat',
+                    'telegram': 'Telegram',
+                    'kakaotalk': 'KakaoTalk',
+                    'line': 'LINE',
+                    'zalo': 'Zalo'
+                };
+                document.getElementById('preferredMessenger').textContent = 
+                    messengerNames[customerData?.preferred_messenger] || '없음';
 
-            // 선호 메신저 강조
-            if (customerData?.preferred_messenger) {
-                const messengerButtons = document.querySelectorAll('.messenger-btn');
-                messengerButtons.forEach(btn => {
-                    const messengerType = btn.getAttribute('onclick').match(/'(.+)'/)[1];
-                    if (messengerType === customerData.preferred_messenger) {
-                        btn.classList.add('active');
-                    }
-                });
-            }
+                // 선호 메신저 강조
+                if (customerData?.preferred_messenger) {
+                    const messengerButtons = document.querySelectorAll('.messenger-btn');
+                    messengerButtons.forEach(btn => {
+                        const messengerType = btn.getAttribute('onclick')?.match(/'(.+)'/)?.[1];
+                        if (messengerType === customerData.preferred_messenger) {
+                            btn.classList.add('active');
+                        }
+                    });
+                }
+                console.log('✅ 메신저 정보 업데이트 완료');
 
-            // 출입국 정보
-            if (threadData.immigration_office) {
-                document.getElementById('immigrationOffice').value = threadData.immigration_office;
-            }
-            if (threadData.submission_method) {
-                document.getElementById('submissionMethod').value = threadData.submission_method;
-            }
-            if (threadData.submission_deadline) {
-                document.getElementById('submissionDeadline').value = threadData.submission_deadline;
-            }
+                // 출입국 정보
+                if (threadData.immigration_office) {
+                    document.getElementById('immigrationOffice').value = threadData.immigration_office;
+                }
+                if (threadData.submission_method) {
+                    document.getElementById('submissionMethod').value = threadData.submission_method;
+                }
+                if (threadData.submission_deadline) {
+                    document.getElementById('submissionDeadline').value = threadData.submission_deadline;
+                }
+                console.log('✅ 출입국 정보 업데이트 완료');
 
-            // 금액 정보
-            const totalAmount = threadData.amount || 0;
-            const governmentFee = threadData.government_fee || 0;
-            const netRevenue = totalAmount - governmentFee;
+                // 금액 정보
+                const totalAmount = threadData.amount || 0;
+                const governmentFee = threadData.government_fee || 0;
+                const netRevenue = totalAmount - governmentFee;
 
-            document.getElementById('totalAmount').textContent = '₩' + totalAmount.toLocaleString();
-            document.getElementById('governmentFee').textContent = '₩' + governmentFee.toLocaleString();
-            document.getElementById('netRevenue').textContent = '₩' + netRevenue.toLocaleString();
+                document.getElementById('totalAmount').textContent = '₩' + totalAmount.toLocaleString();
+                document.getElementById('governmentFee').textContent = '₩' + governmentFee.toLocaleString();
+                document.getElementById('netRevenue').textContent = '₩' + netRevenue.toLocaleString();
+                console.log('✅ 금액 정보 업데이트 완료');
 
-            // 내부 메모
-            if (threadData.admin_notes) {
-                document.getElementById('adminNotes').value = threadData.admin_notes;
+                // 내부 메모
+                if (threadData.admin_notes) {
+                    document.getElementById('adminNotes').value = threadData.admin_notes;
+                }
+                
+                console.log('✅ UI 업데이트 전체 완료!');
+                
+            } catch (error) {
+                console.error('❌ UI 업데이트 중 오류:', error);
+                console.error('오류 위치:', error.stack);
+                throw error;
             }
         }
 
