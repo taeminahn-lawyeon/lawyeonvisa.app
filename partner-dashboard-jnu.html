@@ -589,7 +589,7 @@
 
             <div class="stat-card success">
                 <div class="stat-content">
-                    <p>예정 졸업 (이번 학기)</p>
+                    <p>졸업 예정 (6개월 이내)</p>
                     <h3 id="graduatingStudents">0</h3>
                 </div>
             </div>
@@ -887,10 +887,30 @@
             ).length;
             document.getElementById('pendingDiagnosis').textContent = pendingCount;
             
-            // 예정 졸업 (이번 학기)
-            const graduatingCount = allStudents.filter(s => 
-                s.expected_graduation && s.expected_graduation.startsWith(currentSemester.split('-')[0])
-            ).length;
+            // 예정 졸업 (향후 6개월 이내)
+            const sixMonthsLater = new Date();
+            sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
+            
+            const graduatingCount = allStudents.filter(s => {
+                if (!s.expected_graduation) return false;
+                
+                // "2026-02" 형식 또는 "2026. 02. 28." 형식 지원
+                let gradDate;
+                if (s.expected_graduation.includes('.')) {
+                    // "2026. 02. 28." 형식
+                    const parts = s.expected_graduation.split('.').map(p => p.trim());
+                    gradDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2] || 1));
+                } else if (s.expected_graduation.includes('-')) {
+                    // "2026-02" 형식
+                    const [year, month] = s.expected_graduation.split('-');
+                    gradDate = new Date(parseInt(year), parseInt(month) - 1, 1);
+                } else {
+                    return false;
+                }
+                
+                return gradDate <= sixMonthsLater;
+            }).length;
+            
             document.getElementById('graduatingStudents').textContent = graduatingCount;
         }
 
