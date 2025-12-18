@@ -890,9 +890,12 @@
         // 페이지 로드
         window.addEventListener('DOMContentLoaded', async function() {
             try {
+                console.log('🔵 admin-thread.html 페이지 로드 시작');
+                
                 // URL에서 thread_id 가져오기
                 const urlParams = new URLSearchParams(window.location.search);
                 threadId = urlParams.get('thread_id');
+                console.log('📌 Thread ID:', threadId);
 
                 if (!threadId) {
                     alert('유효하지 않은 쓰레드 ID입니다.');
@@ -901,7 +904,10 @@
                 }
 
                 // 관리자 권한 확인
+                console.log('🔐 세션 확인 중...');
                 const session = await checkSession();
+                console.log('✅ 세션:', session);
+                
                 if (!session || !session.user) {
                     alert('로그인이 필요합니다.');
                     window.location.href = 'admin-login.html';
@@ -909,7 +915,10 @@
                 }
 
                 // 관리자 프로필 확인
+                console.log('👤 프로필 조회 중... User ID:', session.user.id);
                 const profileResult = await getUserProfile(session.user.id);
+                console.log('✅ 프로필 결과:', profileResult);
+                
                 if (!profileResult.success || !profileResult.data) {
                     alert('프로필 정보를 찾을 수 없습니다.');
                     window.location.href = 'admin-login.html';
@@ -917,6 +926,8 @@
                 }
                 
                 currentUser = profileResult.data;
+                console.log('👤 현재 사용자:', currentUser);
+                
                 if (!['super_admin', 'partner_admin'].includes(currentUser.role)) {
                     alert('관리자 권한이 필요합니다.');
                     window.location.href = 'admin-dashboard.html';
@@ -924,8 +935,13 @@
                 }
 
                 // 쓰레드 데이터 로드
+                console.log('📁 쓰레드 데이터 로드 중...');
                 await loadThreadData();
+                console.log('✅ 쓰레드 데이터 로드 완료');
+                
+                console.log('💬 메시지 로드 중...');
                 await loadMessages();
+                console.log('✅ 메시지 로드 완료');
 
                 // 로딩 완료
                 document.getElementById('loading').style.display = 'none';
@@ -933,10 +949,13 @@
 
                 // 메시지 입력 자동 높이 조절
                 setupMessageInput();
+                
+                console.log('✅ 페이지 로드 완료!');
 
             } catch (error) {
-                console.error('페이지 로드 오류:', error);
-                alert('페이지 로드 중 오류가 발생했습니다.');
+                console.error('❌ 페이지 로드 오류:', error);
+                console.error('오류 스택:', error.stack);
+                alert('페이지 로드 중 오류가 발생했습니다: ' + error.message);
                 window.location.href = 'admin-dashboard.html';
             }
         });
@@ -944,34 +963,58 @@
         // 쓰레드 데이터 로드
         async function loadThreadData() {
             try {
-                const { data: thread, error } = await supabase
+                console.log('📁 Supabase 쿼리 시작 - Thread ID:', threadId);
+                
+                // 먼저 쓰레드 데이터만 가져오기
+                const { data: thread, error: threadError } = await supabaseClient
                     .from('threads')
-                    .select(`
-                        *,
-                        profiles!threads_user_id_fkey (
-                            name,
-                            email,
-                            phone,
-                            nationality,
-                            visa_type,
-                            preferred_messenger,
-                            messenger_id
-                        )
-                    `)
+                    .select('*')
                     .eq('id', threadId)
                     .single();
 
-                if (error) throw error;
-                if (!thread) throw new Error('쓰레드를 찾을 수 없습니다.');
+                console.log('✅ Thread 쿼리 결과:', { thread, threadError });
+                
+                if (threadError) {
+                    console.error('❌ Thread 쿼리 에러:', threadError);
+                    throw threadError;
+                }
+                if (!thread) {
+                    throw new Error('쓰레드를 찾을 수 없습니다.');
+                }
 
                 threadData = thread;
-                customerData = thread.profiles;
+                
+                // 사용자 프로필 정보 가져오기
+                if (thread.user_id) {
+                    console.log('👤 사용자 프로필 조회 - User ID:', thread.user_id);
+                    const { data: profile, error: profileError } = await supabaseClient
+                        .from('profiles')
+                        .select('name, email, phone, nationality, visa_type, preferred_messenger, messenger_id')
+                        .eq('id', thread.user_id)
+                        .single();
+                    
+                    console.log('✅ Profile 쿼리 결과:', { profile, profileError });
+                    
+                    if (!profileError) {
+                        customerData = profile;
+                    } else {
+                        console.warn('⚠️ 프로필 조회 실패:', profileError);
+                        customerData = null;
+                    }
+                } else {
+                    console.warn('⚠️ Thread에 user_id가 없습니다.');
+                    customerData = null;
+                }
+                
+                console.log('📊 Thread Data:', threadData);
+                console.log('👤 Customer Data:', customerData);
 
                 // UI 업데이트
                 updateThreadUI();
 
             } catch (error) {
-                console.error('쓰레드 로드 오류:', error);
+                console.error('❌ 쓰레드 로드 오류:', error);
+                console.error('오류 상세:', error.message);
                 throw error;
             }
         }
@@ -1050,8 +1093,14 @@
         // 메시지 로드
         async function loadMessages() {
             try {
+                console.log('💬 메시지 로드 시작 - Thread ID:', threadId);
+                
                 const result = await getThreadMessages(threadId);
+                console.log('✅ getThreadMessages 결과:', result);
+                
                 const messages = result.success ? result.data : [];
+                console.log('📨 메시지 개수:', messages.length);
+                
                 const container = document.getElementById('messagesContainer');
                 container.innerHTML = '';
 
@@ -1072,9 +1121,12 @@
 
                 // 스크롤 맨 아래로
                 container.scrollTop = container.scrollHeight;
+                
+                console.log('✅ 메시지 UI 렌더링 완료');
 
             } catch (error) {
-                console.error('메시지 로드 오류:', error);
+                console.error('❌ 메시지 로드 오류:', error);
+                console.error('오류 스택:', error.stack);
             }
         }
 
@@ -1221,7 +1273,7 @@
             const status = document.getElementById('threadStatus').value;
             
             try {
-                const { error } = await supabase
+                const { error } = await supabaseClient
                     .from('threads')
                     .update({ status: status })
                     .eq('id', threadId);
@@ -1242,7 +1294,7 @@
             const priority = document.getElementById('threadPriority').value;
             
             try {
-                const { error } = await supabase
+                const { error } = await supabaseClient
                     .from('threads')
                     .update({ priority: priority })
                     .eq('id', threadId);
@@ -1265,7 +1317,7 @@
             const submissionDeadline = document.getElementById('submissionDeadline').value;
 
             try {
-                const { error } = await supabase
+                const { error } = await supabaseClient
                     .from('threads')
                     .update({
                         immigration_office: immigrationOffice,
@@ -1289,7 +1341,7 @@
             const notes = document.getElementById('adminNotes').value;
 
             try {
-                const { error } = await supabase
+                const { error } = await supabaseClient
                     .from('threads')
                     .update({ admin_notes: notes })
                     .eq('id', threadId);
