@@ -41,10 +41,22 @@ if (window.supabase) {
 // Google 로그인
 async function signInWithGoogle() {
     try {
+        // 현재 페이지에 따라 리디렉션 URL 결정
+        let redirectUrl = window.location.origin + '/index.html';
+        
+        // 전남대 로그인 페이지
+        if (window.location.pathname.includes('visa-login-jnu')) {
+            redirectUrl = window.location.origin + '/visa-dashboard-jnu.html';
+        }
+        // 한국대 로그인 페이지
+        else if (window.location.pathname.includes('visa-login-korea')) {
+            redirectUrl = window.location.origin + '/visa-dashboard-korea.html';
+        }
+        
         const { data, error } = await supabaseClient.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: window.location.origin + '/index.html'
+                redirectTo: redirectUrl
             }
         });
         
