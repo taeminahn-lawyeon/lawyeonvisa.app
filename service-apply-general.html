@@ -596,18 +596,7 @@
 
         <!-- 일반 결제 -->
         <div id="payment-content" style="display: none;">
-            <!-- 사전진단 전용 배너 (visa-prediagnosis일 때만 표시) -->
-            <div id="prediagnosis-info" style="display: none;">
-                <div class="prediagnosis-banner">
-                    <h2><i class="fas fa-shield-check"></i> 유학생 범죄화 및 불법체류 사전진단</h2>
-                    <p>
-                        <strong>법무법인 로연 출입국이민지원센터</strong>가 제안하는 <strong>4단계 관리 시스템</strong>을 통해<br>
-                        유학생의 비자 위험요소를 사전에 진단하고 대응 방안을 제시합니다.
-                    </p>
-                    
-
-                </div>
-            </div>
+            <!-- 사전진단 전용 배너 제거됨 -->
             
             <!-- 서비스 정보 -->
             <div class="card">
@@ -647,7 +636,7 @@
             <!-- 안내 -->
             <div class="notice">
                 <i class="fas fa-comment-dots"></i>
-                <div class="notice-text">
+                <div class="notice-text" id="service-notice-text">
                     결제 완료 후 센터 담당자가 쓰레드를 통해 추가 서류를 안내드립니다
                 </div>
             </div>
@@ -923,8 +912,8 @@
         }
         
         function showPrediagnosisPayment() {
-            // 사전진단 전용 정보 배너 표시
-            document.getElementById('prediagnosis-info').style.display = 'block';
+            // 사전진단 전용 정보 배너 제거 (표시 안 함)
+            // document.getElementById('prediagnosis-info').style.display = 'block';
             
             document.getElementById('service-name').textContent = selectedService.name;
             document.getElementById('service-desc').textContent = selectedService.desc;
@@ -950,10 +939,10 @@
             selectedService.agencyFee = agencyFee;
             selectedService.govtFee = 0;
             
-            // 안내 문구 제거 (사전진단 설명 삭제)
-            const noticeElement = document.querySelector('.notice .notice-text');
-            if (noticeElement) {
-                noticeElement.style.display = 'none';
+            // 사전진단 안내 문구 변경
+            const noticeTextElement = document.getElementById('service-notice-text');
+            if (noticeTextElement) {
+                noticeTextElement.textContent = '사전 진단을 위한 쓰레드에서 필요 서류와 진단 결과를 안내 드립니다.';
             }
             
             document.getElementById('payment-content').style.display = 'block';
