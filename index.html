@@ -1002,7 +1002,7 @@
                                     <span data-i18n="dashboard.application.step.approval">승인</span>
                                 </div>
                             </div>
-                            <button onclick="window.location.href='visa-thread-jnu.html'" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
+                            <button onclick="window.location.href='visa-thread-general.html'" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
                                 <i class="fas fa-comments"></i> <span data-i18n="dashboard.application.openThread">쓰레드 열기</span>
                             </button>
                         </div>
@@ -1097,7 +1097,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=20251217002"></script>
     
-    <script src="js/ui-components.js?v=20251217002"></script>
+    <script src="js/ui-components.js?v=20251217002" onerror="console.warn('ui-components.js 로드 실패 - 계속 진행')"></script>
     
     <!-- 다국어 시스템 -->
     <script src="js/translations.js"></script>
@@ -1578,19 +1578,8 @@
                     return;
                 }
 
-                // 프로필에서 organization 확인
-                const profileResult = await getUserProfile(session.user.id);
-                const organization = profileResult.data?.organization;
-
-                // organization에 따라 쓰레드 페이지 이동
-                if (organization === 'jnu') {
-                    window.location.href = `visa-thread-jnu.html?id=${threadId}`;
-                } else if (organization === 'snu') {
-                    window.location.href = `visa-thread-snu.html?id=${threadId}`;
-                } else {
-                    // 일반 회원은 일반 쓰레드로
-                    window.location.href = `visa-thread-general.html?id=${threadId}`;
-                }
+                // 모든 사용자는 일반 쓰레드로 이동 (organization 체크 제거)
+                window.location.href = `visa-thread-general.html?id=${threadId}`;
             } catch (error) {
                 console.error('Thread open error:', error);
                 // 기본값으로 일반 쓰레드로 이동
