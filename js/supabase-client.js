@@ -41,16 +41,21 @@ if (window.supabase) {
 // Google 로그인
 async function signInWithGoogle() {
     try {
-        // 현재 페이지에 따라 리디렉션 URL 결정
+        // localStorage에서 universityCode 확인
+        const universityCode = localStorage.getItem('universityCode');
+        console.log('🎓 Google 로그인 - 대학 코드:', universityCode);
+        
+        // 대학 코드에 따라 리디렉션 URL 결정
         let redirectUrl = window.location.origin + '/index.html';
         
-        // 전남대 로그인 페이지
-        if (window.location.pathname.includes('visa-login-jnu')) {
+        if (universityCode === 'jnu') {
             redirectUrl = window.location.origin + '/visa-dashboard-jnu.html';
-        }
-        // 한국대 로그인 페이지
-        else if (window.location.pathname.includes('visa-login-korea')) {
+            console.log('✅ 전남대 학생 - 리디렉션:', redirectUrl);
+        } else if (universityCode === 'korea') {
             redirectUrl = window.location.origin + '/visa-dashboard-korea.html';
+            console.log('✅ 한국대 학생 - 리디렉션:', redirectUrl);
+        } else {
+            console.log('ℹ️ 일반 사용자 - 리디렉션:', redirectUrl);
         }
         
         const { data, error } = await supabaseClient.auth.signInWithOAuth({
