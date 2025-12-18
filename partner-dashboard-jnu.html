@@ -388,6 +388,146 @@
                 gap: 10px;
             }
         }
+
+        /* 탭 스타일 */
+        .tabs-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px 20px 0;
+            border-radius: 16px 16px 0 0;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            border: 1px solid #E5E8EB;
+            border-bottom: none;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: #6B7280;
+            padding: 12px 24px;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            font-size: 15px;
+            position: relative;
+        }
+
+        .tab-btn:hover {
+            background: #F9FAFB;
+            color: #191F28;
+        }
+
+        .tab-btn.active {
+            background: #F9FAFB;
+            color: #00A651;
+            font-weight: 700;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #00A651;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* 쓰레드 카드 스타일 */
+        .thread-card {
+            background: white;
+            border: 1px solid #E5E8EB;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .thread-card:hover {
+            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
+            border-color: #00A651;
+        }
+
+        .thread-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .thread-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #191F28;
+        }
+
+        .thread-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .thread-status.payment {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .thread-status.document {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .thread-status.submission {
+            background: #E0E7FF;
+            color: #3730A3;
+        }
+
+        .thread-status.approval {
+            background: #FCE7F3;
+            color: #831843;
+        }
+
+        .thread-status.completed {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .thread-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        .thread-info-item {
+            display: flex;
+            gap: 8px;
+        }
+
+        .thread-info-label {
+            font-weight: 600;
+        }
+
+        .threads-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
     </style>
 </head>
 <body>
@@ -412,6 +552,18 @@
     </div>
 
     <div class="container">
+        <!-- 탭 메뉴 -->
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="switchTab('students')">
+                👥 학생 관리
+            </button>
+            <button class="tab-btn" onclick="switchTab('threads')">
+                💬 쓰레드 상담
+            </button>
+        </div>
+
+        <!-- 학생 관리 탭 -->
+        <div id="students-tab" class="tab-content active">
         <!-- 통계 카드 -->
         <div class="stats-grid">
             <div class="stat-card">
@@ -531,12 +683,88 @@
                 <!-- 테이블이 여기에 동적으로 생성됨 -->
             </div>
         </div>
+        </div>
+        <!-- 학생 관리 탭 끝 -->
+
+        <!-- 쓰레드 상담 탭 -->
+        <div id="threads-tab" class="tab-content">
+            <div class="threads-stats-grid">
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <p>전체 쓰레드</p>
+                        <h3 id="totalThreads">0</h3>
+                    </div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-content">
+                        <p>진행 중</p>
+                        <h3 id="activeThreads">0</h3>
+                    </div>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-content">
+                        <p>완료</p>
+                        <h3 id="completedThreads">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 쓰레드 필터 -->
+            <div class="filter-section">
+                <h2>쓰레드 검색</h2>
+                <div class="filter-grid">
+                    <div class="filter-item">
+                        <label>학생 이름</label>
+                        <input type="text" id="threadStudentSearch" placeholder="학생 이름 검색">
+                    </div>
+                    <div class="filter-item">
+                        <label>상태</label>
+                        <select id="threadStatusFilter">
+                            <option value="">전체</option>
+                            <option value="payment">결제 완료</option>
+                            <option value="document">서류 대기</option>
+                            <option value="submission">제출 완료</option>
+                            <option value="approval">승인 대기</option>
+                            <option value="completed">완료</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label>서비스</label>
+                        <input type="text" id="threadServiceSearch" placeholder="서비스 이름 검색">
+                    </div>
+                </div>
+                <div class="filter-actions">
+                    <button class="filter-btn primary" onclick="applyThreadFilters()">
+                        🔍 검색
+                    </button>
+                    <button class="filter-btn secondary" onclick="resetThreadFilters()">
+                        🔄 초기화
+                    </button>
+                </div>
+            </div>
+
+            <!-- 쓰레드 목록 -->
+            <div class="students-section">
+                <h2>
+                    <span>쓰레드 목록</span>
+                    <span id="threadCount">0개</span>
+                </h2>
+                <div id="threadsTableContainer">
+                    <p style="text-align: center; padding: 40px; color: #999;">
+                        쓰레드를 불러오는 중...
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- 쓰레드 상담 탭 끝 -->
     </div>
 
     <script>
         // 전역 변수
         let allStudents = [];
         let filteredStudents = [];
+        let allThreads = [];
+        let filteredThreads = [];
 
         // 페이지 로드 시 초기화
         window.addEventListener('DOMContentLoaded', async function() {
@@ -868,6 +1096,209 @@
                     window.location.href = 'visa-login-jnu.html';
                 }
             }
+        }
+
+        // 탭 전환
+        function switchTab(tabName) {
+            // 모든 탭 버튼과 컨텐츠 비활성화
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // 선택된 탭 활성화
+            event.target.classList.add('active');
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            // 쓰레드 탭이면 쓰레드 로드
+            if (tabName === 'threads') {
+                loadThreadsData();
+            }
+        }
+
+        // 쓰레드 데이터 로드
+        async function loadThreadsData() {
+            try {
+                // 전남대 학생들의 user_id 목록 가져오기
+                const { data: jnuStudents, error: studentsError } = await supabaseClient
+                    .from('jnu_students')
+                    .select('student_number, name, passport_name');
+                
+                if (studentsError) {
+                    console.error('❌ 전남대 학생 목록 조회 오류:', studentsError);
+                    return;
+                }
+                
+                // 학번으로 user_id 매핑 생성
+                const studentNumbers = jnuStudents.map(s => s.student_number);
+                
+                // profiles 테이블에서 전남대 학생들의 user_id 찾기
+                const { data: profiles, error: profilesError } = await supabaseClient
+                    .from('profiles')
+                    .select('id, full_name, student_number, university_code')
+                    .eq('university_code', 'jnu')
+                    .in('student_number', studentNumbers);
+                
+                if (profilesError) {
+                    console.error('❌ profiles 조회 오류:', profilesError);
+                }
+                
+                const jnuUserIds = profiles ? profiles.map(p => p.id) : [];
+                
+                if (jnuUserIds.length === 0) {
+                    console.warn('⚠️ 전남대 학생의 user_id를 찾을 수 없습니다.');
+                    allThreads = [];
+                    filteredThreads = [];
+                    updateThreadStatistics();
+                    renderThreadsList();
+                    return;
+                }
+                
+                // threads 테이블에서 전남대 학생들의 쓰레드만 조회
+                const { data: threads, error: threadsError } = await supabaseClient
+                    .from('threads')
+                    .select('*, profiles:user_id (full_name, student_number)')
+                    .in('user_id', jnuUserIds)
+                    .order('created_at', { ascending: false });
+                
+                if (threadsError) {
+                    console.error('❌ 쓰레드 데이터 로드 오류:', threadsError);
+                    allThreads = [];
+                } else {
+                    console.log('✅ 쓰레드 데이터 로드 성공:', threads.length, '개');
+                    allThreads = threads;
+                }
+                
+                filteredThreads = [...allThreads];
+                updateThreadStatistics();
+                renderThreadsList();
+            } catch (error) {
+                console.error('❌ 쓰레드 데이터 로드 오류:', error);
+                allThreads = [];
+                filteredThreads = [];
+                updateThreadStatistics();
+                renderThreadsList();
+            }
+        }
+
+        // 쓰레드 통계 업데이트
+        function updateThreadStatistics() {
+            document.getElementById('totalThreads').textContent = allThreads.length;
+            
+            const activeCount = allThreads.filter(t => 
+                t.status !== 'completed' && t.status !== 'cancelled'
+            ).length;
+            document.getElementById('activeThreads').textContent = activeCount;
+            
+            const completedCount = allThreads.filter(t => 
+                t.status === 'completed'
+            ).length;
+            document.getElementById('completedThreads').textContent = completedCount;
+        }
+
+        // 쓰레드 목록 렌더링
+        function renderThreadsList() {
+            const container = document.getElementById('threadsTableContainer');
+            document.getElementById('threadCount').textContent = `${filteredThreads.length}개`;
+            
+            if (filteredThreads.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 60px 20px; color: #999;">
+                        <p style="font-size: 18px; margin-bottom: 12px;">📭</p>
+                        <p>쓰레드가 없습니다.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let threadsHTML = '<div style="display: flex; flex-direction: column; gap: 16px;">';
+            
+            filteredThreads.forEach(thread => {
+                const statusText = getStatusText(thread.status);
+                const statusClass = thread.status;
+                const studentName = thread.profiles?.full_name || '알 수 없음';
+                const studentNumber = thread.profiles?.student_number || '-';
+                const createdDate = new Date(thread.created_at).toLocaleDateString('ko-KR');
+                const amount = thread.amount ? `₩${thread.amount.toLocaleString()}` : '-';
+                
+                threadsHTML += `
+                    <div class="thread-card" onclick="openThread('${thread.id}')">
+                        <div class="thread-header">
+                            <div class="thread-title">${thread.service_name || '서비스 상담'}</div>
+                            <div class="thread-status ${statusClass}">${statusText}</div>
+                        </div>
+                        <div class="thread-info">
+                            <div class="thread-info-item">
+                                <span class="thread-info-label">학생:</span>
+                                <span>${studentName} (${studentNumber})</span>
+                            </div>
+                            <div class="thread-info-item">
+                                <span class="thread-info-label">금액:</span>
+                                <span>${amount}</span>
+                            </div>
+                            <div class="thread-info-item">
+                                <span class="thread-info-label">생성일:</span>
+                                <span>${createdDate}</span>
+                            </div>
+                            ${thread.order_id ? `
+                            <div class="thread-info-item">
+                                <span class="thread-info-label">주문번호:</span>
+                                <span><code style="font-size: 11px; background: #f3f4f6; padding: 2px 6px; border-radius: 4px;">${thread.order_id}</code></span>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            threadsHTML += '</div>';
+            container.innerHTML = threadsHTML;
+        }
+
+        // 상태 텍스트 변환
+        function getStatusText(status) {
+            const statusMap = {
+                'payment': '결제 완료',
+                'document': '서류 대기',
+                'submission': '제출 완료',
+                'approval': '승인 대기',
+                'completed': '완료',
+                'cancelled': '취소됨'
+            };
+            return statusMap[status] || status;
+        }
+
+        // 쓰레드 열기
+        function openThread(threadId) {
+            window.open(`visa-thread-jnu.html?id=${threadId}`, '_blank');
+        }
+
+        // 쓰레드 필터 적용
+        function applyThreadFilters() {
+            const studentSearch = document.getElementById('threadStudentSearch').value.toLowerCase();
+            const statusFilter = document.getElementById('threadStatusFilter').value;
+            const serviceSearch = document.getElementById('threadServiceSearch').value.toLowerCase();
+            
+            filteredThreads = allThreads.filter(thread => {
+                const studentName = (thread.profiles?.full_name || '').toLowerCase();
+                const serviceName = (thread.service_name || '').toLowerCase();
+                
+                if (studentSearch && !studentName.includes(studentSearch)) return false;
+                if (statusFilter && thread.status !== statusFilter) return false;
+                if (serviceSearch && !serviceName.includes(serviceSearch)) return false;
+                
+                return true;
+            });
+            
+            renderThreadsList();
+        }
+
+        // 쓰레드 필터 초기화
+        function resetThreadFilters() {
+            document.getElementById('threadStudentSearch').value = '';
+            document.getElementById('threadStatusFilter').value = '';
+            document.getElementById('threadServiceSearch').value = '';
+            
+            filteredThreads = [...allThreads];
+            renderThreadsList();
         }
 
         console.log('✅ 전남대학교 담당자 대시보드 초기화 완료');
