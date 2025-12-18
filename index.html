@@ -946,7 +946,7 @@
                     <p style="font-size: 17px; margin-bottom: 24px; line-height: 1.6; font-weight: 500;" data-i18n="dashboard.loginPrompt">
                         로그인하시면 나의 체류현황, 서비스 신청, 진행 현황을 확인하실 수 있습니다.
                     </p>
-                    <button onclick="document.getElementById('googleLoginBtn').click()" style="padding: 16px 32px; background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%); color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 8px 24px rgba(49, 130, 246, 0.25);" data-i18n="dashboard.loginButton">
+                    <button onclick="document.getElementById('newGoogleLoginBtn').click()" style="padding: 16px 32px; background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%); color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 8px 24px rgba(49, 130, 246, 0.25);" data-i18n="dashboard.loginButton">
                         Google 로그인
                     </button>
                 </div>
@@ -1200,7 +1200,7 @@
                 
                 if (!session || !session.user) {
                     alert(window.i18n.translate('common.loginRequired'));
-                    document.getElementById('googleLoginBtn').scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById('newGoogleLoginBtn').scrollIntoView({ behavior: 'smooth' });
                     return;
                 }
                 
@@ -1234,7 +1234,7 @@
                 
                 if (!session || !session.user) {
                     alert(window.i18n.translate('common.loginRequired'));
-                    document.getElementById('googleLoginBtn').scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById('newGoogleLoginBtn').scrollIntoView({ behavior: 'smooth' });
                     return;
                 }
                 
