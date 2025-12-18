@@ -5,8 +5,15 @@
 // ⚠️ 중요: 아래 값들을 실제 Supabase 프로젝트 정보로 교체하세요
 // Settings > API에서 확인 가능
 
+// ⚠️ Supabase Dashboard → Settings → API에서 확인
 const SUPABASE_URL = 'https://gqistzsergddnpcvuzba.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxaXN0enNlcmdkZG5wY3Z1emJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNTEyMjEsImV4cCI6MjA4MDcyNzIyMX0.X_GgShObq9OJ6z7aEKdUCoyHYo-OJL-I5hcIDt4komg';
+
+// 연결 테스트 (콘솔 로그)
+console.log('🔍 Supabase 설정:', {
+  url: SUPABASE_URL,
+  keyPreview: SUPABASE_ANON_KEY.substring(0, 50) + '...'
+});
 
 // Supabase 클라이언트 초기화
 let supabaseClient;
@@ -512,7 +519,7 @@ async function getAllThreads() {
             .from('threads')
             .select(`
                 *,
-                profiles:user_id (
+                profiles!threads_user_id_fkey (
                     name,
                     email,
                     phone
@@ -521,7 +528,10 @@ async function getAllThreads() {
             .eq('is_active', true)
             .order('created_at', { ascending: false });
         
-        if (error) throw error;
+        if (error) {
+            console.error('❌ getAllThreads 에러:', error);
+            throw error;
+        }
         return { success: true, data };
     } catch (error) {
         console.error('전체 쓰레드 조회 오류:', error);
