@@ -45,16 +45,21 @@ async function signInWithGoogle() {
         const universityCode = localStorage.getItem('universityCode');
         console.log('🎓 Google 로그인 - 대학 코드:', universityCode);
         
-        // 대학 코드에 따라 리디렉션 URL 결정
-        let redirectUrl = window.location.origin + '/index.html';
+        // 현재 페이지로 리디렉션 (OAuth 콜백 후 프로필 생성 로직 실행 위해)
+        // 대학별 로그인 페이지에서 프로필 생성 후 대시보드로 이동
+        let redirectUrl = window.location.href;
         
         if (universityCode === 'jnu') {
-            redirectUrl = window.location.origin + '/visa-dashboard-jnu.html';
+            // 전남대 로그인 페이지로 리디렉션 (프로필 생성 위해)
+            redirectUrl = window.location.origin + '/visa-login-jnu.html';
             console.log('✅ 전남대 학생 - 리디렉션:', redirectUrl);
         } else if (universityCode === 'korea') {
-            redirectUrl = window.location.origin + '/visa-dashboard-korea.html';
+            // 한국대 로그인 페이지로 리디렉션 (프로필 생성 위해)
+            redirectUrl = window.location.origin + '/visa-login-korea.html';
             console.log('✅ 한국대 학생 - 리디렉션:', redirectUrl);
         } else {
+            // 일반 사용자는 index.html로
+            redirectUrl = window.location.origin + '/index.html';
             console.log('ℹ️ 일반 사용자 - 리디렉션:', redirectUrl);
         }
         
