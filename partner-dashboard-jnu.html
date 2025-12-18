@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>전남대학교 담당자 대시보드 - 법무법인 로연</title>
+    <title>담당자 대시보드 - 법무법인 로연 출입국이민지원센터 전남대학교 전용 페이지</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
     
     <!-- Supabase 라이브러리 (head에서 먼저 로드) -->
@@ -557,7 +557,7 @@
             
             try {
                 // Supabase 세션 확인
-                const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+                const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
                 
                 console.log('🔍 [DASHBOARD] 세션 확인 결과:', { 
                     hasSession: !!session, 
@@ -576,7 +576,7 @@
                 
                 // admins 테이블에서 role='partner_jnu' 확인
                 console.log('🔍 [DASHBOARD] admins 테이블 조회 시작...');
-                const { data: adminData, error: adminError } = await supabase
+                const { data: adminData, error: adminError } = await supabaseClient
                     .from('admins')
                     .select('*')
                     .eq('email', session.user.email)
@@ -614,7 +614,7 @@
         // 학생 데이터 로드
         async function loadStudentsData() {
             try {
-                const { data: students, error } = await supabase
+                const { data: students, error } = await supabaseClient
                     .from('jnu_students')
                     .select('*')
                     .order('name', { ascending: true });
