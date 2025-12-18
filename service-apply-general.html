@@ -734,7 +734,7 @@
             <!-- 신청 버튼 -->
             <button class="btn-primary" onclick="applyForConsulting()">
                 <i class="fas fa-paper-plane"></i>
-                상담 신청하기
+                견적 상담 신청하기
             </button>
         </div>
     </div>
@@ -801,7 +801,7 @@
             'education-consulting': { name: '교육 자문', price: 0, desc: 'TOPIK, OASIS, 사회통합프로그램 가이드', icon: '📚', consulting: true },
             'organization-consulting': { name: '외국인 소속 단체 자문', price: 0, desc: '대학, 기업 외국인 관리 컨설팅', icon: '🏫', consulting: true },
             'emergency-legal': { name: '변호사 전담 대응', price: 0, desc: '강제출국, 비자거절 긴급 법률 대응', icon: '🚨', consulting: true },
-            'visa-prediagnosis': { name: '비자 사전진단', price: 55000, desc: '유학생 범죄화 및 불법체류 위험 사전진단', icon: '🔍', consulting: false }
+            'visa-prediagnosis': { name: '비자 사전진단', price: 55000, desc: '유학생 비자 안전 진단', icon: '🔍', consulting: false }
         };
 
         let selectedService = null;
@@ -942,7 +942,7 @@
             // 사전진단 안내 문구 변경
             const noticeTextElement = document.getElementById('service-notice-text');
             if (noticeTextElement) {
-                noticeTextElement.textContent = '쓰레드에서 필요 서류와 진단 결과를 안내 드립니다.';
+                noticeTextElement.textContent = '사전 진단을 위한 쓰레드에서 필요 서류와 진단 결과를 안내 드립니다.';
             }
             
             document.getElementById('payment-content').style.display = 'block';
@@ -1082,7 +1082,7 @@
                     throw new Error('쓰레드 생성 실패');
                 }
                 
-                alert('상담 신청이 완료되었습니다!\n\n센터 담당자가 쓰레드에서 곧 연락드릴게요!');
+                alert('견적 상담 신청이 완료되었습니다!\n\n센터 담당자가 쓰레드에서 곧 연락드릴게요!');
                 window.location.href = `visa-thread-general.html?id=${threadResult.data.id}`;
             } catch (error) {
                 console.error('상담 신청 오류:', error);
