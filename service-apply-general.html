@@ -372,6 +372,74 @@
             to { transform: rotate(360deg); }
         }
 
+        /* 사전진단 배너 */
+        .prediagnosis-banner {
+            background: linear-gradient(135deg, #DBEAFE 0%, #EFF6FF 100%);
+            border: 2px solid #3182F6;
+            border-radius: 16px;
+            padding: 24px;
+            margin: 20px 0;
+        }
+
+        .prediagnosis-banner h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1E40AF;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .prediagnosis-banner h2 i {
+            font-size: 24px;
+        }
+
+        .prediagnosis-banner p {
+            font-size: 15px;
+            color: #1E40AF;
+            font-weight: 600;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .risk-cards {
+            display: grid;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .risk-card {
+            background: white;
+            border: 2px solid #BFDBFE;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .risk-card i {
+            font-size: 24px;
+            color: #DC2626;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .risk-card-content h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 6px;
+        }
+
+        .risk-card-content p {
+            font-size: 14px;
+            color: #4B5563;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
         /* 상담 서비스 스타일 */
         .consulting-banner {
             background: linear-gradient(135deg, #FEF3C7 0%, #FFFBEB 100%);
@@ -528,6 +596,59 @@
 
         <!-- 일반 결제 -->
         <div id="payment-content" style="display: none;">
+            <!-- 사전진단 전용 배너 (visa-prediagnosis일 때만 표시) -->
+            <div id="prediagnosis-info" style="display: none;">
+                <div class="prediagnosis-banner">
+                    <h2><i class="fas fa-shield-check"></i> 유학생 범죄화 및 불법체류 사전진단</h2>
+                    <p>
+                        <strong>법무법인 로연 출입국이민지원센터</strong>가 제안하는 <strong>4단계 관리 시스템</strong>을 통해<br>
+                        유학생의 비자 위험요소를 사전에 진단하고 대응 방안을 제시합니다.
+                    </p>
+                    
+                    <div class="risk-cards">
+                        <div class="risk-card">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div class="risk-card-content">
+                                <h4>📌 사전체류 조건 미준수</h4>
+                                <p>유학생이 입국 전 준수해야 할 조건(ex. 재정증명, 입학허가)을 충족하지 못한 채 입국한 경우</p>
+                            </div>
+                        </div>
+                        
+                        <div class="risk-card">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div class="risk-card-content">
+                                <h4>📌 장기 무단결석 및 제적</h4>
+                                <p>학교 수업 출석 없이 장기간 이탈하거나 학적 상실 시 체류자격 박탈 위험</p>
+                            </div>
+                        </div>
+                        
+                        <div class="risk-card">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div class="risk-card-content">
+                                <h4>📌 불법취업 및 자격외 활동</h4>
+                                <p>시간제 취업 허가 없이 근무하거나 허용된 시간 초과 시 불법취업으로 분류</p>
+                            </div>
+                        </div>
+                        
+                        <div class="risk-card">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div class="risk-card-content">
+                                <h4>📌 체류자격 외 활동 허가 미신청</h4>
+                                <p>아르바이트, 인턴십 등 사전 허가 없이 활동 시 불법체류 전환 가능성</p>
+                            </div>
+                        </div>
+                        
+                        <div class="risk-card">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div class="risk-card-content">
+                                <h4>📌 범죄 이력</h4>
+                                <p>음주운전, 폭행, 절도 등 형사사건 연루 시 비자 연장 거부 및 강제출국 대상</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <!-- 서비스 정보 -->
             <div class="card">
                 <div class="service-header">
@@ -731,7 +852,7 @@
             'education-consulting': { name: '교육 자문', price: 0, desc: 'TOPIK, OASIS, 사회통합프로그램 가이드', icon: '📚', consulting: true },
             'organization-consulting': { name: '외국인 소속 단체 자문', price: 0, desc: '대학, 기업 외국인 관리 컨설팅', icon: '🏫', consulting: true },
             'emergency-legal': { name: '변호사 전담 대응', price: 0, desc: '강제출국, 비자거절 긴급 법률 대응', icon: '🚨', consulting: true },
-            'visa-prediagnosis': { name: '비자 사전진단', price: 0, desc: '비자 변경 가능성, 불법체류 위험도 사전 검토', icon: '🔍', consulting: true }
+            'visa-prediagnosis': { name: '비자 사전진단', price: 55000, desc: '유학생 범죄화 및 불법체류 위험 사전진단', icon: '🔍', consulting: false }
         };
 
         let selectedService = null;
@@ -792,7 +913,10 @@
             setTimeout(() => {
                 document.getElementById('loading').style.display = 'none';
                 
-                if (selectedService.consulting) {
+                // 비자 사전진단은 특별 처리
+                if (serviceId === 'visa-prediagnosis') {
+                    showPrediagnosisPayment();
+                } else if (selectedService.consulting) {
                     showConsulting();
                 } else {
                     showPayment(serviceId);
@@ -827,9 +951,58 @@
         }
 
         function showConsulting() {
+            // 비자 사전진단은 결제 페이지로 표시
+            if (selectedService.name === '비자 사전진단') {
+                showPrediagnosisPayment();
+                return;
+            }
+            
             document.getElementById('consulting-name').textContent = selectedService.name;
             document.getElementById('consulting-desc').textContent = selectedService.desc;
             document.getElementById('consulting-content').style.display = 'block';
+        }
+        
+        function showPrediagnosisPayment() {
+            // 사전진단 전용 정보 배너 표시
+            document.getElementById('prediagnosis-info').style.display = 'block';
+            
+            document.getElementById('service-name').textContent = selectedService.name;
+            document.getElementById('service-desc').textContent = selectedService.desc;
+            
+            const agencyFee = selectedService.price;
+            const totalPrice = agencyFee;
+            
+            // '민원 대행 보수' 라벨을 '사전진단 서비스'로 변경
+            const agencyFeeLabel = document.querySelector('.price-label[data-i18n="payment.agencyFee"]');
+            if (agencyFeeLabel) {
+                agencyFeeLabel.textContent = '사전진단 서비스';
+            }
+            
+            document.getElementById('agency-fee').textContent = '₩' + agencyFee.toLocaleString();
+            document.getElementById('total-price').textContent = '₩' + totalPrice.toLocaleString();
+            
+            // 출입국 관서 수수료 숨김
+            document.getElementById('govt-fee-row').style.display = 'none';
+            document.getElementById('govt-fee-notice').style.display = 'none';
+            
+            // 결제 데이터 저장
+            selectedService.totalPrice = totalPrice;
+            selectedService.agencyFee = agencyFee;
+            selectedService.govtFee = 0;
+            
+            // 안내 문구 수정
+            const noticeElement = document.querySelector('.notice .notice-text');
+            if (noticeElement) {
+                noticeElement.innerHTML = `<strong>사전진단 결과는 결제 완료 후 3영업일 이내</strong>에 쓰레드를 통해 안내드립니다<br><br>
+                <strong>📋 진단 내용:</strong><br>
+                ✓ 비자 변경 가능성 분석<br>
+                ✓ 불법체류 위험도 평가<br>
+                ✓ 범죄화 가능성 사전 검토<br>
+                ✓ 체류자격 위반 여부 확인<br>
+                ✓ 맞춤형 대응 방안 제시`;
+            }
+            
+            document.getElementById('payment-content').style.display = 'block';
         }
 
         function selectPayment(element) {
