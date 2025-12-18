@@ -467,8 +467,16 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=7"></script>
     
-    <script src="js/ui-components.js"></script>
+    <script src="js/ui-components.js?v=2"></script>
     <script>
+        // Toast fallback (ui-components.js 로드 실패 시)
+        if (typeof showToast === 'undefined') {
+            window.showToast = function(message, type, duration) {
+                console.log(`[Toast ${type}]: ${message}`);
+                alert(message);
+            };
+        }
+        
         // 전남대학교 고정
         const universityCode = 'jnu';
         const currentUniversity = { 
