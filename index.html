@@ -1420,7 +1420,23 @@
                     // 프로필 수정 버튼 표시 (프로필이 있는 경우)
                     document.getElementById('editProfileBtn')?.setAttribute('style', 'display: inline-flex;');
                 } else {
-                    // 프로필이 없으면 기본사항 제출로 이동 (단, 사용자가 뒤로가기를 누른 경우 제외)
+                    // 프로필이 없으면 대학 코드 확인 후 적절한 페이지로 이동
+                    const universityCode = localStorage.getItem('universityCode');
+                    console.log('🔍 프로필 없음 - universityCode:', universityCode);
+                    
+                    if (universityCode === 'jnu') {
+                        // 전남대 학생 → visa-login-jnu.html로 리디렉션 (프로필 생성 위해)
+                        console.log('➡️ 전남대 학생 - visa-login-jnu.html로 리디렉션');
+                        window.location.href = 'visa-login-jnu.html';
+                        return;
+                    } else if (universityCode === 'korea') {
+                        // 한국대 학생 → visa-login-korea.html로 리디렉션 (프로필 생성 위해)
+                        console.log('➡️ 한국대 학생 - visa-login-korea.html로 리디렉션');
+                        window.location.href = 'visa-login-korea.html';
+                        return;
+                    }
+                    
+                    // 일반 사용자 - 기본사항 제출로 이동 (단, 사용자가 뒤로가기를 누른 경우 제외)
                     const skipProfileSetup = sessionStorage.getItem('skipProfileSetup');
                     if (skipProfileSetup === 'true') {
                         console.log('프로필 없음 - 하지만 사용자가 뒤로가기를 눌러 건너뜀');
