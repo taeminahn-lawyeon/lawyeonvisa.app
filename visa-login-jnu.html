@@ -519,7 +519,7 @@
             
             try {
                 // Supabase에서 학번 검증
-                const { data: student, error } = await supabase
+                const { data: student, error } = await supabaseClient
                     .from('jnu_students')
                     .select('*')
                     .eq('student_number', studentNumber)
@@ -632,7 +632,7 @@
                 
                 // admins 테이블에서 partner_jnu 권한 확인
                 console.log('🔍 admins 테이블 조회 시작:', userEmail);
-                const { data: adminData, error: adminError } = await supabase
+                const { data: adminData, error: adminError } = await supabaseClient
                     .from('admins')
                     .select('*')
                     .eq('email', userEmail)
@@ -694,7 +694,7 @@
                     console.log('✅ 이미 로그인된 사용자:', session.user.email);
                     
                     // 먼저 admins 테이블에서 partner_jnu 권한 확인
-                    const { data: adminData, error: adminError } = await supabase
+                    const { data: adminData, error: adminError } = await supabaseClient
                         .from('admins')
                         .select('*')
                         .eq('email', session.user.email)
@@ -709,7 +709,7 @@
                     }
                     
                     // admins 테이블에 없으면 profiles 테이블 확인 (학생 계정)
-                    const { data: profileData, error: profileError } = await supabase
+                    const { data: profileData, error: profileError } = await supabaseClient
                         .from('profiles')
                         .select('*')
                         .eq('id', session.user.id)
