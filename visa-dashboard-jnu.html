@@ -942,7 +942,7 @@
                     <p style="font-size: 17px; margin-bottom: 24px; line-height: 1.6; font-weight: 500;" data-i18n="dashboard.loginPrompt">
                         로그인하시면 나의 체류현황, 서비스 신청, 진행 현황을 확인하실 수 있습니다.
                     </p>
-                    <button onclick="document.getElementById('googleLoginBtn').click()" style="padding: 16px 32px; background: linear-gradient(135deg, #00A651 0%, #007A33 100%); color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 8px 24px rgba(49, 130, 246, 0.25);">
+                    <button onclick="document.getElementById('googleLoginBtn').click()" style="padding: 16px 32px; background: linear-gradient(135deg, #00A651 0%, #007A33 100%); color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 8px 24px rgba(49, 130, 246, 0.25);" data-i18n="dashboard.loginButton">
                         Google 로그인
                     </button>
                 </div>
@@ -954,17 +954,17 @@
                         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
                             <div style="font-size: 32px;">📝</div>
                             <div>
-                                <div style="font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 4px;">체류 현황</div>
+                                <div style="font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 4px;" data-i18n="dashboard.residence.title">체류 현황</div>
                                 <div style="font-size: 14px; color: #64748b;" id="userNameDisplay"></div>
                             </div>
                         </div>
                         <div style="display: flex; flex-direction: column; gap: 12px;">
                             <div style="background: white; padding: 16px; border-radius: 12px;">
-                                <div style="font-size: 13px; color: #64748b; margin-bottom: 6px;">체류자격</div>
+                                <div style="font-size: 13px; color: #64748b; margin-bottom: 6px;" data-i18n="dashboard.residence.visaType">체류자격</div>
                                 <div style="font-size: 17px; font-weight: 700; color: #007A33;" id="userVisaType">D-2 유학</div>
                             </div>
                             <div style="background: white; padding: 16px; border-radius: 12px;">
-                                <div style="font-size: 13px; color: #64748b; margin-bottom: 6px;">만료일</div>
+                                <div style="font-size: 13px; color: #64748b; margin-bottom: 6px;" data-i18n="dashboard.residence.expiry">만료일</div>
                                 <div style="font-size: 17px; font-weight: 700; color: #EF4444;" id="userExpiry">2025-06-30</div>
                             </div>
                         </div>
@@ -984,7 +984,7 @@
                                 </div>
                             </div>
                             <div style="margin-bottom: 16px;">
-                                <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;">진행 단계</div>
+                                <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;" data-i18n="dashboard.application.progress">진행 단계</div>
                                 <div style="display: flex; gap: 8px;">
                                     <div style="flex: 1; height: 8px; background: #00A651; border-radius: 4px;"></div>
                                     <div style="flex: 1; height: 8px; background: #00A651; border-radius: 4px;"></div>
@@ -992,21 +992,21 @@
                                     <div style="flex: 1; height: 8px; background: #E5E7EB; border-radius: 4px;"></div>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: #64748b;">
-                                    <span>결제</span>
-                                    <span>서류수집</span>
-                                    <span>신청중</span>
-                                    <span>승인</span>
+                                    <span data-i18n="dashboard.application.step.payment">결제</span>
+                                    <span data-i18n="dashboard.application.step.documents">서류수집</span>
+                                    <span data-i18n="dashboard.application.step.processing">신청중</span>
+                                    <span data-i18n="dashboard.application.step.approval">승인</span>
                                 </div>
                             </div>
                             <button onclick="window.location.href='visa-thread-jnu.html'" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #00A651 0%, #007A33 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
-                                <i class="fas fa-comments"></i> 쓰레드 열기
+                                <i class="fas fa-comments"></i> <span data-i18n="dashboard.application.openThread">쓰레드 열기</span>
                             </button>
                         </div>
                         
                         <!-- 내역 없을 때 -->
                         <div id="noApplications" style="display: none; text-align: center; padding: 40px 20px; color: #9CA3AF;">
                             <div style="font-size: 48px; margin-bottom: 16px;">📄</div>
-                            <p style="font-size: 16px; font-weight: 600;">아직 신청하신 서비스가 없습니다.</p>
+                            <p style="font-size: 16px; font-weight: 600;" data-i18n="dashboard.noApplications">아직 신청하신 서비스가 없습니다.</p>
                         </div>
                     </div>
                 </div>
@@ -1102,13 +1102,21 @@
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', async function() {
                     if (confirm('로그아웃 하시겠습니까?')) {
-                        const result = await signOut();
-                        if (result.success) {
-                            console.log('로그아웃 성공');
-                            // 페이지 새로고침
-                            window.location.reload();
-                        } else {
-                            alert('로그아웃 실패: ' + result.error);
+                        try {
+                            // Supabase 로그아웃
+                            const { error } = await supabaseClient.auth.signOut();
+                            if (error) throw error;
+                            
+                            console.log('✅ 로그아웃 성공');
+                            
+                            // localStorage 정리
+                            localStorage.clear();
+                            
+                            // 전남대 로그인 페이지로 이동
+                            window.location.href = 'visa-login-jnu.html';
+                        } catch (error) {
+                            console.error('❌ 로그아웃 실패:', error);
+                            alert('로그아웃 실패: ' + error.message);
                         }
                     }
                 });
@@ -1274,21 +1282,6 @@
             if (session && session.user) {
                 console.log('✅ 세션 존재:', session.user.email);
                 
-                // 🔥 organization 체크: 일반 사용자 계정으로 JNU 전용 페이지 접근 시 로그아웃
-                const quickProfileCheck = await getUserProfile(session.user.id);
-                if (quickProfileCheck.success && quickProfileCheck.data) {
-                    const userOrg = quickProfileCheck.data.organization;
-                    console.log('🔍 사용자 organization:', userOrg);
-                    
-                    if (userOrg !== 'jnu') {
-                        console.log('⚠️ 일반 계정으로 JNU 전용 페이지 접근 시도');
-                        alert('전남대 전용 페이지입니다.\n\n일반 페이지에서 로그인해주세요.');
-                        await signOut();
-                        window.location.href = 'visa-login-jnu.html';
-                        return;
-                    }
-                }
-                
                 // ✅ 프로필 생성 완료 플래그 확인
                 const profileCreatedFlag = sessionStorage.getItem('profileCreated');
                 console.log('🔍 프로필 생성 플래그:', profileCreatedFlag);
@@ -1429,29 +1422,31 @@
                 // 상태 텍스트 및 색상
                 let statusBg = '#FEF3C7';
                 let statusColor = '#92400E';
-                let statusText = '서류 수집 중';
+                let statusTextKey = 'dashboard.application.status.document';
                 
                 if (thread.status === 'payment') {
                     statusBg = '#DBEAFE';
                     statusColor = '#1E40AF';
-                    statusText = '결제 완료';
+                    statusTextKey = 'dashboard.application.status.payment';
                 } else if (thread.status === 'document') {
                     statusBg = '#FEF3C7';
                     statusColor = '#92400E';
-                    statusText = '서류 수집 중';
+                    statusTextKey = 'dashboard.application.status.document';
                 } else if (thread.status === 'processing') {
                     statusBg = '#E0E7FF';
                     statusColor = '#4338CA';
-                    statusText = '신청 진행 중';
+                    statusTextKey = 'dashboard.application.status.processing';
                 } else if (thread.status === 'completed') {
                     statusBg = '#D1FAE5';
                     statusColor = '#065F46';
-                    statusText = '처리 완료';
+                    statusTextKey = 'dashboard.application.status.completed';
                 } else if (thread.status === 'archived') {
                     statusBg = '#F3F4F6';
                     statusColor = '#6B7280';
-                    statusText = '완료 (보관)';
+                    statusTextKey = 'dashboard.application.status.archived';
                 }
+                
+                const statusText = window.i18n.translate(statusTextKey);
                 
                 // 진행 단계 계산
                 let progress1 = thread.status === 'payment' || thread.status === 'document' || thread.status === 'processing' || thread.status === 'completed' || thread.status === 'archived';
@@ -1469,22 +1464,33 @@
                 `;
                 
                 // 신청일 포맷팅
-                const applicationDate = thread.created_at ? new Date(thread.created_at).toISOString().split('T')[0] : '알 수 없음';
+                const applicationDate = thread.created_at ? new Date(thread.created_at).toISOString().split('T')[0] : window.i18n.translate('dashboard.application.unknown');
+                const applicationDateLabel = window.i18n.translate('dashboard.application.date');
+                const progressLabel = window.i18n.translate('dashboard.application.progress');
+                const paymentLabel = window.i18n.translate('dashboard.application.step.payment');
+                const documentsLabel = window.i18n.translate('dashboard.application.step.documents');
+                const processingLabel = window.i18n.translate('dashboard.application.step.processing');
+                const approvalLabel = window.i18n.translate('dashboard.application.step.approval');
+                const openThreadLabel = window.i18n.translate('dashboard.application.openThread');
+                const archivedThreadLabel = window.i18n.translate('dashboard.application.archivedThread');
+                // 서비스명에서 "(견적 상담)" 제거
+                let serviceNameLabel = thread.service_name || window.i18n.translate('dashboard.application.serviceName');
+                serviceNameLabel = serviceNameLabel.replace(/\s*\(견적\s*상담\)\s*/g, '');
                 
                 card.innerHTML = `
                     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
                         <div>
                             <div style="font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 8px;">
-                                ${thread.service_name || '서비스'}
+                                ${serviceNameLabel}
                             </div>
-                            <div style="font-size: 14px; color: #64748b;">신청일: ${applicationDate}</div>
+                            <div style="font-size: 14px; color: #64748b;">${applicationDateLabel} ${applicationDate}</div>
                         </div>
                         <div style="background: ${statusBg}; color: ${statusColor}; padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 700;">
                             ${statusText}
                         </div>
                     </div>
                     <div style="margin-bottom: 16px;">
-                        <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;">진행 단계</div>
+                        <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;">${progressLabel}</div>
                         <div style="display: flex; gap: 8px;">
                             <div style="flex: 1; height: 8px; background: ${progress1 ? '#00A651' : '#E5E7EB'}; border-radius: 4px;"></div>
                             <div style="flex: 1; height: 8px; background: ${progress2 ? '#00A651' : '#E5E7EB'}; border-radius: 4px;"></div>
@@ -1492,14 +1498,14 @@
                             <div style="flex: 1; height: 8px; background: ${progress4 ? '#00A651' : '#E5E7EB'}; border-radius: 4px;"></div>
                         </div>
                         <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: #64748b;">
-                            <span>결제</span>
-                            <span>서류수집</span>
-                            <span>신청중</span>
-                            <span>승인</span>
+                            <span>${paymentLabel}</span>
+                            <span>${documentsLabel}</span>
+                            <span>${processingLabel}</span>
+                            <span>${approvalLabel}</span>
                         </div>
                     </div>
                     <button onclick="openThread('${thread.id}')" style="width: 100%; padding: 14px; background: linear-gradient(135deg, ${isArchived ? '#9CA3AF' : '#00A651'} 0%, ${isArchived ? '#6B7280' : '#007A33'} 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
-                        ${isArchived ? '완료된 쓰레드' : '쓰레드 열기'}
+                        ${isArchived ? archivedThreadLabel : openThreadLabel}
                     </button>
                 `;
                 
