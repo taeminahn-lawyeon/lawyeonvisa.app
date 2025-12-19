@@ -294,9 +294,9 @@
             const pendingOrder = localStorage.getItem('pendingOrder');
             if (pendingOrder) {
                 const orderInfo = JSON.parse(pendingOrder);
-                window.location.href = `visa-service-apply-jnu.html?service=${orderInfo.serviceId || ''}`;
+                window.location.href = `service-apply-jnu.html?service=${orderInfo.serviceId || ''}`;
             } else {
-                window.location.href = 'visa-dashboard-jnu.html';
+                window.location.href = 'dashboard-jnu.html';
             }
         }
 
