@@ -1394,12 +1394,14 @@
                 // ✅ 프로필 데이터 사용 (위에서 이미 조회함)
                 const profileData = userProfile;
                 
-                // 🚨 협약 기관 학생 거부 (organization이 'jnu' 또는 'korea'인 경우만)
-                if (profileData && (profileData.organization === 'jnu' || profileData.organization === 'korea')) {
-                    console.log('❌ 협약 기관 학생 감지:', profileData.organization);
-                    alert('협약 기관 학생 전용 페이지를 이용해주세요.\n\n회원이 아닙니다.');
-                    await signOut();
-                    window.location.reload();
+                // 🚨 협약 기관 학생 리디렉션 (organization이 'jnu' 또는 'korea'인 경우)
+                if (profileData && profileData.organization === 'jnu') {
+                    console.log('🔄 전남대 학생 감지 → dashboard-jnu.html로 리디렉션');
+                    window.location.href = 'dashboard-jnu.html';
+                    return;
+                } else if (profileData && profileData.organization === 'korea') {
+                    console.log('🔄 한국대 학생 감지 → dashboard-korea.html로 리디렉션');
+                    window.location.href = 'dashboard-korea.html';
                     return;
                 }
                 
