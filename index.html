@@ -1002,7 +1002,7 @@
                                     <span data-i18n="dashboard.application.step.approval">승인</span>
                                 </div>
                             </div>
-                            <button onclick="window.location.href='visa-thread-general.html'" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
+                            <button onclick="window.location.href='thread-general.html'" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
                                 <i class="fas fa-comments"></i> <span data-i18n="dashboard.application.openThread">쓰레드 열기</span>
                             </button>
                         </div>
@@ -1118,12 +1118,12 @@
                 console.log('🎓 대학 코드:', universityCode);
                 
                 if (universityCode === 'jnu') {
-                    console.log('➡️ 전남대 학생 - visa-login-jnu.html로 즉시 리디렉션');
-                    window.location.replace('visa-login-jnu.html' + window.location.search + window.location.hash);
+                    console.log('➡️ 전남대 학생 - login-jnu.html로 즉시 리디렉션');
+                    window.location.replace('login-jnu.html' + window.location.search + window.location.hash);
                     return;
                 } else if (universityCode === 'korea') {
-                    console.log('➡️ 한국대 학생 - visa-login-korea.html로 즉시 리디렉션');
-                    window.location.replace('visa-login-korea.html' + window.location.search + window.location.hash);
+                    console.log('➡️ 한국대 학생 - login-korea.html로 즉시 리디렉션');
+                    window.location.replace('login-korea.html' + window.location.search + window.location.hash);
                     return;
                 }
             }
@@ -1466,14 +1466,14 @@
                     console.log('🔍 프로필 없음 - universityCode:', universityCode);
                     
                     if (universityCode === 'jnu') {
-                        // 전남대 학생 → visa-login-jnu.html로 리디렉션 (프로필 생성 위해)
-                        console.log('➡️ 전남대 학생 - visa-login-jnu.html로 리디렉션');
-                        window.location.href = 'visa-login-jnu.html';
+                        // 전남대 학생 → login-jnu.html로 리디렉션 (프로필 생성 위해)
+                        console.log('➡️ 전남대 학생 - login-jnu.html로 리디렉션');
+                        window.location.href = 'login-jnu.html';
                         return;
                     } else if (universityCode === 'korea') {
-                        // 한국대 학생 → visa-login-korea.html로 리디렉션 (프로필 생성 위해)
-                        console.log('➡️ 한국대 학생 - visa-login-korea.html로 리디렉션');
-                        window.location.href = 'visa-login-korea.html';
+                        // 한국대 학생 → login-korea.html로 리디렉션 (프로필 생성 위해)
+                        console.log('➡️ 한국대 학생 - login-korea.html로 리디렉션');
+                        window.location.href = 'login-korea.html';
                         return;
                     }
                     
@@ -1794,7 +1794,7 @@
             applications.forEach(app => {
                 const card = document.createElement('a');
                 card.className = 'application-card';
-                card.href = `visa-thread-jnu.html?id=${app.thread_id}`;
+                card.href = `thread-general.html?id=${app.thread_id}`;
                 
                 let statusClass = 'pending';
                 let statusText = '대기중';
