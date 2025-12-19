@@ -421,7 +421,7 @@
             <div class="info-box">
                 <strong><i class="fas fa-info-circle"></i> 전남대학교 학생 인증</strong>
                 전남대학교에 등록된 유학생 학번을 입력하신 후 Google 계정으로 로그인하세요. 
-                학번이 확인되지 않으면 <a href="index.html" style="color: #007A33; font-weight: 600; text-decoration: underline;">일반 페이지</a>에서 가입한 후 관리자에게 문의해 주세요.
+                학번이 확인되지 않으면 관리자에게 문의해 주세요.
             </div>
         </div>
 
@@ -451,21 +451,12 @@
         </div>
 
         <!-- 일반 페이지 안내 (NEW) -->
-        <div class="footer-notice">
-            <p class="footer-text">
-                <i class="fas fa-question-circle"></i> 
-                <strong>전남대학교 학생이 아니신가요?</strong><br>
-                <span class="footer-subtitle">Not a CNU student?</span>
-            </p>
-            <a href="index.html" class="link-general">
-                일반 페이지로 이동 <i class="fas fa-arrow-right"></i>
-            </a>
-        </div>
+        <!-- 전남대학교 학생 전용 페이지 -->
     </div>
 
     <!-- Supabase 라이브러리 -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-client.js?v=7"></script>
+    <script src="js/supabase-client.js?v=20251218001"></script>
     
     <script src="js/ui-components.js?v=2"></script>
     <script>
@@ -536,7 +527,7 @@
                 
                 if (error || !student) {
                     console.error('❌ 학번 검증 실패:', error);
-                    resultDiv.innerHTML = '<span style="color: #EF4444;"><i class="fas fa-times-circle"></i> 등록되지 않은 학번입니다. <a href="index.html" style="color: #007A33; font-weight: 600; text-decoration: underline;">일반 페이지</a>에서 가입한 후 관리자에게 문의해 주세요.</span>';
+                    resultDiv.innerHTML = '<span style="color: #EF4444;"><i class="fas fa-times-circle"></i> 등록되지 않은 학번입니다. 관리자에게 문의해 주세요.</span>';
                     googleLoginBtn.disabled = false;
                     googleLoginBtn.style.opacity = '1';
                     googleLoginBtn.innerHTML = '학번 확인 후 Google 로그인';
@@ -836,29 +827,11 @@
                         if (profileData.organization === 'jnu') {
                             console.log('✅ JNU 학생 계정 - visa-dashboard-jnu.html로 이동');
                             window.location.href = 'visa-dashboard-jnu.html';
-                        } else if (profileData.organization === null || profileData.organization === '') {
-                            // organization이 없는 일반 계정 - 안내 메시지 표시 후 로그아웃
-                            console.log('ℹ️ 일반 계정 (organization 없음) - 전남대 학번 등록 필요');
-                            
-                            // 사용자에게 알림
-                            const confirmUpdate = confirm(
-                                '전남대학교 학생 전용 페이지입니다.\n\n' +
-                                '전남대 학생이신 경우, 로그아웃 후 학번을 입력하여 다시 로그인해주세요.\n\n' +
-                                '일반 사용자는 메인 페이지(index.html)를 이용해주세요.\n\n' +
-                                '로그아웃하시겠습니까?'
-                            );
-                            
-                            if (confirmUpdate) {
-                                await supabaseClient.auth.signOut();
-                                window.location.reload();
-                            } else {
-                                // 취소하면 index.html로 이동
-                                window.location.href = 'index.html';
-                            }
                         } else {
-                            console.log('⚠️ 다른 organization 계정 - 강제 로그아웃');
+                            // organization이 다른 계정 - 거부
+                            console.log('❌ 전남대 학생이 아닌 계정:', profileData.organization);
+                            alert('전남대학교 학생 전용 페이지입니다.\n\n회원이 아닙니다.');
                             await supabaseClient.auth.signOut();
-                            alert('전남대학교 학생 전용 페이지입니다.\n' + profileData.organization + ' 계정은 해당 대학 페이지를 이용해주세요.');
                             window.location.reload();
                         }
                     } else {
