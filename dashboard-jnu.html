@@ -1131,7 +1131,7 @@
                             
                             // 세션 정리를 위해 짧은 지연 후 리디렉션
                             setTimeout(() => {
-                                window.location.href = 'visa-login-jnu.html';
+                                window.location.href = 'login-jnu.html';
                             }, 100);
                         } catch (error) {
                             console.error('❌ 로그아웃 실패:', error);
@@ -1172,7 +1172,7 @@
                 const cachedProfile = sessionStorage.getItem('userProfileCache');
                 if (cachedProfile) {
                     console.log('✅ 캐시된 프로필 사용');
-                    window.location.href = 'visa-service-apply-jnu.html?service=emergency-legal';
+                    window.location.href = 'service-apply-jnu.html?service=emergency-legal';
                     return;
                 }
                 
@@ -1206,7 +1206,7 @@
                 const cachedProfile = sessionStorage.getItem('userProfileCache');
                 if (cachedProfile) {
                     console.log('✅ 캐시된 프로필 사용');
-                    window.location.href = 'visa-service-apply-jnu.html?service=visa-prediagnosis';
+                    window.location.href = 'service-apply-jnu.html?service=visa-prediagnosis';
                     return;
                 }
                 
