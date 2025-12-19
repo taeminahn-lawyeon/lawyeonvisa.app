@@ -41,26 +41,39 @@ if (window.supabase) {
 // Google 로그인
 async function signInWithGoogle() {
     try {
-        // localStorage에서 universityCode 확인
-        const universityCode = localStorage.getItem('universityCode');
-        console.log('🎓 Google 로그인 - 대학 코드:', universityCode);
+        // 🚨 현재 페이지 URL 확인
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        console.log('🔍 현재 페이지:', currentPage);
         
-        // 현재 페이지로 리디렉션 (OAuth 콜백 후 프로필 생성 로직 실행 위해)
-        // 대학별 로그인 페이지에서 프로필 생성 후 대시보드로 이동
+        // 현재 페이지로 리디렉션
         let redirectUrl = window.location.href;
         
-        if (universityCode === 'jnu') {
-            // 전남대 로그인 페이지로 리디렉션 (프로필 생성 위해)
+        // 🚨 페이지별 리디렉션 URL 및 universityCode 설정
+        if (currentPage === 'visa-login-jnu.html') {
+            // 전남대 학생 로그인
+            localStorage.setItem('universityCode', 'jnu');
             redirectUrl = window.location.origin + '/visa-login-jnu.html';
-            console.log('✅ 전남대 학생 - 리디렉션:', redirectUrl);
-        } else if (universityCode === 'korea') {
-            // 한국대 로그인 페이지로 리디렉션 (프로필 생성 위해)
+            console.log('✅ 전남대 학생 로그인 - 대학 코드 설정');
+        } else if (currentPage === 'visa-login-korea.html') {
+            // 한국대 학생 로그인
+            localStorage.setItem('universityCode', 'korea');
             redirectUrl = window.location.origin + '/visa-login-korea.html';
-            console.log('✅ 한국대 학생 - 리디렉션:', redirectUrl);
+            console.log('✅ 한국대 학생 로그인 - 대학 코드 설정');
+        } else if (currentPage === 'partner-login-jnu.html') {
+            // 전남대 관리자 로그인 (universityCode 사용 안 함)
+            localStorage.removeItem('universityCode');
+            redirectUrl = window.location.origin + '/partner-login-jnu.html';
+            console.log('✅ 전남대 관리자 로그인');
+        } else if (currentPage === 'partner-login-korea.html') {
+            // 한국대 관리자 로그인 (universityCode 사용 안 함)
+            localStorage.removeItem('universityCode');
+            redirectUrl = window.location.origin + '/partner-login-korea.html';
+            console.log('✅ 한국대 관리자 로그인');
         } else {
-            // 일반 사용자는 index.html로
+            // 일반 페이지 (index.html 등) - universityCode 삭제
+            localStorage.removeItem('universityCode');
             redirectUrl = window.location.origin + '/index.html';
-            console.log('ℹ️ 일반 사용자 - 리디렉션:', redirectUrl);
+            console.log('✅ 일반 사용자 로그인 - 대학 코드 삭제');
         }
         
         const { data, error } = await supabaseClient.auth.signInWithOAuth({
