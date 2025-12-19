@@ -49,15 +49,15 @@ async function signInWithGoogle() {
         let redirectUrl = window.location.href;
         
         // 🚨 페이지별 리디렉션 URL 및 universityCode 설정
-        if (currentPage === 'visa-login-jnu.html') {
+        if (currentPage === 'login-jnu.html') {
             // 전남대 학생 로그인
             localStorage.setItem('universityCode', 'jnu');
-            redirectUrl = window.location.origin + '/visa-login-jnu.html';
+            redirectUrl = window.location.origin + '/login-jnu.html';
             console.log('✅ 전남대 학생 로그인 - 대학 코드 설정');
-        } else if (currentPage === 'visa-login-korea.html') {
+        } else if (currentPage === 'login-korea.html') {
             // 한국대 학생 로그인
             localStorage.setItem('universityCode', 'korea');
-            redirectUrl = window.location.origin + '/visa-login-korea.html';
+            redirectUrl = window.location.origin + '/login-korea.html';
             console.log('✅ 한국대 학생 로그인 - 대학 코드 설정');
         } else if (currentPage === 'partner-login-jnu.html') {
             // 전남대 관리자 로그인 (universityCode 사용 안 함)
