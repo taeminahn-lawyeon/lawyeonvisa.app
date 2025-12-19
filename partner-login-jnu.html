@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>담당자 대시보드 - 법무법인 로연 출입국이민지원센터 전남대학교 전용 페이지</title>
+    <title>담당자 로그인 - 법무법인 로연 출입국이민지원센터 전남대학교 전용 페이지</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     
-    <!-- Supabase 라이브러리 (head에서 먼저 로드) -->
+    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=8"></script>
+    
     <style>
         * {
             margin: 0;
@@ -18,859 +20,482 @@
 
         body {
             font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-            background: #F9FAFB;
-            min-height: 100vh;
-            color: #191F28;
-        }
-
-        /* 헤더 - 토스 스타일 */
-        .header {
-            background: white;
-            padding: 20px 24px;
-            color: #191F28;
-            box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.05);
-            border-bottom: none;
-        }
-
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .admin-title {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .admin-title h1 {
-            font-size: 24px;
-            font-weight: 700;
-            color: #191F28;
-            letter-spacing: -0.02em;
-        }
-
-        .admin-title .jnu-badge {
-            display: inline-block;
             background: linear-gradient(135deg, #007A33 0%, #005A25 100%);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-left: 10px;
-        }
-
-        .admin-title p {
-            font-size: 14px;
-            color: #4E5968;
-            margin-top: 0;
-        }
-
-        .header-actions {
+            min-height: 100vh;
             display: flex;
-            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
-        .header-btn {
-            background: #F2F4F6;
-            border: none;
-            color: #191F28;
-            padding: 10px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            font-size: 14px;
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 500px;
+            padding: 50px 40px;
+            animation: fadeInUp 0.6s ease;
         }
 
-        .header-btn:hover {
-            background: #E5E8EB;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        /* 메인 컨테이너 */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        /* 통계 카드 */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+        .logo {
+            text-align: center;
             margin-bottom: 40px;
         }
 
-        .stat-card {
-            background: white;
-            padding: 24px;
-            border-radius: 16px;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            border: 1px solid #E5E8EB;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .stat-card:hover {
-            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
-        }
-
-        .stat-content p {
-            font-size: 14px;
-            color: #4E5968;
-            font-weight: 500;
-        }
-
-        .stat-content h3 {
-            font-size: 32px;
-            font-weight: 700;
-            color: #191F28;
-            letter-spacing: -0.02em;
-        }
-
-        .stat-card.warning .stat-content h3 {
-            color: #EF4444;
-        }
-
-        .stat-card.success .stat-content h3 {
-            color: #00A651;
-        }
-
-        /* 필터 섹션 */
-        .filter-section {
-            background: white;
-            padding: 24px;
-            border-radius: 16px;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            border: 1px solid #E5E8EB;
-            margin-bottom: 24px;
-        }
-
-        .filter-section h2 {
-            font-size: 18px;
+        .logo i {
+            font-size: 48px;
+            color: #007A33;
             margin-bottom: 20px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
             color: #191F28;
+            margin-bottom: 8px;
             font-weight: 700;
-            letter-spacing: -0.02em;
         }
 
-        .filter-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
+        .logo .subtitle {
+            font-size: 16px;
+            color: #007A33;
+            font-weight: 600;
+            margin-bottom: 5px;
         }
 
-        .filter-item {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+        .logo p {
+            color: #6B7684;
+            font-size: 13px;
+            line-height: 1.5;
         }
 
-        .filter-item label {
+        .university-badge {
+            background: linear-gradient(135deg, #007A33 0%, #005A25 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0, 122, 51, 0.3);
+        }
+
+        .university-badge i {
+            margin-right: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
             font-size: 14px;
             font-weight: 600;
-            color: #555;
+            color: #191F28;
+            margin-bottom: 8px;
         }
 
-        .filter-item input,
-        .filter-item select {
-            padding: 10px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 14px;
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #E5E8EB;
+            border-radius: 12px;
+            font-size: 15px;
             transition: all 0.3s ease;
+            font-family: "Pretendard", sans-serif;
         }
 
-        .filter-item input:focus,
-        .filter-item select:focus {
+        .form-group input:focus {
             outline: none;
             border-color: #007A33;
+            box-shadow: 0 0 0 4px rgba(0, 122, 51, 0.1);
         }
 
-        .filter-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .filter-btn {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .filter-btn.primary {
-            background: #3182F6;
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #007A33 0%, #005A25 100%);
             color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
         }
 
-        .filter-btn.primary:hover {
-            background: #1B64DA;
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 122, 51, 0.3);
         }
 
-        .filter-btn.secondary {
-            background: #F2F4F6;
-            color: #191F28;
+        .login-btn:active {
+            transform: translateY(0);
         }
 
-        .filter-btn.secondary:hover {
+        .login-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
             background: #E5E8EB;
         }
 
-        /* 학생 테이블 - 토스 스타일 */
-        .students-section {
+        .divider span {
+            position: relative;
             background: white;
-            padding: 24px;
-            border-radius: 16px;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            border: 1px solid #E5E8EB;
-        }
-
-        .students-section h2 {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: #191F28;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .student-count {
+            padding: 0 15px;
+            color: #6B7684;
             font-size: 14px;
-            color: #4E5968;
             font-weight: 500;
         }
 
-        .students-table {
+        .google-login-btn {
             width: 100%;
-            border-collapse: collapse;
-            overflow: hidden;
-        }
-
-        .students-table thead {
-            background: #F9FAFB;
-            border-top: 1px solid #E5E8EB;
-            border-bottom: 1px solid #E5E8EB;
-        }
-
-        .students-table th {
-            padding: 12px 16px;
-            text-align: left;
-            font-weight: 600;
-            color: #4E5968;
-            font-size: 13px;
-            white-space: nowrap;
-        }
-
-        .students-table td {
-            padding: 16px;
-            border-bottom: 1px solid #F2F4F6;
-            font-size: 14px;
-            color: #191F28;
-        }
-
-        .students-table tr:hover {
-            background: #F9FAFB;
-        }
-
-        .visa-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 600;
-            background: #E8F3FF;
-            color: #1B64DA;
-        }
-
-        .diagnosis-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .diagnosis-badge.completed {
-            background: #E8FAF0;
-            color: #00A651;
-        }
-
-        .diagnosis-badge.pending {
-            background: #FFF4E8;
-            color: #F59638;
-        }
-
-        .expiry-warning {
-            color: #EF4444;
-            font-weight: 600;
-        }
-
-        .expiry-normal {
-            color: #00A651;
-        }
-
-        .action-btn {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 12px;
+            padding: 14px 16px;
+            background: white;
+            border: 2px solid #E5E8EB;
+            border-radius: 12px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin: 0 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        .action-btn.view {
-            background: #3182F6;
-            color: white;
+        .google-login-btn:hover {
+            background: #F9FAFB;
+            border-color: #007A33;
         }
 
-        .action-btn.view:hover {
-            background: #1B64DA;
+        .google-login-btn img {
+            width: 20px;
+            height: 20px;
         }
 
-        /* 빈 상태 */
-        .empty-state {
+        .info-box {
+            background: #F0FDF4;
+            border: 2px solid #007A33;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #191F28;
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #007A33;
+            font-size: 14px;
+        }
+
+        .info-box i {
+            margin-right: 6px;
+        }
+
+        .back-link {
             text-align: center;
-            padding: 60px 20px;
-            color: #999;
+            margin-top: 25px;
         }
 
-        .empty-state i {
-            font-size: 64px;
-            margin-bottom: 20px;
-            opacity: 0.5;
+        .back-link a {
+            color: #007A33;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
         }
 
-        .empty-state p {
-            font-size: 16px;
+        .back-link a:hover {
+            text-decoration: underline;
         }
 
-        /* 반응형 */
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
+        .error-message {
+            background: #FEE2E2;
+            border: 2px solid #EF4444;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-top: 15px;
+            color: #B91C1C;
+            font-size: 14px;
+            display: none;
+        }
+
+        .error-message i {
+            margin-right: 8px;
+        }
+
+        @media (max-width: 576px) {
+            .login-container {
+                padding: 40px 30px;
             }
 
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .filter-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .students-table {
-                display: block;
-                overflow-x: auto;
-            }
-
-            .students-section h2 {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
+            .logo h1 {
+                font-size: 22px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="header-content">
-            <div class="admin-title">
-                <h1>담당자 대시보드 <span class="jnu-badge">전남대학교</span></h1>
-                <p>유학생 출입국이민 관리 시스템</p>
-            </div>
-            <div class="header-actions">
-                <button class="header-btn" onclick="exportToExcel()">
-                    📥 Excel 내보내기
-                </button>
-                <button class="header-btn" onclick="location.reload()">
-                    🔄 새로고침
-                </button>
-                <button class="header-btn" onclick="logout()">
-                    🚪 로그아웃
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <!-- 통계 카드 -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-content">
-                    <p>전체 학생 수</p>
-                    <h3 id="totalStudents">0</h3>
-                </div>
-            </div>
-
-            <div class="stat-card warning">
-                <div class="stat-content">
-                    <p>체류만료 임박 (30일 이내)</p>
-                    <h3 id="expiringStudents">0</h3>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-content">
-                    <p>사전진단 미완료</p>
-                    <h3 id="pendingDiagnosis">0</h3>
-                </div>
-            </div>
-
-            <div class="stat-card success">
-                <div class="stat-content">
-                    <p>예정 졸업 (이번 학기)</p>
-                    <h3 id="graduatingStudents">0</h3>
-                </div>
-            </div>
+    <div class="login-container">
+        <div class="logo">
+            <i class="fas fa-university"></i>
+            <h1>전남대학교</h1>
+            <p class="subtitle">출입국이민지원센터</p>
+            <p>담당자 전용 로그인</p>
         </div>
 
-        <!-- 필터 섹션 -->
-        <div class="filter-section">
-            <h2>학생 검색 및 필터</h2>
-            <div class="filter-grid">
-                <div class="filter-item">
-                    <label>학생명</label>
-                    <input type="text" id="filterName" placeholder="이름 검색...">
-                </div>
-                <div class="filter-item">
-                    <label>학번</label>
-                    <input type="text" id="filterStudentNumber" placeholder="학번 검색...">
-                </div>
-                <div class="filter-item">
-                    <label>학과</label>
-                    <input type="text" id="filterDepartment" placeholder="학과 검색...">
-                </div>
-                <div class="filter-item">
-                    <label>국적</label>
-                    <select id="filterNationality">
-                        <option value="">전체</option>
-                        <option value="중국">중국</option>
-                        <option value="베트남">베트남</option>
-                        <option value="미국">미국</option>
-                        <option value="일본">일본</option>
-                        <option value="몽골">몽골</option>
-                        <option value="필리핀">필리핀</option>
-                        <option value="기타">기타</option>
-                    </select>
-                </div>
-                <div class="filter-item">
-                    <label>비자 종류</label>
-                    <select id="filterVisa">
-                        <option value="">전체</option>
-                        <option value="D-2">D-2 (유학)</option>
-                        <option value="D-10">D-10 (구직)</option>
-                        <option value="F-4">F-4 (재외동포)</option>
-                        <option value="E-7">E-7 (특정활동)</option>
-                    </select>
-                </div>
-                <div class="filter-item">
-                    <label>사전진단 여부</label>
-                    <select id="filterDiagnosis">
-                        <option value="">전체</option>
-                        <option value="completed">완료</option>
-                        <option value="pending">미완료</option>
-                    </select>
-                </div>
-                <div class="filter-item">
-                    <label>체류만료</label>
-                    <select id="filterExpiry">
-                        <option value="">전체</option>
-                        <option value="expired">만료됨</option>
-                        <option value="30days">30일 이내</option>
-                        <option value="60days">60일 이내</option>
-                        <option value="90days">90일 이내</option>
-                    </select>
-                </div>
-                <div class="filter-item">
-                    <label>예정 졸업</label>
-                    <select id="filterGraduation">
-                        <option value="">전체</option>
-                        <option value="2025-02">2025년 2월</option>
-                        <option value="2025-08">2025년 8월</option>
-                        <option value="2026-02">2026년 2월</option>
-                        <option value="2026-08">2026년 8월</option>
-                    </select>
-                </div>
-            </div>
-            <div class="filter-actions">
-                <button class="filter-btn primary" onclick="applyFilters()">
-                    🔍 검색
-                </button>
-                <button class="filter-btn secondary" onclick="resetFilters()">
-                    🔄 초기화
-                </button>
-            </div>
+        <div class="university-badge">
+            <i class="fas fa-user-tie"></i>
+            국제교류팀 담당자
         </div>
 
-        <!-- 학생 목록 -->
-        <div class="students-section">
-            <h2>
-                <span>학생 목록</span>
-                <span class="student-count" id="studentCount">총 0명</span>
-            </h2>
-            <div id="studentsTableContainer">
-                <!-- 테이블이 여기에 동적으로 생성됨 -->
+        <!-- 이메일/비밀번호 로그인 -->
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="email">
+                    <i class="fas fa-envelope"></i> 이메일
+                </label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    placeholder="담당자 이메일을 입력하세요"
+                    required
+                >
             </div>
+
+            <div class="form-group">
+                <label for="password">
+                    <i class="fas fa-lock"></i> 비밀번호
+                </label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    placeholder="비밀번호를 입력하세요"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="login-btn" id="loginBtn">
+                <i class="fas fa-sign-in-alt"></i> 로그인
+            </button>
+        </form>
+
+        <div class="error-message" id="errorMessage">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="errorText"></span>
+        </div>
+
+        <div class="divider">
+            <span>또는</span>
+        </div>
+
+        <!-- Google 로그인 -->
+        <button class="google-login-btn" onclick="handleGoogleLogin()">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+            Google 계정으로 로그인
+        </button>
+
+        <div class="info-box">
+            <strong><i class="fas fa-info-circle"></i> 담당자 권한 안내</strong>
+            전남대학교 국제교류팀 담당자만 접근 가능합니다. 
+            권한이 없는 경우 관리자에게 문의하세요.
+        </div>
+
+        <div class="back-link">
+            <a href="index.html">
+                <i class="fas fa-arrow-left"></i> 메인 페이지로 돌아가기
+            </a>
         </div>
     </div>
 
     <script>
-        // 전역 변수
-        let allStudents = [];
-        let filteredStudents = [];
+        // 에러 메시지 표시
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            errorText.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
 
-        // 페이지 로드 시 초기화
-        window.addEventListener('DOMContentLoaded', async function() {
-            console.log('🎓 전남대학교 담당자 대시보드 로드 시작');
+        // 이메일/비밀번호 로그인
+        async function handleLogin(event) {
+            event.preventDefault();
             
-            // 담당자 권한 확인
-            const hasAccess = await checkPartnerAccess();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
             
-            if (!hasAccess) return;
-            
-            // 데이터 로드
-            loadStudentsData();
-        });
-
-        // 담당자 권한 확인
-        async function checkPartnerAccess() {
-            console.log('🔍🔍🔍 [DASHBOARD] checkPartnerAccess 시작');
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 로그인 중...';
             
             try {
-                // Supabase 세션 확인
-                const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
+                const result = await signInWithEmail(email, password);
                 
-                console.log('🔍 [DASHBOARD] 세션 확인 결과:', { 
-                    hasSession: !!session, 
-                    hasUser: !!session?.user,
-                    email: session?.user?.email,
-                    error: sessionError 
+                if (result.success) {
+                    // 권한 확인
+                    const hasAccess = await checkPartnerAccess(result.user);
+                    
+                    if (hasAccess) {
+                        window.location.href = 'partner-dashboard-jnu.html';
+                    } else {
+                        await signOut();
+                        showError('담당자 권한이 없습니다. 관리자에게 문의하세요.');
+                        loginBtn.disabled = false;
+                        loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> 로그인';
+                    }
+                } else {
+                    showError(result.error || '로그인에 실패했습니다.');
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> 로그인';
+                }
+            } catch (error) {
+                console.error('로그인 오류:', error);
+                showError('로그인 중 오류가 발생했습니다.');
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> 로그인';
+            }
+        }
+
+        // Google 로그인
+        async function handleGoogleLogin() {
+            try {
+                // Google OAuth는 리디렉션 방식이므로, 로그인 전 플래그 저장
+                sessionStorage.setItem('partner_login_redirect', 'partner-dashboard-jnu.html');
+                
+                const { data, error } = await supabase.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: window.location.origin + '/partner-login-jnu.html'
+                    }
                 });
                 
-                if (sessionError || !session || !session.user) {
-                    console.error('❌ [DASHBOARD] 로그인 세션 없음');
-                    document.getElementById('content').innerHTML = '<div style="padding: 40px; text-align: center;"><h2>⚠️ 로그인 세션 없음</h2><p>이메일: 없음</p><a href="visa-login-jnu.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #007A33; color: white; text-decoration: none; border-radius: 8px;">로그인 페이지로 이동</a></div>';
-                    return false;
+                if (error) {
+                    showError('Google 로그인에 실패했습니다: ' + error.message);
                 }
-                
-                console.log('✅ [DASHBOARD] 로그인된 사용자:', session.user.email);
-                
+            } catch (error) {
+                console.error('Google 로그인 오류:', error);
+                showError('Google 로그인 중 오류가 발생했습니다.');
+            }
+        }
+
+        // 담당자 권한 확인
+        async function checkPartnerAccess(user) {
+            if (!user || !user.email) {
+                console.error('❌ 유효하지 않은 사용자 객체');
+                return false;
+            }
+            
+            console.log('🔍 권한 확인 중:', user.email);
+            
+            try {
                 // admins 테이블에서 role='partner_jnu' 확인
-                console.log('🔍 [DASHBOARD] admins 테이블 조회 시작...');
-                const { data: adminData, error: adminError } = await supabaseClient
+                const { data, error } = await supabase
                     .from('admins')
                     .select('*')
-                    .eq('email', session.user.email)
+                    .eq('email', user.email)
                     .eq('role', 'partner_jnu')
-                    .maybeSingle();
+                    .single();
                 
-                console.log('📊 [DASHBOARD] admins 테이블 조회 결과:', { 
-                    adminData, 
-                    adminError,
-                    hasData: !!adminData,
-                    errorCode: adminError?.code 
-                });
+                console.log('📊 admins 테이블 조회 결과:', { data, error });
                 
-                if (adminError) {
-                    console.error('❌ [DASHBOARD] admins 테이블 조회 오류');
-                    document.getElementById('content').innerHTML = '<div style="padding: 40px; text-align: center;"><h2>⚠️ DB 조회 오류</h2><p>이메일: ' + session.user.email + '</p><p>에러 코드: ' + (adminError.code || '알 수 없음') + '</p><p>에러 메시지: ' + (adminError.message || '알 수 없음') + '</p><a href="visa-login-jnu.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #007A33; color: white; text-decoration: none; border-radius: 8px;">로그인 페이지로 이동</a></div>';
+                if (error) {
+                    // PGRST116은 결과가 없을 때 발생하는 에러
+                    if (error.code === 'PGRST116') {
+                        console.error('❌ admins 테이블에 해당 이메일 없음:', user.email);
+                    } else {
+                        console.error('❌ 권한 확인 오류:', error);
+                    }
                     return false;
                 }
                 
-                if (!adminData) {
-                    console.error('❌ [DASHBOARD] partner_jnu 역할 없음');
-                    document.getElementById('content').innerHTML = '<div style="padding: 40px; text-align: center;"><h2>⚠️ 권한 없음</h2><p>로그인된 이메일: ' + session.user.email + '</p><p>이 계정은 admins 테이블에 role=partner_jnu로 등록되어 있지 않습니다.</p><p><strong>Supabase에서 확인:</strong></p><pre style="background: #f5f5f5; padding: 12px; border-radius: 4px; text-align: left; display: inline-block;">SELECT * FROM admins WHERE email = \'' + session.user.email + '\';</pre><a href="visa-login-jnu.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #007A33; color: white; text-decoration: none; border-radius: 8px;">로그인 페이지로 이동</a></div>';
-                    return false;
+                if (data) {
+                    console.log('✅ 권한 확인 성공:', data);
+                    return true;
                 }
                 
-                console.log('✅✅✅ [DASHBOARD] 담당자 접근 허용:', session.user.email);
-                return true;
+                console.error('❌ 권한 없음: data가 null');
+                return false;
             } catch (error) {
-                console.error('❌ [DASHBOARD] 권한 확인 중 예외 발생:', error);
-                document.getElementById('content').innerHTML = '<div style="padding: 40px; text-align: center;"><h2>⚠️ 예외 발생</h2><p>에러: ' + error.message + '</p><pre style="background: #f5f5f5; padding: 12px; border-radius: 4px; text-align: left; display: inline-block;">' + error.stack + '</pre><a href="visa-login-jnu.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #007A33; color: white; text-decoration: none; border-radius: 8px;">로그인 페이지로 이동</a></div>';
+                console.error('❌ 권한 확인 중 예외 발생:', error);
                 return false;
             }
         }
 
-        // 학생 데이터 로드
-        async function loadStudentsData() {
+        // 페이지 로드 시 세션 확인
+        window.addEventListener('DOMContentLoaded', async function() {
             try {
-                const { data: students, error } = await supabaseClient
-                    .from('jnu_students')
-                    .select('*')
-                    .order('name', { ascending: true });
+                // Supabase 세션 직접 확인
+                const { data: { session }, error } = await supabase.auth.getSession();
                 
                 if (error) {
-                    console.error('❌ 학생 데이터 로드 오류:', error);
-                    allStudents = [];
-                } else {
-                    console.log('✅ 학생 데이터 로드 성공:', students.length, '명');
-                    allStudents = students;
+                    console.error('❌ 세션 확인 오류:', error);
+                    return;
                 }
                 
-                filteredStudents = [...allStudents];
-                
-                updateStatistics();
-                renderStudentsTable();
-            } catch (error) {
-                console.error('❌ 학생 데이터 로드 오류:', error);
-                alert('데이터를 불러오는 중 오류가 발생했습니다.');
-            }
-        }
-
-        // 통계 업데이트
-        function updateStatistics() {
-            // 전체 학생 수
-            document.getElementById('totalStudents').textContent = allStudents.length;
-            
-            // 체류만료 임박 (30일 이내)
-            const now = new Date();
-            const expiringCount = allStudents.filter(s => {
-                if (!s.stay_expiry) return false;
-                const expiry = new Date(s.stay_expiry);
-                const diffDays = Math.floor((expiry - now) / (1000 * 60 * 60 * 24));
-                return diffDays >= 0 && diffDays <= 30;
-            }).length;
-            document.getElementById('expiringStudents').textContent = expiringCount;
-            
-            // 사전진단 미완료 (현재 반기 기준)
-            const currentSemester = getCurrentSemester();
-            const pendingCount = allStudents.filter(s => 
-                !s.diagnosis_completed || s.diagnosis_semester !== currentSemester
-            ).length;
-            document.getElementById('pendingDiagnosis').textContent = pendingCount;
-            
-            // 예정 졸업 (이번 학기)
-            const graduatingCount = allStudents.filter(s => 
-                s.expected_graduation && s.expected_graduation.startsWith(currentSemester.split('-')[0])
-            ).length;
-            document.getElementById('graduatingStudents').textContent = graduatingCount;
-        }
-
-        // 현재 반기 계산
-        function getCurrentSemester() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = now.getMonth() + 1;
-            
-            // 1월~7월: 1학기, 8월~12월: 2학기
-            return month <= 7 ? `${year}-1` : `${year}-2`;
-        }
-
-        // 학생 테이블 렌더링
-        function renderStudentsTable() {
-            const container = document.getElementById('studentsTableContainer');
-            document.getElementById('studentCount').textContent = `총 ${filteredStudents.length}명`;
-            
-            if (filteredStudents.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <p>📭 검색 결과가 없습니다.</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            const currentSemester = getCurrentSemester();
-            
-            let tableHTML = `
-                <table class="students-table">
-                    <thead>
-                        <tr>
-                            <th>학번</th>
-                            <th>학생명 (영문)</th>
-                            <th>학과</th>
-                            <th>국적</th>
-                            <th>비자</th>
-                            <th>체류만료일</th>
-                            <th>외국인등록번호</th>
-                            <th>사전진단</th>
-                            <th>예정 졸업</th>
-                            <th>진단결과</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-            
-            filteredStudents.forEach(student => {
-                // 체류만료일 계산
-                let expiryDisplay = '-';
-                let expiryClass = 'expiry-normal';
-                if (student.stay_expiry) {
-                    const expiry = new Date(student.stay_expiry);
-                    const now = new Date();
-                    const diffDays = Math.floor((expiry - now) / (1000 * 60 * 60 * 24));
+                if (session && session.user) {
+                    console.log('✅ 이미 로그인된 사용자:', session.user.email);
                     
-                    // 날짜 포맷: 2025. 12. 31.
-                    const year = expiry.getFullYear();
-                    const month = String(expiry.getMonth() + 1).padStart(2, '0');
-                    const day = String(expiry.getDate()).padStart(2, '0');
-                    const formattedDate = `${year}. ${month}. ${day}.`;
+                    // 권한 확인
+                    const hasAccess = await checkPartnerAccess(session.user);
                     
-                    if (diffDays < 0) {
-                        expiryDisplay = `${formattedDate} <span style="color: #EF4444; font-weight: 600;">(만료됨)</span>`;
-                        expiryClass = 'expiry-warning';
-                    } else if (diffDays <= 30) {
-                        expiryDisplay = `${formattedDate} <span style="color: #EF4444; font-weight: 600;">(${diffDays}일 남음)</span>`;
-                        expiryClass = 'expiry-warning';
+                    if (hasAccess) {
+                        console.log('✅ 권한 확인 완료 - 대시보드로 이동');
+                        
+                        // Google 로그인 후 리디렉션 확인
+                        const redirectUrl = sessionStorage.getItem('partner_login_redirect');
+                        sessionStorage.removeItem('partner_login_redirect');
+                        
+                        window.location.href = redirectUrl || 'partner-dashboard-jnu.html';
                     } else {
-                        expiryDisplay = formattedDate;
+                        console.log('❌ 권한 없음 - admins 테이블 확인 필요');
+                        await supabase.auth.signOut();
+                        showError('전남대학교 담당자 전용 페이지입니다.\n\n권한이 없습니다.');
                     }
+                } else {
+                    console.log('ℹ️ 로그인 필요');
                 }
-                
-                // 사전진단 여부
-                const needsDiagnosis = !student.diagnosis_completed || 
-                                      student.diagnosis_semester !== currentSemester;
-                const diagnosisDisplay = needsDiagnosis 
-                    ? '<span class="diagnosis-badge pending">미완료</span>'
-                    : '<span class="diagnosis-badge completed">✓ 완료</span>';
-                
-                // 사전진단 결과 샘플
-                const diagnosisResults = [
-                    '✅ 정상 - 문제없음',
-                    '⚠️ 시간제 취업 신고 없이 불법취업 활동 의심',
-                    '⚠️ 체류자격 변경 민원 신청 전 해당 부분 소명 및 자진신고 권고',
-                    '⚠️ 학업 성적 불량으로 인한 체류자격 유지 위험',
-                    '⚠️ 출석률 저조 (70% 미만) - 체류자격 취소 위험',
-                    '✅ 정상 - 문제없음',
-                    '⚠️ 미등록 아르바이트 활동 의심 - 소명 필요',
-                    '✅ 정상 - 문제없음'
-                ];
-                
-                // 학생마다 고정된 결과를 보여주기 위해 학번 기반으로 인덱스 계산
-                const studentIndex = parseInt(student.student_number.replace(/\D/g, '')) || 0;
-                const diagnosisResult = needsDiagnosis 
-                    ? '<span style="color: #999;">-</span>'
-                    : diagnosisResults[studentIndex % diagnosisResults.length];
-                
-                tableHTML += `
-                    <tr>
-                        <td><code style="font-size: 11px; background: #f3f4f6; padding: 2px 6px; border-radius: 4px;">${student.student_number}</code></td>
-                        <td><strong>${student.passport_name || student.name || '알 수 없음'}</strong></td>
-                        <td>${student.department || '-'}</td>
-                        <td>${student.nationality || '-'}</td>
-                        <td>${student.visa_type ? `<span class="visa-badge">${student.visa_type}</span>` : '-'}</td>
-                        <td class="${expiryClass}">${expiryDisplay}</td>
-                        <td>${student.alien_registration_number || '-'}</td>
-                        <td>${diagnosisDisplay}</td>
-                        <td>${student.expected_graduation || '-'}</td>
-                        <td style="max-width: 300px; font-size: 13px;">${diagnosisResult}</td>
-                    </tr>
-                `;
-            });
-            
-            tableHTML += `
-                    </tbody>
-                </table>
-            `;
-            
-            container.innerHTML = tableHTML;
-        }
-
-        // 필터 적용
-        function applyFilters() {
-            const nameFilter = document.getElementById('filterName').value.toLowerCase();
-            const studentNumberFilter = document.getElementById('filterStudentNumber').value.toLowerCase();
-            const departmentFilter = document.getElementById('filterDepartment').value.toLowerCase();
-            const nationalityFilter = document.getElementById('filterNationality').value;
-            const visaFilter = document.getElementById('filterVisa').value;
-            const diagnosisFilter = document.getElementById('filterDiagnosis').value;
-            const expiryFilter = document.getElementById('filterExpiry').value;
-            const graduationFilter = document.getElementById('filterGraduation').value;
-            
-            const currentSemester = getCurrentSemester();
-            
-            filteredStudents = allStudents.filter(student => {
-                if (nameFilter && !student.name?.toLowerCase().includes(nameFilter)) return false;
-                if (studentNumberFilter && !student.student_number?.toLowerCase().includes(studentNumberFilter)) return false;
-                if (departmentFilter && !student.department?.toLowerCase().includes(departmentFilter)) return false;
-                if (nationalityFilter && student.nationality !== nationalityFilter) return false;
-                if (visaFilter && student.visa_type !== visaFilter) return false;
-                
-                // 사전진단 필터
-                if (diagnosisFilter) {
-                    const needsDiagnosis = !student.diagnosis_completed || 
-                                          student.diagnosis_semester !== currentSemester;
-                    if (diagnosisFilter === 'completed' && needsDiagnosis) return false;
-                    if (diagnosisFilter === 'pending' && !needsDiagnosis) return false;
-                }
-                
-                // 체류만료 필터
-                if (expiryFilter && student.stay_expiry) {
-                    const expiry = new Date(student.stay_expiry);
-                    const now = new Date();
-                    const diffDays = Math.floor((expiry - now) / (1000 * 60 * 60 * 24));
-                    
-                    if (expiryFilter === 'expired' && diffDays >= 0) return false;
-                    if (expiryFilter === '30days' && (diffDays < 0 || diffDays > 30)) return false;
-                    if (expiryFilter === '60days' && (diffDays < 0 || diffDays > 60)) return false;
-                    if (expiryFilter === '90days' && (diffDays < 0 || diffDays > 90)) return false;
-                }
-                
-                // 예정 졸업 필터
-                if (graduationFilter && student.expected_graduation !== graduationFilter) return false;
-                
-                return true;
-            });
-            
-            renderStudentsTable();
-        }
-
-        // 필터 초기화
-        function resetFilters() {
-            document.getElementById('filterName').value = '';
-            document.getElementById('filterStudentNumber').value = '';
-            document.getElementById('filterDepartment').value = '';
-            document.getElementById('filterNationality').value = '';
-            document.getElementById('filterVisa').value = '';
-            document.getElementById('filterDiagnosis').value = '';
-            document.getElementById('filterExpiry').value = '';
-            document.getElementById('filterGraduation').value = '';
-            
-            filteredStudents = [...allStudents];
-            renderStudentsTable();
-        }
-
-        // 학생 상세보기 (추후 구현)
-        function viewStudent(studentNumber) {
-            alert(`학생 상세 페이지 (${studentNumber}) - 추후 구현 예정`);
-        }
-
-        // Excel 내보내기
-        function exportToExcel() {
-            alert('Excel 내보내기 기능은 추후 구현 예정입니다.');
-        }
-
-        // 로그아웃
-        async function logout() {
-            if (confirm('로그아웃하시겠습니까?')) {
-                const result = await signOut();
-                if (result.success) {
-                    window.location.href = 'partner-login-jnu.html';
-                }
+            } catch (error) {
+                console.error('❌ 페이지 로드 오류:', error);
             }
-        }
-
-        console.log('✅ 전남대학교 담당자 대시보드 초기화 완료');
+        });
     </script>
 </body>
 </html>
