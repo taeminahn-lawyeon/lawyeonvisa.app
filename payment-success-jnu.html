@@ -311,7 +311,7 @@
                 const session = await checkSession();
                 if (!session || !session.user) {
                     displayError('로그인이 필요합니다.');
-                    setTimeout(() => { window.location.href = 'visa-dashboard-jnu.html'; }, 2000);
+                    setTimeout(() => { window.location.href = 'dashboard-jnu.html'; }, 2000);
                     return;
                 }
 
