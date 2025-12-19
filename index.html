@@ -1394,9 +1394,9 @@
                 // ✅ 프로필 데이터 사용 (위에서 이미 조회함)
                 const profileData = userProfile;
                 
-                // 🚨 협약 기관 사용자 거부 (organization이 있으면 대학 학생)
-                if (profileData && profileData.organization) {
-                    console.log('❌ 협약 기관 사용자 감지:', profileData.organization);
+                // 🚨 협약 기관 학생 거부 (organization이 'jnu' 또는 'korea'인 경우만)
+                if (profileData && (profileData.organization === 'jnu' || profileData.organization === 'korea')) {
+                    console.log('❌ 협약 기관 학생 감지:', profileData.organization);
                     alert('협약 기관 학생 전용 페이지를 이용해주세요.\n\n회원이 아닙니다.');
                     await signOut();
                     window.location.reload();
