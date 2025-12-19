@@ -1634,11 +1634,11 @@
                 }
 
                 // 모든 사용자는 일반 쓰레드로 이동 (organization 체크 제거)
-                window.location.href = `visa-thread-general.html?id=${threadId}`;
+                window.location.href = `thread-general.html?id=${threadId}`;
             } catch (error) {
                 console.error('Thread open error:', error);
                 // 기본값으로 일반 쓰레드로 이동
-                window.location.href = `visa-thread-general.html?id=${threadId}`;
+                window.location.href = `thread-general.html?id=${threadId}`;
             }
         }
 
