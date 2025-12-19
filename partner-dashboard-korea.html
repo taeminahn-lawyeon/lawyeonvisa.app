@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>담당자 대시보드 - 법무법인 로연 출입국이민지원센터 전남대학교 전용 페이지</title>
+    <title>담당자 대시보드 - 법무법인 로연 출입국이민지원센터 한국대학교 전용 페이지</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
     
     <!-- Supabase 라이브러리 (head에서 먼저 로드) -->
@@ -574,7 +574,7 @@
                 
                 if (sessionError || !session || !session.user) {
                     console.error('❌ [DASHBOARD] 로그인 세션 없음');
-                    document.getElementById('content').innerHTML = '<div style="padding: 40px; text-align: center;"><h2>⚠️ 로그인 세션 없음</h2><p>이메일: 없음</p><a href="visa-login-korea.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #3182F6; color: white; text-decoration: none; border-radius: 8px;">로그인 페이지로 이동</a></div>';
+                    document.getElementById('content').innerHTML = '<div style="padding: 40px; text-align: center;"><h2>⚠️ 로그인 세션 없음</h2><p>이메일: 없음</p><a href="partner-login-korea.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #3182F6; color: white; text-decoration: none; border-radius: 8px;">로그인 페이지로 이동</a></div>';
                     return false;
                 }
                 
@@ -598,13 +598,13 @@
                 
                 if (adminError) {
                     console.error('❌ [DASHBOARD] admins 테이블 조회 오류');
-                    document.getElementById('content').innerHTML = '<div style="padding: 40px; text-align: center;"><h2>⚠️ DB 조회 오류</h2><p>이메일: ' + session.user.email + '</p><p>에러 코드: ' + (adminError.code || '알 수 없음') + '</p><p>에러 메시지: ' + (adminError.message || '알 수 없음') + '</p><a href="visa-login-korea.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #3182F6; color: white; text-decoration: none; border-radius: 8px;">로그인 페이지로 이동</a></div>';
+                    document.getElementById('content').innerHTML = '<div style="padding: 40px; text-align: center;"><h2>⚠️ DB 조회 오류</h2><p>이메일: ' + session.user.email + '</p><p>에러 코드: ' + (adminError.code || '알 수 없음') + '</p><p>에러 메시지: ' + (adminError.message || '알 수 없음') + '</p><a href="partner-login-korea.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #3182F6; color: white; text-decoration: none; border-radius: 8px;">로그인 페이지로 이동</a></div>';
                     return false;
                 }
                 
                 if (!adminData) {
                     console.error('❌ [DASHBOARD] partner_korea 역할 없음');
-                    document.getElementById('content').innerHTML = '<div style="padding: 40px; text-align: center;"><h2>⚠️ 권한 없음</h2><p>로그인된 이메일: ' + session.user.email + '</p><p>이 계정은 admins 테이블에 role=partner_korea로 등록되어 있지 않습니다.</p><p><strong>Supabase에서 확인:</strong></p><pre style="background: #f5f5f5; padding: 12px; border-radius: 4px; text-align: left; display: inline-block;">SELECT * FROM admins WHERE email = \'' + session.user.email + '\';</pre><a href="visa-login-korea.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #3182F6; color: white; text-decoration: none; border-radius: 8px;">로그인 페이지로 이동</a></div>';
+                    document.getElementById('content').innerHTML = '<div style="padding: 40px; text-align: center;"><h2>⚠️ 권한 없음</h2><p>로그인된 이메일: ' + session.user.email + '</p><p>이 계정은 admins 테이블에 role=partner_korea로 등록되어 있지 않습니다.</p><p><strong>Supabase에서 확인:</strong></p><pre style="background: #f5f5f5; padding: 12px; border-radius: 4px; text-align: left; display: inline-block;">SELECT * FROM admins WHERE email = \'' + session.user.email + '\';</pre><a href="partner-login-korea.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #3182F6; color: white; text-decoration: none; border-radius: 8px;">로그인 페이지로 이동</a></div>';
                     return false;
                 }
                 
@@ -612,7 +612,7 @@
                 return true;
             } catch (error) {
                 console.error('❌ [DASHBOARD] 권한 확인 중 예외 발생:', error);
-                document.getElementById('content').innerHTML = '<div style="padding: 40px; text-align: center;"><h2>⚠️ 예외 발생</h2><p>에러: ' + error.message + '</p><pre style="background: #f5f5f5; padding: 12px; border-radius: 4px; text-align: left; display: inline-block;">' + error.stack + '</pre><a href="visa-login-korea.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #3182F6; color: white; text-decoration: none; border-radius: 8px;">로그인 페이지로 이동</a></div>';
+                document.getElementById('content').innerHTML = '<div style="padding: 40px; text-align: center;"><h2>⚠️ 예외 발생</h2><p>에러: ' + error.message + '</p><pre style="background: #f5f5f5; padding: 12px; border-radius: 4px; text-align: left; display: inline-block;">' + error.stack + '</pre><a href="partner-login-korea.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #3182F6; color: white; text-decoration: none; border-radius: 8px;">로그인 페이지로 이동</a></div>';
                 return false;
             }
         }
