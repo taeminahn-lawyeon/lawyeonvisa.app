@@ -1172,7 +1172,7 @@
                 const cachedProfile = sessionStorage.getItem('userProfileCache');
                 if (cachedProfile) {
                     console.log('✅ 캐시된 프로필 사용');
-                    window.location.href = 'service-apply-general.html?service=emergency-legal&org=korea';
+                    window.location.href = 'service-apply-korea.html?service=emergency-legal';
                     return;
                 }
                 
@@ -1186,7 +1186,7 @@
                 }
                 
                 // 변호사 전담 대응 서비스로 이동
-                window.location.href = 'visa-service-apply-jnu.html?service=emergency-legal';
+                window.location.href = 'service-apply-korea.html?service=emergency-legal';
             });
 
             document.getElementById('visaDiagnosisCard').addEventListener('click', async function() {
@@ -1206,7 +1206,7 @@
                 const cachedProfile = sessionStorage.getItem('userProfileCache');
                 if (cachedProfile) {
                     console.log('✅ 캐시된 프로필 사용');
-                    window.location.href = 'service-apply-general.html?service=visa-prediagnosis&org=korea';
+                    window.location.href = 'service-apply-korea.html?service=visa-prediagnosis';
                     return;
                 }
                 
@@ -1220,7 +1220,7 @@
                 }
                 
                 // 비자 사전진단 서비스로 이동
-                window.location.href = 'service-apply-general.html?service=visa-prediagnosis&org=korea';
+                window.location.href = 'service-apply-korea.html?service=visa-prediagnosis';
             });
         });
 
