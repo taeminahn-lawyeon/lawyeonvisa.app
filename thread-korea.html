@@ -829,7 +829,7 @@
 
             if (!threadId) {
                 alert('쓰레드 ID가 없습니다.');
-                window.location.href = 'visa-dashboard-korea.html';
+                window.location.href = 'dashboard-korea.html';
                 return;
             }
 
@@ -837,7 +837,7 @@
             const session = await checkSession();
             if (!session || !session.user) {
                 alert('로그인이 필요합니다.');
-                window.location.href = 'visa-dashboard-korea.html';
+                window.location.href = 'dashboard-korea.html';
                 return;
             }
             
@@ -904,7 +904,7 @@
                 if (error || !thread) {
                     console.error('쓰레드 조회 오류:', error);
                     alert('쓰레드를 찾을 수 없습니다.');
-                    window.location.href = isAdmin ? 'admin-dashboard.html' : 'visa-dashboard-korea.html';
+                    window.location.href = isAdmin ? 'admin-dashboard.html' : 'dashboard-korea.html';
                     return;
                 }
                 
@@ -956,7 +956,7 @@
             } catch (error) {
                 console.error('❌ 쓰레드 로드 실패:', error);
                 alert('쓰레드 정보를 불러올 수 없습니다.');
-                window.location.href = 'visa-dashboard-korea.html';
+                window.location.href = 'dashboard-korea.html';
             }
         }
 
@@ -1042,7 +1042,7 @@
             }
             
             // 그렇지 않으면 한국대학교 대시보드로 이동
-            window.location.href = 'visa-dashboard-korea.html';
+            window.location.href = 'dashboard-korea.html';
         }
 
         // 메시지 추가
