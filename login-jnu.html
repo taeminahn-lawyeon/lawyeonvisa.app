@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인 - 법무법인 로연 출입국이민지원센터 전남대학교 전용 페이지</title>
@@ -430,12 +431,12 @@
             <form onsubmit="adminLogin(event)">
                 <div class="form-group">
                     <label><i class="fas fa-envelope"></i> 관리자 이메일</label>
-                    <input type="email" id="adminEmail" placeholder="admin@jnu.ac.kr" required>
+                    <input type="email" id="adminEmail" placeholder="admin@jnu.ac.kr" required autocomplete="email">
                 </div>
 
                 <div class="form-group">
                     <label><i class="fas fa-lock"></i> 비밀번호</label>
-                    <input type="password" id="adminPassword" placeholder="비밀번호를 입력하세요" required>
+                    <input type="password" id="adminPassword" placeholder="비밀번호를 입력하세요" required autocomplete="current-password">
                 </div>
 
                 <button type="submit" class="submit-btn">
