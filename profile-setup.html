@@ -1057,7 +1057,7 @@
                 
                 submitBtn.textContent = '프로필 저장 중...';
 
-                // Supabase에 저장할 프로필 데이터
+                // Supabase에 저장할 프로필 데이터 (role은 기존 값 유지)
                 const profileData = {
                     name: formData.get('lastName') + formData.get('firstName'),
                     email: session.user.email,
@@ -1071,7 +1071,7 @@
                     address: formData.get('address') + ' ' + formData.get('detailAddress') + ' (' + formData.get('postcode') + ')',
                     preferred_messenger: formData.get('preferredMessenger'),
                     messenger_id: formData.get('messengerId'),
-                    role: 'customer',
+                    // role은 제외 - 기존 role 값 유지 (관리자 권한 보호)
                     // 첨부파일 URL 추가
                     arc_front_url: arcFrontUrl,
                     arc_back_url: arcBackUrl,
