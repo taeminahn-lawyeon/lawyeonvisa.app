@@ -1444,13 +1444,20 @@
                 const sendBtn = document.getElementById('sendBtn');
                 sendBtn.disabled = true;
 
+                console.log('📤 [sendMessage] 메시지 전송 시작');
+                console.log('📤 [sendMessage] threadId:', threadId);
+                console.log('📤 [sendMessage] content:', content);
+
                 const result = await createMessage({
                     thread_id: threadId,
                     sender_type: 'admin',
                     content: content
                 });
 
+                console.log('📤 [sendMessage] 전송 결과:', result);
+
                 if (result.success) {
+                    console.log('✅ [sendMessage] 메시지 저장 성공!');
                     appendMessage({
                         sender_type: 'admin',
                         sender: 'admin',
@@ -1464,6 +1471,9 @@
                     // 스크롤 맨 아래로
                     const container = document.getElementById('messagesContainer');
                     container.scrollTop = container.scrollHeight;
+                } else {
+                    console.error('❌ [sendMessage] 메시지 저장 실패:', result.error);
+                    alert('메시지 저장 실패: ' + result.error);
                 }
 
                 sendBtn.disabled = false;
