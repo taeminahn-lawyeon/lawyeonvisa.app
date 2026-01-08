@@ -997,6 +997,27 @@
                     timestamp: new Date().toISOString()
                 };
 
+                // 🎯 데모 모드: Supabase 저장 스킵하고 바로 성공 페이지로 이동
+                // (토스 정식 키 연결 후 아래 createPayment 활성화)
+                console.log('🎯 데모 모드 - 결제 정보:', orderInfo);
+                
+                // sessionStorage에 결제 정보 임시 저장 (성공 페이지에서 사용)
+                sessionStorage.setItem('pendingPayment', JSON.stringify({
+                    orderId: orderInfo.orderId,
+                    serviceName: orderInfo.orderName,
+                    amount: orderInfo.amount,
+                    agencyFee: orderInfo.agencyFee,
+                    govtFee: orderInfo.govtFee,
+                    paymentMethod: orderInfo.paymentMethod,
+                    customerName: orderInfo.customerName,
+                    customerEmail: orderInfo.customerEmail
+                }));
+                
+                const currentUrl = window.location.origin;
+                window.location.href = `${currentUrl}/payment-success.html?orderId=${orderInfo.orderId}&amount=${orderInfo.amount}&paymentKey=DEMO_${Date.now()}&demo=true`;
+                return;
+                
+                /* 🔒 토스 정식 키 연결 후 활성화
                 // Supabase에 결제 정보 임시 저장
                 const pendingPaymentResult = await createPayment({
                     order_id: orderInfo.orderId,
@@ -1012,12 +1033,7 @@
                 if (!pendingPaymentResult.success) {
                     throw new Error('결제 정보 저장 실패');
                 }
-
-                // 🎯 데모 모드: 모든 사용자에 대해 결제 스킵하고 바로 성공 페이지로 이동
-                console.log('🎯 데모 모드 - 결제 스킵 (모든 사용자)');
-                const currentUrl = window.location.origin;
-                window.location.href = `${currentUrl}/payment-success.html?orderId=${orderInfo.orderId}&amount=${orderInfo.amount}&paymentKey=DEMO_${Date.now()}&v=${Date.now()}`;
-                return;
+                */
                 
                 // 아래 코드는 실제 결제 연동 시 활성화
                 /*
