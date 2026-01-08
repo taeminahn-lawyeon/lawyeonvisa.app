@@ -992,7 +992,11 @@
                 currentUser = {
                     id: session.user.id,
                     email: session.user.email,
-                    name: profileResult.data.name || session.user.email
+                    name: profileResult.data.name || session.user.email,
+                    arc_front_url: profileResult.data.arc_front_url,
+                    arc_back_url: profileResult.data.arc_back_url,
+                    passport_url: profileResult.data.passport_url,
+                    signature_url: profileResult.data.signature_url
                 };
             } else {
                 currentUser = {
@@ -1004,6 +1008,7 @@
 
             loadThread();
             loadMessages();
+            loadMyDocuments(); // 내 제출 서류 로드
             
             // 실시간 메시지 구독 시작
             subscribeToMessages();
@@ -1240,6 +1245,76 @@
             
             // 그렇지 않으면 일반 사용자 페이지로 이동
             window.location.href = 'index.html';
+        }
+
+        // ============================================
+        // 내 제출 서류 표시
+        // ============================================
+        async function loadMyDocuments() {
+            const documentsList = document.getElementById('documentsList');
+            if (!documentsList || !currentUser) return;
+            
+            const documents = [];
+            
+            // 첨부파일 목록 구성
+            if (currentUser.arc_front_url) {
+                documents.push({ name: '외국인등록증 (앞면)', path: currentUser.arc_front_url, icon: 'fa-id-card' });
+            }
+            if (currentUser.arc_back_url) {
+                documents.push({ name: '외국인등록증 (뒷면)', path: currentUser.arc_back_url, icon: 'fa-id-card' });
+            }
+            if (currentUser.passport_url) {
+                documents.push({ name: '여권', path: currentUser.passport_url, icon: 'fa-passport' });
+            }
+            if (currentUser.signature_url) {
+                documents.push({ name: '전자서명', path: currentUser.signature_url, icon: 'fa-signature' });
+            }
+            
+            if (documents.length === 0) {
+                documentsList.innerHTML = '<p style="color: #6B7280; font-size: 14px; padding: 12px 0;">아직 제출된 서류가 없습니다.</p>';
+                return;
+            }
+            
+            documentsList.innerHTML = '';
+            
+            for (const doc of documents) {
+                const btn = document.createElement('button');
+                btn.style.cssText = 'display: flex; align-items: center; gap: 10px; width: 100%; padding: 12px; border: 1px solid #E5E7EB; border-radius: 8px; background: #F9FAFB; cursor: pointer; font-size: 14px; color: #374151; transition: all 0.2s;';
+                btn.innerHTML = `
+                    <i class="fas ${doc.icon}" style="color: #3182F6;"></i>
+                    <span style="flex: 1; text-align: left;">${doc.name}</span>
+                    <i class="fas fa-download" style="color: #6B7280;"></i>
+                `;
+                btn.onmouseover = () => { btn.style.background = '#EFF6FF'; btn.style.borderColor = '#3182F6'; };
+                btn.onmouseout = () => { btn.style.background = '#F9FAFB'; btn.style.borderColor = '#E5E7EB'; };
+                btn.onclick = async () => {
+                    try {
+                        btn.disabled = true;
+                        btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> 로딩 중...`;
+                        
+                        const result = await getProfileDocumentUrl(doc.path);
+                        
+                        if (result.success) {
+                            window.open(result.url, '_blank');
+                        } else {
+                            alert('파일을 불러올 수 없습니다: ' + result.error);
+                        }
+                    } catch (error) {
+                        console.error('파일 다운로드 오류:', error);
+                        alert('파일 다운로드 중 오류가 발생했습니다.');
+                    } finally {
+                        btn.disabled = false;
+                        btn.innerHTML = `
+                            <i class="fas ${doc.icon}" style="color: #3182F6;"></i>
+                            <span style="flex: 1; text-align: left;">${doc.name}</span>
+                            <i class="fas fa-download" style="color: #6B7280;"></i>
+                        `;
+                    }
+                };
+                documentsList.appendChild(btn);
+            }
+            
+            console.log('✅ 내 제출 서류 표시 완료:', documents.length, '개');
         }
 
         // ============================================
