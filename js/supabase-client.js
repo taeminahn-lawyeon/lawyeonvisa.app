@@ -364,13 +364,18 @@ async function updateThreadStatus(threadId, status) {
 // 쓰레드 메시지 조회
 async function getThreadMessages(threadId) {
     try {
+        console.log('📨 [getThreadMessages] 조회 시작, threadId:', threadId);
         const { data, error } = await supabaseClient
             .from('messages')
             .select('*')
             .eq('thread_id', threadId)
             .order('created_at', { ascending: true });
         
-        if (error) throw error;
+        if (error) {
+            console.error('📨 [getThreadMessages] Supabase 오류:', error);
+            throw error;
+        }
+        console.log('📨 [getThreadMessages] 조회 성공, 개수:', data?.length || 0, '데이터:', data);
         return { success: true, data };
     } catch (error) {
         console.error('메시지 조회 오류:', error);

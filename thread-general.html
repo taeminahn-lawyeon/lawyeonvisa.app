@@ -1155,9 +1155,13 @@
             
             try {
                 // Supabase에서 메시지 가져오기
+                console.log('📨 [loadMessages] 메시지 조회 시작, threadId:', threadId);
                 const result = await getThreadMessages(threadId);
+                console.log('📨 [loadMessages] 조회 결과:', result);
+                console.log('📨 [loadMessages] 메시지 개수:', result.data?.length || 0);
                 
                 if (result.success && result.data && result.data.length > 0) {
+                    console.log('📨 [loadMessages] 메시지 목록:', result.data);
                     // 시스템 메시지 제외하고 동적 메시지만 제거
                     const systemMessage = messagesArea.querySelector('.system-message');
                     messagesArea.innerHTML = '';
