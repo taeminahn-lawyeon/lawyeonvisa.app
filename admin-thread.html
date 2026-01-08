@@ -402,6 +402,38 @@
             cursor: not-allowed;
         }
 
+        /* 설문 요청 버튼 영역 */
+        .survey-request-area {
+            padding: 0 0 12px 0;
+            border-bottom: 1px solid #E5E8EB;
+            margin-bottom: 12px;
+        }
+
+        .survey-send-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+        }
+
+        .survey-send-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+        }
+
+        .survey-send-btn i {
+            font-size: 14px;
+        }
+
         /* 오른쪽 관리 패널 */
         .right-panel {
             border-left: 1px solid #E5E8EB;
@@ -775,6 +807,13 @@
 
             <!-- 메시지 입력 -->
             <div class="message-input-container">
+                <!-- 설문 요청 버튼 영역 -->
+                <div class="survey-request-area">
+                    <button class="survey-send-btn" onclick="sendSurveyRequest()">
+                        <i class="fas fa-clipboard-list"></i>
+                        비자 사전진단 설문 요청
+                    </button>
+                </div>
                 <div class="input-wrapper">
                     <textarea 
                         class="message-input" 
@@ -1540,6 +1579,39 @@
         // 뒤로 가기
         function goBack() {
             window.location.href = 'admin-dashboard.html';
+        }
+
+        // 설문 요청 전송
+        async function sendSurveyRequest() {
+            const surveyUrl = 'https://tally.so/r/7RLOo9';
+            const surveyTitle = '📋 비자 사전진단 설문';
+            
+            // 확인 메시지
+            if (!confirm('고객에게 비자 사전진단 설문을 요청하시겠습니까?')) {
+                return;
+            }
+            
+            try {
+                // 설문 요청 메시지 전송
+                const result = await createMessage({
+                    thread_id: threadId,
+                    sender_type: 'admin',
+                    content: `안녕하세요, 법무법인 로연 출입국이민지원센터입니다.\n\n비자 관련 상담을 위해 사전진단 설문 작성을 부탁드립니다.\n설문은 약 2분 정도 소요됩니다.\n\n${surveyUrl}`
+                });
+                
+                if (!result.success) {
+                    throw new Error(result.error);
+                }
+                
+                // 메시지 목록 새로고침
+                await loadMessages();
+                
+                alert('설문 요청이 전송되었습니다.');
+                
+            } catch (error) {
+                console.error('설문 요청 전송 실패:', error);
+                alert('설문 요청 전송에 실패했습니다.');
+            }
         }
     </script>
 </body>
