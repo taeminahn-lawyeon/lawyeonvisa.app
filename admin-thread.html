@@ -886,6 +886,7 @@
         let threadData = null;
         let customerData = null;
         let currentUser = null;
+        let messageChannel = null;  // 실시간 메시지 구독 채널
 
         // 페이지 로드
         window.addEventListener('DOMContentLoaded', async function() {
@@ -942,6 +943,9 @@
                 console.log('💬 메시지 로드 중...');
                 await loadMessages();
                 console.log('✅ 메시지 로드 완료');
+                
+                // 실시간 메시지 구독 시작
+                subscribeToMessages();
 
                 // 로딩 완료
                 document.getElementById('loading').style.display = 'none';
@@ -1164,6 +1168,80 @@
             } catch (error) {
                 console.error('❌ 메시지 로드 오류:', error);
                 console.error('오류 스택:', error.stack);
+            }
+        }
+
+        // ============================================
+        // 실시간 메시지 구독 (Supabase Realtime)
+        // ============================================
+        function subscribeToMessages() {
+            if (!threadId) {
+                console.error('❌ [Realtime] threadId가 없어 구독 불가');
+                return;
+            }
+            
+            console.log('🔔 [Realtime] 관리자 메시지 구독 시작, threadId:', threadId);
+            
+            if (messageChannel) {
+                supabaseClient.removeChannel(messageChannel);
+            }
+            
+            messageChannel = supabaseClient
+                .channel(`admin-thread-messages-${threadId}`)
+                .on('postgres_changes', {
+                    event: 'INSERT',
+                    schema: 'public',
+                    table: 'messages',
+                    filter: `thread_id=eq.${threadId}`
+                }, (payload) => {
+                    console.log('📩 [Realtime] 새 메시지 수신:', payload.new);
+                    
+                    const newMessage = payload.new;
+                    
+                    // 본인(관리자)이 보낸 메시지는 스킵
+                    if (newMessage.sender_type === 'admin') {
+                        console.log('⏭️ [Realtime] 관리자 메시지 스킵');
+                        return;
+                    }
+                    
+                    // 고객이 보낸 새 메시지 UI에 추가
+                    appendMessage(newMessage);
+                    scrollToBottom();
+                    
+                    // 알림
+                    showNotification('새 메시지', `${customerData?.name || '고객'}님이 메시지를 보냈습니다.`);
+                    
+                    // 브라우저 알림
+                    if (Notification.permission === 'granted') {
+                        new Notification('새 고객 메시지', {
+                            body: newMessage.content.substring(0, 50) + (newMessage.content.length > 50 ? '...' : ''),
+                            icon: '/favicon.svg'
+                        });
+                    }
+                })
+                .subscribe((status) => {
+                    console.log('🔔 [Realtime] 구독 상태:', status);
+                    if (status === 'SUBSCRIBED') {
+                        console.log('✅ [Realtime] 관리자 실시간 메시지 구독 성공!');
+                    }
+                });
+        }
+        
+        window.addEventListener('beforeunload', () => {
+            if (messageChannel) {
+                console.log('🔕 [Realtime] 구독 해제');
+                supabaseClient.removeChannel(messageChannel);
+            }
+        });
+        
+        if ('Notification' in window && Notification.permission === 'default') {
+            Notification.requestPermission();
+        }
+        
+        function scrollToBottom() {
+            const container = document.getElementById('messagesContainer');
+            if (container) {
+                container.scrollTop = container.scrollHeight;
             }
         }
 

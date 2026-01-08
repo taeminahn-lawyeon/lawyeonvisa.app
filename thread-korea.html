@@ -817,6 +817,7 @@
         // 페이지 로드
         let threadId = null;
         let currentUser = null;
+        let messageChannel = null;  // 실시간 메시지 구독 채널
 
         window.addEventListener('DOMContentLoaded', async function() {
             // i18n 초기화
@@ -860,6 +861,9 @@
             loadThread();
             loadMessages();
             
+            // 실시간 메시지 구독 시작
+            subscribeToMessages();
+            
             // 자동 리사이즈
             const messageInput = document.getElementById('messageInput');
             messageInput.addEventListener('input', function() {
@@ -867,6 +871,80 @@
                 this.style.height = Math.min(this.scrollHeight, 120) + 'px';
             });
         });
+
+        // ============================================
+        // 실시간 메시지 구독 (Supabase Realtime)
+        // ============================================
+        function subscribeToMessages() {
+            if (!threadId) {
+                console.error('❌ [Realtime] threadId가 없어 구독 불가');
+                return;
+            }
+            
+            console.log('🔔 [Realtime] 메시지 구독 시작, threadId:', threadId);
+            
+            if (messageChannel) {
+                supabaseClient.removeChannel(messageChannel);
+            }
+            
+            messageChannel = supabaseClient
+                .channel(`thread-messages-${threadId}`)
+                .on('postgres_changes', {
+                    event: 'INSERT',
+                    schema: 'public',
+                    table: 'messages',
+                    filter: `thread_id=eq.${threadId}`
+                }, (payload) => {
+                    console.log('📩 [Realtime] 새 메시지 수신:', payload.new);
+                    
+                    const newMessage = payload.new;
+                    
+                    if (currentUser && newMessage.sender_id === currentUser.id) {
+                        console.log('⏭️ [Realtime] 본인 메시지 스킵');
+                        return;
+                    }
+                    
+                    const messageTime = new Date(newMessage.created_at).toLocaleTimeString('ko-KR', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    
+                    const msg = {
+                        sender: newMessage.sender_type === 'admin' ? 'admin' : 'user',
+                        name: newMessage.sender_name || (newMessage.sender_type === 'admin' ? '법무법인 로연' : '상대방'),
+                        content: newMessage.content,
+                        time: messageTime,
+                        avatar: newMessage.sender_type === 'admin' ? '로' : '나',
+                        file_url: newMessage.file_url,
+                        file_name: newMessage.file_name,
+                        file_type: newMessage.file_type
+                    };
+                    
+                    appendMessage(msg);
+                    scrollToBottom();
+                    showToast('새 메시지가 도착했습니다.', 'info', 3000);
+                    
+                    if (Notification.permission === 'granted') {
+                        new Notification('법무법인 로연', {
+                            body: newMessage.content.substring(0, 50) + (newMessage.content.length > 50 ? '...' : ''),
+                            icon: '/favicon.svg'
+                        });
+                    }
+                })
+                .subscribe((status) => {
+                    console.log('🔔 [Realtime] 구독 상태:', status);
+                });
+        }
+        
+        window.addEventListener('beforeunload', () => {
+            if (messageChannel) {
+                supabaseClient.removeChannel(messageChannel);
+            }
+        });
+        
+        if ('Notification' in window && Notification.permission === 'default') {
+            Notification.requestPermission();
+        }
 
         // 쓰레드 정보 로드
         async function loadThread() {

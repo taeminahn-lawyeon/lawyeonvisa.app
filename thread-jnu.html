@@ -765,6 +765,7 @@
         // 페이지 로드
         let threadId = null;
         let currentUser = null;
+        let messageChannel = null;  // 실시간 메시지 구독 채널
 
         window.addEventListener('DOMContentLoaded', async function() {
             console.log('🔍 [쓰레드] 페이지 로드 시작');
@@ -827,6 +828,9 @@
 
             loadThread();
             loadMessages();
+            
+            // 실시간 메시지 구독 시작
+            subscribeToMessages();
             
             // 자동 리사이즈
             const messageInput = document.getElementById('messageInput');
@@ -1065,6 +1069,95 @@
             
             // 그렇지 않으면 일반 사용자 페이지로 이동
             window.location.href = 'index.html';
+        }
+
+        // ============================================
+        // 실시간 메시지 구독 (Supabase Realtime)
+        // ============================================
+        function subscribeToMessages() {
+            if (!threadId) {
+                console.error('❌ [Realtime] threadId가 없어 구독 불가');
+                return;
+            }
+            
+            console.log('🔔 [Realtime] 메시지 구독 시작, threadId:', threadId);
+            
+            // 기존 채널이 있으면 제거
+            if (messageChannel) {
+                supabaseClient.removeChannel(messageChannel);
+            }
+            
+            // 새 메시지 구독
+            messageChannel = supabaseClient
+                .channel(`thread-messages-${threadId}`)
+                .on('postgres_changes', {
+                    event: 'INSERT',
+                    schema: 'public',
+                    table: 'messages',
+                    filter: `thread_id=eq.${threadId}`
+                }, (payload) => {
+                    console.log('📩 [Realtime] 새 메시지 수신:', payload.new);
+                    
+                    const newMessage = payload.new;
+                    
+                    // 본인이 보낸 메시지는 이미 UI에 추가되어 있으므로 스킵
+                    if (currentUser && newMessage.sender_id === currentUser.id) {
+                        console.log('⏭️ [Realtime] 본인 메시지 스킵');
+                        return;
+                    }
+                    
+                    // 새 메시지 UI에 추가
+                    const messageTime = new Date(newMessage.created_at).toLocaleTimeString('ko-KR', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    
+                    const msg = {
+                        sender: newMessage.sender_type === 'admin' ? 'admin' : 'user',
+                        name: newMessage.sender_name || (newMessage.sender_type === 'admin' ? '법무법인 로연' : '상대방'),
+                        content: newMessage.content,
+                        time: messageTime,
+                        avatar: newMessage.sender_type === 'admin' ? '로' : '나',
+                        file_url: newMessage.file_url,
+                        file_name: newMessage.file_name,
+                        file_type: newMessage.file_type
+                    };
+                    
+                    appendMessage(msg);
+                    scrollToBottom();
+                    
+                    // 새 메시지 알림
+                    showToast('새 메시지가 도착했습니다.', 'info', 3000);
+                    
+                    // 브라우저 알림 (권한이 있는 경우)
+                    if (Notification.permission === 'granted') {
+                        new Notification('법무법인 로연', {
+                            body: newMessage.content.substring(0, 50) + (newMessage.content.length > 50 ? '...' : ''),
+                            icon: '/favicon.svg'
+                        });
+                    }
+                })
+                .subscribe((status) => {
+                    console.log('🔔 [Realtime] 구독 상태:', status);
+                    if (status === 'SUBSCRIBED') {
+                        console.log('✅ [Realtime] 실시간 메시지 구독 성공!');
+                    } else if (status === 'CHANNEL_ERROR') {
+                        console.error('❌ [Realtime] 구독 오류');
+                    }
+                });
+        }
+        
+        // 페이지 떠날 때 구독 해제
+        window.addEventListener('beforeunload', () => {
+            if (messageChannel) {
+                console.log('🔕 [Realtime] 구독 해제');
+                supabaseClient.removeChannel(messageChannel);
+            }
+        });
+        
+        // 브라우저 알림 권한 요청
+        if ('Notification' in window && Notification.permission === 'default') {
+            Notification.requestPermission();
         }
 
         // 메시지 추가
