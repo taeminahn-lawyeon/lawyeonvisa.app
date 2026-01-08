@@ -184,23 +184,26 @@ async function checkSession() {
 // 프로필 관련 함수
 // ============================================
 
-// 프로필 생성
+// 프로필 생성 또는 업데이트 (UPSERT)
 async function createUserProfile(userId, profileData) {
     try {
         const { data, error } = await supabaseClient
             .from('profiles')
-            .insert([{
+            .upsert({
                 id: userId,
                 ...profileData,
-                created_at: new Date().toISOString()
-            }])
+                updated_at: new Date().toISOString()
+            }, {
+                onConflict: 'id'  // id가 이미 존재하면 업데이트
+            })
             .select()
             .single();
         
         if (error) throw error;
+        console.log('✅ 프로필 저장 성공 (upsert):', data);
         return { success: true, data };
     } catch (error) {
-        console.error('프로필 생성 오류:', error);
+        console.error('프로필 생성/업데이트 오류:', error);
         return { success: false, error: error.message };
     }
 }

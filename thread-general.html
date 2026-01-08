@@ -7,6 +7,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/ui-components.css">
+    
+    <!-- Tally 설문 위젯 -->
+    <script src="https://tally.so/widgets/embed.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -578,6 +582,145 @@
             }
         }
 
+        /* ============================================
+           Tally 설문 임베드 스타일
+           ============================================ */
+        .tally-survey-card {
+            background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
+            border: 2px solid #C7D2FE;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tally-survey-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .tally-survey-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .tally-survey-title {
+            flex: 1;
+        }
+
+        .tally-survey-title h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #3730A3;
+            margin-bottom: 4px;
+        }
+
+        .tally-survey-title p {
+            font-size: 13px;
+            color: #6366F1;
+        }
+
+        .tally-survey-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .tally-survey-status.pending {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .tally-survey-status.completed {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .tally-survey-body {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
+        }
+
+        .tally-survey-body iframe {
+            display: block;
+            width: 100%;
+            border: none;
+        }
+
+        .tally-survey-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .tally-survey-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tally-survey-btn.primary {
+            background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+            color: white;
+        }
+
+        .tally-survey-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .tally-survey-btn.secondary {
+            background: white;
+            color: #6366F1;
+            border: 2px solid #C7D2FE;
+        }
+
+        .tally-survey-btn.secondary:hover {
+            background: #EEF2FF;
+        }
+
+        .tally-survey-collapsed .tally-survey-body {
+            display: none;
+        }
+
+        .tally-survey-completed {
+            background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+            border-color: #6EE7B7;
+        }
+
+        .tally-survey-completed .tally-survey-icon {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        }
+
+        .tally-survey-completed .tally-survey-title h4 {
+            color: #065F46;
+        }
+
+        .tally-survey-completed .tally-survey-title p {
+            color: #10B981;
+        }
+
         /* 초소형 모바일 (iPhone SE 등) */
         @media (max-width: 375px) {
             .thread-header {
@@ -641,6 +784,39 @@
             .send-btn {
                 width: 36px !important;
                 height: 36px !important;
+            }
+
+            /* Tally 설문 모바일 */
+            .tally-survey-card {
+                padding: 16px;
+                margin: 16px 0;
+            }
+
+            .tally-survey-header {
+                flex-wrap: wrap;
+            }
+
+            .tally-survey-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .tally-survey-title h4 {
+                font-size: 14px;
+            }
+
+            .tally-survey-title p {
+                font-size: 12px;
+            }
+
+            .tally-survey-actions {
+                flex-direction: column;
+            }
+
+            .tally-survey-btn {
+                padding: 10px 16px;
+                font-size: 13px;
             }
         }
     </style>
@@ -1004,6 +1180,12 @@
                     
                     // 나머지 메시지 표시
                     result.data.forEach(msg => {
+                        // 설문 요청 메시지인지 확인
+                        if (msg.content && msg.content.includes('---TALLY_SURVEY_DATA---')) {
+                            processSurveyMessage(msg);
+                            return;
+                        }
+                        
                         const messageData = {
                             sender: msg.sender_type,
                             name: msg.sender_type === 'user' ? '본인' : '법무법인 로연',
@@ -1096,6 +1278,14 @@
                         hour: '2-digit',
                         minute: '2-digit'
                     });
+                    
+                    // 설문 요청 메시지인지 확인
+                    if (newMessage.content && newMessage.content.includes('---TALLY_SURVEY_DATA---')) {
+                        processSurveyMessage(newMessage);
+                        showToast('새로운 설문이 도착했습니다!', 'info', 5000);
+                        scrollToBottom();
+                        return;
+                    }
                     
                     const msg = {
                         sender: newMessage.sender_type === 'admin' ? 'admin' : 'user',
@@ -1364,6 +1554,277 @@
                 sendMessage();
             }
         });
+
+        // ============================================
+        // Tally 설문 임베드 기능
+        // ============================================
+        
+        // 설문 요청 메시지 처리
+        function processSurveyMessage(msg) {
+            try {
+                // 메시지에서 설문 데이터 추출
+                const parts = msg.content.split('---TALLY_SURVEY_DATA---');
+                const textContent = parts[0].trim();
+                const surveyDataStr = parts[1]?.trim();
+                
+                if (!surveyDataStr) {
+                    console.error('설문 데이터가 없습니다');
+                    return;
+                }
+                
+                const surveyData = JSON.parse(surveyDataStr);
+                console.log('📋 설문 데이터 파싱됨:', surveyData);
+                
+                // 먼저 안내 메시지 표시
+                const messageTime = new Date(msg.created_at).toLocaleTimeString('ko-KR', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                appendMessage({
+                    sender: 'admin',
+                    name: '법무법인 로연',
+                    content: textContent,
+                    time: messageTime,
+                    avatar: '로'
+                });
+                
+                // 설문 카드 추가
+                appendTallySurvey({
+                    formId: surveyData.formId,
+                    title: surveyData.title || '설문 응답 요청',
+                    description: '센터 담당자가 설문 응답을 요청했습니다',
+                    status: 'pending',
+                    surveyId: surveyData.surveyId
+                });
+                
+            } catch (error) {
+                console.error('설문 메시지 처리 오류:', error);
+                // 오류 시 일반 메시지로 표시
+                appendMessage({
+                    sender: msg.sender_type,
+                    name: msg.sender_type === 'user' ? '본인' : '법무법인 로연',
+                    content: msg.content.split('---TALLY_SURVEY_DATA---')[0],
+                    time: new Date(msg.created_at).toLocaleTimeString('ko-KR', { 
+                        hour: '2-digit', 
+                        minute: '2-digit' 
+                    }),
+                    avatar: msg.sender_type === 'user' ? '나' : '로'
+                });
+            }
+        }
+        
+        // 설문 카드를 메시지 영역에 추가
+        function appendTallySurvey(surveyConfig) {
+            const messagesArea = document.getElementById('messagesArea');
+            
+            // 기본 설정
+            const config = {
+                formId: surveyConfig.formId || '7RLOo9',
+                title: surveyConfig.title || '비자 진단 설문',
+                description: surveyConfig.description || '센터 담당자가 설문 응답을 요청했습니다',
+                status: surveyConfig.status || 'pending', // pending, completed
+                surveyId: surveyConfig.surveyId || `survey_${Date.now()}`,
+                height: surveyConfig.height || 600
+            };
+            
+            // Hidden Fields에 전달할 파라미터 구성
+            const hiddenParams = new URLSearchParams({
+                thread_id: threadId || '',
+                user_id: currentUser?.id || '',
+                user_email: currentUser?.email || '',
+                user_name: currentUser?.name || '',
+                survey_id: config.surveyId
+            });
+            
+            // Tally 임베드 URL 생성
+            const tallyUrl = `https://tally.so/embed/${config.formId}?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1&${hiddenParams.toString()}`;
+            
+            // 설문 카드 HTML 생성
+            const surveyCard = document.createElement('div');
+            surveyCard.className = `tally-survey-card ${config.status === 'completed' ? 'tally-survey-completed' : ''}`;
+            surveyCard.id = `tally-survey-${config.surveyId}`;
+            surveyCard.dataset.surveyId = config.surveyId;
+            surveyCard.dataset.formId = config.formId;
+            
+            const statusText = config.status === 'completed' ? '응답 완료' : '응답 대기';
+            const statusClass = config.status === 'completed' ? 'completed' : 'pending';
+            const iconClass = config.status === 'completed' ? 'fa-check-circle' : 'fa-clipboard-list';
+            
+            surveyCard.innerHTML = `
+                <div class="tally-survey-header">
+                    <div class="tally-survey-icon">
+                        <i class="fas ${iconClass}"></i>
+                    </div>
+                    <div class="tally-survey-title">
+                        <h4>${config.title}</h4>
+                        <p>${config.description}</p>
+                    </div>
+                    <div class="tally-survey-status ${statusClass}">${statusText}</div>
+                </div>
+                <div class="tally-survey-body">
+                    <iframe 
+                        data-tally-src="${tallyUrl}"
+                        loading="lazy" 
+                        width="100%" 
+                        height="${config.height}" 
+                        frameborder="0" 
+                        marginheight="0" 
+                        marginwidth="0" 
+                        title="${config.title}">
+                    </iframe>
+                </div>
+                <div class="tally-survey-actions">
+                    <button class="tally-survey-btn secondary" onclick="toggleSurveyView('${config.surveyId}')">
+                        <i class="fas fa-chevron-up"></i> 접기/펼치기
+                    </button>
+                    ${config.status !== 'completed' ? `
+                    <button class="tally-survey-btn primary" onclick="openSurveyFullscreen('${config.formId}', '${hiddenParams.toString()}')">
+                        <i class="fas fa-external-link-alt"></i> 새 창에서 열기
+                    </button>
+                    ` : ''}
+                </div>
+            `;
+            
+            messagesArea.appendChild(surveyCard);
+            
+            // Tally 임베드 로드
+            if (typeof Tally !== 'undefined') {
+                Tally.loadEmbeds();
+            } else {
+                // Tally가 아직 로드되지 않은 경우 수동으로 iframe src 설정
+                const iframe = surveyCard.querySelector('iframe');
+                if (iframe && iframe.dataset.tallySrc) {
+                    iframe.src = iframe.dataset.tallySrc;
+                }
+            }
+            
+            scrollToBottom();
+            
+            console.log('✅ Tally 설문 카드 추가됨:', config);
+            return config.surveyId;
+        }
+        
+        // 설문 접기/펼치기
+        function toggleSurveyView(surveyId) {
+            const surveyCard = document.getElementById(`tally-survey-${surveyId}`);
+            if (surveyCard) {
+                surveyCard.classList.toggle('tally-survey-collapsed');
+                
+                const btn = surveyCard.querySelector('.tally-survey-btn.secondary i');
+                if (surveyCard.classList.contains('tally-survey-collapsed')) {
+                    btn.className = 'fas fa-chevron-down';
+                } else {
+                    btn.className = 'fas fa-chevron-up';
+                }
+            }
+        }
+        
+        // 설문 새 창에서 열기
+        function openSurveyFullscreen(formId, params) {
+            const url = `https://tally.so/r/${formId}?${params}`;
+            window.open(url, '_blank', 'width=800,height=900');
+        }
+        
+        // 설문 완료 상태로 변경
+        function markSurveyCompleted(surveyId) {
+            const surveyCard = document.getElementById(`tally-survey-${surveyId}`);
+            if (surveyCard) {
+                surveyCard.classList.add('tally-survey-completed');
+                
+                // 상태 배지 업데이트
+                const statusBadge = surveyCard.querySelector('.tally-survey-status');
+                if (statusBadge) {
+                    statusBadge.textContent = '응답 완료';
+                    statusBadge.className = 'tally-survey-status completed';
+                }
+                
+                // 아이콘 변경
+                const icon = surveyCard.querySelector('.tally-survey-icon i');
+                if (icon) {
+                    icon.className = 'fas fa-check-circle';
+                }
+                
+                // 새 창 열기 버튼 제거
+                const primaryBtn = surveyCard.querySelector('.tally-survey-btn.primary');
+                if (primaryBtn) {
+                    primaryBtn.remove();
+                }
+                
+                console.log('✅ 설문 완료 처리:', surveyId);
+            }
+        }
+        
+        // Tally 설문 제출 이벤트 리스너
+        window.addEventListener('message', function(event) {
+            // Tally에서 오는 메시지인지 확인
+            if (event.origin !== 'https://tally.so') return;
+            
+            try {
+                const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+                
+                // Tally 폼 제출 완료 이벤트
+                if (data.event === 'Tally.FormSubmitted') {
+                    console.log('📋 Tally 설문 제출됨:', data);
+                    
+                    // 해당 설문 카드 찾아서 완료 표시
+                    const surveyCards = document.querySelectorAll('.tally-survey-card');
+                    surveyCards.forEach(card => {
+                        if (card.dataset.formId === data.formId) {
+                            markSurveyCompleted(card.dataset.surveyId);
+                            
+                            // 쓰레드에 완료 메시지 전송
+                            sendSurveyCompletionMessage(card.dataset.surveyId);
+                        }
+                    });
+                    
+                    showToast('설문이 제출되었습니다. 감사합니다!', 'success', 3000);
+                }
+            } catch (e) {
+                // JSON 파싱 실패는 무시 (다른 메시지일 수 있음)
+            }
+        });
+        
+        // 설문 완료 메시지 전송
+        async function sendSurveyCompletionMessage(surveyId) {
+            try {
+                await createMessage({
+                    thread_id: threadId,
+                    sender_type: 'user',
+                    content: `📋 설문 응답을 완료했습니다. (설문 ID: ${surveyId})`
+                });
+                
+                // UI에 메시지 추가
+                const now = new Date();
+                const time = now.getHours().toString().padStart(2, '0') + ':' + 
+                            now.getMinutes().toString().padStart(2, '0');
+                
+                appendMessage({
+                    sender: 'user',
+                    name: '본인',
+                    content: '📋 설문 응답을 완료했습니다.',
+                    time: time,
+                    avatar: '나'
+                });
+                
+                scrollToBottom();
+            } catch (error) {
+                console.error('설문 완료 메시지 전송 실패:', error);
+            }
+        }
+        
+        // 테스트용: 설문 추가 함수 (개발자 콘솔에서 사용 가능)
+        window.addTestSurvey = function() {
+            appendTallySurvey({
+                formId: '7RLOo9',
+                title: '26년 2월 외국인유학생 비자 진단 설문',
+                description: '비자 상태 점검을 위한 설문입니다. 응답해 주세요.',
+                status: 'pending'
+            });
+        };
+        
+        console.log('✅ Tally 설문 시스템 로드 완료');
+        console.log('💡 테스트: 콘솔에서 addTestSurvey() 실행');
     </script>
     
     <!-- 설문 모달 -->

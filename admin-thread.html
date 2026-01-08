@@ -11,6 +11,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=8"></script>
     
+    <!-- Tally 설문 위젯 -->
+    <script src="https://tally.so/widgets/embed.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -110,6 +113,15 @@
 
         .header-btn.primary:hover {
             background: #1B64DA;
+        }
+
+        .header-btn.survey {
+            background: #6366F1;
+            color: white;
+        }
+
+        .header-btn.survey:hover {
+            background: #4F46E5;
         }
 
         /* 왼쪽 사이드바 - 고객 정보 */
@@ -402,38 +414,6 @@
             cursor: not-allowed;
         }
 
-        /* 설문 요청 버튼 영역 */
-        .survey-request-area {
-            padding: 0 0 12px 0;
-            border-bottom: 1px solid #E5E8EB;
-            margin-bottom: 12px;
-        }
-
-        .survey-send-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 16px;
-            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
-        }
-
-        .survey-send-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
-        }
-
-        .survey-send-btn i {
-            font-size: 14px;
-        }
-
         /* 오른쪽 관리 패널 */
         .right-panel {
             border-left: 1px solid #E5E8EB;
@@ -689,6 +669,9 @@
                 </div>
             </div>
             <div class="header-right">
+                <button class="header-btn survey" onclick="openSurveyModal()">
+                    <i class="fas fa-clipboard-list"></i> 설문 요청
+                </button>
                 <button class="header-btn">
                     <i class="fas fa-download"></i> 문서 다운로드
                 </button>
@@ -807,13 +790,6 @@
 
             <!-- 메시지 입력 -->
             <div class="message-input-container">
-                <!-- 설문 요청 버튼 영역 -->
-                <div class="survey-request-area">
-                    <button class="survey-send-btn" onclick="sendSurveyRequest()">
-                        <i class="fas fa-clipboard-list"></i>
-                        비자 사전진단 설문 요청
-                    </button>
-                </div>
                 <div class="input-wrapper">
                     <textarea 
                         class="message-input" 
@@ -1581,38 +1557,258 @@
             window.location.href = 'admin-dashboard.html';
         }
 
+        // ============================================
+        // Tally 설문 요청 기능
+        // ============================================
+        
+        // 설문 모달 열기
+        function openSurveyModal() {
+            // 기존 모달이 있으면 제거
+            const existingModal = document.getElementById('surveyModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+            
+            const modal = document.createElement('div');
+            modal.id = 'surveyModal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+            `;
+            
+            modal.innerHTML = `
+                <div style="
+                    background: white;
+                    border-radius: 16px;
+                    padding: 24px;
+                    max-width: 500px;
+                    width: 90%;
+                    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                ">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="font-size: 18px; font-weight: 700; color: #191F28;">
+                            <i class="fas fa-clipboard-list" style="color: #6366F1; margin-right: 8px;"></i>
+                            설문 요청 보내기
+                        </h3>
+                        <button onclick="closeSurveyModal()" style="
+                            background: none;
+                            border: none;
+                            font-size: 20px;
+                            color: #6B7684;
+                            cursor: pointer;
+                        ">&times;</button>
+                    </div>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; font-size: 13px; color: #6B7684; margin-bottom: 6px; font-weight: 600;">
+                            설문 선택
+                        </label>
+                        <select id="surveySelect" style="
+                            width: 100%;
+                            padding: 12px;
+                            border: 2px solid #E5E8EB;
+                            border-radius: 8px;
+                            font-size: 14px;
+                            font-family: inherit;
+                        ">
+                            <option value="7RLOo9">26년 2월 외국인유학생 비자 진단 설문</option>
+                            <option value="custom">직접 입력...</option>
+                        </select>
+                    </div>
+                    
+                    <div id="customSurveyInput" style="display: none; margin-bottom: 16px;">
+                        <label style="display: block; font-size: 13px; color: #6B7684; margin-bottom: 6px; font-weight: 600;">
+                            Tally 폼 ID (예: 7RLOo9)
+                        </label>
+                        <input type="text" id="customFormId" placeholder="폼 ID 입력" style="
+                            width: 100%;
+                            padding: 12px;
+                            border: 2px solid #E5E8EB;
+                            border-radius: 8px;
+                            font-size: 14px;
+                            font-family: inherit;
+                        ">
+                    </div>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; font-size: 13px; color: #6B7684; margin-bottom: 6px; font-weight: 600;">
+                            설문 제목
+                        </label>
+                        <input type="text" id="surveyTitle" value="비자 진단 설문" style="
+                            width: 100%;
+                            padding: 12px;
+                            border: 2px solid #E5E8EB;
+                            border-radius: 8px;
+                            font-size: 14px;
+                            font-family: inherit;
+                        ">
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-size: 13px; color: #6B7684; margin-bottom: 6px; font-weight: 600;">
+                            안내 메시지
+                        </label>
+                        <textarea id="surveyMessage" rows="3" style="
+                            width: 100%;
+                            padding: 12px;
+                            border: 2px solid #E5E8EB;
+                            border-radius: 8px;
+                            font-size: 14px;
+                            font-family: inherit;
+                            resize: vertical;
+                        ">안녕하세요, ${customerData?.name || '고객'}님.
+
+비자 상태 확인을 위한 설문을 보내드립니다.
+아래 설문에 응답해 주시면 더 정확한 상담이 가능합니다.
+
+감사합니다.</textarea>
+                    </div>
+                    
+                    <div style="
+                        background: #F0F4FF;
+                        border-radius: 8px;
+                        padding: 12px;
+                        margin-bottom: 20px;
+                        font-size: 13px;
+                        color: #3730A3;
+                    ">
+                        <i class="fas fa-info-circle" style="margin-right: 6px;"></i>
+                        <strong>Hidden Fields로 전달되는 정보:</strong><br>
+                        <span style="font-size: 12px; color: #6366F1;">
+                            • thread_id: ${threadId}<br>
+                            • user_id: ${threadData?.user_id || '-'}<br>
+                            • user_email: ${customerData?.email || '-'}<br>
+                            • user_name: ${customerData?.name || '-'}
+                        </span>
+                    </div>
+                    
+                    <div style="display: flex; gap: 12px;">
+                        <button onclick="closeSurveyModal()" style="
+                            flex: 1;
+                            padding: 12px;
+                            background: #F2F4F6;
+                            border: none;
+                            border-radius: 8px;
+                            font-size: 14px;
+                            font-weight: 600;
+                            cursor: pointer;
+                        ">취소</button>
+                        <button onclick="sendSurveyRequest()" style="
+                            flex: 1;
+                            padding: 12px;
+                            background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+                            color: white;
+                            border: none;
+                            border-radius: 8px;
+                            font-size: 14px;
+                            font-weight: 600;
+                            cursor: pointer;
+                        ">
+                            <i class="fas fa-paper-plane" style="margin-right: 6px;"></i>
+                            설문 요청 보내기
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // 모달 외부 클릭 시 닫기
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeSurveyModal();
+                }
+            });
+            
+            // 설문 선택 변경 이벤트
+            document.getElementById('surveySelect').addEventListener('change', (e) => {
+                const customInput = document.getElementById('customSurveyInput');
+                if (e.target.value === 'custom') {
+                    customInput.style.display = 'block';
+                } else {
+                    customInput.style.display = 'none';
+                }
+            });
+        }
+        
+        // 모달 닫기
+        function closeSurveyModal() {
+            const modal = document.getElementById('surveyModal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+        
         // 설문 요청 전송
         async function sendSurveyRequest() {
-            const surveyUrl = 'https://tally.so/r/7RLOo9';
-            const surveyTitle = '📋 비자 사전진단 설문';
+            const surveySelect = document.getElementById('surveySelect');
+            const customFormId = document.getElementById('customFormId');
+            const surveyTitle = document.getElementById('surveyTitle').value;
+            const surveyMessage = document.getElementById('surveyMessage').value;
             
-            // 확인 메시지
-            if (!confirm('고객에게 비자 사전진단 설문을 요청하시겠습니까?')) {
-                return;
+            let formId = surveySelect.value;
+            if (formId === 'custom') {
+                formId = customFormId.value.trim();
+                if (!formId) {
+                    alert('Tally 폼 ID를 입력해주세요.');
+                    return;
+                }
             }
             
             try {
                 // 설문 요청 메시지 전송
+                const surveyId = `survey_${Date.now()}`;
+                const surveyData = {
+                    type: 'tally_survey',
+                    formId: formId,
+                    title: surveyTitle,
+                    surveyId: surveyId
+                };
+                
+                // 메시지 내용에 설문 데이터 포함 (특수 포맷)
+                const messageContent = `${surveyMessage}\n\n---TALLY_SURVEY_DATA---\n${JSON.stringify(surveyData)}`;
+                
                 const result = await createMessage({
                     thread_id: threadId,
                     sender_type: 'admin',
-                    content: `안녕하세요, 법무법인 로연 출입국이민지원센터입니다.\n\n비자 관련 상담을 위해 사전진단 설문 작성을 부탁드립니다.\n설문은 약 2분 정도 소요됩니다.\n\n${surveyUrl}`
+                    content: messageContent
                 });
                 
                 if (!result.success) {
                     throw new Error(result.error);
                 }
                 
-                // 메시지 목록 새로고침
-                await loadMessages();
+                // UI에 메시지 추가
+                appendMessage({
+                    sender_type: 'admin',
+                    sender: 'admin',
+                    content: surveyMessage + `\n\n📋 [설문: ${surveyTitle}]`,
+                    created_at: new Date().toISOString()
+                });
                 
-                alert('설문 요청이 전송되었습니다.');
+                // 스크롤 아래로
+                const container = document.getElementById('messagesContainer');
+                container.scrollTop = container.scrollHeight;
+                
+                closeSurveyModal();
+                
+                alert('설문 요청이 전송되었습니다.\n\n고객 쓰레드에서 설문이 표시됩니다.');
                 
             } catch (error) {
                 console.error('설문 요청 전송 실패:', error);
                 alert('설문 요청 전송에 실패했습니다.');
             }
         }
+        
+        console.log('✅ Tally 설문 관리 기능 로드 완료');
     </script>
 </body>
 </html>
