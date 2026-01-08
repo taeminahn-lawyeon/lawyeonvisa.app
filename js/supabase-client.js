@@ -421,6 +421,41 @@ async function getSignedUrl(bucket, filePath, expiresIn = 3600) {
     }
 }
 
+// 프로필 첨부파일 업로드 (외국인등록증, 여권, 전자서명)
+async function uploadProfileDocument(filePath, file) {
+    try {
+        const { data, error } = await supabaseClient.storage
+            .from('profile-documents')
+            .upload(filePath, file, {
+                cacheControl: '3600',
+                upsert: true
+            });
+        
+        if (error) throw error;
+        
+        console.log('✅ 프로필 문서 업로드 성공:', data);
+        return { success: true, data };
+    } catch (error) {
+        console.error('프로필 문서 업로드 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// 프로필 첨부파일 다운로드 URL 가져오기
+async function getProfileDocumentUrl(filePath, expiresIn = 86400) {
+    try {
+        const { data, error } = await supabaseClient.storage
+            .from('profile-documents')
+            .createSignedUrl(filePath, expiresIn);
+        
+        if (error) throw error;
+        return { success: true, url: data.signedUrl };
+    } catch (error) {
+        console.error('프로필 문서 URL 생성 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
 // ============================================
 // 결제 관련 함수
 // ============================================

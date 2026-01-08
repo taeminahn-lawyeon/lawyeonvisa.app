@@ -519,6 +519,17 @@
             background: white;
         }
 
+        .tab .badge {
+            display: inline-block;
+            background: #F04452;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: 6px;
+        }
+
         .tab-content {
             display: none;
         }
@@ -734,6 +745,9 @@
                 <button class="tab" onclick="switchTab('customers')">
                     고객 명단
                 </button>
+                <button class="tab" onclick="switchTab('newMembers')">
+                    <i class="fas fa-user-plus"></i> 신규 회원 <span id="newMemberBadge" class="badge" style="display: none;">0</span>
+                </button>
             </div>
         </div>
 
@@ -815,6 +829,25 @@
             </div>
             
             <div id="customersTableContainer"></div>
+        </div>
+
+        <!-- 신규 회원 탭 -->
+        <div id="newMembersTab" class="tab-content threads-section">
+            <h2>
+                <span><i class="fas fa-user-plus"></i> 신규 회원 (기본사항 제출)</span>
+                <span class="thread-count" id="newMemberCount">총 0명</span>
+            </h2>
+            
+            <div style="margin-bottom: 20px; padding: 16px; background: #EBF4FF; border-radius: 12px; border: 1px solid #3182F6;">
+                <p style="font-size: 14px; color: #1E40AF; margin: 0;">
+                    <i class="fas fa-info-circle"></i> 
+                    최근 7일 이내 기본사항을 제출한 회원 목록입니다. 첨부파일(외국인등록증, 여권, 전자서명)은 쓰레드에서 확인할 수 있습니다.
+                </p>
+            </div>
+            
+            <div id="newMembersTableContainer">
+                <!-- 테이블이 여기에 동적으로 생성됨 -->
+            </div>
         </div>
     </div>
 
@@ -948,9 +981,33 @@
                 
                 updateStatistics();
                 renderThreadsTable();
+                
+                // 신규 회원 배지 업데이트
+                updateNewMemberBadge();
             } catch (error) {
                 console.error('대시보드 데이터 로드 오류:', error);
                 alert('데이터를 불러오는 중 오류가 발생했습니다.');
+            }
+        }
+
+        // 신규 회원 배지만 업데이트 (전체 데이터 로드 없이)
+        async function updateNewMemberBadge() {
+            try {
+                const sevenDaysAgo = new Date();
+                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+                
+                const { count, error } = await supabaseClient
+                    .from('profiles')
+                    .select('*', { count: 'exact', head: true })
+                    .gte('created_at', sevenDaysAgo.toISOString());
+                
+                if (!error && count > 0) {
+                    const badge = document.getElementById('newMemberBadge');
+                    badge.textContent = count;
+                    badge.style.display = 'inline-block';
+                }
+            } catch (error) {
+                console.error('신규 회원 배지 업데이트 오류:', error);
             }
         }
 
@@ -1263,7 +1320,116 @@
             } else if (tabName === 'customers') {
                 document.getElementById('customersTab').classList.add('active');
                 loadCustomersData();
+            } else if (tabName === 'newMembers') {
+                document.getElementById('newMembersTab').classList.add('active');
+                loadNewMembersData();
             }
+        }
+
+        // ========================================
+        // 신규 회원 탭 함수
+        // ========================================
+        let newMembers = [];
+
+        // 신규 회원 데이터 로드 (최근 7일)
+        async function loadNewMembersData() {
+            try {
+                const sevenDaysAgo = new Date();
+                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+                
+                const { data: profiles, error } = await supabaseClient
+                    .from('profiles')
+                    .select('*')
+                    .gte('created_at', sevenDaysAgo.toISOString())
+                    .order('created_at', { ascending: false });
+                
+                if (error) {
+                    console.error('❌ 신규 회원 로드 오류:', error);
+                    newMembers = [];
+                } else {
+                    console.log('✅ 신규 회원 로드 성공:', profiles.length, '명');
+                    newMembers = profiles;
+                }
+                
+                // 배지 업데이트
+                const badge = document.getElementById('newMemberBadge');
+                if (newMembers.length > 0) {
+                    badge.textContent = newMembers.length;
+                    badge.style.display = 'inline-block';
+                } else {
+                    badge.style.display = 'none';
+                }
+                
+                renderNewMembersTable();
+            } catch (error) {
+                console.error('신규 회원 데이터 로드 오류:', error);
+            }
+        }
+
+        // 신규 회원 테이블 렌더링
+        function renderNewMembersTable() {
+            const container = document.getElementById('newMembersTableContainer');
+            document.getElementById('newMemberCount').textContent = `총 ${newMembers.length}명`;
+            
+            if (newMembers.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="text-align: center; padding: 60px 20px; color: #6B7684;">
+                        <i class="fas fa-user-check" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                        <p style="font-size: 16px;">최근 7일 이내 신규 회원이 없습니다.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let tableHTML = `
+                <table class="customers-table">
+                    <thead>
+                        <tr>
+                            <th>이름</th>
+                            <th>이메일</th>
+                            <th>전화번호</th>
+                            <th>비자</th>
+                            <th>국적</th>
+                            <th>첨부파일</th>
+                            <th>가입일</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            newMembers.forEach(member => {
+                const hasArc = member.arc_front_url || member.arc_back_url;
+                const hasPassport = member.passport_url;
+                const hasSignature = member.signature_url;
+                
+                const attachments = [];
+                if (hasArc) attachments.push('<span title="외국인등록증"><i class="fas fa-id-card" style="color: #3182F6;"></i></span>');
+                if (hasPassport) attachments.push('<span title="여권"><i class="fas fa-passport" style="color: #10B981;"></i></span>');
+                if (hasSignature) attachments.push('<span title="전자서명"><i class="fas fa-signature" style="color: #8B5CF6;"></i></span>');
+                
+                const attachmentHTML = attachments.length > 0 
+                    ? attachments.join(' ') 
+                    : '<span style="color: #9CA3AF;">없음</span>';
+                
+                tableHTML += `
+                    <tr>
+                        <td><strong>${member.name || '-'}</strong></td>
+                        <td>${member.email || '-'}</td>
+                        <td>${member.phone || '-'}</td>
+                        <td><span class="visa-badge">${member.visa_type || '-'}</span></td>
+                        <td>${member.nationality || '-'}</td>
+                        <td style="font-size: 16px;">${attachmentHTML}</td>
+                        <td>${new Date(member.created_at).toLocaleDateString('ko-KR')}</td>
+                    </tr>
+                `;
+            });
+            
+            tableHTML += `
+                    </tbody>
+                </table>
+            `;
+            
+            container.innerHTML = tableHTML;
         }
 
         // 고객 데이터 로드

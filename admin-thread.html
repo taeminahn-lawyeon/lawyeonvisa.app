@@ -168,6 +168,41 @@
             text-decoration: none;
         }
 
+        /* 첨부파일 버튼 스타일 */
+        .doc-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            background: #F2F4F6;
+            border: 1px solid #E5E8EB;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #191F28;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .doc-btn:hover {
+            background: #E5E8EB;
+            border-color: #3182F6;
+        }
+
+        .doc-btn i {
+            color: #3182F6;
+        }
+
+        .doc-btn .doc-name {
+            flex: 1;
+            text-align: left;
+        }
+
+        .doc-btn .download-icon {
+            color: #6B7684;
+        }
+
         .info-value a:hover {
             text-decoration: underline;
         }
@@ -714,6 +749,16 @@
                 </div>
             </div>
 
+            <!-- 고객 첨부파일 -->
+            <div class="sidebar-section" id="customerDocuments" style="display: none;">
+                <div class="section-title">
+                    <i class="fas fa-paperclip"></i> 고객 제출 서류
+                </div>
+                <div id="documentsList" style="display: flex; flex-direction: column; gap: 8px;">
+                    <!-- 동적으로 생성됨 -->
+                </div>
+            </div>
+
             <!-- 쓰레드 정보 -->
             <div class="sidebar-section">
                 <div class="section-title">
@@ -1008,7 +1053,7 @@
                     console.log('👤 사용자 프로필 조회 - User ID:', thread.user_id);
                     const { data: profile, error: profileError } = await supabaseClient
                         .from('profiles')
-                        .select('name, email, phone, nationality, visa_type, preferred_messenger, messenger_id')
+                        .select('name, email, phone, nationality, visa_type, preferred_messenger, messenger_id, arc_front_url, arc_back_url, passport_url, signature_url')
                         .eq('id', thread.user_id)
                         .maybeSingle();
                     
@@ -1078,6 +1123,9 @@
                 document.getElementById('customerNationality').textContent = customerData?.nationality || '-';
                 document.getElementById('customerVisa').textContent = customerData?.visa_type || '-';
                 console.log('✅ 고객 정보 업데이트 완료');
+
+                // 고객 첨부파일 표시
+                updateCustomerDocuments();
 
                 // 쓰레드 정보
                 document.getElementById('serviceName').textContent = threadData.service_name || '-';
@@ -1184,6 +1232,77 @@
                 console.error('❌ 메시지 로드 오류:', error);
                 console.error('오류 스택:', error.stack);
             }
+        }
+
+        // ============================================
+        // 고객 첨부파일 표시
+        // ============================================
+        async function updateCustomerDocuments() {
+            const documentsSection = document.getElementById('customerDocuments');
+            const documentsList = document.getElementById('documentsList');
+            
+            if (!customerData) return;
+            
+            const documents = [];
+            
+            // 첨부파일 목록 구성
+            if (customerData.arc_front_url) {
+                documents.push({ name: '외국인등록증 (앞면)', path: customerData.arc_front_url, icon: 'fa-id-card' });
+            }
+            if (customerData.arc_back_url) {
+                documents.push({ name: '외국인등록증 (뒷면)', path: customerData.arc_back_url, icon: 'fa-id-card' });
+            }
+            if (customerData.passport_url) {
+                documents.push({ name: '여권', path: customerData.passport_url, icon: 'fa-passport' });
+            }
+            if (customerData.signature_url) {
+                documents.push({ name: '전자서명', path: customerData.signature_url, icon: 'fa-signature' });
+            }
+            
+            if (documents.length === 0) {
+                documentsSection.style.display = 'none';
+                return;
+            }
+            
+            documentsSection.style.display = 'block';
+            documentsList.innerHTML = '';
+            
+            for (const doc of documents) {
+                const btn = document.createElement('button');
+                btn.className = 'doc-btn';
+                btn.innerHTML = `
+                    <i class="fas ${doc.icon}"></i>
+                    <span class="doc-name">${doc.name}</span>
+                    <i class="fas fa-download download-icon"></i>
+                `;
+                btn.onclick = async () => {
+                    try {
+                        btn.disabled = true;
+                        btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> 로딩 중...`;
+                        
+                        const result = await getProfileDocumentUrl(doc.path);
+                        
+                        if (result.success) {
+                            window.open(result.url, '_blank');
+                        } else {
+                            alert('파일을 불러올 수 없습니다: ' + result.error);
+                        }
+                    } catch (error) {
+                        console.error('파일 다운로드 오류:', error);
+                        alert('파일 다운로드 중 오류가 발생했습니다.');
+                    } finally {
+                        btn.disabled = false;
+                        btn.innerHTML = `
+                            <i class="fas ${doc.icon}"></i>
+                            <span class="doc-name">${doc.name}</span>
+                            <i class="fas fa-download download-icon"></i>
+                        `;
+                    }
+                };
+                documentsList.appendChild(btn);
+            }
+            
+            console.log('✅ 고객 첨부파일 표시 완료:', documents.length, '개');
         }
 
         // ============================================

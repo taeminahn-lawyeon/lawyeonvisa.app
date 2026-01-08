@@ -998,6 +998,64 @@
                 
                 // 서명 데이터 추가
                 const signatureData = signaturePad.toDataURL();
+                
+                // 파일 업로드 URL 저장 변수
+                let arcFrontUrl = null;
+                let arcBackUrl = null;
+                let passportUrl = null;
+                let signatureUrl = null;
+                
+                submitBtn.textContent = '파일 업로드 중...';
+                
+                // 🔄 파일 업로드 처리
+                const userId = session.user.id;
+                const timestamp = Date.now();
+                
+                // 외국인등록증 앞면 업로드
+                const arcFrontFile = document.getElementById('arcFront').files[0];
+                if (arcFrontFile) {
+                    const arcFrontPath = `${userId}/arc_front_${timestamp}.${arcFrontFile.name.split('.').pop()}`;
+                    const arcFrontResult = await uploadProfileDocument(arcFrontPath, arcFrontFile);
+                    if (arcFrontResult.success) {
+                        arcFrontUrl = arcFrontResult.data.path;
+                        console.log('✅ 외국인등록증 앞면 업로드:', arcFrontUrl);
+                    }
+                }
+                
+                // 외국인등록증 뒷면 업로드
+                const arcBackFile = document.getElementById('arcBack').files[0];
+                if (arcBackFile) {
+                    const arcBackPath = `${userId}/arc_back_${timestamp}.${arcBackFile.name.split('.').pop()}`;
+                    const arcBackResult = await uploadProfileDocument(arcBackPath, arcBackFile);
+                    if (arcBackResult.success) {
+                        arcBackUrl = arcBackResult.data.path;
+                        console.log('✅ 외국인등록증 뒷면 업로드:', arcBackUrl);
+                    }
+                }
+                
+                // 여권 업로드
+                const passportFile = document.getElementById('passport').files[0];
+                if (passportFile) {
+                    const passportPath = `${userId}/passport_${timestamp}.${passportFile.name.split('.').pop()}`;
+                    const passportResult = await uploadProfileDocument(passportPath, passportFile);
+                    if (passportResult.success) {
+                        passportUrl = passportResult.data.path;
+                        console.log('✅ 여권 업로드:', passportUrl);
+                    }
+                }
+                
+                // 전자서명 업로드 (Base64 -> Blob 변환)
+                if (signatureData) {
+                    const signatureBlob = await fetch(signatureData).then(r => r.blob());
+                    const signaturePath = `${userId}/signature_${timestamp}.png`;
+                    const signatureResult = await uploadProfileDocument(signaturePath, signatureBlob);
+                    if (signatureResult.success) {
+                        signatureUrl = signatureResult.data.path;
+                        console.log('✅ 전자서명 업로드:', signatureUrl);
+                    }
+                }
+                
+                submitBtn.textContent = '프로필 저장 중...';
 
                 // Supabase에 저장할 프로필 데이터
                 const profileData = {
@@ -1013,7 +1071,12 @@
                     address: formData.get('address') + ' ' + formData.get('detailAddress') + ' (' + formData.get('postcode') + ')',
                     preferred_messenger: formData.get('preferredMessenger'),
                     messenger_id: formData.get('messengerId'),
-                    role: 'customer'
+                    role: 'customer',
+                    // 첨부파일 URL 추가
+                    arc_front_url: arcFrontUrl,
+                    arc_back_url: arcBackUrl,
+                    passport_url: passportUrl,
+                    signature_url: signatureUrl
                 };
 
                 // Supabase에 프로필 생성
