@@ -320,32 +320,71 @@
                 const orderId = urlParams.get('orderId');
                 const paymentKey = urlParams.get('paymentKey');
                 const amount = urlParams.get('amount');
+                const isDemo = urlParams.get('demo') === 'true';
 
-                // Supabase에서 결제 정보 조회
-                const { data: paymentData, error: paymentError } = await supabaseClient
-                    .from('payments')
-                    .select('*')
-                    .eq('order_id', orderId)
-                    .eq('user_id', session.user.id)
-                    .single();
+                let paymentData;
                 
-                if (paymentError || !paymentData) {
-                    displayError('결제 정보를 찾을 수 없습니다.');
-                    return;
+                // 🎯 데모 모드: sessionStorage에서 결제 정보 가져오기
+                if (isDemo) {
+                    console.log('🎯 데모 모드 - sessionStorage에서 결제 정보 로드');
+                    const pendingPayment = sessionStorage.getItem('pendingPayment');
+                    
+                    if (pendingPayment) {
+                        const parsed = JSON.parse(pendingPayment);
+                        paymentData = {
+                            id: 'demo-' + Date.now(),
+                            order_id: parsed.orderId,
+                            service_name: parsed.serviceName,
+                            amount: parsed.amount,
+                            agency_fee: parsed.agencyFee,
+                            govt_fee: parsed.govtFee,
+                            payment_method: parsed.paymentMethod,
+                            customer_name: parsed.customerName,
+                            customer_email: parsed.customerEmail,
+                            organization: 'jnu',
+                            status: 'completed'
+                        };
+                        sessionStorage.removeItem('pendingPayment');
+                    } else {
+                        paymentData = {
+                            id: 'demo-' + Date.now(),
+                            order_id: orderId,
+                            service_name: '서비스 신청',
+                            amount: parseInt(amount) || 0,
+                            organization: 'jnu',
+                            status: 'completed'
+                        };
+                    }
+                } else {
+                    // 실제 결제: Supabase에서 결제 정보 조회
+                    const { data, error: paymentError } = await supabaseClient
+                        .from('payments')
+                        .select('*')
+                        .eq('order_id', orderId)
+                        .eq('user_id', session.user.id)
+                        .single();
+                    
+                    if (paymentError || !data) {
+                        displayError('결제 정보를 찾을 수 없습니다.');
+                        return;
+                    }
+                    paymentData = data;
                 }
 
-                // 결제 상태 업데이트
-                const { error: updateError } = await supabaseClient
-                    .from('payments')
-                    .update({
-                        status: 'completed',
-                        payment_key: paymentKey,
-                        updated_at: new Date().toISOString()
-                    })
-                    .eq('id', paymentData.id);
+                // 결제 상태 업데이트 (데모 모드에서는 스킵)
+                if (!isDemo) {
+                    const { error: updateError } = await supabaseClient
+                        .from('payments')
+                        .update({
+                            status: 'completed',
+                            payment_key: paymentKey,
+                            updated_at: new Date().toISOString()
+                        })
+                        .eq('id', paymentData.id);
 
-                if (updateError) {
-                    console.error('결제 상태 업데이트 오류:', updateError);
+                    if (updateError) {
+                        console.error('결제 상태 업데이트 오류:', updateError);
+                    }
                 }
 
                 // 쓰레드 생성
