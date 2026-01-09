@@ -7,8 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     
-    <!-- Toss Payments SDK -->
-    <script src="https://js.tosspayments.com/v1/payment"></script>
+    <!-- Toss Payments SDK v2 -->
+    <script src="https://js.tosspayments.com/v2/standard"></script>
     
     <style>
         * {
@@ -837,14 +837,16 @@
                 return;
             }
 
-            // ✅ 3. Toss Payments SDK 초기화
+            // ✅ 3. Toss Payments SDK v2 초기화
             try {
-                tossPayments = TossPayments(clientKey, {
-                    language: 'ko_KR'  // 언어를 한국어로 고정
+                const tossPaymentsInstance = TossPayments(clientKey);
+                // 회원 결제 (customerKey는 사용자 고유 ID 사용)
+                tossPayments = tossPaymentsInstance.payment({
+                    customerKey: session.user.id  // Supabase 사용자 ID를 customerKey로 사용
                 });
-                console.log('Toss Payments SDK 초기화 성공');
+                console.log('✅ Toss Payments SDK v2 초기화 성공');
             } catch (error) {
-                console.error('Toss Payments SDK 초기화 실패:', error);
+                console.error('❌ Toss Payments SDK 초기화 실패:', error);
             }
 
             // ✅ 4. 서비스 확인 및 로드
@@ -955,7 +957,8 @@
         }
 
         // Toss Payments 클라이언트 키 (테스트용)
-        const clientKey = 'test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm';
+        // TODO: 정식 연동 시 실제 클라이언트 키로 교체
+        const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
         let tossPayments = null;
 
         async function processPayment() {
@@ -993,13 +996,12 @@
                     govtFee: selectedService.govtFee,
                     customerName: profile.name || session.user.email,
                     customerEmail: profile.email || session.user.email,
+                    customerPhone: profile.phone || '',
                     paymentMethod: selectedPaymentMethod,
                     timestamp: new Date().toISOString()
                 };
 
-                // 🎯 데모 모드: Supabase 저장 스킵하고 바로 성공 페이지로 이동
-                // (토스 정식 키 연결 후 아래 createPayment 활성화)
-                console.log('🎯 데모 모드 - 결제 정보:', orderInfo);
+                console.log('💳 결제 요청 정보:', orderInfo);
                 
                 // sessionStorage에 결제 정보 임시 저장 (성공 페이지에서 사용)
                 sessionStorage.setItem('pendingPayment', JSON.stringify({
@@ -1012,57 +1014,71 @@
                     customerName: orderInfo.customerName,
                     customerEmail: orderInfo.customerEmail
                 }));
+
+                // Toss Payments SDK가 초기화되지 않은 경우
+                if (!tossPayments) {
+                    console.error('❌ Toss Payments SDK가 초기화되지 않았습니다.');
+                    throw new Error('결제 시스템 초기화 실패');
+                }
                 
                 const currentUrl = window.location.origin;
-                window.location.href = `${currentUrl}/payment-success.html?orderId=${orderInfo.orderId}&amount=${orderInfo.amount}&paymentKey=DEMO_${Date.now()}&demo=true`;
-                return;
                 
-                /* 🔒 토스 정식 키 연결 후 활성화
-                // Supabase에 결제 정보 임시 저장
-                const pendingPaymentResult = await createPayment({
-                    order_id: orderInfo.orderId,
-                    service_name: orderInfo.orderName,
-                    amount: orderInfo.amount,
-                    agency_fee: orderInfo.agencyFee,
-                    govt_fee: orderInfo.govtFee,
-                    payment_method: orderInfo.paymentMethod,
-                    status: 'pending',
-                    organization: 'general'
-                });
-
-                if (!pendingPaymentResult.success) {
-                    throw new Error('결제 정보 저장 실패');
-                }
-                */
-                
-                // 아래 코드는 실제 결제 연동 시 활성화
-                /*
+                // 카드 결제 (Toss Payments v2 SDK)
                 if (selectedPaymentMethod === 'card') {
-                    // Toss Payments 실제 결제 호출
-                    const currentUrl = window.location.origin;
-                    
-                    await tossPayments.requestPayment('카드', {
-                        amount: orderInfo.amount,
+                    await tossPayments.requestPayment({
+                        method: 'CARD',
+                        amount: {
+                            currency: 'KRW',
+                            value: orderInfo.amount
+                        },
                         orderId: orderInfo.orderId,
                         orderName: orderInfo.orderName,
-                        customerName: orderInfo.customerName,
-                        customerEmail: orderInfo.customerEmail,
                         successUrl: currentUrl + '/payment-success.html',
                         failUrl: currentUrl + '/payment-fail.html',
+                        customerEmail: orderInfo.customerEmail,
+                        customerName: orderInfo.customerName,
+                        customerMobilePhone: orderInfo.customerPhone.replace(/-/g, ''),
+                        card: {
+                            useEscrow: false,
+                            flowMode: 'DEFAULT',
+                            useCardPoint: false,
+                            useAppCardOnly: false
+                        }
                     });
                 } else if (selectedPaymentMethod === 'paypal') {
-                    // PayPal 결제는 준비 중
-                    alert('PayPal 결제는 준비 중입니다.');
-                    btn.disabled = false;
-                    btn.classList.remove('loading');
-                    btn.innerHTML = '<i class="fas fa-lock"></i> <span id="total-price-text">₩' + selectedService.totalPrice.toLocaleString() + '</span> 결제하기';
+                    // PayPal (해외간편결제)
+                    await tossPayments.requestPayment({
+                        method: 'FOREIGN_EASY_PAY',
+                        amount: {
+                            currency: 'KRW',
+                            value: orderInfo.amount
+                        },
+                        orderId: orderInfo.orderId,
+                        orderName: orderInfo.orderName,
+                        successUrl: currentUrl + '/payment-success.html',
+                        failUrl: currentUrl + '/payment-fail.html',
+                        customerEmail: orderInfo.customerEmail,
+                        customerName: orderInfo.customerName,
+                        foreignEasyPay: {
+                            provider: 'PAYPAL',
+                            country: 'KR'
+                        }
+                    });
+                } else {
+                    throw new Error('지원하지 않는 결제 수단입니다.');
                 }
-                */
+                
             } catch (error) {
                 console.error('결제 오류:', error);
                 btn.disabled = false;
                 btn.classList.remove('loading');
                 btn.innerHTML = '<i class="fas fa-lock"></i> <span id="total-price-text">₩' + selectedService.totalPrice.toLocaleString() + '</span> 결제하기';
+                
+                // 사용자가 결제창을 닫은 경우 (PAY_PROCESS_CANCELED)
+                if (error.code === 'PAY_PROCESS_CANCELED') {
+                    console.log('사용자가 결제를 취소했습니다.');
+                    return;
+                }
                 
                 let errorMessage = '결제 처리 중 오류가 발생했습니다.';
                 if (error.message) {

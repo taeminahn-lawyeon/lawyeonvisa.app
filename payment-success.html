@@ -408,87 +408,71 @@
                 const orderId = urlParams.get('orderId');
                 const paymentKey = urlParams.get('paymentKey');
                 const amount = urlParams.get('amount');
-                const isDemo = urlParams.get('demo') === 'true';
 
-                if (!orderId) {
-                    displayError('결제 정보를 찾을 수 없습니다.');
+                console.log('💳 결제 성공 페이지 로드:', { orderId, paymentKey: paymentKey?.substring(0, 20) + '...', amount });
+
+                if (!orderId || !paymentKey || !amount) {
+                    displayError('결제 정보가 올바르지 않습니다.');
                     return;
                 }
 
-                let paymentData;
+                // sessionStorage에서 결제 정보 가져오기
+                const pendingPayment = sessionStorage.getItem('pendingPayment');
+                let paymentInfo = null;
                 
-                // 🎯 데모 모드: sessionStorage에서 결제 정보 가져오기
-                if (isDemo) {
-                    console.log('🎯 데모 모드 - sessionStorage에서 결제 정보 로드');
-                    const pendingPayment = sessionStorage.getItem('pendingPayment');
-                    
-                    if (pendingPayment) {
-                        const parsed = JSON.parse(pendingPayment);
-                        paymentData = {
-                            id: 'demo-' + Date.now(),
-                            order_id: parsed.orderId,
-                            service_name: parsed.serviceName,
-                            amount: parsed.amount,
-                            agency_fee: parsed.agencyFee,
-                            govt_fee: parsed.govtFee,
-                            payment_method: parsed.paymentMethod,
-                            customer_name: parsed.customerName,
-                            customer_email: parsed.customerEmail,
-                            organization: parsed.organization || 'general',
-                            status: 'completed'
-                        };
-                        console.log('✅ 데모 결제 정보:', paymentData);
-                        
-                        // sessionStorage 정리
-                        sessionStorage.removeItem('pendingPayment');
-                    } else {
-                        // sessionStorage에 없으면 URL 파라미터로 기본 정보 생성
-                        paymentData = {
-                            id: 'demo-' + Date.now(),
-                            order_id: orderId,
-                            service_name: '서비스 신청',
-                            amount: parseInt(amount) || 0,
-                            agency_fee: 0,
-                            govt_fee: 0,
-                            payment_method: 'card',
-                            organization: 'general',
-                            status: 'completed'
-                        };
-                        console.log('⚠️ sessionStorage 없음, 기본 정보 사용:', paymentData);
-                    }
-                } else {
-                    // 실제 결제: Supabase에서 결제 정보 조회
-                    const { data, error: paymentError } = await supabaseClient
-                        .from('payments')
-                        .select('*')
-                        .eq('order_id', orderId)
-                        .eq('user_id', session.user.id)
-                        .single();
-                    
-                    if (paymentError || !data) {
-                        console.error('결제 정보 조회 오류:', paymentError);
-                        displayError('결제 정보를 찾을 수 없습니다.');
-                        return;
-                    }
-                    
-                    paymentData = data;
+                if (pendingPayment) {
+                    paymentInfo = JSON.parse(pendingPayment);
+                    console.log('📦 저장된 결제 정보:', paymentInfo);
                 }
 
-                // 결제 상태 업데이트 (데모 모드에서는 스킵)
-                if (!isDemo) {
-                    const { error: updateError } = await supabaseClient
-                        .from('payments')
-                        .update({
-                            status: 'completed',
-                            payment_key: paymentKey,
-                            updated_at: new Date().toISOString()
-                        })
-                        .eq('id', paymentData.id);
+                // 🔒 토스페이먼츠 결제 승인 API 호출
+                console.log('🔄 토스페이먼츠 결제 승인 요청 중...');
+                
+                const confirmResponse = await fetch('/.netlify/functions/confirm-payment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        paymentKey,
+                        orderId,
+                        amount: Number(amount)
+                    })
+                });
 
-                    if (updateError) {
-                        console.error('결제 상태 업데이트 오류:', updateError);
-                    }
+                const confirmResult = await confirmResponse.json();
+                console.log('💳 결제 승인 결과:', confirmResult);
+
+                if (!confirmResult.success) {
+                    // 결제 승인 실패
+                    console.error('❌ 결제 승인 실패:', confirmResult);
+                    displayError(`결제 승인 실패: ${confirmResult.message || '알 수 없는 오류'}`);
+                    return;
                 }
+
+                // 결제 승인 성공 - 토스페이먼츠 응답 데이터
+                const tossPaymentData = confirmResult.data;
+                console.log('✅ 토스페이먼츠 결제 승인 성공:', tossPaymentData);
+
+                // paymentData 구성
+                const paymentData = {
+                    id: 'payment-' + Date.now(),
+                    order_id: orderId,
+                    service_name: paymentInfo?.serviceName || tossPaymentData.orderName || '서비스 신청',
+                    amount: tossPaymentData.totalAmount || parseInt(amount),
+                    agency_fee: paymentInfo?.agencyFee || 0,
+                    govt_fee: paymentInfo?.govtFee || 0,
+                    payment_method: tossPaymentData.method || 'card',
+                    payment_key: paymentKey,
+                    customer_name: paymentInfo?.customerName || tossPaymentData.customerName,
+                    customer_email: paymentInfo?.customerEmail || tossPaymentData.customerEmail,
+                    organization: paymentInfo?.organization || 'general',
+                    status: 'completed',
+                    toss_response: tossPaymentData  // 토스 응답 전체 저장
+                };
+
+                // sessionStorage 정리
+                sessionStorage.removeItem('pendingPayment');
 
                 // 쓰레드 생성
                 const thread = await createThreadFromPayment(paymentData);
@@ -503,7 +487,7 @@
                 displaySuccess(paymentData, thread);
             } catch (error) {
                 console.error('❌ 결제 완료 처리 오류:', error);
-                displayError('결제 처리 중 오류가 발생했습니다.');
+                displayError('결제 처리 중 오류가 발생했습니다.\n\n고객센터로 문의해주세요.');
             }
         });
 
