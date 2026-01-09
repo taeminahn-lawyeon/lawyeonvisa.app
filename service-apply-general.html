@@ -596,82 +596,12 @@
 
         <!-- 일반 결제 -->
         <div id="payment-content" style="display: none;">
-            <!-- 사전진단 전용 배너 제거됨 -->
-            
-            <!-- 서비스 정보 -->
-            <div class="card">
-                <div class="service-header">
-                    <div class="service-info">
-                        <h1 id="service-name">비자 연장</h1>
-                        <p id="service-desc">현재 체류자격의 기간 연장을 대행합니다</p>
-                    </div>
-                </div>
-
-                <!-- 금액 상세 -->
-                <div class="price-breakdown">
-                    <div class="price-row">
-                        <div class="price-label" data-i18n="payment.agencyFee">민원 대행 보수</div>
-                        <div class="price-value" id="agency-fee">₩550,000</div>
-                    </div>
-                    <div class="price-row" id="govt-fee-row" style="display: none;">
-                        <div class="price-label" data-i18n="payment.govtFee">출입국 관서 수수료</div>
-                        <div class="price-value" id="govt-fee">₩50,000</div>
-                    </div>
-                    <div class="price-row total">
-                        <div class="price-label" data-i18n="payment.totalPrice">총 결제 금액</div>
-                        <div class="price-value" id="total-price">₩600,000</div>
-                    </div>
-                </div>
-
-                <!-- 출입국 관서 수수료 안내 -->
-                <div class="govt-fee-notice" id="govt-fee-notice" style="display: none;">
-                    <i class="fas fa-info-circle"></i>
-                    <div class="govt-fee-notice-text">
-                        <strong>출입국 관서 수수료 포함</strong><br>
-                        출입국 관서 수수료는 센터가 대신 납부하며 총 결제 금액에 포함되어 있습니다.
-                    </div>
-                </div>
-            </div>
-
             <!-- 안내 -->
-            <div class="notice">
+            <div class="notice" style="margin-top: 20px;">
                 <i class="fas fa-comment-dots"></i>
                 <div class="notice-text" id="service-notice-text">
                     결제 완료 후 센터 담당자가 쓰레드를 통해 추가 서류를 안내드립니다
                 </div>
-            </div>
-
-            <!-- 보안 안내 -->
-            <div class="security-badge">
-                <i class="fas fa-shield-check"></i>
-                <div class="security-badge-text">
-                    <strong>안전한 결제</strong> Toss Payments 글로벌 결제 시스템
-                </div>
-            </div>
-
-            <!-- 결제수단 -->
-            <div class="section-title">결제수단</div>
-
-            <div class="payment-method selected" data-method="card" onclick="selectPayment(this)">
-                <div class="payment-icon">
-                    <i class="fas fa-credit-card"></i>
-                </div>
-                <div class="payment-info">
-                    <div class="payment-name">신용/체크카드</div>
-                    <div class="payment-desc">Visa, Mastercard, JCB</div>
-                </div>
-                <div class="payment-radio"></div>
-            </div>
-
-            <div class="payment-method" data-method="paypal" onclick="selectPayment(this)">
-                <div class="payment-icon">
-                    <i class="fab fa-paypal"></i>
-                </div>
-                <div class="payment-info">
-                    <div class="payment-name">PayPal</div>
-                    <div class="payment-desc">글로벌 간편결제</div>
-                </div>
-                <div class="payment-radio"></div>
             </div>
 
             <!-- 결제 버튼 -->
@@ -876,22 +806,9 @@
         });
 
         function showPayment(serviceId) {
-            document.getElementById('service-name').textContent = selectedService.name;
-            document.getElementById('service-desc').textContent = selectedService.desc;
-            
             const agencyFee = selectedService.price;
             const govtFee = govtFees[serviceId] || 0;
             const totalPrice = agencyFee + govtFee;
-            
-            document.getElementById('agency-fee').textContent = '₩' + agencyFee.toLocaleString();
-            
-            if (govtFee > 0) {
-                document.getElementById('govt-fee-row').style.display = 'flex';
-                document.getElementById('govt-fee').textContent = '₩' + govtFee.toLocaleString();
-                document.getElementById('govt-fee-notice').style.display = 'flex';
-            }
-            
-            document.getElementById('total-price').textContent = '₩' + totalPrice.toLocaleString();
             
             // 결제 데이터 저장
             selectedService.totalPrice = totalPrice;
@@ -914,27 +831,8 @@
         }
         
         function showPrediagnosisPayment() {
-            // 사전진단 전용 정보 배너 제거 (표시 안 함)
-            // document.getElementById('prediagnosis-info').style.display = 'block';
-            
-            document.getElementById('service-name').textContent = selectedService.name;
-            document.getElementById('service-desc').textContent = selectedService.desc;
-            
             const agencyFee = selectedService.price;
             const totalPrice = agencyFee;
-            
-            // '민원 대행 보수' 라벨을 '사전진단 서비스'로 변경
-            const agencyFeeLabel = document.querySelector('.price-label[data-i18n="payment.agencyFee"]');
-            if (agencyFeeLabel) {
-                agencyFeeLabel.textContent = '사전진단 서비스';
-            }
-            
-            document.getElementById('agency-fee').textContent = '₩' + agencyFee.toLocaleString();
-            document.getElementById('total-price').textContent = '₩' + totalPrice.toLocaleString();
-            
-            // 출입국 관서 수수료 숨김
-            document.getElementById('govt-fee-row').style.display = 'none';
-            document.getElementById('govt-fee-notice').style.display = 'none';
             
             // 결제 데이터 저장
             selectedService.totalPrice = totalPrice;
@@ -950,11 +848,7 @@
             document.getElementById('payment-content').style.display = 'block';
         }
 
-        function selectPayment(element) {
-            document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('selected'));
-            element.classList.add('selected');
-            selectedPaymentMethod = element.dataset.method;
-        }
+        // selectPayment 함수 제거됨 - 더 이상 결제수단 선택 UI를 사용하지 않음
 
         // Toss Payments 클라이언트 키 (테스트용)
         // TODO: 정식 연동 시 실제 클라이언트 키로 교체
@@ -1023,56 +917,33 @@
                 
                 const currentUrl = window.location.origin;
                 
-                // 카드 결제 (Toss Payments v2 SDK)
-                if (selectedPaymentMethod === 'card') {
-                    await tossPayments.requestPayment({
-                        method: 'CARD',
-                        amount: {
-                            currency: 'KRW',
-                            value: orderInfo.amount
-                        },
-                        orderId: orderInfo.orderId,
-                        orderName: orderInfo.orderName,
-                        successUrl: currentUrl + '/payment-success.html',
-                        failUrl: currentUrl + '/payment-fail.html',
-                        customerEmail: orderInfo.customerEmail,
-                        customerName: orderInfo.customerName,
-                        customerMobilePhone: orderInfo.customerPhone.replace(/-/g, ''),
-                        card: {
-                            useEscrow: false,
-                            flowMode: 'DEFAULT',
-                            useCardPoint: false,
-                            useAppCardOnly: false
-                        }
-                    });
-                } else if (selectedPaymentMethod === 'paypal') {
-                    // PayPal (해외간편결제)
-                    await tossPayments.requestPayment({
-                        method: 'FOREIGN_EASY_PAY',
-                        amount: {
-                            currency: 'KRW',
-                            value: orderInfo.amount
-                        },
-                        orderId: orderInfo.orderId,
-                        orderName: orderInfo.orderName,
-                        successUrl: currentUrl + '/payment-success.html',
-                        failUrl: currentUrl + '/payment-fail.html',
-                        customerEmail: orderInfo.customerEmail,
-                        customerName: orderInfo.customerName,
-                        foreignEasyPay: {
-                            provider: 'PAYPAL',
-                            country: 'KR'
-                        }
-                    });
-                } else {
-                    throw new Error('지원하지 않는 결제 수단입니다.');
-                }
+                // 토스페이먼츠 결제창 호출 (카드/간편결제 통합)
+                await tossPayments.requestPayment({
+                    method: 'CARD',
+                    amount: {
+                        currency: 'KRW',
+                        value: orderInfo.amount
+                    },
+                    orderId: orderInfo.orderId,
+                    orderName: orderInfo.orderName,
+                    successUrl: currentUrl + '/payment-success.html',
+                    failUrl: currentUrl + '/payment-fail.html',
+                    customerEmail: orderInfo.customerEmail,
+                    customerName: orderInfo.customerName,
+                    customerMobilePhone: orderInfo.customerPhone ? orderInfo.customerPhone.replace(/-/g, '') : '',
+                    card: {
+                        useEscrow: false,
+                        flowMode: 'DEFAULT',
+                        useCardPoint: false,
+                        useAppCardOnly: false
+                    }
+                });
                 
             } catch (error) {
                 console.error('결제 오류:', error);
                 btn.disabled = false;
                 btn.classList.remove('loading');
-                btn.innerHTML = '<i class="fas fa-lock"></i> <span id="total-price-text">₩' + selectedService.totalPrice.toLocaleString() + '</span> 결제하기';
+                btn.textContent = '결제하기';
                 
                 // 사용자가 결제창을 닫은 경우 (PAY_PROCESS_CANCELED)
                 if (error.code === 'PAY_PROCESS_CANCELED') {
