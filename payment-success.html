@@ -425,13 +425,16 @@
                     console.log('📦 저장된 결제 정보:', paymentInfo);
                 }
 
-                // 🔒 토스페이먼츠 결제 승인 API 호출
+                // 🔒 토스페이먼츠 결제 승인 API 호출 (Supabase Edge Function)
                 console.log('🔄 토스페이먼츠 결제 승인 요청 중...');
                 
-                const confirmResponse = await fetch('/.netlify/functions/confirm-payment', {
+                // Supabase Edge Function URL
+                const supabaseUrl = 'https://gqistzsergddnpcvuzba.supabase.co';
+                const confirmResponse = await fetch(`${supabaseUrl}/functions/v1/confirm-payment`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${(await supabaseClient.auth.getSession()).data.session?.access_token}`
                     },
                     body: JSON.stringify({
                         paymentKey,
