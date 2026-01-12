@@ -16,50 +16,59 @@
 
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #f8f9fa;
             -webkit-font-smoothing: antialiased;
             min-height: 100vh;
+        }
+
+        /* 헤더 */
+        .header {
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
+            padding: 20px 0;
+            border-bottom: 3px solid #10B981;
+        }
+
+        .header-inner {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
+            gap: 10px;
         }
 
+        .header-title i {
+            color: #10B981;
+        }
+
+        /* 컨테이너 */
         .container {
             max-width: 600px;
-            width: 100%;
+            margin: 0 auto;
+            padding: 0 20px 40px;
         }
 
-        /* 카드 */
-        .card {
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-            overflow: hidden;
-            animation: slideUp 0.5s ease;
-        }
-
-        @keyframes slideUp {
-            from { 
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* 성공 헤더 */
-        .success-header {
+        /* 성공 배너 */
+        .success-banner {
             background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-            padding: 48px 32px;
+            border-radius: 20px;
+            padding: 40px 24px;
+            margin: 20px 0;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
 
-        .success-header::before {
+        .success-banner::before {
             content: '';
             position: absolute;
             top: -50%;
@@ -76,15 +85,15 @@
         }
 
         .success-icon {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             background: rgba(255,255,255,0.2);
-            border: 4px solid white;
+            border: 3px solid white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 24px;
+            margin: 0 auto 20px;
             animation: scaleIn 0.6s ease;
             position: relative;
         }
@@ -96,42 +105,38 @@
         }
 
         .success-icon i {
-            font-size: 48px;
+            font-size: 36px;
             color: white;
         }
 
         .success-title {
-            font-size: 32px;
+            font-size: 26px;
             font-weight: 900;
             color: white;
-            margin-bottom: 12px;
-            letter-spacing: -1px;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
             position: relative;
         }
 
         .success-message {
-            font-size: 16px;
+            font-size: 15px;
             color: rgba(255,255,255,0.95);
             font-weight: 500;
             line-height: 1.6;
             position: relative;
         }
 
-        /* 컨텐츠 */
-        .content {
-            padding: 40px 32px;
-        }
-
-        /* 주문 정보 */
-        .order-info {
-            background: #F9FAFB;
+        /* 카드 */
+        .card {
+            background: white;
             border-radius: 16px;
             padding: 24px;
-            margin-bottom: 24px;
+            margin: 16px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
 
-        .order-info h3 {
-            font-size: 18px;
+        .card-title {
+            font-size: 17px;
             font-weight: 800;
             color: #191F28;
             margin-bottom: 20px;
@@ -140,61 +145,66 @@
             gap: 10px;
         }
 
-        .order-info h3 i {
-            color: #10B981;
-            font-size: 20px;
+        .card-title i {
+            color: #3182F6;
+            font-size: 18px;
         }
 
+        /* 정보 행 */
         .info-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 14px 0;
-            border-bottom: 1px solid #E5E7EB;
+            border-bottom: 1px solid #F3F4F6;
         }
 
         .info-row:last-child {
             border-bottom: none;
-            padding-top: 20px;
-            margin-top: 12px;
-            border-top: 2px solid #D1D5DB;
         }
 
         .info-label {
-            font-size: 15px;
+            font-size: 14px;
             color: #6B7280;
             font-weight: 600;
         }
 
         .info-value {
-            font-size: 15px;
+            font-size: 14px;
             color: #191F28;
             font-weight: 700;
+            text-align: right;
         }
 
-        .info-row:last-child .info-label {
-            font-size: 18px;
+        .info-row.total {
+            margin-top: 12px;
+            padding-top: 16px;
+            border-top: 2px solid #E5E7EB;
+        }
+
+        .info-row.total .info-label {
+            font-size: 16px;
             font-weight: 800;
             color: #191F28;
         }
 
-        .info-row:last-child .info-value {
-            font-size: 28px;
+        .info-row.total .info-value {
+            font-size: 22px;
             color: #10B981;
             font-weight: 900;
         }
 
-        /* 다음 단계 안내 */
+        /* 다음 단계 */
         .next-steps {
             background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 24px;
             border: 2px solid #BFDBFE;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 16px 0;
         }
 
-        .next-steps h3 {
-            font-size: 17px;
+        .next-steps-title {
+            font-size: 16px;
             font-weight: 800;
             color: #1E40AF;
             margin-bottom: 16px;
@@ -203,9 +213,8 @@
             gap: 10px;
         }
 
-        .next-steps h3 i {
+        .next-steps-title i {
             color: #3B82F6;
-            font-size: 18px;
         }
 
         .steps-list {
@@ -214,60 +223,62 @@
         }
 
         .steps-list li {
-            padding: 12px 0;
+            padding: 10px 0;
             color: #1E40AF;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
             display: flex;
             align-items: flex-start;
             gap: 12px;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
         .steps-list li i {
             color: #10B981;
-            margin-top: 3px;
+            margin-top: 2px;
             flex-shrink: 0;
-            font-size: 18px;
         }
 
         /* 버튼 */
-        .btn {
+        .btn-primary {
             width: 100%;
-            height: 60px;
+            height: 56px;
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            color: white;
             border: none;
-            border-radius: 16px;
-            font-size: 18px;
+            border-radius: 12px;
+            font-size: 16px;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 12px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.5);
-        }
-
-        .btn-primary:active {
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(49, 130, 246, 0.4);
         }
 
         .btn-secondary {
+            width: 100%;
+            height: 56px;
             background: white;
             color: #6B7280;
             border: 2px solid #E5E7EB;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .btn-secondary:hover {
@@ -279,17 +290,17 @@
         /* 로딩 */
         .loading-container {
             text-align: center;
-            padding: 80px 40px;
+            padding: 80px 20px;
         }
 
         .spinner {
-            width: 60px;
-            height: 60px;
-            border: 5px solid #E5E7EB;
-            border-top-color: #667eea;
+            width: 48px;
+            height: 48px;
+            border: 4px solid #E5E7EB;
+            border-top-color: #3182F6;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
-            margin: 0 auto 32px;
+            margin: 0 auto 24px;
         }
 
         @keyframes spin {
@@ -297,26 +308,32 @@
         }
 
         .loading-text {
-            font-size: 18px;
+            font-size: 16px;
             color: #6B7280;
             font-weight: 600;
         }
 
-        /* 에러 스타일 */
-        .error-header {
+        /* 에러 배너 */
+        .error-banner {
             background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+            border-radius: 20px;
+            padding: 40px 24px;
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
         .error-icon {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             background: rgba(255,255,255,0.2);
-            border: 4px solid white;
+            border: 3px solid white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 24px;
+            margin: 0 auto 20px;
             animation: shake 0.5s ease;
             position: relative;
         }
@@ -328,62 +345,97 @@
         }
 
         .error-icon i {
-            font-size: 48px;
+            font-size: 36px;
             color: white;
+        }
+
+        .error-steps {
+            background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+            border: 2px solid #FCA5A5;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 16px 0;
+        }
+
+        .error-steps .next-steps-title {
+            color: #991B1B;
+        }
+
+        .error-steps .next-steps-title i {
+            color: #DC2626;
+        }
+
+        .error-steps .steps-list li {
+            color: #991B1B;
+        }
+
+        .error-steps .steps-list li i {
+            color: #DC2626;
         }
 
         /* 모바일 최적화 */
         @media (max-width: 768px) {
-            body {
-                padding: 12px;
-            }
-
-            .success-header {
-                padding: 36px 24px;
+            .success-banner, .error-banner {
+                padding: 32px 20px;
+                margin: 16px 0;
             }
 
             .success-icon, .error-icon {
-                width: 80px;
-                height: 80px;
+                width: 64px;
+                height: 64px;
             }
 
             .success-icon i, .error-icon i {
-                font-size: 36px;
+                font-size: 28px;
             }
 
             .success-title {
-                font-size: 26px;
+                font-size: 22px;
             }
 
             .success-message {
+                font-size: 14px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .info-row.total .info-value {
+                font-size: 20px;
+            }
+
+            .btn-primary, .btn-secondary {
+                height: 52px;
                 font-size: 15px;
-            }
-
-            .content {
-                padding: 32px 24px;
-            }
-
-            .info-row:last-child .info-value {
-                font-size: 24px;
-            }
-
-            .btn {
-                height: 56px;
-                font-size: 16px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- 헤더 -->
+    <div class="header">
+        <div class="header-inner">
+            <div class="header-title">
+                <i class="fas fa-check-circle"></i>
+                결제 완료
+            </div>
+        </div>
+    </div>
+
     <div class="container">
-        <div class="card">
-            <div class="content" id="content">
+        <!-- 로딩 상태 -->
+        <div id="loading-content">
+            <div class="card">
                 <div class="loading-container">
                     <div class="spinner"></div>
                     <div class="loading-text">결제 완료 처리 중...</div>
                 </div>
             </div>
         </div>
+
+        <!-- 성공/에러 컨텐츠 (JavaScript로 렌더링) -->
+        <div id="result-content" style="display: none;"></div>
     </div>
 
     <!-- Supabase -->
@@ -533,15 +585,18 @@
         }
 
         function displaySuccess(paymentData, thread) {
-            const content = document.getElementById('content');
+            document.getElementById('loading-content').style.display = 'none';
+            const resultContent = document.getElementById('result-content');
+            resultContent.style.display = 'block';
             
             // 쓰레드 생성 여부에 따른 메시지
             const threadMessage = thread 
-                ? '센터 담당자가 전용 쓰레드에서 곧 연락드립니다.'
-                : '결제가 완료되었습니다. 곧 담당자가 연락드립니다.';
+                ? '센터 담당자가 전용 쓰레드에서 곧 연락드립니다'
+                : '결제가 완료되었습니다. 곧 담당자가 연락드립니다';
             
-            content.innerHTML = `
-                <div class="success-header">
+            resultContent.innerHTML = `
+                <!-- 성공 배너 -->
+                <div class="success-banner">
                     <div class="success-icon">
                         <i class="fas fa-check"></i>
                     </div>
@@ -549,54 +604,63 @@
                     <div class="success-message">${threadMessage}</div>
                 </div>
 
-                <div style="padding: 40px 32px;">
-                    <div class="order-info">
-                        <h3><i class="fas fa-receipt"></i> 결제 정보</h3>
-                        <div class="info-row">
-                            <span class="info-label">신청 서비스</span>
-                            <span class="info-value">${paymentData.service_name}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">주문번호</span>
-                            <span class="info-value">${paymentData.order_id}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">결제 수단</span>
-                            <span class="info-value">${getPaymentMethodName(paymentData.payment_method || 'card')}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">결제 금액</span>
-                            <span class="info-value">₩${paymentData.amount.toLocaleString()}</span>
-                        </div>
+                <!-- 결제 정보 -->
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-receipt"></i>
+                        결제 정보
                     </div>
-
-                    <div class="next-steps">
-                        <h3><i class="fas fa-list-check"></i> 다음 단계</h3>
-                        <ul class="steps-list">
-                            <li><i class="fas fa-check-circle"></i> <span>센터 담당자가 전용 쓰레드에서 연락드립니다 (즉시)</span></li>
-                            <li><i class="fas fa-check-circle"></i> <span>쓰레드에서 추가 서류를 요청드립니다</span></li>
-                            <li><i class="fas fa-check-circle"></i> <span>진행 상황은 쓰레드에서 실시간 확인 가능합니다</span></li>
-                        </ul>
+                    <div class="info-row">
+                        <span class="info-label">신청 서비스</span>
+                        <span class="info-value">${paymentData.service_name}</span>
                     </div>
-
-                    ${thread ? `
-                        <button class="btn btn-primary" onclick="goToThread()">
-                            <i class="fas fa-comments"></i> <span>쓰레드로 이동</span>
-                        </button>
-                    ` : ''}
-
-                    <button class="btn btn-secondary" onclick="goToHome()">
-                        <i class="fas fa-home"></i> <span>메인으로 이동</span>
-                    </button>
+                    <div class="info-row">
+                        <span class="info-label">주문번호</span>
+                        <span class="info-value">${paymentData.order_id}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">결제 수단</span>
+                        <span class="info-value">${getPaymentMethodName(paymentData.payment_method || 'card')}</span>
+                    </div>
+                    <div class="info-row total">
+                        <span class="info-label">결제 금액</span>
+                        <span class="info-value">₩${paymentData.amount.toLocaleString()}</span>
+                    </div>
                 </div>
+
+                <!-- 다음 단계 -->
+                <div class="next-steps">
+                    <div class="next-steps-title">
+                        <i class="fas fa-list-check"></i>
+                        다음 단계
+                    </div>
+                    <ul class="steps-list">
+                        <li><i class="fas fa-check-circle"></i> <span>센터 담당자가 전용 쓰레드에서 연락드립니다</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span>쓰레드에서 추가 서류를 요청드립니다</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span>진행 상황은 쓰레드에서 실시간 확인 가능합니다</span></li>
+                    </ul>
+                </div>
+
+                <!-- 버튼 -->
+                ${thread ? `
+                    <button class="btn-primary" onclick="goToThread()">
+                        <i class="fas fa-comments"></i> 쓰레드로 이동
+                    </button>
+                ` : ''}
+                <button class="btn-secondary" onclick="goToHome()">
+                    <i class="fas fa-home"></i> 메인으로 이동
+                </button>
             `;
         }
 
         function displayError(message) {
-            const content = document.getElementById('content');
+            document.getElementById('loading-content').style.display = 'none';
+            const resultContent = document.getElementById('result-content');
+            resultContent.style.display = 'block';
             
-            content.innerHTML = `
-                <div class="error-header">
+            resultContent.innerHTML = `
+                <!-- 에러 배너 -->
+                <div class="error-banner">
                     <div class="error-icon">
                         <i class="fas fa-exclamation-triangle"></i>
                     </div>
@@ -604,26 +668,32 @@
                     <div class="success-message">${message}</div>
                 </div>
 
-                <div style="padding: 40px 32px;">
-                    <div class="next-steps" style="background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%); border-color: #FCA5A5;">
-                        <h3 style="color: #991B1B;"><i class="fas fa-info-circle"></i> 안내</h3>
-                        <ul class="steps-list">
-                            <li style="color: #991B1B;"><i class="fas fa-arrow-right" style="color: #DC2626;"></i> <span>잠시 후 메인 페이지로 이동합니다</span></li>
-                            <li style="color: #991B1B;"><i class="fas fa-arrow-right" style="color: #DC2626;"></i> <span>문제가 지속되면 고객센터로 문의해주세요</span></li>
-                        </ul>
+                <!-- 안내 -->
+                <div class="error-steps">
+                    <div class="next-steps-title">
+                        <i class="fas fa-info-circle"></i>
+                        안내
                     </div>
-
-                    <button class="btn btn-primary" onclick="goToHome()">
-                        <i class="fas fa-home"></i> <span>메인으로 이동</span>
-                    </button>
+                    <ul class="steps-list">
+                        <li><i class="fas fa-arrow-right"></i> <span>잠시 후 메인 페이지로 이동합니다</span></li>
+                        <li><i class="fas fa-arrow-right"></i> <span>문제가 지속되면 고객센터로 문의해주세요</span></li>
+                    </ul>
                 </div>
+
+                <!-- 버튼 -->
+                <button class="btn-primary" onclick="goToHome()">
+                    <i class="fas fa-home"></i> 메인으로 이동
+                </button>
             `;
         }
 
         function getPaymentMethodName(method) {
             const methodMap = {
                 'card': '신용/체크카드',
-                'paypal': 'PayPal'
+                'CARD': '신용/체크카드',
+                '카드': '신용/체크카드',
+                'paypal': 'PayPal',
+                'PAYPAL': 'PayPal'
             };
             return methodMap[method] || method;
         }
