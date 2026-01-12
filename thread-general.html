@@ -430,6 +430,66 @@
             color: #374151;
         }
 
+        /* 정보 토글 버튼 (모바일용) */
+        .info-toggle-btn {
+            display: none; /* 데스크톱에서는 숨김 */
+            padding: 8px 12px;
+            background: #EEF2FF;
+            border: 2px solid #C7D2FE;
+            border-radius: 8px;
+            color: #4F46E5;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-toggle-btn:hover {
+            background: #E0E7FF;
+            border-color: #6366F1;
+        }
+
+        .info-toggle-btn.active {
+            background: #4F46E5;
+            color: white;
+            border-color: #4F46E5;
+        }
+        
+        /* 첨부파일 토글 버튼 (모바일용) */
+        .docs-toggle-btn {
+            display: none; /* 데스크톱에서는 숨김 */
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 8px;
+            box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
+        }
+
+        .docs-toggle-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(49, 130, 246, 0.4);
+        }
+
+        .docs-toggle-btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .docs-toggle-btn.active i.fa-chevron-down {
+            transform: rotate(180deg);
+        }
+
         /* 모바일 반응형 디자인 */
         @media (max-width: 968px) {
             /* 글로벌 텍스트 줄바꿈 - 한글 단어 단위 */
@@ -450,16 +510,64 @@
                 max-width: 100%;
             }
 
+            /* 사이드바 - 모바일에서 기본 숨김 (토글로 표시) */
             .thread-sidebar {
-                display: none;
+                display: none; /* 기본 숨김 */
                 width: 100%;
                 border-left: none;
                 border-top: 2px solid #f3f4f6;
                 padding: 16px;
+                order: 2; /* 메시지 영역 아래로 배치 */
+                background: #f9fafb;
             }
-
-            .thread-sidebar.mobile-show {
+            
+            .thread-sidebar.mobile-visible {
                 display: block;
+                animation: slideDown 0.3s ease;
+            }
+            
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            /* 첨부파일 토글 버튼 - 모바일에서 표시 */
+            .docs-toggle-btn {
+                display: flex !important;
+            }
+            
+            /* 정보 토글 버튼 - 모바일에서 숨김 (대신 첨부파일 버튼 사용) */
+            .info-toggle-btn {
+                display: none !important;
+            }
+            
+            /* 사이드바 섹션 모바일 최적화 */
+            .sidebar-section {
+                margin-bottom: 20px;
+            }
+            
+            .sidebar-section h3 {
+                font-size: 14px;
+                margin-bottom: 12px;
+            }
+            
+            .info-item {
+                padding: 10px;
+                margin-bottom: 6px;
+            }
+            
+            .info-label {
+                font-size: 11px;
+            }
+            
+            .info-value {
+                font-size: 13px;
             }
 
             .thread-header {
@@ -499,6 +607,7 @@
             .messages-area {
                 padding: 16px 12px;
                 min-height: 50vh;
+                order: 1; /* 메시지 영역 우선 */
             }
 
             .message {
@@ -535,53 +644,86 @@
                 font-size: 10px;
             }
 
+            /* 입력 영역 - 모바일 최적화 */
             .input-area {
-                padding: 12px 16px !important;
+                padding: 12px !important;
                 position: sticky;
                 bottom: 0;
                 background: white;
                 z-index: 10;
+                border-top: 1px solid #e5e7eb;
             }
 
             .input-wrapper {
                 gap: 8px !important;
+                flex-wrap: nowrap !important;
+                align-items: center !important;
             }
 
+            /* 버튼들 가로 정렬 유지 */
             .input-controls {
-                flex-direction: column;
+                flex-direction: row !important;
                 gap: 6px !important;
+                flex-shrink: 0;
             }
 
             .input-btn {
-                width: 38px !important;
-                height: 38px !important;
-                font-size: 16px;
+                width: 36px !important;
+                height: 36px !important;
+                font-size: 15px;
+                border-radius: 8px;
+                flex-shrink: 0;
+            }
+
+            /* 메시지 입력창 - 모바일 최적화 */
+            .message-input-wrapper {
+                flex: 1;
+                min-width: 0; /* 오버플로우 방지 */
             }
 
             .message-input {
-                font-size: 14px;
+                font-size: 14px !important;
                 padding: 10px 12px !important;
-                min-height: 38px !important;
+                min-height: 36px !important;
+                max-height: 80px !important;
+                border-radius: 10px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            
+            /* 플레이스홀더 스타일 */
+            .message-input::placeholder {
+                font-size: 13px;
+                color: #9ca3af;
             }
 
             .send-btn {
-                width: 38px !important;
-                height: 38px !important;
-                font-size: 16px;
+                width: 36px !important;
+                height: 36px !important;
+                font-size: 15px;
+                border-radius: 8px;
+                flex-shrink: 0;
             }
 
+            /* 파일 첨부 메시지 - 모바일 최적화 */
             .message-file {
                 padding: 10px;
+                max-width: 100%;
+                box-sizing: border-box;
             }
 
             .file-icon {
                 width: 36px;
                 height: 36px;
                 font-size: 16px;
+                flex-shrink: 0;
             }
 
             .file-name {
                 font-size: 13px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .file-size {
@@ -595,6 +737,12 @@
             .system-message-content {
                 padding: 10px 16px;
                 font-size: 13px;
+            }
+            
+            /* 첨부파일 버튼 목록 - 모바일 */
+            #documentsList button {
+                font-size: 13px !important;
+                padding: 10px !important;
             }
         }
 
@@ -778,28 +926,87 @@
 
             .message-file {
                 padding: 8px 10px;
-                max-width: 240px;
+                max-width: 100%;
             }
 
             .file-icon {
-                width: 38px;
-                height: 38px;
-                font-size: 18px;
-            }
-
-            .input-area {
-                padding: 10px 12px !important;
-            }
-
-            .input-btn {
-                width: 36px !important;
-                height: 36px !important;
+                width: 32px;
+                height: 32px;
                 font-size: 14px;
             }
 
+            /* 입력 영역 - 초소형 모바일 */
+            .input-area {
+                padding: 10px !important;
+            }
+            
+            .input-wrapper {
+                gap: 6px !important;
+            }
+            
+            .input-controls {
+                gap: 4px !important;
+            }
+
+            .input-btn {
+                width: 32px !important;
+                height: 32px !important;
+                font-size: 13px;
+                border-radius: 6px;
+            }
+
             .send-btn {
-                width: 36px !important;
-                height: 36px !important;
+                width: 32px !important;
+                height: 32px !important;
+                font-size: 13px;
+                border-radius: 6px;
+            }
+            
+            .message-input {
+                font-size: 13px !important;
+                padding: 8px 10px !important;
+                min-height: 32px !important;
+            }
+            
+            .message-input::placeholder {
+                font-size: 12px;
+            }
+            
+            /* 사이드바 - 초소형 모바일 */
+            .thread-sidebar {
+                padding: 12px;
+            }
+            
+            .sidebar-section h3 {
+                font-size: 13px;
+            }
+            
+            .info-item {
+                padding: 8px;
+            }
+            
+            .info-label {
+                font-size: 10px;
+            }
+            
+            .info-value {
+                font-size: 12px;
+            }
+            
+            #documentsList button {
+                font-size: 12px !important;
+                padding: 8px !important;
+            }
+            
+            /* 첨부파일 토글 버튼 - 초소형 모바일 */
+            .docs-toggle-btn {
+                padding: 8px 12px !important;
+                font-size: 12px !important;
+                margin-top: 6px !important;
+            }
+            
+            .docs-toggle-btn i {
+                font-size: 11px;
             }
 
             /* Tally 설문 모바일 */
@@ -845,7 +1052,12 @@
                     <button class="back-btn" onclick="goBack()">
                         <i class="fas fa-arrow-left"></i> 돌아가기
                     </button>
-                    <div class="status-badge processing" id="statusBadge">진행중</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <button class="info-toggle-btn" id="infoToggleBtn" onclick="toggleSidebar()" title="정보 보기">
+                            <i class="fas fa-info-circle"></i> <span class="info-toggle-text">정보</span>
+                        </button>
+                        <div class="status-badge processing" id="statusBadge">진행중</div>
+                    </div>
                 </div>
                 <div class="thread-info">
                     <div>
@@ -868,30 +1080,36 @@
                 <!-- 메시지는 JavaScript로 동적 생성 -->
             </div>
 
-            <div class="input-area" style="padding: 20px 24px; background: white; border-top: 2px solid #f3f4f6;">
-                <div class="input-wrapper" style="display: flex; gap: 12px; align-items: center;">
-                    <div class="input-controls" style="display: flex; gap: 8px;">
-                        <button class="input-btn" onclick="attachFile()" style="width: 42px; height: 42px; flex-shrink: 0;">
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <div class="input-controls">
+                        <button class="input-btn" onclick="attachFile()" title="파일 첨부">
                             <i class="fas fa-paperclip"></i>
                         </button>
-                        <button class="input-btn" onclick="attachImage()" style="width: 42px; height: 42px; flex-shrink: 0;">
+                        <button class="input-btn" onclick="attachImage()" title="이미지 첨부">
                             <i class="fas fa-image"></i>
                         </button>
                     </div>
-                    <div class="message-input-wrapper" style="flex: 1;">
+                    <div class="message-input-wrapper">
                         <textarea 
                             class="message-input" 
                             id="messageInput" 
-                            placeholder="메시지를 입력하세요 (Shift+Enter: 줄바꿈, Enter: 전송)"
+                            placeholder="메시지 입력..."
                             rows="1"
-                            style="width: 100%; min-height: 42px; max-height: 120px; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 15px; font-family: 'Noto Sans KR', sans-serif; resize: none;"
                         ></textarea>
                     </div>
-                    <button class="send-btn" id="sendBtn" onclick="sendMessage()" style="width: 42px; height: 42px; flex-shrink: 0;">
+                    <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="전송">
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </div>
                 <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload(event)">
+                
+                <!-- 모바일 첨부파일 토글 버튼 -->
+                <button class="docs-toggle-btn" id="docsToggleBtn" onclick="toggleDocsPanel()">
+                    <i class="fas fa-file-alt"></i>
+                    <span>첨부서류 및 진행현황 보기</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
             </div>
         </div>
 
@@ -1649,6 +1867,32 @@
                 sendMessage();
             }
         });
+        
+        // 모바일 첨부파일/정보 패널 토글
+        function toggleDocsPanel() {
+            const sidebar = document.querySelector('.thread-sidebar');
+            const toggleBtn = document.getElementById('docsToggleBtn');
+            
+            if (sidebar.classList.contains('mobile-visible')) {
+                sidebar.classList.remove('mobile-visible');
+                toggleBtn.classList.remove('active');
+                toggleBtn.querySelector('span').textContent = '첨부서류 및 진행현황 보기';
+            } else {
+                sidebar.classList.add('mobile-visible');
+                toggleBtn.classList.add('active');
+                toggleBtn.querySelector('span').textContent = '첨부서류 및 진행현황 닫기';
+                
+                // 사이드바로 부드럽게 스크롤
+                setTimeout(() => {
+                    sidebar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
+        }
+        
+        // 기존 사이드바 토글 함수 (호환성 유지)
+        function toggleSidebar() {
+            toggleDocsPanel();
+        }
 
         // ============================================
         // Tally 설문 임베드 기능
