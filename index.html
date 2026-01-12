@@ -64,19 +64,25 @@
         .header-actions {
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            align-items: center;
         }
 
         .header-btn {
             background: #3182F6;
             border: 2px solid #3182F6;
             color: white;
-            padding: 10px 20px;
+            padding: 10px 16px;
             border-radius: 10px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
             font-size: 14px;
-            height: 42px;
+            height: auto;
+            min-height: 42px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .header-btn:hover {
@@ -89,13 +95,16 @@
             background: rgba(239, 68, 68, 0.2);
             border: 2px solid #EF4444;
             color: white;
-            padding: 10px 20px;
+            padding: 10px 16px;
             border-radius: 10px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
             font-size: 14px;
-            height: 42px;
+            height: auto;
+            min-height: 42px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .logout-btn:hover {
@@ -106,11 +115,13 @@
         .user-greeting {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
         .user-greeting span {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
             opacity: 0.95;
         }
@@ -617,23 +628,81 @@
             }
             
             /* 토스 스타일 모바일: 여유로운 패딩과 큰 폰트 유지 */
+            .header {
+                padding: 16px;
+            }
+            
             .header-content {
                 flex-direction: column;
-                gap: 16px;
-                padding: 20px 16px;
+                gap: 12px;
+                padding: 0;
+                align-items: stretch;
+            }
+            
+            .user-info {
+                text-align: center;
             }
 
-            .header h2 {
-                font-size: 20px;
+            .header h2, .user-info h2 {
+                font-size: 18px;
                 font-weight: 800;
                 line-height: 1.4;
                 word-break: keep-all;
             }
             
             .header p {
-                font-size: 13px;
+                font-size: 12px;
                 line-height: 1.5;
                 word-break: keep-all;
+            }
+            
+            /* 헤더 버튼 영역 - 모바일 (수정: 버튼 밀림 방지) */
+            .header-actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                justify-content: center;
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+                padding: 0 4px;
+            }
+            
+            .header-btn, .logout-btn, .google-login-button {
+                padding: 7px 10px;
+                font-size: 12px;
+                min-height: 34px;
+                height: auto;
+                flex: 0 0 auto;
+                max-width: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                box-sizing: border-box;
+            }
+            
+            .user-greeting {
+                width: 100%;
+                justify-content: center;
+                gap: 6px;
+                flex-wrap: wrap;
+            }
+            
+            .user-greeting span {
+                font-size: 12px;
+                white-space: nowrap;
+            }
+            
+            /* 언어 선택기 모바일 */
+            .language-selector {
+                order: -1;
+            }
+            
+            #language-selector-btn {
+                padding: 6px 10px;
+                font-size: 12px;
+                min-height: 32px;
+                height: auto;
             }
 
             .container {
@@ -819,6 +888,28 @@
             .stay-status h3 {
                 font-size: 18px !important;
             }
+            
+            /* 매우 작은 화면에서 헤더 버튼 추가 축소 */
+            .header-actions {
+                gap: 4px !important;
+                padding: 0 2px !important;
+            }
+            
+            .header-btn, .logout-btn, .google-login-button {
+                padding: 6px 8px !important;
+                font-size: 11px !important;
+                min-height: 30px !important;
+            }
+            
+            #language-selector-btn {
+                padding: 5px 8px !important;
+                font-size: 11px !important;
+                min-height: 28px !important;
+            }
+            
+            .user-greeting span {
+                font-size: 11px !important;
+            }
         }
 
         /* 작은 모바일 */
@@ -831,6 +922,17 @@
                 font-size: 13px;
                 margin-top: 4px;
                 letter-spacing: 0.5px;
+            }
+            
+            /* 작은 화면에서 버튼 추가 조정 */
+            .header-actions {
+                gap: 5px;
+            }
+            
+            .header-btn, .logout-btn, .google-login-button {
+                padding: 6px 9px;
+                font-size: 11px;
+                min-height: 32px;
             }
 
             .premium-service-banner,
@@ -1155,7 +1257,7 @@
                 loadPartners();
             }, 100);
             
-            // 🌍 언어 변경 이벤트 리스너 추가
+            // 🌍 언어 변경 이벤트 리스너 추가 (개선됨: 모든 동적 콘텐츠 다시 렌더링)
             window.addEventListener('languageChanged', function(event) {
                 console.log('🌍 언어 변경 감지:', event.detail.language);
                 
@@ -1169,6 +1271,14 @@
                 // 서비스 및 파트너 카드 다시 로드
                 loadServices(activeCategory);
                 loadPartners(activePartnerCategory);
+                
+                // 로그인된 사용자의 쓰레드 정보도 다시 로드 (언어 변경 시 상태 텍스트 업데이트)
+                (async function() {
+                    const session = await checkSession();
+                    if (session && session.user) {
+                        loadUserThreads(session.user.id);
+                    }
+                })();
             });
             
             checkUserLogin();

@@ -59,14 +59,26 @@ const i18n = {
     },
     
     /**
-     * 브라우저 언어 감지
+     * 브라우저 언어 감지 (개선: 항상 한국어 기본으로 설정)
      */
     detectBrowserLanguage: function() {
-        const browserLang = navigator.language || navigator.userLanguage;
-        const langCode = browserLang.split('-')[0].toLowerCase();
-        
-        // 지원 언어인 경우 반환, 아니면 한국어 기본
-        return this.supportedLanguages[langCode] ? langCode : 'ko';
+        try {
+            const browserLang = navigator.language || navigator.userLanguage;
+            if (!browserLang) return 'ko'; // 기본값: 한국어
+            
+            const langCode = browserLang.split('-')[0].toLowerCase();
+            
+            // 지원 언어인 경우에만 해당 언어 반환, 아니면 항상 한국어
+            if (this.supportedLanguages[langCode]) {
+                return langCode;
+            }
+            
+            // 몰라 모드를 위한 추가 체크: 지원되지 않는 언어는 항상 한국어
+            return 'ko';
+        } catch (e) {
+            console.warn('[i18n] Browser language detection failed, defaulting to Korean');
+            return 'ko';
+        }
     },
     
     /**
