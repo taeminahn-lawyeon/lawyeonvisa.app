@@ -276,17 +276,19 @@
         .input-wrapper {
             display: flex;
             gap: 12px;
-            align-items: flex-end;
+            align-items: center; /* 중앙 정렬로 버튼과 입력창 높이 맞춤 */
         }
 
         .input-controls {
             display: flex;
             gap: 8px;
+            align-items: center;
         }
 
         .input-btn {
             width: 42px;
             height: 42px;
+            min-height: 42px; /* 최소 높이 고정 */
             border-radius: 10px;
             border: 2px solid #e5e7eb;
             background: white;
@@ -318,8 +320,11 @@
             font-size: 15px;
             font-family: inherit;
             resize: none;
+            min-height: 42px; /* 버튼과 동일한 최소 높이 */
             max-height: 120px;
             transition: all 0.3s ease;
+            line-height: 1.4;
+            box-sizing: border-box;
         }
 
         .message-input:focus {
@@ -331,6 +336,7 @@
         .send-btn {
             width: 42px;
             height: 42px;
+            min-height: 42px; /* 최소 높이 고정 */
             border-radius: 10px;
             border: none;
             background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
@@ -341,6 +347,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0; /* 버튼 크기 고정 */
         }
 
         .send-btn:hover {
