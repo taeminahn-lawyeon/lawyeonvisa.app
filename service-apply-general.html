@@ -921,7 +921,6 @@
             }
 
             // ✅ 4. 서비스 확인 및 로드
-            const urlParams = new URLSearchParams(window.location.search);
             const serviceId = urlParams.get('service');
             
             if (!serviceId || !servicePricing[serviceId]) {
