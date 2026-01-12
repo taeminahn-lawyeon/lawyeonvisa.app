@@ -1366,17 +1366,23 @@
             // 긴급 구제 카드 클릭 이벤트
             document.getElementById('emergencyLegalCard').addEventListener('click', async function() {
                 console.log('👉 긴급 구제 카드 클릭');
-                
+
+                // ✅ 관리자 로그인 체크
+                if (window.isAdminLoggedIn && window.isAdminLoggedIn()) {
+                    alert('즉시 결제가 필요하지 않은 서비스입니다.');
+                    return;
+                }
+
                 // ✅ Supabase 세션 체크
                 const session = await checkSession();
                 console.log('🔍 세션:', session);
-                
+
                 if (!session || !session.user) {
                     alert(window.i18n.translate('common.loginRequired'));
                     document.getElementById('newGoogleLoginBtn').scrollIntoView({ behavior: 'smooth' });
                     return;
                 }
-                
+
                 // ✅ 프로필 체크 (캐시 우선)
                 const cachedProfile = sessionStorage.getItem('userProfileCache');
                 if (cachedProfile) {
@@ -1384,33 +1390,40 @@
                     window.location.href = 'service-apply-general.html?service=emergency-legal';
                     return;
                 }
-                
+
                 const profileResult = await getUserProfile(session.user.id);
                 console.log('🔍 프로필 조회:', profileResult);
-                
+
                 if (!profileResult.success || !profileResult.data) {
                     alert('프로필 설정이 필요합니다.');
                     window.location.href = 'profile-setup.html';
                     return;
                 }
-                
+
                 // 변호사 전담 대응 서비스로 이동
                 window.location.href = 'service-apply-general.html?service=emergency-legal';
             });
 
             document.getElementById('visaDiagnosisCard').addEventListener('click', async function() {
                 console.log('👉 비자 사전진단 카드 클릭');
-                
+
+                // ✅ 관리자 로그인 체크 - 바로 결제 페이지로 이동
+                if (window.isAdminLoggedIn && window.isAdminLoggedIn()) {
+                    console.log('✅ 관리자 로그인 상태 - 프로필 체크 생략');
+                    window.location.href = 'service-apply-general.html?service=visa-prediagnosis&admin=true';
+                    return;
+                }
+
                 // ✅ Supabase 세션 체크
                 const session = await checkSession();
                 console.log('🔍 세션:', session);
-                
+
                 if (!session || !session.user) {
                     alert(window.i18n.translate('common.loginRequired'));
                     document.getElementById('newGoogleLoginBtn').scrollIntoView({ behavior: 'smooth' });
                     return;
                 }
-                
+
                 // ✅ 프로필 체크 (캐시 우선)
                 const cachedProfile = sessionStorage.getItem('userProfileCache');
                 if (cachedProfile) {
