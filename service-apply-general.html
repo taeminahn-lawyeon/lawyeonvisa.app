@@ -868,14 +868,21 @@
                 
                 // 서비스 확인 및 로드로 바로 이동
                 const serviceId = urlParams.get('service');
-                if (!serviceId || !services[serviceId]) {
+                if (!serviceId || !servicePricing[serviceId]) {
                     alert('올바르지 않은 서비스입니다.');
                     window.location.href = 'index.html';
                     return;
                 }
-                
-                currentService = services[serviceId];
-                loadServiceDetails(currentService);
+
+                selectedService = servicePricing[serviceId];
+
+                // 로딩 숨기고 결제 화면 표시
+                document.getElementById('loading').style.display = 'none';
+                if (selectedService.consulting) {
+                    showConsulting();
+                } else {
+                    showPayment(serviceId);
+                }
                 return;
             }
             
