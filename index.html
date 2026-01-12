@@ -205,60 +205,31 @@
         .emergency-btn.line i { color: #00B900; }
         .emergency-btn.line:hover { border-color: #00B900; background: #f0fdf4; }
 
-        /* 출국 긴급 대응 섹션 - 프리미엄 강조 (다크 그라데이션) */
+        /* 출국 긴급 대응 섹션 - 미니멀 화이트 + 신뢰 강조 */
         .premium-service-banner {
-            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+            background: #F8FAFC;
             border-radius: 24px;
             padding: 40px;
             margin-bottom: 30px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .premium-service-banner::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(239, 68, 68, 0.15) 0%, transparent 70%);
-            pointer-events: none;
         }
 
         .premium-service-banner h3 {
             font-size: 26px;
-            margin-bottom: 8px;
-            color: #FFFFFF;
+            margin-bottom: 28px;
+            color: #1E293B;
             font-weight: 800;
             letter-spacing: -0.5px;
-            position: relative;
-        }
-        
-        .premium-service-banner h3::before {
-            content: '🚨';
-            margin-right: 10px;
-        }
-        
-        .premium-service-banner .subtitle {
-            font-size: 15px;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 28px;
-            font-weight: 400;
-            position: relative;
         }
 
         .premium-service-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 16px;
-            position: relative;
         }
 
         .premium-service-card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
             border-radius: 16px;
             padding: 24px;
             text-decoration: none;
@@ -269,15 +240,15 @@
         }
 
         .premium-service-card:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.2);
+            border-color: #CBD5E1;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             transform: translateY(-2px);
         }
 
         .premium-service-card .title {
             font-size: 18px;
             font-weight: 700;
-            color: #FFFFFF;
+            color: #1E293B;
             line-height: 1.4;
             letter-spacing: -0.3px;
             margin-bottom: 12px;
@@ -285,7 +256,7 @@
 
         .premium-service-card .desc {
             font-size: 14px;
-            color: rgba(255, 255, 255, 0.65);
+            color: #64748B;
             line-height: 1.8;
             font-weight: 400;
             flex: 1;
@@ -294,7 +265,7 @@
         .premium-service-card .desc-item {
             display: block;
             margin-bottom: 4px;
-            color: rgba(255, 255, 255, 0.65);
+            color: #64748B;
         }
         
         .premium-service-card .cta-btn {
@@ -303,7 +274,7 @@
             gap: 6px;
             margin-top: 16px;
             padding: 10px 18px;
-            background: #EF4444;
+            background: #2563EB;
             color: white;
             border: none;
             border-radius: 8px;
@@ -315,7 +286,7 @@
         }
         
         .premium-service-card .cta-btn:hover {
-            background: #DC2626;
+            background: #1D4ED8;
         }
         
         .premium-service-card .cta-btn .arrow {
@@ -781,12 +752,6 @@
             
             .premium-service-banner h3 {
                 font-size: 20px;
-                color: #FFFFFF;
-            }
-            
-            .premium-service-banner .subtitle {
-                font-size: 14px;
-                margin-bottom: 20px;
             }
 
             .premium-service-grid,
@@ -826,27 +791,21 @@
                 border-radius: 14px;
             }
 
-            /* 긴급 대응 카드: 모바일 다크 스타일 */
+            /* 긴급 대응 카드: 모바일 스타일 */
             .premium-service-card {
                 padding: 20px;
                 border-radius: 12px;
-                background: rgba(255, 255, 255, 0.08);
             }
 
             .premium-service-card .title {
                 font-size: 16px;
                 font-weight: 700;
                 margin-bottom: 10px;
-                color: #FFFFFF;
             }
 
             .premium-service-card .desc {
                 font-size: 13px;
                 line-height: 1.7;
-            }
-            
-            .premium-service-card .desc-item {
-                color: rgba(255, 255, 255, 0.65);
             }
             
             .premium-service-card .cta-btn {
@@ -1071,7 +1030,6 @@
         <!-- 강제출국·비자거절 긴급 구제 - 미니멀 화이트 + 신뢰 강조 -->
         <div class="premium-service-banner">
             <h3 data-i18n="emergency.title">강제출국·비자거절 긴급 구제</h3>
-            <p class="subtitle" data-i18n="emergency.subtitle">출입국 전문 변호사가 직접 대응합니다</p>
             <div class="premium-service-grid">
                 <div class="premium-service-card" id="emergencyLegalCard" style="cursor: pointer;">
                     <div class="title" data-i18n="emergency.legal.title">출입국 분쟁 해결</div>
