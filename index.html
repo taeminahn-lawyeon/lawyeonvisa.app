@@ -680,9 +680,18 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 box-sizing: border-box;
-                display: inline-flex !important;
                 align-items: center !important;
                 justify-content: center !important;
+            }
+            
+            /* 프로필 버튼은 JS에서 제어 - display 속성 제외 */
+            #createProfileBtn, #editProfileBtn {
+                /* display는 JS에서 제어하므로 여기서 설정하지 않음 */
+            }
+            
+            /* 다른 버튼들만 display: inline-flex 적용 */
+            .logout-btn, .google-login-button, #language-selector-btn {
+                display: inline-flex !important;
             }
             
             .user-greeting {
@@ -1614,6 +1623,9 @@
                 const newGoogleBtn = document.getElementById('newGoogleLoginBtn');
                 if (newGoogleBtn) newGoogleBtn.style.display = 'inline-flex';
                 document.getElementById('userGreeting').style.display = 'none';
+                // 프로필 버튼들 숨김
+                document.getElementById('createProfileBtn')?.setAttribute('style', 'display: none;');
+                document.getElementById('editProfileBtn')?.setAttribute('style', 'display: none;');
             }
         }
 
