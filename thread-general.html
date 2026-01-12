@@ -432,6 +432,12 @@
 
         /* 모바일 반응형 디자인 */
         @media (max-width: 968px) {
+            /* 글로벌 텍스트 줄바꿈 - 한글 단어 단위 */
+            * {
+                word-break: keep-all;
+                overflow-wrap: break-word;
+            }
+            
             body {
                 overflow-y: auto;
                 height: auto;
@@ -468,21 +474,26 @@
             .back-btn {
                 padding: 8px 12px;
                 font-size: 14px;
+                word-break: keep-all;
             }
 
             .service-title {
                 font-size: 18px;
+                line-height: 1.4;
+                word-break: keep-all;
             }
 
             .service-meta {
                 font-size: 13px;
                 flex-wrap: wrap;
                 gap: 10px;
+                word-break: keep-all;
             }
 
             .status-badge {
                 padding: 5px 12px;
                 font-size: 12px;
+                word-break: keep-all;
             }
 
             .messages-area {
@@ -496,23 +507,28 @@
             }
 
             .message-content {
-                max-width: 75%;
+                max-width: 80%;
+                min-width: 0;
             }
 
             .message-bubble {
                 padding: 10px 14px;
                 font-size: 14px;
                 border-radius: 16px;
+                line-height: 1.6;
+                word-break: keep-all;
             }
 
             .message-avatar {
                 width: 32px;
                 height: 32px;
                 font-size: 12px;
+                flex-shrink: 0;
             }
 
             .message-sender {
                 font-size: 11px;
+                word-break: keep-all;
             }
 
             .message-time {

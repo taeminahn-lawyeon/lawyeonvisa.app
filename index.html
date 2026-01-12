@@ -610,6 +610,12 @@
 
         /* 모바일 */
         @media (max-width: 768px) {
+            /* 글로벌 텍스트 줄바꿈 - 한글 단어 단위 */
+            * {
+                word-break: keep-all;
+                overflow-wrap: break-word;
+            }
+            
             /* 토스 스타일 모바일: 여유로운 패딩과 큰 폰트 유지 */
             .header-content {
                 flex-direction: column;
@@ -620,10 +626,14 @@
             .header h2 {
                 font-size: 20px;
                 font-weight: 800;
+                line-height: 1.4;
+                word-break: keep-all;
             }
             
             .header p {
                 font-size: 13px;
+                line-height: 1.5;
+                word-break: keep-all;
             }
 
             .container {
@@ -645,10 +655,12 @@
             .services-section h3,
             .applications-section h3,
             .stay-status h3 {
-                font-size: 22px;
+                font-size: 20px;
                 font-weight: 900;
                 margin-bottom: 20px;
                 letter-spacing: -0.5px;
+                line-height: 1.4;
+                word-break: keep-all;
             }
 
             .premium-service-grid,

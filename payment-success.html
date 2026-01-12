@@ -375,6 +375,12 @@
 
         /* 모바일 최적화 */
         @media (max-width: 768px) {
+            /* 글로벌 텍스트 줄바꿈 */
+            * {
+                word-break: keep-all;
+                overflow-wrap: break-word;
+            }
+            
             .success-banner, .error-banner {
                 padding: 32px 20px;
                 margin: 16px 0;
@@ -390,24 +396,54 @@
             }
 
             .success-title {
-                font-size: 22px;
+                font-size: 20px;
+                line-height: 1.4;
+                word-break: keep-all;
             }
 
             .success-message {
                 font-size: 14px;
+                line-height: 1.6;
+                word-break: keep-all;
             }
 
             .card {
                 padding: 20px;
             }
+            
+            .card-title {
+                font-size: 16px;
+                line-height: 1.4;
+                word-break: keep-all;
+            }
+            
+            .info-label, .info-value {
+                font-size: 13px;
+                word-break: keep-all;
+            }
 
             .info-row.total .info-value {
                 font-size: 20px;
+            }
+            
+            .next-steps-title {
+                font-size: 15px;
+                line-height: 1.4;
+                word-break: keep-all;
+            }
+            
+            .steps-list li {
+                font-size: 13px;
+                line-height: 1.6;
+                word-break: keep-all;
             }
 
             .btn-primary, .btn-secondary {
                 height: 52px;
                 font-size: 15px;
+                word-break: keep-all;
+                white-space: normal;
+                line-height: 1.3;
             }
         }
     </style>
