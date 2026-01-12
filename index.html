@@ -1015,14 +1015,24 @@
                     <span data-i18n="login.google">Google 로그인</span>
                 </button>
 
-                <!-- 관리자 로그인 버튼 -->
-                <button class="header-btn" id="adminLoginBtn" onclick="(function(){var id=prompt('관리자 아이디:');if(!id)return;var pw=prompt('비밀번호:');if(!pw)return;if(id==='admin012'&&pw==='lawyeon2601'){sessionStorage.setItem('adminLoggedIn','true');alert('관리자 로그인 성공');location.reload();}else{alert('아이디 또는 비밀번호 오류');}})();" style="display: inline-flex; align-items: center; gap: 6px; background: #374151; border-color: #374151; color: white;">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C9.38 2 7.25 4.13 7.25 6.75c0 2.57 2.01 4.65 4.63 4.74.08-.01.16-.01.22 0h.07a4.738 4.738 0 004.58-4.74C16.75 4.13 14.62 2 12 2z"/>
-                        <path d="M17.08 14.15c-2.79-1.86-7.34-1.86-10.15 0-1.27.85-1.97 2-1.97 3.23s.7 2.37 1.96 3.21C8.32 21.53 10.16 22 12 22c1.84 0 3.68-.47 5.08-1.41 1.26-.85 1.96-1.99 1.96-3.23-.01-1.23-.7-2.37-1.96-3.21z"/>
-                    </svg>
-                    <span>관리자</span>
-                </button>
+                <!-- 관리자 로그인 링크 -->
+                <a href="javascript:void(0)" id="adminLoginLink" style="display: inline-flex; align-items: center; gap: 6px; background: #374151; color: white; padding: 8px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 500; cursor: pointer;">관리자</a>
+                <script>
+                document.getElementById('adminLoginLink').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var id = prompt('관리자 아이디:');
+                    if (!id) return;
+                    var pw = prompt('비밀번호:');
+                    if (!pw) return;
+                    if (id === 'admin012' && pw === 'lawyeon2601') {
+                        sessionStorage.setItem('adminLoggedIn', 'true');
+                        alert('관리자 로그인 성공');
+                        location.reload();
+                    } else {
+                        alert('아이디 또는 비밀번호 오류');
+                    }
+                });
+                </script>
 
                 <!-- 로그인 후 -->
                 <div id="userGreeting" class="user-greeting" style="display: none;">
@@ -2011,69 +2021,26 @@
 
         // Main page - no logout function needed
 
-        // ========================================
-        // 관리자 로그인 기능
-        // ========================================
+        // 관리자 로그인 상태 UI 업데이트
         (function() {
-            const ADMIN_ID = 'admin012';
-            const ADMIN_PW = 'lawyeon2601';
-
-            // 관리자 버튼 클릭 이벤트
-            const adminBtn = document.getElementById('adminLoginBtn');
-            if (adminBtn) {
-                adminBtn.onclick = function() {
-                    const inputId = prompt('관리자 아이디를 입력하세요:');
-                    if (inputId === null) return; // 취소
-
-                    const inputPw = prompt('비밀번호를 입력하세요:');
-                    if (inputPw === null) return; // 취소
-
-                    if (inputId === ADMIN_ID && inputPw === ADMIN_PW) {
-                        sessionStorage.setItem('adminLoggedIn', 'true');
-                        sessionStorage.setItem('adminId', inputId);
-                        alert('관리자로 로그인되었습니다.');
-
-                        // UI 업데이트
-                        adminBtn.style.display = 'none';
-                        const googleBtn = document.getElementById('newGoogleLoginBtn');
-                        if (googleBtn) googleBtn.style.display = 'none';
-
-                        const userGreeting = document.getElementById('userGreeting');
-                        const userGreetingName = document.getElementById('userGreetingName');
-                        if (userGreeting) userGreeting.style.display = 'flex';
-                        if (userGreetingName) userGreetingName.textContent = '관리자님 환영합니다!';
-
-                        const loginPrompt = document.getElementById('loginPrompt');
-                        if (loginPrompt) loginPrompt.style.display = 'none';
-                    } else {
-                        alert('아이디 또는 비밀번호가 올바르지 않습니다.');
-                    }
-                };
-            }
-
-            // 페이지 로드 시 관리자 로그인 상태 확인
             if (sessionStorage.getItem('adminLoggedIn') === 'true') {
-                if (adminBtn) adminBtn.style.display = 'none';
-                const googleBtn = document.getElementById('newGoogleLoginBtn');
+                var adminLink = document.getElementById('adminLoginLink');
+                if (adminLink) adminLink.style.display = 'none';
+                var googleBtn = document.getElementById('newGoogleLoginBtn');
                 if (googleBtn) googleBtn.style.display = 'none';
-
-                const userGreeting = document.getElementById('userGreeting');
-                const userGreetingName = document.getElementById('userGreetingName');
+                var userGreeting = document.getElementById('userGreeting');
+                var userGreetingName = document.getElementById('userGreetingName');
                 if (userGreeting) userGreeting.style.display = 'flex';
                 if (userGreetingName) userGreetingName.textContent = '관리자님 환영합니다!';
-
-                const loginPrompt = document.getElementById('loginPrompt');
+                var loginPrompt = document.getElementById('loginPrompt');
                 if (loginPrompt) loginPrompt.style.display = 'none';
             }
 
-            // 로그아웃 버튼에 관리자 로그아웃 기능 추가
-            const logoutBtn = document.getElementById('logoutBtn');
+            var logoutBtn = document.getElementById('logoutBtn');
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', function() {
-                    if (sessionStorage.getItem('adminLoggedIn') === 'true') {
-                        sessionStorage.removeItem('adminLoggedIn');
-                        sessionStorage.removeItem('adminId');
-                    }
+                    sessionStorage.removeItem('adminLoggedIn');
+                    sessionStorage.removeItem('adminId');
                 });
             }
         })();
