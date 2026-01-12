@@ -656,7 +656,7 @@
                 word-break: keep-all;
             }
             
-            /* 헤더 버튼 영역 - 모바일 (수정: 버튼 밀림 방지) */
+            /* 헤더 버튼 영역 - 모바일 (수정: 버튼 크기 통일) */
             .header-actions {
                 display: flex;
                 flex-wrap: wrap;
@@ -668,17 +668,21 @@
                 padding: 0 4px;
             }
             
-            .header-btn, .logout-btn, .google-login-button {
-                padding: 7px 10px;
-                font-size: 12px;
-                min-height: 34px;
-                height: auto;
+            /* 모든 헤더 버튼 통일된 크기 */
+            .header-btn, .logout-btn, .google-login-button, #language-selector-btn {
+                padding: 8px 12px !important;
+                font-size: 13px !important;
+                min-height: 36px !important;
+                height: 36px !important;
                 flex: 0 0 auto;
                 max-width: 100%;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 box-sizing: border-box;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
             }
             
             .user-greeting {
@@ -689,20 +693,13 @@
             }
             
             .user-greeting span {
-                font-size: 12px;
+                font-size: 13px;
                 white-space: nowrap;
             }
             
-            /* 언어 선택기 모바일 */
+            /* 언어 선택기 모바일 - 다른 버튼과 동일한 크기 */
             .language-selector {
                 order: -1;
-            }
-            
-            #language-selector-btn {
-                padding: 6px 10px;
-                font-size: 12px;
-                min-height: 32px;
-                height: auto;
             }
 
             .container {
@@ -895,16 +892,12 @@
                 padding: 0 2px !important;
             }
             
-            .header-btn, .logout-btn, .google-login-button {
+            /* 매우 작은 화면: 모든 버튼 통일 */
+            .header-btn, .logout-btn, .google-login-button, #language-selector-btn {
                 padding: 6px 8px !important;
                 font-size: 11px !important;
                 min-height: 30px !important;
-            }
-            
-            #language-selector-btn {
-                padding: 5px 8px !important;
-                font-size: 11px !important;
-                min-height: 28px !important;
+                height: 30px !important;
             }
             
             .user-greeting span {
@@ -924,15 +917,16 @@
                 letter-spacing: 0.5px;
             }
             
-            /* 작은 화면에서 버튼 추가 조정 */
+            /* 작은 화면에서 모든 버튼 통일 */
             .header-actions {
                 gap: 5px;
             }
             
-            .header-btn, .logout-btn, .google-login-button {
-                padding: 6px 9px;
-                font-size: 11px;
-                min-height: 32px;
+            .header-btn, .logout-btn, .google-login-button, #language-selector-btn {
+                padding: 7px 10px !important;
+                font-size: 12px !important;
+                min-height: 34px !important;
+                height: 34px !important;
             }
 
             .premium-service-banner,

@@ -1006,6 +1006,154 @@
             document.getElementById(previewId).innerHTML = '';
         }
 
+        /**
+         * 사용자의 활성 쓰레드에 프로필 서류를 업로드하는 함수
+         * @param {string} userId - 사용자 ID
+         * @param {File} arcFrontFile - 외국인등록증 앞면 파일
+         * @param {File} arcBackFile - 외국인등록증 뒷면 파일
+         * @param {File} passportFile - 여권 파일
+         * @param {string} signatureData - 서명 Base64 데이터
+         * @param {string} arcFrontUrl - 외국인등록증 앞면 저장 경로
+         * @param {string} arcBackUrl - 외국인등록증 뒷면 저장 경로
+         * @param {string} passportUrl - 여권 저장 경로
+         * @param {string} signatureUrl - 서명 저장 경로
+         */
+        async function uploadFilesToActiveThreads(userId, arcFrontFile, arcBackFile, passportFile, signatureData, arcFrontUrl, arcBackUrl, passportUrl, signatureUrl) {
+            try {
+                console.log('📤 [uploadFilesToActiveThreads] 활성 쓰레드에 파일 업로드 시작');
+                
+                // 사용자의 활성 쓰레드 목록 가져오기
+                const threadsResult = await getUserThreads(userId);
+                
+                if (!threadsResult.success || !threadsResult.data || threadsResult.data.length === 0) {
+                    console.log('📤 [uploadFilesToActiveThreads] 활성 쓰레드가 없음 - 스킵');
+                    return;
+                }
+                
+                // document 상태인 쓰레드만 필터링 (서류 제출 대기 중인 쓰레드)
+                const activeThreads = threadsResult.data.filter(t => 
+                    t.status === 'document' || t.status === 'payment'
+                );
+                
+                if (activeThreads.length === 0) {
+                    console.log('📤 [uploadFilesToActiveThreads] 서류 제출 대기 중인 쓰레드가 없음 - 스킵');
+                    return;
+                }
+                
+                console.log(`📤 [uploadFilesToActiveThreads] ${activeThreads.length}개 쓰레드에 파일 업로드`);
+                
+                // 각 활성 쓰레드에 파일 업로드
+                for (const thread of activeThreads) {
+                    console.log(`📤 [uploadFilesToActiveThreads] 쓰레드 ${thread.id}에 파일 업로드 시작`);
+                    
+                    const timestamp = Date.now();
+                    
+                    // 업로드된 파일 목록 생성 (메시지 내용용)
+                    const uploadedFiles = [];
+                    
+                    // 외국인등록증 앞면
+                    if (arcFrontFile && arcFrontUrl) {
+                        try {
+                            const arcFrontResult = await uploadThreadDocument(thread.id, arcFrontFile);
+                            if (arcFrontResult.success) {
+                                uploadedFiles.push({
+                                    name: '외국인등록증 (앞면)',
+                                    url: arcFrontResult.data.signedUrl,
+                                    path: arcFrontResult.data.path,
+                                    type: arcFrontFile.type
+                                });
+                            }
+                        } catch (err) {
+                            console.error('외국인등록증 앞면 쓰레드 업로드 실패:', err);
+                        }
+                    }
+                    
+                    // 외국인등록증 뒷면
+                    if (arcBackFile && arcBackUrl) {
+                        try {
+                            const arcBackResult = await uploadThreadDocument(thread.id, arcBackFile);
+                            if (arcBackResult.success) {
+                                uploadedFiles.push({
+                                    name: '외국인등록증 (뒷면)',
+                                    url: arcBackResult.data.signedUrl,
+                                    path: arcBackResult.data.path,
+                                    type: arcBackFile.type
+                                });
+                            }
+                        } catch (err) {
+                            console.error('외국인등록증 뒷면 쓰레드 업로드 실패:', err);
+                        }
+                    }
+                    
+                    // 여권
+                    if (passportFile && passportUrl) {
+                        try {
+                            const passportResult = await uploadThreadDocument(thread.id, passportFile);
+                            if (passportResult.success) {
+                                uploadedFiles.push({
+                                    name: '여권 (사진면)',
+                                    url: passportResult.data.signedUrl,
+                                    path: passportResult.data.path,
+                                    type: passportFile.type
+                                });
+                            }
+                        } catch (err) {
+                            console.error('여권 쓰레드 업로드 실패:', err);
+                        }
+                    }
+                    
+                    // 전자서명
+                    if (signatureData && signatureUrl) {
+                        try {
+                            const signatureBlob = await fetch(signatureData).then(r => r.blob());
+                            const signatureFile = new File([signatureBlob], `signature_${timestamp}.png`, { type: 'image/png' });
+                            const signatureResult = await uploadThreadDocument(thread.id, signatureFile);
+                            if (signatureResult.success) {
+                                uploadedFiles.push({
+                                    name: '전자서명',
+                                    url: signatureResult.data.signedUrl,
+                                    path: signatureResult.data.path,
+                                    type: 'image/png'
+                                });
+                            }
+                        } catch (err) {
+                            console.error('전자서명 쓰레드 업로드 실패:', err);
+                        }
+                    }
+                    
+                    // 업로드된 파일이 있으면 메시지 생성
+                    if (uploadedFiles.length > 0) {
+                        const fileListText = uploadedFiles.map(f => `📎 ${f.name}`).join('\n');
+                        const messageContent = `📋 기본 서류가 업데이트되었습니다.\n\n${fileListText}\n\n(프로필 기본사항 수정에서 업로드)`;
+                        
+                        // 각 파일에 대해 개별 메시지 생성 (파일 미리보기 지원)
+                        for (const file of uploadedFiles) {
+                            try {
+                                await createMessage({
+                                    thread_id: thread.id,
+                                    content: `📎 ${file.name} 업로드됨`,
+                                    sender_type: 'user',
+                                    file_url: file.url,
+                                    file_name: file.name,
+                                    file_type: file.type
+                                });
+                                console.log(`✅ 메시지 생성 완료: ${file.name}`);
+                            } catch (err) {
+                                console.error(`메시지 생성 실패 (${file.name}):`, err);
+                            }
+                        }
+                        
+                        console.log(`✅ 쓰레드 ${thread.id}에 ${uploadedFiles.length}개 파일 업로드 완료`);
+                    }
+                }
+                
+                console.log('📤 [uploadFilesToActiveThreads] 모든 쓰레드 파일 업로드 완료');
+            } catch (error) {
+                console.error('📤 [uploadFilesToActiveThreads] 오류:', error);
+                // 오류가 발생해도 프로필 저장은 성공한 것으로 처리 (쓰레드 업로드는 부가 기능)
+            }
+        }
+
         // 폼 제출
         document.getElementById('profileForm').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -1128,6 +1276,20 @@
                     
                     // ✅ 프로필 데이터를 sessionStorage에 캐싱
                     sessionStorage.setItem('userProfileCache', JSON.stringify(profileData));
+                    
+                    // 🔄 사용자의 활성 쓰레드에 업로드한 파일들을 추가
+                    submitBtn.textContent = '쓰레드 업데이트 중...';
+                    await uploadFilesToActiveThreads(
+                        session.user.id, 
+                        arcFrontFile, 
+                        arcBackFile, 
+                        passportFile, 
+                        signatureData,
+                        arcFrontUrl,
+                        arcBackUrl,
+                        passportUrl,
+                        signatureUrl
+                    );
                     
                     alert('기본 사항 제출이 완료되었습니다!\n\n이제 서비스를 이용하실 수 있습니다.');
                     

@@ -149,6 +149,8 @@ const i18n = {
      * 페이지의 모든 번역 가능한 요소 번역
      */
     translatePage: function() {
+        console.log(`[i18n] translatePage() 호출 - 현재 언어: ${this.currentLanguage}`);
+        
         // data-i18n 속성을 가진 모든 요소 찾기
         const elements = document.querySelectorAll('[data-i18n]');
         
@@ -184,6 +186,8 @@ const i18n = {
         
         // HTML 언어 속성 업데이트
         document.documentElement.lang = this.currentLanguage;
+        
+        console.log(`[i18n] translatePage() 완료 - ${elements.length}개 요소 번역`);
     },
     
     /**

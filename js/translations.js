@@ -1652,8 +1652,28 @@ const translations = {
         'login.google': 'เข้าสู่ระบบ Google',
         'site.name': 'ศูนย์สนับสนุนตรวจคนเข้าเมือง Lawyeon',
         'site.company': 'สำนักงานกฎหมาย Lawyeon',
+        
+        // === Emergency Relief Section ===
         'emergency.title': 'การช่วยเหลือฉุกเฉินการเนรเทศและการปฏิเสธวีซ่า',
+        'emergency.legal.title': 'ตัวแทนทนายความ',
+        'emergency.legal.item1': 'สนับสนุนการสอบสวนสำนักงานตรวจคนเข้าเมือง',
+        'emergency.legal.item2': 'คดีปกครอง (ยกเลิกคำสั่ง)',
+        'emergency.legal.item3': 'การป้องกันคดีอาญาการละเมิดตรวจคนเข้าเมือง',
+        'emergency.diagnosis.title': 'การประเมินสถานะตรวจคนเข้าเมือง',
+        'emergency.diagnosis.item1': 'สิทธิ์ในการเปลี่ยนสถานะ',
+        'emergency.diagnosis.item2': 'การวิเคราะห์ความเสี่ยงการพำนักผิดกฎหมาย',
+        'emergency.diagnosis.item3': 'การตรวจสอบการปฏิบัติตามกฎหมายตรวจคนเข้าเมือง',
+        'emergency.diagnosis.item4': 'ตัวเลือกวีซ่าทางเลือก',
+        
+        // === Services Section ===
         'services.title': 'บริการตรวจคนเข้าเมือง',
+        'services.subtitle': 'บริการตรวจคนเข้าเมืองมืออาชีพโดยทนายความ',
+        'services.tab.visa': 'วีซ่า',
+        'services.tab.residenceReport': 'รายงานการพำนัก',
+        'services.tab.immigration': 'ตรวจคนเข้าเมือง·สัญชาติ·ผู้ลี้ภัย',
+        'services.tab.alienReg': 'การลงทะเบียนคนต่างด้าว',
+        'services.tab.consulting': 'ที่ปรึกษา',
+        'services.tab.certificate': 'ใบรับรอง',
         'dashboard.title': 'คำขอของฉัน',
         'dashboard.loginPrompt': 'เข้าสู่ระบบเพื่อดูสถานะการพำนัก คำขอบริการ และความคืบหน้าในการดำเนินการของคุณ',
         'dashboard.loginButton': 'เข้าสู่ระบบด้วย Google',
