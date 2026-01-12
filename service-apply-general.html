@@ -581,7 +581,7 @@
     <div class="header">
         <div class="header-inner">
             <div class="header-title" data-i18n="payment.title">결제</div>
-            <a href="javascript:history.back()" class="btn-back">
+<a href="javascript:void(0)" onclick="goBack()" class="btn-back">
                 <i class="fas fa-times"></i>
             </a>
         </div>
@@ -771,6 +771,17 @@
 
         let selectedService = null;
         let selectedPaymentMethod = 'card';
+        
+        // 뒤로가기 함수
+        function goBack() {
+            // referrer가 있으면 해당 페이지로, 없으면 index.html로 이동
+            const referrer = document.referrer;
+            if (referrer && referrer.includes(window.location.host)) {
+                window.location.href = referrer;
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
 
         window.addEventListener('DOMContentLoaded', async function() {
             // ✅ 1. 로그인 세션 확인 (재시도 포함)
