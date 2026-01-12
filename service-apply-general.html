@@ -842,7 +842,43 @@
             }
         }
 
+        // 관리자 로그인 상태 확인 함수
+        window.isAdminLoggedIn = function() {
+            return sessionStorage.getItem('adminLoggedIn') === 'true';
+        };
+        
         window.addEventListener('DOMContentLoaded', async function() {
+            // ✅ 관리자 로그인 체크 - 관리자는 세션/프로필 체크 생략
+            const urlParams = new URLSearchParams(window.location.search);
+            const isAdminMode = urlParams.get('admin') === 'true' || window.isAdminLoggedIn();
+            
+            if (isAdminMode) {
+                console.log('✅ [결제 페이지] 관리자 모드 - 세션/프로필 체크 생략');
+                
+                // Toss Payments SDK 초기화 (관리자용 - 테스트 customerKey)
+                try {
+                    const tossPaymentsInstance = TossPayments(clientKey);
+                    tossPayments = tossPaymentsInstance.payment({
+                        customerKey: 'admin_' + Date.now()
+                    });
+                    console.log('✅ Toss Payments SDK v2 초기화 성공 (관리자)');
+                } catch (error) {
+                    console.error('❌ Toss Payments SDK 초기화 실패:', error);
+                }
+                
+                // 서비스 확인 및 로드로 바로 이동
+                const serviceId = urlParams.get('service');
+                if (!serviceId || !services[serviceId]) {
+                    alert('올바르지 않은 서비스입니다.');
+                    window.location.href = 'index.html';
+                    return;
+                }
+                
+                currentService = services[serviceId];
+                loadServiceDetails(currentService);
+                return;
+            }
+            
             // ✅ 1. 로그인 세션 확인 (재시도 포함)
             let session = await checkSession();
             console.log('🔍 [결제 페이지] 세션 확인 (1차):', session);
@@ -996,25 +1032,40 @@
             btn.innerHTML = '<i class="fas fa-spinner"></i> 결제 진행 중...';
 
             try {
-                // 현재 로그인 사용자 확인
-                const session = await checkSession();
-                if (!session || !session.user) {
-                    alert('로그인이 필요합니다.');
-                    window.location.href = 'index.html';
-                    return;
-                }
+                let profile = null;
+                let session = null;
+                
+                // 관리자 모드 체크
+                const isAdminMode = window.isAdminLoggedIn && window.isAdminLoggedIn();
+                
+                if (isAdminMode) {
+                    console.log('✅ [결제] 관리자 모드 - 테스트 프로필 사용');
+                    profile = {
+                        name: '관리자 테스트',
+                        email: 'admin@lawyeon.com',
+                        phone: '010-0000-0000'
+                    };
+                    session = { user: { id: 'admin_' + Date.now(), email: 'admin@lawyeon.com' } };
+                } else {
+                    // 현재 로그인 사용자 확인
+                    session = await checkSession();
+                    if (!session || !session.user) {
+                        alert('로그인이 필요합니다.');
+                        window.location.href = 'index.html';
+                        return;
+                    }
 
-                // 사용자 프로필 가져오기
-                const profileResult = await getUserProfile(session.user.id);
-                if (!profileResult.success || !profileResult.data) {
-                    alert('사용자 정보를 불러올 수 없습니다.');
-                    btn.disabled = false;
-                    btn.classList.remove('loading');
-                    btn.textContent = '결제하기';
-                    return;
+                    // 사용자 프로필 가져오기
+                    const profileResult = await getUserProfile(session.user.id);
+                    if (!profileResult.success || !profileResult.data) {
+                        alert('사용자 정보를 불러올 수 없습니다.');
+                        btn.disabled = false;
+                        btn.classList.remove('loading');
+                        btn.textContent = '결제하기';
+                        return;
+                    }
+                    profile = profileResult.data;
                 }
-
-                const profile = profileResult.data;
 
                 const orderInfo = {
                     orderId: 'ORD' + Date.now(),
