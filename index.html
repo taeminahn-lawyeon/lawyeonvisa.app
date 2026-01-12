@@ -1131,7 +1131,7 @@
                 </button>
                 
                 <!-- 관리자 로그인 버튼 -->
-                <button class="header-btn admin-login-button" id="adminLoginBtn" onclick="openAdminLoginModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #374151; border-color: #374151;">
+                <button class="header-btn admin-login-button" id="adminLoginBtn" style="display: inline-flex; align-items: center; gap: 6px; background: #374151; border-color: #374151;">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 2C9.38 2 7.25 4.13 7.25 6.75c0 2.57 2.01 4.65 4.63 4.74.08-.01.16-.01.22 0h.07a4.738 4.738 0 004.58-4.74C16.75 4.13 14.62 2 12 2z" fill="currentColor"/>
                         <path d="M17.08 14.15c-2.79-1.86-7.34-1.86-10.15 0-1.27.85-1.97 2-1.97 3.23s.7 2.37 1.96 3.21C8.32 21.53 10.16 22 12 22c1.84 0 3.68-.47 5.08-1.41 1.26-.85 1.96-1.99 1.96-3.23-.01-1.23-.7-2.37-1.96-3.21z" fill="currentColor"/>
@@ -1461,6 +1461,23 @@
                     } catch (error) {
                         console.error('로그인 에러:', error);
                         alert('로그인 중 오류가 발생했습니다.');
+                    }
+                });
+            }
+
+            // 관리자 로그인 버튼 이벤트 리스너
+            const adminLoginBtn = document.getElementById('adminLoginBtn');
+            if (adminLoginBtn) {
+                adminLoginBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('관리자 로그인 버튼 클릭됨');
+                    // 관리자 로그인 모달 열기
+                    const modal = document.getElementById('adminLoginModal');
+                    if (modal) {
+                        modal.style.display = 'flex';
+                        const adminIdInput = document.getElementById('adminId');
+                        if (adminIdInput) adminIdInput.focus();
                     }
                 });
             }
