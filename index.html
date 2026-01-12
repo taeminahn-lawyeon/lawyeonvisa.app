@@ -1018,6 +1018,16 @@
                 <!-- 관리자 로그인 링크 -->
                 <a href="admin-test-login.html" id="adminLoginLink" class="header-btn" style="display: inline-flex; align-items: center; gap: 8px; background: #1a1a2e; color: white; text-decoration: none;">관리자</a>
 
+                <!-- 관리자 로그인 상태 표시 -->
+                <div id="adminLoggedInStatus" class="header-btn" style="display: none; align-items: center; gap: 8px; background: #1a1a2e; color: white; cursor: default;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>관리자 로그인 중</span>
+                    <button id="adminLogoutBtn" style="background: transparent; border: 1px solid rgba(255,255,255,0.5); color: white; padding: 2px 8px; border-radius: 4px; cursor: pointer; font-size: 12px; margin-left: 4px;">로그아웃</button>
+                </div>
+
                 <!-- 로그인 후 -->
                 <div id="userGreeting" class="user-greeting" style="display: none;">
                     <span id="userGreetingName" data-i18n="header.welcome">환영합니다!</span>
@@ -1271,7 +1281,32 @@
             if (window.i18n && typeof window.i18n.init === 'function') {
                 window.i18n.init();
             }
-            
+
+            // 관리자 로그인 상태 확인 및 UI 업데이트
+            if (window.isAdminLoggedIn && window.isAdminLoggedIn()) {
+                // 구글 로그인 버튼 숨기기
+                var googleBtn = document.getElementById('newGoogleLoginBtn');
+                if (googleBtn) googleBtn.style.display = 'none';
+
+                // 관리자 로그인 링크 숨기기
+                var adminLink = document.getElementById('adminLoginLink');
+                if (adminLink) adminLink.style.display = 'none';
+
+                // 관리자 로그인 상태 표시
+                var adminStatus = document.getElementById('adminLoggedInStatus');
+                if (adminStatus) adminStatus.style.display = 'inline-flex';
+
+                // 관리자 로그아웃 버튼 이벤트
+                var adminLogoutBtn = document.getElementById('adminLogoutBtn');
+                if (adminLogoutBtn) {
+                    adminLogoutBtn.addEventListener('click', function() {
+                        sessionStorage.removeItem('adminLoggedIn');
+                        sessionStorage.removeItem('adminId');
+                        window.location.reload();
+                    });
+                }
+            }
+
             // 서비스 및 파트너 로드 (다국어 시스템 초기화 후)
             setTimeout(() => {
                 loadServices();
