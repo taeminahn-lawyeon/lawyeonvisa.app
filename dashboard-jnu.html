@@ -246,9 +246,7 @@
         }
 
         .premium-service-card .icon {
-            font-size: 56px;
-            line-height: 1;
-            margin-bottom: 8px;
+            display: none;
         }
 
         .premium-service-card .title {
@@ -274,12 +272,43 @@
         }
 
         .premium-service-card .desc-item::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            background: #00A651;
-            border-radius: 50%;
-            flex-shrink: 0;
+            display: none;
+        }
+        
+        .premium-service-banner .subtitle {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+        
+        .premium-service-card .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 16px;
+            padding: 12px 20px;
+            background: #f59e0b;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: fit-content;
+        }
+        
+        .premium-service-card .cta-btn:hover {
+            background: #d97706;
+        }
+        
+        .premium-service-card .cta-btn .arrow {
+            transition: transform 0.2s ease;
+        }
+        
+        .premium-service-card:hover .cta-btn .arrow {
+            transform: translateX(3px);
         }
 
         /* 나의 체류현황 */
@@ -893,25 +922,25 @@
         <!-- 강제출국·비자거절 긴급 구제 -->
         <div class="premium-service-banner">
             <h3 data-i18n="emergency.title">강제출국·비자거절 긴급 구제</h3>
+            <p class="subtitle" data-i18n="emergency.subtitle">출입국 전문 변호사가 직접 대응합니다</p>
             <div class="premium-service-grid">
                 <div class="premium-service-card" id="emergencyLegalCard" style="cursor: pointer;">
-                    <div class="icon">🚨</div>
-                    <div class="title" data-i18n="emergency.legal.title">변호사 전담 대응</div>
+                    <div class="title" data-i18n="emergency.legal.title">출입국 분쟁 해결</div>
                     <div class="desc">
-                        <div class="desc-item" data-i18n="emergency.legal.item1">사범심사 동행</div>
-                        <div class="desc-item" data-i18n="emergency.legal.item2">처분 취소소송</div>
-                        <div class="desc-item" data-i18n="emergency.legal.item3">형사 사건 변호</div>
+                        <div class="desc-item" data-i18n="emergency.legal.item1">사범심사 동행 등 출입국사범 구제</div>
+                        <div class="desc-item" data-i18n="emergency.legal.item2">처분 취소소송 등 국적·체류 관련 불복절차 대리</div>
+                        <div class="desc-item" data-i18n="emergency.legal.item3">외국인 형사 사건 변호</div>
                     </div>
+                    <button class="cta-btn" data-i18n="emergency.legal.cta">상담 신청 <span class="arrow">→</span></button>
                 </div>
                 <div class="premium-service-card diagnostic" id="visaDiagnosisCard" style="cursor: pointer;">
-                    <div class="icon">🔍</div>
                     <div class="title" data-i18n="emergency.diagnosis.title">비자 사전진단</div>
                     <div class="desc">
-                        <div class="desc-item" data-i18n="emergency.diagnosis.item1">비자 변경 가능성</div>
-                        <div class="desc-item" data-i18n="emergency.diagnosis.item2">불법체류 위험도</div>
-                        <div class="desc-item" data-i18n="emergency.diagnosis.item3">출입국법 위반 여부</div>
-                        <div class="desc-item" data-i18n="emergency.diagnosis.item4">전환 가능 비자</div>
+                        <div class="desc-item" data-i18n="emergency.diagnosis.item1">비자 변경 자문</div>
+                        <div class="desc-item" data-i18n="emergency.diagnosis.item2">불법체류 위험 자문</div>
+                        <div class="desc-item" data-i18n="emergency.diagnosis.item3">출입국관리법 위반 자문</div>
                     </div>
+                    <button class="cta-btn" data-i18n="emergency.diagnosis.cta">진단 받기 <span class="arrow">→</span></button>
                 </div>
             </div>
         </div>
