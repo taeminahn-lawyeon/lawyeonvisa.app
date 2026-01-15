@@ -339,6 +339,7 @@
             display: none;
             position: absolute;
             left: 50%;
+            bottom: 100%;
             transform: translateX(-50%);
             background: white;
             border-radius: 12px;
@@ -346,6 +347,7 @@
             padding: 8px;
             z-index: 50;
             min-width: 280px;
+            margin-bottom: 8px;
         }
 
         .block-menu.show {
@@ -654,9 +656,108 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        /* 로그인 오버레이 */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-overlay.hidden {
+            display: none;
+        }
+
+        .login-box {
+            background: white;
+            padding: 48px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .login-box h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #191f28;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .login-box p {
+            font-size: 14px;
+            color: #6b7684;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #e5e8eb;
+            border-radius: 10px;
+            font-size: 15px;
+            margin-bottom: 12px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .login-input:focus {
+            border-color: #3182f6;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #3182f6, #1b64da);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(49,130,246,0.3);
+        }
+
+        .login-error {
+            color: #f03e3e;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 16px;
+            display: none;
+        }
     </style>
 </head>
 <body>
+    <!-- 로그인 오버레이 -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <h2>블로그 관리자</h2>
+            <p>관리자 계정으로 로그인해주세요</p>
+            <form id="blogLoginForm">
+                <input type="text" class="login-input" id="blogAdminId" placeholder="아이디" required>
+                <input type="password" class="login-input" id="blogAdminPw" placeholder="비밀번호" required>
+                <button type="submit" class="login-btn">로그인</button>
+            </form>
+            <div class="login-error" id="loginError">아이디 또는 비밀번호가 올바르지 않습니다.</div>
+        </div>
+    </div>
+
     <header class="header">
         <div class="header-left">
             <a href="admin-blog.html" class="header-back">← 목록</a>
@@ -815,6 +916,36 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+        // 블로그 관리자 계정
+        const BLOG_ADMIN_ID = 'admin012';
+        const BLOG_ADMIN_PW = 'lawyeon2601';
+
+        // 관리자 인증 체크 및 로그인 폼 처리
+        (function() {
+            const isLoggedIn = sessionStorage.getItem('blogAdminLoggedIn') === 'true';
+            const loginOverlay = document.getElementById('loginOverlay');
+
+            if (isLoggedIn) {
+                loginOverlay.classList.add('hidden');
+            }
+
+            // 로그인 폼 처리
+            document.getElementById('blogLoginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const inputId = document.getElementById('blogAdminId').value.trim();
+                const inputPw = document.getElementById('blogAdminPw').value;
+                const errorMsg = document.getElementById('loginError');
+
+                if (inputId === BLOG_ADMIN_ID && inputPw === BLOG_ADMIN_PW) {
+                    sessionStorage.setItem('blogAdminLoggedIn', 'true');
+                    loginOverlay.classList.add('hidden');
+                    errorMsg.style.display = 'none';
+                } else {
+                    errorMsg.style.display = 'block';
+                }
+            });
+        })();
+
         // Supabase 초기화
         const SUPABASE_URL = 'https://qpulzpgtrtebgonshceq.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFwdWx6cGd0cnRlYmdvbnNoY2VxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcxOTYxNjgsImV4cCI6MjA2Mjc3MjE2OH0.whg1u6MXPMzgKRhVxG0pYzKnTi3mR81AuGCNmCHEqzI';
