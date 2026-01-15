@@ -850,10 +850,13 @@
                 <div class="sidebar-title">글 정보</div>
                 <label class="sidebar-label">카테고리</label>
                 <select class="sidebar-select" id="postCategory">
-                    <option value="visa">비자</option>
-                    <option value="stay">체류</option>
-                    <option value="case">판례·사례</option>
-                    <option value="news">법령·뉴스</option>
+                    <option value="citizenship">국적·귀화·난민</option>
+                    <option value="admin">공통 행정 신고</option>
+                    <option value="work">취업·워크</option>
+                    <option value="education">교육·구직</option>
+                    <option value="business">사업·투자</option>
+                    <option value="family">동포·가족·결혼</option>
+                    <option value="residence">거주·영주</option>
                 </select>
 
                 <label class="sidebar-label">URL 슬러그</label>
@@ -1318,7 +1321,7 @@
             const title = document.getElementById('postTitle').value;
             const category = document.getElementById('postCategory').value;
 
-            const categoryNames = { 'visa': '비자', 'stay': '체류', 'case': '판례·사례', 'news': '법령·뉴스' };
+            const categoryNames = { 'citizenship': '국적·귀화·난민', 'admin': '공통 행정 신고', 'work': '취업·워크', 'education': '교육·구직', 'business': '사업·투자', 'family': '동포·가족·결혼', 'residence': '거주·영주' };
 
             const previewHtml = `
                 <span style="display: inline-block; padding: 6px 12px; background: #f2f4f6; border-radius: 6px; font-size: 13px; font-weight: 600; color: #3182f6; margin-bottom: 16px;">${categoryNames[category]}</span>

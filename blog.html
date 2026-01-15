@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>법률정보 | 법무법인 로연</title>
+    <title>뉴스 & 인사이트 | 법무법인 로연</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -276,24 +276,26 @@
             <h1><a href="index.html">법무법인 로연</a></h1>
             <nav class="header-nav">
                 <a href="index.html">서비스</a>
-                <a href="blog.html" style="color: white; font-weight: 600;">법률정보</a>
-                <a href="price-list.html">가격표</a>
+                <a href="blog.html" style="color: white; font-weight: 600;">뉴스 & 인사이트</a>
             </nav>
         </div>
     </header>
 
     <section class="hero">
-        <h2>법률정보</h2>
+        <h2>뉴스 & 인사이트</h2>
         <p>출입국·비자에 관한 유용한 정보를 제공합니다</p>
     </section>
 
     <main class="container">
         <div class="category-tabs" id="categoryTabs">
             <button class="category-tab active" data-category="all">전체</button>
-            <button class="category-tab" data-category="visa">비자</button>
-            <button class="category-tab" data-category="stay">체류</button>
-            <button class="category-tab" data-category="case">판례·사례</button>
-            <button class="category-tab" data-category="news">법령·뉴스</button>
+            <button class="category-tab" data-category="citizenship">국적·귀화·난민</button>
+            <button class="category-tab" data-category="admin">공통 행정 신고</button>
+            <button class="category-tab" data-category="work">취업·워크</button>
+            <button class="category-tab" data-category="education">교육·구직</button>
+            <button class="category-tab" data-category="business">사업·투자</button>
+            <button class="category-tab" data-category="family">동포·가족·결혼</button>
+            <button class="category-tab" data-category="residence">거주·영주</button>
         </div>
 
         <div id="blogList" class="blog-grid">
@@ -324,10 +326,13 @@
         // 카테고리 매핑
         const categoryNames = {
             'all': '전체',
-            'visa': '비자',
-            'stay': '체류',
-            'case': '판례·사례',
-            'news': '법령·뉴스'
+            'citizenship': '국적·귀화·난민',
+            'admin': '공통 행정 신고',
+            'work': '취업·워크',
+            'education': '교육·구직',
+            'business': '사업·투자',
+            'family': '동포·가족·결혼',
+            'residence': '거주·영주'
         };
 
         // 블로그 글 로드
@@ -393,10 +398,13 @@
         // 카테고리별 기본 이모지
         function getDefaultEmoji(category) {
             const emojis = {
-                'visa': '🛂',
-                'stay': '🏠',
-                'case': '⚖️',
-                'news': '📰'
+                'citizenship': '🛂',
+                'admin': '📋',
+                'work': '💼',
+                'education': '🎓',
+                'business': '🏢',
+                'family': '👨‍👩‍👧',
+                'residence': '🏠'
             };
             return emojis[category] || '📄';
         }
