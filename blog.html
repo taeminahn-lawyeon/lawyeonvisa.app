@@ -319,7 +319,7 @@
         // Supabase 초기화
         const SUPABASE_URL = 'https://qpulzpgtrtebgonshceq.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFwdWx6cGd0cnRlYmdvbnNoY2VxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcxOTYxNjgsImV4cCI6MjA2Mjc3MjE2OH0.whg1u6MXPMzgKRhVxG0pYzKnTi3mR81AuGCNmCHEqzI';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         let currentCategory = 'all';
 
@@ -341,7 +341,7 @@
             blogList.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>글을 불러오는 중...</p></div>';
 
             try {
-                let query = supabase
+                let query = supabaseClient
                     .from('blog_posts')
                     .select('*')
                     .eq('is_published', true)
