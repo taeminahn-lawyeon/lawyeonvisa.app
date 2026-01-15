@@ -815,6 +815,16 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+        // 관리자 인증 체크
+        (function() {
+            const isAdminLoggedIn = sessionStorage.getItem('adminLoggedIn') === 'true';
+            if (!isAdminLoggedIn) {
+                alert('관리자 로그인이 필요합니다.');
+                window.location.href = 'admin-test-login.html';
+                return;
+            }
+        })();
+
         // Supabase 초기화
         const SUPABASE_URL = 'https://qpulzpgtrtebgonshceq.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFwdWx6cGd0cnRlYmdvbnNoY2VxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcxOTYxNjgsImV4cCI6MjA2Mjc3MjE2OH0.whg1u6MXPMzgKRhVxG0pYzKnTi3mR81AuGCNmCHEqzI';
