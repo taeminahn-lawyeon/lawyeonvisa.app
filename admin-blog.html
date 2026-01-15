@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>블로그 관리 | 관리자</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8f9fa;
+            color: #191f28;
+            line-height: 1.6;
+        }
+
+        /* 헤더 */
+        .header {
+            background: #1a1a2e;
+            color: white;
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .header-back {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .header-back:hover {
+            color: white;
+        }
+
+        .btn-new {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #3182f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .btn-new:hover {
+            background: #1b64da;
+        }
+
+        /* 컨테이너 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        /* 통계 */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        @media (max-width: 768px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #8b95a1;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #191f28;
+        }
+
+        /* 필터 */
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+        }
+
+        .filter-tab {
+            padding: 8px 16px;
+            background: white;
+            border: 1px solid #e5e8eb;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #6b7684;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-tab:hover {
+            border-color: #3182f6;
+            color: #3182f6;
+        }
+
+        .filter-tab.active {
+            background: #3182f6;
+            border-color: #3182f6;
+            color: white;
+        }
+
+        .search-input {
+            padding: 10px 16px;
+            border: 1px solid #e5e8eb;
+            border-radius: 8px;
+            font-size: 14px;
+            width: 240px;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: #3182f6;
+        }
+
+        /* 테이블 */
+        .posts-table {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .posts-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .posts-table th {
+            background: #f8f9fa;
+            padding: 14px 20px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            color: #6b7684;
+            border-bottom: 1px solid #e5e8eb;
+        }
+
+        .posts-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f2f4f6;
+            font-size: 14px;
+        }
+
+        .posts-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .posts-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .post-title {
+            font-weight: 600;
+            color: #191f28;
+            max-width: 400px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .post-category {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #f2f4f6;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #3182f6;
+        }
+
+        .post-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .post-status.published {
+            background: #e6fcf5;
+            color: #0ca678;
+        }
+
+        .post-status.draft {
+            background: #f2f4f6;
+            color: #8b95a1;
+        }
+
+        .post-date {
+            color: #8b95a1;
+            font-size: 13px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: 1px solid #e5e8eb;
+            border-radius: 6px;
+            background: white;
+            font-size: 13px;
+            color: #4e5968;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            background: #f8f9fa;
+            border-color: #dee2e6;
+        }
+
+        .action-btn.delete {
+            color: #f03e3e;
+        }
+
+        .action-btn.delete:hover {
+            background: #ffeaea;
+            border-color: #f03e3e;
+        }
+
+        /* 빈 상태 */
+        .empty-state {
+            text-align: center;
+            padding: 64px 24px;
+            color: #8b95a1;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .empty-state p {
+            margin-bottom: 24px;
+        }
+
+        /* 로딩 */
+        .loading {
+            text-align: center;
+            padding: 48px;
+        }
+
+        .loading-spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e5e8eb;
+            border-top-color: #3182f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 반응형 테이블 */
+        @media (max-width: 768px) {
+            .posts-table {
+                overflow-x: auto;
+            }
+
+            .posts-table table {
+                min-width: 700px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <a href="index.html" class="header-back">← 사이트로</a>
+                <h1>블로그 관리</h1>
+            </div>
+            <a href="admin-blog-edit.html" class="btn-new">
+                <span>+</span>
+                <span>새 글 작성</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <div class="stat-label">전체 글</div>
+                <div class="stat-value" id="statTotal">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">발행됨</div>
+                <div class="stat-value" id="statPublished">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">임시저장</div>
+                <div class="stat-value" id="statDraft">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">이번 달</div>
+                <div class="stat-value" id="statThisMonth">-</div>
+            </div>
+        </div>
+
+        <div class="filters">
+            <div class="filter-tabs" id="filterTabs">
+                <button class="filter-tab active" data-filter="all">전체</button>
+                <button class="filter-tab" data-filter="published">발행됨</button>
+                <button class="filter-tab" data-filter="draft">임시저장</button>
+            </div>
+            <input type="text" class="search-input" id="searchInput" placeholder="제목 검색...">
+        </div>
+
+        <div class="posts-table" id="postsTable">
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <p>글을 불러오는 중...</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Supabase 초기화
+        const SUPABASE_URL = 'https://qpulzpgtrtebgonshceq.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFwdWx6cGd0cnRlYmdvbnNoY2VxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcxOTYxNjgsImV4cCI6MjA2Mjc3MjE2OH0.whg1u6MXPMzgKRhVxG0pYzKnTi3mR81AuGCNmCHEqzI';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        let allPosts = [];
+        let currentFilter = 'all';
+
+        const categoryNames = {
+            'visa': '비자',
+            'stay': '체류',
+            'case': '판례·사례',
+            'news': '법령·뉴스'
+        };
+
+        // 글 목록 로드
+        async function loadPosts() {
+            try {
+                const { data: posts, error } = await supabase
+                    .from('blog_posts')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                allPosts = posts || [];
+                updateStats();
+                renderPosts();
+
+            } catch (error) {
+                console.error('Error loading posts:', error);
+                document.getElementById('postsTable').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚠️</div>
+                        <p>글을 불러오는 중 오류가 발생했습니다.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // 통계 업데이트
+        function updateStats() {
+            const total = allPosts.length;
+            const published = allPosts.filter(p => p.is_published).length;
+            const draft = total - published;
+
+            const now = new Date();
+            const thisMonth = allPosts.filter(p => {
+                const postDate = new Date(p.created_at);
+                return postDate.getMonth() === now.getMonth() && postDate.getFullYear() === now.getFullYear();
+            }).length;
+
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statPublished').textContent = published;
+            document.getElementById('statDraft').textContent = draft;
+            document.getElementById('statThisMonth').textContent = thisMonth;
+        }
+
+        // 글 목록 렌더링
+        function renderPosts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            let filtered = allPosts;
+
+            // 필터 적용
+            if (currentFilter === 'published') {
+                filtered = filtered.filter(p => p.is_published);
+            } else if (currentFilter === 'draft') {
+                filtered = filtered.filter(p => !p.is_published);
+            }
+
+            // 검색 적용
+            if (searchTerm) {
+                filtered = filtered.filter(p => p.title.toLowerCase().includes(searchTerm));
+            }
+
+            if (filtered.length === 0) {
+                document.getElementById('postsTable').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📝</div>
+                        <p>글이 없습니다.</p>
+                        <a href="admin-blog-edit.html" class="btn-new">새 글 작성</a>
+                    </div>
+                `;
+                return;
+            }
+
+            const tableHtml = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>제목</th>
+                            <th>카테고리</th>
+                            <th>상태</th>
+                            <th>작성일</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${filtered.map(post => `
+                            <tr>
+                                <td>
+                                    <div class="post-title">${post.title}</div>
+                                </td>
+                                <td>
+                                    <span class="post-category">${categoryNames[post.category] || post.category}</span>
+                                </td>
+                                <td>
+                                    <span class="post-status ${post.is_published ? 'published' : 'draft'}">
+                                        ${post.is_published ? '발행됨' : '임시저장'}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="post-date">${formatDate(post.created_at)}</span>
+                                </td>
+                                <td>
+                                    <div class="post-actions">
+                                        <a href="admin-blog-edit.html?id=${post.id}" class="action-btn">수정</a>
+                                        <a href="blog-post.html?slug=${post.slug}" class="action-btn" target="_blank">보기</a>
+                                        <button class="action-btn delete" onclick="deletePost('${post.id}')">삭제</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+
+            document.getElementById('postsTable').innerHTML = tableHtml;
+        }
+
+        // 글 삭제
+        async function deletePost(id) {
+            if (!confirm('정말 이 글을 삭제하시겠습니까?')) return;
+
+            try {
+                const { error } = await supabase
+                    .from('blog_posts')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                allPosts = allPosts.filter(p => p.id !== id);
+                updateStats();
+                renderPosts();
+                alert('삭제되었습니다.');
+
+            } catch (error) {
+                console.error('Error deleting post:', error);
+                alert('삭제에 실패했습니다.');
+            }
+        }
+
+        // 날짜 포맷
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
+        }
+
+        // 필터 탭 이벤트
+        document.getElementById('filterTabs').addEventListener('click', (e) => {
+            if (e.target.classList.contains('filter-tab')) {
+                document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
+                e.target.classList.add('active');
+                currentFilter = e.target.dataset.filter;
+                renderPosts();
+            }
+        });
+
+        // 검색 이벤트
+        document.getElementById('searchInput').addEventListener('input', () => {
+            renderPosts();
+        });
+
+        // 초기 로드
+        loadPosts();
+    </script>
+</body>
+</html>
