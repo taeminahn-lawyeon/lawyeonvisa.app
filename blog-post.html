@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>법률정보 | 법무법인 로연</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            color: #191f28;
+            line-height: 1.8;
+        }
+
+        /* 헤더 */
+        .header {
+            background: white;
+            border-bottom: 1px solid #e5e8eb;
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #191f28;
+        }
+
+        .header h1 a {
+            color: #191f28;
+            text-decoration: none;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 24px;
+        }
+
+        .header-nav a {
+            color: #6b7684;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .header-nav a:hover {
+            color: #191f28;
+        }
+
+        /* 메인 레이아웃 */
+        .main-layout {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 48px;
+            padding: 48px 24px;
+        }
+
+        @media (max-width: 900px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none;
+            }
+        }
+
+        /* 아티클 */
+        .article {
+            max-width: 720px;
+        }
+
+        /* 아티클 헤더 */
+        .article-header {
+            margin-bottom: 40px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid #e5e8eb;
+        }
+
+        .article-category {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #f2f4f6;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #3182f6;
+            margin-bottom: 16px;
+        }
+
+        .article-title {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 16px;
+            color: #191f28;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            color: #8b95a1;
+            font-size: 14px;
+        }
+
+        .article-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 공유 버튼 */
+        .share-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .share-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: #f8f9fa;
+            border: 1px solid #e5e8eb;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #4e5968;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .share-btn:hover {
+            background: #e5e8eb;
+        }
+
+        /* 아티클 본문 */
+        .article-content {
+            font-size: 17px;
+            line-height: 1.9;
+            color: #333d4b;
+        }
+
+        /* 블록 스타일 */
+        .article-content h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 48px 0 20px;
+            color: #191f28;
+            scroll-margin-top: 80px;
+        }
+
+        .article-content h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 32px 0 16px;
+            color: #191f28;
+        }
+
+        .article-content p {
+            margin-bottom: 20px;
+        }
+
+        .article-content ul, .article-content ol {
+            margin: 16px 0 24px 24px;
+        }
+
+        .article-content li {
+            margin-bottom: 8px;
+        }
+
+        .article-content a {
+            color: #3182f6;
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        /* 번호 섹션 블록 */
+        .block-numbered-section {
+            display: flex;
+            gap: 16px;
+            margin: 32px 0;
+            padding: 24px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .block-numbered-section .number-badge {
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            background: linear-gradient(135deg, #3182f6, #1b64da);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .block-numbered-section .section-content {
+            flex: 1;
+        }
+
+        .block-numbered-section .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #191f28;
+            margin-bottom: 8px;
+        }
+
+        .block-numbered-section .section-text {
+            color: #4e5968;
+            font-size: 15px;
+        }
+
+        /* 표 블록 */
+        .block-table {
+            margin: 24px 0;
+            overflow-x: auto;
+        }
+
+        .block-table table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+
+        .block-table th {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .block-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #e5e8eb;
+        }
+
+        .block-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .block-table tr:hover {
+            background: #f2f4f6;
+        }
+
+        /* 안내 박스 블록 */
+        .block-info-box {
+            margin: 24px 0;
+            padding: 20px 24px;
+            border-radius: 12px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .block-info-box.info {
+            background: #e8f4fd;
+            border-left: 4px solid #3182f6;
+        }
+
+        .block-info-box.warning {
+            background: #fff8e6;
+            border-left: 4px solid #f59f00;
+        }
+
+        .block-info-box.danger {
+            background: #ffeaea;
+            border-left: 4px solid #f03e3e;
+        }
+
+        .block-info-box.success {
+            background: #e6fcf5;
+            border-left: 4px solid #20c997;
+        }
+
+        .block-info-box-icon {
+            font-size: 20px;
+        }
+
+        .block-info-box-content {
+            flex: 1;
+            font-size: 15px;
+            color: #333d4b;
+        }
+
+        /* 링크 버튼 블록 */
+        .block-link-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: #3182f6;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            margin: 16px 0;
+            transition: background 0.2s;
+        }
+
+        .block-link-button:hover {
+            background: #1b64da;
+            text-decoration: none;
+        }
+
+        /* 이미지 블록 */
+        .block-image {
+            margin: 24px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .block-image img {
+            width: 100%;
+            display: block;
+        }
+
+        .block-image-caption {
+            padding: 12px 16px;
+            background: #f8f9fa;
+            font-size: 14px;
+            color: #6b7684;
+            text-align: center;
+        }
+
+        /* 사이드바 */
+        .sidebar {
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+        }
+
+        /* 목차 */
+        .toc {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .toc-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #191f28;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e5e8eb;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-item {
+            margin-bottom: 8px;
+        }
+
+        .toc-link {
+            display: block;
+            padding: 8px 12px;
+            font-size: 14px;
+            color: #6b7684;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .toc-link:hover {
+            background: #e5e8eb;
+            color: #191f28;
+        }
+
+        .toc-link.active {
+            background: #3182f6;
+            color: white;
+        }
+
+        /* 서비스 CTA 섹션 */
+        .service-cta-section {
+            margin-top: 64px;
+            padding: 40px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 16px;
+            color: white;
+        }
+
+        .service-cta-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .service-cta-desc {
+            font-size: 15px;
+            opacity: 0.8;
+            margin-bottom: 24px;
+        }
+
+        .service-cta-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .service-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 24px;
+            background: white;
+            color: #1a1a2e;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+
+        .service-cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .service-cta-btn .arrow {
+            transition: transform 0.2s;
+        }
+
+        .service-cta-btn:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        /* 관련 글 섹션 */
+        .related-posts {
+            margin-top: 64px;
+            padding-top: 48px;
+            border-top: 1px solid #e5e8eb;
+        }
+
+        .related-posts-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #191f28;
+        }
+
+        .related-posts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .related-posts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .related-post-card {
+            display: flex;
+            gap: 16px;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .related-post-card:hover {
+            background: #f2f4f6;
+            transform: translateY(-2px);
+        }
+
+        .related-post-thumb {
+            width: 80px;
+            height: 80px;
+            min-width: 80px;
+            background: linear-gradient(135deg, #e8f4f8, #d1e8ff);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .related-post-content {
+            flex: 1;
+        }
+
+        .related-post-category {
+            font-size: 12px;
+            color: #3182f6;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .related-post-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #191f28;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* 로딩 */
+        .loading {
+            text-align: center;
+            padding: 100px 24px;
+            color: #8b95a1;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e5e8eb;
+            border-top-color: #3182f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 목록 버튼 */
+        .back-to-list {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 48px;
+            padding: 12px 20px;
+            background: #f8f9fa;
+            border: 1px solid #e5e8eb;
+            border-radius: 8px;
+            color: #4e5968;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .back-to-list:hover {
+            background: #e5e8eb;
+        }
+
+        /* 모바일 목차 토글 */
+        @media (max-width: 900px) {
+            .mobile-toc-toggle {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 12px 16px;
+                background: #f8f9fa;
+                border: 1px solid #e5e8eb;
+                border-radius: 8px;
+                font-size: 14px;
+                color: #4e5968;
+                cursor: pointer;
+                margin-bottom: 24px;
+            }
+
+            .mobile-toc {
+                display: none;
+                background: #f8f9fa;
+                border-radius: 12px;
+                padding: 20px;
+                margin-bottom: 24px;
+            }
+
+            .mobile-toc.show {
+                display: block;
+            }
+        }
+
+        @media (min-width: 901px) {
+            .mobile-toc-toggle, .mobile-toc {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1><a href="index.html">법무법인 로연</a></h1>
+            <nav class="header-nav">
+                <a href="index.html">서비스</a>
+                <a href="blog.html">법률정보</a>
+                <a href="price-list.html">가격표</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-layout" id="mainContent">
+        <div class="loading">
+            <div class="loading-spinner"></div>
+            <p>글을 불러오는 중...</p>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Supabase 초기화
+        const SUPABASE_URL = 'https://qpulzpgtrtebgonshceq.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFwdWx6cGd0cnRlYmdvbnNoY2VxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcxOTYxNjgsImV4cCI6MjA2Mjc3MjE2OH0.whg1u6MXPMzgKRhVxG0pYzKnTi3mR81AuGCNmCHEqzI';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // 카테고리 매핑
+        const categoryNames = {
+            'visa': '비자',
+            'stay': '체류',
+            'case': '판례·사례',
+            'news': '법령·뉴스'
+        };
+
+        // URL에서 slug 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const slug = urlParams.get('slug');
+
+        // 글 로드
+        async function loadPost() {
+            if (!slug) {
+                window.location.href = 'blog.html';
+                return;
+            }
+
+            try {
+                const { data: post, error } = await supabase
+                    .from('blog_posts')
+                    .select('*')
+                    .eq('slug', slug)
+                    .eq('is_published', true)
+                    .single();
+
+                if (error || !post) {
+                    document.getElementById('mainContent').innerHTML = `
+                        <div class="article" style="grid-column: 1 / -1; text-align: center; padding: 100px 24px;">
+                            <h2 style="margin-bottom: 16px;">글을 찾을 수 없습니다</h2>
+                            <p style="color: #8b95a1; margin-bottom: 24px;">요청하신 글이 존재하지 않거나 삭제되었습니다.</p>
+                            <a href="blog.html" class="back-to-list">← 목록으로 돌아가기</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // 페이지 타이틀 업데이트
+                document.title = `${post.title} | 법무법인 로연`;
+
+                // 목차 생성
+                const toc = generateTOC(post.content);
+
+                // 관련 서비스 버튼 생성
+                const relatedServices = post.related_services ? JSON.parse(post.related_services) : [];
+
+                // 메인 콘텐츠 렌더링
+                document.getElementById('mainContent').innerHTML = `
+                    <article class="article">
+                        <!-- 모바일 목차 토글 -->
+                        <button class="mobile-toc-toggle" onclick="toggleMobileToc()">
+                            <span>📑</span>
+                            <span>목차 보기</span>
+                        </button>
+                        <div class="mobile-toc" id="mobileToc">
+                            <div class="toc-title">목차</div>
+                            <ul class="toc-list">${toc.html}</ul>
+                        </div>
+
+                        <header class="article-header">
+                            <span class="article-category">${categoryNames[post.category] || post.category}</span>
+                            <h1 class="article-title">${post.title}</h1>
+                            <div class="article-meta">
+                                <span class="article-meta-item">
+                                    <span>📅</span>
+                                    <span>${formatDate(post.created_at)}</span>
+                                </span>
+                                ${post.updated_at !== post.created_at ? `
+                                    <span class="article-meta-item">
+                                        <span>수정:</span>
+                                        <span>${formatDate(post.updated_at)}</span>
+                                    </span>
+                                ` : ''}
+                            </div>
+                            <div class="share-buttons">
+                                <button class="share-btn" onclick="copyLink()">
+                                    <span>🔗</span>
+                                    <span>링크 복사</span>
+                                </button>
+                                <button class="share-btn" onclick="shareKakao()">
+                                    <span>💬</span>
+                                    <span>카카오톡</span>
+                                </button>
+                            </div>
+                        </header>
+
+                        <div class="article-content">
+                            ${renderContent(post.content)}
+                        </div>
+
+                        <!-- 서비스 CTA -->
+                        <div class="service-cta-section">
+                            <div class="service-cta-title">관련 서비스 신청하기</div>
+                            <div class="service-cta-desc">전문가의 도움이 필요하신가요? 바로 서비스를 신청하세요.</div>
+                            <div class="service-cta-buttons" id="serviceCTAButtons">
+                                ${renderServiceButtons(relatedServices)}
+                            </div>
+                        </div>
+
+                        <!-- 관련 글 -->
+                        <div class="related-posts" id="relatedPosts">
+                            <div class="loading-spinner"></div>
+                        </div>
+
+                        <a href="blog.html" class="back-to-list">← 목록으로 돌아가기</a>
+                    </article>
+
+                    <aside class="sidebar">
+                        <nav class="toc">
+                            <div class="toc-title">목차</div>
+                            <ul class="toc-list" id="tocList">${toc.html}</ul>
+                        </nav>
+                    </aside>
+                `;
+
+                // 관련 글 로드
+                loadRelatedPosts(post.category, post.id);
+
+                // 목차 스크롤 하이라이트
+                setupTocHighlight();
+
+            } catch (error) {
+                console.error('Error loading post:', error);
+            }
+        }
+
+        // 목차 생성
+        function generateTOC(content) {
+            const headings = [];
+            const regex = /<h2[^>]*id="([^"]*)"[^>]*>([^<]*)<\/h2>/gi;
+            let match;
+
+            // content가 블록 형식인 경우
+            try {
+                const blocks = JSON.parse(content);
+                blocks.forEach((block, index) => {
+                    if (block.type === 'heading' || block.type === 'numbered-section') {
+                        const id = `section-${index}`;
+                        headings.push({ id, title: block.title || block.content });
+                    }
+                });
+            } catch {
+                // HTML 형식인 경우
+                while ((match = regex.exec(content)) !== null) {
+                    headings.push({ id: match[1], title: match[2] });
+                }
+            }
+
+            const html = headings.map(h => `
+                <li class="toc-item">
+                    <a href="#${h.id}" class="toc-link" data-id="${h.id}">${h.title}</a>
+                </li>
+            `).join('');
+
+            return { headings, html };
+        }
+
+        // 콘텐츠 렌더링
+        function renderContent(content) {
+            try {
+                const blocks = JSON.parse(content);
+                return blocks.map((block, index) => renderBlock(block, index)).join('');
+            } catch {
+                // HTML 형식인 경우 그대로 반환
+                return content;
+            }
+        }
+
+        // 블록 렌더링
+        function renderBlock(block, index) {
+            switch (block.type) {
+                case 'heading':
+                    return `<h2 id="section-${index}">${block.content}</h2>`;
+
+                case 'paragraph':
+                    return `<p>${block.content}</p>`;
+
+                case 'numbered-section':
+                    return `
+                        <div class="block-numbered-section" id="section-${index}">
+                            <div class="number-badge">${block.number}</div>
+                            <div class="section-content">
+                                <div class="section-title">${block.title}</div>
+                                <div class="section-text">${block.content}</div>
+                            </div>
+                        </div>
+                    `;
+
+                case 'table':
+                    return `
+                        <div class="block-table">
+                            <table>
+                                <thead>
+                                    <tr>${block.headers.map(h => `<th>${h}</th>`).join('')}</tr>
+                                </thead>
+                                <tbody>
+                                    ${block.rows.map(row => `
+                                        <tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+
+                case 'info-box':
+                    const icons = { info: 'ℹ️', warning: '⚠️', danger: '🚨', success: '✅' };
+                    return `
+                        <div class="block-info-box ${block.style || 'info'}">
+                            <span class="block-info-box-icon">${icons[block.style] || 'ℹ️'}</span>
+                            <div class="block-info-box-content">${block.content}</div>
+                        </div>
+                    `;
+
+                case 'link-button':
+                    return `
+                        <a href="${block.url}" class="block-link-button" target="_blank">
+                            ${block.text} →
+                        </a>
+                    `;
+
+                case 'image':
+                    return `
+                        <figure class="block-image">
+                            <img src="${block.url}" alt="${block.alt || ''}">
+                            ${block.caption ? `<figcaption class="block-image-caption">${block.caption}</figcaption>` : ''}
+                        </figure>
+                    `;
+
+                case 'list':
+                    const tag = block.ordered ? 'ol' : 'ul';
+                    return `<${tag}>${block.items.map(item => `<li>${item}</li>`).join('')}</${tag}>`;
+
+                default:
+                    return `<p>${block.content || ''}</p>`;
+            }
+        }
+
+        // 서비스 버튼 렌더링
+        function renderServiceButtons(services) {
+            if (!services || services.length === 0) {
+                // 기본 서비스 버튼
+                return `
+                    <a href="index.html#services" class="service-cta-btn">
+                        <span>서비스 둘러보기</span>
+                        <span class="arrow">→</span>
+                    </a>
+                `;
+            }
+
+            return services.map(service => `
+                <a href="service-apply-general.html?service=${service.id}" class="service-cta-btn">
+                    <span>${service.name}</span>
+                    <span class="arrow">→</span>
+                </a>
+            `).join('');
+        }
+
+        // 관련 글 로드
+        async function loadRelatedPosts(category, currentId) {
+            try {
+                const { data: posts, error } = await supabase
+                    .from('blog_posts')
+                    .select('*')
+                    .eq('category', category)
+                    .eq('is_published', true)
+                    .neq('id', currentId)
+                    .order('created_at', { ascending: false })
+                    .limit(4);
+
+                const container = document.getElementById('relatedPosts');
+
+                if (!posts || posts.length === 0) {
+                    container.style.display = 'none';
+                    return;
+                }
+
+                const emojis = { 'visa': '🛂', 'stay': '🏠', 'case': '⚖️', 'news': '📰' };
+
+                container.innerHTML = `
+                    <h3 class="related-posts-title">관련 글</h3>
+                    <div class="related-posts-grid">
+                        ${posts.map(post => `
+                            <a href="blog-post.html?slug=${post.slug}" class="related-post-card">
+                                <div class="related-post-thumb">
+                                    ${post.thumbnail_url
+                                        ? `<img src="${post.thumbnail_url}" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">`
+                                        : emojis[post.category] || '📄'
+                                    }
+                                </div>
+                                <div class="related-post-content">
+                                    <div class="related-post-category">${categoryNames[post.category] || post.category}</div>
+                                    <div class="related-post-title">${post.title}</div>
+                                </div>
+                            </a>
+                        `).join('')}
+                    </div>
+                `;
+
+            } catch (error) {
+                console.error('Error loading related posts:', error);
+            }
+        }
+
+        // 목차 하이라이트
+        function setupTocHighlight() {
+            const tocLinks = document.querySelectorAll('.toc-link');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        tocLinks.forEach(link => {
+                            link.classList.toggle('active', link.dataset.id === id);
+                        });
+                    }
+                });
+            }, { rootMargin: '-80px 0px -80% 0px' });
+
+            document.querySelectorAll('[id^="section-"]').forEach(section => {
+                observer.observe(section);
+            });
+        }
+
+        // 모바일 목차 토글
+        function toggleMobileToc() {
+            document.getElementById('mobileToc').classList.toggle('show');
+        }
+
+        // 링크 복사
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('링크가 복사되었습니다.');
+            });
+        }
+
+        // 카카오 공유
+        function shareKakao() {
+            // 카카오 SDK 연동 시 구현
+            alert('카카오톡 공유 기능은 준비 중입니다.');
+        }
+
+        // 날짜 포맷
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
+        }
+
+        // 초기 로드
+        loadPost();
+    </script>
+</body>
+</html>

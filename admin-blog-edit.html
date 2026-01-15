@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>블로그 글쓰기 | 관리자</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8f9fa;
+            color: #191f28;
+            line-height: 1.6;
+        }
+
+        /* 헤더 */
+        .header {
+            background: #1a1a2e;
+            color: white;
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .header h1 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .header-back {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .btn-primary {
+            background: #3182f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1b64da;
+        }
+
+        /* 메인 레이아웃 */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            min-height: calc(100vh - 60px);
+        }
+
+        @media (max-width: 900px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                order: -1;
+            }
+        }
+
+        /* 에디터 영역 */
+        .editor-area {
+            padding: 32px;
+            max-width: 800px;
+        }
+
+        /* 제목 입력 */
+        .title-input {
+            width: 100%;
+            font-size: 32px;
+            font-weight: 700;
+            border: none;
+            background: transparent;
+            outline: none;
+            margin-bottom: 24px;
+            color: #191f28;
+        }
+
+        .title-input::placeholder {
+            color: #adb5bd;
+        }
+
+        /* 블록 컨테이너 */
+        .blocks-container {
+            min-height: 400px;
+        }
+
+        /* 블록 */
+        .block {
+            position: relative;
+            background: white;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            transition: all 0.2s;
+        }
+
+        .block:hover {
+            border-color: #e5e8eb;
+        }
+
+        .block.selected {
+            border-color: #3182f6;
+        }
+
+        .block-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: #f8f9fa;
+            border-radius: 10px 10px 0 0;
+            border-bottom: 1px solid #e5e8eb;
+        }
+
+        .block-type {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #6b7684;
+        }
+
+        .block-actions {
+            display: flex;
+            gap: 4px;
+        }
+
+        .block-action-btn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #8b95a1;
+            transition: all 0.2s;
+        }
+
+        .block-action-btn:hover {
+            background: #e5e8eb;
+            color: #191f28;
+        }
+
+        .block-content {
+            padding: 16px;
+        }
+
+        /* 블록 입력 필드 */
+        .block-input {
+            width: 100%;
+            border: 1px solid #e5e8eb;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            resize: vertical;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .block-input:focus {
+            border-color: #3182f6;
+        }
+
+        .block-input-small {
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+
+        .block-input-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #6b7684;
+            margin-bottom: 6px;
+        }
+
+        .block-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .block-row > * {
+            flex: 1;
+        }
+
+        /* 번호 섹션 블록 */
+        .number-input {
+            width: 60px;
+            text-align: center;
+            flex: none !important;
+        }
+
+        /* 표 블록 */
+        .table-editor {
+            overflow-x: auto;
+        }
+
+        .table-editor table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-editor th, .table-editor td {
+            border: 1px solid #e5e8eb;
+            padding: 0;
+        }
+
+        .table-editor input {
+            width: 100%;
+            border: none;
+            padding: 10px 12px;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .table-editor th input {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .table-action-btn {
+            padding: 6px 12px;
+            background: #f8f9fa;
+            border: 1px solid #e5e8eb;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .table-action-btn:hover {
+            background: #e5e8eb;
+        }
+
+        /* 안내박스 스타일 선택 */
+        .style-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .style-option {
+            padding: 8px 16px;
+            border: 2px solid #e5e8eb;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .style-option:hover {
+            border-color: #adb5bd;
+        }
+
+        .style-option.selected {
+            border-color: #3182f6;
+            background: #e8f4fd;
+        }
+
+        /* 블록 추가 버튼 */
+        .add-block-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 16px;
+            border: 2px dashed #dee2e6;
+            border-radius: 12px;
+            background: transparent;
+            color: #6b7684;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .add-block-btn:hover {
+            border-color: #3182f6;
+            color: #3182f6;
+            background: #f8f9fa;
+        }
+
+        /* 블록 추가 메뉴 */
+        .block-menu {
+            display: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            padding: 8px;
+            z-index: 50;
+            min-width: 280px;
+        }
+
+        .block-menu.show {
+            display: block;
+        }
+
+        .block-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 12px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .block-menu-item:hover {
+            background: #f8f9fa;
+        }
+
+        .block-menu-icon {
+            width: 36px;
+            height: 36px;
+            background: #f2f4f6;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .block-menu-text {
+            flex: 1;
+        }
+
+        .block-menu-title {
+            font-weight: 600;
+            color: #191f28;
+        }
+
+        .block-menu-desc {
+            font-size: 12px;
+            color: #8b95a1;
+        }
+
+        /* 사이드바 */
+        .sidebar {
+            background: white;
+            border-left: 1px solid #e5e8eb;
+            padding: 24px;
+        }
+
+        .sidebar-section {
+            margin-bottom: 32px;
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #191f28;
+            margin-bottom: 16px;
+        }
+
+        .sidebar-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #6b7684;
+            margin-bottom: 8px;
+        }
+
+        .sidebar-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #e5e8eb;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            margin-bottom: 16px;
+            outline: none;
+        }
+
+        .sidebar-input:focus {
+            border-color: #3182f6;
+        }
+
+        .sidebar-select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #e5e8eb;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            margin-bottom: 16px;
+            outline: none;
+            background: white;
+        }
+
+        /* 썸네일 업로드 */
+        .thumbnail-upload {
+            border: 2px dashed #dee2e6;
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 16px;
+        }
+
+        .thumbnail-upload:hover {
+            border-color: #3182f6;
+            background: #f8f9fa;
+        }
+
+        .thumbnail-upload-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .thumbnail-upload-text {
+            font-size: 14px;
+            color: #6b7684;
+        }
+
+        .thumbnail-preview {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        /* 관련 서비스 */
+        .service-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border: 1px solid #e5e8eb;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .service-checkbox:hover {
+            background: #f8f9fa;
+        }
+
+        .service-checkbox.checked {
+            border-color: #3182f6;
+            background: #e8f4fd;
+        }
+
+        .service-checkbox input {
+            display: none;
+        }
+
+        .service-checkbox-mark {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #dee2e6;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .service-checkbox.checked .service-checkbox-mark {
+            background: #3182f6;
+            border-color: #3182f6;
+            color: white;
+        }
+
+        .service-checkbox-label {
+            font-size: 14px;
+            color: #333d4b;
+        }
+
+        /* 발행 상태 토글 */
+        .publish-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .publish-toggle-label {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            background: #dee2e6;
+            border-radius: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .toggle-switch.active {
+            background: #3182f6;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: left 0.2s;
+        }
+
+        .toggle-switch.active::after {
+            left: 25px;
+        }
+
+        /* 미리보기 모달 */
+        .preview-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            overflow-y: auto;
+        }
+
+        .preview-modal.show {
+            display: block;
+        }
+
+        .preview-content {
+            background: white;
+            max-width: 800px;
+            margin: 40px auto;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e5e8eb;
+        }
+
+        .preview-close {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .preview-body {
+            padding: 40px;
+        }
+
+        /* 로딩 */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.9);
+            z-index: 300;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .loading-overlay.show {
+            display: flex;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e5e8eb;
+            border-top-color: #3182f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <a href="admin-blog.html" class="header-back">← 목록</a>
+            <h1>블로그 글쓰기</h1>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-secondary" onclick="showPreview()">미리보기</button>
+            <button class="btn btn-primary" onclick="savePost()">저장</button>
+        </div>
+    </header>
+
+    <main class="main-layout">
+        <div class="editor-area">
+            <input type="text" class="title-input" id="postTitle" placeholder="제목을 입력하세요">
+
+            <div class="blocks-container" id="blocksContainer">
+                <!-- 블록들이 여기에 추가됨 -->
+            </div>
+
+            <div style="position: relative;">
+                <button class="add-block-btn" onclick="toggleBlockMenu()">
+                    <span>+</span>
+                    <span>블록 추가</span>
+                </button>
+                <div class="block-menu" id="blockMenu">
+                    <button class="block-menu-item" onclick="addBlock('paragraph')">
+                        <div class="block-menu-icon">📝</div>
+                        <div class="block-menu-text">
+                            <div class="block-menu-title">텍스트</div>
+                            <div class="block-menu-desc">일반 텍스트 단락</div>
+                        </div>
+                    </button>
+                    <button class="block-menu-item" onclick="addBlock('heading')">
+                        <div class="block-menu-icon">H</div>
+                        <div class="block-menu-text">
+                            <div class="block-menu-title">제목</div>
+                            <div class="block-menu-desc">섹션 제목 (목차에 표시됨)</div>
+                        </div>
+                    </button>
+                    <button class="block-menu-item" onclick="addBlock('numbered-section')">
+                        <div class="block-menu-icon">1️⃣</div>
+                        <div class="block-menu-text">
+                            <div class="block-menu-title">번호 섹션</div>
+                            <div class="block-menu-desc">번호가 있는 강조 섹션</div>
+                        </div>
+                    </button>
+                    <button class="block-menu-item" onclick="addBlock('table')">
+                        <div class="block-menu-icon">📊</div>
+                        <div class="block-menu-text">
+                            <div class="block-menu-title">표</div>
+                            <div class="block-menu-desc">데이터 표 삽입</div>
+                        </div>
+                    </button>
+                    <button class="block-menu-item" onclick="addBlock('info-box')">
+                        <div class="block-menu-icon">💡</div>
+                        <div class="block-menu-text">
+                            <div class="block-menu-title">안내 박스</div>
+                            <div class="block-menu-desc">정보, 주의, 경고 안내</div>
+                        </div>
+                    </button>
+                    <button class="block-menu-item" onclick="addBlock('list')">
+                        <div class="block-menu-icon">•</div>
+                        <div class="block-menu-text">
+                            <div class="block-menu-title">목록</div>
+                            <div class="block-menu-desc">글머리 기호 또는 번호 목록</div>
+                        </div>
+                    </button>
+                    <button class="block-menu-item" onclick="addBlock('link-button')">
+                        <div class="block-menu-icon">🔗</div>
+                        <div class="block-menu-text">
+                            <div class="block-menu-title">링크 버튼</div>
+                            <div class="block-menu-desc">외부 링크 버튼</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">발행 설정</div>
+                <div class="publish-toggle">
+                    <span class="publish-toggle-label">발행 상태</span>
+                    <div class="toggle-switch" id="publishToggle" onclick="togglePublish()"></div>
+                </div>
+                <span id="publishStatus" style="font-size: 13px; color: #8b95a1;">임시저장</span>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">글 정보</div>
+                <label class="sidebar-label">카테고리</label>
+                <select class="sidebar-select" id="postCategory">
+                    <option value="visa">비자</option>
+                    <option value="stay">체류</option>
+                    <option value="case">판례·사례</option>
+                    <option value="news">법령·뉴스</option>
+                </select>
+
+                <label class="sidebar-label">URL 슬러그</label>
+                <input type="text" class="sidebar-input" id="postSlug" placeholder="url-slug">
+
+                <label class="sidebar-label">요약 (목록에 표시)</label>
+                <textarea class="sidebar-input" id="postExcerpt" rows="3" placeholder="글 요약을 입력하세요"></textarea>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">썸네일</div>
+                <div class="thumbnail-upload" id="thumbnailUpload" onclick="document.getElementById('thumbnailInput').click()">
+                    <div class="thumbnail-upload-icon">📷</div>
+                    <div class="thumbnail-upload-text">이미지 업로드</div>
+                </div>
+                <input type="file" id="thumbnailInput" accept="image/*" style="display: none;" onchange="uploadThumbnail(event)">
+                <img id="thumbnailPreview" class="thumbnail-preview" style="display: none;">
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">관련 서비스 (CTA)</div>
+                <div id="servicesList">
+                    <label class="service-checkbox" onclick="toggleService(this, 'visa-e9')">
+                        <div class="service-checkbox-mark">✓</div>
+                        <span class="service-checkbox-label">E-9 비자 신청</span>
+                    </label>
+                    <label class="service-checkbox" onclick="toggleService(this, 'visa-d10')">
+                        <div class="service-checkbox-mark">✓</div>
+                        <span class="service-checkbox-label">D-10 비자 연장</span>
+                    </label>
+                    <label class="service-checkbox" onclick="toggleService(this, 'stay-extension')">
+                        <div class="service-checkbox-mark">✓</div>
+                        <span class="service-checkbox-label">체류기간 연장</span>
+                    </label>
+                    <label class="service-checkbox" onclick="toggleService(this, 'visa-prediagnosis')">
+                        <div class="service-checkbox-mark">✓</div>
+                        <span class="service-checkbox-label">비자 사전진단</span>
+                    </label>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- 미리보기 모달 -->
+    <div class="preview-modal" id="previewModal">
+        <div class="preview-content">
+            <div class="preview-header">
+                <span>미리보기</span>
+                <button class="preview-close" onclick="closePreview()">×</button>
+            </div>
+            <div class="preview-body" id="previewBody"></div>
+        </div>
+    </div>
+
+    <!-- 로딩 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <span>저장 중...</span>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Supabase 초기화
+        const SUPABASE_URL = 'https://qpulzpgtrtebgonshceq.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFwdWx6cGd0cnRlYmdvbnNoY2VxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcxOTYxNjgsImV4cCI6MjA2Mjc3MjE2OH0.whg1u6MXPMzgKRhVxG0pYzKnTi3mR81AuGCNmCHEqzI';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // 상태
+        let blocks = [];
+        let isPublished = false;
+        let postId = null;
+        let thumbnailUrl = null;
+        let selectedServices = [];
+
+        // URL에서 ID 가져오기 (수정 모드)
+        const urlParams = new URLSearchParams(window.location.search);
+        const editId = urlParams.get('id');
+
+        // 초기화
+        document.addEventListener('DOMContentLoaded', () => {
+            if (editId) {
+                loadPost(editId);
+            }
+        });
+
+        // 기존 글 로드
+        async function loadPost(id) {
+            try {
+                const { data: post, error } = await supabase
+                    .from('blog_posts')
+                    .select('*')
+                    .eq('id', id)
+                    .single();
+
+                if (error) throw error;
+
+                postId = post.id;
+                document.getElementById('postTitle').value = post.title;
+                document.getElementById('postCategory').value = post.category;
+                document.getElementById('postSlug').value = post.slug;
+                document.getElementById('postExcerpt').value = post.excerpt || '';
+                isPublished = post.is_published;
+                thumbnailUrl = post.thumbnail_url;
+
+                if (isPublished) {
+                    document.getElementById('publishToggle').classList.add('active');
+                    document.getElementById('publishStatus').textContent = '발행됨';
+                }
+
+                if (thumbnailUrl) {
+                    document.getElementById('thumbnailPreview').src = thumbnailUrl;
+                    document.getElementById('thumbnailPreview').style.display = 'block';
+                    document.getElementById('thumbnailUpload').style.display = 'none';
+                }
+
+                // 콘텐츠 로드
+                try {
+                    blocks = JSON.parse(post.content);
+                } catch {
+                    blocks = [{ type: 'paragraph', content: post.content }];
+                }
+
+                // 관련 서비스 로드
+                if (post.related_services) {
+                    selectedServices = JSON.parse(post.related_services);
+                    selectedServices.forEach(s => {
+                        const checkbox = document.querySelector(`[onclick*="${s.id}"]`);
+                        if (checkbox) checkbox.classList.add('checked');
+                    });
+                }
+
+                renderBlocks();
+
+            } catch (error) {
+                console.error('Error loading post:', error);
+                alert('글을 불러오는데 실패했습니다.');
+            }
+        }
+
+        // 블록 메뉴 토글
+        function toggleBlockMenu() {
+            document.getElementById('blockMenu').classList.toggle('show');
+        }
+
+        // 블록 추가
+        function addBlock(type) {
+            const block = createBlockData(type);
+            blocks.push(block);
+            renderBlocks();
+            toggleBlockMenu();
+        }
+
+        // 블록 데이터 생성
+        function createBlockData(type) {
+            switch (type) {
+                case 'paragraph':
+                    return { type: 'paragraph', content: '' };
+                case 'heading':
+                    return { type: 'heading', content: '' };
+                case 'numbered-section':
+                    return { type: 'numbered-section', number: blocks.filter(b => b.type === 'numbered-section').length + 1, title: '', content: '' };
+                case 'table':
+                    return { type: 'table', headers: ['항목', '내용'], rows: [['', '']] };
+                case 'info-box':
+                    return { type: 'info-box', style: 'info', content: '' };
+                case 'list':
+                    return { type: 'list', ordered: false, items: [''] };
+                case 'link-button':
+                    return { type: 'link-button', text: '', url: '' };
+                default:
+                    return { type: 'paragraph', content: '' };
+            }
+        }
+
+        // 블록 렌더링
+        function renderBlocks() {
+            const container = document.getElementById('blocksContainer');
+            container.innerHTML = blocks.map((block, index) => renderBlockEditor(block, index)).join('');
+        }
+
+        // 블록 에디터 렌더링
+        function renderBlockEditor(block, index) {
+            const typeLabels = {
+                'paragraph': '📝 텍스트',
+                'heading': 'H 제목',
+                'numbered-section': '1️⃣ 번호 섹션',
+                'table': '📊 표',
+                'info-box': '💡 안내 박스',
+                'list': '• 목록',
+                'link-button': '🔗 링크 버튼'
+            };
+
+            return `
+                <div class="block" data-index="${index}">
+                    <div class="block-header">
+                        <span class="block-type">${typeLabels[block.type]}</span>
+                        <div class="block-actions">
+                            ${index > 0 ? `<button class="block-action-btn" onclick="moveBlock(${index}, -1)">↑</button>` : ''}
+                            ${index < blocks.length - 1 ? `<button class="block-action-btn" onclick="moveBlock(${index}, 1)">↓</button>` : ''}
+                            <button class="block-action-btn" onclick="deleteBlock(${index})">🗑</button>
+                        </div>
+                    </div>
+                    <div class="block-content">
+                        ${renderBlockContent(block, index)}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 블록 내용 렌더링
+        function renderBlockContent(block, index) {
+            switch (block.type) {
+                case 'paragraph':
+                    return `<textarea class="block-input" rows="3" placeholder="텍스트를 입력하세요" onchange="updateBlock(${index}, 'content', this.value)">${block.content}</textarea>`;
+
+                case 'heading':
+                    return `<input type="text" class="block-input" placeholder="제목을 입력하세요" value="${block.content}" onchange="updateBlock(${index}, 'content', this.value)">`;
+
+                case 'numbered-section':
+                    return `
+                        <div class="block-row">
+                            <div>
+                                <label class="block-input-label">번호</label>
+                                <input type="number" class="block-input block-input-small number-input" value="${block.number}" onchange="updateBlock(${index}, 'number', parseInt(this.value))">
+                            </div>
+                            <div style="flex: 4;">
+                                <label class="block-input-label">제목</label>
+                                <input type="text" class="block-input block-input-small" placeholder="섹션 제목" value="${block.title}" onchange="updateBlock(${index}, 'title', this.value)">
+                            </div>
+                        </div>
+                        <label class="block-input-label">내용</label>
+                        <textarea class="block-input" rows="3" placeholder="섹션 내용" onchange="updateBlock(${index}, 'content', this.value)">${block.content}</textarea>
+                    `;
+
+                case 'table':
+                    return `
+                        <div class="table-editor">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        ${block.headers.map((h, hi) => `<th><input type="text" value="${h}" onchange="updateTableHeader(${index}, ${hi}, this.value)"></th>`).join('')}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${block.rows.map((row, ri) => `
+                                        <tr>
+                                            ${row.map((cell, ci) => `<td><input type="text" value="${cell}" onchange="updateTableCell(${index}, ${ri}, ${ci}, this.value)"></td>`).join('')}
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-actions">
+                            <button class="table-action-btn" onclick="addTableRow(${index})">+ 행 추가</button>
+                            <button class="table-action-btn" onclick="addTableColumn(${index})">+ 열 추가</button>
+                            <button class="table-action-btn" onclick="removeTableRow(${index})">- 행 삭제</button>
+                            <button class="table-action-btn" onclick="removeTableColumn(${index})">- 열 삭제</button>
+                        </div>
+                    `;
+
+                case 'info-box':
+                    return `
+                        <div class="style-selector">
+                            <div class="style-option ${block.style === 'info' ? 'selected' : ''}" onclick="updateBlock(${index}, 'style', 'info'); renderBlocks();">ℹ️ 정보</div>
+                            <div class="style-option ${block.style === 'warning' ? 'selected' : ''}" onclick="updateBlock(${index}, 'style', 'warning'); renderBlocks();">⚠️ 주의</div>
+                            <div class="style-option ${block.style === 'danger' ? 'selected' : ''}" onclick="updateBlock(${index}, 'style', 'danger'); renderBlocks();">🚨 경고</div>
+                            <div class="style-option ${block.style === 'success' ? 'selected' : ''}" onclick="updateBlock(${index}, 'style', 'success'); renderBlocks();">✅ 성공</div>
+                        </div>
+                        <textarea class="block-input" rows="2" placeholder="안내 내용" onchange="updateBlock(${index}, 'content', this.value)">${block.content}</textarea>
+                    `;
+
+                case 'list':
+                    return `
+                        <div class="style-selector">
+                            <div class="style-option ${!block.ordered ? 'selected' : ''}" onclick="updateBlock(${index}, 'ordered', false); renderBlocks();">• 글머리</div>
+                            <div class="style-option ${block.ordered ? 'selected' : ''}" onclick="updateBlock(${index}, 'ordered', true); renderBlocks();">1. 번호</div>
+                        </div>
+                        ${block.items.map((item, ii) => `
+                            <div class="block-row" style="margin-bottom: 8px;">
+                                <input type="text" class="block-input block-input-small" value="${item}" onchange="updateListItem(${index}, ${ii}, this.value)" placeholder="항목 ${ii + 1}">
+                                ${block.items.length > 1 ? `<button class="table-action-btn" style="flex: none; width: 36px;" onclick="removeListItem(${index}, ${ii})">×</button>` : ''}
+                            </div>
+                        `).join('')}
+                        <button class="table-action-btn" onclick="addListItem(${index})">+ 항목 추가</button>
+                    `;
+
+                case 'link-button':
+                    return `
+                        <div class="block-row">
+                            <div>
+                                <label class="block-input-label">버튼 텍스트</label>
+                                <input type="text" class="block-input block-input-small" placeholder="바로가기" value="${block.text}" onchange="updateBlock(${index}, 'text', this.value)">
+                            </div>
+                            <div>
+                                <label class="block-input-label">URL</label>
+                                <input type="url" class="block-input block-input-small" placeholder="https://..." value="${block.url}" onchange="updateBlock(${index}, 'url', this.value)">
+                            </div>
+                        </div>
+                    `;
+
+                default:
+                    return '';
+            }
+        }
+
+        // 블록 업데이트
+        function updateBlock(index, key, value) {
+            blocks[index][key] = value;
+        }
+
+        // 블록 이동
+        function moveBlock(index, direction) {
+            const newIndex = index + direction;
+            if (newIndex >= 0 && newIndex < blocks.length) {
+                [blocks[index], blocks[newIndex]] = [blocks[newIndex], blocks[index]];
+                renderBlocks();
+            }
+        }
+
+        // 블록 삭제
+        function deleteBlock(index) {
+            if (confirm('이 블록을 삭제하시겠습니까?')) {
+                blocks.splice(index, 1);
+                renderBlocks();
+            }
+        }
+
+        // 표 관련 함수
+        function updateTableHeader(blockIndex, headerIndex, value) {
+            blocks[blockIndex].headers[headerIndex] = value;
+        }
+
+        function updateTableCell(blockIndex, rowIndex, cellIndex, value) {
+            blocks[blockIndex].rows[rowIndex][cellIndex] = value;
+        }
+
+        function addTableRow(blockIndex) {
+            const cols = blocks[blockIndex].headers.length;
+            blocks[blockIndex].rows.push(Array(cols).fill(''));
+            renderBlocks();
+        }
+
+        function addTableColumn(blockIndex) {
+            blocks[blockIndex].headers.push('');
+            blocks[blockIndex].rows.forEach(row => row.push(''));
+            renderBlocks();
+        }
+
+        function removeTableRow(blockIndex) {
+            if (blocks[blockIndex].rows.length > 1) {
+                blocks[blockIndex].rows.pop();
+                renderBlocks();
+            }
+        }
+
+        function removeTableColumn(blockIndex) {
+            if (blocks[blockIndex].headers.length > 1) {
+                blocks[blockIndex].headers.pop();
+                blocks[blockIndex].rows.forEach(row => row.pop());
+                renderBlocks();
+            }
+        }
+
+        // 목록 관련 함수
+        function updateListItem(blockIndex, itemIndex, value) {
+            blocks[blockIndex].items[itemIndex] = value;
+        }
+
+        function addListItem(blockIndex) {
+            blocks[blockIndex].items.push('');
+            renderBlocks();
+        }
+
+        function removeListItem(blockIndex, itemIndex) {
+            blocks[blockIndex].items.splice(itemIndex, 1);
+            renderBlocks();
+        }
+
+        // 발행 토글
+        function togglePublish() {
+            isPublished = !isPublished;
+            document.getElementById('publishToggle').classList.toggle('active');
+            document.getElementById('publishStatus').textContent = isPublished ? '발행됨' : '임시저장';
+        }
+
+        // 서비스 토글
+        function toggleService(el, serviceId) {
+            el.classList.toggle('checked');
+            const serviceName = el.querySelector('.service-checkbox-label').textContent;
+
+            const index = selectedServices.findIndex(s => s.id === serviceId);
+            if (index > -1) {
+                selectedServices.splice(index, 1);
+            } else {
+                selectedServices.push({ id: serviceId, name: serviceName });
+            }
+        }
+
+        // 썸네일 업로드
+        async function uploadThumbnail(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            try {
+                const fileExt = file.name.split('.').pop();
+                const fileName = `${Date.now()}.${fileExt}`;
+                const filePath = `blog-thumbnails/${fileName}`;
+
+                const { data, error } = await supabase.storage
+                    .from('blog')
+                    .upload(filePath, file);
+
+                if (error) throw error;
+
+                const { data: { publicUrl } } = supabase.storage
+                    .from('blog')
+                    .getPublicUrl(filePath);
+
+                thumbnailUrl = publicUrl;
+                document.getElementById('thumbnailPreview').src = publicUrl;
+                document.getElementById('thumbnailPreview').style.display = 'block';
+                document.getElementById('thumbnailUpload').style.display = 'none';
+
+            } catch (error) {
+                console.error('Error uploading thumbnail:', error);
+                alert('썸네일 업로드에 실패했습니다.');
+            }
+        }
+
+        // 미리보기
+        function showPreview() {
+            const title = document.getElementById('postTitle').value;
+            const category = document.getElementById('postCategory').value;
+
+            const categoryNames = { 'visa': '비자', 'stay': '체류', 'case': '판례·사례', 'news': '법령·뉴스' };
+
+            const previewHtml = `
+                <span style="display: inline-block; padding: 6px 12px; background: #f2f4f6; border-radius: 6px; font-size: 13px; font-weight: 600; color: #3182f6; margin-bottom: 16px;">${categoryNames[category]}</span>
+                <h1 style="font-size: 28px; font-weight: 700; margin-bottom: 32px;">${title || '제목 없음'}</h1>
+                <div style="font-size: 16px; line-height: 1.8;">
+                    ${renderPreviewContent()}
+                </div>
+            `;
+
+            document.getElementById('previewBody').innerHTML = previewHtml;
+            document.getElementById('previewModal').classList.add('show');
+        }
+
+        function closePreview() {
+            document.getElementById('previewModal').classList.remove('show');
+        }
+
+        // 미리보기 콘텐츠 렌더링
+        function renderPreviewContent() {
+            return blocks.map(block => {
+                switch (block.type) {
+                    case 'paragraph':
+                        return `<p style="margin-bottom: 20px;">${block.content}</p>`;
+                    case 'heading':
+                        return `<h2 style="font-size: 22px; font-weight: 700; margin: 40px 0 16px;">${block.content}</h2>`;
+                    case 'numbered-section':
+                        return `
+                            <div style="display: flex; gap: 16px; margin: 24px 0; padding: 20px; background: #f8f9fa; border-radius: 12px;">
+                                <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #3182f6, #1b64da); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">${block.number}</div>
+                                <div>
+                                    <div style="font-size: 17px; font-weight: 700; margin-bottom: 6px;">${block.title}</div>
+                                    <div style="color: #4e5968; font-size: 15px;">${block.content}</div>
+                                </div>
+                            </div>
+                        `;
+                    case 'table':
+                        return `
+                            <div style="margin: 24px 0; overflow-x: auto;">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <thead>
+                                        <tr>${block.headers.map(h => `<th style="background: #1a1a2e; color: white; padding: 12px 16px; text-align: left;">${h}</th>`).join('')}</tr>
+                                    </thead>
+                                    <tbody>
+                                        ${block.rows.map((row, i) => `
+                                            <tr style="background: ${i % 2 ? '#f8f9fa' : 'white'};">
+                                                ${row.map(cell => `<td style="padding: 12px 16px; border-bottom: 1px solid #e5e8eb;">${cell}</td>`).join('')}
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        `;
+                    case 'info-box':
+                        const colors = { info: '#e8f4fd', warning: '#fff8e6', danger: '#ffeaea', success: '#e6fcf5' };
+                        const borders = { info: '#3182f6', warning: '#f59f00', danger: '#f03e3e', success: '#20c997' };
+                        const icons = { info: 'ℹ️', warning: '⚠️', danger: '🚨', success: '✅' };
+                        return `
+                            <div style="margin: 20px 0; padding: 16px 20px; background: ${colors[block.style]}; border-left: 4px solid ${borders[block.style]}; border-radius: 8px; display: flex; gap: 10px;">
+                                <span>${icons[block.style]}</span>
+                                <span style="font-size: 15px;">${block.content}</span>
+                            </div>
+                        `;
+                    case 'list':
+                        const tag = block.ordered ? 'ol' : 'ul';
+                        return `<${tag} style="margin: 16px 0 20px 24px;">${block.items.map(item => `<li style="margin-bottom: 6px;">${item}</li>`).join('')}</${tag}>`;
+                    case 'link-button':
+                        return `<a href="${block.url}" target="_blank" style="display: inline-block; padding: 12px 24px; background: #3182f6; color: white; border-radius: 8px; text-decoration: none; font-weight: 600; margin: 16px 0;">${block.text} →</a>`;
+                    default:
+                        return '';
+                }
+            }).join('');
+        }
+
+        // 저장
+        async function savePost() {
+            const title = document.getElementById('postTitle').value.trim();
+            const category = document.getElementById('postCategory').value;
+            let slug = document.getElementById('postSlug').value.trim();
+            const excerpt = document.getElementById('postExcerpt').value.trim();
+
+            if (!title) {
+                alert('제목을 입력해주세요.');
+                return;
+            }
+
+            // slug 자동 생성
+            if (!slug) {
+                slug = title
+                    .toLowerCase()
+                    .replace(/[^a-z0-9가-힣]/g, '-')
+                    .replace(/-+/g, '-')
+                    .replace(/^-|-$/g, '')
+                    + '-' + Date.now();
+            }
+
+            document.getElementById('loadingOverlay').classList.add('show');
+
+            try {
+                const postData = {
+                    title,
+                    slug,
+                    category,
+                    excerpt,
+                    content: JSON.stringify(blocks),
+                    thumbnail_url: thumbnailUrl,
+                    related_services: JSON.stringify(selectedServices),
+                    is_published: isPublished,
+                    updated_at: new Date().toISOString()
+                };
+
+                let result;
+                if (postId) {
+                    // 수정
+                    result = await supabase
+                        .from('blog_posts')
+                        .update(postData)
+                        .eq('id', postId);
+                } else {
+                    // 새 글
+                    postData.created_at = new Date().toISOString();
+                    result = await supabase
+                        .from('blog_posts')
+                        .insert(postData)
+                        .select();
+
+                    if (result.data && result.data[0]) {
+                        postId = result.data[0].id;
+                    }
+                }
+
+                if (result.error) throw result.error;
+
+                alert('저장되었습니다.');
+
+            } catch (error) {
+                console.error('Error saving post:', error);
+                alert('저장에 실패했습니다: ' + error.message);
+            } finally {
+                document.getElementById('loadingOverlay').classList.remove('show');
+            }
+        }
+
+        // 블록 메뉴 외부 클릭 시 닫기
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('blockMenu');
+            const btn = document.querySelector('.add-block-btn');
+            if (!menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
