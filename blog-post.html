@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>법률정보 | 법무법인 로연</title>
+    <title>뉴스 & 인사이트 | 법무법인 로연</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -617,8 +617,7 @@
             <h1><a href="index.html">법무법인 로연</a></h1>
             <nav class="header-nav">
                 <a href="index.html">서비스</a>
-                <a href="blog.html">법률정보</a>
-                <a href="price-list.html">가격표</a>
+                <a href="blog.html">뉴스 & 인사이트</a>
             </nav>
         </div>
     </header>
@@ -639,10 +638,13 @@
 
         // 카테고리 매핑
         const categoryNames = {
-            'visa': '비자',
-            'stay': '체류',
-            'case': '판례·사례',
-            'news': '법령·뉴스'
+            'citizenship': '국적·귀화·난민',
+            'admin': '공통 행정 신고',
+            'work': '취업·워크',
+            'education': '교육·구직',
+            'business': '사업·투자',
+            'family': '동포·가족·결혼',
+            'residence': '거주·영주'
         };
 
         // URL에서 slug 가져오기
@@ -914,7 +916,7 @@
                     return;
                 }
 
-                const emojis = { 'visa': '🛂', 'stay': '🏠', 'case': '⚖️', 'news': '📰' };
+                const emojis = { 'citizenship': '🛂', 'admin': '📋', 'work': '💼', 'education': '🎓', 'business': '🏢', 'family': '👨‍👩‍👧', 'residence': '🏠' };
 
                 container.innerHTML = `
                     <h3 class="related-posts-title">관련 글</h3>
