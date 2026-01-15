@@ -353,7 +353,21 @@
 
                 const { data: posts, error } = await query;
 
-                if (error) throw error;
+                // 테이블이 없거나 에러인 경우
+                if (error) {
+                    console.error('Supabase error:', error);
+                    // 테이블이 없는 경우 빈 상태로 표시
+                    if (error.code === '42P01' || error.message?.includes('does not exist')) {
+                        blogList.innerHTML = `
+                            <div class="empty-state" style="grid-column: 1 / -1;">
+                                <div class="empty-state-icon">📝</div>
+                                <p>아직 작성된 글이 없습니다.</p>
+                            </div>
+                        `;
+                        return;
+                    }
+                    throw error;
+                }
 
                 if (!posts || posts.length === 0) {
                     blogList.innerHTML = `
