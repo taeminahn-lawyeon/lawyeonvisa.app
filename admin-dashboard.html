@@ -1035,7 +1035,7 @@
             document.getElementById('urgentCases').textContent = urgentCases.length;
             
             // 이번 달 매출 (모든 상태, 부가세 포함 합계금액)
-            // 주의: 출입국 관서 수수료 포함
+            // 주의: 출입국 수수료 포함
             const now = new Date();
             const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
             const monthlyRevenue = allThreads
