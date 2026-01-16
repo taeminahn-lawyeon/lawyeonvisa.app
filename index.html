@@ -1205,12 +1205,12 @@
             <h3 data-i18n="services.title">출입국 민원 대행</h3>
             
             <div class="service-categories">
-                <div class="category-tab active" data-category="general" data-i18n="services.tab.general">일반 신고·증명</div>
-                <div class="category-tab" data-category="education" data-i18n="services.tab.education">교육·구직</div>
-                <div class="category-tab" data-category="work" data-i18n="services.tab.work">취업·워크</div>
-                <div class="category-tab" data-category="business" data-i18n="services.tab.business">사업·투자</div>
-                <div class="category-tab" data-category="family" data-i18n="services.tab.family">동포·가족·결혼</div>
-                <div class="category-tab" data-category="residence" data-i18n="services.tab.residence">거주·영주·국적</div>
+                <div class="category-tab active" data-category="general">일반 신고·증명</div>
+                <div class="category-tab" data-category="education">교육·구직</div>
+                <div class="category-tab" data-category="work">취업·워크</div>
+                <div class="category-tab" data-category="business">사업·투자</div>
+                <div class="category-tab" data-category="family">동포·가족·결혼</div>
+                <div class="category-tab" data-category="residence">거주·영주·국적</div>
             </div>
 
             <div class="service-grid" id="serviceGrid">
@@ -2165,13 +2165,9 @@
                 const title = service.title;
                 const desc = service.desc;
 
-                // 가격 포맷팅
-                const feeText = service.fee ? `₩${service.fee.toLocaleString()}` : '';
-
                 card.innerHTML = `
                     <div class="title">${title}</div>
                     <div class="desc">${desc}</div>
-                    <div class="price-info" style="margin-top: 8px; font-size: 13px; color: #3182F6; font-weight: 600;">${feeText}</div>
                 `;
                 grid.appendChild(card);
             });
@@ -2299,7 +2295,7 @@
             };
 
             try {
-                const { data: posts, error } = await supabase
+                const { data: posts, error } = await supabaseClient
                     .from('blog_posts')
                     .select('*')
                     .eq('is_published', true)
