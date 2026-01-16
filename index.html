@@ -1657,6 +1657,7 @@
         const services = {
             // 1. 일반 신고·증명
             general: [
+                { id: 'short-stay-extension', title: '단기체류 체류기간 연장', desc: 'C-3, B-1, B-2 등 단기체류 연장', fee: 110000, govFee: 50000 },
                 { id: 'departure-extension', title: '출국기간 연장허가', desc: '출국기한 연장', fee: 110000, govFee: 0 },
                 { id: 'g1-extension', title: '기타(G-1) 체류기간 연장', desc: 'G-1 비자 체류기간 연장', fee: 110000, govFee: 60000 },
                 { id: 'arc-registration', title: '외국인등록 신청', desc: '최초 외국인등록', fee: 110000, govFee: 35000 },
@@ -1666,11 +1667,11 @@
                 { id: 'passport-change', title: '여권/등록사항 변경신고', desc: '여권 갱신 등 변경사항 신고', fee: 33000, govFee: 0 },
                 { id: 'reentry-multiple', title: '재입국허가 (복수)', desc: '복수 재입국허가', fee: 55000, govFee: 41300 },
                 { id: 'reentry-single', title: '재입국허가 (단수)', desc: '단수 재입국허가', fee: 55000, govFee: 30000 },
-                { id: 'cert-entry-exit', title: '출입국사실 증명서', desc: '출입국 기록 증명', fee: 11000, govFee: 2000 },
-                { id: 'cert-arc', title: '외국인등록사실 증명서', desc: '외국인등록 증명', fee: 11000, govFee: 2000 },
-                { id: 'cert-residence', title: '국내거소신고사실 증명서', desc: '재외동포 거소 증명', fee: 11000, govFee: 2000 },
-                { id: 'cert-realestate', title: '부동산등기용 등록번호부여 증명서', desc: '부동산 등기용', fee: 11000, govFee: 2000 },
-                { id: 'cert-nationality', title: '국적 관련 증명서', desc: '국적 관련 각종 증명', fee: 11000, govFee: 2000 }
+                { id: 'cert-entry-exit', title: '출입국사실 증명서', desc: '출입국 기록 증명', fee: 22000, govFee: 2000 },
+                { id: 'cert-arc', title: '외국인등록사실 증명서', desc: '외국인등록 증명', fee: 22000, govFee: 2000 },
+                { id: 'cert-residence', title: '국내거소신고사실 증명서', desc: '재외동포 거소 증명', fee: 22000, govFee: 2000 },
+                { id: 'cert-realestate', title: '부동산등기용 등록번호부여 증명서', desc: '부동산 등기용', fee: 22000, govFee: 2000 },
+                { id: 'cert-nationality', title: '국적 관련 증명서', desc: '국적 관련 각종 증명', fee: 22000, govFee: 2000 }
             ],
             // 2. 교육·구직
             education: [
@@ -1705,12 +1706,12 @@
                 { id: 'd8-1-change', title: 'D-8-1 법인투자 자격변경', desc: '법인 설립 투자비자', fee: 1100000, govFee: 100000 },
                 { id: 'd8-2-change', title: 'D-8-2 벤처투자 자격변경', desc: '벤처기업 투자비자', fee: 1100000, govFee: 100000 },
                 { id: 'd8-3-change', title: 'D-8-3 개인투자 자격변경', desc: '개인사업자 투자비자', fee: 1100000, govFee: 100000 },
-                { id: 'd8-4-change', title: 'D-8-4 기술창업 자격변경', desc: '유학생 창업비자', fee: 1100000, govFee: 100000 },
+                { id: 'd8-4-change', title: 'D-8-4 기술창업 자격변경', desc: '유학생 창업비자', fee: 550000, govFee: 100000 },
                 { id: 'd9-1-change', title: 'D-9-1 무역경영 자격변경', desc: '무역업 비자', fee: 1100000, govFee: 100000 },
                 { id: 'd9-2-change', title: 'D-9-2 수출설비 자격변경', desc: '수출입 설비 관리자 비자', fee: 1100000, govFee: 100000 },
                 { id: 'd9-3-change', title: 'D-9-3 선박건조 자격변경', desc: '선박 건조·설비 감독 비자', fee: 1100000, govFee: 100000 },
                 { id: 'd9-4-change', title: 'D-9-4 회사경영 자격변경', desc: '회사 경영·영리사업 비자', fee: 1100000, govFee: 100000 },
-                { id: 'd9-5-change', title: 'D-9-5 유학생무역 자격변경', desc: '유학생 출신 무역경영 비자', fee: 1100000, govFee: 100000 },
+                { id: 'd9-5-change', title: 'D-9-5 유학생무역 자격변경', desc: '유학생 출신 무역경영 비자', fee: 550000, govFee: 100000 },
                 { id: 'business-extension', title: '사업/투자(D-8, D-9) 기간연장', desc: '투자비자 기간 연장', fee: 220000, govFee: 60000 },
                 { id: 'fic-registration', title: '외국인투자기업 등록', desc: '외투기업 등록증 발급', fee: 330000, govFee: 0 },
                 { id: 'fi-report', title: '외국인투자 신고', desc: '투자 사전 신고', fee: 220000, govFee: 0 }
