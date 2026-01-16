@@ -718,7 +718,6 @@
                     .from('blog_posts')
                     .select('*')
                     .eq('slug', slug)
-                    .eq('is_published', true)
                     .single();
 
                 if (error || !post) {
@@ -962,7 +961,6 @@
                     .from('blog_posts')
                     .select('*')
                     .eq('category', category)
-                    .eq('is_published', true)
                     .neq('id', currentId)
                     .order('created_at', { ascending: false })
                     .limit(4);
