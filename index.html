@@ -1653,53 +1653,70 @@
             ]
         };
 
-        // 출입국 민원 서비스 (6개 카테고리) - 새 구조
+        // 출입국 민원 서비스 (6개 카테고리) - 수정된 최종 버전
         const services = {
-            // 1. 일반 신고·증명
+            // 1. 일반 신고·증명 (17개)
             general: [
-                { id: 'short-stay-extension', title: '단기체류 체류기간 연장', desc: 'C-3, B-1, B-2 등 단기체류 연장', fee: 110000, govFee: 50000 },
-                { id: 'departure-extension', title: '출국기간 연장허가', desc: '출국기한 연장', fee: 110000, govFee: 0 },
-                { id: 'g1-extension', title: '기타(G-1) 체류기간 연장', desc: 'G-1 비자 체류기간 연장', fee: 110000, govFee: 60000 },
-                { id: 'arc-registration', title: '외국인등록 신청', desc: '최초 외국인등록', fee: 110000, govFee: 35000 },
-                { id: 'arc-reissue', title: '외국인등록증 재발급', desc: '분실/훼손 시 재발급', fee: 110000, govFee: 35000 },
-                { id: 'address-change', title: '체류지 변경신고', desc: '주소 변경 신고', fee: 33000, govFee: 0 },
-                { id: 'f4-address-change', title: '재외동포 거소이전신고', desc: 'F-4 거소 변경', fee: 33000, govFee: 0 },
-                { id: 'passport-change', title: '여권/등록사항 변경신고', desc: '여권 갱신 등 변경사항 신고', fee: 33000, govFee: 0 },
-                { id: 'reentry-multiple', title: '재입국허가 (복수)', desc: '복수 재입국허가', fee: 55000, govFee: 41300 },
-                { id: 'reentry-single', title: '재입국허가 (단수)', desc: '단수 재입국허가', fee: 55000, govFee: 30000 },
+                // 체류기간 연장
+                { id: 'short-stay-extension', title: '단기체류 체류기간 연장 (전자민원)', desc: 'B-1, B-2, C-1, C-2, C-3, C-4', fee: 110000, govFee: 50000 },
+                { id: 'departure-extension', title: '출국기간 연장허가 (전자민원)', desc: '등록외국인, 단기체류자 출국 목적', fee: 110000, govFee: 0 },
+                { id: 'g1-extension', title: '기타(G-1) 체류기간 연장 (방문)', desc: 'G-1 기타 체류자격', fee: 110000, govFee: 60000 },
+                // 등록·신고
+                { id: 'arc-registration', title: '외국인등록 신청', desc: '입국 후 90일 이내 필수 등록', fee: 110000, govFee: 35000 },
+                { id: 'arc-reissue', title: '외국인등록증 재발급', desc: '분실·훼손 시 재발급', fee: 110000, govFee: 35000 },
+                { id: 'address-change', title: '체류지 변경신고', desc: '이사 후 주소 변경', fee: 33000, govFee: 0 },
+                { id: 'f4-address-change', title: '재외동포 거소이전신고', desc: 'F-4 동포 주소 변경', fee: 33000, govFee: 0 },
+                { id: 'passport-change', title: '여권/등록사항 변경신고', desc: '여권·성명 등 정보 변경', fee: 33000, govFee: 0 },
+                // 재입국허가
+                { id: 'reentry-multiple-online', title: '재입국허가 (복수/전자민원)', desc: '2회 이상 출입국 승인', fee: 55000, govFee: 41300 },
+                { id: 'reentry-multiple-visit', title: '재입국허가 (복수/방문)', desc: '2회 이상 출입국 승인', fee: 55000, govFee: 50000 },
+                { id: 'reentry-single', title: '재입국허가 (단수)', desc: '1회성 출입국 승인', fee: 55000, govFee: 30000 },
+                // 증명서 발급
                 { id: 'cert-entry-exit', title: '출입국사실 증명서', desc: '출입국 기록 증명', fee: 22000, govFee: 2000 },
-                { id: 'cert-arc', title: '외국인등록사실 증명서', desc: '외국인등록 증명', fee: 22000, govFee: 2000 },
-                { id: 'cert-residence', title: '국내거소신고사실 증명서', desc: '재외동포 거소 증명', fee: 22000, govFee: 2000 },
-                { id: 'cert-realestate', title: '부동산등기용 등록번호부여 증명서', desc: '부동산 등기용', fee: 22000, govFee: 2000 },
-                { id: 'cert-nationality', title: '국적 관련 증명서', desc: '국적 관련 각종 증명', fee: 22000, govFee: 2000 }
+                { id: 'cert-arc', title: '외국인등록사실 증명서', desc: '외국인등록 내역 증명', fee: 22000, govFee: 2000 },
+                { id: 'cert-residence', title: '국내거소신고사실 증명서', desc: 'F-4 거소신고 증명', fee: 22000, govFee: 2000 },
+                { id: 'cert-realestate', title: '부동산등기용 등록번호부여 증명서', desc: '부동산 거래용', fee: 22000, govFee: 2000 },
+                { id: 'cert-arc-number-change', title: '외국인등록번호변경 확인서', desc: '등록번호 변경 확인', fee: 22000, govFee: 2000 },
+                { id: 'cert-nationality', title: '국적 관련 증명서', desc: '국적상실, 국적보유 증명', fee: 22000, govFee: 2000 }
             ],
-            // 2. 교육·구직
+            // 2. 교육·구직 (12개)
             education: [
-                { id: 'd2-extension', title: 'D-2 유학 체류기간 연장', desc: '유학생 체류기간 연장', fee: 110000, govFee: 60000 },
-                { id: 'd2-change', title: 'D-2 유학 체류자격 변경', desc: '타 자격에서 유학으로 변경', fee: 220000, govFee: 119000 },
-                { id: 'd4-extension', title: 'D-4 일반연수 체류기간 연장', desc: '어학연수 체류기간 연장', fee: 110000, govFee: 60000 },
-                { id: 'd4-change', title: 'D-4 일반연수 체류자격 변경', desc: '타 자격에서 연수로 변경', fee: 220000, govFee: 119000 },
-                { id: 'd10-change', title: 'D-10 구직 체류자격 변경', desc: '졸업 후 구직비자로 변경', fee: 330000, govFee: 119000 },
-                { id: 'd10-extension', title: 'D-10 구직 체류기간 연장', desc: '구직비자 체류기간 연장', fee: 220000, govFee: 60000 },
-                { id: 'parttime-confirm', title: '시간제취업 확인', desc: '유학생 아르바이트 허가', fee: 33000, govFee: 0 }
+                { id: 'd4-to-d2-change', title: 'D-4→D-2 유학 변경 (전자민원)', desc: '어학연수→정규과정', fee: 110000, govFee: 119000 },
+                { id: 'd2-to-d10-change', title: 'D-2→D-10 구직 변경 (방문)', desc: '졸업 후 구직비자', fee: 220000, govFee: 100000 },
+                { id: 'd10-1-change', title: 'D-10-1 일반구직 자격변경', desc: '일반 구직비자 변경', fee: 220000, govFee: 100000 },
+                { id: 'd10-2-change', title: 'D-10-2 기술창업구직 자격변경', desc: '창업 준비생 구직비자', fee: 330000, govFee: 100000 },
+                { id: 'd10-3-change', title: 'D-10-3 첨단기술인턴 자격변경', desc: '첨단분야 인턴 비자', fee: 330000, govFee: 100000 },
+                { id: 'd10-t-change', title: 'D-10-T 최우수인재구직 자격변경', desc: '우수대학 졸업자 구직비자', fee: 330000, govFee: 100000 },
+                { id: 'd2-d4-extension', title: 'D-2, D-4 체류기간 연장 (전자민원)', desc: '유학·연수 비자 연장', fee: 110000, govFee: 50000 },
+                { id: 'd10-extension', title: 'D-10 체류기간 연장 (전자민원)', desc: '구직 비자 연장', fee: 110000, govFee: 50000 },
+                { id: 'parttime-online', title: '시간제취업 허가 (전자민원)', desc: 'D-2, D-4 아르바이트', fee: 33000, govFee: 0 },
+                { id: 'parttime-visit', title: '시간제취업 허가 (방문)', desc: 'D-2, D-4 아르바이트', fee: 33000, govFee: 20000 },
+                { id: 'intern-report', title: '연수개시 및 기관변경 신고', desc: 'D-10 인턴십 시작·변경', fee: 110000, govFee: 0 },
+                { id: 'parent-invite', title: '외국인 유학생 부모 초청', desc: '우수 유학생 부모 초청', fee: 330000, govFee: 60000 }
             ],
-            // 3. 취업·워크
+            // 3. 취업·워크 (17개)
             work: [
-                { id: 'e1-e7-extension', title: 'E-1~E-7 전문인력 체류기간 연장', desc: '전문직 체류기간 연장', fee: 220000, govFee: 60000 },
-                { id: 'e1-e7-change', title: 'E-1~E-7 전문인력 체류자격 변경', desc: '전문직 비자로 변경', fee: 550000, govFee: 119000 },
-                { id: 'e7-workplace-change', title: 'E-7 근무처 변경·추가', desc: '특정활동 근무처 변경', fee: 220000, govFee: 119000 },
-                { id: 'e9-extension', title: 'E-9 비전문취업 체류기간 연장', desc: '비전문 취업 연장', fee: 110000, govFee: 60000 },
-                { id: 'e9-change', title: 'E-9 비전문취업 체류자격 변경', desc: '비전문 취업으로 변경', fee: 220000, govFee: 119000 },
-                { id: 'e9-workplace-change', title: 'E-9 사업장 변경', desc: 'E-9 근무처 변경', fee: 110000, govFee: 0 },
-                { id: 'e10-extension', title: 'E-10 선원취업 체류기간 연장', desc: '선원취업 연장', fee: 110000, govFee: 60000 },
-                { id: 'h2-extension', title: 'H-2 방문취업 체류기간 연장', desc: '방문취업 연장', fee: 110000, govFee: 60000 },
-                { id: 'h2-change', title: 'H-2 방문취업 체류자격 변경', desc: '방문취업으로 변경', fee: 220000, govFee: 119000 },
-                { id: 'h2-workplace-change', title: 'H-2 근무처 변경·추가', desc: '방문취업 근무처 변경', fee: 110000, govFee: 0 },
-                { id: 'c4-extension', title: 'C-4 단기취업 체류기간 연장', desc: '단기취업 연장', fee: 110000, govFee: 50000 },
-                { id: 'c4-change', title: 'C-4 단기취업 체류자격 변경', desc: '단기취업으로 변경', fee: 220000, govFee: 119000 },
-                { id: 'employment-report', title: '고용·위탁 신고', desc: '외국인 고용 신고', fee: 33000, govFee: 0 },
-                { id: 'employment-change', title: '고용·위탁 변경신고', desc: '고용 변경 신고', fee: 33000, govFee: 0 },
-                { id: 'outside-activity', title: '체류자격 외 활동허가', desc: '허가 외 활동 신청', fee: 110000, govFee: 119000 }
+                // 자격변경 (전자민원)
+                { id: 'e7-4-change', title: '숙련기능인력 E-7-4 변경', desc: 'E-9/H-2 숙련기능 전환', fee: 550000, govFee: 119000 },
+                { id: 'e7-4r-change', title: '지역특화 E-7-4R 변경', desc: '인구감소지역 숙련기능', fee: 550000, govFee: 119000 },
+                // 자격변경 (방문)
+                { id: 'e7-change', title: '특정활동 E-7 자격변경', desc: '전문인력 취업비자', fee: 1100000, govFee: 100000 },
+                { id: 'f2-7-change', title: '우수인재 거주 F-2-7 변경', desc: '점수제 우수인재 거주비자', fee: 550000, govFee: 100000 },
+                { id: 'f2-r-change', title: '지역특화 F-2-R 변경', desc: '인구감소지역 거주비자', fee: 550000, govFee: 100000 },
+                { id: 'e7-st-change', title: '최우수인재 E-7-S/T 변경', desc: '첨단·고소득 인재 비자', fee: 1100000, govFee: 100000 },
+                { id: 'e1-e6-change', title: '전문직 E-1~E-6 자격변경', desc: '교수·연구원 등 전문직', fee: 1100000, govFee: 100000 },
+                // 기간연장·허가
+                { id: 'e7-extension', title: '전문인력(E-7) 체류기간 연장', desc: 'E-7 비자 기간 연장 (방문)', fee: 110000, govFee: 60000 },
+                { id: 'e9-workplace-change', title: 'E-9 근무처변경 허가', desc: 'E-9 사업장 변경 (전자민원)', fee: 220000, govFee: 99000 },
+                { id: 'workplace-change-permit', title: '근무처 변경·추가 허가', desc: '이직·겸직 사전 허가', fee: 220000, govFee: 120000 },
+                { id: 'outside-activity', title: '체류자격 외 활동 허가', desc: '본래 자격 외 활동 승인', fee: 220000, govFee: 120000 },
+                // 신고 (무료)
+                { id: 'h2-work-start', title: '방문취업 H-2 취업개시 신고', desc: 'H-2 취업 시작 신고', fee: 55000, govFee: 0 },
+                { id: 'workplace-change-report', title: '근무처 변경·추가 신고', desc: '이직·겸직 사후 신고', fee: 110000, govFee: 0 },
+                { id: 'employment-info-change', title: '취업정보 변경신고', desc: '근무지·연봉 변경 신고', fee: 55000, govFee: 0 },
+                { id: 'dispatch-report', title: '파견근무 신고', desc: '계열사 파견 신고', fee: 110000, govFee: 0 },
+                { id: 'income-report', title: '직업 및 연간소득금액 신고', desc: '소득 정보 신고', fee: 55000, govFee: 0 },
+                { id: 'foreign-worker-change', title: '고용·연수외국인 변동신고', desc: '퇴사·이탈 신고 (기업용)', fee: 55000, govFee: 0 }
             ],
             // 4. 사업·투자 (12개)
             business: [
@@ -1712,42 +1729,39 @@
                 { id: 'd9-3-change', title: 'D-9-3 선박건조 자격변경', desc: '선박 건조·설비 감독 비자', fee: 1100000, govFee: 100000 },
                 { id: 'd9-4-change', title: 'D-9-4 회사경영 자격변경', desc: '회사 경영·영리사업 비자', fee: 1100000, govFee: 100000 },
                 { id: 'd9-5-change', title: 'D-9-5 유학생무역 자격변경', desc: '유학생 출신 무역경영 비자', fee: 550000, govFee: 100000 },
-                { id: 'business-extension', title: '사업/투자(D-8, D-9) 기간연장', desc: '투자비자 기간 연장', fee: 220000, govFee: 60000 },
+                { id: 'business-extension', title: '사업/투자(D-8, D-9) 기간연장', desc: '투자비자 기간 연장 (방문)', fee: 220000, govFee: 60000 },
                 { id: 'fic-registration', title: '외국인투자기업 등록', desc: '외투기업 등록증 발급', fee: 330000, govFee: 0 },
                 { id: 'fi-report', title: '외국인투자 신고', desc: '투자 사전 신고', fee: 220000, govFee: 0 }
             ],
-            // 5. 동포·가족·결혼
+            // 5. 동포·가족·결혼 (13개)
             family: [
-                { id: 'f1-extension', title: 'F-1 방문동거 체류기간 연장', desc: '방문동거 연장', fee: 110000, govFee: 60000 },
-                { id: 'f1-change', title: 'F-1 방문동거 체류자격 변경', desc: '방문동거로 변경', fee: 220000, govFee: 119000 },
-                { id: 'f2-extension', title: 'F-2 거주 체류기간 연장', desc: '거주 비자 연장', fee: 110000, govFee: 60000 },
-                { id: 'f2-change', title: 'F-2 거주 체류자격 변경', desc: '거주 비자로 변경', fee: 330000, govFee: 119000 },
-                { id: 'f3-extension', title: 'F-3 동반 체류기간 연장', desc: '동반가족 연장', fee: 110000, govFee: 60000 },
-                { id: 'f3-change', title: 'F-3 동반 체류자격 변경', desc: '동반가족으로 변경', fee: 220000, govFee: 119000 },
-                { id: 'f4-extension', title: 'F-4 재외동포 체류기간 연장', desc: '재외동포 연장', fee: 110000, govFee: 60000 },
-                { id: 'f4-change', title: 'F-4 재외동포 체류자격 변경', desc: '재외동포로 변경', fee: 330000, govFee: 119000 },
-                { id: 'f4-registration', title: 'F-4 국내거소신고', desc: '재외동포 거소신고', fee: 110000, govFee: 35000 },
-                { id: 'f6-extension', title: 'F-6 결혼이민 체류기간 연장', desc: '결혼이민 연장', fee: 110000, govFee: 60000 },
-                { id: 'f6-change', title: 'F-6 결혼이민 체류자격 변경', desc: '결혼이민으로 변경', fee: 330000, govFee: 119000 },
-                { id: 'f6-divorce', title: 'F-6 결혼이민 이혼 후 체류자격 변경', desc: '이혼 후 체류자격 변경', fee: 550000, govFee: 119000 }
+                { id: 'h2-to-f4-change', title: 'H-2→F-4 재외동포 변경 (전자민원)', desc: '방문취업→재외동포', fee: 220000, govFee: 119000 },
+                { id: 'f4-change', title: '재외동포 F-4 자격변경 (방문)', desc: '재외동포 비자 변경', fee: 220000, govFee: 100000 },
+                { id: 'f4-registration', title: '재외동포 F-4 거소신고', desc: 'F-4 거소증 발급', fee: 110000, govFee: 35000 },
+                { id: 'f4-extension', title: '재외동포 F-4 체류기간 연장', desc: 'F-4 거소증 연장', fee: 110000, govFee: 50000 },
+                { id: 'h2-extension', title: 'H-2 체류기간 연장 (전자민원)', desc: '방문취업 비자 연장', fee: 110000, govFee: 50000 },
+                { id: 'f6-change', title: '결혼이민 F-6 자격변경', desc: '결혼이민 비자 취득', fee: 1100000, govFee: 100000 },
+                { id: 'f6-extension', title: '결혼이민 F-6 체류기간 연장', desc: '결혼이민 비자 연장', fee: 110000, govFee: 30000 },
+                { id: 'f3-change', title: '동반가족 F-3 자격변경', desc: '배우자·자녀 동반비자', fee: 330000, govFee: 100000 },
+                { id: 'f1-change', title: '방문동거 F-1 자격변경', desc: '친척 방문·장기체류', fee: 330000, govFee: 100000 },
+                { id: 'visa-grant-child', title: '체류자격 부여 (자녀출생/일반)', desc: '국내 출생 자녀 비자', fee: 220000, govFee: 80000 },
+                { id: 'visa-grant-f6-child', title: '체류자격 부여 (자녀출생/F-6)', desc: '결혼이민자 자녀 비자', fee: 220000, govFee: 40000 },
+                { id: 'family-invite', title: '가족 초청 (사증발급)', desc: '해외 가족 초청', fee: 550000, govFee: 60000 },
+                { id: 'housework-report', title: '가사·육아 활동 개시 신고', desc: '가사보조 활동 신고', fee: 55000, govFee: 0 }
             ],
-            // 6. 거주·영주·국적
+            // 6. 거주·영주·국적 (12개)
             residence: [
-                { id: 'f5-extension', title: 'F-5 영주 체류기간 연장', desc: '영주증 갱신', fee: 110000, govFee: 35000 },
-                { id: 'f5-change', title: 'F-5 영주 체류자격 변경', desc: '영주권 취득', fee: 550000, govFee: 119000 },
-                { id: 'f5-reissue', title: 'F-5 영주증 재발급', desc: '영주증 분실/훼손', fee: 110000, govFee: 35000 },
-                { id: 'naturalization-general', title: '일반귀화 신청', desc: '외국인 귀화', fee: 1100000, govFee: 300000 },
-                { id: 'naturalization-simple', title: '간이귀화 신청', desc: '결혼이민자 등 귀화', fee: 1100000, govFee: 300000 },
-                { id: 'naturalization-special', title: '특별귀화 신청', desc: '특별 공로자 귀화', fee: 1100000, govFee: 300000 },
-                { id: 'nationality-recovery', title: '국적회복 신청', desc: '한국 국적 회복', fee: 330000, govFee: 200000 },
-                { id: 'nationality-acquisition', title: '국적취득 신고', desc: '외국국적 아동 국적취득', fee: 110000, govFee: 20000 },
-                { id: 'nationality-selection', title: '국적선택 신고', desc: '복수국적자 국적선택', fee: 110000, govFee: 20000 },
-                { id: 'nationality-loss', title: '국적상실 신고', desc: '한국 국적 포기', fee: 110000, govFee: 20000 },
-                { id: 'nationality-retention', title: '국적보유 신고', desc: '복수국적 유지 신고', fee: 110000, govFee: 20000 },
-                { id: 'nationality-renunciation', title: '외국국적 불행사 서약', desc: '복수국적 유지 서약', fee: 110000, govFee: 0 },
-                { id: 'refugee-application', title: '난민 신청', desc: '난민 지위 신청', fee: 550000, govFee: 0 },
-                { id: 'refugee-appeal', title: '난민 이의신청', desc: '난민 불인정 이의', fee: 330000, govFee: 0 },
-                { id: 'refugee-travel', title: '난민여행증명서 발급', desc: '난민 여행 서류', fee: 110000, govFee: 15000 }
+                { id: 'f5-change', title: '영주 F-5 자격변경', desc: '한국 영주권 취득', fee: 1100000, govFee: 200000 },
+                { id: 'f5-reissue', title: '영주증 재발급 (10년)', desc: '영주증 갱신', fee: 110000, govFee: 35000 },
+                { id: 'f2-extension', title: '거주(F-2) 체류기간 연장', desc: '거주비자 기간 연장', fee: 110000, govFee: 60000 },
+                { id: 'naturalization', title: '귀화허가 신청', desc: '한국 국적 취득', fee: 1100000, govFee: 300000 },
+                { id: 'nationality-recovery', title: '국적회복 허가 신청', desc: '과거 한국인의 국적 회복', fee: 550000, govFee: 200000 },
+                { id: 'nationality-selection', title: '국적선택 신고', desc: '복수국적자 국적 선택', fee: 110000, govFee: 20000 },
+                { id: 'nationality-renounce', title: '국적이탈 신고', desc: '한국 국적 포기', fee: 110000, govFee: 20000 },
+                { id: 'nationality-loss', title: '국적상실 신고', desc: '외국 국적 취득 시 신고', fee: 55000, govFee: 0 },
+                { id: 'nationality-retention', title: '국적보유 신고', desc: '국적 유보 의사 표시', fee: 110000, govFee: 20000 },
+                { id: 'nationality-acquisition', title: '국적취득 신고', desc: '인지에 의한 국적 취득', fee: 110000, govFee: 20000 },
+                { id: 'nationality-judgment', title: '국적판정 신청', desc: '국적 여부 판정 요청', fee: 110000, govFee: 30000 }
             ]
         };
 
