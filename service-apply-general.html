@@ -791,26 +791,7 @@
 
         // 서비스 가격 정보 (대행 보수, 부가세 포함) - index.html 서비스 ID 기준
         const servicePricing = {
-            // 1. 일반 신고·증명 (17개)
-            'short-stay-extension': { name: '단기체류 체류기간 연장 (전자민원)', price: 110000, govFee: 50000, desc: 'B-1, B-2, C-1, C-2, C-3, C-4', icon: '📅' },
-            'departure-extension': { name: '출국기간 연장허가 (전자민원)', price: 110000, govFee: 0, desc: '등록외국인, 단기체류자 출국 목적', icon: '✈️' },
-            'g1-extension': { name: '기타(G-1) 체류기간 연장 (방문)', price: 110000, govFee: 60000, desc: 'G-1 기타 체류자격', icon: '📋' },
-            'arc-registration': { name: '외국인등록 신청', price: 110000, govFee: 35000, desc: '입국 후 90일 이내 필수 등록', icon: '🆔' },
-            'arc-reissue': { name: '외국인등록증 재발급', price: 110000, govFee: 35000, desc: '분실·훼손 시 재발급', icon: '🔄' },
-            'address-change': { name: '체류지 변경신고', price: 33000, govFee: 0, desc: '이사 후 주소 변경', icon: '🏠' },
-            'f4-address-change': { name: '재외동포 거소이전신고', price: 33000, govFee: 0, desc: 'F-4 동포 주소 변경', icon: '🇰🇷' },
-            'passport-change': { name: '여권/등록사항 변경신고', price: 33000, govFee: 0, desc: '여권·성명 등 정보 변경', icon: '📝' },
-            'reentry-multiple-online': { name: '재입국허가 (복수/전자민원)', price: 55000, govFee: 41300, desc: '2회 이상 출입국 승인', icon: '🔁' },
-            'reentry-multiple-visit': { name: '재입국허가 (복수/방문)', price: 55000, govFee: 50000, desc: '2회 이상 출입국 승인', icon: '🔁' },
-            'reentry-single': { name: '재입국허가 (단수)', price: 55000, govFee: 30000, desc: '1회성 출입국 승인', icon: '↩️' },
-            'cert-entry-exit': { name: '출입국사실 증명서', price: 22000, govFee: 2000, desc: '출입국 기록 증명', icon: '📋' },
-            'cert-arc': { name: '외국인등록사실 증명서', price: 22000, govFee: 2000, desc: '외국인등록 내역 증명', icon: '📄' },
-            'cert-residence': { name: '국내거소신고사실 증명서', price: 22000, govFee: 2000, desc: 'F-4 거소신고 증명', icon: '🏠' },
-            'cert-realestate': { name: '부동산등기용 등록번호부여 증명서', price: 22000, govFee: 2000, desc: '부동산 거래용', icon: '🏘️' },
-            'cert-arc-number-change': { name: '외국인등록번호변경 확인서', price: 22000, govFee: 2000, desc: '등록번호 변경 확인', icon: '📋' },
-            'cert-nationality': { name: '국적 관련 증명서', price: 22000, govFee: 2000, desc: '국적상실, 국적보유 증명', icon: '📜' },
-
-            // 2. 교육·구직 (12개)
+            // 1. 교육·구직 (12개)
             'd4-to-d2-change': { name: 'D-4→D-2 유학 변경 (전자민원)', price: 110000, govFee: 119000, desc: '어학연수→정규과정', icon: '🎓' },
             'd2-to-d10-change': { name: 'D-2→D-10 구직 변경 (방문)', price: 220000, govFee: 100000, desc: '졸업 후 구직비자', icon: '📚' },
             'd10-1-change': { name: 'D-10-1 일반구직 자격변경', price: 220000, govFee: 100000, desc: '일반 구직비자 변경', icon: '🔍' },
@@ -824,7 +805,7 @@
             'intern-report': { name: '연수개시 및 기관변경 신고', price: 110000, govFee: 0, desc: 'D-10 인턴십 시작·변경', icon: '📝' },
             'parent-invite': { name: '외국인 유학생 부모 초청', price: 330000, govFee: 60000, desc: '우수 유학생 부모 초청', icon: '👨‍👩‍👧' },
 
-            // 3. 취업·워크 (17개)
+            // 2. 취업·워크 (17개)
             'e7-4-change': { name: '숙련기능인력 E-7-4 변경', price: 550000, govFee: 119000, desc: 'E-9/H-2 숙련기능 전환', icon: '🔧' },
             'e7-4r-change': { name: '지역특화 E-7-4R 변경', price: 550000, govFee: 119000, desc: '인구감소지역 숙련기능', icon: '🏘️' },
             'e7-change': { name: '특정활동 E-7 자격변경', price: 1100000, govFee: 100000, desc: '전문인력 취업비자', icon: '💼' },
@@ -843,7 +824,7 @@
             'income-report': { name: '직업 및 연간소득금액 신고', price: 55000, govFee: 0, desc: '소득 정보 신고', icon: '💵' },
             'foreign-worker-change': { name: '고용·연수외국인 변동신고', price: 55000, govFee: 0, desc: '퇴사·이탈 신고 (기업용)', icon: '📊' },
 
-            // 4. 사업·투자 (12개)
+            // 3. 사업·투자 (12개)
             'd8-1-change': { name: 'D-8-1 법인투자 자격변경', price: 1100000, govFee: 100000, desc: '법인 설립 투자비자', icon: '🏢' },
             'd8-2-change': { name: 'D-8-2 벤처투자 자격변경', price: 1100000, govFee: 100000, desc: '벤처기업 투자비자', icon: '🚀' },
             'd8-3-change': { name: 'D-8-3 개인투자 자격변경', price: 1100000, govFee: 100000, desc: '개인사업자 투자비자', icon: '💼' },
@@ -857,7 +838,7 @@
             'fic-registration': { name: '외국인투자기업 등록', price: 330000, govFee: 0, desc: '외투기업 등록증 발급', icon: '📋' },
             'fi-report': { name: '외국인투자 신고', price: 220000, govFee: 0, desc: '투자 사전 신고', icon: '📝' },
 
-            // 5. 동포·가족·결혼 (13개)
+            // 4. 동포·가족·결혼 (13개)
             'h2-to-f4-change': { name: 'H-2→F-4 재외동포 변경 (전자민원)', price: 220000, govFee: 119000, desc: '방문취업→재외동포', icon: '🇰🇷' },
             'f4-change': { name: '재외동포 F-4 자격변경 (방문)', price: 220000, govFee: 100000, desc: '재외동포 비자 변경', icon: '🎌' },
             'f4-registration': { name: '재외동포 F-4 거소신고', price: 110000, govFee: 35000, desc: 'F-4 거소증 발급', icon: '📍' },
@@ -872,7 +853,7 @@
             'family-invite': { name: '가족 초청 (사증발급)', price: 550000, govFee: 60000, desc: '해외 가족 초청', icon: '✈️' },
             'housework-report': { name: '가사·육아 활동 개시 신고', price: 55000, govFee: 0, desc: '가사보조 활동 신고', icon: '🏡' },
 
-            // 6. 거주·영주·국적 (12개)
+            // 5. 거주·영주·국적 (12개)
             'f5-change': { name: '영주 F-5 자격변경', price: 1100000, govFee: 200000, desc: '한국 영주권 취득', icon: '🏠' },
             'f5-reissue': { name: '영주증 재발급 (10년)', price: 110000, govFee: 35000, desc: '영주증 갱신', icon: '🔄' },
             'f2-extension': { name: '거주(F-2) 체류기간 연장', price: 110000, govFee: 60000, desc: '거주비자 기간 연장', icon: '🏡' },
@@ -883,7 +864,23 @@
             'nationality-loss': { name: '국적상실 신고', price: 55000, govFee: 0, desc: '외국 국적 취득 시 신고', icon: '📋' },
             'nationality-retention': { name: '국적보유 신고', price: 110000, govFee: 20000, desc: '국적 유보 의사 표시', icon: '✍️' },
             'nationality-acquisition': { name: '국적취득 신고', price: 110000, govFee: 20000, desc: '인지에 의한 국적 취득', icon: '📜' },
-            'nationality-judgment': { name: '국적판정 신청', price: 110000, govFee: 30000, desc: '국적 여부 판정 요청', icon: '⚖️' }
+            'nationality-judgment': { name: '국적판정 신청', price: 110000, govFee: 30000, desc: '국적 여부 판정 요청', icon: '⚖️' },
+
+            // 6. 일반 신고·증명 (14개)
+            'arc-registration': { name: '외국인등록 신청', price: 110000, govFee: 35000, desc: '입국 후 90일 이내 필수 등록', icon: '🆔' },
+            'arc-reissue': { name: '외국인등록증 재발급', price: 110000, govFee: 35000, desc: '분실·훼손 시 재발급', icon: '🔄' },
+            'address-change': { name: '체류지 변경신고', price: 33000, govFee: 0, desc: '이사 후 주소 변경', icon: '🏠' },
+            'f4-address-change': { name: '재외동포 거소이전신고', price: 33000, govFee: 0, desc: 'F-4 동포 주소 변경', icon: '🇰🇷' },
+            'passport-change': { name: '여권/등록사항 변경신고', price: 33000, govFee: 0, desc: '여권·성명 등 정보 변경', icon: '📝' },
+            'reentry-multiple-online': { name: '재입국허가 (복수/전자민원)', price: 55000, govFee: 41300, desc: '2회 이상 출입국 승인', icon: '🔁' },
+            'reentry-multiple-visit': { name: '재입국허가 (복수/방문)', price: 55000, govFee: 50000, desc: '2회 이상 출입국 승인', icon: '🔁' },
+            'reentry-single': { name: '재입국허가 (단수)', price: 55000, govFee: 30000, desc: '1회성 출입국 승인', icon: '↩️' },
+            'cert-entry-exit': { name: '출입국사실 증명서', price: 22000, govFee: 2000, desc: '출입국 기록 증명', icon: '📋' },
+            'cert-arc': { name: '외국인등록사실 증명서', price: 22000, govFee: 2000, desc: '외국인등록 내역 증명', icon: '📄' },
+            'cert-residence': { name: '국내거소신고사실 증명서', price: 22000, govFee: 2000, desc: 'F-4 거소신고 증명', icon: '🏠' },
+            'cert-realestate': { name: '부동산등기용 등록번호부여 증명서', price: 22000, govFee: 2000, desc: '부동산 거래용', icon: '🏘️' },
+            'cert-arc-number-change': { name: '외국인등록번호변경 확인서', price: 22000, govFee: 2000, desc: '등록번호 변경 확인', icon: '📋' },
+            'cert-nationality': { name: '국적 관련 증명서', price: 22000, govFee: 2000, desc: '국적상실, 국적보유 증명', icon: '📜' }
         };
 
         let selectedService = null;
