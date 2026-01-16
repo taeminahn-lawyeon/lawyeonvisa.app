@@ -1,0 +1,23 @@
+# 법무법인 로연 출입국이민지원센터 robots.txt
+# https://lawyeon.com
+
+User-agent: *
+Allow: /
+
+# 관리자 페이지 크롤링 제외
+Disallow: /admin-*.html
+Disallow: /partner-dashboard*.html
+Disallow: /supabase-diagnostic.html
+
+# 결제/인증 페이지 크롤링 제외
+Disallow: /payment-*.html
+Disallow: /login-*.html
+Disallow: /profile-*.html
+Disallow: /thread-*.html
+Disallow: /dashboard-*.html
+
+# 테스트 페이지 제외
+Disallow: /admin-test-login.html
+
+# 사이트맵 위치
+Sitemap: https://lawyeon.com/sitemap.xml

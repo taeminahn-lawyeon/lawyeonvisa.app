@@ -1015,7 +1015,7 @@
             document.getElementById('service-desc').textContent = selectedService.desc;
             
             const agencyFee = selectedService.price;
-            const govtFee = govtFees[serviceId] || 0;
+            const govtFee = selectedService.govFee || 0;
             const totalPrice = agencyFee + govtFee;
             
             document.getElementById('agency-fee').textContent = '₩' + agencyFee.toLocaleString();
