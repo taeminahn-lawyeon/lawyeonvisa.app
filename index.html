@@ -1205,12 +1205,12 @@
             <h3 data-i18n="services.title">출입국 민원 대행</h3>
             
             <div class="service-categories">
-                <div class="category-tab active" data-category="visa" data-i18n="services.tab.visa">비자</div>
-                <div class="category-tab" data-category="residence-report" data-i18n="services.tab.residenceReport">체류 신고</div>
-                <div class="category-tab" data-category="immigration" data-i18n="services.tab.immigration">이민·국적·난민</div>
-                <div class="category-tab" data-category="alien-registration" data-i18n="services.tab.alienReg">외국인 등록</div>
-                <div class="category-tab" data-category="consulting" data-i18n="services.tab.consulting">자문</div>
-                <div class="category-tab" data-category="certificate" data-i18n="services.tab.certificate">증명서</div>
+                <div class="category-tab active" data-category="general" data-i18n="services.tab.general">일반 신고·증명</div>
+                <div class="category-tab" data-category="education" data-i18n="services.tab.education">교육·구직</div>
+                <div class="category-tab" data-category="work" data-i18n="services.tab.work">취업·워크</div>
+                <div class="category-tab" data-category="business" data-i18n="services.tab.business">사업·투자</div>
+                <div class="category-tab" data-category="family" data-i18n="services.tab.family">동포·가족·결혼</div>
+                <div class="category-tab" data-category="residence" data-i18n="services.tab.residence">거주·영주·국적</div>
             </div>
 
             <div class="service-grid" id="serviceGrid">
@@ -1473,7 +1473,7 @@
                 
                 // 현재 활성화된 카테고리 찾기
                 const activeServiceTab = document.querySelector('.service-categories .category-tab[data-category].active');
-                const activeCategory = activeServiceTab ? activeServiceTab.dataset.category : 'visa';
+                const activeCategory = activeServiceTab ? activeServiceTab.dataset.category : 'general';
                 
                 const activePartnerTab = document.querySelector('.service-categories .category-tab[data-partner-category].active');
                 const activePartnerCategory = activePartnerTab ? activePartnerTab.dataset.partnerCategory : 'university';
@@ -1653,52 +1653,96 @@
             ]
         };
 
-        // 출입국 민원 서비스 (6개 카테고리) - 번역 키 기반
+        // 출입국 민원 서비스 (6개 카테고리) - 새 구조
         const services = {
-            visa: [
-                { id: 'visa-issue', titleKey: 'service.visa_issue', descKey: 'service.visa_issue.desc' },
-                { id: 'visa-extension', titleKey: 'service.visa_extension', descKey: 'service.visa_extension.desc' },
-                { id: 'visa-change', titleKey: 'service.visa_change', descKey: 'service.visa_change.desc' },
-                { id: 'visa-grant', titleKey: 'service.visa_grant', descKey: 'service.visa_grant.desc' }
+            // 1. 일반 신고·증명
+            general: [
+                { id: 'short-stay-extension', title: '단기체류 체류기간 연장', desc: 'C-3, B-1, B-2 등 단기체류 연장', fee: 110000, govFee: 50000 },
+                { id: 'departure-extension', title: '출국기간 연장허가', desc: '출국기한 연장', fee: 110000, govFee: 0 },
+                { id: 'g1-extension', title: '기타(G-1) 체류기간 연장', desc: 'G-1 비자 체류기간 연장', fee: 110000, govFee: 60000 },
+                { id: 'arc-registration', title: '외국인등록 신청', desc: '최초 외국인등록', fee: 110000, govFee: 35000 },
+                { id: 'arc-reissue', title: '외국인등록증 재발급', desc: '분실/훼손 시 재발급', fee: 110000, govFee: 35000 },
+                { id: 'address-change', title: '체류지 변경신고', desc: '주소 변경 신고', fee: 33000, govFee: 0 },
+                { id: 'f4-address-change', title: '재외동포 거소이전신고', desc: 'F-4 거소 변경', fee: 33000, govFee: 0 },
+                { id: 'passport-change', title: '여권/등록사항 변경신고', desc: '여권 갱신 등 변경사항 신고', fee: 33000, govFee: 0 },
+                { id: 'reentry-multiple', title: '재입국허가 (복수)', desc: '복수 재입국허가', fee: 55000, govFee: 41300 },
+                { id: 'reentry-single', title: '재입국허가 (단수)', desc: '단수 재입국허가', fee: 55000, govFee: 30000 },
+                { id: 'cert-entry-exit', title: '출입국사실 증명서', desc: '출입국 기록 증명', fee: 11000, govFee: 2000 },
+                { id: 'cert-arc', title: '외국인등록사실 증명서', desc: '외국인등록 증명', fee: 11000, govFee: 2000 },
+                { id: 'cert-residence', title: '국내거소신고사실 증명서', desc: '재외동포 거소 증명', fee: 11000, govFee: 2000 },
+                { id: 'cert-realestate', title: '부동산등기용 등록번호부여 증명서', desc: '부동산 등기용', fee: 11000, govFee: 2000 },
+                { id: 'cert-nationality', title: '국적 관련 증명서', desc: '국적 관련 각종 증명', fee: 11000, govFee: 2000 }
             ],
-            'residence-report': [
-                { id: 'parttime-report', titleKey: 'service.parttime_report', descKey: 'service.parttime_report.desc' },
-                { id: 'workplace-change', titleKey: 'service.workplace_change', descKey: 'service.workplace_change.desc' },
-                { id: 'employment-report', titleKey: 'service.employment_report', descKey: 'service.employment_report.desc' },
-                { id: 'employment-change', titleKey: 'service.employment_change', descKey: 'service.employment_change.desc' },
-                { id: 'address-change', titleKey: 'service.address_change', descKey: 'service.address_change.desc' },
-                { id: 'f4-residence', titleKey: 'service.f4_residence', descKey: 'service.f4_residence.desc' },
-                { id: 'c3-report', titleKey: 'service.c3_report', descKey: 'service.c3_report.desc' },
-                { id: 'outside-activity', titleKey: 'service.outside_activity', descKey: 'service.outside_activity.desc' }
+            // 2. 교육·구직
+            education: [
+                { id: 'd2-extension', title: 'D-2 유학 체류기간 연장', desc: '유학생 체류기간 연장', fee: 110000, govFee: 60000 },
+                { id: 'd2-change', title: 'D-2 유학 체류자격 변경', desc: '타 자격에서 유학으로 변경', fee: 220000, govFee: 119000 },
+                { id: 'd4-extension', title: 'D-4 일반연수 체류기간 연장', desc: '어학연수 체류기간 연장', fee: 110000, govFee: 60000 },
+                { id: 'd4-change', title: 'D-4 일반연수 체류자격 변경', desc: '타 자격에서 연수로 변경', fee: 220000, govFee: 119000 },
+                { id: 'd10-change', title: 'D-10 구직 체류자격 변경', desc: '졸업 후 구직비자로 변경', fee: 330000, govFee: 119000 },
+                { id: 'd10-extension', title: 'D-10 구직 체류기간 연장', desc: '구직비자 체류기간 연장', fee: 220000, govFee: 60000 },
+                { id: 'parttime-confirm', title: '시간제취업 확인', desc: '유학생 아르바이트 허가', fee: 33000, govFee: 0 }
             ],
-            immigration: [
-                { id: 'naturalization', titleKey: 'service.naturalization', descKey: 'service.naturalization.desc' },
-                { id: 'nationality-recovery', titleKey: 'service.nationality_recovery', descKey: 'service.nationality_recovery.desc' },
-                { id: 'nationality-acquisition', titleKey: 'service.nationality_acquisition', descKey: 'service.nationality_acquisition.desc' },
-                { id: 'nationality-selection', titleKey: 'service.nationality_selection', descKey: 'service.nationality_selection.desc' },
-                { id: 'nationality-loss', titleKey: 'service.nationality_loss', descKey: 'service.nationality_loss.desc' },
-                { id: 'nationality-retention', titleKey: 'service.nationality_retention', descKey: 'service.nationality_retention.desc' },
-                { id: 'refugee-application', titleKey: 'service.refugee_application', descKey: 'service.refugee_application.desc' },
-                { id: 'refugee-appeal', titleKey: 'service.refugee_appeal', descKey: 'service.refugee_appeal.desc' },
-                { id: 'refugee-travel', titleKey: 'service.refugee_travel', descKey: 'service.refugee_travel.desc' }
+            // 3. 취업·워크
+            work: [
+                { id: 'e1-e7-extension', title: 'E-1~E-7 전문인력 체류기간 연장', desc: '전문직 체류기간 연장', fee: 220000, govFee: 60000 },
+                { id: 'e1-e7-change', title: 'E-1~E-7 전문인력 체류자격 변경', desc: '전문직 비자로 변경', fee: 550000, govFee: 119000 },
+                { id: 'e7-workplace-change', title: 'E-7 근무처 변경·추가', desc: '특정활동 근무처 변경', fee: 220000, govFee: 119000 },
+                { id: 'e9-extension', title: 'E-9 비전문취업 체류기간 연장', desc: '비전문 취업 연장', fee: 110000, govFee: 60000 },
+                { id: 'e9-change', title: 'E-9 비전문취업 체류자격 변경', desc: '비전문 취업으로 변경', fee: 220000, govFee: 119000 },
+                { id: 'e9-workplace-change', title: 'E-9 사업장 변경', desc: 'E-9 근무처 변경', fee: 110000, govFee: 0 },
+                { id: 'e10-extension', title: 'E-10 선원취업 체류기간 연장', desc: '선원취업 연장', fee: 110000, govFee: 60000 },
+                { id: 'h2-extension', title: 'H-2 방문취업 체류기간 연장', desc: '방문취업 연장', fee: 110000, govFee: 60000 },
+                { id: 'h2-change', title: 'H-2 방문취업 체류자격 변경', desc: '방문취업으로 변경', fee: 220000, govFee: 119000 },
+                { id: 'h2-workplace-change', title: 'H-2 근무처 변경·추가', desc: '방문취업 근무처 변경', fee: 110000, govFee: 0 },
+                { id: 'c4-extension', title: 'C-4 단기취업 체류기간 연장', desc: '단기취업 연장', fee: 110000, govFee: 50000 },
+                { id: 'c4-change', title: 'C-4 단기취업 체류자격 변경', desc: '단기취업으로 변경', fee: 220000, govFee: 119000 },
+                { id: 'employment-report', title: '고용·위탁 신고', desc: '외국인 고용 신고', fee: 33000, govFee: 0 },
+                { id: 'employment-change', title: '고용·위탁 변경신고', desc: '고용 변경 신고', fee: 33000, govFee: 0 },
+                { id: 'outside-activity', title: '체류자격 외 활동허가', desc: '허가 외 활동 신청', fee: 110000, govFee: 119000 }
             ],
-            'alien-registration': [
-                { id: 'arc-application', titleKey: 'service.arc_application', descKey: 'service.arc_application.desc' },
-                { id: 'arc-reissue', titleKey: 'service.arc_reissue', descKey: 'service.arc_reissue.desc' },
-                { id: 'arc-change', titleKey: 'service.arc_change', descKey: 'service.arc_change.desc' }
+            // 4. 사업·투자
+            business: [
+                { id: 'd8-extension', title: 'D-8 기업투자 체류기간 연장', desc: '기업투자 연장', fee: 220000, govFee: 60000 },
+                { id: 'd8-change', title: 'D-8 기업투자 체류자격 변경', desc: '기업투자로 변경', fee: 550000, govFee: 119000 },
+                { id: 'd8-4-change', title: 'D-8-4 기술창업 체류자격 변경', desc: '기술창업 비자', fee: 1100000, govFee: 119000 },
+                { id: 'd9-extension', title: 'D-9 무역경영 체류기간 연장', desc: '무역경영 연장', fee: 220000, govFee: 60000 },
+                { id: 'd9-change', title: 'D-9 무역경영 체류자격 변경', desc: '무역경영으로 변경', fee: 550000, govFee: 119000 },
+                { id: 'd9-5-change', title: 'D-9-5 외국인전용 유흥업소 체류자격 변경', desc: '외국인 유흥업소', fee: 1100000, govFee: 119000 },
+                { id: 'f2-7-change', title: 'F-2-7 부동산투자이민 체류자격 변경', desc: '부동산 투자이민', fee: 550000, govFee: 119000 }
             ],
-            consulting: [
-                { id: 'visa-consulting', titleKey: 'service.visa_consulting', descKey: 'service.visa_consulting.desc' },
-                { id: 'education-consulting', titleKey: 'service.education_consulting', descKey: 'service.education_consulting.desc' },
-                { id: 'organization-consulting', titleKey: 'service.organization_consulting', descKey: 'service.organization_consulting.desc' }
+            // 5. 동포·가족·결혼
+            family: [
+                { id: 'f1-extension', title: 'F-1 방문동거 체류기간 연장', desc: '방문동거 연장', fee: 110000, govFee: 60000 },
+                { id: 'f1-change', title: 'F-1 방문동거 체류자격 변경', desc: '방문동거로 변경', fee: 220000, govFee: 119000 },
+                { id: 'f2-extension', title: 'F-2 거주 체류기간 연장', desc: '거주 비자 연장', fee: 110000, govFee: 60000 },
+                { id: 'f2-change', title: 'F-2 거주 체류자격 변경', desc: '거주 비자로 변경', fee: 330000, govFee: 119000 },
+                { id: 'f3-extension', title: 'F-3 동반 체류기간 연장', desc: '동반가족 연장', fee: 110000, govFee: 60000 },
+                { id: 'f3-change', title: 'F-3 동반 체류자격 변경', desc: '동반가족으로 변경', fee: 220000, govFee: 119000 },
+                { id: 'f4-extension', title: 'F-4 재외동포 체류기간 연장', desc: '재외동포 연장', fee: 110000, govFee: 60000 },
+                { id: 'f4-change', title: 'F-4 재외동포 체류자격 변경', desc: '재외동포로 변경', fee: 330000, govFee: 119000 },
+                { id: 'f4-registration', title: 'F-4 국내거소신고', desc: '재외동포 거소신고', fee: 110000, govFee: 35000 },
+                { id: 'f6-extension', title: 'F-6 결혼이민 체류기간 연장', desc: '결혼이민 연장', fee: 110000, govFee: 60000 },
+                { id: 'f6-change', title: 'F-6 결혼이민 체류자격 변경', desc: '결혼이민으로 변경', fee: 330000, govFee: 119000 },
+                { id: 'f6-divorce', title: 'F-6 결혼이민 이혼 후 체류자격 변경', desc: '이혼 후 체류자격 변경', fee: 550000, govFee: 119000 }
             ],
-            certificate: [
-                { id: 'cert-entry-exit', titleKey: 'service.cert_entry_exit', descKey: 'service.cert_entry_exit.desc' },
-                { id: 'cert-arc', titleKey: 'service.cert_arc', descKey: 'service.cert_arc.desc' },
-                { id: 'cert-residence', titleKey: 'service.cert_residence', descKey: 'service.cert_residence.desc' },
-                { id: 'cert-realestate', titleKey: 'service.cert_realestate', descKey: 'service.cert_realestate.desc' },
-                { id: 'cert-number-change', titleKey: 'service.cert_number_change', descKey: 'service.cert_number_change.desc' },
-                { id: 'cert-nationality', titleKey: 'service.cert_nationality', descKey: 'service.cert_nationality.desc' }
+            // 6. 거주·영주·국적
+            residence: [
+                { id: 'f5-extension', title: 'F-5 영주 체류기간 연장', desc: '영주증 갱신', fee: 110000, govFee: 35000 },
+                { id: 'f5-change', title: 'F-5 영주 체류자격 변경', desc: '영주권 취득', fee: 550000, govFee: 119000 },
+                { id: 'f5-reissue', title: 'F-5 영주증 재발급', desc: '영주증 분실/훼손', fee: 110000, govFee: 35000 },
+                { id: 'naturalization-general', title: '일반귀화 신청', desc: '외국인 귀화', fee: 1100000, govFee: 300000 },
+                { id: 'naturalization-simple', title: '간이귀화 신청', desc: '결혼이민자 등 귀화', fee: 1100000, govFee: 300000 },
+                { id: 'naturalization-special', title: '특별귀화 신청', desc: '특별 공로자 귀화', fee: 1100000, govFee: 300000 },
+                { id: 'nationality-recovery', title: '국적회복 신청', desc: '한국 국적 회복', fee: 330000, govFee: 200000 },
+                { id: 'nationality-acquisition', title: '국적취득 신고', desc: '외국국적 아동 국적취득', fee: 110000, govFee: 20000 },
+                { id: 'nationality-selection', title: '국적선택 신고', desc: '복수국적자 국적선택', fee: 110000, govFee: 20000 },
+                { id: 'nationality-loss', title: '국적상실 신고', desc: '한국 국적 포기', fee: 110000, govFee: 20000 },
+                { id: 'nationality-retention', title: '국적보유 신고', desc: '복수국적 유지 신고', fee: 110000, govFee: 20000 },
+                { id: 'nationality-renunciation', title: '외국국적 불행사 서약', desc: '복수국적 유지 서약', fee: 110000, govFee: 0 },
+                { id: 'refugee-application', title: '난민 신청', desc: '난민 지위 신청', fee: 550000, govFee: 0 },
+                { id: 'refugee-appeal', title: '난민 이의신청', desc: '난민 불인정 이의', fee: 330000, govFee: 0 },
+                { id: 'refugee-travel', title: '난민여행증명서 발급', desc: '난민 여행 서류', fee: 110000, govFee: 15000 }
             ]
         };
 
@@ -2076,15 +2120,15 @@
             });
         }
 
-        function loadServices(category = 'visa') {
+        function loadServices(category = 'general') {
             const grid = document.getElementById('serviceGrid');
             if (!grid) {
                 return;
             }
-            
+
             grid.innerHTML = '';
 
-            const serviceList = services[category] || services.visa;
+            const serviceList = services[category] || services.general;
 
             serviceList.forEach(service => {
                 const card = document.createElement('div');
@@ -2092,21 +2136,21 @@
                 card.style.cursor = 'pointer';
                 card.setAttribute('role', 'button');
                 card.setAttribute('tabindex', '0');
-                
+
                 // 클릭 및 터치 이벤트 모두 지원
                 const handleClick = (e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     goToConsent(service);
                 };
-                
+
                 let touchStartY = 0;
                 let touchEndY = 0;
-                
+
                 card.addEventListener('touchstart', (e) => {
                     touchStartY = e.touches[0].clientY;
                 }, { passive: true });
-                
+
                 card.addEventListener('touchend', (e) => {
                     touchEndY = e.changedTouches[0].clientY;
                     // 스크롤이 아닌 경우에만 클릭으로 간주 (5px 이하 이동)
@@ -2114,16 +2158,20 @@
                         handleClick(e);
                     }
                 }, { passive: false });
-                
+
                 card.onclick = handleClick;
-                
-                // 🌍 번역 키를 사용하여 동적으로 번역 적용
-                const title = window.i18n ? window.i18n.translate(service.titleKey) : service.titleKey;
-                const desc = window.i18n ? window.i18n.translate(service.descKey) : service.descKey;
-                
+
+                // 직접 title/desc 사용 (새 구조)
+                const title = service.title;
+                const desc = service.desc;
+
+                // 가격 포맷팅
+                const feeText = service.fee ? `₩${service.fee.toLocaleString()}` : '';
+
                 card.innerHTML = `
                     <div class="title">${title}</div>
                     <div class="desc">${desc}</div>
+                    <div class="price-info" style="margin-top: 8px; font-size: 13px; color: #3182F6; font-weight: 600;">${feeText}</div>
                 `;
                 grid.appendChild(card);
             });
