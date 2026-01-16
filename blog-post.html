@@ -3,7 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>뉴스 & 인사이트 | 법무법인 로연</title>
+    <title id="page-title">뉴스 & 인사이트 | 법무법인 로연</title>
+
+    <!-- SEO 메타 태그 (동적으로 업데이트됨) -->
+    <meta name="description" id="meta-description" content="법무법인 로연 출입국이민지원센터의 비자, 체류자격, 출입국 관련 전문 콘텐츠입니다.">
+    <meta name="keywords" content="비자, 체류자격, 영주권, 귀화, 외국인등록, 출입국, 이민법, 법무법인 로연">
+    <meta name="author" content="법무법인 로연 출입국이민지원센터">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" id="canonical-url" href="https://lawyeon.com/blog-post.html">
+
+    <!-- Open Graph (동적으로 업데이트됨) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" id="og-title" content="뉴스 & 인사이트 | 법무법인 로연">
+    <meta property="og:description" id="og-description" content="법무법인 로연 출입국이민지원센터의 전문 콘텐츠">
+    <meta property="og:url" id="og-url" content="https://lawyeon.com/blog-post.html">
+    <meta property="og:site_name" content="법무법인 로연 출입국이민지원센터">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:image" id="og-image" content="">
+    <meta property="article:author" content="법무법인 로연">
+    <meta property="article:publisher" content="https://lawyeon.com">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" id="twitter-title" content="뉴스 & 인사이트 | 법무법인 로연">
+    <meta name="twitter:description" id="twitter-description" content="법무법인 로연 출입국이민지원센터의 전문 콘텐츠">
+    <meta name="twitter:image" id="twitter-image" content="">
+
+    <!-- Schema.org 구조화된 데이터 (동적으로 업데이트됨) -->
+    <script type="application/ld+json" id="schema-article">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "",
+        "description": "",
+        "image": "",
+        "author": {
+            "@type": "Organization",
+            "name": "법무법인 로연 출입국이민지원센터",
+            "url": "https://lawyeon.com"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "법무법인 로연",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://lawyeon.com/images/logo.png"
+            }
+        },
+        "datePublished": "",
+        "dateModified": "",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": ""
+        }
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -680,6 +735,9 @@
                 // 페이지 타이틀 업데이트
                 document.title = `${post.title} | 법무법인 로연`;
 
+                // SEO 메타 태그 및 Schema.org 업데이트
+                updateSEOMetaTags(post);
+
                 // 목차 생성
                 const toc = generateTOC(post.content);
 
@@ -985,6 +1043,63 @@
         function formatDate(dateString) {
             const date = new Date(dateString);
             return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
+        }
+
+        // SEO 메타 태그 및 Schema.org 업데이트
+        function updateSEOMetaTags(post) {
+            const pageUrl = `https://lawyeon.com/blog-post.html?slug=${post.slug}`;
+            const description = post.excerpt || post.title;
+            const imageUrl = post.featured_image || '';
+            const publishDate = new Date(post.created_at).toISOString();
+            const modifiedDate = new Date(post.updated_at || post.created_at).toISOString();
+
+            // 메타 태그 업데이트
+            document.getElementById('meta-description').setAttribute('content', description);
+            document.getElementById('canonical-url').setAttribute('href', pageUrl);
+
+            // Open Graph 업데이트
+            document.getElementById('og-title').setAttribute('content', `${post.title} | 법무법인 로연`);
+            document.getElementById('og-description').setAttribute('content', description);
+            document.getElementById('og-url').setAttribute('content', pageUrl);
+            if (imageUrl) {
+                document.getElementById('og-image').setAttribute('content', imageUrl);
+            }
+
+            // Twitter Card 업데이트
+            document.getElementById('twitter-title').setAttribute('content', `${post.title} | 법무법인 로연`);
+            document.getElementById('twitter-description').setAttribute('content', description);
+            if (imageUrl) {
+                document.getElementById('twitter-image').setAttribute('content', imageUrl);
+            }
+
+            // Schema.org 구조화 데이터 업데이트
+            const schemaData = {
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": post.title,
+                "description": description,
+                "image": imageUrl,
+                "author": {
+                    "@type": "Organization",
+                    "name": "법무법인 로연 출입국이민지원센터",
+                    "url": "https://lawyeon.com"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "법무법인 로연",
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": "https://lawyeon.com/images/logo.png"
+                    }
+                },
+                "datePublished": publishDate,
+                "dateModified": modifiedDate,
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": pageUrl
+                }
+            };
+            document.getElementById('schema-article').textContent = JSON.stringify(schemaData);
         }
 
         // 초기 로드
