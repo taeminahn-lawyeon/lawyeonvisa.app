@@ -791,6 +791,10 @@
 
         // 서비스 가격 정보 (대행 보수, 부가세 포함) - index.html 서비스 ID 기준
         const servicePricing = {
+            // 프리미엄 서비스 (긴급 구제)
+            'visa-prediagnosis': { name: '비자 사전진단', price: 110000, govFee: 0, desc: '비자 변경·불법체류 위험·출입국관리법 위반 자문', icon: '🔍' },
+            'emergency-legal': { name: '출입국 분쟁 해결 상담', price: 0, govFee: 0, desc: '사범심사, 처분 취소소송, 외국인 형사 변호', icon: '⚖️', consulting: true },
+
             // 1. 교육·구직 (12개)
             'd4-to-d2-change': { name: 'D-4→D-2 유학 변경 (전자민원)', price: 110000, govFee: 119000, desc: '어학연수→정규과정', icon: '🎓' },
             'd2-to-d10-change': { name: 'D-2→D-10 구직 변경 (방문)', price: 220000, govFee: 100000, desc: '졸업 후 구직비자', icon: '📚' },
