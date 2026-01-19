@@ -1962,8 +1962,24 @@
                         // 프로필 수정 버튼 숨김
                         document.getElementById('editProfileBtn')?.setAttribute('style', 'display: none;');
                     } else {
-                        console.log('프로필 없음 - profile-setup.html로 이동');
-                        window.location.href = 'profile-setup.html';
+                        // 프로필 없음 - 리다이렉트 없이 index.html에서 로그인 상태 유지
+                        console.log('프로필 없음 - index.html에서 로그인 상태 유지 (기본정보 작성 버튼 표시)');
+
+                        // 구글 로그인 버튼 숨김
+                        const newGoogleBtn = document.getElementById('newGoogleLoginBtn');
+                        if (newGoogleBtn) newGoogleBtn.style.display = 'none';
+
+                        // 사용자 인사말 표시
+                        document.getElementById('userGreeting').style.display = 'flex';
+
+                        // 로그인 프롬프트 숨기기
+                        const loginPrompt = document.getElementById('loginPrompt');
+                        if (loginPrompt) loginPrompt.style.display = 'none';
+
+                        // 프로필 작성 버튼 표시
+                        document.getElementById('createProfileBtn')?.setAttribute('style', 'display: inline-flex;');
+                        // 프로필 수정 버튼 숨김
+                        document.getElementById('editProfileBtn')?.setAttribute('style', 'display: none;');
                     }
                 }
             } else {
