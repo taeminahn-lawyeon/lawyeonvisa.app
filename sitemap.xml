@@ -5,56 +5,64 @@
 
   <!-- 메인 페이지 -->
   <url>
-    <loc>https://lawyeon.com/</loc>
-    <lastmod>2025-01-16</lastmod>
+    <loc>https://www.lawyeonvisa.app/</loc>
+    <lastmod>2025-01-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <!-- 블로그 목록 -->
   <url>
-    <loc>https://lawyeon.com/blog.html</loc>
-    <lastmod>2025-01-16</lastmod>
+    <loc>https://www.lawyeonvisa.app/blog.html</loc>
+    <lastmod>2025-01-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
+  <!-- 블로그 포스트: D-10-1 비자 -->
+  <url>
+    <loc>https://www.lawyeonvisa.app/blog-post.html?slug=d10-1-visa-korea-no-points-exemption-guide</loc>
+    <lastmod>2025-01-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- 가격표 -->
   <url>
-    <loc>https://lawyeon.com/price-list.html</loc>
-    <lastmod>2025-01-16</lastmod>
+    <loc>https://www.lawyeonvisa.app/price-list.html</loc>
+    <lastmod>2025-01-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- 협약기관 신청 -->
   <url>
-    <loc>https://lawyeon.com/partnership-apply.html</loc>
-    <lastmod>2025-01-16</lastmod>
+    <loc>https://www.lawyeonvisa.app/partnership-apply.html</loc>
+    <lastmod>2025-01-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- 이용약관 -->
   <url>
-    <loc>https://lawyeon.com/terms-of-service.html</loc>
-    <lastmod>2025-01-16</lastmod>
+    <loc>https://www.lawyeonvisa.app/terms-of-service.html</loc>
+    <lastmod>2025-01-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <!-- 개인정보처리방침 -->
   <url>
-    <loc>https://lawyeon.com/privacy-policy.html</loc>
-    <lastmod>2025-01-16</lastmod>
+    <loc>https://www.lawyeonvisa.app/privacy-policy.html</loc>
+    <lastmod>2025-01-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <!-- 환불규정 -->
   <url>
-    <loc>https://lawyeon.com/refund-policy.html</loc>
-    <lastmod>2025-01-16</lastmod>
+    <loc>https://www.lawyeonvisa.app/refund-policy.html</loc>
+    <lastmod>2025-01-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
