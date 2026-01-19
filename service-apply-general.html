@@ -956,7 +956,10 @@
             
             if (!session || !session.user) {
                 console.log('❌ [결제 페이지] 세션 없음 (최종)');
-                alert('로그인이 필요합니다.\n\n먼저 로그인 후 이용해주세요.');
+                // 로그인 후 돌아올 URL 저장
+                const currentUrl = window.location.href;
+                localStorage.setItem('redirectAfterLogin', currentUrl);
+                alert('로그인이 필요합니다.\n\n로그인 후 자동으로 서비스 신청 페이지로 돌아갑니다.');
                 window.location.href = 'index.html';
                 return;
             }
