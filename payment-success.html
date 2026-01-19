@@ -650,17 +650,16 @@
             try {
                 const profileSubmitUrl = `${window.location.origin}/profile-submit.html?thread=${threadId}`;
 
-                const welcomeMessage = `
-🎉 **Thank you for your payment!**
+                const welcomeMessage = `🎉 Thank you for your payment!
 
-Your application for **${serviceName}** has been received.
+Your application for "${serviceName}" has been received.
 
-📋 **Next Step: Submit Your Basic Information**
+📋 Next Step: Submit Your Basic Information
 Please click the link below to submit your required documents:
 
-👉 [Submit Basic Information](${profileSubmitUrl})
+👉 ${profileSubmitUrl}
 
-**Required Documents:**
+Required Documents:
 • Passport (photo page)
 • Alien Registration Card (front & back)
 • Electronic Signature
@@ -669,8 +668,19 @@ Our team will review your submission and contact you soon.
 
 ---
 결제해 주셔서 감사합니다!
-아래 링크를 통해 기본 정보를 제출해 주세요.
-                `.trim();
+"${serviceName}" 신청이 접수되었습니다.
+
+📋 다음 단계: 기본 정보 제출
+아래 링크를 클릭하여 필요 서류를 제출해 주세요:
+
+👉 ${profileSubmitUrl}
+
+필요 서류:
+• 여권 (사진 페이지)
+• 외국인등록증 (앞/뒤)
+• 전자서명
+
+담당자가 검토 후 곧 연락드리겠습니다.`;
 
                 // 시스템 메시지로 발송 (sender_type: 'system')
                 const { data, error } = await supabaseClient
