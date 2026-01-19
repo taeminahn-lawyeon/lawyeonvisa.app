@@ -35,7 +35,7 @@
             margin-bottom: 24px;
             text-align: center;
             box-shadow: 0 4px 24px rgba(0,0,0,0.15);
-            border-bottom: 3px solid #10B981;
+            border-bottom: 3px solid #3182F6;
         }
 
         .header h1 {
@@ -55,7 +55,7 @@
 
         .thread-badge {
             display: inline-block;
-            background: #10B981;
+            background: #3182F6;
             color: white;
             padding: 6px 16px;
             border-radius: 20px;
@@ -96,7 +96,7 @@
             top: 20px;
             left: 0;
             height: 4px;
-            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
             transition: width 0.3s ease;
             z-index: 2;
         }
@@ -126,13 +126,13 @@
         }
 
         .step.active .step-circle {
-            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
             color: white;
             box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
         }
 
         .step.completed .step-circle {
-            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
             color: white;
         }
 
@@ -144,11 +144,11 @@
         }
 
         .step.active .step-label {
-            color: #10B981;
+            color: #3182F6;
         }
 
         .step.completed .step-label {
-            color: #10B981;
+            color: #3182F6;
         }
 
         /* 폼 카드 */
@@ -222,7 +222,7 @@
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #10B981;
+            border-color: #3182F6;
             background: #F0FDF4;
         }
 
@@ -248,7 +248,7 @@
 
         .address-search button {
             padding: 16px 24px;
-            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
             color: white;
             border: none;
             border-radius: 12px;
@@ -276,12 +276,12 @@
         }
 
         .file-upload-area:hover {
-            border-color: #10B981;
+            border-color: #3182F6;
             background: #F0FDF4;
         }
 
         .file-upload-area.dragover {
-            border-color: #10B981;
+            border-color: #3182F6;
             background: #DCFCE7;
         }
 
@@ -373,8 +373,8 @@
         }
 
         .signature-controls button:hover {
-            border-color: #10B981;
-            color: #10B981;
+            border-color: #3182F6;
+            color: #3182F6;
         }
 
         /* 제출 버튼 */
@@ -387,7 +387,7 @@
             width: 100%;
             max-width: 400px;
             padding: 20px;
-            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
             color: white;
             border: none;
             border-radius: 14px;
@@ -529,11 +529,11 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label>Last Name (English) <span class="required">*</span></label>
-                            <input type="text" name="lastName" required placeholder="e.g., KIM">
+                            <input type="text" name="lastName" required placeholder="">
                         </div>
                         <div class="form-group">
                             <label>First Name (English) <span class="required">*</span></label>
-                            <input type="text" name="firstName" required placeholder="e.g., MINHO">
+                            <input type="text" name="firstName" required placeholder="">
                         </div>
                     </div>
 
@@ -836,13 +836,14 @@
 
         // 기존 프로필 데이터로 폼 자동 채우기
         function prefillForm(profile) {
-            if (profile.name) {
-                // 이름 분리 시도 (간단하게 마지막 단어를 이름으로)
+            // 이름이 있고, 이메일 형식이 아닌 경우에만 자동 입력
+            if (profile.name && profile.name.trim() && !profile.name.includes('@')) {
                 const nameParts = profile.name.split(' ');
                 if (nameParts.length >= 2) {
                     document.querySelector('input[name="lastName"]').value = nameParts[0];
                     document.querySelector('input[name="firstName"]').value = nameParts.slice(1).join(' ');
-                } else {
+                } else if (profile.name.length > 1) {
+                    // 이름만 있는 경우 firstName에 입력
                     document.querySelector('input[name="firstName"]').value = profile.name;
                 }
             }

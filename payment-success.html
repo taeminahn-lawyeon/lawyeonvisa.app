@@ -25,7 +25,7 @@
         .header {
             background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
             padding: 20px 0;
-            border-bottom: 3px solid #10B981;
+            border-bottom: 3px solid #3182F6;
         }
 
         .header-inner {
@@ -47,7 +47,7 @@
         }
 
         .header-title i {
-            color: #10B981;
+            color: #3182F6;
         }
 
         /* 컨테이너 */
@@ -59,7 +59,7 @@
 
         /* 성공 배너 */
         .success-banner {
-            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
             border-radius: 20px;
             padding: 40px 24px;
             margin: 20px 0;
@@ -190,7 +190,7 @@
 
         .info-row.total .info-value {
             font-size: 22px;
-            color: #10B981;
+            color: #3182F6;
             font-weight: 900;
         }
 
@@ -234,7 +234,7 @@
         }
 
         .steps-list li i {
-            color: #10B981;
+            color: #3182F6;
             margin-top: 2px;
             flex-shrink: 0;
         }
@@ -602,7 +602,7 @@
                 if (!profileResult.success || !profileResult.data) {
                     console.log('📋 프로필 없음 - 자동 생성 시작');
                     const newProfileResult = await createOrUpdateProfile(user.id, {
-                        name: paymentData.customer_name || user.email?.split('@')[0] || '',
+                        name: '',  // 기본사항 제출 시 입력받음
                         email: paymentData.customer_email || user.email || '',
                         phone: ''
                     });
