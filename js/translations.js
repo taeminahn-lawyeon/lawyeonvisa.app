@@ -496,7 +496,7 @@ const translations = {
         // === Site Information ===
         'site.name': 'Lawyeon Immigration Support Center',
         'site.company': 'Law Firm Lawyeon',
-        'site.title': 'Lawyeon Immigration Support Center',
+        'site.title': 'Law Firm Lawyeon LLC.',
         'site.visa': 'Visa',
         'site.immigration': '& Immigration Center',
         
@@ -943,7 +943,8 @@ const translations = {
         'login.google': 'Google 登录',
         'site.name': '律渊律师事务所 出入境移民支援中心',
         'site.company': '律渊律师事务所',
-        
+        'site.title': '律渊律师事务所',
+
         // === Emergency Relief Section ===
         'emergency.title': '强制出境·签证拒签紧急救济',
         'emergency.subtitle': '出入境专业律师亲自应对',
@@ -1343,7 +1344,8 @@ const translations = {
         'login.google': 'Đăng nhập Google',
         'site.name': 'Trung Tâm Hỗ Trợ Xuất Nhập Cảnh Lawyeon',
         'site.company': 'Công Ty Luật Lawyeon',
-        
+        'site.title': 'Công Ty Luật Lawyeon',
+
         // === Emergency Relief Section ===
         'emergency.title': 'Cứu Trợ Khẩn Cấp Trục Xuất & Từ Chối Visa',
         'emergency.subtitle': 'Luật sư chuyên xuất nhập cảnh trực tiếp hỗ trợ',
@@ -1743,7 +1745,8 @@ const translations = {
         'login.google': 'Google ログイン',
         'site.name': 'ロヨン法律事務所出入国移民支援センター',
         'site.company': 'ロヨン法律事務所',
-        
+        'site.title': 'ロヨン法律事務所',
+
         // === Emergency Relief Section ===
         'emergency.title': '強制出国・ビザ拒否緊急救済',
         'emergency.subtitle': '出入国専門弁護士が直接対応します',
@@ -2141,7 +2144,8 @@ const translations = {
         'login.google': 'Google нэвтрэх',
         'site.name': 'Lawyeon Хуулийн Фирм Цагаачлалын Тусламжийн Төв',
         'site.company': 'Lawyeon Хуулийн Фирм',
-        
+        'site.title': 'Lawyeon Хуулийн Фирм',
+
         // === Emergency Relief Section ===
         'emergency.title': 'Албадан гаргах, Виз татгалзах Яаралтай тусламж',
         'emergency.subtitle': 'Цагаачлалын мэргэжлийн өмгөөлөгч шууд хариуцна',
@@ -2539,7 +2543,8 @@ const translations = {
         'login.google': 'เข้าสู่ระบบ Google',
         'site.name': 'ศูนย์สนับสนุนตรวจคนเข้าเมือง Lawyeon',
         'site.company': 'สำนักงานกฎหมาย Lawyeon',
-        
+        'site.title': 'สำนักงานกฎหมาย Lawyeon',
+
         // === Emergency Relief Section ===
         'emergency.title': 'การช่วยเหลือฉุกเฉินการเนรเทศและการปฏิเสธวีซ่า',
         'emergency.subtitle': 'ทนายความผู้เชี่ยวชาญด้านตรวจคนเข้าเมืองรับผิดชอบโดยตรง',
