@@ -956,11 +956,14 @@
             
             if (!session || !session.user) {
                 console.log('❌ [결제 페이지] 세션 없음 (최종)');
-                // 로그인 후 돌아올 URL 저장
+                // 로그인 후 돌아올 URL 저장 (현재 페이지로 돌아오기)
                 const currentUrl = window.location.href;
                 localStorage.setItem('redirectAfterLogin', currentUrl);
-                alert('로그인이 필요합니다.\n\n로그인 후 자동으로 서비스 신청 페이지로 돌아갑니다.');
-                window.location.href = 'index.html';
+
+                // 바로 Google 로그인 실행
+                if (confirm('로그인이 필요합니다.\n\nGoogle 계정으로 로그인하시겠습니까?')) {
+                    await signInWithGoogle();
+                }
                 return;
             }
             
