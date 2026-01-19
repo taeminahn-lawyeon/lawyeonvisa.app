@@ -969,15 +969,10 @@
             
             console.log('✅ [결제 페이지] 세션 존재:', session.user.email);
 
-            // ✅ 2. 프로필 확인
-            const profileResult = await getUserProfile(session.user.id);
-            if (!profileResult.success || !profileResult.data) {
-                alert('사용자 프로필이 없습니다.\n\n먼저 기본사항을 제출해주세요.');
-                window.location.href = 'profile-setup.html';
-                return;
-            }
+            // 프로필 체크 제거 - 결제 후 쓰레드에서 기본사항 제출 받음
+            // (기존: 프로필 없으면 profile-setup.html로 리다이렉트)
 
-            // ✅ 3. Toss Payments SDK v2 초기화
+            // ✅ 2. Toss Payments SDK v2 초기화
             try {
                 const tossPaymentsInstance = TossPayments(clientKey);
                 // 회원 결제 (customerKey는 사용자 고유 ID 사용)
