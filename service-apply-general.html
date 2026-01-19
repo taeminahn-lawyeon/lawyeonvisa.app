@@ -1118,16 +1118,19 @@
                         return;
                     }
 
-                    // 사용자 프로필 가져오기
+                    // 사용자 프로필 가져오기 (없어도 결제 가능)
                     const profileResult = await getUserProfile(session.user.id);
-                    if (!profileResult.success || !profileResult.data) {
-                        alert('사용자 정보를 불러올 수 없습니다.');
-                        btn.disabled = false;
-                        btn.classList.remove('loading');
-                        btn.textContent = '결제하기';
-                        return;
+                    if (profileResult.success && profileResult.data) {
+                        profile = profileResult.data;
+                    } else {
+                        // 프로필 없으면 세션 정보로 대체
+                        console.log('📋 프로필 없음 - 세션 정보 사용');
+                        profile = {
+                            name: session.user.email.split('@')[0], // 이메일 앞부분을 이름으로
+                            email: session.user.email,
+                            phone: ''
+                        };
                     }
-                    profile = profileResult.data;
                 }
 
                 const orderInfo = {
