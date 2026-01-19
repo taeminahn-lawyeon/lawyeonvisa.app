@@ -794,22 +794,22 @@ async function deleteThreadDocument(filePath) {
 // 메시지 관련 함수 (파일 포함)
 // ============================================
 
-// 메시지 생성 (파일 첨부 지원)
+// 메시지 생성 (파일 첨부 지원 + SNS 알림)
 async function createMessage(messageData) {
     try {
         console.log('📝 [createMessage] 메시지 생성 시작:', messageData);
-        
+
         const user = await getCurrentUser();
         if (!user) throw new Error('로그인이 필요합니다');
         console.log('📝 [createMessage] 현재 사용자:', user.id, user.email);
-        
+
         // 프로필 정보 가져오기 (sender_name 용)
         const profileResult = await getUserProfile(user.id);
-        const senderName = profileResult.success && profileResult.data 
-            ? profileResult.data.name 
+        const senderName = profileResult.success && profileResult.data
+            ? profileResult.data.name
             : user.email;
         console.log('📝 [createMessage] sender_name:', senderName);
-        
+
         const insertData = {
             thread_id: messageData.thread_id,
             sender_id: user.id,
@@ -821,18 +821,33 @@ async function createMessage(messageData) {
             file_type: messageData.file_type || null
         };
         console.log('📝 [createMessage] INSERT 데이터:', insertData);
-        
+
         const { data, error } = await supabaseClient
             .from('messages')
             .insert(insertData)
             .select()
             .single();
-        
+
         if (error) {
             console.error('📝 [createMessage] Supabase INSERT 오류:', error);
             throw error;
         }
         console.log('📝 [createMessage] INSERT 성공:', data);
+
+        // 📱 관리자가 보낸 메시지인 경우 사용자에게 SNS 알림 발송
+        if (messageData.sender_type === 'admin' && typeof notifyUserOnNewMessage === 'function') {
+            console.log('📱 [createMessage] 관리자 메시지 - SNS 알림 발송');
+            notifyUserOnNewMessage(messageData.thread_id, messageData.content)
+                .then(result => {
+                    if (result.success) {
+                        console.log('📱 [createMessage] SNS 알림 발송 성공');
+                    } else {
+                        console.log('📱 [createMessage] SNS 알림 발송 실패 (무시):', result.error);
+                    }
+                })
+                .catch(err => console.log('📱 [createMessage] SNS 알림 오류 (무시):', err));
+        }
+
         return { success: true, data };
     } catch (error) {
         console.error('메시지 생성 오류:', error);

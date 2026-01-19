@@ -559,21 +559,6 @@
                             <input type="date" name="birthDate" value="2000-01-01" required>
                         </div>
                         <div class="form-group">
-                            <label><span data-i18n="profile.gender">성별</span> <span class="required" data-i18n="profile.required">*</span></label>
-                            <select name="gender" required>
-                                <option value="" data-i18n="profile.selectGender">선택하세요</option>
-                                <option value="male" data-i18n="profile.male">남성</option>
-                                <option value="female" data-i18n="profile.female">여성</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label><span data-i18n="profile.email">이메일</span> <span class="required" data-i18n="profile.required">*</span></label>
-                            <input type="email" name="email" required data-i18n-placeholder="profile.emailPlaceholder" placeholder="example@email.com">
-                        </div>
-                        <div class="form-group">
                             <label><span data-i18n="profile.phone">전화번호</span> <span class="required" data-i18n="profile.required">*</span></label>
                             <input type="tel" name="phone" required data-i18n-placeholder="profile.phonePlaceholder" placeholder="010-0000-0000">
                         </div>
@@ -1246,11 +1231,10 @@
                 // Supabase에 저장할 프로필 데이터 (role은 기존 값 유지)
                 const profileData = {
                     name: formData.get('lastName') + formData.get('firstName'),
-                    email: session.user.email,
+                    email: session.user.email, // Google 로그인 이메일 자동 사용
                     phone: formData.get('phone'),
                     nationality: formData.get('nationality'),
                     birth_date: formData.get('birthDate'),
-                    gender: formData.get('gender'),
                     passport_number: formData.get('foreignerNumber'),
                     visa_type: formData.get('visaType'),
                     visa_expiry_date: formData.get('stayExpiry'),

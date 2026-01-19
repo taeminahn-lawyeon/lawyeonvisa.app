@@ -591,7 +591,7 @@
                     order_id: paymentData.order_id,
                     payment_id: paymentData.id
                 });
-                
+
                 const threadResult = await createThread({
                     service_name: paymentData.service_name,
                     status: 'payment',
@@ -601,22 +601,74 @@
                     organization: paymentData.organization || null,
                     payment_id: paymentData.id
                 });
-                
+
                 console.log('📋 쓰레드 생성 결과:', threadResult);
-                
+
                 if (!threadResult.success) {
                     console.error('❌ 쓰레드 생성 실패:', threadResult.error);
                     throw new Error(threadResult.error || '쓰레드 생성 실패');
                 }
-                
+
                 createdThreadId = threadResult.data.id;
                 console.log('✅ 쓰레드 생성 완료. ID:', createdThreadId);
-                
+
+                // 📨 기본사항 제출 링크가 포함된 환영 메시지 발송
+                await sendWelcomeMessage(createdThreadId, paymentData.service_name);
+
                 return threadResult.data;
             } catch (error) {
                 console.error('❌ 쓰레드 생성 오류:', error);
                 // 에러를 다시 던지지 않고 null 반환 (결제는 완료되었으므로)
                 return null;
+            }
+        }
+
+        // 환영 메시지 발송 (기본사항 제출 링크 포함)
+        async function sendWelcomeMessage(threadId, serviceName) {
+            try {
+                const profileSubmitUrl = `${window.location.origin}/profile-submit.html?thread=${threadId}`;
+
+                const welcomeMessage = `
+🎉 **Thank you for your payment!**
+
+Your application for **${serviceName}** has been received.
+
+📋 **Next Step: Submit Your Basic Information**
+Please click the link below to submit your required documents:
+
+👉 [Submit Basic Information](${profileSubmitUrl})
+
+**Required Documents:**
+• Passport (photo page)
+• Alien Registration Card (front & back)
+• Electronic Signature
+
+Our team will review your submission and contact you soon.
+
+---
+결제해 주셔서 감사합니다!
+아래 링크를 통해 기본 정보를 제출해 주세요.
+                `.trim();
+
+                // 시스템 메시지로 발송 (sender_type: 'system')
+                const { data, error } = await supabaseClient
+                    .from('messages')
+                    .insert({
+                        thread_id: threadId,
+                        sender_id: null,
+                        sender_type: 'system',
+                        sender_name: 'Lawyeon Visa Center',
+                        content: welcomeMessage,
+                        created_at: new Date().toISOString()
+                    });
+
+                if (error) {
+                    console.error('❌ 환영 메시지 발송 실패:', error);
+                } else {
+                    console.log('✅ 환영 메시지 발송 완료');
+                }
+            } catch (error) {
+                console.error('❌ 환영 메시지 발송 오류:', error);
             }
         }
 
