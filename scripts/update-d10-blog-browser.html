@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>D-10 블로그 글 업데이트</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+        .btn { padding: 12px 24px; background: #3182f6; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; }
+        .btn:hover { background: #1b64da; }
+        .btn:disabled { background: #ccc; }
+        #result { margin-top: 20px; padding: 16px; border-radius: 8px; white-space: pre-wrap; }
+        .success { background: #e6fcf5; color: #087f5b; }
+        .error { background: #ffeaea; color: #c92a2a; }
+        .info { background: #e8f4fd; color: #1864ab; }
+    </style>
+</head>
+<body>
+    <h1>D-10 비자 블로그 글 업데이트</h1>
+    <p>이 페이지를 브라우저에서 열고 아래 버튼을 클릭하면 블로그 글이 업데이트됩니다.</p>
+    <button class="btn" id="updateBtn" onclick="updateBlogPost()">블로그 글 업데이트</button>
+    <div id="result"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://gqistzsergddnpcvuzba.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxaXN0enNlcmdkZG5wY3Z1emJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNTEyMjEsImV4cCI6MjA4MDcyNzIyMX0.X_GgShObq9OJ6z7aEKdUCoyHYo-OJL-I5hcIDt4komg';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        const blogPost = {
+            title: 'D-10 Job Seeker Visa Korea 2026: Complete Guide for New Graduates (Points Exemption)',
+            slug: 'd10-visa-korea-new-graduate-points-exemption-guide-2026',
+            category: 'education',
+            excerpt: 'Just graduated from a Korean university? You are EXEMPT from the D-10 Points System and financial proof requirements. Complete guide including internship rules, part-time work, and extension requirements.',
+            meta_description: 'Complete D-10 Job Seeker Visa guide for 2026. New graduates are exempt from points system & financial proof. Learn about internship rules, part-time work requirements, and visa extension.',
+            thumbnail_url: null,
+            related_services: JSON.stringify([{ id: 'd10-1-change', name: 'D-10-1 Job Seeker Visa Application' }]),
+            is_published: true,
+            content: JSON.stringify([
+                { type: 'paragraph', content: '<strong>"I just graduated. Do I really need 60 points for a D-10 visa?"</strong>' },
+                { type: 'paragraph', content: 'This is the most common worry for international students in South Korea as graduation approaches. The standard D-10-1 Job Seeker Visa usually operates on a strictly calculated Points System, requiring age, education, and Korean language scores to total at least 60 points.' },
+                { type: 'info-box', style: 'success', content: '<strong>Great News!</strong> If you have just graduated from a university in South Korea, you are <strong>EXEMPT</strong> from the points system.' },
+                { type: 'paragraph', content: 'At Lawyeon Visa Center, we specialize in helping fresh graduates transition smoothly to a Job Seeker status without the stress of complex calculations.' },
+                { type: 'heading', content: 'The "New Graduate" Privilege' },
+                { type: 'paragraph', content: 'According to the latest Immigration Office manual, you qualify for the <strong>Points System Exemption</strong> if you meet these specific conditions:' },
+                { type: 'table', headers: ['Criteria', 'Details'], rows: [['Target', 'International students who have graduated from a regular university in South Korea (Associate degree or higher)'], ['Conditions', '1. Applying for D-10 visa for the first time\n2. Within 1 year after graduation\n3. Currently holding D-2 student visa']] },
+                { type: 'paragraph', content: 'If you fit this description, you do not need to calculate points. You just need to prove you graduated.' },
+                { type: 'heading', content: 'Why This is a Game Changer' },
+                { type: 'paragraph', content: 'The biggest benefit is not just skipping the math. <strong>It is about the money.</strong>' },
+                { type: 'paragraph', content: 'Standard D-10 applicants must provide a bank statement showing proof of living expenses (approx. 4~5 million KRW). However, as a new graduate under this exemption rule:' },
+                { type: 'info-box', style: 'info', content: '<strong>Proof of Living Expenses (Financial Ability) is EXEMPT.</strong><br>You do not need to freeze money in your bank account to apply.' },
+                { type: 'heading', content: 'Required Documents (Simplified for Graduates)' },
+                { type: 'paragraph', content: 'Since you are skipping the points evaluation, the document list is much simpler. We handle the preparation for you, but here is what is needed:' },
+                { type: 'paragraph', content: '<strong>Common Documents</strong>' },
+                { type: 'list', ordered: false, items: ['Application form (Form 34)', 'Passport', 'Recent photo', 'Alien Registration Card (ARC)', 'Application fee (100,000 KRW)'] },
+                { type: 'paragraph', content: '<strong>Graduate-Specific Documents</strong>' },
+                { type: 'list', ordered: false, items: ['<strong>Job Seeking Plan:</strong> A simple statement of how you will look for a job (We can help guide you on this)', '<strong>Diploma/Degree Certificate:</strong> Usually NOT required - the immigration office can verify through their system', '<strong>Proof of Residence:</strong> Housing contract (lease agreement) or residence certificate'] },
+                { type: 'info-box', style: 'success', content: '<strong>Note:</strong> No bank balance certificate is required for this specific category!' },
+                { type: 'heading', content: 'Internship Rules You Must Know' },
+                { type: 'paragraph', content: 'You can do internships on a D-10 visa, but there are specific rules:' },
+                { type: 'paragraph', content: '<strong>Time Limits (2026 Regulations)</strong>' },
+                { type: 'paragraph', content: 'One key limit:' },
+                { type: 'list', ordered: false, items: ['<strong>Maximum 1 year cumulative at each individual company</strong>'] },
+                { type: 'paragraph', content: 'There is <strong>NO limit</strong> on total internship time across different companies during your entire D-10 period.' },
+                { type: 'paragraph', content: 'There is <strong>NO minimum period</strong> requirement. You can work at a company for any duration as long as you do not exceed 1 year at that specific company.' },
+                { type: 'paragraph', content: '<strong>Examples</strong>' },
+                { type: 'info-box', style: 'success', content: '<strong>ALLOWED:</strong><br>• Company A: 1 year + Company B: 1 year = OK<br>• Company A: 6 months + Company B: 6 months + Company C: 1 year = OK<br>• Company A: 8 months + Company B: 11 months + Company C: 6 months = OK<br>• Company A: 1 year + Company B: 1 year + Company C: 1 year = OK<br>• Company A: 11 months + Company B: 1 month + Company A again: 1 month = OK (Company A total: 1 year)' },
+                { type: 'info-box', style: 'danger', content: '<strong>NOT ALLOWED:</strong><br>• Company A: 1 year 2 months = NOT ALLOWED (exceeds 1 year at same company)<br>• Company A: 7 months + later returning to Company A for 6 more months = NOT ALLOWED (Company A cumulative total: 13 months)' },
+                { type: 'paragraph', content: '<strong>Reporting Requirement</strong>' },
+                { type: 'info-box', style: 'warning', content: '<strong>You MUST report your internship to the immigration office within 15 days of starting.</strong><br>Not reporting can cause serious problems later.' },
+                { type: 'paragraph', content: 'What to submit when reporting:' },
+                { type: 'list', ordered: false, items: ['Change of registration form', 'Your internship contract', 'Company registration documents', "Company's employment insurance certificate"] },
+                { type: 'heading', content: 'Part-Time Work: Not as Simple as You Think' },
+                { type: 'paragraph', content: 'Many students assume they can work part-time freely on a D-10 visa. <strong>This is NOT true.</strong>' },
+                { type: 'paragraph', content: '<strong>Requirements to Work Part-Time</strong>' },
+                { type: 'paragraph', content: 'You can work part-time <strong>ONLY IF</strong> you meet <strong>ALL</strong> of these conditions:' },
+                { type: 'paragraph', content: '<strong>For 25 Hours Per Week:</strong>' },
+                { type: 'list', ordered: false, items: ['Less than 3 years since you graduated', 'Korean language proficiency: TOPIK Level 4 or higher, OR Social Integration Program (KIIP) Level 4 or higher (passed intermediate evaluation)', 'No previous E-1 to E-7 visa history (including teaching visas E-2, professional visas E-5, E-7, etc.)'] },
+                { type: 'paragraph', content: '<strong>For 30 Hours Per Week:</strong>' },
+                { type: 'paragraph', content: 'If you have TOPIK Level 5 or higher OR KIIP Level 5, you can work up to 30 hours per week. BUT you must still meet all the requirements above.' },
+                { type: 'paragraph', content: '<strong>What Jobs Are Allowed?</strong>' },
+                { type: 'paragraph', content: 'Part-time work for D-10 visa holders follows the same rules as international students on D-2 visas.' },
+                { type: 'info-box', style: 'success', content: '<strong>Permitted Industries:</strong> Same as international student part-time work permit' },
+                { type: 'info-box', style: 'danger', content: '<strong>Restricted Industries:</strong><br>• Manufacturing<br>• Construction<br>• English kids cafes<br>• Other restricted businesses' },
+                { type: 'info-box', style: 'warning', content: '<strong>Important:</strong> If you do not meet these requirements, you CANNOT work part-time legally.' },
+                { type: 'heading', content: 'How Long Can You Stay?' },
+                { type: 'table', headers: ['Your Situation', 'Period Per Issuance', 'Maximum Total Stay'], rows: [['Points Exempt (New Graduate within 1 year)', '1 year', '3 years'], ['80+ Points', '1 year', '3 years'], ['60-79 Points', '6 months', '1 year'], ['Former E-1 to E-7 Visa Holders', '6 months', '1 year'], ['Caregiver Training Program Completers', '6 months', '3 years'], ['Foreign Embassy/Consulate Interns', '6 months', '3 years']] },
+                { type: 'info-box', style: 'info', content: '<strong>Important:</strong> Maximum stay varies by category. New graduates and high scorers (80+) can stay up to 3 years, while those with 60-79 points or former E-visa holders are limited to 1 year total.' },
+                { type: 'heading', content: 'Extension Details' },
+                { type: 'paragraph', content: '<strong>For New Graduates (Points Exempt for First Application):</strong>' },
+                { type: 'paragraph', content: 'When you apply for extension, you will need to meet the points system requirements:' },
+                { type: 'list', ordered: false, items: ['<strong>60+ points required</strong> for extension', 'If you have <strong>60-79 points:</strong> Each extension is for 6 months - maximum 1 year total stay', 'If you have <strong>80+ points:</strong> Each extension is for 1 year - maximum 3 years total stay'] },
+                { type: 'paragraph', content: 'What you need for extension:' },
+                { type: 'list', ordered: false, items: ['Korean language certificate (TOPIK or KIIP)', 'Bank statements (proof of financial ability)', 'Proof of active job hunting (internship records, interview records, job applications)', 'Any certificates or training you completed'] },
+                { type: 'info-box', style: 'warning', content: '<strong>Start preparing for extension at least 1 month before your visa expires.</strong>' },
+                { type: 'heading', content: 'Other Exemption Cases' },
+                { type: 'paragraph', content: 'While the "New Graduate" case is the most common, the points system is also exempted if you fall into these categories:' },
+                { type: 'paragraph', content: '<strong>High Korean Proficiency</strong>' },
+                { type: 'list', ordered: false, items: ['TOPIK Level 4 or higher', 'Social Integration Program (KIIP) Level 4 or higher (passed intermediate evaluation)', 'Within 3 years of graduation', 'Stay: 1 year per issuance, up to 3 years total'] },
+                { type: 'paragraph', content: '<strong>Promising Talent (D-10-T)</strong>' },
+                { type: 'list', ordered: false, items: ['Graduated from Times Higher Education or QS World University Rankings Top 200 university', "Master's degree or higher", 'Within 3 years of graduation', 'Stay: 1 year per issuance, up to 3 years total'] },
+                { type: 'paragraph', content: '<strong>Experienced Professionals (Former E-1 to E-7 Holders)</strong>' },
+                { type: 'list', ordered: false, items: ['Previous experience working in E-1 through E-7 professional visa categories', 'Stay: 6 months per issuance, maximum 1 year total'] },
+                { type: 'heading', content: 'Skip the Immigration Office Visit' },
+                { type: 'paragraph', content: 'Graduation season means the immigration office is fully booked. Why wait for weeks just to reserve a visit?' },
+                { type: 'paragraph', content: '<strong>Lawyeon Visa & Immigration Center</strong> provides a direct online application service:' },
+                { type: 'paragraph', content: '<strong>How It Works</strong>' },
+                { type: 'numbered-section', number: '1', title: 'Upload Documents', content: 'Upload your documents to our secure platform.' },
+                { type: 'numbered-section', number: '2', title: 'Pay Online', content: 'Pay the service fee online.' },
+                { type: 'numbered-section', number: '3', title: 'We Handle Everything', content: 'We file the application on your behalf immediately.' },
+                { type: 'info-box', style: 'info', content: '<strong>You focus on finding your dream job. We handle the visa paperwork.</strong>' },
+                { type: 'heading', content: 'Frequently Asked Questions' },
+                { type: 'paragraph', content: '<strong>Q: Can I apply for D-10 right after graduation?</strong><br>A: Yes! Just make sure to apply within 1 year of graduation to get the points system exemption.' },
+                { type: 'paragraph', content: '<strong>Q: Do I need TOPIK to get D-10?</strong><br>A: No, you do not need TOPIK to get the D-10 visa. However, you DO need TOPIK 4+ (or KIIP Level 4+) if you want to work part-time.' },
+                { type: 'paragraph', content: '<strong>Q: Do I need to show bank statements?</strong><br>A: No, not for your first D-10 application if you are a new graduate within 1 year of graduation.' },
+                { type: 'paragraph', content: '<strong>Q: Can I work part-time immediately after getting D-10?</strong><br>A: Only if you meet ALL the requirements: less than 3 years since graduation, TOPIK 4+ or KIIP 4+, and no previous E-1~E-7 visa history.' },
+                { type: 'paragraph', content: '<strong>Q: I have TOPIK 3. Can I work part-time?</strong><br>A: No, you need at least TOPIK Level 4 or KIIP Level 4 to be eligible for part-time work.' },
+                { type: 'paragraph', content: '<strong>Q: Do I have to report my internship?</strong><br>A: YES! You must report it within 15 days of starting. Not reporting can cause problems later.' },
+                { type: 'paragraph', content: '<strong>Q: Can I intern at multiple companies for more than 1 year total?</strong><br>A: Yes! There is NO limit on total internship time. The only limit is that you cannot work at any single company for more than 1 year cumulative. You can intern at Company A for 1 year, then Company B for 1 year, then Company C for 1 year, etc.' },
+                { type: 'paragraph', content: '<strong>Q: Is there a minimum internship period at each company?</strong><br>A: No, there is NO minimum period requirement. You can intern for 1 month, 3 months, 6 months, or any duration up to 1 year at each company.' },
+                { type: 'paragraph', content: '<strong>Q: I worked at Company A for 8 months. Can I go back to Company A later?</strong><br>A: Yes, you can return to Company A. But your total cumulative time at Company A cannot exceed 1 year throughout your entire D-10 period. So you can only work 4 more months maximum at Company A.' },
+                { type: 'paragraph', content: '<strong>Q: How long does the application take?</strong><br>A: Usually 2-4 weeks. It might take longer if your documents are not complete.' },
+                { type: 'paragraph', content: '<strong>Q: What if more than 1 year has passed since I graduated?</strong><br>A: You can still apply, but you will lose the points exemption. You will need to meet the 60+ points requirement.' },
+                { type: 'paragraph', content: '<strong>Q: If I get 60-79 points for extension, how long can I stay?</strong><br>A: With 60-79 points, you get 6 months per extension, and the maximum total stay is 1 year. This means: initial 1 year (points exempt) ends, but you can only stay up to 1 year total if your extension score is 60-79 points.' },
+                { type: 'paragraph', content: '<strong>Q: I used to have an E-2 teaching visa. Can I work part-time on D-10?</strong><br>A: No, if you have ever had any E-1 through E-7 visa (including E-2), you are not eligible for the part-time work allowance on D-10.' },
+                { type: 'paragraph', content: '<strong>Q: What if I did not graduate from a university in South Korea?</strong><br>A: If you graduated from a university abroad, you will likely need to follow the Points System or qualify under the "World Top University" exemption (Times/QS Top 200).' },
+                { type: 'paragraph', content: '<strong>Q: What part-time jobs can I do with D-10?</strong><br>A: The allowed jobs are the same as for international students on D-2 visas. Manufacturing, construction, and English kids cafes are among the restricted industries.' },
+                { type: 'paragraph', content: '<strong>Q: I completed a caregiver training program. What are my stay limits?</strong><br>A: You get 6 months per issuance. The maximum total stay is 3 years.' },
+                { type: 'paragraph', content: '<strong>Q: I have previous E-7 visa experience. What are my D-10 limits?</strong><br>A: You get 6 months per issuance. The maximum total stay is 1 year (not 3 years).' },
+                { type: 'heading', content: 'Common Mistakes to Avoid' },
+                { type: 'info-box', style: 'danger', content: '<strong>Mistake #1: Applying after D-2 expires</strong><br>Solution: Apply before your D-2 visa runs out!' },
+                { type: 'info-box', style: 'danger', content: '<strong>Mistake #2: Not reporting internships</strong><br>Solution: Report within 15 days of starting any internship.' },
+                { type: 'info-box', style: 'danger', content: "<strong>Mistake #3: Thinking there's a limit on total internship time</strong><br>Solution: There is NO total limit! You can intern as long as your D-10 visa is valid. Just do not exceed 1 year at any single company." },
+                { type: 'info-box', style: 'danger', content: '<strong>Mistake #4: Working part-time without qualifications</strong><br>Solution: Make sure you meet ALL requirements: TOPIK 4+, less than 3 years since graduation, no previous E visa.' },
+                { type: 'info-box', style: 'danger', content: '<strong>Mistake #5: Not preparing for extension early</strong><br>Solution: Start gathering documents for 60+ points at least 1 month before expiry.' },
+                { type: 'info-box', style: 'danger', content: '<strong>Mistake #6: Not keeping job hunting records</strong><br>Solution: Keep proof of all job applications, interviews, training courses. You will need these for extension.' },
+                { type: 'info-box', style: 'danger', content: '<strong>Mistake #7: Thinking 60-79 points allows 3 years stay</strong><br>Solution: 60-79 points only allows 1 year maximum total stay. To stay longer, you need 80+ points.' },
+                { type: 'heading', content: 'Important Tips' },
+                { type: 'paragraph', content: '<strong>Before You Graduate</strong>' },
+                { type: 'list', ordered: false, items: ['Find out when you can get your graduation certificate', 'Make sure you have a rental contract', 'Write up a simple job search plan', 'Check when your D-2 visa expires', 'Get TOPIK 4+ if you plan to work part-time'] },
+                { type: 'paragraph', content: '<strong>While You Have D-10</strong>' },
+                { type: 'list', ordered: false, items: ['Report any internships within 15 days of starting', 'Track your internship time at each company (do not exceed 1 year per company)', 'Keep records of all your job search activities', 'Start preparing for extension early if you need one', 'Aim for 80+ points if you want to stay for 3 years'] },
+                { type: 'paragraph', content: '<strong>For Extension</strong>' },
+                { type: 'list', ordered: false, items: ['Start preparing 1 month before your visa expires', 'Collect documents to meet the 60+ points requirement', 'Keep proof of all job hunting activities', 'Get TOPIK or KIIP certificate to boost your points', '<strong>Critical: Aim for 80+ points</strong> to get 1-year extensions instead of 6-month extensions'] },
+                { type: 'heading', content: 'Need Help with Your D-10 Visa?' },
+                { type: 'paragraph', content: 'At <strong>Lawyeon Visa & Immigration Center</strong>, we specialize in helping international graduates navigate the D-10 visa process smoothly.' },
+                { type: 'paragraph', content: '<strong>Our Services</strong>' },
+                { type: 'list', ordered: false, items: ['D-10 visa application (points exemption track)', 'Internship reporting assistance', 'D-10 visa extension preparation (help you reach 80+ points)', 'E-7 work visa conversion consulting'] },
+                { type: 'paragraph', content: '<strong>Why Choose Us?</strong>' },
+                { type: 'list', ordered: false, items: ['Experienced with fresh graduate cases', 'Fast online application process', 'No need to visit immigration office', 'English-speaking staff available', 'Strategic advice to maximize your stay period'] },
+                { type: 'paragraph', content: '<strong>Apply for D-10 Visa Service</strong>' },
+                { type: 'link-button', text: 'Apply for D-10 Visa Service', url: 'service-apply-general.html?service=d10-1-change' }
+            ])
+        };
+
+        async function updateBlogPost() {
+            const btn = document.getElementById('updateBtn');
+            const result = document.getElementById('result');
+
+            btn.disabled = true;
+            btn.textContent = '업데이트 중...';
+            result.className = 'info';
+            result.textContent = '기존 D-10 블로그 글을 검색 중...';
+
+            try {
+                // Find existing D-10 posts
+                const { data: existingPosts, error: fetchError } = await supabase
+                    .from('blog_posts')
+                    .select('id, slug, title')
+                    .or('slug.ilike.%d10%,slug.ilike.%d-10%');
+
+                if (fetchError) throw fetchError;
+
+                console.log('Found posts:', existingPosts);
+                result.textContent = `찾은 D-10 글: ${existingPosts?.length || 0}개\n${existingPosts?.map(p => `- ${p.title} (ID: ${p.id})`).join('\n') || '없음'}`;
+
+                if (existingPosts && existingPosts.length > 0) {
+                    const postToUpdate = existingPosts[0];
+                    result.textContent += `\n\n기존 글 업데이트 중... (ID: ${postToUpdate.id})`;
+
+                    const { data, error } = await supabase
+                        .from('blog_posts')
+                        .update({
+                            ...blogPost,
+                            updated_at: new Date().toISOString()
+                        })
+                        .eq('id', postToUpdate.id)
+                        .select();
+
+                    if (error) throw error;
+
+                    result.className = 'success';
+                    result.textContent = `블로그 글 업데이트 완료!\n\nPost ID: ${data[0].id}\n새 제목: ${blogPost.title}\n새 슬러그: ${blogPost.slug}\n\n확인: blog-post.html?slug=${blogPost.slug}`;
+                } else {
+                    result.textContent += '\n\n기존 글 없음. 새 글 생성 중...';
+
+                    const { data, error } = await supabase
+                        .from('blog_posts')
+                        .insert([{
+                            ...blogPost,
+                            created_at: new Date().toISOString(),
+                            updated_at: new Date().toISOString()
+                        }])
+                        .select();
+
+                    if (error) throw error;
+
+                    result.className = 'success';
+                    result.textContent = `새 블로그 글 생성 완료!\n\nPost ID: ${data[0].id}\n제목: ${blogPost.title}\n슬러그: ${blogPost.slug}\n\n확인: blog-post.html?slug=${blogPost.slug}`;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                result.className = 'error';
+                result.textContent = `오류 발생: ${error.message}`;
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '블로그 글 업데이트';
+            }
+        }
+    </script>
+</body>
+</html>
