@@ -4,6 +4,7 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
     <title data-i18n="site.title">법무법인 로연 출입국이민지원센터</title>
 
     <!-- SEO 메타 태그 -->
@@ -1271,18 +1272,18 @@
 
         <!-- 뉴스 & 인사이트 섹션 -->
         <div class="blog-section">
-            <h3>뉴스 & 인사이트</h3>
-            <p class="blog-section-desc">출입국·비자에 관한 유용한 정보를 확인하세요</p>
+            <h3 data-i18n="blog.title">뉴스 & 인사이트</h3>
+            <p class="blog-section-desc" data-i18n="blog.subtitle">출입국·비자에 관한 유용한 정보를 확인하세요</p>
 
             <div class="blog-grid" id="blogGrid">
                 <div class="blog-empty">
                     <div class="blog-empty-icon">📝</div>
-                    <p>글을 불러오는 중...</p>
+                    <p data-i18n="blog.loading">글을 불러오는 중...</p>
                 </div>
             </div>
 
             <a href="blog.html" class="blog-more-btn">
-                <span>더 많은 글 보기</span>
+                <span data-i18n="blog.moreBtn">더 많은 글 보기</span>
                 <span>→</span>
             </a>
         </div>
@@ -2266,9 +2267,18 @@
 
                 card.onclick = handleClick;
 
-                // 직접 title/desc 사용 (새 구조)
-                const title = service.title;
-                const desc = service.desc;
+                // i18n 번역 시도 (번역이 없으면 기본 title/desc 사용)
+                // 하이픈을 언더스코어로 변환하여 기존 번역 키와 호환
+                const normalizedId = service.id.replace(/-/g, '_');
+                const titleKey = `service.${normalizedId}.title`;
+                const descKey = `service.${normalizedId}.desc`;
+
+                let title = window.i18n ? window.i18n.translate(titleKey) : service.title;
+                let desc = window.i18n ? window.i18n.translate(descKey) : service.desc;
+
+                // 번역이 키 그대로 반환되면 원본 사용 (폴백)
+                if (title === titleKey) title = service.title;
+                if (desc === descKey) desc = service.desc;
 
                 card.innerHTML = `
                     <div class="title">${title}</div>

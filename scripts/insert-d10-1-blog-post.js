@@ -21,7 +21,7 @@ const blogPost = {
     meta_description: 'Just graduated from a Korean university? You might be exempt from the D-10 Points System and financial proof requirements. Apply for your Job Seeker Visa online instantly with Lawyeon.',
     thumbnail_url: null, // Add thumbnail URL if available
     related_services: JSON.stringify([
-        { id: 'd10-1-change', name: 'D-10-1 일반구직 비자 변경' }
+        { id: 'd10-1-change', name: 'D-10-1 Job Seeker Visa Change' }
     ]),
     content: JSON.stringify([
         {
