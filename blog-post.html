@@ -689,7 +689,7 @@
         // Supabase 초기화
         const SUPABASE_URL = 'https://gqistzsergddnpcvuzba.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxaXN0enNlcmdkZG5wY3Z1emJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNTEyMjEsImV4cCI6MjA4MDcyNzIyMX0.X_GgShObq9OJ6z7aEKdUCoyHYo-OJL-I5hcIDt4komg';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         // 카테고리 매핑
         const categoryNames = {
@@ -714,7 +714,7 @@
             }
 
             try {
-                const { data: post, error } = await supabase
+                const { data: post, error } = await supabaseClient
                     .from('blog_posts')
                     .select('*')
                     .eq('slug', slug)
@@ -957,7 +957,7 @@
         // 관련 글 로드
         async function loadRelatedPosts(category, currentId) {
             try {
-                const { data: posts, error } = await supabase
+                const { data: posts, error } = await supabaseClient
                     .from('blog_posts')
                     .select('*')
                     .eq('category', category)
