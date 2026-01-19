@@ -13,13 +13,13 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// D-10-1 Blog Post Content (Comprehensive 2025 Update)
+// D-10-1 Blog Post Content (Comprehensive 2026 Update)
 const blogPost = {
-    title: 'D-10 Job Seeker Visa Korea 2025: Complete Guide for New Graduates (Points Exemption)',
-    slug: 'd10-visa-korea-new-graduate-points-exemption-guide-2025',
+    title: 'D-10 Job Seeker Visa Korea 2026: Complete Guide for New Graduates (Points Exemption)',
+    slug: 'd10-visa-korea-new-graduate-points-exemption-guide-2026',
     category: 'education',
     excerpt: 'Just graduated from a Korean university? You are EXEMPT from the D-10 Points System and financial proof requirements. Complete guide including internship rules, part-time work, and extension requirements.',
-    meta_description: 'Complete D-10 Job Seeker Visa guide for 2025. New graduates are exempt from points system & financial proof. Learn about internship rules, part-time work requirements, and visa extension.',
+    meta_description: 'Complete D-10 Job Seeker Visa guide for 2026. New graduates are exempt from points system & financial proof. Learn about internship rules, part-time work requirements, and visa extension.',
     thumbnail_url: null,
     related_services: JSON.stringify([
         { id: 'd10-1-change', name: 'D-10-1 Job Seeker Visa Application' }
@@ -140,7 +140,7 @@ const blogPost = {
         },
         {
             type: 'paragraph',
-            content: '<strong>Time Limits (2025 Regulations)</strong>'
+            content: '<strong>Time Limits (2026 Regulations)</strong>'
         },
         {
             type: 'paragraph',
