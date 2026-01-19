@@ -602,7 +602,7 @@
                 if (!profileResult.success || !profileResult.data) {
                     console.log('📋 프로필 없음 - 자동 생성 시작');
                     const newProfileResult = await createOrUpdateProfile(user.id, {
-                        name: paymentData.customer_name || user.email?.split('@')[0] || '',
+                        name: '',  // 기본사항 제출 시 입력받음
                         email: paymentData.customer_email || user.email || '',
                         phone: ''
                     });
