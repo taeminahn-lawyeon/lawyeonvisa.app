@@ -583,53 +583,6 @@ const blogPost = {
             ]
         },
 
-        // Need Help
-        {
-            type: 'heading',
-            content: 'Need Help with Your D-10 Visa?'
-        },
-        {
-            type: 'paragraph',
-            content: 'At <strong>Lawyeon Visa & Immigration Center</strong>, we specialize in helping international graduates navigate the D-10 visa process smoothly.'
-        },
-        {
-            type: 'paragraph',
-            content: '<strong>Our Services</strong>'
-        },
-        {
-            type: 'list',
-            ordered: false,
-            items: [
-                'D-10 visa application (points exemption track)',
-                'Internship reporting assistance',
-                'D-10 visa extension preparation (help you reach 80+ points)',
-                'E-7 work visa conversion consulting'
-            ]
-        },
-        {
-            type: 'paragraph',
-            content: '<strong>Why Choose Us?</strong>'
-        },
-        {
-            type: 'list',
-            ordered: false,
-            items: [
-                'Experienced with fresh graduate cases',
-                'Fast online application process',
-                'No need to visit immigration office',
-                'English-speaking staff available',
-                'Strategic advice to maximize your stay period'
-            ]
-        },
-        {
-            type: 'paragraph',
-            content: '<strong>Apply for D-10 Visa Service</strong>'
-        },
-        {
-            type: 'link-button',
-            text: 'Apply for D-10 Visa Service',
-            url: 'service-apply-general.html?service=d10-1-change'
-        }
     ])
 };
 
