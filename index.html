@@ -1859,7 +1859,16 @@
                 
                 if (profileData) {
                     console.log('✅ 프로필 데이터 확인 완료 (일반 사용자)');
-                    
+
+                    // 🔄 로그인 후 리다이렉트 체크 (서비스 신청 페이지에서 왔을 경우)
+                    const redirectUrl = localStorage.getItem('redirectAfterLogin');
+                    if (redirectUrl) {
+                        console.log('🔄 서비스 신청 페이지로 리다이렉트:', redirectUrl);
+                        localStorage.removeItem('redirectAfterLogin');
+                        window.location.href = redirectUrl;
+                        return;
+                    }
+
                     // 헤더에 사용자 이름 표시
                     const userName = profileData.name || session.user.email.split('@')[0];
                     document.getElementById('userGreetingName').textContent = `${userName}님`;
