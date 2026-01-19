@@ -271,6 +271,39 @@ async function updateUserProfile(userId, updates) {
     }
 }
 
+// 프로필 생성 또는 업데이트 (upsert)
+async function createOrUpdateProfile(userId, profileData) {
+    try {
+        console.log('🔄 프로필 생성/업데이트 시도:', { userId, profileData });
+
+        const { data, error } = await supabaseClient
+            .from('profiles')
+            .upsert({
+                id: userId,
+                name: profileData.name || '',
+                email: profileData.email || '',
+                phone: profileData.phone || '',
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString()
+            }, {
+                onConflict: 'id'
+            })
+            .select()
+            .single();
+
+        if (error) {
+            console.error('❌ 프로필 upsert 에러:', error);
+            throw error;
+        }
+
+        console.log('✅ 프로필 생성/업데이트 성공:', data);
+        return { success: true, data };
+    } catch (error) {
+        console.error('❌ 프로필 생성/업데이트 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
 // ============================================
 // 쓰레드 관련 함수
 // ============================================
