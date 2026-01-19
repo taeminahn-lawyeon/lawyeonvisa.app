@@ -44,10 +44,10 @@ async function signInWithGoogle() {
         // 🚨 현재 페이지 URL 확인
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
         console.log('🔍 현재 페이지:', currentPage);
-        
+
         // 현재 페이지로 리디렉션
         let redirectUrl = window.location.href;
-        
+
         // 🚨 페이지별 리디렉션 URL 및 universityCode 설정
         if (currentPage === 'login-jnu.html') {
             // 전남대 학생 로그인
@@ -69,20 +69,25 @@ async function signInWithGoogle() {
             localStorage.removeItem('universityCode');
             redirectUrl = window.location.origin + '/partner-login-korea.html';
             console.log('✅ 한국대 관리자 로그인');
+        } else if (currentPage === 'service-apply-general.html') {
+            // 서비스 신청 페이지 - 현재 URL 유지 (쿼리 파라미터 포함)
+            localStorage.removeItem('universityCode');
+            redirectUrl = window.location.href; // 현재 URL 그대로 사용 (service ID 포함)
+            console.log('✅ 서비스 신청 페이지 로그인 - 현재 URL 유지:', redirectUrl);
         } else {
             // 일반 페이지 (index.html 등) - universityCode 삭제
             localStorage.removeItem('universityCode');
             redirectUrl = window.location.origin + '/index.html';
             console.log('✅ 일반 사용자 로그인 - 대학 코드 삭제');
         }
-        
+
         const { data, error } = await supabaseClient.auth.signInWithOAuth({
             provider: 'google',
             options: {
                 redirectTo: redirectUrl
             }
         });
-        
+
         if (error) throw error;
         return { success: true, data };
     } catch (error) {
