@@ -592,6 +592,28 @@
                     payment_id: paymentData.id
                 });
 
+                // 🔥 프로필 확인 및 자동 생성
+                const user = await getCurrentUser();
+                if (!user) {
+                    throw new Error('로그인이 필요합니다');
+                }
+
+                const profileResult = await getUserProfile(user.id);
+                if (!profileResult.success || !profileResult.data) {
+                    console.log('📋 프로필 없음 - 자동 생성 시작');
+                    const newProfileResult = await createOrUpdateProfile(user.id, {
+                        name: paymentData.customer_name || user.email?.split('@')[0] || '',
+                        email: paymentData.customer_email || user.email || '',
+                        phone: ''
+                    });
+
+                    if (!newProfileResult.success) {
+                        console.error('❌ 프로필 자동 생성 실패:', newProfileResult.error);
+                        throw new Error('프로필 생성 실패: ' + newProfileResult.error);
+                    }
+                    console.log('✅ 프로필 자동 생성 완료');
+                }
+
                 const threadResult = await createThread({
                     service_name: paymentData.service_name,
                     status: 'payment',
