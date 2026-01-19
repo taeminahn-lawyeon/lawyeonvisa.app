@@ -776,10 +776,6 @@
                                     <span>🔗</span>
                                     <span>링크 복사</span>
                                 </button>
-                                <button class="share-btn" onclick="shareKakao()">
-                                    <span>💬</span>
-                                    <span>카카오톡</span>
-                                </button>
                             </div>
                         </header>
 
@@ -1029,12 +1025,6 @@
             navigator.clipboard.writeText(window.location.href).then(() => {
                 alert('링크가 복사되었습니다.');
             });
-        }
-
-        // 카카오 공유
-        function shareKakao() {
-            // 카카오 SDK 연동 시 구현
-            alert('카카오톡 공유 기능은 준비 중입니다.');
         }
 
         // 날짜 포맷
