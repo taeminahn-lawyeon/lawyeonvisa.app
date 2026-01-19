@@ -91,7 +91,14 @@ const translations = {
         'services.title': '출입국 민원 대행',
         'services.subtitle': '전문 변호사가 처리하는 출입국 서비스',
         
-        // 서비스 카테고리 탭
+        // 서비스 카테고리 탭 (index.html 메인 페이지용)
+        'services.tab.general': '일반 신고·증명',
+        'services.tab.education': '교육·구직',
+        'services.tab.work': '취업·워크',
+        'services.tab.business': '사업·투자',
+        'services.tab.family': '동포·가족·결혼',
+        'services.tab.residence': '거주·영주·국적',
+        // 기존 서비스 카테고리 탭 (하위 호환용)
         'services.tab.visa': '비자',
         'services.tab.residenceReport': '체류 신고',
         'services.tab.immigration': '이민·국적·난민',
@@ -514,14 +521,21 @@ const translations = {
         'services.title': 'Immigration Services',
         'services.subtitle': 'Professional immigration services handled by lawyers',
         
-        // Service Category Tabs
+        // Service Category Tabs (index.html main page)
+        'services.tab.general': 'General Services',
+        'services.tab.education': 'Education & Job Seeking',
+        'services.tab.work': 'Employment',
+        'services.tab.business': 'Business & Investment',
+        'services.tab.family': 'Family & Overseas Koreans',
+        'services.tab.residence': 'Residence & Nationality',
+        // Legacy service tabs
         'services.tab.visa': 'Visa & Status',
         'services.tab.residenceReport': 'Notifications & Permits',
         'services.tab.immigration': 'Nationality & Refugees',
         'services.tab.alienReg': 'Foreigner Registration',
         'services.tab.consulting': 'Legal Consultation',
         'services.tab.certificate': 'Certificate Issuance',
-        
+
         // === Blog/News Section ===
         'blog.title': 'News & Insights',
         'blog.subtitle': 'Useful information about immigration and visas',
@@ -947,13 +961,18 @@ const translations = {
         // === Services Section ===
         'services.title': '出入境事务代理',
         'services.subtitle': '专业律师处理的出入境服务',
+        'services.tab.general': '一般申报·证明',
+        'services.tab.education': '教育·求职',
+        'services.tab.work': '就业·工作',
+        'services.tab.business': '商务·投资',
+        'services.tab.family': '同胞·家庭·婚姻',
+        'services.tab.residence': '居住·永住·国籍',
         'services.tab.visa': '签证',
         'services.tab.residenceReport': '居留申报',
         'services.tab.immigration': '移民·国籍·难民',
         'services.tab.alienReg': '外国人登记',
         'services.tab.consulting': '咨询',
         'services.tab.certificate': '证明',
-        'services.title': '出入境事务代理',
 
         // === Blog/News Section ===
         'blog.title': '新闻与资讯',
@@ -1182,13 +1201,18 @@ const translations = {
         // === Services Section ===
         'services.title': 'Dịch Vụ Xuất Nhập Cảnh',
         'services.subtitle': 'Dịch vụ xuất nhập cảnh chuyên nghiệp do luật sư xử lý',
+        'services.tab.general': 'Dịch vụ chung',
+        'services.tab.education': 'Giáo dục & Tìm việc',
+        'services.tab.work': 'Việc làm',
+        'services.tab.business': 'Kinh doanh & Đầu tư',
+        'services.tab.family': 'Gia đình & Kiều bào',
+        'services.tab.residence': 'Cư trú & Quốc tịch',
         'services.tab.visa': 'Visa',
         'services.tab.residenceReport': 'Báo Cáo Cư Trú',
         'services.tab.immigration': 'Di Trú·Quốc Tịch·Tị Nạn',
         'services.tab.alienReg': 'Đăng Ký Người Nước Ngoài',
         'services.tab.consulting': 'Tư Vấn',
         'services.tab.certificate': 'Chứng Nhận',
-        'services.title': 'Dịch Vụ Xuất Nhập Cảnh',
 
         // === Blog/News Section ===
         'blog.title': 'Tin Tức & Thông Tin',
@@ -1417,13 +1441,18 @@ const translations = {
         // === Services Section ===
         'services.title': '出入国民願代行',
         'services.subtitle': '専門弁護士が処理する出入国サービス',
+        'services.tab.general': '一般申告・証明',
+        'services.tab.education': '教育・求職',
+        'services.tab.work': '就業・ワーク',
+        'services.tab.business': '事業・投資',
+        'services.tab.family': '同胞・家族・結婚',
+        'services.tab.residence': '居住・永住・国籍',
         'services.tab.visa': 'ビザ',
         'services.tab.residenceReport': '滞在申告',
         'services.tab.immigration': '移民・国籍・難民',
         'services.tab.alienReg': '外国人登録',
         'services.tab.consulting': 'コンサルティング',
         'services.tab.certificate': '証明書',
-        'services.title': '出入国民願代行',
 
         // === Blog/News Section ===
         'blog.title': 'ニュース & インサイト',
@@ -1652,13 +1681,18 @@ const translations = {
         // === Services Section ===
         'services.title': 'Цагаачлалын үйлчилгээ',
         'services.subtitle': 'Хуульчдын гүйцэтгэсэн мэргэжлийн цагаачлалын үйлчилгээ',
+        'services.tab.general': 'Ерөнхий үйлчилгээ',
+        'services.tab.education': 'Боловсрол & Ажил хайх',
+        'services.tab.work': 'Ажил эрхлэлт',
+        'services.tab.business': 'Бизнес & Хөрөнгө оруулалт',
+        'services.tab.family': 'Гэр бүл & Гадаад солонгосчууд',
+        'services.tab.residence': 'Оршин суух & Иргэншил',
         'services.tab.visa': 'Виз',
         'services.tab.residenceReport': 'Оршин суух мэдэгдэл',
         'services.tab.immigration': 'Цагаачлал·Иргэншил·Дүрвэгсэд',
         'services.tab.alienReg': 'Гадаадын Иргэний Бүртгэл',
         'services.tab.consulting': 'Зөвлөгөө',
         'services.tab.certificate': 'Гэрчилгээ',
-        'services.title': 'Цагаачлалын үйлчилгээ',
 
         // === Blog/News Section ===
         'blog.title': 'Мэдээ & Мэдээлэл',
@@ -1887,6 +1921,12 @@ const translations = {
         // === Services Section ===
         'services.title': 'บริการตรวจคนเข้าเมือง',
         'services.subtitle': 'บริการตรวจคนเข้าเมืองมืออาชีพโดยทนายความ',
+        'services.tab.general': 'บริการทั่วไป',
+        'services.tab.education': 'การศึกษา & หางาน',
+        'services.tab.work': 'การจ้างงาน',
+        'services.tab.business': 'ธุรกิจ & การลงทุน',
+        'services.tab.family': 'ครอบครัว & ชาวเกาหลีโพ้นทะเล',
+        'services.tab.residence': 'การพำนัก & สัญชาติ',
         'services.tab.visa': 'วีซ่า',
         'services.tab.residenceReport': 'รายงานการพำนัก',
         'services.tab.immigration': 'ตรวจคนเข้าเมือง·สัญชาติ·ผู้ลี้ภัย',
