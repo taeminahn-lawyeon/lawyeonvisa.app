@@ -1884,35 +1884,53 @@
                     const userInfo = document.getElementById('userInfo');
                     if (userInfo) {
                         userInfo.style.display = 'block';
-                        
+
+                        // 기본사항 제출 여부 확인 (visa_type이 있으면 제출된 것으로 판단)
+                        const isProfileComplete = profileData.visa_type && profileData.visa_expiry_date;
+
                         // 사용자 이름 표시
                         const userNameDisplay = document.getElementById('userNameDisplay');
                         if (userNameDisplay) {
-                            userNameDisplay.textContent = `${profileData.name || session.user.email} (${profileData.nationality || '국적 미설정'})`;
+                            if (isProfileComplete) {
+                                userNameDisplay.textContent = `${profileData.name || session.user.email} (${profileData.nationality || '국적 미설정'})`;
+                            } else {
+                                userNameDisplay.textContent = '기본사항 미제출';
+                                userNameDisplay.style.color = '#EF4444';
+                            }
                         }
-                        
+
                         // 체류자격 표시
                         const userVisaType = document.getElementById('userVisaType');
                         if (userVisaType) {
-                            userVisaType.textContent = profileData.visa_type || 'D-2 유학';
+                            if (isProfileComplete) {
+                                userVisaType.textContent = profileData.visa_type;
+                            } else {
+                                userVisaType.textContent = '미입력';
+                                userVisaType.style.color = '#9CA3AF';
+                            }
                         }
-                        
+
                         // 만료일 표시
                         const userExpiry = document.getElementById('userExpiry');
-                        if (userExpiry && profileData.visa_expiry_date) {
-                            userExpiry.textContent = profileData.visa_expiry_date;
-                            
-                            // 만료일까지 남은 일수 계산하여 색상 변경
-                            const today = new Date();
-                            const expiry = new Date(profileData.visa_expiry_date);
-                            const daysLeft = Math.floor((expiry - today) / (1000 * 60 * 60 * 24));
-                            
-                            if (daysLeft < 30) {
-                                userExpiry.style.color = '#EF4444'; // 빨강
-                            } else if (daysLeft < 60) {
-                                userExpiry.style.color = '#F59E0B'; // 주황
+                        if (userExpiry) {
+                            if (isProfileComplete && profileData.visa_expiry_date) {
+                                userExpiry.textContent = profileData.visa_expiry_date;
+
+                                // 만료일까지 남은 일수 계산하여 색상 변경
+                                const today = new Date();
+                                const expiry = new Date(profileData.visa_expiry_date);
+                                const daysLeft = Math.floor((expiry - today) / (1000 * 60 * 60 * 24));
+
+                                if (daysLeft < 30) {
+                                    userExpiry.style.color = '#EF4444'; // 빨강
+                                } else if (daysLeft < 60) {
+                                    userExpiry.style.color = '#F59E0B'; // 주황
+                                } else {
+                                    userExpiry.style.color = '#10B981'; // 초록
+                                }
                             } else {
-                                userExpiry.style.color = '#10B981'; // 초록
+                                userExpiry.textContent = '미입력';
+                                userExpiry.style.color = '#9CA3AF';
                             }
                         }
                     }
