@@ -1169,7 +1169,7 @@
                 const currentUrl = window.location.origin;
                 
                 // 토스페이먼츠 결제창 호출 (카드/간편결제 통합)
-                await tossPayments.requestPayment({
+                const paymentRequest = {
                     method: 'CARD',
                     amount: {
                         currency: 'KRW',
@@ -1181,14 +1181,20 @@
                     failUrl: currentUrl + '/payment-fail.html',
                     customerEmail: orderInfo.customerEmail,
                     customerName: orderInfo.customerName,
-                    customerMobilePhone: orderInfo.customerPhone ? orderInfo.customerPhone.replace(/-/g, '') : '',
                     card: {
                         useEscrow: false,
                         flowMode: 'DEFAULT',
                         useCardPoint: false,
                         useAppCardOnly: false
                     }
-                });
+                };
+
+                // 전화번호가 있을 때만 추가 (빈 문자열이면 제외)
+                if (orderInfo.customerPhone && orderInfo.customerPhone.trim()) {
+                    paymentRequest.customerMobilePhone = orderInfo.customerPhone.replace(/-/g, '');
+                }
+
+                await tossPayments.requestPayment(paymentRequest);
                 
             } catch (error) {
                 console.error('결제 오류:', error);
