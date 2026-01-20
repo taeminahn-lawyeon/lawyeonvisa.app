@@ -684,9 +684,23 @@
         </div>
     </main>
 
+    <script>
+        // 새 정적 URL로 리다이렉트 (SEO 친화적인 /blog/slug.html 형식)
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const slug = urlParams.get('slug');
+            if (slug) {
+                // 새 URL로 301 스타일 리다이렉트 (클라이언트 사이드)
+                window.location.replace('/blog/' + slug + '.html');
+                return;
+            }
+            // slug가 없으면 블로그 목록으로
+            window.location.replace('/blog.html');
+        })();
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // Supabase 초기화
+        // Supabase 초기화 (리다이렉트 후에는 이 코드 실행 안됨)
         const SUPABASE_URL = 'https://gqistzsergddnpcvuzba.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxaXN0enNlcmdkZG5wY3Z1emJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNTEyMjEsImV4cCI6MjA4MDcyNzIyMX0.X_GgShObq9OJ6z7aEKdUCoyHYo-OJL-I5hcIDt4komg';
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);

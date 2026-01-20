@@ -4,7 +4,8 @@
   "description": "법무법인 로연의 출입국 이민 지원을 위한 통합 웹 서비스입니다. - **일반 회원 시스템**: 개인 외국인을 위한 출입국 민원 대행 서비스 - **협약 기관 시스템**: 전남대학교, 서울대학교 등 협약 대학 학생 전용 서비스 (**일반 페이지와 완전 통일됨**) - **관리자 시스템**: 법무법인 직원용 쓰레드·고객 관리 대시보드 - **담당자 시스템**: 제휴기관 담당자용 외국인 체류 현황 모니터링",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:blog": "node scripts/build-blog.js"
   },
   "repository": {
     "type": "git",
