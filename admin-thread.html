@@ -681,6 +681,35 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #D1D5DB;
         }
+
+        /* 프로필 제출 버튼 스타일 */
+        .profile-submit-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            text-decoration: none;
+            margin-top: 8px;
+        }
+
+        .profile-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+            color: white;
+        }
+
+        .profile-submit-btn i {
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -1418,12 +1447,32 @@
                 `;
             }
 
+            // 프로필 제출 링크 버튼 처리
+            let profileHtml = '';
+            let contentHtml = msg.content;
+            if (msg.content && msg.content.includes('profile-submit.html')) {
+                const profileMatch = msg.content.match(/https?:\/\/[^\s]*profile-submit\.html[^\s]*/);
+                if (profileMatch) {
+                    profileHtml = `
+                        <a href="${profileMatch[0]}" class="profile-submit-btn" target="_blank">
+                            <i class="fas fa-user-edit"></i>
+                            기본정보 제출하기
+                        </a>
+                    `;
+                    contentHtml = msg.content.replace(/https?:\/\/[^\s]*profile-submit\.html[^\s]*/g, '').trim();
+                    if (!contentHtml) {
+                        contentHtml = '아래 버튼을 눌러 기본정보를 제출해주세요.';
+                    }
+                }
+            }
+
             messageDiv.innerHTML = `
                 <div class="message-avatar">${senderInitial}</div>
                 <div class="message-content">
                     <div class="message-sender">${senderName}</div>
                     <div class="message-bubble">
-                        <div class="message-text">${msg.content}</div>
+                        <div class="message-text">${contentHtml}</div>
+                        ${profileHtml}
                         ${fileHtml}
                     </div>
                     <div class="message-time">${formatMessageTime(msg.created_at)}</div>

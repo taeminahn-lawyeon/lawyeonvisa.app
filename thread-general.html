@@ -1741,6 +1741,26 @@
                 }
             }
             
+            // 프로필 제출 링크인지 확인
+            let profileHtml = '';
+            if (msg.content && msg.content.includes('profile-submit.html')) {
+                const profileUrl = extractProfileUrl(msg.content);
+
+                if (profileUrl) {
+                    profileHtml = `
+                        <a href="${profileUrl}" class="profile-submit-btn" target="_blank">
+                            <i class="fas fa-user-edit"></i>
+                            기본정보 제출하기
+                        </a>
+                    `;
+                    // 원본 URL을 숨기고 안내 메시지만 표시
+                    contentHtml = contentHtml.replace(/https?:\/\/[^\s]*profile-submit\.html[^\s]*/g, '').trim();
+                    if (!contentHtml) {
+                        contentHtml = '아래 버튼을 눌러 기본정보를 제출해주세요.';
+                    }
+                }
+            }
+
             // 설문 완료 메시지인지 확인
             if (msg.content && msg.content.includes('설문을 완료했습니다')) {
                 contentHtml = `<span class="survey-completed-badge"><i class="fas fa-check-circle"></i> ${msg.content}</span>`;
@@ -1753,6 +1773,7 @@
                     <div class="message-sender">${msg.name}</div>
                     <div class="message-bubble">${contentHtml}</div>
                     ${surveyHtml}
+                    ${profileHtml}
                     ${fileHtml}
                     <div class="message-time">${msg.time}</div>
                 </div>
@@ -1765,6 +1786,13 @@
         function extractTallyUrl(content) {
             if (!content) return null;
             const match = content.match(/https?:\/\/tally\.so\/r\/[^\s]+/);
+            return match ? match[0] : null;
+        }
+
+        // 프로필 제출 URL 추출 헬퍼 함수
+        function extractProfileUrl(content) {
+            if (!content) return null;
+            const match = content.match(/https?:\/\/[^\s]*profile-submit\.html[^\s]*/);
             return match ? match[0] : null;
         }
         
@@ -2365,7 +2393,36 @@
         .survey-completed-badge i {
             color: #10b981;
         }
-        
+
+        /* 프로필 제출 버튼 스타일 */
+        .profile-submit-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            text-decoration: none;
+            margin-top: 8px;
+        }
+
+        .profile-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+            color: white;
+        }
+
+        .profile-submit-btn i {
+            font-size: 16px;
+        }
+
         /* 모바일 반응형 */
         @media (max-width: 640px) {
             .survey-modal-content {
@@ -2379,6 +2436,11 @@
             }
             
             .survey-request-btn {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+
+            .profile-submit-btn {
                 padding: 10px 16px;
                 font-size: 13px;
             }
