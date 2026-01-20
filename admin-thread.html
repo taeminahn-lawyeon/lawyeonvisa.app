@@ -681,6 +681,35 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #D1D5DB;
         }
+
+        /* 프로필 제출 버튼 스타일 */
+        .profile-submit-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            text-decoration: none;
+            margin-top: 8px;
+        }
+
+        .profile-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+            color: white;
+        }
+
+        .profile-submit-btn i {
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -1383,12 +1412,28 @@
         function appendMessage(msg) {
             const container = document.getElementById('messagesContainer');
             const messageDiv = document.createElement('div');
-            
+
             // sender_type 또는 sender 필드 모두 지원
-            const senderType = msg.sender_type || msg.sender || 'user';
+            const originalType = msg.sender_type || msg.sender || 'customer';
+
+            // sender_type 매핑: 'system' -> 'admin', 'user' -> 'customer'
+            let senderType = originalType;
+            if (originalType === 'system') {
+                senderType = 'admin';  // 시스템 메시지는 관리자 스타일로 표시
+            } else if (originalType === 'user') {
+                senderType = 'customer';
+            }
             messageDiv.className = `message ${senderType}`;
 
-            const senderName = senderType === 'admin' ? '관리자' : customerData?.name || '고객';
+            // 발신자 이름 설정
+            let senderName;
+            if (originalType === 'admin') {
+                senderName = '관리자';
+            } else if (originalType === 'system') {
+                senderName = msg.sender_name || 'Lawyeon Visa Center';
+            } else {
+                senderName = customerData?.name || '고객';
+            }
             const senderInitial = senderName.charAt(0);
 
             let fileHtml = '';
@@ -1402,12 +1447,32 @@
                 `;
             }
 
+            // 프로필 제출 링크 버튼 처리
+            let profileHtml = '';
+            let contentHtml = msg.content;
+            if (msg.content && msg.content.includes('profile-submit.html')) {
+                const profileMatch = msg.content.match(/https?:\/\/[^\s]*profile-submit\.html[^\s]*/);
+                if (profileMatch) {
+                    profileHtml = `
+                        <a href="${profileMatch[0]}" class="profile-submit-btn" target="_blank">
+                            <i class="fas fa-user-edit"></i>
+                            기본정보 제출하기
+                        </a>
+                    `;
+                    contentHtml = msg.content.replace(/https?:\/\/[^\s]*profile-submit\.html[^\s]*/g, '').trim();
+                    if (!contentHtml) {
+                        contentHtml = '아래 버튼을 눌러 기본정보를 제출해주세요.';
+                    }
+                }
+            }
+
             messageDiv.innerHTML = `
                 <div class="message-avatar">${senderInitial}</div>
                 <div class="message-content">
                     <div class="message-sender">${senderName}</div>
                     <div class="message-bubble">
-                        <div class="message-text">${msg.content}</div>
+                        <div class="message-text">${contentHtml}</div>
+                        ${profileHtml}
                         ${fileHtml}
                     </div>
                     <div class="message-time">${formatMessageTime(msg.created_at)}</div>

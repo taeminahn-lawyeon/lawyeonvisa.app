@@ -877,12 +877,15 @@
                         minute: '2-digit'
                     });
                     
+                    // sender_type 매핑: 'system', 'admin' -> 'admin'
+                    const isAdmin = newMessage.sender_type === 'admin' || newMessage.sender_type === 'system';
+
                     const msg = {
-                        sender: newMessage.sender_type === 'admin' ? 'admin' : 'user',
-                        name: newMessage.sender_name || (newMessage.sender_type === 'admin' ? '법무법인 로연' : '상대방'),
+                        sender: isAdmin ? 'admin' : 'user',
+                        name: newMessage.sender_name || (isAdmin ? '법무법인 로연' : '상대방'),
                         content: newMessage.content,
                         time: messageTime,
-                        avatar: newMessage.sender_type === 'admin' ? '로' : '나',
+                        avatar: isAdmin ? '로' : '나',
                         file_url: newMessage.file_url,
                         file_name: newMessage.file_name,
                         file_type: newMessage.file_type
@@ -1078,15 +1081,23 @@
                     
                     // 나머지 메시지 표시
                     result.data.forEach(msg => {
+                        // sender_type 매핑: 'system', 'admin' -> 'admin', 'user', 'customer' -> 'user'
+                        let mappedSender = msg.sender_type;
+                        if (msg.sender_type === 'system' || msg.sender_type === 'admin') {
+                            mappedSender = 'admin';
+                        } else if (msg.sender_type === 'customer') {
+                            mappedSender = 'user';
+                        }
+
                         const messageData = {
-                            sender: msg.sender_type,
-                            name: msg.sender_type === 'user' ? '본인' : '법무법인 로연',
+                            sender: mappedSender,
+                            name: mappedSender === 'user' ? '본인' : (msg.sender_name || '법무법인 로연'),
                             content: msg.content,
-                            time: new Date(msg.created_at).toLocaleTimeString('ko-KR', { 
-                                hour: '2-digit', 
-                                minute: '2-digit' 
+                            time: new Date(msg.created_at).toLocaleTimeString('ko-KR', {
+                                hour: '2-digit',
+                                minute: '2-digit'
                             }),
-                            avatar: msg.sender_type === 'user' ? '나' : '로',
+                            avatar: mappedSender === 'user' ? '나' : '로',
                             file_url: msg.file_url,
                             file_name: msg.file_name,
                             file_type: msg.file_type
