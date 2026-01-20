@@ -1383,12 +1383,28 @@
         function appendMessage(msg) {
             const container = document.getElementById('messagesContainer');
             const messageDiv = document.createElement('div');
-            
+
             // sender_type 또는 sender 필드 모두 지원
-            const senderType = msg.sender_type || msg.sender || 'user';
+            const originalType = msg.sender_type || msg.sender || 'customer';
+
+            // sender_type 매핑: 'system' -> 'admin', 'user' -> 'customer'
+            let senderType = originalType;
+            if (originalType === 'system') {
+                senderType = 'admin';  // 시스템 메시지는 관리자 스타일로 표시
+            } else if (originalType === 'user') {
+                senderType = 'customer';
+            }
             messageDiv.className = `message ${senderType}`;
 
-            const senderName = senderType === 'admin' ? '관리자' : customerData?.name || '고객';
+            // 발신자 이름 설정
+            let senderName;
+            if (originalType === 'admin') {
+                senderName = '관리자';
+            } else if (originalType === 'system') {
+                senderName = msg.sender_name || 'Lawyeon Visa Center';
+            } else {
+                senderName = customerData?.name || '고객';
+            }
             const senderInitial = senderName.charAt(0);
 
             let fileHtml = '';
