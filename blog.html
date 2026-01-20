@@ -404,7 +404,7 @@
                 }
 
                 blogList.innerHTML = posts.map(post => `
-                    <article class="blog-card" onclick="location.href='blog-post.html?slug=${post.slug}'">
+                    <article class="blog-card" onclick="location.href='/blog/${post.slug}.html'">
                         <div class="blog-card-thumbnail">
                             ${post.thumbnail_url
                                 ? `<img src="${post.thumbnail_url}" alt="${post.title}">`

@@ -1,0 +1,54 @@
+name: Build Blog SSG
+
+on:
+  # 수동 트리거 (GitHub Actions 페이지에서 "Run workflow" 버튼)
+  workflow_dispatch:
+
+  # 매일 오전 9시 (KST) 자동 빌드 - 새 글이 있으면 반영
+  schedule:
+    - cron: '0 0 * * *'  # UTC 00:00 = KST 09:00
+
+  # main 브랜치에 push될 때 (scripts/build-blog.js 변경시에만)
+  push:
+    branches:
+      - main
+    paths:
+      - 'scripts/build-blog.js'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build blog static files
+        run: npm run build:blog
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git add -A
+          if git diff --staged --quiet; then
+            echo "changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push changes
+        if: steps.git-check.outputs.changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -m "chore: 블로그 정적 파일 자동 생성 [skip ci]"
+          git push
