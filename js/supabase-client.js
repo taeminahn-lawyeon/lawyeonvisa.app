@@ -319,6 +319,7 @@ async function createThread(threadData) {
         
         const threadRecord = {
             user_id: user.id,
+            user_email: user.email,
             service_name: threadData.service_name,
             status: threadData.status || 'document',
             amount: threadData.amount || 0,
