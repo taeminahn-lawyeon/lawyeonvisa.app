@@ -180,7 +180,7 @@ function generateTOC(content) {
 function renderServiceButtons(relatedServices) {
     if (!relatedServices || relatedServices.length === 0) {
         return `
-                                <a href="index.html#services" class="service-cta-btn">
+                                <a href="/index.html#services" class="service-cta-btn">
                                     <span>서비스 둘러보기</span>
                                     <span class="arrow">→</span>
                                 </a>
@@ -188,7 +188,7 @@ function renderServiceButtons(relatedServices) {
     }
 
     return relatedServices.map(service => `
-                                <a href="service-apply-general.html?service=${escapeHtml(service.id)}" class="service-cta-btn">
+                                <a href="/service-apply-general.html?service=${escapeHtml(service.id)}" class="service-cta-btn">
                                     <span>${escapeHtml(service.name)}</span>
                                     <span class="arrow">→</span>
                                 </a>
