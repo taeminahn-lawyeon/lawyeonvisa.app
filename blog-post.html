@@ -685,17 +685,27 @@
     </main>
 
     <script>
-        // 새 정적 URL로 리다이렉트 (SEO 친화적인 /blog/slug.html 형식)
+        // 정적 파일이 있으면 리다이렉트, 없으면 기존 방식으로 동작
         (function() {
             const urlParams = new URLSearchParams(window.location.search);
             const slug = urlParams.get('slug');
             if (slug) {
-                // 새 URL로 301 스타일 리다이렉트 (클라이언트 사이드)
-                window.location.replace('/blog/' + slug + '.html');
-                return;
+                // 정적 파일 존재 여부 확인
+                fetch('/blog/' + slug + '.html', { method: 'HEAD' })
+                    .then(response => {
+                        if (response.ok) {
+                            // 정적 파일 있으면 리다이렉트
+                            window.location.replace('/blog/' + slug + '.html');
+                        }
+                        // 없으면 기존 Supabase 방식으로 로드 (아래 코드 실행)
+                    })
+                    .catch(() => {
+                        // 에러시 기존 방식 유지
+                    });
+            } else {
+                // slug가 없으면 블로그 목록으로
+                window.location.replace('/blog.html');
             }
-            // slug가 없으면 블로그 목록으로
-            window.location.replace('/blog.html');
         })();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
