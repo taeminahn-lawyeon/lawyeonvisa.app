@@ -1036,7 +1036,6 @@ async function build() {
     const { data: posts, error } = await supabase
         .from('blog_posts')
         .select('*')
-        .eq('status', 'published')
         .order('created_at', { ascending: false });
 
     if (error) {
