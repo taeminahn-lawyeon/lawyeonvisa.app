@@ -1073,7 +1073,7 @@
             <button class="back-btn" onclick="goBack()">
                 <i class="fas fa-arrow-left"></i> 목록
             </button>
-            <div class="header-title">쓰레드</div>
+            <div class="header-title" data-i18n="thread.header">쓰레드</div>
             <div class="header-actions"></div>
         </div>
     </header>
@@ -1290,6 +1290,10 @@
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=20250126"></script>
+
+    <!-- i18n 다국어 지원 -->
+    <script src="js/translations.js?v=20250126"></script>
+    <script src="js/i18n.js?v=20250126"></script>
 
     <script>
         // Thread stages configuration
