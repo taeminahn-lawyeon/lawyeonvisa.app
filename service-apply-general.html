@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="favicon.png?v=3">
-    <title>결제 - 법무법인 로연</title>
+    <title>Apply for Service - Lawyeon Visa Center</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    
+
     <!-- Toss Payments SDK v2 -->
     <script src="https://js.tosspayments.com/v2/standard"></script>
-    
+
     <style>
         * {
             margin: 0;
@@ -19,22 +19,26 @@
         }
 
         body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background: #f8f9fa;
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F8FAFC;
             -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
         }
 
-        /* 헤더 */
+        /* Header */
         .header {
             background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
             padding: 20px 0;
             border-bottom: 3px solid #3182F6;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .header-inner {
-            max-width: 600px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -52,317 +56,260 @@
             font-size: 15px;
             font-weight: 600;
             opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn-back:hover {
             opacity: 1;
         }
 
-        /* 컨테이너 */
-        .container {
-            max-width: 600px;
+        /* Main Container - 2 Column Layout */
+        .main-container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px 40px;
+            padding: 48px 24px;
         }
 
-        /* 섹션 카드 */
-        .card {
-            background: white;
-            border-radius: 16px;
-            padding: 28px 24px;
-            margin: 20px 0;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        .two-column-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
         }
 
-        /* 서비스 정보 */
+        /* Left Column - Service Info & Steps */
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Service Header */
         .service-header {
-            margin-bottom: 24px;
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
         }
 
-        .service-info h1 {
-            font-size: 24px;
+        .service-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #EBF4FF;
+            color: #3182F6;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .service-header h1 {
+            font-size: 28px;
             font-weight: 800;
-            color: #191F28;
+            color: #1E293B;
             margin-bottom: 8px;
             letter-spacing: -0.5px;
+            line-height: 1.3;
         }
 
-        .service-info p {
-            font-size: 15px;
-            color: #6B7280;
+        .service-header p {
+            font-size: 16px;
+            color: #64748B;
             font-weight: 500;
             line-height: 1.5;
         }
 
-        /* 금액 표시 */
-        .price-breakdown {
-            background: #F9FAFB;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
+        /* Price Card */
+        .price-card {
+            background: white;
+            border-radius: 20px;
+            padding: 28px 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .price-card h2 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #64748B;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .price-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
+            padding: 14px 0;
+            border-bottom: 1px solid #F1F5F9;
         }
 
-        .price-row:not(:last-child) {
-            border-bottom: 1px solid #E5E7EB;
+        .price-row:last-of-type {
+            border-bottom: none;
         }
 
         .price-label {
             font-size: 15px;
-            color: #4E5968;
-            font-weight: 600;
+            color: #475569;
+            font-weight: 500;
         }
 
         .price-value {
             font-size: 16px;
-            color: #191F28;
+            color: #1E293B;
             font-weight: 700;
         }
 
-        .price-row.total {
-            padding-top: 16px;
-            border-top: 2px solid #D1D5DB;
+        .price-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            margin-top: 8px;
+            border-top: 2px solid #E2E8F0;
         }
 
-        .price-row.total .price-label {
+        .price-total .label {
             font-size: 17px;
-            color: #191F28;
+            color: #1E293B;
             font-weight: 800;
         }
 
-        .price-row.total .price-value {
-            font-size: 28px;
+        .price-total .value {
+            font-size: 32px;
             color: #3182F6;
             font-weight: 900;
+            letter-spacing: -1px;
         }
 
-        /* 출입국 수수료 안내 */
-        .govt-fee-notice {
-            background: #FEF3C7;
-            border: 2px solid #F59E0B;
+        /* Government Fee Notice */
+        .govt-notice {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            background: #FEF9C3;
+            border: 1px solid #FDE047;
             border-radius: 12px;
             padding: 14px 16px;
-            margin: 16px 0;
-            display: flex;
-            gap: 10px;
-            align-items: center;
+            margin-top: 16px;
         }
 
-        .govt-fee-notice i {
-            color: #D97706;
-            font-size: 18px;
-            flex-shrink: 0;
+        .govt-notice i {
+            color: #CA8A04;
+            font-size: 16px;
+            margin-top: 2px;
         }
 
-        .govt-fee-notice-text {
-            font-size: 14px;
-            color: #78350F;
+        .govt-notice-text {
+            font-size: 13px;
+            color: #854D0E;
             font-weight: 600;
             line-height: 1.5;
         }
 
-        .govt-fee-notice-text strong {
-            font-weight: 800;
-            color: #92400E;
-        }
-
-        /* 모바일 대응 */
-        @media (max-width: 768px) {
-            .govt-fee-notice {
-                padding: 12px 14px;
-            }
-            
-            .govt-fee-notice i {
-                font-size: 16px;
-            }
-            
-            .govt-fee-notice-text {
-                font-size: 13px;
-            }
-        }
-
-        /* 결제수단 */
-        .section-title {
-            font-size: 18px;
-            font-weight: 800;
-            color: #191F28;
-            margin: 32px 0 16px;
-            letter-spacing: -0.3px;
-        }
-
-        .payment-method {
+        /* Process Steps */
+        .process-steps {
             background: white;
-            border: 2px solid #E5E7EB;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .process-steps h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1E293B;
+            margin-bottom: 24px;
             display: flex;
             align-items: center;
+            gap: 10px;
+        }
+
+        .process-steps h2 i {
+            color: #3182F6;
+        }
+
+        .step-item {
+            display: flex;
             gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid #F1F5F9;
         }
 
-        .payment-method:hover {
-            border-color: #3182F6;
-            background: #F9FAFB;
+        .step-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
         }
 
-        .payment-method.selected {
-            border-color: #3182F6;
-            border-width: 2px;
-            background: #F0F7FF;
-        }
-
-        .payment-icon {
-            width: 48px;
-            height: 48px;
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            color: white;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 12px;
-            background: #F3F4F6;
-            font-size: 24px;
+            font-size: 14px;
+            font-weight: 700;
             flex-shrink: 0;
         }
 
-        .payment-method.selected .payment-icon {
-            background: #3182F6;
-            color: white;
-        }
-
-        .payment-info {
+        .step-content {
             flex: 1;
         }
 
-        .payment-name {
-            font-size: 16px;
+        .step-content h3 {
+            font-size: 15px;
             font-weight: 700;
-            color: #191F28;
-            margin-bottom: 2px;
+            color: #1E293B;
+            margin-bottom: 4px;
         }
 
-        .payment-desc {
-            font-size: 13px;
-            color: #6B7280;
+        .step-content p {
+            font-size: 14px;
+            color: #64748B;
             font-weight: 500;
+            line-height: 1.4;
         }
 
-        .payment-radio {
-            width: 24px;
-            height: 24px;
-            border: 2px solid #D1D5DB;
-            border-radius: 50%;
-            position: relative;
-            flex-shrink: 0;
+        /* CTA Button */
+        .cta-section {
+            margin-top: 8px;
         }
 
-        .payment-method.selected .payment-radio {
-            border-color: #3182F6;
-            border-width: 2px;
-        }
-
-        .payment-method.selected .payment-radio::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 12px;
-            height: 12px;
-            background: #3182F6;
-            border-radius: 50%;
-        }
-
-        /* 안내 메시지 */
-        .notice {
-            background: #F0F7FF;
-            border-radius: 12px;
-            padding: 16px;
-            margin: 20px 0;
-            display: flex;
-            gap: 12px;
-        }
-
-        .notice i {
-            color: #3182F6;
-            font-size: 18px;
-            margin-top: 2px;
-            flex-shrink: 0;
-        }
-
-        .notice-text {
-            font-size: 14px;
-            color: #1e40af;
-            font-weight: 600;
-            line-height: 1.6;
-        }
-
-        /* 보안 안내 */
-        .security-badge {
-            background: white;
-            border: 1px solid #E5E7EB;
-            border-radius: 12px;
-            padding: 16px;
-            margin: 20px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .security-badge i {
-            color: #10B981;
-            font-size: 24px;
-        }
-
-        .security-badge-text {
-            font-size: 14px;
-            color: #4E5968;
-            font-weight: 600;
-            line-height: 1.5;
-        }
-
-        .security-badge-text strong {
-            color: #10B981;
-            font-weight: 700;
-        }
-
-        /* 버튼 */
         .btn-primary {
             width: 100%;
             height: 56px;
             background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             font-size: 17px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
-            margin-top: 32px;
-            box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
+            box-shadow: 0 4px 16px rgba(49, 130, 246, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .btn-primary:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(49, 130, 246, 0.4);
+            box-shadow: 0 8px 24px rgba(49, 130, 246, 0.4);
         }
 
         .btn-primary:disabled {
-            background: #D1D5DB;
+            background: #CBD5E1;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
-        }
-
-        .btn-primary i {
-            margin-right: 6px;
         }
 
         .btn-primary.loading i {
@@ -373,166 +320,171 @@
             to { transform: rotate(360deg); }
         }
 
-        /* 사전진단 배너 */
-        .prediagnosis-banner {
-            background: linear-gradient(135deg, #DBEAFE 0%, #EFF6FF 100%);
-            border: 2px solid #3182F6;
-            border-radius: 16px;
-            padding: 24px;
-            margin: 20px 0;
+        /* Right Column - Thread Preview */
+        .right-column {
+            position: sticky;
+            top: 100px;
         }
 
-        .prediagnosis-banner h2 {
-            font-size: 20px;
-            font-weight: 800;
-            color: #1E40AF;
-            margin-bottom: 12px;
+        .thread-preview {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            border: 1px solid #E2E8F0;
+        }
+
+        .thread-preview-header {
             display: flex;
             align-items: center;
-            gap: 8px;
-        }
-
-        .prediagnosis-banner h2 i {
-            font-size: 24px;
-        }
-
-        .prediagnosis-banner p {
-            font-size: 15px;
-            color: #1E40AF;
-            font-weight: 600;
-            line-height: 1.6;
-            margin-bottom: 16px;
-        }
-
-        .risk-cards {
-            display: grid;
             gap: 12px;
-            margin-top: 16px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #F1F5F9;
         }
 
-        .risk-card {
-            background: white;
-            border: 2px solid #BFDBFE;
+        .thread-preview-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
             border-radius: 12px;
-            padding: 16px;
             display: flex;
-            gap: 12px;
-            align-items: flex-start;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
         }
 
-        .risk-card i {
-            font-size: 24px;
-            color: #DC2626;
-            flex-shrink: 0;
-            margin-top: 2px;
+        .thread-preview-title {
+            flex: 1;
         }
 
-        .risk-card-content h4 {
+        .thread-preview-title h3 {
             font-size: 16px;
             font-weight: 700;
-            color: #1F2937;
-            margin-bottom: 6px;
+            color: #1E293B;
+            margin-bottom: 2px;
         }
 
-        .risk-card-content p {
-            font-size: 14px;
-            color: #4B5563;
+        .thread-preview-title p {
+            font-size: 13px;
+            color: #64748B;
             font-weight: 500;
-            line-height: 1.5;
         }
 
-        /* 상담 서비스 스타일 */
-        .consulting-banner {
-            background: linear-gradient(135deg, #FEF3C7 0%, #FFFBEB 100%);
-            border: 2px solid #F59E0B;
+        .thread-preview-image {
+            width: 100%;
             border-radius: 12px;
+            overflow: hidden;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+        }
+
+        .thread-preview-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Thread mockup placeholder */
+        .thread-mockup {
+            background: linear-gradient(180deg, #F8FAFC 0%, #EFF6FF 100%);
             padding: 20px;
-            margin: 20px 0;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
+            min-height: 400px;
         }
 
-        .consulting-banner i {
-            color: #D97706;
-            font-size: 22px;
-            margin-top: 2px;
-        }
-
-        .consulting-banner-content h3 {
-            font-size: 16px;
-            font-weight: 800;
-            color: #92400E;
-            margin-bottom: 6px;
-        }
-
-        .consulting-banner-content p {
-            font-size: 14px;
-            color: #78350F;
-            font-weight: 600;
-            line-height: 1.5;
-        }
-
-        .process-list {
+        .mockup-message {
             background: white;
-            border-radius: 16px;
-            padding: 24px;
-            margin: 20px 0;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
-        .process-list h3 {
-            font-size: 18px;
-            font-weight: 800;
-            color: #191F28;
-            margin-bottom: 16px;
+        .mockup-message.admin {
+            background: #EBF4FF;
+            border-left: 3px solid #3182F6;
+        }
+
+        .mockup-message-header {
             display: flex;
             align-items: center;
             gap: 8px;
+            margin-bottom: 8px;
         }
 
-        .process-list h3 i {
-            color: #10B981;
-        }
-
-        .process-step {
-            padding: 14px 0;
-            border-bottom: 1px solid #F3F4F6;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .process-step:last-child {
-            border-bottom: none;
-        }
-
-        .step-number {
+        .mockup-avatar {
             width: 28px;
             height: 28px;
             background: #3182F6;
-            color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            color: white;
+            font-size: 12px;
             font-weight: 700;
-            flex-shrink: 0;
         }
 
-        .step-text {
-            font-size: 15px;
-            color: #4E5968;
+        .mockup-avatar.user {
+            background: #10B981;
+        }
+
+        .mockup-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1E293B;
+        }
+
+        .mockup-time {
+            font-size: 11px;
+            color: #94A3B8;
+            margin-left: auto;
+        }
+
+        .mockup-text {
+            font-size: 14px;
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        .thread-preview-caption {
+            text-align: center;
+            padding: 16px;
+            color: #64748B;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .thread-preview-caption strong {
+            color: #3182F6;
+            font-weight: 700;
+        }
+
+        /* Security Badge */
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #F0FDF4;
+            border: 1px solid #86EFAC;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-top: 16px;
+        }
+
+        .security-badge i {
+            color: #22C55E;
+            font-size: 18px;
+        }
+
+        .security-badge-text {
+            font-size: 13px;
+            color: #166534;
             font-weight: 600;
         }
 
-        .step-text strong {
-            color: #191F28;
-            font-weight: 700;
-        }
-
-        /* 로딩 */
+        /* Loading State */
         .loading-container {
             min-height: 400px;
             display: flex;
@@ -557,215 +509,226 @@
             font-weight: 600;
         }
 
-        /* 모바일 최적화 */
-        @media (max-width: 768px) {
-            /* 글로벌 텍스트 줄바꿈 */
-            * {
-                word-break: keep-all;
-                overflow-wrap: break-word;
+        /* Mobile Responsive */
+        @media (max-width: 968px) {
+            .two-column-layout {
+                grid-template-columns: 1fr;
+                gap: 24px;
             }
-            
-            .service-header {
+
+            .right-column {
+                position: static;
+                order: -1;
+            }
+
+            .thread-preview {
+                display: none;
+            }
+
+            .main-container {
+                padding: 24px 16px;
+            }
+
+            .service-header,
+            .price-card,
+            .process-steps {
+                padding: 24px 20px;
+                border-radius: 16px;
+            }
+
+            .service-header h1 {
+                font-size: 22px;
+            }
+
+            .price-total .value {
+                font-size: 26px;
+            }
+
+            .step-item {
                 gap: 12px;
             }
 
-            .service-icon {
-                font-size: 48px;
+            .step-number {
+                width: 28px;
+                height: 28px;
+                font-size: 13px;
             }
+        }
 
-            .service-info h1 {
-                font-size: 20px;
-                line-height: 1.4;
-                word-break: keep-all;
-            }
-            
-            .service-info p {
-                font-size: 14px;
-                line-height: 1.5;
-                word-break: keep-all;
-            }
+        /* Consulting Mode Styles */
+        .consulting-badge {
+            background: #FEF3C7;
+            color: #D97706;
+        }
 
-            .price-row.total .price-value {
-                font-size: 22px;
-            }
-            
-            .price-label, .price-value {
-                font-size: 14px;
-                word-break: keep-all;
-            }
-            
-            .notice-text {
-                font-size: 13px;
-                line-height: 1.6;
-                word-break: keep-all;
-            }
-            
-            .govt-fee-notice-text {
-                font-size: 13px;
-                line-height: 1.5;
-                word-break: keep-all;
-            }
-            
-            .btn-primary {
-                font-size: 16px;
-                word-break: keep-all;
-                white-space: normal;
-                line-height: 1.3;
-                min-height: 52px;
-            }
-            
-            /* 프로세스 스텝 */
-            .step-text {
-                font-size: 14px;
-                line-height: 1.5;
-                word-break: keep-all;
-            }
-            
-            /* 컨설팅 배너 */
-            .consulting-banner-content h3 {
-                font-size: 15px;
-                line-height: 1.4;
-                word-break: keep-all;
-            }
-            
-            .consulting-banner-content p {
-                font-size: 13px;
-                line-height: 1.5;
-                word-break: keep-all;
-            }
+        .consulting-notice {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FFFBEB 100%);
+            border: 1px solid #FCD34D;
+            border-radius: 16px;
+            padding: 20px 24px;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .consulting-notice i {
+            color: #D97706;
+            font-size: 22px;
+            margin-top: 2px;
+        }
+
+        .consulting-notice-content h3 {
+            font-size: 17px;
+            font-weight: 800;
+            color: #92400E;
+            margin-bottom: 6px;
+        }
+
+        .consulting-notice-content p {
+            font-size: 14px;
+            color: #78350F;
+            font-weight: 600;
+            line-height: 1.5;
         }
     </style>
 </head>
 <body>
-    <!-- 헤더 -->
+    <!-- Header -->
     <div class="header">
         <div class="header-inner">
-            <div class="header-title" data-i18n="payment.title">결제</div>
-<a href="javascript:void(0)" onclick="goBack()" class="btn-back">
+            <div class="header-title">Apply for Service</div>
+            <a href="javascript:void(0)" onclick="goBack()" class="btn-back">
                 <i class="fas fa-times"></i>
             </a>
         </div>
     </div>
 
-    <div class="container">
-        <!-- 로딩 -->
+    <!-- Loading State -->
+    <div class="main-container">
         <div id="loading" class="loading-container">
             <div class="spinner"></div>
-            <div class="loading-text" data-i18n="payment.loading">정보를 불러오는 중...</div>
+            <div class="loading-text">Loading service information...</div>
         </div>
 
-        <!-- 일반 결제 -->
-        <div id="payment-content" style="display: none;">
-            <!-- 서비스 정보 -->
-            <div class="card">
+        <!-- Main Content -->
+        <div id="main-content" class="two-column-layout" style="display: none;">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- Service Header -->
                 <div class="service-header">
-                    <div class="service-info">
-                        <h1 id="service-name">비자 연장</h1>
-                        <p id="service-desc">현재 체류자격의 기간 연장을 대행합니다</p>
+                    <div class="service-badge" id="service-badge">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Visa Service</span>
                     </div>
+                    <h1 id="service-name">Visa Extension</h1>
+                    <p id="service-desc">Extension of your current residence status</p>
                 </div>
 
-                <!-- 금액 상세 -->
-                <div class="price-breakdown">
+                <!-- Price Card (for payment services) -->
+                <div class="price-card" id="price-card">
+                    <h2>Price Details</h2>
                     <div class="price-row">
-                        <div class="price-label" data-i18n="payment.agencyFee">대행 보수</div>
-                        <div class="price-value" id="agency-fee">₩550,000</div>
+                        <span class="price-label">Agency Fee</span>
+                        <span class="price-value" id="agency-fee">₩550,000</span>
                     </div>
                     <div class="price-row" id="govt-fee-row" style="display: none;">
-                        <div class="price-label" data-i18n="payment.govtFee">출입국 수수료</div>
-                        <div class="price-value" id="govt-fee">₩50,000</div>
+                        <span class="price-label">Immigration Fee</span>
+                        <span class="price-value" id="govt-fee">₩50,000</span>
                     </div>
-                    <div class="price-row total">
-                        <div class="price-label" data-i18n="payment.totalPrice">총 결제 금액</div>
-                        <div class="price-value" id="total-price">₩600,000</div>
+                    <div class="price-total">
+                        <span class="label">Total</span>
+                        <span class="value" id="total-price">₩600,000</span>
                     </div>
-                </div>
-
-                <!-- 출입국 수수료 안내 -->
-                <div class="govt-fee-notice" id="govt-fee-notice" style="display: none;">
-                    <i class="fas fa-info-circle"></i>
-                    <div class="govt-fee-notice-text">
-                        <strong>출입국 수수료 포함</strong><br>
-                        출입국 수수료는 센터가 대신 납부하며 총 결제 금액에 포함되어 있습니다.
+                    <div class="govt-notice" id="govt-notice" style="display: none;">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="govt-notice-text">Immigration fee is included and paid by our center on your behalf.</span>
                     </div>
                 </div>
-            </div>
 
-            <!-- 안내 -->
-            <div class="notice">
-                <i class="fas fa-comment-dots"></i>
-                <div class="notice-text" id="service-notice-text">
-                    결제 완료 후 센터 담당자가 쓰레드를 통해 추가 서류를 안내드립니다
+                <!-- Consulting Notice (for consulting services) -->
+                <div class="consulting-notice" id="consulting-notice" style="display: none;">
+                    <i class="fas fa-star"></i>
+                    <div class="consulting-notice-content">
+                        <h3>Get a Custom Quote</h3>
+                        <p>Every case is different. We'll provide an accurate quote after understanding your situation.</p>
+                    </div>
                 </div>
-            </div>
 
-            <!-- 결제 버튼 -->
-            <button class="btn-primary" id="payBtn" onclick="processPayment()">
-                결제하기
-            </button>
-        </div>
+                <!-- Process Steps -->
+                <div class="process-steps">
+                    <h2><i class="fas fa-list-check"></i> How It Works</h2>
 
-        <!-- 상담 서비스 -->
-        <div id="consulting-content" style="display: none;">
-            <!-- 배너 -->
-            <div class="consulting-banner">
-                <i class="fas fa-star"></i>
-                <div class="consulting-banner-content">
-                    <h3>맞춤 견적 상담하기</h3>
-                    <p>케이스마다 다르니까, 정확한 견적은 상담 후 안내드려요</p>
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Submit Application</h3>
+                            <p>A dedicated thread will be created instantly</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Specialist Assigned</h3>
+                            <p>We'll contact you within 30 minutes</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Document Review</h3>
+                            <p>We'll guide you through required documents</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Service Complete</h3>
+                            <p>We'll handle everything until completion</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <!-- 서비스 정보 -->
-            <div class="card">
-                <div class="service-header">
-                    <div class="service-info">
-                        <h1 id="consulting-name">비자 자문</h1>
-                        <p id="consulting-desc">개인·기업 비자 전략 컨설팅</p>
+                <!-- CTA Button -->
+                <div class="cta-section">
+                    <button class="btn-primary" id="payBtn" onclick="processPayment()">
+                        <i class="fas fa-credit-card"></i>
+                        <span id="btn-text">Proceed to Payment</span>
+                    </button>
+
+                    <div class="security-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span class="security-badge-text">Secured by Toss Payments · PCI DSS Certified</span>
                     </div>
                 </div>
             </div>
 
-            <!-- 프로세스 -->
-            <div class="process-list">
-                <h3><i class="fas fa-list-check"></i> 어떻게 진행되나요?</h3>
-                
-                <div class="process-step">
-                    <div class="step-number">1</div>
-                    <div class="step-text"><strong>상담 신청하기</strong> - 쓰레드가 바로 만들어져요</div>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">2</div>
-                    <div class="step-text"><strong>담당자 배정</strong> - 30분 안에 연락드려요</div>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">3</div>
-                    <div class="step-text"><strong>상황 파악</strong> - 어떤 케이스인지 함께 살펴봐요</div>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">4</div>
-                    <div class="step-text"><strong>견적 안내</strong> - 정확한 금액을 알려드려요</div>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">5</div>
-                    <div class="step-text"><strong>결제 링크</strong> - 쓰레드에서 바로 결제하세요</div>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">6</div>
-                    <div class="step-text"><strong>서비스 시작</strong> - 끝까지 함께 해요</div>
+            <!-- Right Column - Thread Preview -->
+            <div class="right-column">
+                <div class="thread-preview">
+                    <div class="thread-preview-header">
+                        <div class="thread-preview-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="thread-preview-title">
+                            <h3>Your Dedicated Thread</h3>
+                            <p>Real-time communication with our team</p>
+                        </div>
+                    </div>
+
+                    <div class="thread-preview-image">
+                        <img src="images/thread-preview.png" alt="Thread Preview" style="width: 100%; height: auto; display: block;">
+                    </div>
+
+                    <div class="thread-preview-caption">
+                        <strong>Track your progress</strong> in real-time through your dedicated thread
+                    </div>
                 </div>
             </div>
-
-            <!-- 신청 버튼 -->
-            <button class="btn-primary" onclick="applyForConsulting()">
-                <i class="fas fa-paper-plane"></i>
-                견적 상담 신청하기
-            </button>
         </div>
     </div>
 
     <script>
-        // 출입국 수수료 매핑 (출입국관리법 시행규칙 기준)
+        // Immigration Fees (Based on Immigration Control Act)
         const govtFees = {
             'visa-extension': 50000,
             'visa-change': 119000,
@@ -790,107 +753,105 @@
             'cert-nationality': 2000
         };
 
-        // 서비스 가격 정보 (대행 보수, 부가세 포함) - index.html 서비스 ID 기준
+        // Service Pricing (Agency fee, VAT included)
         const servicePricing = {
-            // 프리미엄 서비스 (긴급 구제)
-            'visa-prediagnosis': { name: '비자 사전진단', price: 110000, govFee: 0, desc: '비자 변경·불법체류 위험·출입국관리법 위반 자문', icon: '🔍' },
-            'emergency-legal': { name: '출입국 분쟁 해결 상담', price: 0, govFee: 0, desc: '사범심사, 처분 취소소송, 외국인 형사 변호', icon: '⚖️', consulting: true },
+            // Premium Services
+            'visa-prediagnosis': { name: 'Visa Pre-diagnosis', price: 110000, govFee: 0, desc: 'Visa change, overstay risk, immigration law consultation', icon: '🔍' },
+            'emergency-legal': { name: 'Immigration Dispute Resolution', price: 0, govFee: 0, desc: 'Criminal investigation, deportation defense, visa denial appeals', icon: '⚖️', consulting: true },
 
-            // 1. 교육·구직 (10개)
-            'd4-to-d2-change': { name: 'D-4→D-2 유학 비자 변경', price: 110000, govFee: 119000, desc: '어학연수→정규과정', icon: '🎓' },
-            'd10-1-change': { name: 'D-10-1 일반구직 비자 변경', price: 220000, govFee: 100000, desc: '일반 구직비자 변경', icon: '🔍' },
-            'd10-2-change': { name: 'D-10-2 기술창업구직 비자 변경', price: 330000, govFee: 100000, desc: '창업 준비생 구직비자', icon: '💡' },
-            'd10-3-change': { name: 'D-10-3 첨단기술인턴 비자 변경', price: 330000, govFee: 100000, desc: '첨단분야 인턴 비자', icon: '🔬' },
-            'd10-t-change': { name: 'D-10-T 최우수인재구직 비자 변경', price: 330000, govFee: 100000, desc: '우수대학 졸업자 구직비자', icon: '🏆' },
-            'd2-d4-extension': { name: 'D-2, D-4 비자 연장', price: 110000, govFee: 50000, desc: '유학·연수 비자 연장', icon: '📖' },
-            'd10-extension': { name: 'D-10 비자 연장', price: 110000, govFee: 50000, desc: '구직 비자 연장', icon: '⏳' },
-            'parttime-permit': { name: '시간제취업 허가', price: 33000, govFee: 0, desc: 'D-2, D-4 아르바이트', icon: '⏰' },
-            'intern-report': { name: '연수개시 및 기관변경 신고', price: 110000, govFee: 0, desc: 'D-10 인턴십 시작·변경', icon: '📝' },
-            'parent-invite': { name: '외국인 유학생 부모 초청', price: 330000, govFee: 60000, desc: '우수 유학생 부모 초청', icon: '👨‍👩‍👧' },
+            // Education & Job Search
+            'd4-to-d2-change': { name: 'D-4→D-2 Student Visa Change', price: 110000, govFee: 119000, desc: 'Language course to degree program', icon: '🎓' },
+            'd10-1-change': { name: 'D-10-1 Job Seeker Visa Change', price: 220000, govFee: 100000, desc: 'General job seeking visa', icon: '🔍' },
+            'd10-2-change': { name: 'D-10-2 Tech Startup Job Seeker', price: 330000, govFee: 100000, desc: 'Startup preparation visa', icon: '💡' },
+            'd10-3-change': { name: 'D-10-3 High-tech Intern Visa', price: 330000, govFee: 100000, desc: 'Advanced technology internship', icon: '🔬' },
+            'd10-t-change': { name: 'D-10-T Top Talent Job Seeker', price: 330000, govFee: 100000, desc: 'Elite university graduate visa', icon: '🏆' },
+            'd2-d4-extension': { name: 'D-2, D-4 Visa Extension', price: 110000, govFee: 50000, desc: 'Student visa renewal', icon: '📖' },
+            'd10-extension': { name: 'D-10 Visa Extension', price: 110000, govFee: 50000, desc: 'Job seeker visa renewal', icon: '⏳' },
+            'parttime-permit': { name: 'Part-time Work Permit', price: 33000, govFee: 0, desc: 'D-2, D-4 part-time employment', icon: '⏰' },
+            'intern-report': { name: 'Internship Start/Change Report', price: 110000, govFee: 0, desc: 'D-10 internship notification', icon: '📝' },
+            'parent-invite': { name: 'Student Parent Invitation', price: 330000, govFee: 60000, desc: 'Excellent student parent visa', icon: '👨‍👩‍👧' },
 
-            // 2. 취업·워크 (17개)
-            'e7-4-change': { name: '숙련기능인력 E-7-4 비자 변경', price: 550000, govFee: 119000, desc: 'E-9/H-2 숙련기능 전환', icon: '🔧' },
-            'e7-4r-change': { name: '지역특화 E-7-4R 비자 변경', price: 550000, govFee: 119000, desc: '인구감소지역 숙련기능', icon: '🏘️' },
-            'e7-change': { name: '특정활동 E-7 비자 변경', price: 550000, govFee: 100000, desc: '전문인력 취업비자', icon: '💼' },
-            'f2-7-change': { name: '우수인재 거주 F-2-7 비자 변경', price: 550000, govFee: 100000, desc: '점수제 우수인재 거주비자', icon: '⭐' },
-            'f2-r-change': { name: '지역특화 F-2-R 비자 변경', price: 550000, govFee: 100000, desc: '인구감소지역 거주비자', icon: '🏡' },
-            'e7-st-change': { name: '최우수인재 E-7-S/T 비자 변경', price: 550000, govFee: 100000, desc: '첨단·고소득 인재 비자', icon: '🏆' },
-            'e1-e6-change': { name: '전문직 E-1~E-6 비자 변경', price: 550000, govFee: 100000, desc: '교수·연구원 등 전문직', icon: '🎓' },
-            'e7-extension': { name: '전문인력 E-7 비자 연장', price: 110000, govFee: 60000, desc: 'E-7 비자 기간 연장', icon: '📅' },
-            'e9-workplace-change': { name: 'E-9 근무처변경 허가', price: 220000, govFee: 99000, desc: 'E-9 사업장 변경', icon: '🏭' },
-            'workplace-change-permit': { name: '근무처 변경·추가 허가', price: 220000, govFee: 120000, desc: '이직·겸직 사전 허가', icon: '🏢' },
-            'outside-activity': { name: '체류자격 외 활동 허가', price: 220000, govFee: 120000, desc: '본래 자격 외 활동 승인', icon: '🔓' },
-            'h2-work-start': { name: '방문취업 H-2 취업개시 신고', price: 55000, govFee: 0, desc: 'H-2 취업 시작 신고', icon: '📋' },
-            'workplace-change-report': { name: '근무처 변경·추가 신고', price: 110000, govFee: 0, desc: '이직·겸직 사후 신고', icon: '📝' },
-            'employment-info-change': { name: '취업정보 변경신고', price: 55000, govFee: 0, desc: '근무지·연봉 변경 신고', icon: '💰' },
-            'dispatch-report': { name: '파견근무 신고', price: 110000, govFee: 0, desc: '계열사 파견 신고', icon: '🔄' },
-            'income-report': { name: '직업 및 연간소득금액 신고', price: 55000, govFee: 0, desc: '소득 정보 신고', icon: '💵' },
-            'foreign-worker-change': { name: '고용·연수외국인 변동신고', price: 55000, govFee: 0, desc: '퇴사·이탈 신고 (기업용)', icon: '📊' },
+            // Employment
+            'e7-4-change': { name: 'E-7-4 Skilled Worker Visa', price: 550000, govFee: 119000, desc: 'E-9/H-2 skilled transition', icon: '🔧' },
+            'e7-4r-change': { name: 'E-7-4R Regional Skilled Worker', price: 550000, govFee: 119000, desc: 'Depopulated area skilled worker', icon: '🏘️' },
+            'e7-change': { name: 'E-7 Professional Visa Change', price: 550000, govFee: 100000, desc: 'Professional employment visa', icon: '💼' },
+            'f2-7-change': { name: 'F-2-7 Points-based Residence', price: 550000, govFee: 100000, desc: 'Outstanding talent residence', icon: '⭐' },
+            'f2-r-change': { name: 'F-2-R Regional Residence Visa', price: 550000, govFee: 100000, desc: 'Depopulated area residence', icon: '🏡' },
+            'e7-st-change': { name: 'E-7-S/T Elite Professional', price: 550000, govFee: 100000, desc: 'High-tech/high-income talent', icon: '🏆' },
+            'e1-e6-change': { name: 'E-1~E-6 Professional Change', price: 550000, govFee: 100000, desc: 'Professor, researcher, specialist', icon: '🎓' },
+            'e7-extension': { name: 'E-7 Visa Extension', price: 110000, govFee: 60000, desc: 'Professional visa renewal', icon: '📅' },
+            'e9-workplace-change': { name: 'E-9 Workplace Change', price: 220000, govFee: 99000, desc: 'E-9 employer change', icon: '🏭' },
+            'workplace-change-permit': { name: 'Workplace Change Permit', price: 220000, govFee: 120000, desc: 'Job transfer pre-approval', icon: '🏢' },
+            'outside-activity': { name: 'Additional Activity Permit', price: 220000, govFee: 120000, desc: 'Activities beyond visa scope', icon: '🔓' },
+            'h2-work-start': { name: 'H-2 Employment Start Report', price: 55000, govFee: 0, desc: 'Working visit job notification', icon: '📋' },
+            'workplace-change-report': { name: 'Workplace Change Report', price: 110000, govFee: 0, desc: 'Job transfer post-notification', icon: '📝' },
+            'employment-info-change': { name: 'Employment Info Update', price: 55000, govFee: 0, desc: 'Workplace/salary change report', icon: '💰' },
+            'dispatch-report': { name: 'Dispatch Work Report', price: 110000, govFee: 0, desc: 'Subsidiary assignment report', icon: '🔄' },
+            'income-report': { name: 'Annual Income Report', price: 55000, govFee: 0, desc: 'Job and income notification', icon: '💵' },
+            'foreign-worker-change': { name: 'Foreign Worker Status Report', price: 55000, govFee: 0, desc: 'Resignation/departure report', icon: '📊' },
 
-            // 3. 사업·투자 (12개)
-            'd8-1-change': { name: 'D-8-1 법인투자 비자 변경', price: 1100000, govFee: 100000, desc: '법인 설립 투자비자', icon: '🏢' },
-            'd8-2-change': { name: 'D-8-2 벤처투자 비자 변경', price: 1100000, govFee: 100000, desc: '벤처기업 투자비자', icon: '🚀' },
-            'd8-3-change': { name: 'D-8-3 개인투자 비자 변경', price: 1100000, govFee: 100000, desc: '개인사업자 투자비자', icon: '💼' },
-            'd8-4-change': { name: 'D-8-4 기술창업 비자 변경', price: 550000, govFee: 100000, desc: '유학생 창업비자', icon: '💡' },
-            'd9-1-change': { name: 'D-9-1 무역경영 비자 변경', price: 1100000, govFee: 100000, desc: '무역업 비자', icon: '🌐' },
-            'd9-2-change': { name: 'D-9-2 수출설비 설치·운영·보수 비자 변경', price: 1100000, govFee: 100000, desc: '수출설비 관리자 비자', icon: '🏭' },
-            'd9-3-change': { name: 'D-9-3 선박건조·설비제작 감독 비자 변경', price: 1100000, govFee: 100000, desc: '선박·설비 감독 비자', icon: '⚓' },
-            'd9-4-change': { name: 'D-9-4 영리 개인사업자 비자 변경', price: 1100000, govFee: 100000, desc: '개인 영리사업 비자', icon: '📊' },
-            'd9-5-change': { name: 'D-9-5 유학생 출신 개인사업자 비자 변경', price: 550000, govFee: 100000, desc: '유학생 출신 사업 비자', icon: '🎓' },
-            'business-extension': { name: '사업/투자 D-8, D-9 비자 연장', price: 220000, govFee: 60000, desc: '투자비자 기간 연장', icon: '📅' },
-            'fic-registration': { name: '외국인투자기업 등록', price: 330000, govFee: 0, desc: '외투기업 등록증 발급', icon: '📋' },
-            'fi-report': { name: '외국인투자 신고', price: 220000, govFee: 0, desc: '투자 사전 신고', icon: '📝' },
+            // Business & Investment
+            'd8-1-change': { name: 'D-8-1 Corporate Investment', price: 1100000, govFee: 100000, desc: 'Corporate establishment visa', icon: '🏢' },
+            'd8-2-change': { name: 'D-8-2 Venture Investment', price: 1100000, govFee: 100000, desc: 'Venture company investment', icon: '🚀' },
+            'd8-3-change': { name: 'D-8-3 Individual Investment', price: 1100000, govFee: 100000, desc: 'Sole proprietor investment', icon: '💼' },
+            'd8-4-change': { name: 'D-8-4 Tech Startup Visa', price: 550000, govFee: 100000, desc: 'Student entrepreneur visa', icon: '💡' },
+            'd9-1-change': { name: 'D-9-1 Trade Business', price: 1100000, govFee: 100000, desc: 'Trading business visa', icon: '🌐' },
+            'd9-2-change': { name: 'D-9-2 Export Equipment', price: 1100000, govFee: 100000, desc: 'Export facility management', icon: '🏭' },
+            'd9-3-change': { name: 'D-9-3 Shipbuilding Supervisor', price: 1100000, govFee: 100000, desc: 'Ship/equipment supervision', icon: '⚓' },
+            'd9-4-change': { name: 'D-9-4 Commercial Business', price: 1100000, govFee: 100000, desc: 'Individual commercial visa', icon: '📊' },
+            'd9-5-change': { name: 'D-9-5 Graduate Entrepreneur', price: 550000, govFee: 100000, desc: 'Former student business', icon: '🎓' },
+            'business-extension': { name: 'D-8, D-9 Business Extension', price: 220000, govFee: 60000, desc: 'Investment visa renewal', icon: '📅' },
+            'fic-registration': { name: 'Foreign Investment Registration', price: 330000, govFee: 0, desc: 'FIC certificate issuance', icon: '📋' },
+            'fi-report': { name: 'Foreign Investment Report', price: 220000, govFee: 0, desc: 'Investment pre-notification', icon: '📝' },
 
-            // 4. 동포·가족·결혼 (13개)
-            'h2-to-f4-change': { name: 'H-2→F-4 재외동포 비자 변경', price: 220000, govFee: 119000, desc: '방문취업→재외동포', icon: '🇰🇷' },
-            'f4-change': { name: '재외동포 F-4 비자 변경', price: 220000, govFee: 100000, desc: '재외동포 비자 변경', icon: '🎌' },
-            'f4-registration': { name: '재외동포 F-4 거소신고', price: 110000, govFee: 35000, desc: 'F-4 거소증 발급', icon: '📍' },
-            'f4-extension': { name: '재외동포 F-4 비자 연장', price: 110000, govFee: 50000, desc: 'F-4 거소증 연장', icon: '📅' },
-            'h2-extension': { name: 'H-2 비자 연장', price: 110000, govFee: 50000, desc: '방문취업 비자 연장', icon: '🛬' },
-            'f6-change': { name: '결혼이민 F-6 비자 변경', price: 1100000, govFee: 100000, desc: '결혼이민 비자 취득', icon: '💍' },
-            'f6-extension': { name: '결혼이민 F-6 비자 연장', price: 110000, govFee: 30000, desc: '결혼이민 비자 연장', icon: '💒' },
-            'f3-change': { name: '동반가족 F-3 비자 변경', price: 330000, govFee: 100000, desc: '배우자·자녀 동반비자', icon: '👪' },
-            'f1-change': { name: '방문동거 F-1 비자 변경', price: 330000, govFee: 100000, desc: '친척 방문·장기체류', icon: '🏠' },
-            'visa-grant-child': { name: '체류자격 부여 (자녀출생/일반)', price: 220000, govFee: 80000, desc: '국내 출생 자녀 비자', icon: '👶' },
-            'visa-grant-f6-child': { name: '체류자격 부여 (자녀출생/F-6)', price: 220000, govFee: 40000, desc: '결혼이민자 자녀 비자', icon: '👶' },
-            'family-invite': { name: '가족 초청 사증발급', price: 550000, govFee: 60000, desc: '해외 가족 초청', icon: '✈️' },
-            'housework-report': { name: '가사·육아 활동 개시 신고', price: 55000, govFee: 0, desc: '가사보조 활동 신고', icon: '🏡' },
+            // Ethnic Korean & Family
+            'h2-to-f4-change': { name: 'H-2→F-4 Overseas Korean', price: 220000, govFee: 119000, desc: 'Working visit to overseas Korean', icon: '🇰🇷' },
+            'f4-change': { name: 'F-4 Overseas Korean Visa', price: 220000, govFee: 100000, desc: 'Overseas Korean status', icon: '🎌' },
+            'f4-registration': { name: 'F-4 Residence Registration', price: 110000, govFee: 35000, desc: 'F-4 residence card issuance', icon: '📍' },
+            'f4-extension': { name: 'F-4 Visa Extension', price: 110000, govFee: 50000, desc: 'F-4 residence renewal', icon: '📅' },
+            'h2-extension': { name: 'H-2 Visa Extension', price: 110000, govFee: 50000, desc: 'Working visit renewal', icon: '🛬' },
+            'f6-change': { name: 'F-6 Marriage Immigration', price: 1100000, govFee: 100000, desc: 'Spouse visa acquisition', icon: '💍' },
+            'f6-extension': { name: 'F-6 Visa Extension', price: 110000, govFee: 30000, desc: 'Marriage visa renewal', icon: '💒' },
+            'f3-change': { name: 'F-3 Dependent Family Visa', price: 330000, govFee: 100000, desc: 'Spouse/child accompanying', icon: '👪' },
+            'f1-change': { name: 'F-1 Family Visit Visa', price: 330000, govFee: 100000, desc: 'Relative long-term stay', icon: '🏠' },
+            'visa-grant-child': { name: 'Child Birth Visa Grant', price: 220000, govFee: 80000, desc: 'Newborn child visa', icon: '👶' },
+            'visa-grant-f6-child': { name: 'F-6 Child Visa Grant', price: 220000, govFee: 40000, desc: 'Marriage immigrant child', icon: '👶' },
+            'family-invite': { name: 'Family Invitation Visa', price: 550000, govFee: 60000, desc: 'Overseas family invitation', icon: '✈️' },
+            'housework-report': { name: 'Domestic Work Report', price: 55000, govFee: 0, desc: 'Household help notification', icon: '🏡' },
 
-            // 5. 거주·영주·국적 (11개)
-            'f5-change': { name: '영주 F-5 비자 변경', price: 1100000, govFee: 200000, desc: '한국 영주권 취득', icon: '🏠' },
-            'f5-reissue': { name: '영주증 재발급 (10년)', price: 110000, govFee: 35000, desc: '영주증 갱신', icon: '🔄' },
-            'f2-extension': { name: '거주 F-2 비자 연장', price: 110000, govFee: 60000, desc: '거주비자 기간 연장', icon: '🏡' },
-            'naturalization': { name: '귀화허가 신청', price: 1100000, govFee: 300000, desc: '한국 국적 취득', icon: '🏛️' },
-            'nationality-recovery': { name: '국적회복 허가 신청', price: 550000, govFee: 200000, desc: '과거 한국인의 국적 회복', icon: '🔙' },
-            'nationality-selection': { name: '국적선택 신고', price: 110000, govFee: 20000, desc: '복수국적자 국적 선택', icon: '🌍' },
-            'nationality-renounce': { name: '국적이탈 신고', price: 110000, govFee: 20000, desc: '한국 국적 포기', icon: '📄' },
-            'nationality-loss': { name: '국적상실 신고', price: 110000, govFee: 0, desc: '외국 국적 취득 시 신고', icon: '📋' },
-            'nationality-retention': { name: '국적보유 신고', price: 110000, govFee: 20000, desc: '국적 유보 의사 표시', icon: '✍️' },
-            'nationality-acquisition': { name: '국적취득 신고', price: 110000, govFee: 20000, desc: '인지에 의한 국적 취득', icon: '📜' },
-            'nationality-judgment': { name: '국적판정 신청', price: 110000, govFee: 30000, desc: '국적 여부 판정 요청', icon: '⚖️' },
+            // Residence & Citizenship
+            'f5-change': { name: 'F-5 Permanent Residence', price: 1100000, govFee: 200000, desc: 'Korea permanent residency', icon: '🏠' },
+            'f5-reissue': { name: 'F-5 Card Renewal (10yr)', price: 110000, govFee: 35000, desc: 'Permanent residence card', icon: '🔄' },
+            'f2-extension': { name: 'F-2 Residence Extension', price: 110000, govFee: 60000, desc: 'Residence visa renewal', icon: '🏡' },
+            'naturalization': { name: 'Naturalization Application', price: 1100000, govFee: 300000, desc: 'Korean citizenship', icon: '🏛️' },
+            'nationality-recovery': { name: 'Nationality Recovery', price: 550000, govFee: 200000, desc: 'Former Korean citizenship', icon: '🔙' },
+            'nationality-selection': { name: 'Nationality Selection', price: 110000, govFee: 20000, desc: 'Dual citizen selection', icon: '🌍' },
+            'nationality-renounce': { name: 'Nationality Renunciation', price: 110000, govFee: 20000, desc: 'Korean citizenship waiver', icon: '📄' },
+            'nationality-loss': { name: 'Nationality Loss Report', price: 110000, govFee: 0, desc: 'Foreign citizenship report', icon: '📋' },
+            'nationality-retention': { name: 'Nationality Retention', price: 110000, govFee: 20000, desc: 'Citizenship retention intent', icon: '✍️' },
+            'nationality-acquisition': { name: 'Nationality Acquisition', price: 110000, govFee: 20000, desc: 'Recognition-based citizenship', icon: '📜' },
+            'nationality-judgment': { name: 'Nationality Determination', price: 110000, govFee: 30000, desc: 'Nationality status inquiry', icon: '⚖️' },
 
-            // 6. 일반 신고·증명 (12개)
-            'arc-registration': { name: '외국인등록 신청', price: 110000, govFee: 35000, desc: '입국 후 90일 이내 필수 등록', icon: '🆔' },
-            'arc-reissue': { name: '외국인등록증 재발급', price: 110000, govFee: 35000, desc: '분실·훼손 시 재발급', icon: '🔄' },
-            'address-change': { name: '체류지 변경신고', price: 33000, govFee: 0, desc: '이사 후 주소 변경', icon: '🏠' },
-            'f4-address-change': { name: '재외동포 거소이전신고', price: 33000, govFee: 0, desc: 'F-4 동포 주소 변경', icon: '🇰🇷' },
-            'passport-change': { name: '여권/등록사항 변경신고', price: 33000, govFee: 0, desc: '여권·성명 등 정보 변경', icon: '📝' },
-            'reentry-permit-multiple': { name: '재입국허가(복수)', price: 55000, govFee: 41300, desc: '2회 이상 출입국 승인', icon: '🔁' },
-            'reentry-permit-single': { name: '재입국허가(단수)', price: 55000, govFee: 28300, desc: '1회 출입국 승인', icon: '🔙' },
-            'cert-entry-exit': { name: '출입국사실 증명서', price: 22000, govFee: 2000, desc: '출입국 기록 증명', icon: '📋' },
-            'cert-arc': { name: '외국인등록사실 증명서', price: 22000, govFee: 2000, desc: '외국인등록 내역 증명', icon: '📄' },
-            'cert-residence': { name: '국내거소신고사실 증명서', price: 22000, govFee: 2000, desc: 'F-4 거소신고 증명', icon: '🏠' },
-            'cert-realestate': { name: '부동산등기용 등록번호부여 증명서', price: 22000, govFee: 2000, desc: '부동산 거래용', icon: '🏘️' },
-            'cert-arc-number-change': { name: '외국인등록번호변경 확인서', price: 22000, govFee: 2000, desc: '등록번호 변경 확인', icon: '📋' },
-            'cert-nationality': { name: '국적 관련 증명서', price: 22000, govFee: 2000, desc: '국적상실, 국적보유 증명', icon: '📜' }
+            // General Registration & Certificates
+            'arc-registration': { name: 'Alien Registration', price: 110000, govFee: 35000, desc: 'Required within 90 days', icon: '🆔' },
+            'arc-reissue': { name: 'ARC Reissue', price: 110000, govFee: 35000, desc: 'Lost/damaged card replacement', icon: '🔄' },
+            'address-change': { name: 'Address Change Report', price: 33000, govFee: 0, desc: 'Moving address update', icon: '🏠' },
+            'f4-address-change': { name: 'F-4 Address Change', price: 33000, govFee: 0, desc: 'Overseas Korean address', icon: '🇰🇷' },
+            'passport-change': { name: 'Passport/Info Change', price: 33000, govFee: 0, desc: 'Passport/name update', icon: '📝' },
+            'reentry-permit-multiple': { name: 'Multiple Re-entry Permit', price: 55000, govFee: 41300, desc: 'Multiple border crossings', icon: '🔁' },
+            'reentry-permit-single': { name: 'Single Re-entry Permit', price: 55000, govFee: 28300, desc: 'One-time border crossing', icon: '🔙' },
+            'cert-entry-exit': { name: 'Entry/Exit Certificate', price: 22000, govFee: 2000, desc: 'Travel history record', icon: '📋' },
+            'cert-arc': { name: 'ARC Certificate', price: 22000, govFee: 2000, desc: 'Registration proof', icon: '📄' },
+            'cert-residence': { name: 'Residence Certificate', price: 22000, govFee: 2000, desc: 'F-4 residence proof', icon: '🏠' },
+            'cert-realestate': { name: 'Real Estate Registration ID', price: 22000, govFee: 2000, desc: 'Property transaction', icon: '🏘️' },
+            'cert-arc-number-change': { name: 'ARC Number Change Cert', price: 22000, govFee: 2000, desc: 'Number change confirmation', icon: '📋' },
+            'cert-nationality': { name: 'Nationality Certificate', price: 22000, govFee: 2000, desc: 'Nationality status proof', icon: '📜' }
         };
 
         let selectedService = null;
         let selectedPaymentMethod = 'card';
-        
-        // 뒤로가기 함수
+
         function goBack() {
-            // referrer가 있으면 해당 페이지로, 없으면 index.html로 이동
             const referrer = document.referrer;
             if (referrer && referrer.includes(window.location.host)) {
                 window.location.href = referrer;
@@ -899,188 +860,120 @@
             }
         }
 
-        // 관리자 로그인 상태 확인 함수
         window.isAdminLoggedIn = function() {
             return sessionStorage.getItem('adminLoggedIn') === 'true';
         };
-        
+
         window.addEventListener('DOMContentLoaded', async function() {
-            // ✅ 관리자 로그인 체크 - 관리자는 세션/프로필 체크 생략
             const urlParams = new URLSearchParams(window.location.search);
             const isAdminMode = urlParams.get('admin') === 'true' || window.isAdminLoggedIn();
-            
+
             if (isAdminMode) {
-                console.log('✅ [결제 페이지] 관리자 모드 - 세션/프로필 체크 생략');
-                
-                // Toss Payments SDK 초기화 (관리자용 - 테스트 customerKey)
+                console.log('✅ Admin mode - skipping session check');
+
                 try {
                     const tossPaymentsInstance = TossPayments(clientKey);
                     tossPayments = tossPaymentsInstance.payment({
                         customerKey: 'admin_' + Date.now()
                     });
-                    console.log('✅ Toss Payments SDK v2 초기화 성공 (관리자)');
                 } catch (error) {
-                    console.error('❌ Toss Payments SDK 초기화 실패:', error);
+                    console.error('❌ Toss Payments init failed:', error);
                 }
-                
-                // 서비스 확인 및 로드로 바로 이동
+
                 const serviceId = urlParams.get('service');
                 if (!serviceId || !servicePricing[serviceId]) {
-                    alert('올바르지 않은 서비스입니다.');
+                    alert('Invalid service.');
                     window.location.href = 'index.html';
                     return;
                 }
 
                 selectedService = servicePricing[serviceId];
-
-                // 로딩 숨기고 상담 화면 표시 (PG사 심사 완료 전까지)
                 document.getElementById('loading').style.display = 'none';
-                showConsulting();
+                showContent(serviceId);
                 return;
             }
-            
-            // ✅ 1. 로그인 세션 확인 (재시도 포함)
+
             let session = await checkSession();
-            console.log('🔍 [결제 페이지] 세션 확인 (1차):', session);
-            
-            // OAuth 리다이렉트 직후 세션 초기화 지연 대응: 1초 후 재시도
+
             if (!session || !session.user) {
-                console.log('⏳ [결제 페이지] 세션 없음 - 1초 후 재시도...');
                 await new Promise(resolve => setTimeout(resolve, 1000));
                 session = await checkSession();
-                console.log('🔍 [결제 페이지] 세션 확인 (2차):', session);
             }
-            
+
             if (!session || !session.user) {
-                console.log('❌ [결제 페이지] 세션 없음 (최종)');
-                // 로그인 후 돌아올 URL 저장 (현재 페이지로 돌아오기)
                 const currentUrl = window.location.href;
                 localStorage.setItem('redirectAfterLogin', currentUrl);
 
-                // 바로 Google 로그인 실행
-                if (confirm('로그인이 필요합니다.\n\nGoogle 계정으로 로그인하시겠습니까?')) {
+                if (confirm('Login required.\n\nSign in with Google?')) {
                     await signInWithGoogle();
                 }
                 return;
             }
-            
-            console.log('✅ [결제 페이지] 세션 존재:', session.user.email);
 
-            // 프로필 체크 제거 - 결제 후 쓰레드에서 기본사항 제출 받음
-            // (기존: 프로필 없으면 profile-setup.html로 리다이렉트)
-
-            // ✅ 2. Toss Payments SDK v2 초기화
             try {
                 const tossPaymentsInstance = TossPayments(clientKey);
-                // 회원 결제 (customerKey는 사용자 고유 ID 사용)
                 tossPayments = tossPaymentsInstance.payment({
-                    customerKey: session.user.id  // Supabase 사용자 ID를 customerKey로 사용
+                    customerKey: session.user.id
                 });
-                console.log('✅ Toss Payments SDK v2 초기화 성공');
             } catch (error) {
-                console.error('❌ Toss Payments SDK 초기화 실패:', error);
+                console.error('❌ Toss Payments init failed:', error);
             }
 
-            // ✅ 4. 서비스 확인 및 로드
             const serviceId = urlParams.get('service');
-            
+
             if (!serviceId || !servicePricing[serviceId]) {
-                alert('잘못된 접근입니다.');
+                alert('Invalid access.');
                 window.history.back();
                 return;
             }
-            
+
             selectedService = servicePricing[serviceId];
-            
+
             setTimeout(() => {
                 document.getElementById('loading').style.display = 'none';
-
-                if (serviceId === 'visa-prediagnosis') {
-                    showPrediagnosisPayment();
-                } else if (selectedService.consulting) {
-                    showConsulting();
-                } else {
-                    showPayment(serviceId);
-                }
+                showContent(serviceId);
             }, 500);
         });
 
-        function showPayment(serviceId) {
+        function showContent(serviceId) {
             document.getElementById('service-name').textContent = selectedService.name;
             document.getElementById('service-desc').textContent = selectedService.desc;
-            
-            const agencyFee = selectedService.price;
-            const govtFee = selectedService.govFee || 0;
-            const totalPrice = agencyFee + govtFee;
-            
-            document.getElementById('agency-fee').textContent = '₩' + agencyFee.toLocaleString();
-            
-            if (govtFee > 0) {
-                document.getElementById('govt-fee-row').style.display = 'flex';
-                document.getElementById('govt-fee').textContent = '₩' + govtFee.toLocaleString();
-                document.getElementById('govt-fee-notice').style.display = 'flex';
+
+            if (selectedService.consulting) {
+                // Consulting mode
+                document.getElementById('price-card').style.display = 'none';
+                document.getElementById('consulting-notice').style.display = 'flex';
+                document.getElementById('service-badge').innerHTML = '<i class="fas fa-comments"></i><span>Consultation</span>';
+                document.getElementById('service-badge').classList.add('consulting-badge');
+                document.getElementById('btn-text').textContent = 'Request Quote';
+                document.getElementById('payBtn').onclick = applyForConsulting;
+
+                // Hide payment icon, show message icon
+                document.querySelector('#payBtn i').className = 'fas fa-paper-plane';
+            } else {
+                // Payment mode
+                const agencyFee = selectedService.price;
+                const govtFee = selectedService.govFee || 0;
+                const totalPrice = agencyFee + govtFee;
+
+                document.getElementById('agency-fee').textContent = '₩' + agencyFee.toLocaleString();
+
+                if (govtFee > 0) {
+                    document.getElementById('govt-fee-row').style.display = 'flex';
+                    document.getElementById('govt-fee').textContent = '₩' + govtFee.toLocaleString();
+                    document.getElementById('govt-notice').style.display = 'flex';
+                }
+
+                document.getElementById('total-price').textContent = '₩' + totalPrice.toLocaleString();
+
+                selectedService.totalPrice = totalPrice;
+                selectedService.agencyFee = agencyFee;
+                selectedService.govtFee = govtFee;
             }
-            
-            document.getElementById('total-price').textContent = '₩' + totalPrice.toLocaleString();
-            
-            // 결제 데이터 저장
-            selectedService.totalPrice = totalPrice;
-            selectedService.agencyFee = agencyFee;
-            selectedService.govtFee = govtFee;
-            
-            document.getElementById('payment-content').style.display = 'block';
+
+            document.getElementById('main-content').style.display = 'grid';
         }
 
-        function showConsulting() {
-            // 비자 사전진단은 결제 페이지로 표시
-            if (selectedService.name === '비자 사전진단') {
-                showPrediagnosisPayment();
-                return;
-            }
-            
-            document.getElementById('consulting-name').textContent = selectedService.name;
-            document.getElementById('consulting-desc').textContent = selectedService.desc;
-            document.getElementById('consulting-content').style.display = 'block';
-        }
-        
-        function showPrediagnosisPayment() {
-            document.getElementById('service-name').textContent = selectedService.name;
-            document.getElementById('service-desc').textContent = selectedService.desc;
-            
-            const agencyFee = selectedService.price;
-            const totalPrice = agencyFee;
-            
-            // '대행 보수' 라벨을 '사전진단 서비스'로 변경
-            const agencyFeeLabel = document.querySelector('.price-label[data-i18n="payment.agencyFee"]');
-            if (agencyFeeLabel) {
-                agencyFeeLabel.textContent = '사전진단 서비스';
-            }
-            
-            document.getElementById('agency-fee').textContent = '₩' + agencyFee.toLocaleString();
-            document.getElementById('total-price').textContent = '₩' + totalPrice.toLocaleString();
-            
-            // 출입국 수수료 숨김
-            document.getElementById('govt-fee-row').style.display = 'none';
-            document.getElementById('govt-fee-notice').style.display = 'none';
-            
-            // 결제 데이터 저장
-            selectedService.totalPrice = totalPrice;
-            selectedService.agencyFee = agencyFee;
-            selectedService.govtFee = 0;
-            
-            // 사전진단 안내 문구 변경
-            const noticeTextElement = document.getElementById('service-notice-text');
-            if (noticeTextElement) {
-                noticeTextElement.textContent = '사전 진단을 위한 쓰레드에서 필요 서류와 진단 결과를 안내 드립니다.';
-            }
-            
-            document.getElementById('payment-content').style.display = 'block';
-        }
-
-        // selectPayment 함수 제거됨 - 더 이상 결제수단 선택 UI를 사용하지 않음
-
-        // Toss Payments 클라이언트 키 (테스트용)
-        // TODO: 정식 연동 시 실제 클라이언트 키로 교체
         const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
         let tossPayments = null;
 
@@ -1088,41 +981,35 @@
             const btn = document.getElementById('payBtn');
             btn.disabled = true;
             btn.classList.add('loading');
-            btn.innerHTML = '<i class="fas fa-spinner"></i> 결제 진행 중...';
+            btn.innerHTML = '<i class="fas fa-spinner"></i> Processing...';
 
             try {
                 let profile = null;
                 let session = null;
-                
-                // 관리자 모드 체크
+
                 const isAdminMode = window.isAdminLoggedIn && window.isAdminLoggedIn();
-                
+
                 if (isAdminMode) {
-                    console.log('✅ [결제] 관리자 모드 - 테스트 프로필 사용');
                     profile = {
-                        name: '관리자 테스트',
+                        name: 'Admin Test',
                         email: 'admin@lawyeon.com',
                         phone: '010-0000-0000'
                     };
                     session = { user: { id: 'admin_' + Date.now(), email: 'admin@lawyeon.com' } };
                 } else {
-                    // 현재 로그인 사용자 확인
                     session = await checkSession();
                     if (!session || !session.user) {
-                        alert('로그인이 필요합니다.');
+                        alert('Login required.');
                         window.location.href = 'index.html';
                         return;
                     }
 
-                    // 사용자 프로필 가져오기 (없어도 결제 가능)
                     const profileResult = await getUserProfile(session.user.id);
                     if (profileResult.success && profileResult.data) {
                         profile = profileResult.data;
                     } else {
-                        // 프로필 없으면 세션 정보로 대체
-                        console.log('📋 프로필 없음 - 세션 정보 사용');
                         profile = {
-                            name: session.user.email.split('@')[0], // 이메일 앞부분을 이름으로
+                            name: session.user.email.split('@')[0],
                             email: session.user.email,
                             phone: ''
                         };
@@ -1142,9 +1029,6 @@
                     timestamp: new Date().toISOString()
                 };
 
-                console.log('💳 결제 요청 정보:', orderInfo);
-                
-                // sessionStorage에 결제 정보 임시 저장 (성공 페이지에서 사용)
                 sessionStorage.setItem('pendingPayment', JSON.stringify({
                     orderId: orderInfo.orderId,
                     serviceName: orderInfo.orderName,
@@ -1156,15 +1040,12 @@
                     customerEmail: orderInfo.customerEmail
                 }));
 
-                // Toss Payments SDK가 초기화되지 않은 경우
                 if (!tossPayments) {
-                    console.error('❌ Toss Payments SDK가 초기화되지 않았습니다.');
-                    throw new Error('결제 시스템 초기화 실패');
+                    throw new Error('Payment system not initialized');
                 }
-                
+
                 const currentUrl = window.location.origin;
-                
-                // 토스페이먼츠 결제창 호출 (카드/간편결제 통합)
+
                 const paymentRequest = {
                     method: 'CARD',
                     amount: {
@@ -1185,80 +1066,65 @@
                     }
                 };
 
-                // 전화번호가 있을 때만 추가 (빈 문자열이면 제외)
                 if (orderInfo.customerPhone && orderInfo.customerPhone.trim()) {
                     paymentRequest.customerMobilePhone = orderInfo.customerPhone.replace(/-/g, '');
                 }
 
                 await tossPayments.requestPayment(paymentRequest);
-                
+
             } catch (error) {
-                console.error('결제 오류:', error);
+                console.error('Payment error:', error);
                 btn.disabled = false;
                 btn.classList.remove('loading');
-                btn.textContent = '결제하기';
-                
-                // 사용자가 결제창을 닫은 경우 (PAY_PROCESS_CANCELED)
+                btn.innerHTML = '<i class="fas fa-credit-card"></i> Proceed to Payment';
+
                 if (error.code === 'PAY_PROCESS_CANCELED') {
-                    console.log('사용자가 결제를 취소했습니다.');
                     return;
                 }
-                
-                let errorMessage = '결제 처리 중 오류가 발생했습니다.';
-                if (error.message) {
-                    errorMessage += '\n\n오류 내용: ' + error.message;
-                }
-                errorMessage += '\n\n다시 시도해주세요.';
-                
-                alert(errorMessage);
+
+                alert('Payment processing error. Please try again.');
             }
         }
 
         async function applyForConsulting() {
+            const btn = document.getElementById('payBtn');
+            btn.disabled = true;
+            btn.classList.add('loading');
+            btn.innerHTML = '<i class="fas fa-spinner"></i> Submitting...';
+
             try {
-                // 현재 로그인 사용자 확인
                 const session = await checkSession();
                 if (!session || !session.user) {
-                    alert('로그인이 필요합니다.');
+                    alert('Login required.');
                     window.location.href = 'index.html';
                     return;
                 }
 
-                // Supabase에 견적 상담용 쓰레드 생성
                 const threadResult = await createThread({
-                    service_name: selectedService.name + ' (견적 상담)',
+                    service_name: selectedService.name + ' (Quote Request)',
                     status: 'document',
                     amount: 0,
                     order_id: 'CONSULT-' + Date.now(),
                     is_consulting: true,
                     organization: 'general'
                 });
-                
+
                 if (!threadResult.success) {
-                    throw new Error('쓰레드 생성 실패');
+                    throw new Error('Thread creation failed');
                 }
-                
-                alert('견적 상담 신청이 완료되었습니다!\n\n센터 담당자가 쓰레드에서 곧 연락드릴게요!');
+
+                alert('Quote request submitted!\n\nOur specialist will contact you shortly through your dedicated thread.');
                 window.location.href = `thread-general-v2.html?id=${threadResult.data.id}`;
             } catch (error) {
-                console.error('상담 신청 오류:', error);
-                alert('상담 신청 중 오류가 발생했습니다.\n다시 시도해주세요.');
+                console.error('Consultation request error:', error);
+                btn.disabled = false;
+                btn.classList.remove('loading');
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Request Quote';
+                alert('An error occurred. Please try again.');
             }
         }
-
-        function getUserName() {
-            const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
-            const user = JSON.parse(localStorage.getItem('user') || '{}');
-            return (profile.firstName && profile.lastName) ? `${profile.lastName} ${profile.firstName}` : user.name || '사용자';
-        }
-
-        function getUserEmail() {
-            const user = JSON.parse(localStorage.getItem('user') || '{}');
-            const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
-            return user.email || profile.email || '';
-        }
     </script>
-    
+
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=20250119"></script>

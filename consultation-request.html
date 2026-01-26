@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="favicon.png?v=3">
-    <title>상담 요청 - 법무법인 로연</title>
+    <title>Consultation Request - Lawyeon Visa Center</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
 
@@ -16,22 +16,26 @@
         }
 
         body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background: #f8f9fa;
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F8FAFC;
             -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
         }
 
-        /* 헤더 */
+        /* Header */
         .header {
             background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
             padding: 20px 0;
             border-bottom: 3px solid #3182F6;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .header-inner {
-            max-width: 600px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -49,162 +53,149 @@
             font-size: 15px;
             font-weight: 600;
             opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn-back:hover {
             opacity: 1;
         }
 
-        /* 컨테이너 */
-        .container {
-            max-width: 600px;
+        /* Main Container - 2 Column Layout */
+        .main-container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px 40px;
+            padding: 48px 24px;
         }
 
-        /* 섹션 카드 */
-        .card {
-            background: white;
-            border-radius: 16px;
-            padding: 28px 24px;
-            margin: 20px 0;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        .two-column-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
         }
 
-        /* 서비스 정보 */
-        .service-header {
-            margin-bottom: 24px;
+        /* Left Column */
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
         }
 
-        .service-info h1 {
+        /* Consultation Banner */
+        .consultation-banner {
+            background: linear-gradient(135deg, #DBEAFE 0%, #EFF6FF 100%);
+            border: 2px solid #3182F6;
+            border-radius: 20px;
+            padding: 28px 32px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .consultation-banner-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .consultation-banner-content h1 {
             font-size: 24px;
             font-weight: 800;
-            color: #191F28;
+            color: #1E40AF;
             margin-bottom: 8px;
             letter-spacing: -0.5px;
         }
 
-        .service-info p {
+        .consultation-banner-content p {
             font-size: 15px;
-            color: #6B7280;
-            font-weight: 500;
-            line-height: 1.5;
-        }
-
-        /* 버튼 */
-        .btn-primary {
-            width: 100%;
-            height: 56px;
-            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 17px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            margin-top: 32px;
-            box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(49, 130, 246, 0.4);
-        }
-
-        .btn-primary:disabled {
-            background: #D1D5DB;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .btn-primary i {
-            margin-right: 6px;
-        }
-
-        .btn-primary.loading i {
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* 상담 배너 */
-        .consulting-banner {
-            background: linear-gradient(135deg, #FEF3C7 0%, #FFFBEB 100%);
-            border: 2px solid #F59E0B;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-        }
-
-        .consulting-banner i {
-            color: #D97706;
-            font-size: 22px;
-            margin-top: 2px;
-        }
-
-        .consulting-banner-content h3 {
-            font-size: 16px;
-            font-weight: 800;
-            color: #92400E;
-            margin-bottom: 6px;
-        }
-
-        .consulting-banner-content p {
-            font-size: 14px;
-            color: #78350F;
+            color: #3B82F6;
             font-weight: 600;
             line-height: 1.5;
         }
 
-        /* 프로세스 리스트 */
-        .process-list {
+        /* Service Card */
+        .service-card {
             background: white;
-            border-radius: 16px;
-            padding: 24px;
-            margin: 20px 0;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border-radius: 20px;
+            padding: 28px 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
         }
 
-        .process-list h3 {
-            font-size: 18px;
+        .service-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #FEF3C7;
+            color: #D97706;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .service-card h2 {
+            font-size: 22px;
             font-weight: 800;
-            color: #191F28;
-            margin-bottom: 20px;
+            color: #1E293B;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+
+        .service-card p {
+            font-size: 15px;
+            color: #64748B;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* Process Steps */
+        .process-steps {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .process-steps h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1E293B;
+            margin-bottom: 24px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
-        .process-list h3 i {
-            color: #10B981;
+        .process-steps h2 i {
+            color: #3182F6;
         }
 
-        .process-step {
-            padding: 14px 0;
-            border-bottom: 1px solid #F3F4F6;
+        .step-item {
             display: flex;
-            align-items: center;
-            gap: 12px;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid #F1F5F9;
         }
 
-        .process-step:last-child {
+        .step-item:last-child {
             border-bottom: none;
+            padding-bottom: 0;
         }
 
         .step-number {
-            width: 28px;
-            height: 28px;
-            background: #3182F6;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
             color: white;
             border-radius: 50%;
             display: flex;
@@ -215,154 +206,380 @@
             flex-shrink: 0;
         }
 
-        .step-text {
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h3 {
             font-size: 15px;
-            color: #4E5968;
+            font-weight: 700;
+            color: #1E293B;
+            margin-bottom: 4px;
+        }
+
+        .step-content p {
+            font-size: 14px;
+            color: #64748B;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* CTA Button */
+        .cta-section {
+            margin-top: 8px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            height: 56px;
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 16px rgba(49, 130, 246, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(49, 130, 246, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #CBD5E1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-primary.loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Free Badge */
+        .free-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #F0FDF4;
+            border: 1px solid #86EFAC;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-top: 16px;
+        }
+
+        .free-badge i {
+            color: #22C55E;
+            font-size: 18px;
+        }
+
+        .free-badge-text {
+            font-size: 13px;
+            color: #166534;
             font-weight: 600;
         }
 
-        .step-text strong {
-            color: #191F28;
+        /* Right Column - Thread Preview */
+        .right-column {
+            position: sticky;
+            top: 100px;
+        }
+
+        .thread-preview {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            border: 1px solid #E2E8F0;
+        }
+
+        .thread-preview-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #F1F5F9;
+        }
+
+        .thread-preview-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .thread-preview-title {
+            flex: 1;
+        }
+
+        .thread-preview-title h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1E293B;
+            margin-bottom: 2px;
+        }
+
+        .thread-preview-title p {
+            font-size: 13px;
+            color: #64748B;
+            font-weight: 500;
+        }
+
+        .thread-preview-image {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+        }
+
+        .thread-preview-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .thread-preview-caption {
+            text-align: center;
+            padding: 16px;
+            color: #64748B;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .thread-preview-caption strong {
+            color: #3182F6;
             font-weight: 700;
         }
 
-        /* 로딩 */
+        /* Loading State */
         .loading-container {
+            min-height: 400px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            min-height: 300px;
+            justify-content: center;
         }
 
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid #E5E7EB;
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid #E5E7EB;
             border-top-color: #3182F6;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
+            margin-bottom: 16px;
         }
 
-        /* 모바일 대응 */
-        @media (max-width: 768px) {
-            .btn-primary {
-                font-size: 16px;
-                word-break: keep-all;
-                white-space: normal;
-                line-height: 1.3;
-                min-height: 52px;
+        .loading-text {
+            font-size: 15px;
+            color: #6B7280;
+            font-weight: 600;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 968px) {
+            .two-column-layout {
+                grid-template-columns: 1fr;
+                gap: 24px;
             }
 
-            .step-text {
-                font-size: 14px;
-                line-height: 1.5;
-                word-break: keep-all;
+            .right-column {
+                position: static;
+                order: -1;
             }
 
-            .consulting-banner-content h3 {
-                font-size: 15px;
-                line-height: 1.4;
-                word-break: keep-all;
+            .thread-preview {
+                display: none;
             }
 
-            .consulting-banner-content p {
+            .main-container {
+                padding: 24px 16px;
+            }
+
+            .consultation-banner,
+            .service-card,
+            .process-steps {
+                padding: 24px 20px;
+                border-radius: 16px;
+            }
+
+            .consultation-banner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .consultation-banner-content h1 {
+                font-size: 20px;
+            }
+
+            .service-card h2 {
+                font-size: 18px;
+            }
+
+            .step-item {
+                gap: 12px;
+            }
+
+            .step-number {
+                width: 28px;
+                height: 28px;
                 font-size: 13px;
-                line-height: 1.5;
-                word-break: keep-all;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 헤더 -->
-    <header class="header">
+    <!-- Header -->
+    <div class="header">
         <div class="header-inner">
+            <div class="header-title">Free Consultation</div>
             <a href="javascript:history.back()" class="btn-back">
-                <i class="fas fa-arrow-left"></i> 뒤로
+                <i class="fas fa-times"></i>
             </a>
-            <div class="header-title">상담 요청</div>
-            <div style="width: 60px;"></div>
         </div>
-    </header>
+    </div>
 
-    <div class="container">
-        <!-- 로딩 -->
+    <!-- Loading State -->
+    <div class="main-container">
         <div id="loading" class="loading-container">
-            <div class="loading-spinner"></div>
+            <div class="spinner"></div>
+            <div class="loading-text">Loading...</div>
         </div>
 
-        <!-- 상담 내용 -->
-        <div id="consultation-content" style="display: none;">
-            <!-- 배너 -->
-            <div class="consulting-banner">
-                <i class="fas fa-star"></i>
-                <div class="consulting-banner-content">
-                    <h3>무료 상담 신청</h3>
+        <!-- Main Content -->
+        <div id="main-content" class="two-column-layout" style="display: none;">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- Consultation Banner -->
+                <div class="consultation-banner">
+                    <div class="consultation-banner-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="consultation-banner-content">
+                        <h1>Free Consultation</h1>
+                        <p>Get expert advice on your visa and immigration matters. No charge for initial consultation.</p>
+                    </div>
                 </div>
-            </div>
 
-            <!-- 서비스 정보 -->
-            <div class="card">
-                <div class="service-header">
-                    <div class="service-info">
-                        <h1 id="service-name">서비스명</h1>
-                        <p id="service-desc">서비스 설명</p>
+                <!-- Service Card -->
+                <div class="service-card">
+                    <div class="service-badge">
+                        <i class="fas fa-star"></i>
+                        <span>Consultation</span>
+                    </div>
+                    <h2 id="service-name">Visa Consultation</h2>
+                    <p id="service-desc">Professional consultation on immigration matters</p>
+                </div>
+
+                <!-- Process Steps -->
+                <div class="process-steps">
+                    <h2><i class="fas fa-list-check"></i> How It Works</h2>
+
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Submit Request</h3>
+                            <p>A dedicated thread will be created for your case</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Specialist Assigned</h3>
+                            <p>We'll contact you within 30 minutes</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Case Review</h3>
+                            <p>We'll analyze your situation and requirements</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Solution & Quote</h3>
+                            <p>Receive tailored recommendations and pricing</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="cta-section">
+                    <button class="btn-primary" id="consultBtn" onclick="applyForConsultation()">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Request Free Consultation</span>
+                    </button>
+
+                    <div class="free-badge">
+                        <i class="fas fa-check-circle"></i>
+                        <span class="free-badge-text">No payment required · Response within 30 minutes</span>
                     </div>
                 </div>
             </div>
 
-            <!-- 프로세스 -->
-            <div class="process-list">
-                <h3><i class="fas fa-list-check"></i> 어떻게 진행되나요?</h3>
+            <!-- Right Column - Thread Preview -->
+            <div class="right-column">
+                <div class="thread-preview">
+                    <div class="thread-preview-header">
+                        <div class="thread-preview-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="thread-preview-title">
+                            <h3>Your Dedicated Thread</h3>
+                            <p>Real-time communication with our team</p>
+                        </div>
+                    </div>
 
-                <div class="process-step">
-                    <div class="step-number">1</div>
-                    <div class="step-text"><strong>상담 신청</strong> - 전용 쓰레드가 생성됩니다</div>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">2</div>
-                    <div class="step-text"><strong>담당자 배정</strong> - 30분 내 연락드려요</div>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">3</div>
-                    <div class="step-text"><strong>상황 파악</strong> - 케이스를 함께 검토해요</div>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">4</div>
-                    <div class="step-text"><strong>견적 안내</strong> - 정확한 비용을 안내드려요</div>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">5</div>
-                    <div class="step-text"><strong>결제 & 진행</strong> - 서비스가 시작됩니다</div>
+                    <div class="thread-preview-image">
+                        <img src="images/thread-preview.png" alt="Thread Preview" style="width: 100%; height: auto; display: block;">
+                    </div>
+
+                    <div class="thread-preview-caption">
+                        <strong>Track your progress</strong> in real-time through your dedicated thread
+                    </div>
                 </div>
             </div>
-
-            <!-- 신청 버튼 -->
-            <button class="btn-primary" id="consultBtn" onclick="applyForConsultation()">
-                <i class="fas fa-paper-plane"></i>
-                상담 요청하기
-            </button>
         </div>
     </div>
 
     <script>
-        // 서비스 정보 (블로그에서 링크되는 서비스들)
+        // Service information (linked from blog posts)
         const serviceInfo = {
-            'd10-change': { name: 'D-10 구직비자 변경', desc: '졸업 후 구직활동을 위한 비자 변경' },
-            'd10-1-change': { name: 'D-10-1 일반구직 비자 변경', desc: '일반 구직비자 변경' },
-            'd10-2-change': { name: 'D-10-2 기술창업구직 비자 변경', desc: '창업 준비생 구직비자' },
-            'd10-3-change': { name: 'D-10-3 첨단기술인턴 비자 변경', desc: '첨단분야 인턴 비자' },
-            'd10-t-change': { name: 'D-10-T 최우수인재구직 비자 변경', desc: '우수대학 졸업자 구직비자' },
-            'd10-extension': { name: 'D-10 비자 연장', desc: '구직 비자 연장' },
-            'visa-prediagnosis': { name: '비자 사전진단', desc: '비자 변경·불법체류 위험·출입국관리법 위반 자문' },
-            'e7-change': { name: '특정활동 E-7 비자 변경', desc: '전문인력 취업비자' },
-            'f2-7-change': { name: '우수인재 거주 F-2-7 비자 변경', desc: '점수제 우수인재 거주비자' },
-            'default': { name: '비자 상담', desc: '출입국·비자 관련 전문 상담' }
+            'd10-change': { name: 'D-10 Job Seeker Visa Change', desc: 'Visa change for job seeking after graduation' },
+            'd10-1-change': { name: 'D-10-1 General Job Seeker Visa', desc: 'General job seeking visa change' },
+            'd10-2-change': { name: 'D-10-2 Tech Startup Job Seeker', desc: 'Startup preparation visa' },
+            'd10-3-change': { name: 'D-10-3 High-tech Intern Visa', desc: 'Advanced technology internship' },
+            'd10-t-change': { name: 'D-10-T Top Talent Job Seeker', desc: 'Elite university graduate visa' },
+            'd10-extension': { name: 'D-10 Visa Extension', desc: 'Job seeker visa renewal' },
+            'visa-prediagnosis': { name: 'Visa Pre-diagnosis', desc: 'Visa change, overstay risk, immigration law consultation' },
+            'e7-change': { name: 'E-7 Professional Visa Change', desc: 'Professional employment visa' },
+            'f2-7-change': { name: 'F-2-7 Points-based Residence', desc: 'Outstanding talent residence visa' },
+            'default': { name: 'Visa Consultation', desc: 'Professional consultation on immigration and visa matters' }
         };
 
         let selectedService = null;
 
-        // 페이지 로드
+        // Page load
         document.addEventListener('DOMContentLoaded', async function() {
             const urlParams = new URLSearchParams(window.location.search);
             const serviceId = urlParams.get('service');
@@ -375,14 +592,15 @@
 
             selectedService.id = serviceId || 'general-consultation';
 
-            // UI 표시
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('service-name').textContent = selectedService.name;
-            document.getElementById('service-desc').textContent = selectedService.desc;
-            document.getElementById('consultation-content').style.display = 'block';
+            // Show UI
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('service-name').textContent = selectedService.name;
+                document.getElementById('service-desc').textContent = selectedService.desc;
+                document.getElementById('main-content').style.display = 'grid';
+            }, 300);
 
-            // 로그인 후 대기 중인 상담 처리
-            // 짧은 지연 후 실행 (Supabase 세션 확인 대기)
+            // Check for pending consultation after login
             setTimeout(async () => {
                 await checkPendingConsultation();
             }, 500);
@@ -391,50 +609,48 @@
         async function applyForConsultation() {
             const btn = document.getElementById('consultBtn');
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner"></i> 처리 중...';
+            btn.innerHTML = '<i class="fas fa-spinner"></i> Processing...';
 
             try {
-                // 현재 로그인 사용자 확인
+                // Check current login status
                 const session = await checkSession();
                 if (!session || !session.user) {
-                    // 로그인 필요 - localStorage에 대기 정보 저장 후 Google 로그인
+                    // Save pending info and start Google login
                     localStorage.setItem('pendingConsultation', JSON.stringify({
                         serviceId: selectedService.id,
                         serviceName: selectedService.name,
                         timestamp: Date.now()
                     }));
 
-                    console.log('📋 상담 정보 저장 후 Google 로그인 시작');
+                    console.log('📋 Saved consultation info, starting Google login');
 
-                    // 바로 Google 로그인 실행
                     const result = await signInWithGoogle();
                     if (!result.success) {
-                        throw new Error('로그인 실패');
+                        throw new Error('Login failed');
                     }
-                    // 로그인 후 이 페이지로 돌아오면 자동으로 쓰레드 생성됨
                     return;
                 }
 
-                // 이미 로그인된 경우 바로 쓰레드 생성
+                // Already logged in, create thread directly
                 await createConsultationThread();
             } catch (error) {
-                console.error('상담 신청 오류:', error);
-                alert('상담 신청 중 오류가 발생했습니다.\n다시 시도해주세요.');
+                console.error('Consultation request error:', error);
+                alert('An error occurred. Please try again.');
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> 상담 요청하기';
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Request Free Consultation';
             }
         }
 
-        // 쓰레드 생성 함수 (분리)
+        // Thread creation function
         async function createConsultationThread() {
             const btn = document.getElementById('consultBtn');
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner"></i> 쓰레드 생성 중...';
+            btn.innerHTML = '<i class="fas fa-spinner"></i> Creating thread...';
 
             try {
-                // Supabase에 상담용 쓰레드 생성
+                // Create consultation thread in Supabase
                 const threadResult = await createThread({
-                    service_name: selectedService.name + ' (상담)',
+                    service_name: selectedService.name + ' (Consultation)',
                     status: 'document',
                     amount: 0,
                     order_id: 'CONSULT-' + Date.now(),
@@ -443,26 +659,26 @@
                 });
 
                 if (!threadResult.success) {
-                    throw new Error('쓰레드 생성 실패');
+                    throw new Error('Thread creation failed');
                 }
 
-                // 환영 메시지 자동 생성
+                // Create welcome message
                 await createWelcomeMessage(threadResult.data.id, selectedService.name);
 
-                // 대기 정보 삭제
+                // Clear pending info
                 localStorage.removeItem('pendingConsultation');
 
-                alert('상담 요청이 완료되었습니다!\n\n센터 담당자가 쓰레드에서 곧 연락드릴게요!');
+                alert('Consultation request submitted!\n\nOur specialist will contact you shortly through your dedicated thread.');
                 window.location.href = `thread-general-v2.html?id=${threadResult.data.id}`;
             } catch (error) {
-                console.error('쓰레드 생성 오류:', error);
-                alert('쓰레드 생성 중 오류가 발생했습니다.\n다시 시도해주세요.');
+                console.error('Thread creation error:', error);
+                alert('An error occurred. Please try again.');
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> 상담 요청하기';
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Request Free Consultation';
             }
         }
 
-        // 로그인 후 대기 중인 상담 처리
+        // Check for pending consultation after login
         async function checkPendingConsultation() {
             const pending = localStorage.getItem('pendingConsultation');
             if (!pending) return;
@@ -470,22 +686,22 @@
             try {
                 const pendingData = JSON.parse(pending);
 
-                // 10분 이내 요청만 처리
+                // Only process requests within 10 minutes
                 if (Date.now() - pendingData.timestamp > 10 * 60 * 1000) {
-                    console.log('⏰ 대기 상담 만료됨');
+                    console.log('⏰ Pending consultation expired');
                     localStorage.removeItem('pendingConsultation');
                     return;
                 }
 
-                // 로그인 상태 확인
+                // Check login status
                 const session = await checkSession();
                 if (!session || !session.user) {
                     return;
                 }
 
-                console.log('✅ 로그인 완료 - 대기 상담 처리 시작');
+                console.log('✅ Login complete - processing pending consultation');
 
-                // selectedService가 설정되지 않았으면 pendingData에서 복원
+                // Restore selectedService if not set
                 if (!selectedService || selectedService.id !== pendingData.serviceId) {
                     selectedService = {
                         id: pendingData.serviceId,
@@ -493,10 +709,10 @@
                     };
                 }
 
-                // 자동으로 쓰레드 생성
+                // Auto-create thread
                 await createConsultationThread();
             } catch (error) {
-                console.error('대기 상담 처리 오류:', error);
+                console.error('Pending consultation error:', error);
                 localStorage.removeItem('pendingConsultation');
             }
         }
