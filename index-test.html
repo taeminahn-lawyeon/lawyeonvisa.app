@@ -291,7 +291,6 @@
             display: flex;
             flex-direction: column;
             cursor: pointer;
-            min-height: 200px;
         }
 
         .premium-service-card:hover {
@@ -312,22 +311,25 @@
         .premium-service-card .desc {
             font-size: 14px;
             color: #64748B;
-            line-height: 1.8;
+            line-height: 1.7;
             font-weight: 400;
-            flex: 1;
+            margin-bottom: 16px;
         }
 
         .premium-service-card .desc-item {
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             color: #64748B;
         }
-        
+
+        .premium-service-card .desc-item:last-child {
+            margin-bottom: 0;
+        }
+
         .premium-service-card .cta-btn {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            margin-top: auto;
             padding: 10px 18px;
             background: #3182F6;
             color: white;
@@ -460,10 +462,10 @@
         }
 
         .lawfirm-intro-content {
-            display: grid;
-            grid-template-columns: 0.8fr 1.2fr;
-            gap: 40px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
+            gap: 32px;
         }
 
         /* Left Column - Text & Badge */
@@ -471,6 +473,8 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            flex: 0 0 auto;
+            max-width: 420px;
         }
 
         .lawfirm-headline {
@@ -517,6 +521,9 @@
         /* Right Column - Attorney Carousel */
         .lawfirm-right {
             position: relative;
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
         }
 
         /* Attorneys Carousel - Continuous Scroll */
@@ -526,8 +533,7 @@
             border-radius: 16px;
             overflow: hidden;
             width: 100%;
-            max-width: 480px;
-            margin-left: auto;
+            max-width: 560px;
         }
 
         .attorneys-track {
