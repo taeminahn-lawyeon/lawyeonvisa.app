@@ -146,11 +146,6 @@
             box-shadow: 0 8px 24px rgba(49, 130, 246, 0.12);
         }
 
-        .option-btn .option-icon {
-            font-size: 24px;
-            margin-bottom: 4px;
-        }
-
         .option-btn .option-title {
             font-size: 16px;
             font-weight: 700;
@@ -206,19 +201,6 @@
             margin-bottom: 32px;
         }
 
-        .result-icon {
-            width: 72px;
-            height: 72px;
-            background: linear-gradient(135deg, #3182F6 0%, #1B64DA 100%);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 32px;
-            color: white;
-        }
-
         .result-title {
             font-size: 26px;
             font-weight: 800;
@@ -255,11 +237,6 @@
             background: #EBF4FF;
             transform: translateY(-4px);
             box-shadow: 0 8px 24px rgba(49, 130, 246, 0.12);
-        }
-
-        .service-item .service-icon {
-            font-size: 28px;
-            margin-bottom: 4px;
         }
 
         .service-item .title {
@@ -422,9 +399,6 @@
         <div class="result-section" id="resultSection">
             <div class="question-card">
                 <div class="result-header">
-                    <div class="result-icon">
-                        <i class="fas fa-check"></i>
-                    </div>
                     <h2 class="result-title">Recommended Services</h2>
                     <p class="result-subtitle">Based on your selections, here are the available services:</p>
                 </div>
@@ -443,96 +417,96 @@
         // ============================================================
         const allServices = {
             // Premium Services (2)
-            'visa-prediagnosis': { name: 'Visa Pre-diagnosis', desc: 'Visa change, overstay risk, immigration law consultation', icon: '🔍', category: 'premium' },
-            'emergency-legal': { name: 'Immigration Dispute Resolution', desc: 'Criminal investigation, deportation defense, visa denial appeals', icon: '⚖️', category: 'premium' },
+            'visa-prediagnosis': { name: 'Visa Pre-diagnosis', desc: 'Visa change, overstay risk, immigration law consultation', category: 'premium' },
+            'emergency-legal': { name: 'Immigration Dispute Resolution', desc: 'Criminal investigation, deportation defense, visa denial appeals', category: 'premium' },
 
             // Education & Job Search (10)
-            'd4-to-d2-change': { name: 'D-4→D-2 Student Visa Change', desc: 'Language course to degree program', icon: '🎓', category: 'education' },
-            'd10-1-change': { name: 'D-10-1 Job Seeker Visa Change', desc: 'General job seeking visa', icon: '🔍', category: 'education' },
-            'd10-2-change': { name: 'D-10-2 Tech Startup Job Seeker', desc: 'Startup preparation visa', icon: '💡', category: 'education' },
-            'd10-3-change': { name: 'D-10-3 High-tech Intern Visa', desc: 'Advanced technology internship', icon: '🔬', category: 'education' },
-            'd10-t-change': { name: 'D-10-T Top Talent Job Seeker', desc: 'Elite university graduate visa', icon: '🏆', category: 'education' },
-            'd2-d4-extension': { name: 'D-2, D-4 Visa Extension', desc: 'Student visa renewal', icon: '📖', category: 'education' },
-            'd10-extension': { name: 'D-10 Visa Extension', desc: 'Job seeker visa renewal', icon: '⏳', category: 'education' },
-            'parttime-permit': { name: 'Part-time Work Permit', desc: 'D-2, D-4 part-time employment', icon: '⏰', category: 'education' },
-            'intern-report': { name: 'Internship Start/Change Report', desc: 'D-10 internship notification', icon: '📝', category: 'education' },
-            'parent-invite': { name: 'Student Parent Invitation', desc: 'Excellent student parent visa', icon: '👨‍👩‍👧', category: 'education' },
+            'd4-to-d2-change': { name: 'D-4→D-2 Student Visa Change', desc: 'Language course to degree program', category: 'education' },
+            'd10-1-change': { name: 'D-10-1 Job Seeker Visa Change', desc: 'General job seeking visa', category: 'education' },
+            'd10-2-change': { name: 'D-10-2 Tech Startup Job Seeker', desc: 'Startup preparation visa', category: 'education' },
+            'd10-3-change': { name: 'D-10-3 High-tech Intern Visa', desc: 'Advanced technology internship', category: 'education' },
+            'd10-t-change': { name: 'D-10-T Top Talent Job Seeker', desc: 'Elite university graduate visa', category: 'education' },
+            'd2-d4-extension': { name: 'D-2, D-4 Visa Extension', desc: 'Student visa renewal', category: 'education' },
+            'd10-extension': { name: 'D-10 Visa Extension', desc: 'Job seeker visa renewal', category: 'education' },
+            'parttime-permit': { name: 'Part-time Work Permit', desc: 'D-2, D-4 part-time employment', category: 'education' },
+            'intern-report': { name: 'Internship Start/Change Report', desc: 'D-10 internship notification', category: 'education' },
+            'parent-invite': { name: 'Student Parent Invitation', desc: 'Excellent student parent visa', category: 'education' },
 
             // Employment (18)
-            'e7-4-change': { name: 'E-7-4 Skilled Worker Visa', desc: 'E-9/H-2 skilled transition', icon: '🔧', category: 'employment' },
-            'e7-4r-change': { name: 'E-7-4R Regional Skilled Worker', desc: 'Depopulated area skilled worker', icon: '🏘️', category: 'employment' },
-            'e7-change': { name: 'E-7 Professional Visa Change', desc: 'Professional employment visa', icon: '💼', category: 'employment' },
-            'f2-7-change': { name: 'F-2-7 Points-based Residence', desc: 'Outstanding talent residence', icon: '⭐', category: 'employment' },
-            'f2-r-change': { name: 'F-2-R Regional Residence Visa', desc: 'Depopulated area residence', icon: '🏡', category: 'employment' },
-            'e7-st-change': { name: 'E-7-S/T Elite Professional', desc: 'High-tech/high-income talent', icon: '🏆', category: 'employment' },
-            'e1-e6-change': { name: 'E-1~E-6 Professional Change', desc: 'Professor, researcher, specialist', icon: '🎓', category: 'employment' },
-            'e7-extension': { name: 'E-7 Visa Extension', desc: 'Professional visa renewal', icon: '📅', category: 'employment' },
-            'e9-workplace-change': { name: 'E-9 Workplace Change', desc: 'E-9 employer change', icon: '🏭', category: 'employment' },
-            'workplace-change-permit': { name: 'Workplace Change Permit', desc: 'Job transfer pre-approval', icon: '🏢', category: 'employment' },
-            'outside-activity': { name: 'Additional Activity Permit', desc: 'Activities beyond visa scope', icon: '🔓', category: 'employment' },
-            'h2-work-start': { name: 'H-2 Employment Start Report', desc: 'Working visit job notification', icon: '📋', category: 'employment' },
-            'workplace-change-report': { name: 'Workplace Change Report', desc: 'Job transfer post-notification', icon: '📝', category: 'employment' },
-            'employment-info-change': { name: 'Employment Info Update', desc: 'Workplace/salary change report', icon: '💰', category: 'employment' },
-            'dispatch-report': { name: 'Dispatch Work Report', desc: 'Subsidiary assignment report', icon: '🔄', category: 'employment' },
-            'income-report': { name: 'Annual Income Report', desc: 'Job and income notification', icon: '💵', category: 'employment' },
-            'foreign-worker-change': { name: 'Foreign Worker Status Report', desc: 'Resignation/departure report', icon: '📊', category: 'employment' },
+            'e7-4-change': { name: 'E-7-4 Skilled Worker Visa', desc: 'E-9/H-2 skilled transition', category: 'employment' },
+            'e7-4r-change': { name: 'E-7-4R Regional Skilled Worker', desc: 'Depopulated area skilled worker', category: 'employment' },
+            'e7-change': { name: 'E-7 Professional Visa Change', desc: 'Professional employment visa', category: 'employment' },
+            'f2-7-change': { name: 'F-2-7 Points-based Residence', desc: 'Outstanding talent residence', category: 'employment' },
+            'f2-r-change': { name: 'F-2-R Regional Residence Visa', desc: 'Depopulated area residence', category: 'employment' },
+            'e7-st-change': { name: 'E-7-S/T Elite Professional', desc: 'High-tech/high-income talent', category: 'employment' },
+            'e1-e6-change': { name: 'E-1~E-6 Professional Change', desc: 'Professor, researcher, specialist', category: 'employment' },
+            'e7-extension': { name: 'E-7 Visa Extension', desc: 'Professional visa renewal', category: 'employment' },
+            'e9-workplace-change': { name: 'E-9 Workplace Change', desc: 'E-9 employer change', category: 'employment' },
+            'workplace-change-permit': { name: 'Workplace Change Permit', desc: 'Job transfer pre-approval', category: 'employment' },
+            'outside-activity': { name: 'Additional Activity Permit', desc: 'Activities beyond visa scope', category: 'employment' },
+            'h2-work-start': { name: 'H-2 Employment Start Report', desc: 'Working visit job notification', category: 'employment' },
+            'workplace-change-report': { name: 'Workplace Change Report', desc: 'Job transfer post-notification', category: 'employment' },
+            'employment-info-change': { name: 'Employment Info Update', desc: 'Workplace/salary change report', category: 'employment' },
+            'dispatch-report': { name: 'Dispatch Work Report', desc: 'Subsidiary assignment report', category: 'employment' },
+            'income-report': { name: 'Annual Income Report', desc: 'Job and income notification', category: 'employment' },
+            'foreign-worker-change': { name: 'Foreign Worker Status Report', desc: 'Resignation/departure report', category: 'employment' },
 
             // Business & Investment (12)
-            'd8-1-change': { name: 'D-8-1 Corporate Investment', desc: 'Corporate establishment visa', icon: '🏢', category: 'business' },
-            'd8-2-change': { name: 'D-8-2 Venture Investment', desc: 'Venture company investment', icon: '🚀', category: 'business' },
-            'd8-3-change': { name: 'D-8-3 Individual Investment', desc: 'Sole proprietor investment', icon: '💼', category: 'business' },
-            'd8-4-change': { name: 'D-8-4 Tech Startup Visa', desc: 'Student entrepreneur visa', icon: '💡', category: 'business' },
-            'd9-1-change': { name: 'D-9-1 Trade Business', desc: 'Trading business visa', icon: '🌐', category: 'business' },
-            'd9-2-change': { name: 'D-9-2 Export Equipment', desc: 'Export facility management', icon: '🏭', category: 'business' },
-            'd9-3-change': { name: 'D-9-3 Shipbuilding Supervisor', desc: 'Ship/equipment supervision', icon: '⚓', category: 'business' },
-            'd9-4-change': { name: 'D-9-4 Commercial Business', desc: 'Individual commercial visa', icon: '📊', category: 'business' },
-            'd9-5-change': { name: 'D-9-5 Graduate Entrepreneur', desc: 'Former student business', icon: '🎓', category: 'business' },
-            'business-extension': { name: 'D-8, D-9 Business Extension', desc: 'Investment visa renewal', icon: '📅', category: 'business' },
-            'fic-registration': { name: 'Foreign Investment Registration', desc: 'FIC certificate issuance', icon: '📋', category: 'business' },
-            'fi-report': { name: 'Foreign Investment Report', desc: 'Investment pre-notification', icon: '📝', category: 'business' },
+            'd8-1-change': { name: 'D-8-1 Corporate Investment', desc: 'Corporate establishment visa', category: 'business' },
+            'd8-2-change': { name: 'D-8-2 Venture Investment', desc: 'Venture company investment', category: 'business' },
+            'd8-3-change': { name: 'D-8-3 Individual Investment', desc: 'Sole proprietor investment', category: 'business' },
+            'd8-4-change': { name: 'D-8-4 Tech Startup Visa', desc: 'Student entrepreneur visa', category: 'business' },
+            'd9-1-change': { name: 'D-9-1 Trade Business', desc: 'Trading business visa', category: 'business' },
+            'd9-2-change': { name: 'D-9-2 Export Equipment', desc: 'Export facility management', category: 'business' },
+            'd9-3-change': { name: 'D-9-3 Shipbuilding Supervisor', desc: 'Ship/equipment supervision', category: 'business' },
+            'd9-4-change': { name: 'D-9-4 Commercial Business', desc: 'Individual commercial visa', category: 'business' },
+            'd9-5-change': { name: 'D-9-5 Graduate Entrepreneur', desc: 'Former student business', category: 'business' },
+            'business-extension': { name: 'D-8, D-9 Business Extension', desc: 'Investment visa renewal', category: 'business' },
+            'fic-registration': { name: 'Foreign Investment Registration', desc: 'FIC certificate issuance', category: 'business' },
+            'fi-report': { name: 'Foreign Investment Report', desc: 'Investment pre-notification', category: 'business' },
 
             // Ethnic Korean & Family (13)
-            'h2-to-f4-change': { name: 'H-2→F-4 Overseas Korean', desc: 'Working visit to overseas Korean', icon: '🇰🇷', category: 'family' },
-            'f4-change': { name: 'F-4 Overseas Korean Visa', desc: 'Overseas Korean status', icon: '🎌', category: 'family' },
-            'f4-registration': { name: 'F-4 Residence Registration', desc: 'F-4 residence card issuance', icon: '📍', category: 'family' },
-            'f4-extension': { name: 'F-4 Visa Extension', desc: 'F-4 residence renewal', icon: '📅', category: 'family' },
-            'h2-extension': { name: 'H-2 Visa Extension', desc: 'Working visit renewal', icon: '🛬', category: 'family' },
-            'f6-change': { name: 'F-6 Marriage Immigration', desc: 'Spouse visa acquisition', icon: '💍', category: 'family' },
-            'f6-extension': { name: 'F-6 Visa Extension', desc: 'Marriage visa renewal', icon: '💒', category: 'family' },
-            'f3-change': { name: 'F-3 Dependent Family Visa', desc: 'Spouse/child accompanying', icon: '👪', category: 'family' },
-            'f1-change': { name: 'F-1 Family Visit Visa', desc: 'Relative long-term stay', icon: '🏠', category: 'family' },
-            'visa-grant-child': { name: 'Child Birth Visa Grant', desc: 'Newborn child visa', icon: '👶', category: 'family' },
-            'visa-grant-f6-child': { name: 'F-6 Child Visa Grant', desc: 'Marriage immigrant child', icon: '👶', category: 'family' },
-            'family-invite': { name: 'Family Invitation Visa', desc: 'Overseas family invitation', icon: '✈️', category: 'family' },
-            'housework-report': { name: 'Domestic Work Report', desc: 'Household help notification', icon: '🏡', category: 'family' },
+            'h2-to-f4-change': { name: 'H-2→F-4 Overseas Korean', desc: 'Working visit to overseas Korean', category: 'family' },
+            'f4-change': { name: 'F-4 Overseas Korean Visa', desc: 'Overseas Korean status', category: 'family' },
+            'f4-registration': { name: 'F-4 Residence Registration', desc: 'F-4 residence card issuance', category: 'family' },
+            'f4-extension': { name: 'F-4 Visa Extension', desc: 'F-4 residence renewal', category: 'family' },
+            'h2-extension': { name: 'H-2 Visa Extension', desc: 'Working visit renewal', category: 'family' },
+            'f6-change': { name: 'F-6 Marriage Immigration', desc: 'Spouse visa acquisition', category: 'family' },
+            'f6-extension': { name: 'F-6 Visa Extension', desc: 'Marriage visa renewal', category: 'family' },
+            'f3-change': { name: 'F-3 Dependent Family Visa', desc: 'Spouse/child accompanying', category: 'family' },
+            'f1-change': { name: 'F-1 Family Visit Visa', desc: 'Relative long-term stay', category: 'family' },
+            'visa-grant-child': { name: 'Child Birth Visa Grant', desc: 'Newborn child visa', category: 'family' },
+            'visa-grant-f6-child': { name: 'F-6 Child Visa Grant', desc: 'Marriage immigrant child', category: 'family' },
+            'family-invite': { name: 'Family Invitation Visa', desc: 'Overseas family invitation', category: 'family' },
+            'housework-report': { name: 'Domestic Work Report', desc: 'Household help notification', category: 'family' },
 
             // Residence & Citizenship (11)
-            'f5-change': { name: 'F-5 Permanent Residence', desc: 'Korea permanent residency', icon: '🏠', category: 'residence' },
-            'f5-reissue': { name: 'F-5 Card Renewal (10yr)', desc: 'Permanent residence card', icon: '🔄', category: 'residence' },
-            'f2-extension': { name: 'F-2 Residence Extension', desc: 'Residence visa renewal', icon: '🏡', category: 'residence' },
-            'naturalization': { name: 'Naturalization Application', desc: 'Korean citizenship', icon: '🏛️', category: 'residence' },
-            'nationality-recovery': { name: 'Nationality Recovery', desc: 'Former Korean citizenship', icon: '🔙', category: 'residence' },
-            'nationality-selection': { name: 'Nationality Selection', desc: 'Dual citizen selection', icon: '🌍', category: 'residence' },
-            'nationality-renounce': { name: 'Nationality Renunciation', desc: 'Korean citizenship waiver', icon: '📄', category: 'residence' },
-            'nationality-loss': { name: 'Nationality Loss Report', desc: 'Foreign citizenship report', icon: '📋', category: 'residence' },
-            'nationality-retention': { name: 'Nationality Retention', desc: 'Citizenship retention intent', icon: '✍️', category: 'residence' },
-            'nationality-acquisition': { name: 'Nationality Acquisition', desc: 'Recognition-based citizenship', icon: '📜', category: 'residence' },
-            'nationality-judgment': { name: 'Nationality Determination', desc: 'Nationality status inquiry', icon: '⚖️', category: 'residence' },
+            'f5-change': { name: 'F-5 Permanent Residence', desc: 'Korea permanent residency', category: 'residence' },
+            'f5-reissue': { name: 'F-5 Card Renewal (10yr)', desc: 'Permanent residence card', category: 'residence' },
+            'f2-extension': { name: 'F-2 Residence Extension', desc: 'Residence visa renewal', category: 'residence' },
+            'naturalization': { name: 'Naturalization Application', desc: 'Korean citizenship', category: 'residence' },
+            'nationality-recovery': { name: 'Nationality Recovery', desc: 'Former Korean citizenship', category: 'residence' },
+            'nationality-selection': { name: 'Nationality Selection', desc: 'Dual citizen selection', category: 'residence' },
+            'nationality-renounce': { name: 'Nationality Renunciation', desc: 'Korean citizenship waiver', category: 'residence' },
+            'nationality-loss': { name: 'Nationality Loss Report', desc: 'Foreign citizenship report', category: 'residence' },
+            'nationality-retention': { name: 'Nationality Retention', desc: 'Citizenship retention intent', category: 'residence' },
+            'nationality-acquisition': { name: 'Nationality Acquisition', desc: 'Recognition-based citizenship', category: 'residence' },
+            'nationality-judgment': { name: 'Nationality Determination', desc: 'Nationality status inquiry', category: 'residence' },
 
             // General Registration & Certificates (13)
-            'arc-registration': { name: 'Alien Registration', desc: 'Required within 90 days', icon: '🆔', category: 'registration' },
-            'arc-reissue': { name: 'ARC Reissue', desc: 'Lost/damaged card replacement', icon: '🔄', category: 'registration' },
-            'address-change': { name: 'Address Change Report', desc: 'Moving address update', icon: '🏠', category: 'registration' },
-            'f4-address-change': { name: 'F-4 Address Change', desc: 'Overseas Korean address', icon: '🇰🇷', category: 'registration' },
-            'passport-change': { name: 'Passport/Info Change', desc: 'Passport/name update', icon: '📝', category: 'registration' },
-            'reentry-permit-multiple': { name: 'Multiple Re-entry Permit', desc: 'Multiple border crossings', icon: '🔁', category: 'registration' },
-            'reentry-permit-single': { name: 'Single Re-entry Permit', desc: 'One-time border crossing', icon: '🔙', category: 'registration' },
-            'cert-entry-exit': { name: 'Entry/Exit Certificate', desc: 'Travel history record', icon: '📋', category: 'registration' },
-            'cert-arc': { name: 'ARC Certificate', desc: 'Registration proof', icon: '📄', category: 'registration' },
-            'cert-residence': { name: 'Residence Certificate', desc: 'F-4 residence proof', icon: '🏠', category: 'registration' },
-            'cert-realestate': { name: 'Real Estate Registration ID', desc: 'Property transaction', icon: '🏘️', category: 'registration' },
-            'cert-arc-number-change': { name: 'ARC Number Change Cert', desc: 'Number change confirmation', icon: '📋', category: 'registration' },
-            'cert-nationality': { name: 'Nationality Certificate', desc: 'Nationality status proof', icon: '📜', category: 'registration' }
+            'arc-registration': { name: 'Alien Registration', desc: 'Required within 90 days', category: 'registration' },
+            'arc-reissue': { name: 'ARC Reissue', desc: 'Lost/damaged card replacement', category: 'registration' },
+            'address-change': { name: 'Address Change Report', desc: 'Moving address update', category: 'registration' },
+            'f4-address-change': { name: 'F-4 Address Change', desc: 'Overseas Korean address', category: 'registration' },
+            'passport-change': { name: 'Passport/Info Change', desc: 'Passport/name update', category: 'registration' },
+            'reentry-permit-multiple': { name: 'Multiple Re-entry Permit', desc: 'Multiple border crossings', category: 'registration' },
+            'reentry-permit-single': { name: 'Single Re-entry Permit', desc: 'One-time border crossing', category: 'registration' },
+            'cert-entry-exit': { name: 'Entry/Exit Certificate', desc: 'Travel history record', category: 'registration' },
+            'cert-arc': { name: 'ARC Certificate', desc: 'Registration proof', category: 'registration' },
+            'cert-residence': { name: 'Residence Certificate', desc: 'F-4 residence proof', category: 'registration' },
+            'cert-realestate': { name: 'Real Estate Registration ID', desc: 'Property transaction', category: 'registration' },
+            'cert-arc-number-change': { name: 'ARC Number Change Cert', desc: 'Number change confirmation', category: 'registration' },
+            'cert-nationality': { name: 'Nationality Certificate', desc: 'Nationality status proof', category: 'registration' }
         };
 
         // 카테고리 이름
@@ -555,12 +529,12 @@
                 title: "What would you like to do?",
                 subtitle: "Select your primary purpose",
                 options: [
-                    { id: "change_visa", title: "Change Visa Type", desc: "Switch to a different visa category", icon: "🔄" },
-                    { id: "extend_visa", title: "Extend Current Visa", desc: "Renew before expiration", icon: "⏳" },
-                    { id: "register_report", title: "Registration & Reports", desc: "ARC, address, workplace changes", icon: "📝" },
-                    { id: "get_certificate", title: "Get Certificates", desc: "Official documents & permits", icon: "📄" },
-                    { id: "residence_citizenship", title: "Residence & Citizenship", desc: "F-5, F-2, naturalization", icon: "🏠" },
-                    { id: "need_consultation", title: "Need Consultation", desc: "Not sure what I need", icon: "💬" }
+                    { id: "change_visa", title: "Change Visa Type", desc: "Switch to a different visa category" },
+                    { id: "extend_visa", title: "Extend Current Visa", desc: "Renew before expiration" },
+                    { id: "register_report", title: "Registration & Reports", desc: "ARC, address, workplace changes" },
+                    { id: "get_certificate", title: "Get Certificates", desc: "Official documents & permits" },
+                    { id: "residence_citizenship", title: "Residence & Citizenship", desc: "F-5, F-2, naturalization" },
+                    { id: "need_consultation", title: "Need Consultation", desc: "Not sure what I need" }
                 ]
             },
             step2: {
@@ -568,72 +542,72 @@
                     title: "What type of visa do you want?",
                     subtitle: "Select your target visa category",
                     options: [
-                        { id: "visa_work", title: "Work Visa", desc: "E-7, E-1~E-6 employment", icon: "💼" },
-                        { id: "visa_skilled", title: "Skilled Worker (E-7-4)", desc: "E-9/H-2 transition", icon: "🔧" },
-                        { id: "visa_business", title: "Business/Investment", desc: "D-8, D-9 investor visa", icon: "🏢" },
-                        { id: "visa_student", title: "Student Visa", desc: "D-2, D-4 study visa", icon: "🎓" },
-                        { id: "visa_jobseeker", title: "Job Seeker (D-10)", desc: "After graduation", icon: "🔍" },
-                        { id: "visa_family", title: "Family/Marriage", desc: "F-1, F-3, F-6 family visa", icon: "👪" },
-                        { id: "visa_korean", title: "Overseas Korean (F-4)", desc: "Ethnic Korean status", icon: "🇰🇷" },
-                        { id: "visa_residence", title: "Residence (F-2)", desc: "Points-based residence", icon: "⭐" }
+                        { id: "visa_work", title: "Work Visa", desc: "E-7, E-1~E-6 employment" },
+                        { id: "visa_skilled", title: "Skilled Worker (E-7-4)", desc: "E-9/H-2 transition" },
+                        { id: "visa_business", title: "Business/Investment", desc: "D-8, D-9 investor visa" },
+                        { id: "visa_student", title: "Student Visa", desc: "D-2, D-4 study visa" },
+                        { id: "visa_jobseeker", title: "Job Seeker (D-10)", desc: "After graduation" },
+                        { id: "visa_family", title: "Family/Marriage", desc: "F-1, F-3, F-6 family visa" },
+                        { id: "visa_korean", title: "Overseas Korean (F-4)", desc: "Ethnic Korean status" },
+                        { id: "visa_residence", title: "Residence (F-2)", desc: "Points-based residence" }
                     ]
                 },
                 extend_visa: {
                     title: "Which visa do you need to extend?",
                     subtitle: "Select your current visa type",
                     options: [
-                        { id: "ext_student", title: "Student (D-2, D-4)", desc: "Student visa renewal", icon: "🎓" },
-                        { id: "ext_jobseeker", title: "Job Seeker (D-10)", desc: "D-10 extension", icon: "🔍" },
-                        { id: "ext_work", title: "Work Visa (E-7)", desc: "E-7 professional visa", icon: "💼" },
-                        { id: "ext_business", title: "Business (D-8, D-9)", desc: "Investment visa renewal", icon: "🏢" },
-                        { id: "ext_family", title: "Family (F-1, F-3, F-6)", desc: "Family visa renewal", icon: "👪" },
-                        { id: "ext_korean", title: "Overseas Korean (F-4, H-2)", desc: "F-4 or H-2 renewal", icon: "🇰🇷" },
-                        { id: "ext_residence", title: "Residence (F-2)", desc: "F-2 extension", icon: "🏡" }
+                        { id: "ext_student", title: "Student (D-2, D-4)", desc: "Student visa renewal" },
+                        { id: "ext_jobseeker", title: "Job Seeker (D-10)", desc: "D-10 extension" },
+                        { id: "ext_work", title: "Work Visa (E-7)", desc: "E-7 professional visa" },
+                        { id: "ext_business", title: "Business (D-8, D-9)", desc: "Investment visa renewal" },
+                        { id: "ext_family", title: "Family (F-1, F-3, F-6)", desc: "Family visa renewal" },
+                        { id: "ext_korean", title: "Overseas Korean (F-4, H-2)", desc: "F-4 or H-2 renewal" },
+                        { id: "ext_residence", title: "Residence (F-2)", desc: "F-2 extension" }
                     ]
                 },
                 register_report: {
                     title: "What do you need to register or report?",
                     subtitle: "Select the type of registration",
                     options: [
-                        { id: "reg_arc", title: "Alien Registration", desc: "New ARC or reissue", icon: "🆔" },
-                        { id: "reg_address", title: "Address Change", desc: "Moving notification", icon: "🏠" },
-                        { id: "reg_passport", title: "Passport/Info Change", desc: "Update personal info", icon: "📝" },
-                        { id: "reg_workplace", title: "Workplace Changes", desc: "Job change reports", icon: "🏢" },
-                        { id: "reg_employment", title: "Employment Reports", desc: "Income, dispatch, etc.", icon: "💼" },
-                        { id: "reg_student", title: "Student Work/Intern", desc: "Part-time, internship", icon: "🎓" },
-                        { id: "reg_family", title: "Family Reports", desc: "Housework, F-4 address", icon: "👪" },
-                        { id: "reg_investment", title: "Investment Reports", desc: "FIC, foreign investment", icon: "📊" }
+                        { id: "reg_arc", title: "Alien Registration", desc: "New ARC or reissue" },
+                        { id: "reg_address", title: "Address Change", desc: "Moving notification" },
+                        { id: "reg_passport", title: "Passport/Info Change", desc: "Update personal info" },
+                        { id: "reg_workplace", title: "Workplace Changes", desc: "Job change reports" },
+                        { id: "reg_employment", title: "Employment Reports", desc: "Income, dispatch, etc." },
+                        { id: "reg_student", title: "Student Work/Intern", desc: "Part-time, internship" },
+                        { id: "reg_family", title: "Family Reports", desc: "Housework, F-4 address" },
+                        { id: "reg_investment", title: "Investment Reports", desc: "FIC, foreign investment" }
                     ]
                 },
                 get_certificate: {
                     title: "What certificate do you need?",
                     subtitle: "Select the document type",
                     options: [
-                        { id: "cert_arc", title: "ARC Certificate", desc: "Registration proof", icon: "📄" },
-                        { id: "cert_travel", title: "Entry/Exit Records", desc: "Travel history", icon: "📋" },
-                        { id: "cert_reentry", title: "Re-entry Permit", desc: "Border crossing permit", icon: "🔁" },
-                        { id: "cert_residence", title: "Residence Certificate", desc: "F-4 residence proof", icon: "🏠" },
-                        { id: "cert_other", title: "Other Certificates", desc: "Real estate, nationality, etc.", icon: "📜" }
+                        { id: "cert_arc", title: "ARC Certificate", desc: "Registration proof" },
+                        { id: "cert_travel", title: "Entry/Exit Records", desc: "Travel history" },
+                        { id: "cert_reentry", title: "Re-entry Permit", desc: "Border crossing permit" },
+                        { id: "cert_residence", title: "Residence Certificate", desc: "F-4 residence proof" },
+                        { id: "cert_other", title: "Other Certificates", desc: "Real estate, nationality, etc." }
                     ]
                 },
                 residence_citizenship: {
                     title: "What are you applying for?",
                     subtitle: "Select your goal",
                     options: [
-                        { id: "res_f5", title: "Permanent Residence (F-5)", desc: "Korea permanent residency", icon: "🏠" },
-                        { id: "res_f2", title: "F-2 Residence Visa", desc: "Points-based or regional", icon: "⭐" },
-                        { id: "res_naturalize", title: "Naturalization", desc: "Korean citizenship", icon: "🏛️" },
-                        { id: "res_nationality", title: "Nationality Services", desc: "Recovery, selection, etc.", icon: "🌍" },
-                        { id: "res_f5_renew", title: "F-5 Card Renewal", desc: "10-year card renewal", icon: "🔄" }
+                        { id: "res_f5", title: "Permanent Residence (F-5)", desc: "Korea permanent residency" },
+                        { id: "res_f2", title: "F-2 Residence Visa", desc: "Points-based or regional" },
+                        { id: "res_naturalize", title: "Naturalization", desc: "Korean citizenship" },
+                        { id: "res_nationality", title: "Nationality Services", desc: "Recovery, selection, etc." },
+                        { id: "res_f5_renew", title: "F-5 Card Renewal", desc: "10-year card renewal" }
                     ]
                 },
                 need_consultation: {
                     title: "What is your situation?",
                     subtitle: "We'll help you find the right service",
                     options: [
-                        { id: "consult_diagnosis", title: "Visa Pre-diagnosis", desc: "Expert consultation on options", icon: "🔍" },
-                        { id: "consult_emergency", title: "Urgent/Legal Issue", desc: "Deportation, overstay, denial", icon: "⚖️" },
-                        { id: "consult_browse", title: "Browse All Services", desc: "See complete service list", icon: "📋" }
+                        { id: "consult_diagnosis", title: "Visa Pre-diagnosis", desc: "Expert consultation on options" },
+                        { id: "consult_emergency", title: "Urgent/Legal Issue", desc: "Deportation, overstay, denial" },
+                        { id: "consult_browse", title: "Browse All Services", desc: "See complete service list" }
                     ]
                 }
             }
@@ -736,7 +710,6 @@
             const optionsGrid = document.getElementById('optionsGrid');
             optionsGrid.innerHTML = stepData.options.map(opt => `
                 <button class="option-btn" onclick="selectOption('${opt.id}')">
-                    <div class="option-icon">${opt.icon || ''}</div>
                     <div class="option-title">${opt.title}</div>
                     ${opt.desc ? `<div class="option-desc">${opt.desc}</div>` : ''}
                 </button>
@@ -805,7 +778,6 @@
 
                 return `
                     <div class="service-item" onclick="applyService('${id}')">
-                        <div class="service-icon">${svc.icon}</div>
                         <div class="title">${svc.name}</div>
                         <div class="desc">${svc.desc}</div>
                     </div>
