@@ -20,13 +20,13 @@
  */
 
 const i18n = {
-    // 현재 언어 (기본값: 한국어)
-    currentLanguage: 'ko',
-    
-    // 지원 언어 목록 (7개 언어만 지원)
+    // 현재 언어 (기본값: 영어)
+    currentLanguage: 'en',
+
+    // 지원 언어 목록 (7개 언어만 지원) - English first, Korean second
     supportedLanguages: {
-        ko: { name: '한국어', flag: '🇰🇷', nativeName: '한국어' },
         en: { name: 'English', flag: '🇺🇸', nativeName: 'English' },
+        ko: { name: '한국어', flag: '🇰🇷', nativeName: '한국어' },
         zh: { name: 'Chinese', flag: '🇨🇳', nativeName: '中文' },
         vi: { name: 'Vietnamese', flag: '🇻🇳', nativeName: 'Tiếng Việt' },
         ja: { name: 'Japanese', flag: '🇯🇵', nativeName: '日本語' },
@@ -59,25 +59,25 @@ const i18n = {
     },
     
     /**
-     * 브라우저 언어 감지 (개선: 항상 한국어 기본으로 설정)
+     * 브라우저 언어 감지 (기본값: 영어)
      */
     detectBrowserLanguage: function() {
         try {
             const browserLang = navigator.language || navigator.userLanguage;
-            if (!browserLang) return 'ko'; // 기본값: 한국어
-            
+            if (!browserLang) return 'en'; // 기본값: 영어
+
             const langCode = browserLang.split('-')[0].toLowerCase();
-            
-            // 지원 언어인 경우에만 해당 언어 반환, 아니면 항상 한국어
+
+            // 지원 언어인 경우에만 해당 언어 반환, 아니면 영어
             if (this.supportedLanguages[langCode]) {
                 return langCode;
             }
-            
-            // 몰라 모드를 위한 추가 체크: 지원되지 않는 언어는 항상 한국어
-            return 'ko';
+
+            // 지원되지 않는 언어는 영어로 기본 설정
+            return 'en';
         } catch (e) {
-            console.warn('[i18n] Browser language detection failed, defaulting to Korean');
-            return 'ko';
+            console.warn('[i18n] Browser language detection failed, defaulting to English');
+            return 'en';
         }
     },
     
