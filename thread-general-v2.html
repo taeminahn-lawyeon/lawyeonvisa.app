@@ -1453,6 +1453,27 @@
 
                 threadData = thread;
 
+                // ============================================
+                // 접근 제어: 쓰레드 소유자만 접근 가능
+                // 관리자/직원은 별도 관리자 페이지를 통해 접근해야 함
+                // ============================================
+                const isThreadOwner = currentUser.id === thread.user_id;
+
+                if (!isThreadOwner) {
+                    // 쓰레드 소유자가 아닌 경우
+                    if (isAdmin) {
+                        // 관리자/직원인 경우 - 관리자 페이지로 리다이렉트
+                        alert('관리자는 관리자 대시보드를 통해 쓰레드에 접근해주세요.');
+                        window.location.href = 'admin-thread.html?id=' + threadId;
+                        return;
+                    } else {
+                        // 일반 사용자가 다른 사람의 쓰레드에 접근하려는 경우
+                        alert('접근 권한이 없습니다.');
+                        window.location.href = 'dashboard-general.html';
+                        return;
+                    }
+                }
+
                 // Update UI
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('threadContent').style.display = 'block';
