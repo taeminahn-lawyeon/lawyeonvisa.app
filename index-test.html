@@ -460,67 +460,67 @@
         .lawfirm-intro-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 48px;
+            gap: 40px;
             align-items: center;
         }
 
-        /* Left Column - Text */
+        /* Left Column - Badge & Text */
         .lawfirm-left {
             display: flex;
             flex-direction: column;
             justify-content: center;
+            padding-right: 20px;
+        }
+
+        /* Registration Badge - Authoritative Style */
+        .registration-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .moj-logo {
+            height: 44px;
+            width: auto;
+        }
+
+        .registration-text {
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748B;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            line-height: 1.4;
         }
 
         .lawfirm-headline {
-            font-size: 28px;
-            font-weight: 800;
+            font-size: 20px;
+            font-weight: 700;
             color: #1E293B;
-            line-height: 1.4;
-            margin-bottom: 16px;
-            letter-spacing: -0.5px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
         }
 
         .lawfirm-subtext {
-            font-size: 17px;
+            font-size: 15px;
             color: #64748B;
             line-height: 1.7;
             font-weight: 500;
         }
 
-        /* Right Column - Badge & Attorneys */
+        /* Right Column - Attorneys Only */
         .lawfirm-right {
             display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .registration-badge {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 16px 20px;
-            background: linear-gradient(135deg, #EBF4FF 0%, #F0F9FF 100%);
-            border: 2px solid #3182F6;
-            border-radius: 12px;
-        }
-
-        .moj-logo {
-            height: 36px;
-            width: auto;
-        }
-
-        .registration-text {
-            font-size: 14px;
-            font-weight: 700;
-            color: #1E40AF;
-            letter-spacing: 0.2px;
+            justify-content: center;
         }
 
         /* Attorneys Grid with Photos */
         .attorneys-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
+            gap: 20px;
         }
 
         .attorney-card {
@@ -531,8 +531,8 @@
         }
 
         .attorney-photo {
-            width: 72px;
-            height: 72px;
+            width: 88px;
+            height: 88px;
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid #E2E8F0;
@@ -545,7 +545,7 @@
         }
 
         .attorney-name {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             color: #334155;
             text-align: center;
@@ -560,18 +560,35 @@
 
             .lawfirm-left {
                 text-align: center;
-            }
-
-            .lawfirm-headline {
-                font-size: 22px;
-            }
-
-            .lawfirm-subtext {
-                font-size: 15px;
+                padding-right: 0;
             }
 
             .registration-badge {
                 justify-content: center;
+            }
+
+            .lawfirm-headline {
+                font-size: 18px;
+            }
+
+            .lawfirm-subtext {
+                font-size: 14px;
+            }
+
+            .attorneys-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+            }
+
+            .attorney-photo {
+                width: 72px;
+                height: 72px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .lawfirm-intro-section {
+                padding: 28px 20px;
             }
 
             .attorneys-grid {
@@ -585,29 +602,15 @@
             }
 
             .attorney-name {
-                font-size: 12px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .lawfirm-intro-section {
-                padding: 28px 20px;
+                font-size: 11px;
             }
 
-            .attorneys-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 16px;
+            .moj-logo {
+                height: 36px;
             }
 
-            .attorney-photo {
-                width: 60px;
-                height: 60px;
-            }
-
-            .registration-badge {
-                flex-direction: column;
-                gap: 10px;
-                text-align: center;
+            .registration-text {
+                font-size: 11px;
             }
         }
 
@@ -1419,19 +1422,18 @@
         <!-- Law Firm Introduction Section -->
         <div class="lawfirm-intro-section">
             <div class="lawfirm-intro-content">
-                <!-- Left Column - Introduction Text -->
+                <!-- Left Column - Badge & Text -->
                 <div class="lawfirm-left">
-                    <p class="lawfirm-headline">Lawyeon's Visa & Immigration Center specializes in legal support for foreigners in Korea.</p>
-                    <p class="lawfirm-subtext">Practicing in immigration office services and legal matters for foreigners and immigrants.</p>
-                </div>
-
-                <!-- Right Column - Badge & Attorneys -->
-                <div class="lawfirm-right">
                     <div class="registration-badge">
                         <img src="images/moj-badge.jpg" alt="Ministry of Justice" class="moj-logo">
                         <span class="registration-text">Registered Immigration Agency<br>#25-SM-RG-063</span>
                     </div>
+                    <p class="lawfirm-headline">Lawyeon's Visa & Immigration Center specializes in legal support for foreigners in Korea.</p>
+                    <p class="lawfirm-subtext">Practicing in immigration office services and legal matters for foreigners and immigrants.</p>
+                </div>
 
+                <!-- Right Column - Attorneys Only -->
+                <div class="lawfirm-right">
                     <div class="attorneys-grid">
                         <div class="attorney-card">
                             <img src="images/attorneys/bong.png" alt="S.H. Bong" class="attorney-photo">
