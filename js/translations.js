@@ -86,7 +86,11 @@ const translations = {
         'emergency.diagnosis.item2': '불법체류 위험 자문',
         'emergency.diagnosis.item3': '출입국관리법 위반 자문',
         'emergency.diagnosis.cta': '진단 받기',
-        
+        'emergency.navigator.title': '서비스 네비게이터',
+        'emergency.navigator.item1': '내게 맞는 서비스 찾기',
+        'emergency.navigator.item2': '맞춤형 서비스 상담',
+        'emergency.navigator.cta': '네비게이터 시작',
+
         // === 서비스 섹션 (Services Section) ===
         'services.title': '출입국 민원 대행',
         'services.subtitle': '전문 변호사가 처리하는 출입국 서비스',
@@ -516,7 +520,11 @@ const translations = {
         'emergency.diagnosis.item2': 'Illegal stay risk assessment',
         'emergency.diagnosis.item3': 'Immigration law violation advisory',
         'emergency.diagnosis.cta': 'Get Assessment',
-        
+        'emergency.navigator.title': 'Service Navigator',
+        'emergency.navigator.item1': 'Find the right service for your case',
+        'emergency.navigator.item2': 'Guided service consultation',
+        'emergency.navigator.cta': 'Start Navigator',
+
         // === Services Section ===
         'services.title': 'Immigration Services',
         'services.subtitle': 'Professional immigration services handled by lawyers',
@@ -958,7 +966,11 @@ const translations = {
         'emergency.diagnosis.item2': '非法滞留风险咨询',
         'emergency.diagnosis.item3': '出入境管理法违反咨询',
         'emergency.diagnosis.cta': '获取诊断',
-        
+        'emergency.navigator.title': '服务导航',
+        'emergency.navigator.item1': '找到适合您情况的服务',
+        'emergency.navigator.item2': '定制服务咨询',
+        'emergency.navigator.cta': '开始导航',
+
         // === Services Section ===
         'services.title': '出入境事务代理',
         'services.subtitle': '专业律师处理的出入境服务',
@@ -1359,7 +1371,11 @@ const translations = {
         'emergency.diagnosis.item2': 'Tư vấn rủi ro cư trú bất hợp pháp',
         'emergency.diagnosis.item3': 'Tư vấn vi phạm luật xuất nhập cảnh',
         'emergency.diagnosis.cta': 'Nhận đánh giá',
-        
+        'emergency.navigator.title': 'Điều Hướng Dịch Vụ',
+        'emergency.navigator.item1': 'Tìm dịch vụ phù hợp với trường hợp của bạn',
+        'emergency.navigator.item2': 'Tư vấn dịch vụ có hướng dẫn',
+        'emergency.navigator.cta': 'Bắt Đầu',
+
         // === Services Section ===
         'services.title': 'Dịch Vụ Xuất Nhập Cảnh',
         'services.subtitle': 'Dịch vụ xuất nhập cảnh chuyên nghiệp do luật sư xử lý',
@@ -1760,7 +1776,11 @@ const translations = {
         'emergency.diagnosis.item2': '不法滞在リスク諮問',
         'emergency.diagnosis.item3': '出入国管理法違反諮問',
         'emergency.diagnosis.cta': '診断を受ける',
-        
+        'emergency.navigator.title': 'サービスナビゲーター',
+        'emergency.navigator.item1': 'お客様のケースに適したサービスを探す',
+        'emergency.navigator.item2': 'ガイド付きサービス相談',
+        'emergency.navigator.cta': 'ナビ開始',
+
         // === Services Section ===
         'services.title': '出入国民願代行',
         'services.subtitle': '専門弁護士が処理する出入国サービス',
@@ -2159,7 +2179,11 @@ const translations = {
         'emergency.diagnosis.item2': 'Хууль бус оршин суух эрсдлийн зөвлөгөө',
         'emergency.diagnosis.item3': 'Цагаачлалын хууль зөрчсөн зөвлөгөө',
         'emergency.diagnosis.cta': 'Оношлогоо авах',
-        
+        'emergency.navigator.title': 'Үйлчилгээний навигатор',
+        'emergency.navigator.item1': 'Танд тохирох үйлчилгээг олоорой',
+        'emergency.navigator.item2': 'Удирдамжтай үйлчилгээний зөвлөгөө',
+        'emergency.navigator.cta': 'Навигатор эхлүүлэх',
+
         // === Services Section ===
         'services.title': 'Цагаачлалын үйлчилгээ',
         'services.subtitle': 'Хуульчдын гүйцэтгэсэн мэргэжлийн цагаачлалын үйлчилгээ',
@@ -2558,7 +2582,11 @@ const translations = {
         'emergency.diagnosis.item2': 'คำปรึกษาความเสี่ยงพำนักผิดกฎหมาย',
         'emergency.diagnosis.item3': 'คำปรึกษาการละเมิดกฎหมายตรวจคนเข้าเมือง',
         'emergency.diagnosis.cta': 'รับการประเมิน',
-        
+        'emergency.navigator.title': 'ตัวนำทางบริการ',
+        'emergency.navigator.item1': 'ค้นหาบริการที่เหมาะสมกับกรณีของคุณ',
+        'emergency.navigator.item2': 'ปรึกษาบริการแบบมีแนะนำ',
+        'emergency.navigator.cta': 'เริ่มต้น',
+
         // === Services Section ===
         'services.title': 'บริการตรวจคนเข้าเมือง',
         'services.subtitle': 'บริการตรวจคนเข้าเมืองมืออาชีพโดยทนายความ',
