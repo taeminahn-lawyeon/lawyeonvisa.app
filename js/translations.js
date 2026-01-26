@@ -66,7 +66,7 @@ const translations = {
         // === 사이트 정보 (Site Information) ===
         'site.name': '법무법인 로연 출입국이민지원센터',
         'site.company': '법무법인 로연',
-        'site.title': '법무법인 로연 출입국이민지원센터',
+        'site.title': 'Law Firm Lawyeon LLC.',
         'site.visa': 'Visa',
         'site.immigration': '& Immigration Center',
         
@@ -951,7 +951,7 @@ const translations = {
         'login.google': 'Google 登录',
         'site.name': '律渊律师事务所 出入境移民支援中心',
         'site.company': '律渊律师事务所',
-        'site.title': '律渊律师事务所',
+        'site.title': 'Law Firm Lawyeon LLC.',
 
         // === Quick Service Application Section ===
         'emergency.title': '快速服务申请',
@@ -1356,7 +1356,7 @@ const translations = {
         'login.google': 'Đăng nhập Google',
         'site.name': 'Trung Tâm Hỗ Trợ Xuất Nhập Cảnh Lawyeon',
         'site.company': 'Công Ty Luật Lawyeon',
-        'site.title': 'Công Ty Luật Lawyeon',
+        'site.title': 'Law Firm Lawyeon LLC.',
 
         // === Quick Service Application Section ===
         'emergency.title': 'Đăng Ký Dịch Vụ Nhanh',
@@ -1761,7 +1761,7 @@ const translations = {
         'login.google': 'Google ログイン',
         'site.name': 'ロヨン法律事務所出入国移民支援センター',
         'site.company': 'ロヨン法律事務所',
-        'site.title': 'ロヨン法律事務所',
+        'site.title': 'Law Firm Lawyeon LLC.',
 
         // === Quick Service Application Section ===
         'emergency.title': 'クイックサービス申請',
@@ -2164,7 +2164,7 @@ const translations = {
         'login.google': 'Google нэвтрэх',
         'site.name': 'Lawyeon Хуулийн Фирм Цагаачлалын Тусламжийн Төв',
         'site.company': 'Lawyeon Хуулийн Фирм',
-        'site.title': 'Lawyeon Хуулийн Фирм',
+        'site.title': 'Law Firm Lawyeon LLC.',
 
         // === Quick Service Application Section ===
         'emergency.title': 'Хурдан үйлчилгээний хүсэлт',
@@ -2567,7 +2567,7 @@ const translations = {
         'login.google': 'เข้าสู่ระบบ Google',
         'site.name': 'ศูนย์สนับสนุนตรวจคนเข้าเมือง Lawyeon',
         'site.company': 'สำนักงานกฎหมาย Lawyeon',
-        'site.title': 'สำนักงานกฎหมาย Lawyeon',
+        'site.title': 'Law Firm Lawyeon LLC.',
 
         // === Quick Service Application Section ===
         'emergency.title': 'สมัครบริการด่วน',

@@ -670,11 +670,11 @@
         }
 
         .services-section h3 {
-            font-size: 32px;
-            margin-bottom: 32px;
+            font-size: 26px;
+            margin-bottom: 28px;
             color: #191F28;
-            font-weight: 900;
-            letter-spacing: -1px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
 
         .service-categories {
@@ -1380,10 +1380,13 @@
 <body>
     <div class="header">
         <div class="header-content">
-            <div class="user-info">
-                <h2 style="word-break: keep-all;" data-i18n="site.name">법무법인&nbsp;로연 출입국이민지원센터</h2>
-                <p style="margin: 0; opacity: 0.8;"><span data-i18n="site.visa">Visa</span> <span data-i18n="site.immigration">& Immigration Center</span></p>
-            </div>
+            <a href="index.html" class="site-logo-link" style="display: flex; align-items: center; gap: 16px; text-decoration: none; color: white;">
+                <img src="favicon.svg" alt="Lawyeon Logo" class="site-logo" style="height: 50px; width: auto;">
+                <div class="user-info">
+                    <h2 style="word-break: keep-all; margin: 0;" data-i18n="site.title">Law Firm Lawyeon LLC.</h2>
+                    <p style="margin: 2px 0 0 0; opacity: 0.8; font-size: 13px;"><span data-i18n="site.visa">Visa</span> <span data-i18n="site.immigration">& Immigration Center</span></p>
+                </div>
+            </a>
             <div class="header-actions">
                 <!-- 언어 선택기 -->
                 <div class="language-selector">
@@ -1454,17 +1457,7 @@
                     </div>
                     <button class="cta-btn" onclick="location.href='consultation-request.html?type=emergency'"><span data-i18n="emergency.legal.cta">Emergency Consultation</span> <span class="arrow">→</span></button>
                 </div>
-                <!-- Card 2: 비자 진단 및 자문 -->
-                <div class="premium-service-card" id="visaDiagnosisCard">
-                    <div class="title" data-i18n="emergency.diagnosis.title">Visa Diagnosis & Consultation</div>
-                    <div class="desc">
-                        <div class="desc-item" data-i18n="emergency.diagnosis.item1">Visa change planning advice</div>
-                        <div class="desc-item" data-i18n="emergency.diagnosis.item2">Immigration law violation consultation</div>
-                        <div class="desc-item" data-i18n="emergency.diagnosis.item3">Overstay risk assessment</div>
-                    </div>
-                    <button class="cta-btn" onclick="location.href='consultation-request.html?type=diagnosis'"><span data-i18n="emergency.diagnosis.cta">Request Consultation</span> <span class="arrow">→</span></button>
-                </div>
-                <!-- Card 3: 서비스 네비게이터 -->
+                <!-- Card 2: 서비스 네비게이터 (중앙) -->
                 <div class="premium-service-card" id="serviceNavigatorCard">
                     <div class="title" data-i18n="emergency.navigator.title">Service Navigator</div>
                     <div class="desc">
@@ -1472,6 +1465,16 @@
                         <div class="desc-item" data-i18n="emergency.navigator.item2">Guided service consultation</div>
                     </div>
                     <button class="cta-btn" onclick="location.href='service-navigator.html'"><span data-i18n="emergency.navigator.cta">Start Navigator</span> <span class="arrow">→</span></button>
+                </div>
+                <!-- Card 3: 비자 진단 및 자문 (우측) -->
+                <div class="premium-service-card" id="visaDiagnosisCard">
+                    <div class="title" data-i18n="emergency.diagnosis.title">Visa Diagnosis & Consultation</div>
+                    <div class="desc">
+                        <div class="desc-item" data-i18n="emergency.diagnosis.item1">Visa change planning advice</div>
+                        <div class="desc-item" data-i18n="emergency.diagnosis.item2">Immigration law violation consultation</div>
+                        <div class="desc-item" data-i18n="emergency.diagnosis.item3">Overstay risk assessment</div>
+                    </div>
+                    <button class="cta-btn" onclick="location.href='service-apply-general.html?service=visa-prediagnosis'"><span data-i18n="emergency.diagnosis.cta">Request Diagnosis</span> <span class="arrow">→</span></button>
                 </div>
             </div>
         </div>
