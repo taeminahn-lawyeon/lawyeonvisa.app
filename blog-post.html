@@ -823,8 +823,8 @@
 
                         <!-- 서비스 CTA -->
                         <div class="service-cta-section">
-                            <div class="service-cta-title">Apply for Related Services</div>
-                            <div class="service-cta-desc">Need professional help? Apply for our service now.</div>
+                            <div class="service-cta-title">관련 서비스 신청</div>
+                            <div class="service-cta-desc">전문가의 도움이 필요하신가요? 지금 바로 서비스를 신청하세요.</div>
                             <div class="service-cta-buttons" id="serviceCTAButtons">
                                 ${renderServiceButtons(relatedServices)}
                             </div>
@@ -971,9 +971,8 @@
         // 서비스 버튼 렌더링
         function renderServiceButtons(services) {
             if (!services || services.length === 0) {
-                // 기본 서비스 버튼
                 return `
-                    <a href="index.html#services" class="service-cta-btn">
+                    <a href="/index.html#services" class="service-cta-btn">
                         <span>서비스 둘러보기</span>
                         <span class="arrow">→</span>
                     </a>
@@ -981,7 +980,7 @@
             }
 
             return services.map(service => `
-                <a href="service-apply-general.html?service=${service.id}" class="service-cta-btn">
+                <a href="/consultation-request.html?service=${service.id}" class="service-cta-btn">
                     <span>${service.name}</span>
                     <span class="arrow">→</span>
                 </a>

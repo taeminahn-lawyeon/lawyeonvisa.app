@@ -188,7 +188,7 @@ function renderServiceButtons(relatedServices) {
     }
 
     return relatedServices.map(service => `
-                                <a href="/service-apply-general.html?service=${escapeHtml(service.id)}" class="service-cta-btn">
+                                <a href="/consultation-request.html?service=${escapeHtml(service.id)}" class="service-cta-btn">
                                     <span>${escapeHtml(service.name)}</span>
                                     <span class="arrow">→</span>
                                 </a>
