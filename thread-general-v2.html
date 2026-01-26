@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상담 쓰레드 - 법무법인 로연</title>
+    <link rel="icon" type="image/png" href="favicon.png?v=3">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+
+    <!-- Quill Editor -->
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .thread-header {
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
+            padding: 16px 24px;
+            border-bottom: 3px solid #3182F6;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            opacity: 1;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* Container */
+        .thread-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px 20px 120px;
+        }
+
+        /* Thread Info Card */
+        .thread-info-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .thread-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #191F28;
+            margin-bottom: 8px;
+        }
+
+        .thread-meta {
+            display: flex;
+            gap: 16px;
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        .thread-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Progress Tracker */
+        .progress-section {
+            background: white;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+
+        .progress-header {
+            padding: 16px 24px;
+            background: #F9FAFB;
+            border-bottom: 1px solid #E5E7EB;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .progress-header h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #191F28;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .progress-header h3 i {
+            color: #10B981;
+        }
+
+        .progress-toggle {
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        .progress-content {
+            padding: 20px 24px;
+        }
+
+        .progress-content.collapsed {
+            display: none;
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid #F3F4F6;
+        }
+
+        .progress-step:last-child {
+            border-bottom: none;
+        }
+
+        .step-indicator {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-indicator.completed {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .step-indicator.completed i {
+            font-size: 12px;
+        }
+
+        .step-indicator.current {
+            background: #3182F6;
+            color: white;
+            box-shadow: 0 0 0 4px rgba(49, 130, 246, 0.2);
+        }
+
+        .step-indicator.pending {
+            background: #F3F4F6;
+            color: #9CA3AF;
+        }
+
+        .step-info {
+            flex: 1;
+        }
+
+        .step-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #191F28;
+            margin-bottom: 2px;
+        }
+
+        .step-name.current {
+            color: #3182F6;
+        }
+
+        .step-name.pending {
+            color: #9CA3AF;
+        }
+
+        .step-assignee {
+            font-size: 13px;
+            color: #6B7280;
+        }
+
+        /* Admin Tools */
+        .admin-tools {
+            background: #FEF3C7;
+            border: 2px solid #F59E0B;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .admin-tools.visible {
+            display: block;
+        }
+
+        .admin-tools-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #92400E;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .admin-btn {
+            background: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .admin-btn:hover {
+            background: #F9FAFB;
+            border-color: #D1D5DB;
+        }
+
+        .admin-btn i {
+            color: #6B7280;
+        }
+
+        /* Messages Section */
+        .messages-section {
+            margin-bottom: 24px;
+        }
+
+        /* Message Card */
+        .message-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #F3F4F6;
+        }
+
+        .message-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .author-badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .author-badge.admin {
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            color: white;
+        }
+
+        .author-badge.client {
+            background: #F3F4F6;
+            color: #374151;
+        }
+
+        .message-time {
+            font-size: 13px;
+            color: #9CA3AF;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .message-body {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #374151;
+        }
+
+        .message-body p {
+            margin-bottom: 12px;
+        }
+
+        .message-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .message-body strong {
+            font-weight: 700;
+            color: #191F28;
+        }
+
+        .message-body a {
+            color: #3182F6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .message-body a:hover {
+            text-decoration: underline;
+        }
+
+        /* Message Attachments */
+        .message-attachments {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #F3F4F6;
+        }
+
+        .attachment-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #F9FAFB;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .attachment-item:hover {
+            background: #F3F4F6;
+        }
+
+        .attachment-icon {
+            width: 40px;
+            height: 40px;
+            background: #3182F6;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .attachment-info {
+            flex: 1;
+        }
+
+        .attachment-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #191F28;
+        }
+
+        .attachment-size {
+            font-size: 12px;
+            color: #9CA3AF;
+        }
+
+        /* Payment Button in Message */
+        .payment-btn-inline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            margin-top: 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .payment-btn-inline:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+
+        /* Reply Editor Section */
+        .reply-section {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        .reply-section-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .reply-header {
+            font-size: 15px;
+            font-weight: 700;
+            color: #191F28;
+            margin-bottom: 12px;
+        }
+
+        /* Quill Editor Customization */
+        .editor-container {
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .ql-toolbar {
+            border: none !important;
+            border-bottom: 1px solid #E5E7EB !important;
+            background: #F9FAFB;
+        }
+
+        .ql-container {
+            border: none !important;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 15px;
+        }
+
+        .ql-editor {
+            min-height: 80px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .ql-editor.ql-blank::before {
+            color: #9CA3AF;
+            font-style: normal;
+        }
+
+        /* File Upload Area */
+        .file-upload-area {
+            margin-top: 12px;
+            padding: 16px;
+            border: 2px dashed #E5E7EB;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .file-upload-area:hover {
+            border-color: #3182F6;
+            background: #F0F7FF;
+        }
+
+        .file-upload-area i {
+            font-size: 24px;
+            color: #9CA3AF;
+            margin-bottom: 8px;
+        }
+
+        .file-upload-area p {
+            font-size: 13px;
+            color: #6B7280;
+        }
+
+        .file-upload-area.dragover {
+            border-color: #3182F6;
+            background: #F0F7FF;
+        }
+
+        /* Pending Files */
+        .pending-files {
+            margin-top: 12px;
+        }
+
+        .pending-file {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            background: #F9FAFB;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .pending-file-name {
+            flex: 1;
+            font-size: 13px;
+            color: #374151;
+        }
+
+        .pending-file-remove {
+            color: #EF4444;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        /* Reply Actions */
+        .reply-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 12px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
+        }
+
+        .submit-btn:disabled {
+            background: #D1D5DB;
+            cursor: not-allowed;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #191F28;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #6B7280;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-select, .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: inherit;
+        }
+
+        .form-select:focus, .form-input:focus {
+            outline: none;
+            border-color: #3182F6;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .btn-secondary {
+            background: #F3F4F6;
+            color: #374151;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* Loading */
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #E5E7EB;
+            border-top-color: #3182F6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .thread-container {
+                padding: 16px 12px 140px;
+            }
+
+            .thread-info-card, .progress-section, .message-card {
+                border-radius: 12px;
+                padding: 16px;
+            }
+
+            .thread-title {
+                font-size: 18px;
+            }
+
+            .admin-buttons {
+                flex-direction: column;
+            }
+
+            .admin-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .reply-section {
+                padding: 16px;
+            }
+
+            .ql-editor {
+                min-height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="thread-header">
+        <div class="header-inner">
+            <button class="back-btn" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i> 목록
+            </button>
+            <div class="header-title">쓰레드</div>
+            <div class="header-actions"></div>
+        </div>
+    </header>
+
+    <div class="thread-container">
+        <!-- Loading -->
+        <div id="loading" class="loading-container">
+            <div class="loading-spinner"></div>
+        </div>
+
+        <!-- Thread Content -->
+        <div id="threadContent" style="display: none;">
+            <!-- Thread Info -->
+            <div class="thread-info-card">
+                <h1 class="thread-title" id="threadTitle">로딩 중...</h1>
+                <div class="thread-meta">
+                    <span><i class="fas fa-user"></i> <span id="threadUser">-</span></span>
+                    <span><i class="fas fa-calendar"></i> <span id="threadDate">-</span></span>
+                </div>
+            </div>
+
+            <!-- Progress Tracker -->
+            <div class="progress-section">
+                <div class="progress-header" onclick="toggleProgress()">
+                    <h3><i class="fas fa-list-check"></i> 진행 상황</h3>
+                    <span class="progress-toggle" id="progressToggle"><i class="fas fa-chevron-up"></i></span>
+                </div>
+                <div class="progress-content" id="progressContent">
+                    <!-- Progress steps will be rendered here -->
+                </div>
+            </div>
+
+            <!-- Admin Tools (hidden by default) -->
+            <div class="admin-tools" id="adminTools">
+                <div class="admin-tools-title">
+                    <i class="fas fa-tools"></i> 관리자 도구
+                </div>
+                <div class="admin-buttons">
+                    <button class="admin-btn" onclick="openPaymentLinkModal()">
+                        <i class="fas fa-credit-card"></i> 결제 링크 전송
+                    </button>
+                    <button class="admin-btn" onclick="openBasicInfoModal()">
+                        <i class="fas fa-file-alt"></i> 기본사항 요청
+                    </button>
+                    <button class="admin-btn" onclick="openStageChangeModal()">
+                        <i class="fas fa-exchange-alt"></i> 단계 변경
+                    </button>
+                </div>
+            </div>
+
+            <!-- Messages -->
+            <div class="messages-section" id="messagesSection">
+                <!-- Messages will be rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Reply Section (Fixed at bottom) -->
+    <div class="reply-section" id="replySection" style="display: none;">
+        <div class="reply-section-inner">
+            <div class="reply-header">답글</div>
+            <div class="editor-container">
+                <div id="editor"></div>
+            </div>
+            <div class="file-upload-area" id="fileUploadArea" onclick="document.getElementById('fileInput').click()">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>파일을 드래그하거나 클릭하여 업로드하세요</p>
+            </div>
+            <input type="file" id="fileInput" multiple style="display: none;" onchange="handleFileSelect(event)">
+            <div class="pending-files" id="pendingFiles"></div>
+            <div class="reply-actions">
+                <button class="submit-btn" id="submitBtn" onclick="submitReply()">
+                    <i class="fas fa-paper-plane"></i> 작성
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Link Modal -->
+    <div class="modal-overlay" id="paymentLinkModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">결제 링크 전송</h2>
+                <button class="modal-close" onclick="closeModal('paymentLinkModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">서비스 선택</label>
+                    <select class="form-select" id="paymentServiceSelect">
+                        <option value="">서비스를 선택하세요</option>
+                        <option value="d10-1-change">D-10-1 일반구직 비자 변경 (220,000원)</option>
+                        <option value="d10-2-change">D-10-2 기술창업구직 비자 변경 (330,000원)</option>
+                        <option value="e7-change">특정활동 E-7 비자 변경 (550,000원)</option>
+                        <option value="custom">직접 입력</option>
+                    </select>
+                </div>
+                <div class="form-group" id="customAmountGroup" style="display: none;">
+                    <label class="form-label">금액 (원)</label>
+                    <input type="number" class="form-input" id="customAmount" placeholder="금액을 입력하세요">
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="closeModal('paymentLinkModal')">취소</button>
+                <button class="btn-primary" onclick="sendPaymentLink()">전송</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Basic Info Request Modal -->
+    <div class="modal-overlay" id="basicInfoModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">기본사항 요청</h2>
+                <button class="modal-close" onclick="closeModal('basicInfoModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="color: #6B7280; margin-bottom: 16px;">고객에게 기본 정보 입력 폼 링크를 전송합니다.</p>
+                <div class="form-group">
+                    <label class="form-label">요청 메시지 (선택)</label>
+                    <textarea class="form-input" id="basicInfoMessage" rows="3" placeholder="추가 안내 메시지를 입력하세요"></textarea>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="closeModal('basicInfoModal')">취소</button>
+                <button class="btn-primary" onclick="sendBasicInfoRequest()">전송</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stage Change Modal -->
+    <div class="modal-overlay" id="stageChangeModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">단계 변경</h2>
+                <button class="modal-close" onclick="closeModal('stageChangeModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">변경할 단계</label>
+                    <select class="form-select" id="stageSelect">
+                        <!-- Options will be populated dynamically -->
+                    </select>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="closeModal('stageChangeModal')">취소</button>
+                <button class="btn-primary" onclick="changeStage()">변경</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js?v=20250126"></script>
+
+    <script>
+        // Thread stages configuration
+        const STAGES = {
+            consulting: [
+                { order: 1, name: '상담 신청', assignee: '고객' },
+                { order: 2, name: '상담 진행', assignee: '로연' },
+                { order: 3, name: '결제 및 서류 안내', assignee: '로연' },
+                { order: 4, name: '서류 제출', assignee: '고객' },
+                { order: 5, name: '서류 검토 및 보완', assignee: '로연' },
+                { order: 6, name: '출입국 신청 완료', assignee: '로연' },
+                { order: 7, name: '보완 요청 대응', assignee: '고객/로연' },
+                { order: 8, name: '허가 완료', assignee: '로연' }
+            ],
+            payment: [
+                { order: 1, name: '결제 및 서류 안내', assignee: '로연' },
+                { order: 2, name: '서류 제출', assignee: '고객' },
+                { order: 3, name: '서류 검토 및 보완', assignee: '로연' },
+                { order: 4, name: '출입국 신청 완료', assignee: '로연' },
+                { order: 5, name: '보완 요청 대응', assignee: '고객/로연' },
+                { order: 6, name: '허가 완료', assignee: '로연' }
+            ]
+        };
+
+        let threadId = null;
+        let threadData = null;
+        let currentUser = null;
+        let isAdmin = false;
+        let quillEditor = null;
+        let pendingFiles = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Get thread ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            threadId = urlParams.get('id');
+
+            if (!threadId) {
+                alert('쓰레드를 찾을 수 없습니다.');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Check session
+            const session = await checkSession();
+            if (!session || !session.user) {
+                alert('로그인이 필요합니다.');
+                window.location.href = 'index.html';
+                return;
+            }
+            currentUser = session.user;
+
+            // Check if admin
+            isAdmin = await checkIfAdmin(currentUser.id);
+
+            // Initialize Quill editor
+            initEditor();
+
+            // Setup file upload
+            setupFileUpload();
+
+            // Load thread data
+            await loadThread();
+
+            // Subscribe to realtime updates
+            subscribeToMessages();
+        });
+
+        async function checkIfAdmin(userId) {
+            try {
+                const { data, error } = await supabase
+                    .from('profiles')
+                    .select('role')
+                    .eq('id', userId)
+                    .single();
+
+                return data?.role === 'admin' || data?.role === 'staff';
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function initEditor() {
+            quillEditor = new Quill('#editor', {
+                theme: 'snow',
+                placeholder: '내용을 입력하세요...',
+                modules: {
+                    toolbar: [
+                        ['bold', 'italic', 'underline'],
+                        ['link', 'image'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }]
+                    ]
+                }
+            });
+        }
+
+        function setupFileUpload() {
+            const uploadArea = document.getElementById('fileUploadArea');
+
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                handleFiles(e.dataTransfer.files);
+            });
+        }
+
+        function handleFileSelect(event) {
+            handleFiles(event.target.files);
+        }
+
+        function handleFiles(files) {
+            for (let file of files) {
+                if (file.size > 10 * 1024 * 1024) { // 10MB limit
+                    alert('파일 크기는 10MB를 초과할 수 없습니다.');
+                    continue;
+                }
+                pendingFiles.push(file);
+            }
+            renderPendingFiles();
+        }
+
+        function renderPendingFiles() {
+            const container = document.getElementById('pendingFiles');
+            container.innerHTML = pendingFiles.map((file, index) => `
+                <div class="pending-file">
+                    <i class="fas fa-file"></i>
+                    <span class="pending-file-name">${file.name}</span>
+                    <span class="pending-file-remove" onclick="removePendingFile(${index})">
+                        <i class="fas fa-times"></i>
+                    </span>
+                </div>
+            `).join('');
+        }
+
+        function removePendingFile(index) {
+            pendingFiles.splice(index, 1);
+            renderPendingFiles();
+        }
+
+        async function loadThread() {
+            try {
+                // Get thread data
+                const { data: thread, error } = await supabase
+                    .from('threads')
+                    .select('*, profiles(*)')
+                    .eq('id', threadId)
+                    .single();
+
+                if (error || !thread) {
+                    throw new Error('쓰레드를 찾을 수 없습니다.');
+                }
+
+                threadData = thread;
+
+                // Update UI
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('threadContent').style.display = 'block';
+                document.getElementById('replySection').style.display = 'block';
+
+                document.getElementById('threadTitle').textContent = thread.service_name || '상담';
+                document.getElementById('threadUser').textContent = thread.profiles?.name || thread.profiles?.email?.split('@')[0] || '고객';
+                document.getElementById('threadDate').textContent = formatDate(thread.created_at);
+
+                // Render progress
+                renderProgress(thread);
+
+                // Show admin tools if admin
+                if (isAdmin) {
+                    document.getElementById('adminTools').classList.add('visible');
+                }
+
+                // Load messages
+                await loadMessages();
+
+            } catch (error) {
+                console.error('Error loading thread:', error);
+                alert('쓰레드를 불러오는 중 오류가 발생했습니다.');
+            }
+        }
+
+        function renderProgress(thread) {
+            const stageType = thread.is_consulting ? 'consulting' : 'payment';
+            const stages = STAGES[stageType];
+            const currentStage = thread.current_stage || 1;
+
+            const container = document.getElementById('progressContent');
+            container.innerHTML = stages.map((stage, index) => {
+                const stageNum = index + 1;
+                let statusClass = 'pending';
+                let indicatorContent = stageNum;
+
+                if (stageNum < currentStage) {
+                    statusClass = 'completed';
+                    indicatorContent = '<i class="fas fa-check"></i>';
+                } else if (stageNum === currentStage) {
+                    statusClass = 'current';
+                }
+
+                return `
+                    <div class="progress-step">
+                        <div class="step-indicator ${statusClass}">${indicatorContent}</div>
+                        <div class="step-info">
+                            <div class="step-name ${statusClass}">${stage.name}</div>
+                            <div class="step-assignee">by ${stage.assignee}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Populate stage select for admin modal
+            const stageSelect = document.getElementById('stageSelect');
+            stageSelect.innerHTML = stages.map((stage, index) => `
+                <option value="${index + 1}" ${index + 1 === currentStage ? 'selected' : ''}>
+                    ${stage.name}
+                </option>
+            `).join('');
+        }
+
+        async function loadMessages() {
+            try {
+                const result = await getMessages(threadId);
+
+                if (!result.success) {
+                    throw new Error('메시지를 불러올 수 없습니다.');
+                }
+
+                const container = document.getElementById('messagesSection');
+
+                if (!result.data || result.data.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: #9CA3AF; padding: 40px;">아직 메시지가 없습니다.</p>';
+                    return;
+                }
+
+                container.innerHTML = result.data.map(msg => renderMessageCard(msg)).join('');
+
+                // Scroll to bottom
+                window.scrollTo(0, document.body.scrollHeight);
+
+            } catch (error) {
+                console.error('Error loading messages:', error);
+            }
+        }
+
+        function renderMessageCard(msg) {
+            const isAdminMessage = msg.sender_type === 'admin' || msg.sender_type === 'staff';
+            const badgeClass = isAdminMessage ? 'admin' : 'client';
+            const badgeText = isAdminMessage ? '법무법인 로연' : (msg.profiles?.name || '고객');
+
+            // Parse message content (could contain HTML from rich editor)
+            let content = msg.content || '';
+
+            // Handle file attachments
+            let attachmentsHtml = '';
+            if (msg.attachments && msg.attachments.length > 0) {
+                attachmentsHtml = `
+                    <div class="message-attachments">
+                        ${msg.attachments.map(att => `
+                            <div class="attachment-item" onclick="downloadFile('${att.url}', '${att.name}')">
+                                <div class="attachment-icon">
+                                    <i class="fas fa-${getFileIcon(att.name)}"></i>
+                                </div>
+                                <div class="attachment-info">
+                                    <div class="attachment-name">${att.name}</div>
+                                    <div class="attachment-size">${formatFileSize(att.size)}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="message-card">
+                    <div class="message-header">
+                        <div class="message-author">
+                            <span class="author-badge ${badgeClass}">${badgeText}</span>
+                        </div>
+                        <div class="message-time">
+                            <i class="fas fa-clock"></i>
+                            ${formatDateTime(msg.created_at)}
+                        </div>
+                    </div>
+                    <div class="message-body">
+                        ${content}
+                    </div>
+                    ${attachmentsHtml}
+                </div>
+            `;
+        }
+
+        function getFileIcon(filename) {
+            const ext = filename.split('.').pop().toLowerCase();
+            const icons = {
+                pdf: 'file-pdf',
+                doc: 'file-word',
+                docx: 'file-word',
+                xls: 'file-excel',
+                xlsx: 'file-excel',
+                jpg: 'file-image',
+                jpeg: 'file-image',
+                png: 'file-image',
+                gif: 'file-image'
+            };
+            return icons[ext] || 'file';
+        }
+
+        function formatFileSize(bytes) {
+            if (!bytes) return '';
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+
+        async function submitReply() {
+            const content = quillEditor.root.innerHTML;
+            const plainText = quillEditor.getText().trim();
+
+            if (!plainText && pendingFiles.length === 0) {
+                alert('내용을 입력하거나 파일을 첨부해주세요.');
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 전송 중...';
+
+            try {
+                // Upload files first
+                let attachments = [];
+                for (let file of pendingFiles) {
+                    const uploadResult = await uploadFile(file, threadId);
+                    if (uploadResult.success) {
+                        attachments.push({
+                            name: file.name,
+                            size: file.size,
+                            url: uploadResult.url
+                        });
+                    }
+                }
+
+                // Create message
+                const messageData = {
+                    thread_id: threadId,
+                    content: content,
+                    sender_type: isAdmin ? 'admin' : 'client',
+                    attachments: attachments.length > 0 ? attachments : null
+                };
+
+                const result = await createMessage(messageData);
+
+                if (!result.success) {
+                    throw new Error('메시지 전송 실패');
+                }
+
+                // Clear editor
+                quillEditor.setText('');
+                pendingFiles = [];
+                renderPendingFiles();
+
+                // Reload messages
+                await loadMessages();
+
+            } catch (error) {
+                console.error('Error submitting reply:', error);
+                alert('메시지 전송 중 오류가 발생했습니다.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> 작성';
+            }
+        }
+
+        async function uploadFile(file, threadId) {
+            try {
+                const fileName = `${threadId}/${Date.now()}_${file.name}`;
+                const { data, error } = await supabase.storage
+                    .from('thread-files')
+                    .upload(fileName, file);
+
+                if (error) throw error;
+
+                const { data: urlData } = supabase.storage
+                    .from('thread-files')
+                    .getPublicUrl(fileName);
+
+                return { success: true, url: urlData.publicUrl };
+            } catch (error) {
+                console.error('File upload error:', error);
+                return { success: false };
+            }
+        }
+
+        function subscribeToMessages() {
+            supabase
+                .channel(`thread-${threadId}`)
+                .on('postgres_changes', {
+                    event: 'INSERT',
+                    schema: 'public',
+                    table: 'messages',
+                    filter: `thread_id=eq.${threadId}`
+                }, payload => {
+                    // Reload messages when new message arrives
+                    loadMessages();
+                })
+                .subscribe();
+        }
+
+        // Admin functions
+        function openPaymentLinkModal() {
+            document.getElementById('paymentLinkModal').classList.add('active');
+        }
+
+        function openBasicInfoModal() {
+            document.getElementById('basicInfoModal').classList.add('active');
+        }
+
+        function openStageChangeModal() {
+            document.getElementById('stageChangeModal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        document.getElementById('paymentServiceSelect').addEventListener('change', function() {
+            const customGroup = document.getElementById('customAmountGroup');
+            customGroup.style.display = this.value === 'custom' ? 'block' : 'none';
+        });
+
+        async function sendPaymentLink() {
+            const serviceId = document.getElementById('paymentServiceSelect').value;
+            if (!serviceId) {
+                alert('서비스를 선택해주세요.');
+                return;
+            }
+
+            let paymentUrl = '';
+            if (serviceId === 'custom') {
+                const amount = document.getElementById('customAmount').value;
+                if (!amount) {
+                    alert('금액을 입력해주세요.');
+                    return;
+                }
+                paymentUrl = `${window.location.origin}/service-apply-general.html?service=custom&amount=${amount}&thread=${threadId}`;
+            } else {
+                paymentUrl = `${window.location.origin}/service-apply-general.html?service=${serviceId}&thread=${threadId}`;
+            }
+
+            // Create message with payment link
+            const content = `
+                <p>결제를 진행해 주세요.</p>
+                <a href="${paymentUrl}" class="payment-btn-inline" target="_blank">
+                    <i class="fas fa-credit-card"></i> 결제하기
+                </a>
+            `;
+
+            await createMessage({
+                thread_id: threadId,
+                content: content,
+                sender_type: 'admin'
+            });
+
+            closeModal('paymentLinkModal');
+            await loadMessages();
+        }
+
+        async function sendBasicInfoRequest() {
+            const additionalMessage = document.getElementById('basicInfoMessage').value;
+            const formUrl = `${window.location.origin}/basic-info-form.html?thread=${threadId}`;
+
+            let content = `
+                <p>서비스 진행을 위해 기본 정보를 입력해 주세요.</p>
+                ${additionalMessage ? `<p>${additionalMessage}</p>` : ''}
+                <a href="${formUrl}" class="payment-btn-inline" target="_blank">
+                    <i class="fas fa-file-alt"></i> 기본사항 입력하기
+                </a>
+            `;
+
+            await createMessage({
+                thread_id: threadId,
+                content: content,
+                sender_type: 'admin'
+            });
+
+            closeModal('basicInfoModal');
+            document.getElementById('basicInfoMessage').value = '';
+            await loadMessages();
+        }
+
+        async function changeStage() {
+            const newStage = parseInt(document.getElementById('stageSelect').value);
+
+            try {
+                const { error } = await supabase
+                    .from('threads')
+                    .update({ current_stage: newStage })
+                    .eq('id', threadId);
+
+                if (error) throw error;
+
+                // Reload thread to update progress
+                threadData.current_stage = newStage;
+                renderProgress(threadData);
+
+                closeModal('stageChangeModal');
+                alert('단계가 변경되었습니다.');
+
+            } catch (error) {
+                console.error('Error changing stage:', error);
+                alert('단계 변경 중 오류가 발생했습니다.');
+            }
+        }
+
+        // Utility functions
+        function toggleProgress() {
+            const content = document.getElementById('progressContent');
+            const toggle = document.getElementById('progressToggle');
+
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                toggle.innerHTML = '<i class="fas fa-chevron-up"></i>';
+            } else {
+                content.classList.add('collapsed');
+                toggle.innerHTML = '<i class="fas fa-chevron-down"></i>';
+            }
+        }
+
+        function goBack() {
+            window.location.href = 'dashboard-general.html';
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        function formatDateTime(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function downloadFile(url, filename) {
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.target = '_blank';
+            a.click();
+        }
+    </script>
+</body>
+</html>
