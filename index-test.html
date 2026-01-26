@@ -557,28 +557,14 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 20px 16px;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.75);
         }
 
-        .attorney-name-kr {
-            font-size: 18px;
-            font-weight: 700;
+        .attorney-name {
+            font-size: 15px;
+            font-weight: 600;
             color: white;
-            margin-bottom: 2px;
-        }
-
-        .attorney-name-kr .title {
-            font-size: 14px;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.8);
-            margin-left: 6px;
-        }
-
-        .attorney-name-en {
-            font-size: 13px;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.7);
         }
 
         /* Carousel Navigation */
@@ -640,15 +626,11 @@
             }
 
             .attorney-info {
-                padding: 16px 12px;
+                padding: 14px 12px;
             }
 
-            .attorney-name-kr {
-                font-size: 16px;
-            }
-
-            .attorney-name-en {
-                font-size: 12px;
+            .attorney-name {
+                font-size: 14px;
             }
         }
 
@@ -1503,22 +1485,19 @@
                                 <div class="attorney-card">
                                     <img src="images/attorneys/bong.png" alt="S.H. Bong" class="attorney-photo">
                                     <div class="attorney-info">
-                                        <div class="attorney-name-kr">봉석현 <span class="title">변호사</span></div>
-                                        <div class="attorney-name-en">S.H. Bong</div>
+                                        <div class="attorney-name">Atty. S.H. Bong</div>
                                     </div>
                                 </div>
                                 <div class="attorney-card">
                                     <img src="images/attorneys/min.png" alt="J.W. Min" class="attorney-photo">
                                     <div class="attorney-info">
-                                        <div class="attorney-name-kr">민정원 <span class="title">변호사</span></div>
-                                        <div class="attorney-name-en">J.W. Min</div>
+                                        <div class="attorney-name">Atty. J.W. Min</div>
                                     </div>
                                 </div>
                                 <div class="attorney-card">
                                     <img src="images/attorneys/nam.png" alt="D.H. Nam" class="attorney-photo">
                                     <div class="attorney-info">
-                                        <div class="attorney-name-kr">남동현 <span class="title">변호사</span></div>
-                                        <div class="attorney-name-en">D.H. Nam</div>
+                                        <div class="attorney-name">Atty. D.H. Nam</div>
                                     </div>
                                 </div>
                             </div>
@@ -1527,22 +1506,19 @@
                                 <div class="attorney-card">
                                     <img src="images/attorneys/kim.png" alt="S.C. Kim" class="attorney-photo">
                                     <div class="attorney-info">
-                                        <div class="attorney-name-kr">김수찬 <span class="title">변호사</span></div>
-                                        <div class="attorney-name-en">S.C. Kim</div>
+                                        <div class="attorney-name">Atty. S.C. Kim</div>
                                     </div>
                                 </div>
                                 <div class="attorney-card">
                                     <img src="images/attorneys/hwang.jpg" alt="Y.H. Hwang" class="attorney-photo">
                                     <div class="attorney-info">
-                                        <div class="attorney-name-kr">황유환 <span class="title">변호사</span></div>
-                                        <div class="attorney-name-en">Y.H. Hwang</div>
+                                        <div class="attorney-name">Atty. Y.H. Hwang</div>
                                     </div>
                                 </div>
                                 <div class="attorney-card">
                                     <img src="images/attorneys/shin.jpg" alt="D.G. Shin" class="attorney-photo">
                                     <div class="attorney-info">
-                                        <div class="attorney-name-kr">신동근 <span class="title">변호사</span></div>
-                                        <div class="attorney-name-en">D.G. Shin</div>
+                                        <div class="attorney-name">Atty. D.G. Shin</div>
                                     </div>
                                 </div>
                             </div>
@@ -1567,8 +1543,8 @@
                 track.style.transform = `translateX(-${currentSlide * 100}%)`;
             }
 
-            // Auto-slide every 5 seconds
-            setInterval(() => slideAttorneys(1), 5000);
+            // Auto-slide every 8 seconds
+            setInterval(() => slideAttorneys(1), 8000);
         </script>
 
         <!-- 출입국 민원 대행 -->
