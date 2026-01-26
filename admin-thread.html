@@ -822,6 +822,23 @@
                         </select>
                     </div>
                 </div>
+
+                <div style="margin-top: 12px;">
+                    <div class="info-label">진행 단계</div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px;">
+                        <select class="status-select" id="threadStage" onchange="updateThreadStage()" style="flex: 1;">
+                            <option value="1">1단계</option>
+                            <option value="2">2단계</option>
+                            <option value="3">3단계</option>
+                            <option value="4">4단계</option>
+                            <option value="5">5단계</option>
+                            <option value="6">6단계</option>
+                            <option value="7">7단계</option>
+                            <option value="8">8단계</option>
+                        </select>
+                        <span id="stageTypeLabel" style="font-size: 11px; color: #6B7684; white-space: nowrap;">상담 8단계</span>
+                    </div>
+                </div>
             </div>
 
             <!-- 메신저 알림 -->
@@ -982,9 +999,9 @@
             try {
                 console.log('🔵 admin-thread.html 페이지 로드 시작');
                 
-                // URL에서 thread_id 가져오기
+                // URL에서 id 가져오기 (thread_id도 호환)
                 const urlParams = new URLSearchParams(window.location.search);
-                threadId = urlParams.get('thread_id');
+                threadId = urlParams.get('id') || urlParams.get('thread_id');
                 console.log('📌 Thread ID:', threadId);
 
                 if (!threadId) {
@@ -1161,6 +1178,12 @@
                 document.getElementById('orderId').textContent = threadData.order_id || '-';
                 document.getElementById('threadStatus').value = threadData.status || 'payment';
                 document.getElementById('threadPriority').value = threadData.priority || 'normal';
+
+                // 진행 단계
+                document.getElementById('threadStage').value = threadData.current_stage || 1;
+                const totalStages = threadData.is_consulting ? 8 : 6;
+                const stageType = threadData.is_consulting ? '상담' : '결제';
+                document.getElementById('stageTypeLabel').textContent = `${stageType} ${totalStages}단계`;
                 console.log('✅ 쓰레드 정보 업데이트 완료');
 
                 // 메신저 정보
@@ -1616,7 +1639,7 @@
         // 우선순위 업데이트
         async function updateThreadPriority() {
             const priority = document.getElementById('threadPriority').value;
-            
+
             try {
                 const { error } = await supabaseClient
                     .from('threads')
@@ -1631,6 +1654,27 @@
             } catch (error) {
                 console.error('우선순위 업데이트 오류:', error);
                 alert('우선순위 업데이트 중 오류가 발생했습니다.');
+            }
+        }
+
+        // 진행 단계 업데이트
+        async function updateThreadStage() {
+            const stage = parseInt(document.getElementById('threadStage').value);
+
+            try {
+                const { error } = await supabaseClient
+                    .from('threads')
+                    .update({ current_stage: stage })
+                    .eq('id', threadId);
+
+                if (error) throw error;
+
+                threadData.current_stage = stage;
+                alert('진행 단계가 업데이트되었습니다.');
+
+            } catch (error) {
+                console.error('진행 단계 업데이트 오류:', error);
+                alert('진행 단계 업데이트 중 오류가 발생했습니다.');
             }
         }
 

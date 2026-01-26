@@ -878,6 +878,20 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <label>진행 단계</label>
+                    <select id="newStage">
+                        <option value="1">1단계</option>
+                        <option value="2">2단계</option>
+                        <option value="3">3단계</option>
+                        <option value="4">4단계</option>
+                        <option value="5">5단계</option>
+                        <option value="6">6단계</option>
+                        <option value="7">7단계</option>
+                        <option value="8">8단계</option>
+                    </select>
+                    <p style="font-size: 12px; color: #6B7684; margin-top: 4px;">상담: 8단계 / 결제: 6단계</p>
+                </div>
+                <div class="form-group">
                     <label>메모 (선택사항)</label>
                     <textarea id="statusMemo" rows="4" placeholder="상태 변경 사유를 입력하세요..."></textarea>
                 </div>
@@ -1077,6 +1091,7 @@
                             <th>협약단체</th>
                             <th>주문번호</th>
                             <th>상태</th>
+                            <th>진행단계</th>
                             <th>금액</th>
                             <th>신청일</th>
                             <th>작업</th>
@@ -1118,12 +1133,18 @@
                     : '-';
                 
                 // 협약단체 표시
-                const organizationBadge = thread.organization === 'jnu' 
+                const organizationBadge = thread.organization === 'jnu'
                     ? `<span class="org-badge" style="background: linear-gradient(135deg, #00A651 0%, #007A33 100%); color: white; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block;"><i class="fas fa-university"></i> 전남대</span>`
                     : thread.organization === 'snu'
                     ? `<span class="org-badge" style="background: linear-gradient(135deg, #1D2088 0%, #0d1147 100%); color: white; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block;"><i class="fas fa-university"></i> 서울대</span>`
                     : `<span style="color: #9CA3AF; font-size: 12px;">일반</span>`;
-                
+
+                // 진행 단계 표시
+                const currentStage = thread.current_stage || 1;
+                const totalStages = thread.is_consulting ? 8 : 6;
+                const stageType = thread.is_consulting ? '상담' : '결제';
+                const stageDisplay = `<span style="background: #EBF4FF; color: #1B64DA; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 600;">${currentStage}/${totalStages}</span> <span style="color: #6B7684; font-size: 11px;">${stageType}</span>`;
+
                 tableHTML += `
                     <tr>
                         <td>
@@ -1135,6 +1156,7 @@
                         <td>${organizationBadge}</td>
                         <td>${orderDisplay}</td>
                         <td><span class="status-badge ${thread.status}">${statusLabel}</span></td>
+                        <td>${stageDisplay}</td>
                         <td><strong>₩${thread.amount.toLocaleString()}</strong></td>
                         <td>${new Date(thread.created_at).toLocaleDateString()}</td>
                         <td>
@@ -1189,19 +1211,20 @@
         // 쓰레드 상세보기
         function viewThread(threadId) {
             // 관리자 전용 쓰레드 페이지로 이동
-            window.location.href = `admin-thread.html?thread_id=${threadId}`;
+            window.location.href = `admin-thread.html?id=${threadId}`;
         }
 
         // 상태 변경 모달 열기
         function openStatusModal(threadId) {
             currentThreadId = threadId;
             const thread = allThreads.find(t => t.id === threadId);
-            
+
             if (thread) {
                 document.getElementById('newStatus').value = thread.status;
-                document.getElementById('newPriority').value = thread.priority;
+                document.getElementById('newPriority').value = thread.priority || 'normal';
+                document.getElementById('newStage').value = thread.current_stage || 1;
                 document.getElementById('statusMemo').value = '';
-                
+
                 document.getElementById('statusModal').classList.add('active');
             }
         }
@@ -1218,18 +1241,20 @@
                 console.error('❌ currentThreadId가 없습니다');
                 return;
             }
-            
+
             const newStatus = document.getElementById('newStatus').value;
             const newPriority = document.getElementById('newPriority').value;
+            const newStage = parseInt(document.getElementById('newStage').value);
             const memo = document.getElementById('statusMemo').value;
-            
+
             console.log('🔄 상태 업데이트 시작:', {
                 threadId: currentThreadId,
                 newStatus,
                 newPriority,
+                newStage,
                 memo
             });
-            
+
             try {
                 // 🔥 Supabase에 실제 업데이트
                 const { data, error } = await supabaseClient
@@ -1237,6 +1262,7 @@
                     .update({
                         status: newStatus,
                         priority: newPriority,
+                        current_stage: newStage,
                         updated_at: new Date().toISOString()
                     })
                     .eq('id', currentThreadId)
@@ -1258,6 +1284,7 @@
                 if (thread) {
                     thread.status = newStatus;
                     thread.priority = newPriority;
+                    thread.current_stage = newStage;
                     thread.updated_at = new Date().toISOString();
                     console.log('✅ 로컬 배열 업데이트 완료');
                 } else {
