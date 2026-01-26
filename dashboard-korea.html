@@ -1028,7 +1028,7 @@
                                     <span data-i18n="dashboard.application.step.approval">승인</span>
                                 </div>
                             </div>
-                            <button onclick="window.location.href='thread-korea.html'" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
+                            <button onclick="window.location.href='thread-general-v2.html'" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
                                 <i class="fas fa-comments"></i> <span data-i18n="dashboard.application.openThread">쓰레드 열기</span>
                             </button>
                         </div>
@@ -1573,10 +1573,10 @@
                 }
 
                 // 한국대학교 전용 대시보드이므로 한국대 쓰레드로 이동
-                window.location.href = `thread-korea.html?id=${threadId}`;
+                window.location.href = `thread-general-v2.html?id=${threadId}`;
             } catch (error) {
                 console.error('쓰레드 열기 오류:', error);
-                window.location.href = `thread-korea.html?id=${threadId}`;
+                window.location.href = `thread-general-v2.html?id=${threadId}`;
             }
         }
 
@@ -1678,7 +1678,7 @@
             applications.forEach(app => {
                 const card = document.createElement('a');
                 card.className = 'application-card';
-                card.href = `thread-korea.html?id=${app.thread_id}`;
+                card.href = `thread-general-v2.html?id=${app.thread_id}`;
                 
                 let statusClass = 'pending';
                 let statusText = '대기중';
