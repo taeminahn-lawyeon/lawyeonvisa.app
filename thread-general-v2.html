@@ -437,6 +437,45 @@
             color: white;
         }
 
+        /* Action Link Button Style */
+        .action-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            color: white !important;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none !important;
+            margin-top: 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .action-link-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
+            text-decoration: none !important;
+            color: white !important;
+        }
+
+        .action-link-btn i {
+            font-size: 14px;
+        }
+
+        /* Auto-converted link style */
+        .auto-link {
+            color: #3182F6;
+            text-decoration: none;
+            font-weight: 600;
+            word-break: break-all;
+        }
+
+        .auto-link:hover {
+            text-decoration: underline;
+        }
+
         /* Reply Editor Section */
         .reply-section {
             background: white;
@@ -1160,12 +1199,25 @@
         }
 
         function renderMessageCard(msg) {
-            const isAdminMessage = msg.sender_type === 'admin' || msg.sender_type === 'staff';
-            const badgeClass = isAdminMessage ? 'admin' : 'client';
-            const badgeText = isAdminMessage ? '법무법인 로연' : (msg.profiles?.name || '고객');
+            // 발신자 판단 로직 개선:
+            // 1. sender_type이 'admin' 또는 'staff'면 관리자
+            // 2. sender_id가 쓰레드 소유자(threadData.user_id)가 아니면 관리자로 간주
+            // 3. sender_id가 쓰레드 소유자와 같으면 고객
+            let isAdminMessage = msg.sender_type === 'admin' || msg.sender_type === 'staff';
 
-            // Parse message content (could contain HTML from rich editor)
-            let content = msg.content || '';
+            // sender_type이 없거나 불분명한 경우, sender_id로 판단
+            if (!isAdminMessage && msg.sender_id && threadData) {
+                // sender_id가 쓰레드 소유자와 다르면 관리자 메시지
+                if (msg.sender_id !== threadData.user_id) {
+                    isAdminMessage = true;
+                }
+            }
+
+            const badgeClass = isAdminMessage ? 'admin' : 'client';
+            const badgeText = isAdminMessage ? '법무법인 로연' : (msg.profiles?.name || threadData?.profiles?.name || '고객');
+
+            // Parse message content and convert links
+            let content = processMessageContent(msg.content || '');
 
             // Handle file attachments
             let attachmentsHtml = '';
@@ -1204,6 +1256,64 @@
                     ${attachmentsHtml}
                 </div>
             `;
+        }
+
+        // 메시지 내용 처리 - URL을 클릭 가능한 링크로 변환
+        function processMessageContent(content) {
+            if (!content) return '';
+
+            // 이미 처리된 HTML인지 확인 (action-link-btn 또는 payment-btn-inline 클래스가 있으면 스킵)
+            if (content.includes('action-link-btn') || content.includes('payment-btn-inline')) {
+                return content;
+            }
+
+            // 1. 기존 앵커 태그를 임시 마커로 치환
+            const anchorPlaceholders = [];
+            content = content.replace(/<a[^>]*>.*?<\/a>/gi, (match) => {
+                const idx = anchorPlaceholders.length;
+                anchorPlaceholders.push(match);
+                return `__ANCHOR_${idx}__`;
+            });
+
+            // 2. 일반 텍스트에서 URL 패턴을 찾아 링크로 변환
+            // https:// 또는 http:// 로 시작하는 URL
+            const urlPattern = /(https?:\/\/[^\s<>"']+)/gi;
+            content = content.replace(urlPattern, (match) => {
+                // 특정 페이지는 버튼 스타일로
+                if (match.includes('profile-submit.html')) {
+                    return `<a href="${match}" class="action-link-btn" target="_blank"><i class="fas fa-file-alt"></i> 기본사항 입력하기</a>`;
+                }
+                if (match.includes('service-apply')) {
+                    return `<a href="${match}" class="action-link-btn" target="_blank"><i class="fas fa-credit-card"></i> 결제하기</a>`;
+                }
+                // 일반 링크
+                return `<a href="${match}" class="auto-link" target="_blank">${match}</a>`;
+            });
+
+            // 3. 임시 마커를 원래 앵커 태그로 복원 (스타일 업그레이드 적용)
+            content = content.replace(/__ANCHOR_(\d+)__/g, (match, idx) => {
+                let originalAnchor = anchorPlaceholders[parseInt(idx)];
+
+                // profile-submit 링크면 스타일 업그레이드
+                if (originalAnchor.includes('profile-submit.html') && !originalAnchor.includes('action-link-btn')) {
+                    const hrefMatch = originalAnchor.match(/href="([^"]*)"/i);
+                    if (hrefMatch) {
+                        return `<a href="${hrefMatch[1]}" class="action-link-btn" target="_blank"><i class="fas fa-file-alt"></i> 기본사항 입력하기</a>`;
+                    }
+                }
+
+                // service-apply 링크면 스타일 업그레이드
+                if (originalAnchor.includes('service-apply') && !originalAnchor.includes('action-link-btn')) {
+                    const hrefMatch = originalAnchor.match(/href="([^"]*)"/i);
+                    if (hrefMatch) {
+                        return `<a href="${hrefMatch[1]}" class="action-link-btn" target="_blank"><i class="fas fa-credit-card"></i> 결제하기</a>`;
+                    }
+                }
+
+                return originalAnchor;
+            });
+
+            return content;
         }
 
         function getFileIcon(filename) {
