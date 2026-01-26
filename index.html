@@ -277,7 +277,7 @@
 
         .premium-service-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 16px;
         }
 
@@ -311,24 +311,27 @@
         .premium-service-card .desc {
             font-size: 14px;
             color: #64748B;
-            line-height: 1.8;
+            line-height: 1.7;
             font-weight: 400;
-            flex: 1;
+            margin-bottom: 16px;
         }
 
         .premium-service-card .desc-item {
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             color: #64748B;
         }
-        
+
+        .premium-service-card .desc-item:last-child {
+            margin-bottom: 0;
+        }
+
         .premium-service-card .cta-btn {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            margin-top: 16px;
             padding: 10px 18px;
-            background: #2563EB;
+            background: #3182F6;
             color: white;
             border: none;
             border-radius: 8px;
@@ -338,9 +341,9 @@
             transition: all 0.2s ease;
             width: fit-content;
         }
-        
+
         .premium-service-card .cta-btn:hover {
-            background: #1D4ED8;
+            background: #1B64DA;
         }
         
         .premium-service-card .cta-btn .arrow {
@@ -447,7 +450,215 @@
             color: white;
         }
 
+        /* Law Firm Introduction Section - 2 Column Layout */
+        .lawfirm-intro-section {
+            background: #FFFFFF;
+            border-radius: 24px;
+            padding: 48px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #E2E8F0;
+            overflow: hidden;
+        }
 
+        .lawfirm-intro-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 32px;
+        }
+
+        /* Left Column - Text & Badge */
+        .lawfirm-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 0 0 auto;
+            max-width: 420px;
+        }
+
+        .lawfirm-headline {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1E293B;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            letter-spacing: -0.3px;
+        }
+
+        /* Registration Badge - Between headline and subtext */
+        .registration-badge {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+            padding: 12px 0;
+            border-top: 1px solid #E2E8F0;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .moj-logo {
+            height: 72px;
+            width: auto;
+        }
+
+        .registration-text {
+            font-size: 11px;
+            font-weight: 600;
+            color: #64748B;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            line-height: 1.5;
+        }
+
+        .lawfirm-subtext {
+            font-size: 15px;
+            color: #64748B;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+
+        /* Right Column - Attorney Carousel */
+        .lawfirm-right {
+            position: relative;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Attorneys Carousel - Continuous Scroll */
+        .attorneys-carousel {
+            position: relative;
+            background: linear-gradient(135deg, #4A4A4A 0%, #2D2D2D 100%);
+            border-radius: 16px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .attorneys-track {
+            display: flex;
+            animation: scroll-attorneys 25s linear infinite;
+            width: fit-content;
+        }
+
+        .attorneys-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll-attorneys {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .attorney-card {
+            flex-shrink: 0;
+            width: 160px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .attorney-photo {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+        }
+
+        /* Name Overlay */
+        .attorney-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 14px 12px;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .attorney-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+            text-align: center;
+        }
+
+        @media (max-width: 968px) {
+            .lawfirm-intro-section {
+                padding: 32px 24px;
+            }
+
+            .lawfirm-intro-content {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .lawfirm-left {
+                text-align: center;
+            }
+
+            .registration-badge {
+                justify-content: center;
+            }
+
+            .lawfirm-headline {
+                font-size: 18px;
+            }
+
+            .lawfirm-right {
+                display: flex;
+                justify-content: center;
+            }
+
+            .attorneys-carousel {
+                max-width: none;
+            }
+
+            .attorney-card {
+                width: 140px;
+            }
+
+            .attorney-photo {
+                height: 220px;
+            }
+
+            .attorney-info {
+                padding: 12px 10px;
+            }
+
+            .attorney-name {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .lawfirm-intro-section {
+                padding: 24px 16px;
+            }
+
+            .moj-logo {
+                height: 60px;
+            }
+
+            .registration-text {
+                font-size: 10px;
+            }
+
+            .attorney-card {
+                width: 140px;
+            }
+
+            .attorney-photo {
+                height: 180px;
+            }
+
+            .attorney-name {
+                font-size: 12px;
+            }
+        }
 
         /* 출입국 민원 서비스 */
         .services-section {
@@ -1229,27 +1440,135 @@
     </div>
     
     <div class="container">
-        <!-- 강제출국·비자거절 긴급 구제 - 미니멀 화이트 + 신뢰 강조 -->
+        <!-- 프리미엄 서비스 섹션 - 3개 카드 -->
         <div class="premium-service-banner">
-            <h3 data-i18n="emergency.title">강제출국·비자거절 긴급 구제</h3>
+            <h3 data-i18n="emergency.title">Immigration Legal Services</h3>
             <div class="premium-service-grid">
-                <div class="premium-service-card" id="emergencyLegalCard" style="cursor: pointer;">
-                    <div class="title" data-i18n="emergency.legal.title">출입국 분쟁 해결</div>
+                <!-- Card 1: 긴급구제 -->
+                <div class="premium-service-card" id="emergencyLegalCard">
+                    <div class="title" data-i18n="emergency.legal.title">Deportation · Visa Denial · Criminal Emergency</div>
                     <div class="desc">
-                        <div class="desc-item" data-i18n="emergency.legal.item1">사범심사 동행 등 출입국사범 구제</div>
-                        <div class="desc-item" data-i18n="emergency.legal.item2">처분 취소소송 등 국적·체류 관련 불복절차 대리</div>
-                        <div class="desc-item" data-i18n="emergency.legal.item3">외국인 형사 사건 변호</div>
+                        <div class="desc-item" data-i18n="emergency.legal.item1">Immigration violation rescue & hearing support</div>
+                        <div class="desc-item" data-i18n="emergency.legal.item2">Administrative appeals & litigation</div>
+                        <div class="desc-item" data-i18n="emergency.legal.item3">Criminal defense for foreigners</div>
                     </div>
-                    <button class="cta-btn"><span data-i18n="emergency.legal.cta">상담 신청</span> <span class="arrow">→</span></button>
+                    <button class="cta-btn" onclick="location.href='consultation-request.html?type=emergency'"><span data-i18n="emergency.legal.cta">Emergency Consultation</span> <span class="arrow">→</span></button>
                 </div>
-                <div class="premium-service-card diagnostic" id="visaDiagnosisCard" style="cursor: pointer;">
-                    <div class="title" data-i18n="emergency.diagnosis.title">비자 사전진단</div>
+                <!-- Card 2: 비자 진단 및 자문 -->
+                <div class="premium-service-card" id="visaDiagnosisCard">
+                    <div class="title" data-i18n="emergency.diagnosis.title">Visa Diagnosis & Consultation</div>
                     <div class="desc">
-                        <div class="desc-item" data-i18n="emergency.diagnosis.item1">비자 변경 자문</div>
-                        <div class="desc-item" data-i18n="emergency.diagnosis.item2">불법체류 위험 자문</div>
-                        <div class="desc-item" data-i18n="emergency.diagnosis.item3">출입국관리법 위반 자문</div>
+                        <div class="desc-item" data-i18n="emergency.diagnosis.item1">Visa change planning advice</div>
+                        <div class="desc-item" data-i18n="emergency.diagnosis.item2">Immigration law violation consultation</div>
+                        <div class="desc-item" data-i18n="emergency.diagnosis.item3">Overstay risk assessment</div>
                     </div>
-                    <button class="cta-btn"><span data-i18n="emergency.diagnosis.cta">진단 받기</span> <span class="arrow">→</span></button>
+                    <button class="cta-btn" onclick="location.href='consultation-request.html?type=diagnosis'"><span data-i18n="emergency.diagnosis.cta">Request Consultation</span> <span class="arrow">→</span></button>
+                </div>
+                <!-- Card 3: 서비스 네비게이터 -->
+                <div class="premium-service-card" id="serviceNavigatorCard">
+                    <div class="title" data-i18n="emergency.navigator.title">Service Navigator</div>
+                    <div class="desc">
+                        <div class="desc-item" data-i18n="emergency.navigator.item1">Find the right service for your case</div>
+                        <div class="desc-item" data-i18n="emergency.navigator.item2">Guided service consultation</div>
+                    </div>
+                    <button class="cta-btn" onclick="location.href='service-navigator.html'"><span data-i18n="emergency.navigator.cta">Start Navigator</span> <span class="arrow">→</span></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Law Firm Introduction Section -->
+        <div class="lawfirm-intro-section">
+            <div class="lawfirm-intro-content">
+                <!-- Left Column - Text & Badge -->
+                <div class="lawfirm-left">
+                    <p class="lawfirm-headline">Law Firm Lawyeon's Visa & Immigration Center specializes in legal support for foreigners in Korea.</p>
+                    <div class="registration-badge">
+                        <img src="images/moj-badge.jpg" alt="Ministry of Justice" class="moj-logo">
+                        <span class="registration-text">Registered Immigration Agency<br>#25-SM-RG-063</span>
+                    </div>
+                    <p class="lawfirm-subtext">Practicing in immigration office services and legal matters for foreigners and immigrants.</p>
+                </div>
+
+                <!-- Right Column - Attorney Carousel -->
+                <div class="lawfirm-right">
+                    <div class="attorneys-carousel">
+                        <div class="attorneys-track">
+                            <!-- Original 6 attorneys -->
+                            <div class="attorney-card">
+                                <img src="images/attorneys/S.H. BONG.png" alt="S.H. Bong" class="attorney-photo">
+                                <div class="attorney-info">
+                                    <div class="attorney-name">Atty. S.H. Bong</div>
+                                </div>
+                            </div>
+                            <div class="attorney-card">
+                                <img src="images/attorneys/J.W. MIN.png" alt="J.W. Min" class="attorney-photo">
+                                <div class="attorney-info">
+                                    <div class="attorney-name">Atty. J.W. Min</div>
+                                </div>
+                            </div>
+                            <div class="attorney-card">
+                                <img src="images/attorneys/D.H. NAM.png" alt="D.H. Nam" class="attorney-photo">
+                                <div class="attorney-info">
+                                    <div class="attorney-name">Atty. D.H. Nam</div>
+                                </div>
+                            </div>
+                            <div class="attorney-card">
+                                <img src="images/attorneys/S.C. KIM.png" alt="S.C. Kim" class="attorney-photo">
+                                <div class="attorney-info">
+                                    <div class="attorney-name">Atty. S.C. Kim</div>
+                                </div>
+                            </div>
+                            <div class="attorney-card">
+                                <img src="images/attorneys/Y.H. HWANG.jpg" alt="Y.H. Hwang" class="attorney-photo">
+                                <div class="attorney-info">
+                                    <div class="attorney-name">Atty. Y.H. Hwang</div>
+                                </div>
+                            </div>
+                            <div class="attorney-card">
+                                <img src="images/attorneys/D.G. SHIN.jpg" alt="D.G. Shin" class="attorney-photo">
+                                <div class="attorney-info">
+                                    <div class="attorney-name">Atty. D.G. Shin</div>
+                                </div>
+                            </div>
+                            <!-- Duplicate for seamless loop -->
+                            <div class="attorney-card">
+                                <img src="images/attorneys/S.H. BONG.png" alt="S.H. Bong" class="attorney-photo">
+                                <div class="attorney-info">
+                                    <div class="attorney-name">Atty. S.H. Bong</div>
+                                </div>
+                            </div>
+                            <div class="attorney-card">
+                                <img src="images/attorneys/J.W. MIN.png" alt="J.W. Min" class="attorney-photo">
+                                <div class="attorney-info">
+                                    <div class="attorney-name">Atty. J.W. Min</div>
+                                </div>
+                            </div>
+                            <div class="attorney-card">
+                                <img src="images/attorneys/D.H. NAM.png" alt="D.H. Nam" class="attorney-photo">
+                                <div class="attorney-info">
+                                    <div class="attorney-name">Atty. D.H. Nam</div>
+                                </div>
+                            </div>
+                            <div class="attorney-card">
+                                <img src="images/attorneys/S.C. KIM.png" alt="S.C. Kim" class="attorney-photo">
+                                <div class="attorney-info">
+                                    <div class="attorney-name">Atty. S.C. Kim</div>
+                                </div>
+                            </div>
+                            <div class="attorney-card">
+                                <img src="images/attorneys/Y.H. HWANG.jpg" alt="Y.H. Hwang" class="attorney-photo">
+                                <div class="attorney-info">
+                                    <div class="attorney-name">Atty. Y.H. Hwang</div>
+                                </div>
+                            </div>
+                            <div class="attorney-card">
+                                <img src="images/attorneys/D.G. SHIN.jpg" alt="D.G. Shin" class="attorney-photo">
+                                <div class="attorney-info">
+                                    <div class="attorney-name">Atty. D.G. Shin</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1367,31 +1686,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- 협약 단체 전용 (항상 한국어) -->
-        <div class="services-section">
-            <h3><span>협약 단체 전용</span> <span style="font-size: 14px; font-weight: 500; color: #6B7280; margin-left: 8px;">(테스트 진행 중입니다. 실제 협약 중인 단체가 아닙니다.)</span></h3>
-            
-            <div class="service-categories">
-                <div class="category-tab active" data-partner-category="university">대학교·어학원</div>
-                <div class="category-tab" data-partner-category="company">기업</div>
-                <div class="category-tab" data-partner-category="union">조합·법인</div>
-                <div class="category-tab" data-partner-category="public">공공기관</div>
-            </div>
-
-            <!-- 협약 단체 버튼 -->
-            <div id="partnerGrid" style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; justify-content: flex-start;">
-                <!-- JavaScript로 동적 생성 -->
-            </div>
-            
-            <!-- 협약 신청 CTA -->
-            <div style="border-top: 2px solid #e5e7eb; padding-top: 24px; margin-top: 24px;">
-                <a href="partnership-apply.html" style="display: inline-block; background: linear-gradient(135deg, #2563EB 0%, #1e40af 100%); color: white; border-radius: 14px; padding: 18px 32px; text-align: center; text-decoration: none; transition: all 0.3s; box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3); font-size: 17px; font-weight: 800;">
-                    우리 단체도 제휴하기
-                </a>
-                <p style="margin-top: 12px; font-size: 14px; color: #6b7280; line-height: 1.6;">모든 서비스 30% 할인 및 관리자 전용 소속 외국인 체류 현황 대시보드 제공</p>
             </div>
         </div>
 
@@ -1514,10 +1808,9 @@
                 }
             }
 
-            // 서비스 및 파트너, 블로그 로드 (다국어 시스템 초기화 후)
+            // 서비스 및 블로그 로드 (다국어 시스템 초기화 후)
             setTimeout(() => {
                 loadServices();
-                loadPartners();
                 loadBlogPosts();
             }, 100);
             
@@ -1528,13 +1821,9 @@
                 // 현재 활성화된 카테고리 찾기
                 const activeServiceTab = document.querySelector('.service-categories .category-tab[data-category].active');
                 const activeCategory = activeServiceTab ? activeServiceTab.dataset.category : 'general';
-                
-                const activePartnerTab = document.querySelector('.service-categories .category-tab[data-partner-category].active');
-                const activePartnerCategory = activePartnerTab ? activePartnerTab.dataset.partnerCategory : 'university';
-                
-                // 서비스 및 파트너 카드 다시 로드
+
+                // 서비스 카드 다시 로드
                 loadServices(activeCategory);
-                loadPartners(activePartnerCategory);
                 
                 // 로그인된 사용자의 쓰레드 정보도 다시 로드 (언어 변경 시 상태 텍스트 업데이트)
                 (async function() {
@@ -1592,17 +1881,6 @@
                     this.classList.add('active');
                     const category = this.dataset.category;
                     loadServices(category);
-                });
-            });
-
-            // Partnership Tab Events (협약 단체 전용)
-            const partnerTabs = document.querySelectorAll('.service-categories .category-tab[data-partner-category]');
-            partnerTabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    partnerTabs.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                    const category = this.dataset.partnerCategory;
-                    loadPartners(category);
                 });
             });
 
@@ -1690,22 +1968,6 @@
         });
 
         // Main page - no login required
-
-        // 협약 단체 (4개 카테고리)
-        const partners = {
-            university: [
-                { id: 'korea', name: '한국대학교', color: 'linear-gradient(135deg, #3182F6 0%, #2563EB 100%)', shadow: 'rgba(49, 130, 246, 0.25)', icon: 'fa-university' }
-            ],
-            company: [
-                { id: 'brookfield', name: '(유)브룩필드코리아', color: 'linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%)', shadow: 'rgba(30, 58, 138, 0.25)', icon: 'fa-building' }
-            ],
-            union: [
-                { id: 'migrant-union', name: '한국외국인근로자노동조합', color: 'linear-gradient(135deg, #DC143C 0%, #C41E3A 100%)', shadow: 'rgba(220, 20, 60, 0.25)', icon: 'fa-handshake' }
-            ],
-            public: [
-                { id: 'support-center', name: '외국인근로자지원센터', color: 'linear-gradient(135deg, #0891B2 0%, #0E7490 100%)', shadow: 'rgba(8, 145, 178, 0.25)', icon: 'fa-landmark' }
-            ]
-        };
 
         // 출입국 민원 서비스 (6개 카테고리) - 수정된 최종 버전
         const services = {
@@ -2172,60 +2434,6 @@
                 // 기본값으로 일반 쓰레드로 이동
                 window.location.href = `thread-general-v2.html?id=${threadId}`;
             }
-        }
-
-        // 협약 단체 로드 함수 (소개 전용 버튼으로 변경)
-        function loadPartners(category = 'university') {
-            const grid = document.getElementById('partnerGrid');
-            if (!grid) {
-                return;
-            }
-            
-            grid.innerHTML = '';
-
-            const partnerList = partners[category] || partners.university;
-
-            partnerList.forEach(partner => {
-                const button = document.createElement('button');
-                button.type = 'button';
-                button.style.cssText = `
-                    display: inline-block;
-                    background: ${partner.color};
-                    color: white;
-                    border: none;
-                    border-radius: 12px;
-                    padding: 20px 32px;
-                    text-align: center;
-                    cursor: pointer;
-                    transition: all 0.2s;
-                    box-shadow: 0 8px 24px ${partner.shadow};
-                    font-family: inherit;
-                `;
-                
-                // 모든 협약 기관 버튼은 클릭 시 안내 메시지만 표시
-                button.onclick = (e) => {
-                    e.preventDefault();
-                    alert('협약 단체 소개 버튼입니다.\n\n실제 서비스 이용을 원하시면 아래 "우리 단체도 제휴하기" 버튼을 통해 문의해주세요.');
-                    return false;
-                };
-                
-                const span = document.createElement('span');
-                span.style.cssText = `
-                    font-size: 18px;
-                    font-weight: 800;
-                    white-space: nowrap;
-                `;
-                
-                const icon = document.createElement('i');
-                icon.className = `fas ${partner.icon}`;
-                icon.style.marginRight = '8px';
-                
-                span.appendChild(icon);
-                span.appendChild(document.createTextNode(partner.name));
-                button.appendChild(span);
-                
-                grid.appendChild(button);
-            });
         }
 
         function loadServices(category = 'general') {
