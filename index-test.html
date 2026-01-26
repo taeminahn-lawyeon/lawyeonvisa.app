@@ -277,7 +277,7 @@
 
         .premium-service-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 16px;
         }
 
@@ -291,6 +291,7 @@
             display: flex;
             flex-direction: column;
             cursor: pointer;
+            min-height: 200px;
         }
 
         .premium-service-card:hover {
@@ -326,9 +327,9 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            margin-top: 16px;
+            margin-top: auto;
             padding: 10px 18px;
-            background: #2563EB;
+            background: #3182F6;
             color: white;
             border: none;
             border-radius: 8px;
@@ -338,9 +339,9 @@
             transition: all 0.2s ease;
             width: fit-content;
         }
-        
+
         .premium-service-card .cta-btn:hover {
-            background: #1D4ED8;
+            background: #1B64DA;
         }
         
         .premium-service-card .cta-btn .arrow {
@@ -1433,27 +1434,38 @@
     </div>
     
     <div class="container">
-        <!-- 강제출국·비자거절 긴급 구제 - 미니멀 화이트 + 신뢰 강조 -->
+        <!-- 프리미엄 서비스 섹션 - 3개 카드 -->
         <div class="premium-service-banner">
-            <h3 data-i18n="emergency.title">강제출국·비자거절 긴급 구제</h3>
+            <h3 data-i18n="emergency.title">Immigration Legal Services</h3>
             <div class="premium-service-grid">
-                <div class="premium-service-card" id="emergencyLegalCard" style="cursor: pointer;">
-                    <div class="title" data-i18n="emergency.legal.title">출입국 분쟁 해결</div>
+                <!-- Card 1: 긴급구제 -->
+                <div class="premium-service-card" id="emergencyLegalCard">
+                    <div class="title" data-i18n="emergency.legal.title">Deportation · Visa Denial · Criminal Emergency</div>
                     <div class="desc">
-                        <div class="desc-item" data-i18n="emergency.legal.item1">사범심사 동행 등 출입국사범 구제</div>
-                        <div class="desc-item" data-i18n="emergency.legal.item2">처분 취소소송 등 국적·체류 관련 불복절차 대리</div>
-                        <div class="desc-item" data-i18n="emergency.legal.item3">외국인 형사 사건 변호</div>
+                        <div class="desc-item" data-i18n="emergency.legal.item1">Immigration violation rescue & hearing support</div>
+                        <div class="desc-item" data-i18n="emergency.legal.item2">Administrative appeals & litigation</div>
+                        <div class="desc-item" data-i18n="emergency.legal.item3">Criminal defense for foreigners</div>
                     </div>
-                    <button class="cta-btn"><span data-i18n="emergency.legal.cta">상담 신청</span> <span class="arrow">→</span></button>
+                    <button class="cta-btn" onclick="location.href='consultation-request.html?type=emergency'"><span data-i18n="emergency.legal.cta">Emergency Consultation</span> <span class="arrow">→</span></button>
                 </div>
-                <div class="premium-service-card diagnostic" id="visaDiagnosisCard" style="cursor: pointer;">
-                    <div class="title" data-i18n="emergency.diagnosis.title">비자 사전진단</div>
+                <!-- Card 2: 비자 진단 및 자문 -->
+                <div class="premium-service-card" id="visaDiagnosisCard">
+                    <div class="title" data-i18n="emergency.diagnosis.title">Visa Diagnosis & Consultation</div>
                     <div class="desc">
-                        <div class="desc-item" data-i18n="emergency.diagnosis.item1">비자 변경 자문</div>
-                        <div class="desc-item" data-i18n="emergency.diagnosis.item2">불법체류 위험 자문</div>
-                        <div class="desc-item" data-i18n="emergency.diagnosis.item3">출입국관리법 위반 자문</div>
+                        <div class="desc-item" data-i18n="emergency.diagnosis.item1">Visa change planning advice</div>
+                        <div class="desc-item" data-i18n="emergency.diagnosis.item2">Immigration law violation consultation</div>
+                        <div class="desc-item" data-i18n="emergency.diagnosis.item3">Overstay risk assessment</div>
                     </div>
-                    <button class="cta-btn"><span data-i18n="emergency.diagnosis.cta">진단 받기</span> <span class="arrow">→</span></button>
+                    <button class="cta-btn" onclick="location.href='consultation-request.html?type=diagnosis'"><span data-i18n="emergency.diagnosis.cta">Request Consultation</span> <span class="arrow">→</span></button>
+                </div>
+                <!-- Card 3: 서비스 네비게이터 -->
+                <div class="premium-service-card" id="serviceNavigatorCard">
+                    <div class="title" data-i18n="emergency.navigator.title">Service Navigator</div>
+                    <div class="desc">
+                        <div class="desc-item" data-i18n="emergency.navigator.item1">Find the right service for your case</div>
+                        <div class="desc-item" data-i18n="emergency.navigator.item2">Guided service consultation</div>
+                    </div>
+                    <button class="cta-btn" onclick="location.href='service-navigator.html'"><span data-i18n="emergency.navigator.cta">Start Navigator</span> <span class="arrow">→</span></button>
                 </div>
             </div>
         </div>
