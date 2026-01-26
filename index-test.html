@@ -524,11 +524,13 @@
             background: linear-gradient(135deg, #4A4A4A 0%, #2D2D2D 100%);
             border-radius: 16px;
             overflow: hidden;
+            width: 100%;
+            max-width: 480px;
         }
 
         .attorneys-track {
             display: flex;
-            animation: scroll-attorneys 30s linear infinite;
+            animation: scroll-attorneys 25s linear infinite;
             width: fit-content;
         }
 
@@ -547,14 +549,14 @@
 
         .attorney-card {
             flex-shrink: 0;
-            width: 200px;
+            width: 160px;
             position: relative;
             overflow: hidden;
         }
 
         .attorney-photo {
             width: 100%;
-            height: 280px;
+            height: 240px;
             object-fit: cover;
             object-position: top center;
             display: block;
@@ -566,12 +568,12 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 16px;
-            background: rgba(0, 0, 0, 0.75);
+            padding: 14px 12px;
+            background: rgba(0, 0, 0, 0.8);
         }
 
         .attorney-name {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             color: white;
             text-align: center;
@@ -599,8 +601,17 @@
                 font-size: 18px;
             }
 
+            .lawfirm-right {
+                display: flex;
+                justify-content: center;
+            }
+
+            .attorneys-carousel {
+                max-width: 420px;
+            }
+
             .attorney-card {
-                width: 160px;
+                width: 140px;
             }
 
             .attorney-photo {
