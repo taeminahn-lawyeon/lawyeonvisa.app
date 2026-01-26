@@ -73,8 +73,8 @@ const translations = {
         // === 헤더 (Header) ===
         'header.welcome': '환영합니다!',
         
-        // === 긴급 구제 섹션 (Emergency Relief Section) ===
-        'emergency.title': '강제출국·비자거절 긴급 구제',
+        // === 핵심 서비스 섹션 (Core Services Section) ===
+        'emergency.title': '핵심 서비스',
         'emergency.subtitle': '출입국 전문 변호사가 직접 대응합니다',
         'emergency.legal.title': '출입국 분쟁 해결',
         'emergency.legal.item1': '사범심사 동행 등 출입국사범 구제',
@@ -507,8 +507,8 @@ const translations = {
         // === Header ===
         'header.welcome': 'Welcome!',
         
-        // === Emergency Relief Section ===
-        'emergency.title': 'Emergency Relief: Deportation & Visa Denial',
+        // === Core Services Section ===
+        'emergency.title': 'Core Services',
         'emergency.subtitle': 'Expert immigration attorneys at your service',
         'emergency.legal.title': 'Immigration Dispute Resolution',
         'emergency.legal.item1': 'Immigration investigation accompaniment and offender relief',
@@ -953,8 +953,8 @@ const translations = {
         'site.company': '律渊律师事务所',
         'site.title': '律渊律师事务所',
 
-        // === Emergency Relief Section ===
-        'emergency.title': '强制出境·签证拒签紧急救济',
+        // === Core Services Section ===
+        'emergency.title': '核心服务',
         'emergency.subtitle': '出入境专业律师亲自应对',
         'emergency.legal.title': '出入境纠纷解决',
         'emergency.legal.item1': '司法审查陪同等出入境违法者救济',
@@ -1358,8 +1358,8 @@ const translations = {
         'site.company': 'Công Ty Luật Lawyeon',
         'site.title': 'Công Ty Luật Lawyeon',
 
-        // === Emergency Relief Section ===
-        'emergency.title': 'Cứu Trợ Khẩn Cấp Trục Xuất & Từ Chối Visa',
+        // === Core Services Section ===
+        'emergency.title': 'Dịch Vụ Cốt Lõi',
         'emergency.subtitle': 'Luật sư chuyên xuất nhập cảnh trực tiếp hỗ trợ',
         'emergency.legal.title': 'Giải Quyết Tranh Chấp Xuất Nhập Cảnh',
         'emergency.legal.item1': 'Hỗ trợ điều tra và cứu trợ vi phạm xuất nhập cảnh',
@@ -1763,8 +1763,8 @@ const translations = {
         'site.company': 'ロヨン法律事務所',
         'site.title': 'ロヨン法律事務所',
 
-        // === Emergency Relief Section ===
-        'emergency.title': '強制出国・ビザ拒否緊急救済',
+        // === Core Services Section ===
+        'emergency.title': 'コアサービス',
         'emergency.subtitle': '出入国専門弁護士が直接対応します',
         'emergency.legal.title': '出入国紛争解決',
         'emergency.legal.item1': '司法審査同行など出入国犯罪者救済',
@@ -2166,8 +2166,8 @@ const translations = {
         'site.company': 'Lawyeon Хуулийн Фирм',
         'site.title': 'Lawyeon Хуулийн Фирм',
 
-        // === Emergency Relief Section ===
-        'emergency.title': 'Албадан гаргах, Виз татгалзах Яаралтай тусламж',
+        // === Core Services Section ===
+        'emergency.title': 'Үндсэн үйлчилгээ',
         'emergency.subtitle': 'Цагаачлалын мэргэжлийн өмгөөлөгч шууд хариуцна',
         'emergency.legal.title': 'Цагаачлалын маргаан шийдвэрлэх',
         'emergency.legal.item1': 'Мөрдөн байцаалт, цагаачлалын гэмт хэрэгтэн аврах',
@@ -2569,8 +2569,8 @@ const translations = {
         'site.company': 'สำนักงานกฎหมาย Lawyeon',
         'site.title': 'สำนักงานกฎหมาย Lawyeon',
 
-        // === Emergency Relief Section ===
-        'emergency.title': 'การช่วยเหลือฉุกเฉินการเนรเทศและการปฏิเสธวีซ่า',
+        // === Core Services Section ===
+        'emergency.title': 'บริการหลัก',
         'emergency.subtitle': 'ทนายความผู้เชี่ยวชาญด้านตรวจคนเข้าเมืองรับผิดชอบโดยตรง',
         'emergency.legal.title': 'แก้ไขข้อพิพาทตรวจคนเข้าเมือง',
         'emergency.legal.item1': 'สอบสวนร่วมและช่วยเหลือผู้กระทำผิดตรวจคนเข้าเมือง',
