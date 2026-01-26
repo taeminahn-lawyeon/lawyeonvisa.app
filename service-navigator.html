@@ -866,14 +866,11 @@
                 const svc = allServices[id];
                 if (!svc) return '';
 
-                const priceText = svc.consulting ? 'Consultation' : (svc.price === 0 ? 'Free Consultation' : `₩${svc.price.toLocaleString()}`);
-
                 return `
                     <div class="service-item" onclick="applyService('${id}')">
                         <div class="service-icon">${svc.icon}</div>
                         <div class="title">${svc.name}</div>
                         <div class="desc">${svc.desc}</div>
-                        <div class="price">${priceText}</div>
                     </div>
                 `;
             }).join('');
