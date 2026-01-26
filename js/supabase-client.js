@@ -74,6 +74,11 @@ async function signInWithGoogle() {
             localStorage.removeItem('universityCode');
             redirectUrl = window.location.href; // 현재 URL 그대로 사용 (service ID 포함)
             console.log('✅ 서비스 신청 페이지 로그인 - 현재 URL 유지:', redirectUrl);
+        } else if (currentPage === 'consultation-request.html') {
+            // 상담 요청 페이지 - 현재 URL 유지 (service 파라미터 포함)
+            localStorage.removeItem('universityCode');
+            redirectUrl = window.location.href;
+            console.log('✅ 상담 요청 페이지 로그인 - 현재 URL 유지:', redirectUrl);
         } else {
             // 일반 페이지 (index.html 등) - universityCode 삭제
             localStorage.removeItem('universityCode');
