@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2">
+    <title>상담 요청 - 법무법인 로연</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 헤더 */
+        .header {
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
+            padding: 20px 0;
+            border-bottom: 3px solid #F5CB5C;
+        }
+
+        .header-inner {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .btn-back {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-back:hover {
+            opacity: 1;
+        }
+
+        /* 메인 컨테이너 */
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        /* 카드 */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 32px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .card-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #F5CB5C 0%, #e6b84d 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+
+        .card-icon i {
+            font-size: 36px;
+            color: white;
+        }
+
+        .card h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #191f28;
+            margin-bottom: 12px;
+        }
+
+        .card .service-name {
+            display: inline-block;
+            background: #f3f4f6;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 20px;
+        }
+
+        .card p {
+            font-size: 15px;
+            color: #6b7280;
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+
+        /* 로그인 버튼 */
+        .login-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 16px 24px;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 16px;
+        }
+
+        .login-btn:hover {
+            border-color: #F5CB5C;
+            background: #fffdf5;
+        }
+
+        .login-btn img {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* 상담 시작 버튼 */
+        .start-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 18px 24px;
+            background: linear-gradient(135deg, #F5CB5C 0%, #e6b84d 100%);
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 700;
+            color: #000;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 203, 92, 0.4);
+        }
+
+        .start-btn:disabled {
+            background: #e5e7eb;
+            color: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* 로그인 상태 표시 */
+        .user-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 20px;
+            background: #f0fdf4;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .user-info i {
+            color: #22c55e;
+        }
+
+        .user-info span {
+            font-size: 14px;
+            color: #166534;
+            font-weight: 500;
+        }
+
+        /* 로딩 */
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid #f3f4f6;
+            border-top-color: #F5CB5C;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading p {
+            margin-top: 16px;
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        /* 안내 텍스트 */
+        .info-list {
+            text-align: left;
+            margin: 24px 0;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+        }
+
+        .info-list li {
+            font-size: 14px;
+            color: #4b5563;
+            margin-bottom: 10px;
+            padding-left: 24px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .info-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        /* 푸터 */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #9ca3af;
+            font-size: 13px;
+        }
+
+        .footer a {
+            color: #6b7280;
+            text-decoration: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="javascript:history.back()" class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+                뒤로가기
+            </a>
+            <span class="header-title">법무법인 로연</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- 로딩 상태 -->
+        <div class="card" id="loadingState">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>로그인 상태 확인 중...</p>
+            </div>
+        </div>
+
+        <!-- 로그인 필요 -->
+        <div class="card hidden" id="loginRequired">
+            <div class="card-icon">
+                <i class="fas fa-comments"></i>
+            </div>
+            <h1>상담 요청하기</h1>
+            <div class="service-name" id="serviceName1">서비스 로딩중...</div>
+            <p>
+                전문 상담원이 빠르게 답변드립니다.<br>
+                간편하게 로그인 후 상담을 시작하세요.
+            </p>
+            <ul class="info-list">
+                <li>로그인 후 1:1 전용 상담 쓰레드가 생성됩니다</li>
+                <li>메시지로 문의사항을 남겨주시면 상담원이 답변드립니다</li>
+                <li>필요한 서류 안내 및 제출도 쓰레드에서 진행됩니다</li>
+            </ul>
+            <button class="login-btn" onclick="loginWithGoogle()">
+                <img src="https://www.google.com/favicon.ico" alt="Google">
+                Google로 계속하기
+            </button>
+        </div>
+
+        <!-- 로그인 완료 - 상담 시작 -->
+        <div class="card hidden" id="loggedIn">
+            <div class="card-icon">
+                <i class="fas fa-comments"></i>
+            </div>
+            <h1>상담 요청하기</h1>
+            <div class="service-name" id="serviceName2">서비스 로딩중...</div>
+
+            <div class="user-info">
+                <i class="fas fa-check-circle"></i>
+                <span id="userEmail">로그인됨</span>
+            </div>
+
+            <p>
+                아래 버튼을 클릭하면 전용 상담 쓰레드가 생성됩니다.<br>
+                궁금하신 사항을 자유롭게 문의해주세요.
+            </p>
+
+            <ul class="info-list">
+                <li>상담은 무료입니다</li>
+                <li>업무시간 내 빠르게 답변드립니다</li>
+                <li>서비스 신청 시 별도 결제가 진행됩니다</li>
+            </ul>
+
+            <button class="start-btn" onclick="startConsultation()" id="startBtn">
+                <i class="fas fa-paper-plane"></i>
+                상담 시작하기
+            </button>
+        </div>
+
+        <!-- 쓰레드 생성 중 -->
+        <div class="card hidden" id="creatingThread">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>상담 쓰레드 생성 중...</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <a href="/index.html">법무법인 로연 출입국이민지원센터</a>
+    </footer>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Supabase 설정
+        const SUPABASE_URL = 'https://gqistzsergddnpcvuzba.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxaXN0enNlcmdkZG5wY3Z1emJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNTEyMjEsImV4cCI6MjA4MDcyNzIyMX0.X_GgShObq9OJ6z7aEKdUCoyHYo-OJL-I5hcIDt4komg';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // URL 파라미터에서 서비스 정보 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const serviceName = urlParams.get('service') || '일반 상담';
+        const fromBlog = urlParams.get('from') || '';
+
+        // 서비스명 표시
+        document.getElementById('serviceName1').textContent = serviceName;
+        document.getElementById('serviceName2').textContent = serviceName;
+
+        // 현재 사용자
+        let currentUser = null;
+
+        // 초기화
+        async function init() {
+            try {
+                const { data: { user } } = await supabase.auth.getUser();
+                currentUser = user;
+
+                document.getElementById('loadingState').classList.add('hidden');
+
+                if (user) {
+                    document.getElementById('userEmail').textContent = user.email;
+                    document.getElementById('loggedIn').classList.remove('hidden');
+                } else {
+                    document.getElementById('loginRequired').classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('초기화 오류:', error);
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('loginRequired').classList.remove('hidden');
+            }
+        }
+
+        // Google 로그인
+        async function loginWithGoogle() {
+            try {
+                const redirectUrl = window.location.href;
+                const { data, error } = await supabase.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: redirectUrl
+                    }
+                });
+
+                if (error) throw error;
+            } catch (error) {
+                console.error('로그인 오류:', error);
+                alert('로그인 중 오류가 발생했습니다. 다시 시도해주세요.');
+            }
+        }
+
+        // 상담 시작 (쓰레드 생성)
+        async function startConsultation() {
+            if (!currentUser) {
+                alert('로그인이 필요합니다.');
+                return;
+            }
+
+            const startBtn = document.getElementById('startBtn');
+            startBtn.disabled = true;
+
+            // 로딩 상태 표시
+            document.getElementById('loggedIn').classList.add('hidden');
+            document.getElementById('creatingThread').classList.remove('hidden');
+
+            try {
+                // 쓰레드 생성
+                const threadRecord = {
+                    user_id: currentUser.id,
+                    user_email: currentUser.email,
+                    service_name: serviceName,
+                    status: 'consulting', // 상담 상태
+                    amount: 0,
+                    government_fee: 0,
+                    order_id: null,
+                    payment_id: null,
+                    organization: null,
+                    is_active: true,
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                };
+
+                const { data: thread, error } = await supabase
+                    .from('threads')
+                    .insert(threadRecord)
+                    .select()
+                    .single();
+
+                if (error) throw error;
+
+                console.log('쓰레드 생성 완료:', thread);
+
+                // 초기 메시지 생성 (선택적)
+                const welcomeMessage = {
+                    thread_id: thread.id,
+                    sender_type: 'system',
+                    content: `[${serviceName}] 상담이 시작되었습니다.\n\n안녕하세요! 법무법인 로연 출입국이민지원센터입니다.\n궁금하신 사항을 자유롭게 문의해주세요. 업무시간 내 빠르게 답변드리겠습니다.`,
+                    created_at: new Date().toISOString()
+                };
+
+                await supabase.from('messages').insert(welcomeMessage);
+
+                // 쓰레드 페이지로 이동
+                window.location.href = `/thread-general.html?thread_id=${thread.id}`;
+
+            } catch (error) {
+                console.error('쓰레드 생성 오류:', error);
+                alert('상담 요청 중 오류가 발생했습니다. 다시 시도해주세요.');
+
+                // 다시 로그인 상태로
+                document.getElementById('creatingThread').classList.add('hidden');
+                document.getElementById('loggedIn').classList.remove('hidden');
+                startBtn.disabled = false;
+            }
+        }
+
+        // 페이지 로드시 초기화
+        init();
+    </script>
+</body>
+</html>

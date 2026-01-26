@@ -177,22 +177,28 @@ function generateTOC(content) {
 }
 
 // 서비스 버튼 렌더링
-function renderServiceButtons(relatedServices) {
-    if (!relatedServices || relatedServices.length === 0) {
-        return `
-                                <a href="/index.html#services" class="service-cta-btn">
-                                    <span>서비스 둘러보기</span>
+function renderServiceButtons(relatedServices, postTitle) {
+    // 상담 요청 버튼 (결제 시스템 준비 전까지 사용)
+    const consultationBtn = `
+                                <a href="/consultation-request.html?service=${encodeURIComponent(postTitle || '비자 상담')}" class="service-cta-btn consultation-btn">
+                                    <span>💬 무료 상담 요청</span>
                                     <span class="arrow">→</span>
                                 </a>
-        `;
+    `;
+
+    if (!relatedServices || relatedServices.length === 0) {
+        return consultationBtn;
     }
 
-    return relatedServices.map(service => `
-                                <a href="/service-apply-general.html?service=${escapeHtml(service.id)}" class="service-cta-btn">
-                                    <span>${escapeHtml(service.name)}</span>
+    // 관련 서비스가 있으면 상담 버튼 + 서비스 버튼들
+    const serviceButtons = relatedServices.map(service => `
+                                <a href="/consultation-request.html?service=${encodeURIComponent(service.name)}" class="service-cta-btn">
+                                    <span>${escapeHtml(service.name)} 상담</span>
                                     <span class="arrow">→</span>
                                 </a>
     `).join('');
+
+    return consultationBtn + serviceButtons;
 }
 
 // 블로그 포스트 HTML 생성
@@ -747,6 +753,16 @@ function generatePostHTML(post, relatedPosts) {
             transform: translateX(4px);
         }
 
+        .service-cta-btn.consultation-btn {
+            background: linear-gradient(135deg, #F5CB5C 0%, #e6b84d 100%);
+            color: #000;
+            font-weight: 700;
+        }
+
+        .service-cta-btn.consultation-btn:hover {
+            box-shadow: 0 8px 25px rgba(245, 203, 92, 0.4);
+        }
+
         /* 관련 글 섹션 */
         .related-posts {
             margin-top: 64px;
@@ -932,10 +948,10 @@ function generatePostHTML(post, relatedPosts) {
 
             <!-- 서비스 CTA -->
             <div class="service-cta-section">
-                <div class="service-cta-title">관련 서비스 신청</div>
-                <div class="service-cta-desc">전문가의 도움이 필요하신가요? 지금 바로 서비스를 신청하세요.</div>
+                <div class="service-cta-title">전문가 상담 받기</div>
+                <div class="service-cta-desc">궁금한 점이 있으신가요? 무료 상담을 신청하시면 전문 상담원이 답변드립니다.</div>
                 <div class="service-cta-buttons">
-                    ${renderServiceButtons(relatedServices)}
+                    ${renderServiceButtons(relatedServices, post.title)}
                 </div>
             </div>
 

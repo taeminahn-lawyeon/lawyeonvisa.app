@@ -517,6 +517,16 @@
             transform: translateX(4px);
         }
 
+        .service-cta-btn.consultation-btn {
+            background: linear-gradient(135deg, #F5CB5C 0%, #e6b84d 100%);
+            color: #000;
+            font-weight: 700;
+        }
+
+        .service-cta-btn.consultation-btn:hover {
+            box-shadow: 0 8px 25px rgba(245, 203, 92, 0.4);
+        }
+
         /* 관련 글 섹션 */
         .related-posts {
             margin-top: 64px;
@@ -1010,15 +1020,17 @@
 
             <!-- 서비스 CTA -->
             <div class="service-cta-section">
-                <div class="service-cta-title">관련 서비스 신청</div>
-                <div class="service-cta-desc">전문가의 도움이 필요하신가요? 지금 바로 서비스를 신청하세요.</div>
+                <div class="service-cta-title">전문가 상담 받기</div>
+                <div class="service-cta-desc">궁금한 점이 있으신가요? 무료 상담을 신청하시면 전문 상담원이 답변드립니다.</div>
                 <div class="service-cta-buttons">
-                    
-                                <a href="/service-apply-general.html?service=d10-1-change" class="service-cta-btn">
-                                    <span>D-10-1 Job Seeker Visa Application</span>
-                                    <span class="arrow">→</span>
-                                </a>
-    
+                    <a href="/consultation-request.html?service=D-10 비자 (구직비자) 상담" class="service-cta-btn consultation-btn">
+                        <span>💬 무료 상담 요청</span>
+                        <span class="arrow">→</span>
+                    </a>
+                    <a href="/consultation-request.html?service=D-10-1 Job Seeker Visa Application" class="service-cta-btn">
+                        <span>D-10-1 비자 신청 상담</span>
+                        <span class="arrow">→</span>
+                    </a>
                 </div>
             </div>
 
