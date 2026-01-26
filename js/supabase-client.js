@@ -931,12 +931,28 @@ async function createWelcomeMessage(threadId, serviceName) {
         const formUrl = `${window.location.origin}/profile-submit.html?thread=${threadId}`;
 
         const welcomeContent = `
-            <p>안녕하세요! <strong>${serviceName}</strong> 상담 요청을 해주셔서 감사합니다.</p>
-            <p>원활한 상담 진행을 위해 아래 기본 정보를 먼저 입력해 주세요.</p>
-            <p>입력해 주신 정보를 바탕으로 담당자가 30분 내에 연락드리겠습니다.</p>
-            <a href="${formUrl}" class="action-link-btn" target="_blank">
-                <i class="fas fa-file-alt"></i> 기본사항 입력하기
-            </a>
+            <h4>상담 요청 확인</h4>
+            <p>안녕하세요! <strong>${serviceName}</strong> 상담 요청이 접수되었습니다.</p>
+
+            <h4>진행 절차 안내</h4>
+            <p>원활한 상담 진행을 위해 아래 순서대로 진행해 주세요.</p>
+
+            <div class="info-box">
+                <div class="info-box-title">1. 기본 정보 입력</div>
+                <p>상담에 필요한 기본 정보를 입력해 주세요. <a href="${formUrl}" target="_blank">기본사항 입력하기</a></p>
+            </div>
+
+            <div class="info-box">
+                <div class="info-box-title">2. 담당자 배정</div>
+                <p>기본 정보 확인 후, 담당자가 <span class="highlight">30분 내</span> 연락드립니다.</p>
+            </div>
+
+            <div class="info-box">
+                <div class="info-box-title">3. 상담 진행</div>
+                <p>케이스 검토 후 정확한 비용과 필요 서류를 안내드립니다.</p>
+            </div>
+
+            <p>추가 문의사항은 이 쓰레드에 답글로 남겨주세요.</p>
         `;
 
         // 시스템 메시지로 생성 (관리자 타입)

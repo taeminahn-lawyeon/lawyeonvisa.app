@@ -72,11 +72,27 @@
             gap: 8px;
         }
 
-        /* Container */
+        /* Container - 2단 레이아웃 */
         .thread-container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 24px 20px 40px;
+        }
+
+        .thread-layout {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 24px;
+        }
+
+        .thread-main {
+            min-width: 0;
+        }
+
+        .thread-sidebar {
+            position: sticky;
+            top: 80px;
+            height: fit-content;
         }
 
         /* Thread Info Card */
@@ -219,6 +235,111 @@
         .step-assignee {
             font-size: 13px;
             color: #6B7280;
+        }
+
+        /* Submitted Files Section */
+        .submitted-files-section {
+            background: white;
+            border-radius: 16px;
+            margin-top: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+
+        .submitted-files-header {
+            padding: 16px 20px;
+            background: #F9FAFB;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .submitted-files-header h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #191F28;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .submitted-files-header h3 i {
+            color: #3182F6;
+        }
+
+        .submitted-files-content {
+            padding: 16px 20px;
+        }
+
+        .submitted-file-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #F9FAFB;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .submitted-file-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .submitted-file-item:hover {
+            background: #F3F4F6;
+        }
+
+        .submitted-file-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .submitted-file-icon.passport {
+            background: #DBEAFE;
+            color: #2563EB;
+        }
+
+        .submitted-file-icon.alien-card {
+            background: #D1FAE5;
+            color: #059669;
+        }
+
+        .submitted-file-icon.signature {
+            background: #FEF3C7;
+            color: #D97706;
+        }
+
+        .submitted-file-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .submitted-file-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .submitted-file-status {
+            font-size: 12px;
+            color: #9CA3AF;
+        }
+
+        .submitted-file-status.submitted {
+            color: #10B981;
+        }
+
+        .no-files-message {
+            text-align: center;
+            padding: 20px;
+            color: #9CA3AF;
+            font-size: 14px;
         }
 
         /* Admin Tools */
@@ -364,6 +485,78 @@
             text-decoration: underline;
         }
 
+        /* 메시지 내 구조적 요소 스타일 */
+        .message-body h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #191F28;
+            margin: 16px 0 8px 0;
+        }
+
+        .message-body h4:first-child {
+            margin-top: 0;
+        }
+
+        .message-body ul, .message-body ol {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .message-body li {
+            margin-bottom: 4px;
+        }
+
+        .message-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 14px;
+        }
+
+        .message-body table th,
+        .message-body table td {
+            border: 1px solid #E5E7EB;
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        .message-body table th {
+            background: #F9FAFB;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .message-body table td {
+            color: #4B5563;
+        }
+
+        .message-body .highlight {
+            background: #FEF3C7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .message-body .info-box {
+            background: #F9FAFB;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 12px 0;
+        }
+
+        .message-body .info-box-title {
+            font-weight: 700;
+            color: #191F28;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .message-body .emoji-point {
+            display: inline-block;
+            margin-right: 4px;
+        }
+
         /* Message Attachments */
         .message-attachments {
             margin-top: 16px;
@@ -414,54 +607,46 @@
             color: #9CA3AF;
         }
 
-        /* Payment Button in Message */
+        /* Payment Link in Message - 인라인 링크 스타일 */
         .payment-btn-inline {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 700;
-            text-decoration: none;
-            margin-top: 12px;
-            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline;
+            background: none;
+            color: #3182F6;
+            padding: 0;
+            font-size: inherit;
+            font-weight: 600;
+            text-decoration: underline;
+            text-underline-offset: 2px;
         }
 
         .payment-btn-inline:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
-            text-decoration: none;
-            color: white;
+            color: #2563EB;
+            text-decoration: underline;
         }
 
-        /* Action Link Button Style */
+        .payment-btn-inline i {
+            display: none;
+        }
+
+        /* Action Link - 인라인 링크 스타일 */
         .action-link-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
-            color: white !important;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 700;
-            text-decoration: none !important;
-            margin-top: 12px;
-            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline;
+            background: none;
+            color: #3182F6 !important;
+            padding: 0;
+            font-size: inherit;
+            font-weight: 600;
+            text-decoration: underline !important;
+            text-underline-offset: 2px;
         }
 
         .action-link-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
-            text-decoration: none !important;
-            color: white !important;
+            color: #2563EB !important;
+            text-decoration: underline !important;
         }
 
         .action-link-btn i {
-            font-size: 14px;
+            display: none;
         }
 
         /* Auto-converted link style */
@@ -729,6 +914,84 @@
             cursor: pointer;
         }
 
+        /* Message Edit Button */
+        .message-edit-btn {
+            background: none;
+            border: none;
+            color: #9CA3AF;
+            font-size: 13px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .message-edit-btn:hover {
+            background: #F3F4F6;
+            color: #374151;
+        }
+
+        /* Edit Modal - Larger */
+        .modal.edit-modal {
+            max-width: 800px;
+            width: 95%;
+        }
+
+        .edit-editor-container {
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        #editEditor {
+            min-height: 300px;
+        }
+
+        #editEditor .ql-editor {
+            min-height: 280px;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        /* Quick Insert Buttons */
+        .quick-insert-section {
+            margin-bottom: 16px;
+        }
+
+        .quick-insert-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #6B7280;
+            margin-bottom: 8px;
+        }
+
+        .quick-insert-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .quick-insert-btn {
+            background: #F3F4F6;
+            border: 1px solid #E5E7EB;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 12px;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-insert-btn:hover {
+            background: #E5E7EB;
+        }
+
+        .quick-insert-btn i {
+            margin-right: 4px;
+            color: #6B7280;
+        }
+
         /* Loading */
         .loading-container {
             display: flex;
@@ -751,9 +1014,20 @@
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .thread-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .thread-sidebar {
+                position: static;
+                order: -1;
+            }
+        }
+
         @media (max-width: 768px) {
             .thread-container {
-                padding: 16px 12px 140px;
+                padding: 16px 12px 40px;
             }
 
             .thread-info-card, .progress-section, .message-card {
@@ -780,6 +1054,14 @@
 
             .ql-editor {
                 min-height: 60px;
+            }
+
+            .progress-content {
+                padding: 16px;
+            }
+
+            .submitted-files-content {
+                padding: 12px;
             }
         }
     </style>
@@ -813,57 +1095,76 @@
                 </div>
             </div>
 
-            <!-- Progress Tracker -->
-            <div class="progress-section">
-                <div class="progress-header" onclick="toggleProgress()">
-                    <h3><i class="fas fa-list-check"></i> 진행 상황</h3>
-                    <span class="progress-toggle" id="progressToggle"><i class="fas fa-chevron-up"></i></span>
-                </div>
-                <div class="progress-content" id="progressContent">
-                    <!-- Progress steps will be rendered here -->
-                </div>
-            </div>
-
-            <!-- Admin Tools (hidden by default) -->
-            <div class="admin-tools" id="adminTools">
-                <div class="admin-tools-title">
-                    <i class="fas fa-tools"></i> 관리자 도구
-                </div>
-                <div class="admin-buttons">
-                    <button class="admin-btn" onclick="openPaymentLinkModal()">
-                        <i class="fas fa-credit-card"></i> 결제 링크 전송
-                    </button>
-                    <button class="admin-btn" onclick="openBasicInfoModal()">
-                        <i class="fas fa-file-alt"></i> 기본사항 요청
-                    </button>
-                    <button class="admin-btn" onclick="openStageChangeModal()">
-                        <i class="fas fa-exchange-alt"></i> 단계 변경
-                    </button>
-                </div>
-            </div>
-
-            <!-- Messages -->
-            <div class="messages-section" id="messagesSection">
-                <!-- Messages will be rendered here -->
-            </div>
-
-            <!-- Reply Section -->
-            <div class="reply-section" id="replySection" style="display: none;">
-                <div class="reply-section-inner">
-                    <div class="reply-header">답글</div>
-                    <div class="editor-container">
-                        <div id="editor"></div>
+            <!-- 2단 레이아웃 -->
+            <div class="thread-layout">
+                <!-- 왼쪽: 메시지 영역 -->
+                <div class="thread-main">
+                    <!-- Admin Tools (hidden by default) -->
+                    <div class="admin-tools" id="adminTools">
+                        <div class="admin-tools-title">
+                            <i class="fas fa-tools"></i> 관리자 도구
+                        </div>
+                        <div class="admin-buttons">
+                            <button class="admin-btn" onclick="openPaymentLinkModal()">
+                                <i class="fas fa-credit-card"></i> 결제 링크 전송
+                            </button>
+                            <button class="admin-btn" onclick="openBasicInfoModal()">
+                                <i class="fas fa-file-alt"></i> 기본사항 요청
+                            </button>
+                            <button class="admin-btn" onclick="openStageChangeModal()">
+                                <i class="fas fa-exchange-alt"></i> 단계 변경
+                            </button>
+                        </div>
                     </div>
-                    <div class="file-upload-area" id="fileUploadArea" onclick="document.getElementById('fileInput').click()">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p>파일을 드래그하거나 클릭하여 업로드하세요</p>
+
+                    <!-- Messages -->
+                    <div class="messages-section" id="messagesSection">
+                        <!-- Messages will be rendered here -->
                     </div>
-                    <input type="file" id="fileInput" multiple style="display: none;" onchange="handleFileSelect(event)">
-                    <div class="pending-files" id="pendingFiles"></div>
-                    <div class="reply-actions">
-                        <button class="submit-btn" id="submitBtn" onclick="submitReply()">
-                            <i class="fas fa-paper-plane"></i> 작성
-                        </button>
+
+                    <!-- Reply Section -->
+                    <div class="reply-section" id="replySection" style="display: none;">
+                        <div class="reply-section-inner">
+                            <div class="reply-header">답글</div>
+                            <div class="editor-container">
+                                <div id="editor"></div>
+                            </div>
+                            <div class="file-upload-area" id="fileUploadArea" onclick="document.getElementById('fileInput').click()">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>파일을 드래그하거나 클릭하여 업로드하세요</p>
+                            </div>
+                            <input type="file" id="fileInput" multiple style="display: none;" onchange="handleFileSelect(event)">
+                            <div class="pending-files" id="pendingFiles"></div>
+                            <div class="reply-actions">
+                                <button class="submit-btn" id="submitBtn" onclick="submitReply()">
+                                    작성
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 오른쪽: 사이드바 -->
+                <div class="thread-sidebar">
+                    <!-- Progress Tracker -->
+                    <div class="progress-section">
+                        <div class="progress-header" onclick="toggleProgress()">
+                            <h3><i class="fas fa-list-check"></i> 진행 상황</h3>
+                            <span class="progress-toggle" id="progressToggle"><i class="fas fa-chevron-up"></i></span>
+                        </div>
+                        <div class="progress-content" id="progressContent">
+                            <!-- Progress steps will be rendered here -->
+                        </div>
+                    </div>
+
+                    <!-- Submitted Files -->
+                    <div class="submitted-files-section">
+                        <div class="submitted-files-header">
+                            <h3><i class="fas fa-folder-open"></i> 제출 서류</h3>
+                        </div>
+                        <div class="submitted-files-content" id="submittedFilesContent">
+                            <!-- Files will be rendered here -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -939,6 +1240,49 @@
             <div class="modal-actions">
                 <button class="btn-secondary" onclick="closeModal('stageChangeModal')">취소</button>
                 <button class="btn-primary" onclick="changeStage()">변경</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Edit Modal -->
+    <div class="modal-overlay" id="editMessageModal">
+        <div class="modal edit-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">메시지 편집</h2>
+                <button class="modal-close" onclick="closeModal('editMessageModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Quick Insert -->
+                <div class="quick-insert-section">
+                    <div class="quick-insert-title">빠른 삽입</div>
+                    <div class="quick-insert-buttons">
+                        <button class="quick-insert-btn" onclick="insertLink()">
+                            <i class="fas fa-link"></i> 링크
+                        </button>
+                        <button class="quick-insert-btn" onclick="insertBasicInfoLink()">
+                            <i class="fas fa-file-alt"></i> 기본사항 입력 링크
+                        </button>
+                        <button class="quick-insert-btn" onclick="insertInfoBox()">
+                            <i class="fas fa-box"></i> 정보 박스
+                        </button>
+                        <button class="quick-insert-btn" onclick="insertHighlight()">
+                            <i class="fas fa-highlighter"></i> 하이라이트
+                        </button>
+                        <button class="quick-insert-btn" onclick="insertTable()">
+                            <i class="fas fa-table"></i> 표
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Editor -->
+                <div class="edit-editor-container">
+                    <div id="editEditor"></div>
+                </div>
+                <input type="hidden" id="editMessageId">
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="closeModal('editMessageModal')">취소</button>
+                <button class="btn-primary" onclick="saveMessageEdit()">저장</button>
             </div>
         </div>
     </div>
@@ -1129,9 +1473,98 @@
                 // Load messages
                 await loadMessages();
 
+                // Load submitted files
+                await loadSubmittedFiles(thread.user_id);
+
             } catch (error) {
                 console.error('Error loading thread:', error);
                 alert('쓰레드를 불러오는 중 오류가 발생했습니다.');
+            }
+        }
+
+        async function loadSubmittedFiles(userId) {
+            const container = document.getElementById('submittedFilesContent');
+
+            try {
+                // profiles 테이블에서 제출 파일 정보 조회
+                const { data: profile, error } = await supabaseClient
+                    .from('profiles')
+                    .select('passport_file, alien_card_file, signature_file')
+                    .eq('id', userId)
+                    .single();
+
+                if (error || !profile) {
+                    container.innerHTML = '<div class="no-files-message">아직 제출된 서류가 없습니다.</div>';
+                    return;
+                }
+
+                const files = [];
+
+                // 여권
+                files.push({
+                    type: 'passport',
+                    label: '여권 사본',
+                    icon: 'fa-passport',
+                    iconClass: 'passport',
+                    path: profile.passport_file,
+                    submitted: !!profile.passport_file
+                });
+
+                // 외국인등록증
+                files.push({
+                    type: 'alien-card',
+                    label: '외국인등록증',
+                    icon: 'fa-id-card',
+                    iconClass: 'alien-card',
+                    path: profile.alien_card_file,
+                    submitted: !!profile.alien_card_file
+                });
+
+                // 전자서명
+                files.push({
+                    type: 'signature',
+                    label: '전자서명',
+                    icon: 'fa-signature',
+                    iconClass: 'signature',
+                    path: profile.signature_file,
+                    submitted: !!profile.signature_file
+                });
+
+                container.innerHTML = files.map(file => `
+                    <div class="submitted-file-item" onclick="${file.submitted ? `viewSubmittedFile('${file.path}')` : ''}">
+                        <div class="submitted-file-icon ${file.iconClass}">
+                            <i class="fas ${file.icon}"></i>
+                        </div>
+                        <div class="submitted-file-info">
+                            <div class="submitted-file-label">${file.label}</div>
+                            <div class="submitted-file-status ${file.submitted ? 'submitted' : ''}">
+                                ${file.submitted ? '제출 완료' : '미제출'}
+                            </div>
+                        </div>
+                        ${file.submitted ? '<i class="fas fa-external-link-alt" style="color: #9CA3AF; font-size: 12px;"></i>' : ''}
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                console.error('Error loading submitted files:', error);
+                container.innerHTML = '<div class="no-files-message">서류 정보를 불러올 수 없습니다.</div>';
+            }
+        }
+
+        async function viewSubmittedFile(filePath) {
+            if (!filePath) return;
+
+            try {
+                const { data, error } = await supabaseClient.storage
+                    .from('profile-documents')
+                    .createSignedUrl(filePath, 3600);
+
+                if (error) throw error;
+
+                window.open(data.signedUrl, '_blank');
+            } catch (error) {
+                console.error('Error getting file URL:', error);
+                alert('파일을 열 수 없습니다.');
             }
         }
 
@@ -1239,13 +1672,21 @@
                 `;
             }
 
+            // 관리자만 편집 버튼 표시
+            const editBtnHtml = isAdmin ? `
+                <button class="message-edit-btn" onclick="openEditMessageModal('${msg.id}')">
+                    <i class="fas fa-edit"></i> 편집
+                </button>
+            ` : '';
+
             return `
-                <div class="message-card">
+                <div class="message-card" data-message-id="${msg.id}">
                     <div class="message-header">
                         <div class="message-author">
                             <span class="author-badge ${badgeClass}">${badgeText}</span>
                         </div>
                         <div class="message-time">
+                            ${editBtnHtml}
                             <i class="fas fa-clock"></i>
                             ${formatDateTime(msg.created_at)}
                         </div>
@@ -1393,7 +1834,7 @@
                 alert('메시지 전송 중 오류가 발생했습니다.');
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> 작성';
+                submitBtn.innerHTML = '작성';
             }
         }
 
@@ -1462,23 +1903,35 @@
             }
 
             let paymentUrl = '';
+            let serviceName = '';
+            let amount = '';
+
             if (serviceId === 'custom') {
-                const amount = document.getElementById('customAmount').value;
+                amount = document.getElementById('customAmount').value;
                 if (!amount) {
                     alert('금액을 입력해주세요.');
                     return;
                 }
                 paymentUrl = `${window.location.origin}/service-apply-general.html?service=custom&amount=${amount}&thread=${threadId}`;
+                serviceName = '맞춤 서비스';
             } else {
                 paymentUrl = `${window.location.origin}/service-apply-general.html?service=${serviceId}&thread=${threadId}`;
+                const serviceNames = {
+                    'd10-1-change': 'D-10-1 일반구직 비자 변경',
+                    'd10-2-change': 'D-10-2 기술창업구직 비자 변경',
+                    'e7-change': '특정활동 E-7 비자 변경'
+                };
+                serviceName = serviceNames[serviceId] || serviceId;
             }
 
-            // Create message with payment link
             const content = `
-                <p>결제를 진행해 주세요.</p>
-                <a href="${paymentUrl}" class="payment-btn-inline" target="_blank">
-                    <i class="fas fa-credit-card"></i> 결제하기
-                </a>
+                <h4>결제 안내</h4>
+                <p>상담 결과에 따라 아래 서비스로 진행됩니다.</p>
+                <div class="info-box">
+                    <div class="info-box-title">서비스: ${serviceName}</div>
+                    <p>아래 링크에서 결제를 진행해 주세요. <a href="${paymentUrl}" target="_blank">결제 페이지로 이동</a></p>
+                </div>
+                <p>결제 완료 후 자동으로 다음 단계로 진행됩니다.</p>
             `;
 
             await createMessage({
@@ -1496,11 +1949,18 @@
             const formUrl = `${window.location.origin}/profile-submit.html?thread=${threadId}`;
 
             let content = `
-                <p>서비스 진행을 위해 기본 정보를 입력해 주세요.</p>
+                <h4>기본 정보 요청</h4>
+                <p>서비스 진행을 위해 아래 정보가 필요합니다.</p>
                 ${additionalMessage ? `<p>${additionalMessage}</p>` : ''}
-                <a href="${formUrl}" class="payment-btn-inline" target="_blank">
-                    <i class="fas fa-file-alt"></i> 기본사항 입력하기
-                </a>
+                <div class="info-box">
+                    <div class="info-box-title">제출 항목</div>
+                    <ul>
+                        <li>여권 사본</li>
+                        <li>외국인등록증 (앞/뒷면)</li>
+                        <li>전자서명</li>
+                    </ul>
+                    <p><a href="${formUrl}" target="_blank">기본사항 입력하기</a></p>
+                </div>
             `;
 
             await createMessage({
@@ -1536,6 +1996,154 @@
                 console.error('Error changing stage:', error);
                 alert('단계 변경 중 오류가 발생했습니다.');
             }
+        }
+
+        // ============================================
+        // 메시지 편집 기능
+        // ============================================
+        let editQuillEditor = null;
+        let messagesCache = [];
+
+        function initEditEditor() {
+            if (editQuillEditor) return;
+
+            editQuillEditor = new Quill('#editEditor', {
+                theme: 'snow',
+                placeholder: '메시지 내용을 입력하세요...',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [4, false] }],
+                        ['bold', 'italic', 'underline'],
+                        ['link'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        ['clean']
+                    ]
+                }
+            });
+        }
+
+        async function openEditMessageModal(messageId) {
+            // 에디터 초기화
+            initEditEditor();
+
+            // 메시지 데이터 찾기
+            const result = await getMessages(threadId);
+            if (!result.success) {
+                alert('메시지를 불러올 수 없습니다.');
+                return;
+            }
+
+            messagesCache = result.data;
+            const message = messagesCache.find(m => m.id === messageId);
+
+            if (!message) {
+                alert('메시지를 찾을 수 없습니다.');
+                return;
+            }
+
+            // 에디터에 내용 설정
+            document.getElementById('editMessageId').value = messageId;
+
+            // HTML을 Quill Delta로 변환하여 설정
+            editQuillEditor.root.innerHTML = message.content || '';
+
+            // 모달 열기
+            document.getElementById('editMessageModal').classList.add('active');
+        }
+
+        async function saveMessageEdit() {
+            const messageId = document.getElementById('editMessageId').value;
+            const content = editQuillEditor.root.innerHTML;
+
+            if (!messageId) {
+                alert('메시지 ID가 없습니다.');
+                return;
+            }
+
+            try {
+                const { error } = await supabaseClient
+                    .from('messages')
+                    .update({
+                        content: content,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', messageId);
+
+                if (error) throw error;
+
+                closeModal('editMessageModal');
+                await loadMessages();
+                alert('메시지가 수정되었습니다.');
+
+            } catch (error) {
+                console.error('Error saving message:', error);
+                alert('메시지 저장 중 오류가 발생했습니다.');
+            }
+        }
+
+        // 빠른 삽입 기능
+        function insertLink() {
+            const url = prompt('링크 URL을 입력하세요:', 'https://');
+            if (!url) return;
+
+            const text = prompt('링크 텍스트를 입력하세요:', '링크');
+            if (!text) return;
+
+            const range = editQuillEditor.getSelection(true);
+            editQuillEditor.insertText(range.index, text, 'link', url);
+        }
+
+        function insertBasicInfoLink() {
+            const formUrl = `${window.location.origin}/profile-submit.html?thread=${threadId}`;
+            const range = editQuillEditor.getSelection(true);
+            editQuillEditor.insertText(range.index, '기본사항 입력하기', 'link', formUrl);
+        }
+
+        function insertInfoBox() {
+            const title = prompt('정보 박스 제목:', '안내');
+            if (!title) return;
+
+            const html = `
+                <div class="info-box">
+                    <div class="info-box-title">${title}</div>
+                    <p>내용을 입력하세요.</p>
+                </div>
+            `;
+
+            const range = editQuillEditor.getSelection(true);
+            editQuillEditor.clipboard.dangerouslyPasteHTML(range.index, html);
+        }
+
+        function insertHighlight() {
+            const text = prompt('하이라이트 텍스트:', '중요');
+            if (!text) return;
+
+            const range = editQuillEditor.getSelection(true);
+            editQuillEditor.clipboard.dangerouslyPasteHTML(range.index, `<span class="highlight">${text}</span>`);
+        }
+
+        function insertTable() {
+            const cols = prompt('열 수:', '3');
+            const rows = prompt('행 수:', '2');
+
+            if (!cols || !rows) return;
+
+            let tableHtml = '<table><thead><tr>';
+            for (let c = 0; c < parseInt(cols); c++) {
+                tableHtml += `<th>제목${c + 1}</th>`;
+            }
+            tableHtml += '</tr></thead><tbody>';
+            for (let r = 0; r < parseInt(rows); r++) {
+                tableHtml += '<tr>';
+                for (let c = 0; c < parseInt(cols); c++) {
+                    tableHtml += '<td>내용</td>';
+                }
+                tableHtml += '</tr>';
+            }
+            tableHtml += '</tbody></table>';
+
+            const range = editQuillEditor.getSelection(true);
+            editQuillEditor.clipboard.dangerouslyPasteHTML(range.index, tableHtml);
         }
 
         // Utility functions
