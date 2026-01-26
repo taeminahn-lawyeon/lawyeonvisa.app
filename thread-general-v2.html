@@ -978,7 +978,7 @@
 
         async function checkIfAdmin(userId) {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await supabaseClient
                     .from('profiles')
                     .select('role')
                     .eq('id', userId)
@@ -1059,7 +1059,7 @@
         async function loadThread() {
             try {
                 // Get thread data
-                const { data: thread, error } = await supabase
+                const { data: thread, error } = await supabaseClient
                     .from('threads')
                     .select('*, profiles(*)')
                     .eq('id', threadId)
@@ -1291,13 +1291,13 @@
         async function uploadFile(file, threadId) {
             try {
                 const fileName = `${threadId}/${Date.now()}_${file.name}`;
-                const { data, error } = await supabase.storage
+                const { data, error } = await supabaseClient.storage
                     .from('thread-files')
                     .upload(fileName, file);
 
                 if (error) throw error;
 
-                const { data: urlData } = supabase.storage
+                const { data: urlData } = supabaseClient.storage
                     .from('thread-files')
                     .getPublicUrl(fileName);
 
@@ -1309,7 +1309,7 @@
         }
 
         function subscribeToMessages() {
-            supabase
+            supabaseClient
                 .channel(`thread-${threadId}`)
                 .on('postgres_changes', {
                     event: 'INSERT',
@@ -1409,7 +1409,7 @@
             const newStage = parseInt(document.getElementById('stageSelect').value);
 
             try {
-                const { error } = await supabase
+                const { error } = await supabaseClient
                     .from('threads')
                     .update({ current_stage: newStage })
                     .eq('id', threadId);
