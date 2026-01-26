@@ -450,7 +450,7 @@
     <!-- Header -->
     <div class="header">
         <div class="header-inner">
-            <div class="header-title">Free Consultation</div>
+            <div class="header-title">Consultation Request</div>
             <a href="javascript:history.back()" class="btn-back">
                 <i class="fas fa-times"></i>
             </a>
@@ -474,8 +474,8 @@
                         <i class="fas fa-comments"></i>
                     </div>
                     <div class="consultation-banner-content">
-                        <h1>Free Consultation</h1>
-                        <p>Get expert advice on your visa and immigration matters. No charge for initial consultation.</p>
+                        <h1>Consultation Request</h1>
+                        <p>Request a consultation to review your case. We'll provide procedure guidance and a detailed cost estimate.</p>
                     </div>
                 </div>
 
@@ -503,22 +503,22 @@
                     <div class="step-item">
                         <div class="step-number">2</div>
                         <div class="step-content">
-                            <h3>Specialist Assigned</h3>
-                            <p>We'll contact you within 30 minutes</p>
+                            <h3>Fact-Finding Review</h3>
+                            <p>Our specialist will verify your situation and documents</p>
                         </div>
                     </div>
                     <div class="step-item">
                         <div class="step-number">3</div>
                         <div class="step-content">
-                            <h3>Case Review</h3>
-                            <p>We'll analyze your situation and requirements</p>
+                            <h3>Procedure Guidance</h3>
+                            <p>Receive detailed steps for your immigration case</p>
                         </div>
                     </div>
                     <div class="step-item">
                         <div class="step-number">4</div>
                         <div class="step-content">
-                            <h3>Solution & Quote</h3>
-                            <p>Receive tailored recommendations and pricing</p>
+                            <h3>Cost Estimate</h3>
+                            <p>Get a detailed breakdown of fees and costs</p>
                         </div>
                     </div>
                 </div>
@@ -527,12 +527,12 @@
                 <div class="cta-section">
                     <button class="btn-primary" id="consultBtn" onclick="applyForConsultation()">
                         <i class="fas fa-paper-plane"></i>
-                        <span>Request Free Consultation</span>
+                        <span>Request Consultation</span>
                     </button>
 
-                    <div class="free-badge">
-                        <i class="fas fa-check-circle"></i>
-                        <span class="free-badge-text">No payment required · Response within 30 minutes</span>
+                    <div class="free-badge" style="background: #EFF6FF; border-color: #93C5FD;">
+                        <i class="fas fa-info-circle" style="color: #3B82F6;"></i>
+                        <span class="free-badge-text" style="color: #1E40AF;">Service fees will be quoted after case review</span>
                     </div>
                 </div>
             </div>
@@ -637,7 +637,7 @@
                 console.error('Consultation request error:', error);
                 alert('An error occurred. Please try again.');
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Request Free Consultation';
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Request Consultation';
             }
         }
 
@@ -674,7 +674,7 @@
                 console.error('Thread creation error:', error);
                 alert('An error occurred. Please try again.');
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Request Free Consultation';
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Request Consultation';
             }
         }
 
