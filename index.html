@@ -1355,7 +1355,7 @@
                                     <span data-i18n="dashboard.application.step.approval">승인</span>
                                 </div>
                             </div>
-                            <button onclick="window.location.href='thread-general.html'" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
+                            <button onclick="window.location.href='thread-general-v2.html'" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
                                 <i class="fas fa-comments"></i> <span data-i18n="dashboard.application.openThread">쓰레드 열기</span>
                             </button>
                         </div>
@@ -2166,11 +2166,11 @@
                 }
 
                 // 모든 사용자는 일반 쓰레드로 이동 (organization 체크 제거)
-                window.location.href = `thread-general.html?id=${threadId}`;
+                window.location.href = `thread-general-v2.html?id=${threadId}`;
             } catch (error) {
                 console.error('Thread open error:', error);
                 // 기본값으로 일반 쓰레드로 이동
-                window.location.href = `thread-general.html?id=${threadId}`;
+                window.location.href = `thread-general-v2.html?id=${threadId}`;
             }
         }
 
@@ -2340,7 +2340,7 @@
             applications.forEach(app => {
                 const card = document.createElement('a');
                 card.className = 'application-card';
-                card.href = `thread-general.html?id=${app.thread_id}`;
+                card.href = `thread-general-v2.html?id=${app.thread_id}`;
                 
                 let statusClass = 'pending';
                 let statusText = '대기중';
