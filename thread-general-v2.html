@@ -72,11 +72,27 @@
             gap: 8px;
         }
 
-        /* Container */
+        /* Container - 2단 레이아웃 */
         .thread-container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 24px 20px 40px;
+        }
+
+        .thread-layout {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 24px;
+        }
+
+        .thread-main {
+            min-width: 0;
+        }
+
+        .thread-sidebar {
+            position: sticky;
+            top: 80px;
+            height: fit-content;
         }
 
         /* Thread Info Card */
@@ -219,6 +235,111 @@
         .step-assignee {
             font-size: 13px;
             color: #6B7280;
+        }
+
+        /* Submitted Files Section */
+        .submitted-files-section {
+            background: white;
+            border-radius: 16px;
+            margin-top: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+
+        .submitted-files-header {
+            padding: 16px 20px;
+            background: #F9FAFB;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .submitted-files-header h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #191F28;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .submitted-files-header h3 i {
+            color: #3182F6;
+        }
+
+        .submitted-files-content {
+            padding: 16px 20px;
+        }
+
+        .submitted-file-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #F9FAFB;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .submitted-file-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .submitted-file-item:hover {
+            background: #F3F4F6;
+        }
+
+        .submitted-file-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .submitted-file-icon.passport {
+            background: #DBEAFE;
+            color: #2563EB;
+        }
+
+        .submitted-file-icon.alien-card {
+            background: #D1FAE5;
+            color: #059669;
+        }
+
+        .submitted-file-icon.signature {
+            background: #FEF3C7;
+            color: #D97706;
+        }
+
+        .submitted-file-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .submitted-file-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .submitted-file-status {
+            font-size: 12px;
+            color: #9CA3AF;
+        }
+
+        .submitted-file-status.submitted {
+            color: #10B981;
+        }
+
+        .no-files-message {
+            text-align: center;
+            padding: 20px;
+            color: #9CA3AF;
+            font-size: 14px;
         }
 
         /* Admin Tools */
@@ -751,9 +872,20 @@
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .thread-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .thread-sidebar {
+                position: static;
+                order: -1;
+            }
+        }
+
         @media (max-width: 768px) {
             .thread-container {
-                padding: 16px 12px 140px;
+                padding: 16px 12px 40px;
             }
 
             .thread-info-card, .progress-section, .message-card {
@@ -780,6 +912,14 @@
 
             .ql-editor {
                 min-height: 60px;
+            }
+
+            .progress-content {
+                padding: 16px;
+            }
+
+            .submitted-files-content {
+                padding: 12px;
             }
         }
     </style>
@@ -813,57 +953,76 @@
                 </div>
             </div>
 
-            <!-- Progress Tracker -->
-            <div class="progress-section">
-                <div class="progress-header" onclick="toggleProgress()">
-                    <h3><i class="fas fa-list-check"></i> 진행 상황</h3>
-                    <span class="progress-toggle" id="progressToggle"><i class="fas fa-chevron-up"></i></span>
-                </div>
-                <div class="progress-content" id="progressContent">
-                    <!-- Progress steps will be rendered here -->
-                </div>
-            </div>
-
-            <!-- Admin Tools (hidden by default) -->
-            <div class="admin-tools" id="adminTools">
-                <div class="admin-tools-title">
-                    <i class="fas fa-tools"></i> 관리자 도구
-                </div>
-                <div class="admin-buttons">
-                    <button class="admin-btn" onclick="openPaymentLinkModal()">
-                        <i class="fas fa-credit-card"></i> 결제 링크 전송
-                    </button>
-                    <button class="admin-btn" onclick="openBasicInfoModal()">
-                        <i class="fas fa-file-alt"></i> 기본사항 요청
-                    </button>
-                    <button class="admin-btn" onclick="openStageChangeModal()">
-                        <i class="fas fa-exchange-alt"></i> 단계 변경
-                    </button>
-                </div>
-            </div>
-
-            <!-- Messages -->
-            <div class="messages-section" id="messagesSection">
-                <!-- Messages will be rendered here -->
-            </div>
-
-            <!-- Reply Section -->
-            <div class="reply-section" id="replySection" style="display: none;">
-                <div class="reply-section-inner">
-                    <div class="reply-header">답글</div>
-                    <div class="editor-container">
-                        <div id="editor"></div>
+            <!-- 2단 레이아웃 -->
+            <div class="thread-layout">
+                <!-- 왼쪽: 메시지 영역 -->
+                <div class="thread-main">
+                    <!-- Admin Tools (hidden by default) -->
+                    <div class="admin-tools" id="adminTools">
+                        <div class="admin-tools-title">
+                            <i class="fas fa-tools"></i> 관리자 도구
+                        </div>
+                        <div class="admin-buttons">
+                            <button class="admin-btn" onclick="openPaymentLinkModal()">
+                                <i class="fas fa-credit-card"></i> 결제 링크 전송
+                            </button>
+                            <button class="admin-btn" onclick="openBasicInfoModal()">
+                                <i class="fas fa-file-alt"></i> 기본사항 요청
+                            </button>
+                            <button class="admin-btn" onclick="openStageChangeModal()">
+                                <i class="fas fa-exchange-alt"></i> 단계 변경
+                            </button>
+                        </div>
                     </div>
-                    <div class="file-upload-area" id="fileUploadArea" onclick="document.getElementById('fileInput').click()">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p>파일을 드래그하거나 클릭하여 업로드하세요</p>
+
+                    <!-- Messages -->
+                    <div class="messages-section" id="messagesSection">
+                        <!-- Messages will be rendered here -->
                     </div>
-                    <input type="file" id="fileInput" multiple style="display: none;" onchange="handleFileSelect(event)">
-                    <div class="pending-files" id="pendingFiles"></div>
-                    <div class="reply-actions">
-                        <button class="submit-btn" id="submitBtn" onclick="submitReply()">
-                            <i class="fas fa-paper-plane"></i> 작성
-                        </button>
+
+                    <!-- Reply Section -->
+                    <div class="reply-section" id="replySection" style="display: none;">
+                        <div class="reply-section-inner">
+                            <div class="reply-header">답글</div>
+                            <div class="editor-container">
+                                <div id="editor"></div>
+                            </div>
+                            <div class="file-upload-area" id="fileUploadArea" onclick="document.getElementById('fileInput').click()">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>파일을 드래그하거나 클릭하여 업로드하세요</p>
+                            </div>
+                            <input type="file" id="fileInput" multiple style="display: none;" onchange="handleFileSelect(event)">
+                            <div class="pending-files" id="pendingFiles"></div>
+                            <div class="reply-actions">
+                                <button class="submit-btn" id="submitBtn" onclick="submitReply()">
+                                    작성
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 오른쪽: 사이드바 -->
+                <div class="thread-sidebar">
+                    <!-- Progress Tracker -->
+                    <div class="progress-section">
+                        <div class="progress-header" onclick="toggleProgress()">
+                            <h3><i class="fas fa-list-check"></i> 진행 상황</h3>
+                            <span class="progress-toggle" id="progressToggle"><i class="fas fa-chevron-up"></i></span>
+                        </div>
+                        <div class="progress-content" id="progressContent">
+                            <!-- Progress steps will be rendered here -->
+                        </div>
+                    </div>
+
+                    <!-- Submitted Files -->
+                    <div class="submitted-files-section">
+                        <div class="submitted-files-header">
+                            <h3><i class="fas fa-folder-open"></i> 제출 서류</h3>
+                        </div>
+                        <div class="submitted-files-content" id="submittedFilesContent">
+                            <!-- Files will be rendered here -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1129,9 +1288,98 @@
                 // Load messages
                 await loadMessages();
 
+                // Load submitted files
+                await loadSubmittedFiles(thread.user_id);
+
             } catch (error) {
                 console.error('Error loading thread:', error);
                 alert('쓰레드를 불러오는 중 오류가 발생했습니다.');
+            }
+        }
+
+        async function loadSubmittedFiles(userId) {
+            const container = document.getElementById('submittedFilesContent');
+
+            try {
+                // profiles 테이블에서 제출 파일 정보 조회
+                const { data: profile, error } = await supabaseClient
+                    .from('profiles')
+                    .select('passport_file, alien_card_file, signature_file')
+                    .eq('id', userId)
+                    .single();
+
+                if (error || !profile) {
+                    container.innerHTML = '<div class="no-files-message">아직 제출된 서류가 없습니다.</div>';
+                    return;
+                }
+
+                const files = [];
+
+                // 여권
+                files.push({
+                    type: 'passport',
+                    label: '여권 사본',
+                    icon: 'fa-passport',
+                    iconClass: 'passport',
+                    path: profile.passport_file,
+                    submitted: !!profile.passport_file
+                });
+
+                // 외국인등록증
+                files.push({
+                    type: 'alien-card',
+                    label: '외국인등록증',
+                    icon: 'fa-id-card',
+                    iconClass: 'alien-card',
+                    path: profile.alien_card_file,
+                    submitted: !!profile.alien_card_file
+                });
+
+                // 전자서명
+                files.push({
+                    type: 'signature',
+                    label: '전자서명',
+                    icon: 'fa-signature',
+                    iconClass: 'signature',
+                    path: profile.signature_file,
+                    submitted: !!profile.signature_file
+                });
+
+                container.innerHTML = files.map(file => `
+                    <div class="submitted-file-item" onclick="${file.submitted ? `viewSubmittedFile('${file.path}')` : ''}">
+                        <div class="submitted-file-icon ${file.iconClass}">
+                            <i class="fas ${file.icon}"></i>
+                        </div>
+                        <div class="submitted-file-info">
+                            <div class="submitted-file-label">${file.label}</div>
+                            <div class="submitted-file-status ${file.submitted ? 'submitted' : ''}">
+                                ${file.submitted ? '제출 완료' : '미제출'}
+                            </div>
+                        </div>
+                        ${file.submitted ? '<i class="fas fa-external-link-alt" style="color: #9CA3AF; font-size: 12px;"></i>' : ''}
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                console.error('Error loading submitted files:', error);
+                container.innerHTML = '<div class="no-files-message">서류 정보를 불러올 수 없습니다.</div>';
+            }
+        }
+
+        async function viewSubmittedFile(filePath) {
+            if (!filePath) return;
+
+            try {
+                const { data, error } = await supabaseClient.storage
+                    .from('profile-documents')
+                    .createSignedUrl(filePath, 3600);
+
+                if (error) throw error;
+
+                window.open(data.signedUrl, '_blank');
+            } catch (error) {
+                console.error('Error getting file URL:', error);
+                alert('파일을 열 수 없습니다.');
             }
         }
 
@@ -1393,7 +1641,7 @@
                 alert('메시지 전송 중 오류가 발생했습니다.');
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> 작성';
+                submitBtn.innerHTML = '작성';
             }
         }
 
