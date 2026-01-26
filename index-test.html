@@ -447,7 +447,7 @@
             color: white;
         }
 
-        /* Law Firm Introduction Section */
+        /* Law Firm Introduction Section - 2 Column Layout */
         .lawfirm-intro-section {
             background: #FFFFFF;
             border-radius: 24px;
@@ -458,106 +458,155 @@
         }
 
         .lawfirm-intro-content {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
         }
 
-        .lawfirm-intro-text {
-            margin-bottom: 32px;
+        /* Left Column - Text */
+        .lawfirm-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .lawfirm-headline {
-            font-size: 22px;
-            font-weight: 700;
+            font-size: 28px;
+            font-weight: 800;
             color: #1E293B;
-            line-height: 1.5;
-            margin-bottom: 12px;
-            letter-spacing: -0.3px;
+            line-height: 1.4;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
         }
 
         .lawfirm-subtext {
-            font-size: 16px;
+            font-size: 17px;
             color: #64748B;
-            line-height: 1.6;
+            line-height: 1.7;
+            font-weight: 500;
         }
 
-        .attorneys-grid {
+        /* Right Column - Badge & Attorneys */
+        .lawfirm-right {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 32px;
-            padding: 20px;
-            background: #F8FAFC;
-            border-radius: 12px;
-        }
-
-        .attorney-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: #334155;
-            white-space: nowrap;
-        }
-
-        .attorney-separator {
-            color: #CBD5E1;
-            font-weight: 300;
+            flex-direction: column;
+            gap: 24px;
         }
 
         .registration-badge {
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px 24px;
+            gap: 14px;
+            padding: 16px 20px;
             background: linear-gradient(135deg, #EBF4FF 0%, #F0F9FF 100%);
-            border: 1px solid #3182F6;
-            border-radius: 8px;
+            border: 2px solid #3182F6;
+            border-radius: 12px;
         }
 
         .moj-logo {
-            height: 28px;
+            height: 36px;
             width: auto;
         }
 
         .registration-text {
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 14px;
+            font-weight: 700;
             color: #1E40AF;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.2px;
         }
 
-        @media (max-width: 768px) {
-            .lawfirm-intro-section {
-                padding: 32px 20px;
+        /* Attorneys Grid with Photos */
+        .attorneys-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .attorney-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .attorney-photo {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #E2E8F0;
+            transition: all 0.2s ease;
+        }
+
+        .attorney-photo:hover {
+            border-color: #3182F6;
+            transform: scale(1.05);
+        }
+
+        .attorney-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 968px) {
+            .lawfirm-intro-content {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .lawfirm-left {
+                text-align: center;
             }
 
             .lawfirm-headline {
-                font-size: 18px;
+                font-size: 22px;
             }
 
             .lawfirm-subtext {
-                font-size: 14px;
+                font-size: 15px;
+            }
+
+            .registration-badge {
+                justify-content: center;
             }
 
             .attorneys-grid {
-                gap: 6px;
-                padding: 16px;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+            }
+
+            .attorney-photo {
+                width: 64px;
+                height: 64px;
             }
 
             .attorney-name {
-                font-size: 13px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .lawfirm-intro-section {
+                padding: 28px 20px;
+            }
+
+            .attorneys-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+
+            .attorney-photo {
+                width: 60px;
+                height: 60px;
             }
 
             .registration-badge {
                 flex-direction: column;
-                gap: 8px;
-                padding: 16px 20px;
-            }
-
-            .registration-text {
-                font-size: 12px;
+                gap: 10px;
                 text-align: center;
             }
         }
@@ -1370,26 +1419,45 @@
         <!-- Law Firm Introduction Section -->
         <div class="lawfirm-intro-section">
             <div class="lawfirm-intro-content">
-                <div class="lawfirm-intro-text">
+                <!-- Left Column - Introduction Text -->
+                <div class="lawfirm-left">
                     <p class="lawfirm-headline">Lawyeon's Visa & Immigration Center specializes in legal support for foreigners in Korea.</p>
                     <p class="lawfirm-subtext">Practicing in immigration office services and legal matters for foreigners and immigrants.</p>
                 </div>
-                <div class="attorneys-grid">
-                    <span class="attorney-name">Atty. S.H. Bong</span>
-                    <span class="attorney-separator">·</span>
-                    <span class="attorney-name">Atty. J.W. Min</span>
-                    <span class="attorney-separator">·</span>
-                    <span class="attorney-name">Atty. D.H. Nam</span>
-                    <span class="attorney-separator">·</span>
-                    <span class="attorney-name">Atty. S.C. Kim</span>
-                    <span class="attorney-separator">·</span>
-                    <span class="attorney-name">Atty. Y.H. Hwang</span>
-                    <span class="attorney-separator">·</span>
-                    <span class="attorney-name">Atty. D.G. Shin</span>
-                </div>
-                <div class="registration-badge">
-                    <img src="images/moj-badge.jpg" alt="Ministry of Justice" class="moj-logo">
-                    <span class="registration-text">Registered Immigration Agency #25-SM-RG-063</span>
+
+                <!-- Right Column - Badge & Attorneys -->
+                <div class="lawfirm-right">
+                    <div class="registration-badge">
+                        <img src="images/moj-badge.jpg" alt="Ministry of Justice" class="moj-logo">
+                        <span class="registration-text">Registered Immigration Agency<br>#25-SM-RG-063</span>
+                    </div>
+
+                    <div class="attorneys-grid">
+                        <div class="attorney-card">
+                            <img src="images/attorneys/bong.png" alt="S.H. Bong" class="attorney-photo">
+                            <span class="attorney-name">Atty. S.H. Bong</span>
+                        </div>
+                        <div class="attorney-card">
+                            <img src="images/attorneys/min.png" alt="J.W. Min" class="attorney-photo">
+                            <span class="attorney-name">Atty. J.W. Min</span>
+                        </div>
+                        <div class="attorney-card">
+                            <img src="images/attorneys/nam.png" alt="D.H. Nam" class="attorney-photo">
+                            <span class="attorney-name">Atty. D.H. Nam</span>
+                        </div>
+                        <div class="attorney-card">
+                            <img src="images/attorneys/kim.png" alt="S.C. Kim" class="attorney-photo">
+                            <span class="attorney-name">Atty. S.C. Kim</span>
+                        </div>
+                        <div class="attorney-card">
+                            <img src="images/attorneys/hwang.jpg" alt="Y.H. Hwang" class="attorney-photo">
+                            <span class="attorney-name">Atty. Y.H. Hwang</span>
+                        </div>
+                        <div class="attorney-card">
+                            <img src="images/attorneys/shin.jpg" alt="D.G. Shin" class="attorney-photo">
+                            <span class="attorney-name">Atty. D.G. Shin</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
