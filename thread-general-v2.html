@@ -914,6 +914,84 @@
             cursor: pointer;
         }
 
+        /* Message Edit Button */
+        .message-edit-btn {
+            background: none;
+            border: none;
+            color: #9CA3AF;
+            font-size: 13px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .message-edit-btn:hover {
+            background: #F3F4F6;
+            color: #374151;
+        }
+
+        /* Edit Modal - Larger */
+        .modal.edit-modal {
+            max-width: 800px;
+            width: 95%;
+        }
+
+        .edit-editor-container {
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        #editEditor {
+            min-height: 300px;
+        }
+
+        #editEditor .ql-editor {
+            min-height: 280px;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        /* Quick Insert Buttons */
+        .quick-insert-section {
+            margin-bottom: 16px;
+        }
+
+        .quick-insert-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #6B7280;
+            margin-bottom: 8px;
+        }
+
+        .quick-insert-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .quick-insert-btn {
+            background: #F3F4F6;
+            border: 1px solid #E5E7EB;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 12px;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-insert-btn:hover {
+            background: #E5E7EB;
+        }
+
+        .quick-insert-btn i {
+            margin-right: 4px;
+            color: #6B7280;
+        }
+
         /* Loading */
         .loading-container {
             display: flex;
@@ -1162,6 +1240,49 @@
             <div class="modal-actions">
                 <button class="btn-secondary" onclick="closeModal('stageChangeModal')">취소</button>
                 <button class="btn-primary" onclick="changeStage()">변경</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Edit Modal -->
+    <div class="modal-overlay" id="editMessageModal">
+        <div class="modal edit-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">메시지 편집</h2>
+                <button class="modal-close" onclick="closeModal('editMessageModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Quick Insert -->
+                <div class="quick-insert-section">
+                    <div class="quick-insert-title">빠른 삽입</div>
+                    <div class="quick-insert-buttons">
+                        <button class="quick-insert-btn" onclick="insertLink()">
+                            <i class="fas fa-link"></i> 링크
+                        </button>
+                        <button class="quick-insert-btn" onclick="insertBasicInfoLink()">
+                            <i class="fas fa-file-alt"></i> 기본사항 입력 링크
+                        </button>
+                        <button class="quick-insert-btn" onclick="insertInfoBox()">
+                            <i class="fas fa-box"></i> 정보 박스
+                        </button>
+                        <button class="quick-insert-btn" onclick="insertHighlight()">
+                            <i class="fas fa-highlighter"></i> 하이라이트
+                        </button>
+                        <button class="quick-insert-btn" onclick="insertTable()">
+                            <i class="fas fa-table"></i> 표
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Editor -->
+                <div class="edit-editor-container">
+                    <div id="editEditor"></div>
+                </div>
+                <input type="hidden" id="editMessageId">
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="closeModal('editMessageModal')">취소</button>
+                <button class="btn-primary" onclick="saveMessageEdit()">저장</button>
             </div>
         </div>
     </div>
@@ -1551,13 +1672,21 @@
                 `;
             }
 
+            // 관리자만 편집 버튼 표시
+            const editBtnHtml = isAdmin ? `
+                <button class="message-edit-btn" onclick="openEditMessageModal('${msg.id}')">
+                    <i class="fas fa-edit"></i> 편집
+                </button>
+            ` : '';
+
             return `
-                <div class="message-card">
+                <div class="message-card" data-message-id="${msg.id}">
                     <div class="message-header">
                         <div class="message-author">
                             <span class="author-badge ${badgeClass}">${badgeText}</span>
                         </div>
                         <div class="message-time">
+                            ${editBtnHtml}
                             <i class="fas fa-clock"></i>
                             ${formatDateTime(msg.created_at)}
                         </div>
@@ -1867,6 +1996,154 @@
                 console.error('Error changing stage:', error);
                 alert('단계 변경 중 오류가 발생했습니다.');
             }
+        }
+
+        // ============================================
+        // 메시지 편집 기능
+        // ============================================
+        let editQuillEditor = null;
+        let messagesCache = [];
+
+        function initEditEditor() {
+            if (editQuillEditor) return;
+
+            editQuillEditor = new Quill('#editEditor', {
+                theme: 'snow',
+                placeholder: '메시지 내용을 입력하세요...',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [4, false] }],
+                        ['bold', 'italic', 'underline'],
+                        ['link'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        ['clean']
+                    ]
+                }
+            });
+        }
+
+        async function openEditMessageModal(messageId) {
+            // 에디터 초기화
+            initEditEditor();
+
+            // 메시지 데이터 찾기
+            const result = await getMessages(threadId);
+            if (!result.success) {
+                alert('메시지를 불러올 수 없습니다.');
+                return;
+            }
+
+            messagesCache = result.data;
+            const message = messagesCache.find(m => m.id === messageId);
+
+            if (!message) {
+                alert('메시지를 찾을 수 없습니다.');
+                return;
+            }
+
+            // 에디터에 내용 설정
+            document.getElementById('editMessageId').value = messageId;
+
+            // HTML을 Quill Delta로 변환하여 설정
+            editQuillEditor.root.innerHTML = message.content || '';
+
+            // 모달 열기
+            document.getElementById('editMessageModal').classList.add('active');
+        }
+
+        async function saveMessageEdit() {
+            const messageId = document.getElementById('editMessageId').value;
+            const content = editQuillEditor.root.innerHTML;
+
+            if (!messageId) {
+                alert('메시지 ID가 없습니다.');
+                return;
+            }
+
+            try {
+                const { error } = await supabaseClient
+                    .from('messages')
+                    .update({
+                        content: content,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', messageId);
+
+                if (error) throw error;
+
+                closeModal('editMessageModal');
+                await loadMessages();
+                alert('메시지가 수정되었습니다.');
+
+            } catch (error) {
+                console.error('Error saving message:', error);
+                alert('메시지 저장 중 오류가 발생했습니다.');
+            }
+        }
+
+        // 빠른 삽입 기능
+        function insertLink() {
+            const url = prompt('링크 URL을 입력하세요:', 'https://');
+            if (!url) return;
+
+            const text = prompt('링크 텍스트를 입력하세요:', '링크');
+            if (!text) return;
+
+            const range = editQuillEditor.getSelection(true);
+            editQuillEditor.insertText(range.index, text, 'link', url);
+        }
+
+        function insertBasicInfoLink() {
+            const formUrl = `${window.location.origin}/profile-submit.html?thread=${threadId}`;
+            const range = editQuillEditor.getSelection(true);
+            editQuillEditor.insertText(range.index, '기본사항 입력하기', 'link', formUrl);
+        }
+
+        function insertInfoBox() {
+            const title = prompt('정보 박스 제목:', '안내');
+            if (!title) return;
+
+            const html = `
+                <div class="info-box">
+                    <div class="info-box-title">${title}</div>
+                    <p>내용을 입력하세요.</p>
+                </div>
+            `;
+
+            const range = editQuillEditor.getSelection(true);
+            editQuillEditor.clipboard.dangerouslyPasteHTML(range.index, html);
+        }
+
+        function insertHighlight() {
+            const text = prompt('하이라이트 텍스트:', '중요');
+            if (!text) return;
+
+            const range = editQuillEditor.getSelection(true);
+            editQuillEditor.clipboard.dangerouslyPasteHTML(range.index, `<span class="highlight">${text}</span>`);
+        }
+
+        function insertTable() {
+            const cols = prompt('열 수:', '3');
+            const rows = prompt('행 수:', '2');
+
+            if (!cols || !rows) return;
+
+            let tableHtml = '<table><thead><tr>';
+            for (let c = 0; c < parseInt(cols); c++) {
+                tableHtml += `<th>제목${c + 1}</th>`;
+            }
+            tableHtml += '</tr></thead><tbody>';
+            for (let r = 0; r < parseInt(rows); r++) {
+                tableHtml += '<tr>';
+                for (let c = 0; c < parseInt(cols); c++) {
+                    tableHtml += '<td>내용</td>';
+                }
+                tableHtml += '</tr>';
+            }
+            tableHtml += '</tbody></table>';
+
+            const range = editQuillEditor.getSelection(true);
+            editQuillEditor.clipboard.dangerouslyPasteHTML(range.index, tableHtml);
         }
 
         // Utility functions
