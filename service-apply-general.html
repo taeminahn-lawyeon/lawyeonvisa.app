@@ -590,6 +590,168 @@
             font-weight: 600;
             line-height: 1.5;
         }
+
+        /* D-10-1 Question Form Styles */
+        .service-form {
+            background: white;
+            border-radius: 20px;
+            padding: 28px 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .service-form h2 {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1E293B;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .service-form h2 i {
+            color: #3182F6;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-group label .required {
+            color: #EF4444;
+            margin-left: 4px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: 'Noto Sans KR', sans-serif;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3182F6;
+            box-shadow: 0 0 0 3px rgba(49, 130, 246, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-group .hint {
+            font-size: 13px;
+            color: #6B7280;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-section-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #3182F6;
+            margin: 24px 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #EBF4FF;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .radio-option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #3182F6;
+        }
+
+        .radio-option span {
+            font-size: 14px;
+            color: #374151;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .checkbox-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            accent-color: #3182F6;
+            flex-shrink: 0;
+        }
+
+        .checkbox-option span {
+            font-size: 14px;
+            color: #374151;
+            line-height: 1.5;
+        }
+
+        .info-box {
+            background: #EBF4FF;
+            border: 1px solid #BFDBFE;
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin-top: 16px;
+        }
+
+        .info-box p {
+            font-size: 13px;
+            color: #1E40AF;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .info-box strong {
+            font-weight: 700;
+        }
     </style>
 </head>
 <body>
@@ -651,6 +813,174 @@
                     <div class="consulting-notice-content">
                         <h3>Get a Custom Quote</h3>
                         <p>Every case is different. We'll provide an accurate quote after understanding your situation.</p>
+                    </div>
+                </div>
+
+                <!-- D-10-1 Application Form -->
+                <div class="service-form" id="d10-1-form" style="display: none;">
+                    <h2><i class="fas fa-clipboard-list"></i> Application Information</h2>
+                    <p style="font-size: 14px; color: #64748B; margin-bottom: 20px;">Please provide the following information to process your D-10-1 visa application. Our specialist will review and contact you.</p>
+
+                    <div class="form-section-title">📋 Basic Eligibility</div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Current Visa Status <span class="required">*</span></label>
+                            <select id="d10-current-visa" required>
+                                <option value="">Select your current visa</option>
+                                <option value="D-2-1">D-2-1 (Associate Degree)</option>
+                                <option value="D-2-2">D-2-2 (Bachelor's Degree)</option>
+                                <option value="D-2-3">D-2-3 (Master's Degree)</option>
+                                <option value="D-2-4">D-2-4 (Doctoral Degree)</option>
+                                <option value="D-2-5">D-2-5 (Research)</option>
+                                <option value="D-2-6">D-2-6 (Exchange Student)</option>
+                                <option value="D-2-7">D-2-7 (Language + Degree)</option>
+                                <option value="D-2-8">D-2-8 (Short-term Study)</option>
+                                <option value="D-4">D-4 (Language Training)</option>
+                                <option value="Other">Other (Please specify below)</option>
+                            </select>
+                            <p class="hint">D-10-1 is typically available for D-2 visa holders</p>
+                        </div>
+                        <div class="form-group">
+                            <label>Visa Expiry Date <span class="required">*</span></label>
+                            <input type="date" id="d10-visa-expiry" required>
+                            <p class="hint">Must apply before current visa expires</p>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Graduation Date <span class="required">*</span></label>
+                            <input type="date" id="d10-graduation-date" required>
+                            <p class="hint">Points exemption available within 1 year of graduation</p>
+                        </div>
+                        <div class="form-group">
+                            <label>Degree Type <span class="required">*</span></label>
+                            <select id="d10-degree-type" required>
+                                <option value="">Select degree type</option>
+                                <option value="Associate">Associate Degree (2-year)</option>
+                                <option value="Bachelor">Bachelor's Degree (4-year)</option>
+                                <option value="Master">Master's Degree</option>
+                                <option value="Doctoral">Doctoral Degree (PhD)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>University Name (in Korea) <span class="required">*</span></label>
+                        <input type="text" id="d10-university" placeholder="e.g., Seoul National University" required>
+                        <p class="hint">Must be a regular university in South Korea</p>
+                    </div>
+
+                    <div class="form-section-title">🏠 Residence Information</div>
+
+                    <div class="form-group">
+                        <label>Current Address in Korea <span class="required">*</span></label>
+                        <input type="text" id="d10-address" placeholder="e.g., 123 Gangnam-daero, Gangnam-gu, Seoul" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Proof of Residence <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="d10-residence-proof" value="lease" required>
+                                <span>Housing contract (Lease/Jeonse)</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="d10-residence-proof" value="dormitory">
+                                <span>Dormitory residence certificate</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="d10-residence-proof" value="host">
+                                <span>Host invitation (staying with family/friend)</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="d10-residence-proof" value="other">
+                                <span>Other (Please explain below)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-section-title">📝 Korean Language & Work Plans</div>
+
+                    <div class="form-group">
+                        <label>Korean Language Proficiency</label>
+                        <select id="d10-korean-level">
+                            <option value="">Select if applicable</option>
+                            <option value="TOPIK-1">TOPIK Level 1</option>
+                            <option value="TOPIK-2">TOPIK Level 2</option>
+                            <option value="TOPIK-3">TOPIK Level 3</option>
+                            <option value="TOPIK-4">TOPIK Level 4</option>
+                            <option value="TOPIK-5">TOPIK Level 5</option>
+                            <option value="TOPIK-6">TOPIK Level 6</option>
+                            <option value="KIIP-3">KIIP Level 3</option>
+                            <option value="KIIP-4">KIIP Level 4 (Intermediate passed)</option>
+                            <option value="KIIP-5">KIIP Level 5</option>
+                            <option value="None">No certificate</option>
+                        </select>
+                        <p class="hint">TOPIK 4+ or KIIP 4+ required for part-time work permission</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Previous E-series Visa History</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="d10-e-visa-history" value="no" checked>
+                                <span>No previous E-1~E-7 visa</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="d10-e-visa-history" value="yes">
+                                <span>Had E-1~E-7 visa before</span>
+                            </label>
+                        </div>
+                        <p class="hint">Previous E-visa holders are NOT eligible for part-time work on D-10</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Do you plan to do internships?</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="d10-internship-plan" value="yes">
+                                <span>Yes, I plan to do internships</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="d10-internship-plan" value="no" checked>
+                                <span>No immediate plans</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="d10-internship-plan" value="already">
+                                <span>I already have an internship offer</span>
+                            </label>
+                        </div>
+                        <p class="hint">Internships must be reported within 15 days of starting</p>
+                    </div>
+
+                    <div class="form-section-title">💼 Job Seeking Plan</div>
+
+                    <div class="form-group">
+                        <label>Target Industry/Field <span class="required">*</span></label>
+                        <input type="text" id="d10-target-industry" placeholder="e.g., IT/Software Development, Marketing, Engineering" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Job Seeking Activities (Brief Plan) <span class="required">*</span></label>
+                        <textarea id="d10-job-plan" placeholder="Describe your job search plan, e.g.:
+- Applying to tech companies in Seoul
+- Using job portals (Saramin, JobKorea, LinkedIn)
+- Attending career fairs at my university
+- Networking with alumni in my field" required></textarea>
+                        <p class="hint">This will be used for your Job Seeking Plan document</p>
+                    </div>
+
+                    <div class="form-section-title">📎 Additional Notes</div>
+
+                    <div class="form-group">
+                        <label>Additional Information or Questions</label>
+                        <textarea id="d10-additional-notes" placeholder="Any special circumstances, questions, or concerns you'd like us to know about..."></textarea>
+                    </div>
+
+                    <div class="info-box">
+                        <p><strong>📌 New Graduate Exemption:</strong> If you graduated within 1 year, you are <strong>exempt from the points system</strong> and <strong>do not need to submit bank statements</strong> (proof of financial ability).</p>
                     </div>
                 </div>
 
@@ -971,13 +1301,120 @@
                 selectedService.govtFee = govtFee;
             }
 
+            // Show D-10-1 specific form
+            if (serviceId === 'd10-1-change') {
+                document.getElementById('d10-1-form').style.display = 'block';
+            }
+
             document.getElementById('main-content').style.display = 'grid';
+        }
+
+        // Get D-10-1 form data
+        function getD10FormData() {
+            const form = document.getElementById('d10-1-form');
+            if (!form || form.style.display === 'none') return null;
+
+            const residenceProof = document.querySelector('input[name="d10-residence-proof"]:checked');
+            const eVisaHistory = document.querySelector('input[name="d10-e-visa-history"]:checked');
+            const internshipPlan = document.querySelector('input[name="d10-internship-plan"]:checked');
+
+            return {
+                currentVisa: document.getElementById('d10-current-visa').value,
+                visaExpiry: document.getElementById('d10-visa-expiry').value,
+                graduationDate: document.getElementById('d10-graduation-date').value,
+                degreeType: document.getElementById('d10-degree-type').value,
+                university: document.getElementById('d10-university').value,
+                address: document.getElementById('d10-address').value,
+                residenceProof: residenceProof ? residenceProof.value : '',
+                koreanLevel: document.getElementById('d10-korean-level').value,
+                eVisaHistory: eVisaHistory ? eVisaHistory.value : 'no',
+                internshipPlan: internshipPlan ? internshipPlan.value : 'no',
+                targetIndustry: document.getElementById('d10-target-industry').value,
+                jobPlan: document.getElementById('d10-job-plan').value,
+                additionalNotes: document.getElementById('d10-additional-notes').value
+            };
+        }
+
+        // Validate D-10-1 form
+        function validateD10Form() {
+            const form = document.getElementById('d10-1-form');
+            if (!form || form.style.display === 'none') return true;
+
+            const requiredFields = [
+                { id: 'd10-current-visa', name: 'Current Visa Status' },
+                { id: 'd10-visa-expiry', name: 'Visa Expiry Date' },
+                { id: 'd10-graduation-date', name: 'Graduation Date' },
+                { id: 'd10-degree-type', name: 'Degree Type' },
+                { id: 'd10-university', name: 'University Name' },
+                { id: 'd10-address', name: 'Current Address' },
+                { id: 'd10-target-industry', name: 'Target Industry' },
+                { id: 'd10-job-plan', name: 'Job Seeking Plan' }
+            ];
+
+            for (const field of requiredFields) {
+                const element = document.getElementById(field.id);
+                if (!element || !element.value.trim()) {
+                    alert(`Please fill in: ${field.name}`);
+                    element?.focus();
+                    return false;
+                }
+            }
+
+            // Check residence proof radio
+            const residenceProof = document.querySelector('input[name="d10-residence-proof"]:checked');
+            if (!residenceProof) {
+                alert('Please select your Proof of Residence type');
+                return false;
+            }
+
+            return true;
+        }
+
+        // Format D-10-1 data for thread message
+        function formatD10DataForMessage(data) {
+            if (!data) return '';
+
+            const graduationDate = new Date(data.graduationDate);
+            const today = new Date();
+            const monthsSinceGraduation = Math.floor((today - graduationDate) / (1000 * 60 * 60 * 24 * 30));
+            const isWithinOneYear = monthsSinceGraduation <= 12;
+
+            return `
+📋 **D-10-1 Application Details**
+
+**Basic Eligibility:**
+• Current Visa: ${data.currentVisa}
+• Visa Expiry: ${data.visaExpiry}
+• Graduation Date: ${data.graduationDate} (${isWithinOneYear ? '✅ Within 1 year - Points Exempt!' : '⚠️ Over 1 year - Points required'})
+• Degree: ${data.degreeType}
+• University: ${data.university}
+
+**Residence:**
+• Address: ${data.address}
+• Proof Type: ${data.residenceProof}
+
+**Korean & Work:**
+• Korean Level: ${data.koreanLevel || 'Not specified'}
+• Previous E-visa: ${data.eVisaHistory === 'yes' ? '⚠️ Yes - Part-time NOT allowed' : '✅ No'}
+• Internship Plan: ${data.internshipPlan}
+
+**Job Seeking Plan:**
+• Target Industry: ${data.targetIndustry}
+• Plan: ${data.jobPlan}
+
+${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
+`;
         }
 
         const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
         let tossPayments = null;
 
         async function processPayment() {
+            // Validate D-10-1 form if applicable
+            if (!validateD10Form()) {
+                return;
+            }
+
             const btn = document.getElementById('payBtn');
             btn.disabled = true;
             btn.classList.add('loading');
@@ -1016,6 +1453,9 @@
                     }
                 }
 
+                // Get D-10-1 form data if applicable
+                const d10Data = getD10FormData();
+
                 const orderInfo = {
                     orderId: 'ORD' + Date.now(),
                     orderName: selectedService.name,
@@ -1037,7 +1477,9 @@
                     govtFee: orderInfo.govtFee,
                     paymentMethod: orderInfo.paymentMethod,
                     customerName: orderInfo.customerName,
-                    customerEmail: orderInfo.customerEmail
+                    customerEmail: orderInfo.customerEmail,
+                    d10FormData: d10Data,
+                    d10FormattedMessage: d10Data ? formatD10DataForMessage(d10Data) : null
                 }));
 
                 if (!tossPayments) {
