@@ -1,5 +1,5 @@
 # 법무법인 로연 출입국이민지원센터 robots.txt
-# https://lawyeon.com
+# https://www.lawyeonvisa.app
 
 User-agent: *
 Allow: /
@@ -20,4 +20,4 @@ Disallow: /dashboard-*.html
 Disallow: /admin-test-login.html
 
 # 사이트맵 위치
-Sitemap: https://lawyeon.com/sitemap.xml
+Sitemap: https://www.lawyeonvisa.app/sitemap.xml
