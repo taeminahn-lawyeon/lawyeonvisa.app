@@ -19,18 +19,20 @@
             color: #191F28;
         }
 
-        /* Header */
+        /* Header - matching index.html */
         .header {
-            background: white;
-            padding: 16px 20px;
-            border-bottom: 1px solid #E5E8EB;
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
+            padding: 20px 25px;
+            color: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border-bottom: 3px solid #3182F6;
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
         .header-content {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             align-items: center;
@@ -41,70 +43,71 @@
             width: 40px;
             height: 40px;
             border: none;
-            background: #F2F4F6;
+            background: rgba(255,255,255,0.1);
             border-radius: 10px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 18px;
-            color: #4E5968;
+            color: white;
             transition: all 0.2s;
         }
 
         .back-btn:hover {
-            background: #E5E8EB;
+            background: rgba(255,255,255,0.2);
         }
 
         .header-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #191F28;
+            font-size: 20px;
+            font-weight: 800;
+            color: white;
         }
 
         /* Main Container */
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 24px 20px 40px;
         }
 
         /* Progress Bar */
         .progress-section {
-            margin-bottom: 32px;
+            margin-bottom: 24px;
         }
 
         .progress-text {
             font-size: 14px;
             color: #8B95A1;
             margin-bottom: 12px;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .progress-bar {
-            height: 4px;
+            height: 6px;
             background: #E5E8EB;
-            border-radius: 2px;
+            border-radius: 3px;
             overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
-            background: #3182F6;
-            border-radius: 2px;
+            background: linear-gradient(90deg, #3182F6, #1B64DA);
+            border-radius: 3px;
             transition: width 0.3s ease;
         }
 
-        /* Question Card */
+        /* Question Card - matching index.html style */
         .question-card {
             background: white;
-            border-radius: 20px;
-            padding: 32px;
+            border-radius: 24px;
+            padding: 40px;
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #E2E8F0;
         }
 
         .question-title {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 800;
             color: #191F28;
             margin-bottom: 8px;
@@ -115,41 +118,46 @@
         .question-subtitle {
             font-size: 15px;
             color: #8B95A1;
-            margin-bottom: 28px;
+            margin-bottom: 32px;
             line-height: 1.5;
         }
 
-        /* Options Grid */
+        /* Options Grid - matching service-grid style */
         .options-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
         }
 
         .option-btn {
             background: #F9FAFB;
             border: 2px solid transparent;
             border-radius: 16px;
-            padding: 20px;
+            padding: 24px;
             cursor: pointer;
             transition: all 0.2s ease;
             text-align: left;
-            min-height: 90px;
+            min-height: 100px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .option-btn:hover {
             border-color: #3182F6;
             background: #EBF4FF;
-            transform: translateY(-2px);
+            transform: translateY(-4px);
             box-shadow: 0 8px 24px rgba(49, 130, 246, 0.12);
         }
 
         .option-btn:active {
-            transform: translateY(0);
+            transform: translateY(-2px);
+        }
+
+        .option-btn .option-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
         }
 
         .option-btn .option-title {
@@ -161,7 +169,7 @@
 
         .option-btn .option-desc {
             font-size: 13px;
-            color: #8B95A1;
+            color: #6B7684;
             line-height: 1.4;
         }
 
@@ -170,15 +178,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 24px;
+            margin-top: 32px;
             padding-top: 24px;
             border-top: 1px solid #F2F4F6;
         }
 
         .nav-btn {
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-size: 14px;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
@@ -194,22 +202,12 @@
             background: #E5E8EB;
         }
 
-        .nav-btn.primary {
-            background: #3182F6;
-            border: none;
-            color: white;
-        }
-
-        .nav-btn.primary:hover {
-            background: #1B64DA;
-        }
-
         .nav-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
 
-        /* Result Card */
+        /* Result Section */
         .result-section {
             display: none;
         }
@@ -220,20 +218,20 @@
         }
 
         .result-icon {
-            width: 64px;
-            height: 64px;
+            width: 72px;
+            height: 72px;
             background: linear-gradient(135deg, #3182F6 0%, #1B64DA 100%);
             border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 16px;
-            font-size: 28px;
+            margin: 0 auto 20px;
+            font-size: 32px;
             color: white;
         }
 
         .result-title {
-            font-size: 22px;
+            font-size: 26px;
             font-weight: 800;
             color: #191F28;
             margin-bottom: 8px;
@@ -244,66 +242,66 @@
             color: #8B95A1;
         }
 
-        .recommended-services {
-            display: flex;
-            flex-direction: column;
+        /* Services Grid - matching index.html service-grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 16px;
         }
 
-        .service-card {
-            background: white;
-            border: 2px solid #E5E8EB;
+        .service-item {
+            background: #F9FAFB;
+            border: 2px solid transparent;
             border-radius: 16px;
             padding: 24px;
-            transition: all 0.2s;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-height: 110px;
         }
 
-        .service-card:hover {
+        .service-item:hover {
             border-color: #3182F6;
-            box-shadow: 0 4px 16px rgba(49, 130, 246, 0.12);
+            background: #EBF4FF;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(49, 130, 246, 0.12);
         }
 
-        .service-card .service-name {
-            font-size: 18px;
+        .service-item .service-icon {
+            font-size: 28px;
+            margin-bottom: 4px;
+        }
+
+        .service-item .title {
+            font-size: 16px;
             font-weight: 700;
             color: #191F28;
-            margin-bottom: 8px;
+            line-height: 1.4;
         }
 
-        .service-card .service-desc {
+        .service-item .desc {
+            font-size: 13px;
+            color: #6B7684;
+            line-height: 1.5;
+        }
+
+        .service-item .price {
             font-size: 14px;
-            color: #8B95A1;
-            line-height: 1.6;
-            margin-bottom: 16px;
-        }
-
-        .service-card .apply-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 20px;
-            background: #3182F6;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .service-card .apply-btn:hover {
-            background: #1B64DA;
+            font-weight: 700;
+            color: #3182F6;
+            margin-top: auto;
         }
 
         .restart-btn {
             display: block;
             width: 100%;
-            padding: 16px;
-            margin-top: 24px;
+            padding: 18px;
+            margin-top: 32px;
             background: #F2F4F6;
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             font-size: 15px;
             font-weight: 600;
             color: #4E5968;
@@ -315,7 +313,45 @@
             background: #E5E8EB;
         }
 
+        /* Category Filter for Results */
+        .category-filter {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 10px 18px;
+            border: 2px solid #E5E8EB;
+            border-radius: 10px;
+            background: white;
+            font-size: 14px;
+            font-weight: 600;
+            color: #4E5968;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .category-btn:hover {
+            border-color: #3182F6;
+            color: #3182F6;
+        }
+
+        .category-btn.active {
+            background: #3182F6;
+            border-color: #3182F6;
+            color: white;
+        }
+
         /* Responsive */
+        @media (max-width: 1024px) {
+            .options-grid,
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 20px 16px 32px;
@@ -323,23 +359,26 @@
 
             .question-card {
                 padding: 24px 20px;
-                border-radius: 16px;
+                border-radius: 20px;
             }
 
             .question-title {
                 font-size: 20px;
             }
 
-            .options-grid {
+            .options-grid,
+            .services-grid {
                 grid-template-columns: 1fr;
             }
 
-            .option-btn {
-                min-height: 76px;
-                padding: 16px;
+            .option-btn,
+            .service-item {
+                min-height: auto;
+                padding: 20px;
             }
 
-            .option-btn .option-title {
+            .option-btn .option-title,
+            .service-item .title {
                 font-size: 15px;
             }
 
@@ -352,9 +391,18 @@
                 width: 100%;
                 text-align: center;
             }
+
+            .category-filter {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                padding-bottom: 8px;
+            }
+
+            .category-btn {
+                flex-shrink: 0;
+            }
         }
 
-        /* Hidden */
         .hidden {
             display: none !important;
         }
@@ -375,9 +423,9 @@
     <div class="container">
         <!-- Progress -->
         <div class="progress-section">
-            <div class="progress-text" id="progressText">Step 1 of 4</div>
+            <div class="progress-text" id="progressText">Step 1 of 3</div>
             <div class="progress-bar">
-                <div class="progress-fill" id="progressFill" style="width: 25%"></div>
+                <div class="progress-fill" id="progressFill" style="width: 33%"></div>
             </div>
         </div>
 
@@ -402,35 +450,152 @@
 
         <!-- Result Section -->
         <div class="result-section" id="resultSection">
-            <div class="result-header">
-                <div class="result-icon">
-                    <i class="fas fa-check"></i>
+            <div class="question-card">
+                <div class="result-header">
+                    <div class="result-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <h2 class="result-title">Recommended Services</h2>
+                    <p class="result-subtitle">Based on your selections, here are the available services:</p>
                 </div>
-                <h2 class="result-title">Recommended Services</h2>
-                <p class="result-subtitle">Based on your selections, we recommend:</p>
-            </div>
 
-            <div class="recommended-services" id="recommendedServices">
-                <!-- Services will be populated by JavaScript -->
-            </div>
+                <div class="category-filter" id="categoryFilter">
+                    <!-- Category buttons will be populated -->
+                </div>
 
-            <button class="restart-btn" onclick="restart()">
-                <i class="fas fa-redo"></i> Start Over
-            </button>
+                <div class="services-grid" id="servicesGrid">
+                    <!-- Services will be populated by JavaScript -->
+                </div>
+
+                <button class="restart-btn" onclick="restart()">
+                    <i class="fas fa-redo"></i> Start Over
+                </button>
+            </div>
         </div>
     </div>
 
     <script>
-        // Decision Tree Data
+        // All available services from servicePricing (service-apply-general.html)
+        const allServices = {
+            // Premium Services
+            'visa-prediagnosis': { name: 'Visa Pre-diagnosis', price: 55000, desc: 'Visa change, overstay risk, immigration consultation', icon: '🔍', category: 'premium' },
+            'emergency-legal': { name: 'Immigration Dispute Resolution', price: 0, desc: 'Deportation defense, visa denial appeals', icon: '⚖️', category: 'premium', consulting: true },
+
+            // Education & Job Search
+            'd4-to-d2-change': { name: 'D-4→D-2 Student Visa Change', price: 110000, desc: 'Language course to degree program', icon: '🎓', category: 'education' },
+            'd10-1-change': { name: 'D-10-1 Job Seeker Visa', price: 220000, desc: 'General job seeking visa', icon: '🔍', category: 'education' },
+            'd10-2-change': { name: 'D-10-2 Tech Startup Job Seeker', price: 330000, desc: 'Startup preparation visa', icon: '💡', category: 'education' },
+            'd10-3-change': { name: 'D-10-3 High-tech Intern', price: 330000, desc: 'Advanced technology internship', icon: '🔬', category: 'education' },
+            'd10-t-change': { name: 'D-10-T Top Talent Job Seeker', price: 330000, desc: 'Elite university graduate visa', icon: '🏆', category: 'education' },
+            'd2-d4-extension': { name: 'D-2, D-4 Visa Extension', price: 110000, desc: 'Student visa renewal', icon: '📖', category: 'education' },
+            'd10-extension': { name: 'D-10 Visa Extension', price: 110000, desc: 'Job seeker visa renewal', icon: '⏳', category: 'education' },
+            'parttime-permit': { name: 'Part-time Work Permit', price: 33000, desc: 'D-2, D-4 part-time employment', icon: '⏰', category: 'education' },
+            'intern-report': { name: 'Internship Start/Change Report', price: 110000, desc: 'D-10 internship notification', icon: '📝', category: 'education' },
+            'parent-invite': { name: 'Student Parent Invitation', price: 330000, desc: 'Excellent student parent visa', icon: '👨‍👩‍👧', category: 'education' },
+
+            // Employment
+            'e7-4-change': { name: 'E-7-4 Skilled Worker Visa', price: 550000, desc: 'E-9/H-2 skilled transition', icon: '🔧', category: 'employment' },
+            'e7-4r-change': { name: 'E-7-4R Regional Skilled Worker', price: 550000, desc: 'Depopulated area skilled worker', icon: '🏘️', category: 'employment' },
+            'e7-change': { name: 'E-7 Professional Visa', price: 550000, desc: 'Professional employment visa', icon: '💼', category: 'employment' },
+            'f2-7-change': { name: 'F-2-7 Points-based Residence', price: 550000, desc: 'Outstanding talent residence', icon: '⭐', category: 'employment' },
+            'f2-r-change': { name: 'F-2-R Regional Residence', price: 550000, desc: 'Depopulated area residence', icon: '🏡', category: 'employment' },
+            'e7-st-change': { name: 'E-7-S/T Elite Professional', price: 550000, desc: 'High-tech/high-income talent', icon: '🏆', category: 'employment' },
+            'e1-e6-change': { name: 'E-1~E-6 Professional Visa', price: 550000, desc: 'Professor, researcher, specialist', icon: '🎓', category: 'employment' },
+            'e7-extension': { name: 'E-7 Visa Extension', price: 110000, desc: 'Professional visa renewal', icon: '📅', category: 'employment' },
+            'e9-workplace-change': { name: 'E-9 Workplace Change', price: 220000, desc: 'E-9 employer change', icon: '🏭', category: 'employment' },
+            'workplace-change-permit': { name: 'Workplace Change Permit', price: 220000, desc: 'Job transfer pre-approval', icon: '🏢', category: 'employment' },
+            'outside-activity': { name: 'Additional Activity Permit', price: 220000, desc: 'Activities beyond visa scope', icon: '🔓', category: 'employment' },
+            'h2-work-start': { name: 'H-2 Employment Start Report', price: 55000, desc: 'Working visit job notification', icon: '📋', category: 'employment' },
+            'workplace-change-report': { name: 'Workplace Change Report', price: 110000, desc: 'Job transfer notification', icon: '📝', category: 'employment' },
+            'employment-info-change': { name: 'Employment Info Update', price: 55000, desc: 'Workplace/salary change report', icon: '💰', category: 'employment' },
+            'dispatch-report': { name: 'Dispatch Work Report', price: 110000, desc: 'Subsidiary assignment report', icon: '🔄', category: 'employment' },
+            'income-report': { name: 'Annual Income Report', price: 55000, desc: 'Job and income notification', icon: '💵', category: 'employment' },
+            'foreign-worker-change': { name: 'Foreign Worker Status Report', price: 55000, desc: 'Resignation/departure report', icon: '📊', category: 'employment' },
+
+            // Business & Investment
+            'd8-1-change': { name: 'D-8-1 Corporate Investment', price: 1100000, desc: 'Corporate establishment visa', icon: '🏢', category: 'business' },
+            'd8-2-change': { name: 'D-8-2 Venture Investment', price: 1100000, desc: 'Venture company investment', icon: '🚀', category: 'business' },
+            'd8-3-change': { name: 'D-8-3 Individual Investment', price: 1100000, desc: 'Sole proprietor investment', icon: '💼', category: 'business' },
+            'd8-4-change': { name: 'D-8-4 Tech Startup Visa', price: 550000, desc: 'Student entrepreneur visa', icon: '💡', category: 'business' },
+            'd9-1-change': { name: 'D-9-1 Trade Business', price: 1100000, desc: 'Trading business visa', icon: '🌐', category: 'business' },
+            'd9-2-change': { name: 'D-9-2 Export Equipment', price: 1100000, desc: 'Export facility management', icon: '🏭', category: 'business' },
+            'd9-3-change': { name: 'D-9-3 Shipbuilding Supervisor', price: 1100000, desc: 'Ship/equipment supervision', icon: '⚓', category: 'business' },
+            'd9-4-change': { name: 'D-9-4 Commercial Business', price: 1100000, desc: 'Individual commercial visa', icon: '📊', category: 'business' },
+            'd9-5-change': { name: 'D-9-5 Graduate Entrepreneur', price: 550000, desc: 'Former student business', icon: '🎓', category: 'business' },
+            'business-extension': { name: 'D-8, D-9 Business Extension', price: 220000, desc: 'Investment visa renewal', icon: '📅', category: 'business' },
+            'fic-registration': { name: 'Foreign Investment Registration', price: 330000, desc: 'FIC certificate issuance', icon: '📋', category: 'business' },
+            'fi-report': { name: 'Foreign Investment Report', price: 220000, desc: 'Investment pre-notification', icon: '📝', category: 'business' },
+
+            // Ethnic Korean & Family
+            'h2-to-f4-change': { name: 'H-2→F-4 Overseas Korean', price: 220000, desc: 'Working visit to overseas Korean', icon: '🇰🇷', category: 'family' },
+            'f4-change': { name: 'F-4 Overseas Korean Visa', price: 220000, desc: 'Overseas Korean status', icon: '🎌', category: 'family' },
+            'f4-registration': { name: 'F-4 Residence Registration', price: 110000, desc: 'F-4 residence card issuance', icon: '📍', category: 'family' },
+            'f4-extension': { name: 'F-4 Visa Extension', price: 110000, desc: 'F-4 residence renewal', icon: '📅', category: 'family' },
+            'h2-extension': { name: 'H-2 Visa Extension', price: 110000, desc: 'Working visit renewal', icon: '🛬', category: 'family' },
+            'f6-change': { name: 'F-6 Marriage Immigration', price: 1100000, desc: 'Spouse visa acquisition', icon: '💍', category: 'family' },
+            'f6-extension': { name: 'F-6 Visa Extension', price: 110000, desc: 'Marriage visa renewal', icon: '💒', category: 'family' },
+            'f3-change': { name: 'F-3 Dependent Family Visa', price: 330000, desc: 'Spouse/child accompanying', icon: '👪', category: 'family' },
+            'f1-change': { name: 'F-1 Family Visit Visa', price: 330000, desc: 'Relative long-term stay', icon: '🏠', category: 'family' },
+            'visa-grant-child': { name: 'Child Birth Visa Grant', price: 220000, desc: 'Newborn child visa', icon: '👶', category: 'family' },
+            'visa-grant-f6-child': { name: 'F-6 Child Visa Grant', price: 220000, desc: 'Marriage immigrant child', icon: '👶', category: 'family' },
+            'family-invite': { name: 'Family Invitation Visa', price: 550000, desc: 'Overseas family invitation', icon: '✈️', category: 'family' },
+            'housework-report': { name: 'Domestic Work Report', price: 55000, desc: 'Household help notification', icon: '🏡', category: 'family' },
+
+            // Residence & Citizenship
+            'f5-change': { name: 'F-5 Permanent Residence', price: 1100000, desc: 'Korea permanent residency', icon: '🏠', category: 'residence' },
+            'f5-reissue': { name: 'F-5 Card Renewal (10yr)', price: 110000, desc: 'Permanent residence card', icon: '🔄', category: 'residence' },
+            'f2-extension': { name: 'F-2 Residence Extension', price: 110000, desc: 'Residence visa renewal', icon: '🏡', category: 'residence' },
+            'naturalization': { name: 'Naturalization Application', price: 1100000, desc: 'Korean citizenship', icon: '🏛️', category: 'residence' },
+            'nationality-recovery': { name: 'Nationality Recovery', price: 550000, desc: 'Former Korean citizenship', icon: '🔙', category: 'residence' },
+            'nationality-selection': { name: 'Nationality Selection', price: 110000, desc: 'Dual citizen selection', icon: '🌍', category: 'residence' },
+            'nationality-renounce': { name: 'Nationality Renunciation', price: 110000, desc: 'Korean citizenship waiver', icon: '📄', category: 'residence' },
+            'nationality-loss': { name: 'Nationality Loss Report', price: 110000, desc: 'Foreign citizenship report', icon: '📋', category: 'residence' },
+            'nationality-retention': { name: 'Nationality Retention', price: 110000, desc: 'Citizenship retention intent', icon: '✍️', category: 'residence' },
+            'nationality-acquisition': { name: 'Nationality Acquisition', price: 110000, desc: 'Recognition-based citizenship', icon: '📜', category: 'residence' },
+            'nationality-judgment': { name: 'Nationality Determination', price: 110000, desc: 'Nationality status inquiry', icon: '⚖️', category: 'residence' },
+
+            // General Registration & Certificates
+            'arc-registration': { name: 'Alien Registration', price: 110000, desc: 'Required within 90 days', icon: '🆔', category: 'registration' },
+            'arc-reissue': { name: 'ARC Reissue', price: 110000, desc: 'Lost/damaged card replacement', icon: '🔄', category: 'registration' },
+            'address-change': { name: 'Address Change Report', price: 33000, desc: 'Moving address update', icon: '🏠', category: 'registration' },
+            'f4-address-change': { name: 'F-4 Address Change', price: 33000, desc: 'Overseas Korean address', icon: '🇰🇷', category: 'registration' },
+            'passport-change': { name: 'Passport/Info Change', price: 33000, desc: 'Passport/name update', icon: '📝', category: 'registration' },
+            'reentry-permit-multiple': { name: 'Multiple Re-entry Permit', price: 55000, desc: 'Multiple border crossings', icon: '🔁', category: 'registration' },
+            'reentry-permit-single': { name: 'Single Re-entry Permit', price: 55000, desc: 'One-time border crossing', icon: '🔙', category: 'registration' },
+            'cert-entry-exit': { name: 'Entry/Exit Certificate', price: 22000, desc: 'Travel history record', icon: '📋', category: 'registration' },
+            'cert-arc': { name: 'ARC Certificate', price: 22000, desc: 'Registration proof', icon: '📄', category: 'registration' },
+            'cert-residence': { name: 'Residence Certificate', price: 22000, desc: 'F-4 residence proof', icon: '🏠', category: 'registration' },
+            'cert-realestate': { name: 'Real Estate Registration ID', price: 22000, desc: 'Property transaction', icon: '🏘️', category: 'registration' },
+            'cert-arc-number-change': { name: 'ARC Number Change Cert', price: 22000, desc: 'Number change confirmation', icon: '📋', category: 'registration' },
+            'cert-nationality': { name: 'Nationality Certificate', price: 22000, desc: 'Nationality status proof', icon: '📜', category: 'registration' }
+        };
+
+        // Category names for filter
+        const categoryNames = {
+            'all': 'All Services',
+            'premium': 'Premium',
+            'education': 'Education & Job',
+            'employment': 'Employment',
+            'business': 'Business',
+            'family': 'Family & Korean',
+            'residence': 'Residence & Citizenship',
+            'registration': 'Registration & Certs'
+        };
+
+        // Decision Tree - 3 steps to narrow down services
         const decisionTree = {
             step1: {
                 question: "What is your current status?",
                 subtitle: "Select the option that best describes your situation",
                 options: [
-                    { id: "valid_visa", title: "In Korea with Valid Visa", desc: "Currently staying legally" },
-                    { id: "overstay", title: "In Korea - Overstaying", desc: "Visa expired or no valid status" },
-                    { id: "overseas", title: "Outside Korea", desc: "Planning to visit or move" },
-                    { id: "korean", title: "Korean Citizen", desc: "With foreign family members" }
+                    { id: "valid_visa", title: "In Korea with Valid Visa", desc: "Currently staying legally", icon: "✅" },
+                    { id: "student", title: "Student in Korea", desc: "D-2, D-4 student visa holder", icon: "🎓" },
+                    { id: "worker", title: "Worker in Korea", desc: "E-7, E-9, H-2 work visa", icon: "💼" },
+                    { id: "family_visa", title: "Family/Marriage Visa", desc: "F-1, F-3, F-6 visa holder", icon: "👪" },
+                    { id: "korean_ethnic", title: "Ethnic Korean Abroad", desc: "F-4, H-2 or applying", icon: "🇰🇷" },
+                    { id: "business_owner", title: "Business/Investor", desc: "D-8, D-9 or planning", icon: "🏢" },
+                    { id: "permanent_citizen", title: "Permanent Resident/Citizen", desc: "F-5, F-2 or citizenship", icon: "🏠" },
+                    { id: "need_help", title: "Need Guidance", desc: "Not sure what I need", icon: "❓" }
                 ]
             },
             step2: {
@@ -438,420 +603,151 @@
                     question: "What do you need help with?",
                     subtitle: "Select your primary purpose",
                     options: [
-                        { id: "extend", title: "Extend My Visa", desc: "Stay longer with current status" },
-                        { id: "change", title: "Change Visa Type", desc: "Switch to different visa category" },
-                        { id: "report", title: "Report Changes", desc: "Address, workplace, passport" },
-                        { id: "certificate", title: "Get Documents", desc: "Certificates & proof documents" },
-                        { id: "permanent", title: "Permanent Residency", desc: "Apply for F-5 visa" },
-                        { id: "naturalize", title: "Naturalization", desc: "Become Korean citizen" }
+                        { id: "extend_visa", title: "Extend My Visa", desc: "Stay longer in Korea", icon: "⏳" },
+                        { id: "change_visa", title: "Change Visa Type", desc: "Switch to different visa", icon: "🔄" },
+                        { id: "report_changes", title: "Report Changes", desc: "Address, passport, etc.", icon: "📝" },
+                        { id: "get_documents", title: "Get Documents", desc: "Certificates & permits", icon: "📄" },
+                        { id: "upgrade_status", title: "Upgrade Status", desc: "F-2, F-5, citizenship", icon: "⬆️" }
                     ]
                 },
-                overstay: {
+                student: {
+                    question: "What do you need?",
+                    subtitle: "Select your student service",
+                    options: [
+                        { id: "student_extend", title: "Extend Student Visa", desc: "D-2, D-4 renewal", icon: "📖" },
+                        { id: "student_change", title: "Change Visa Type", desc: "D-4→D-2, or work visa", icon: "🔄" },
+                        { id: "student_work", title: "Part-time/Internship", desc: "Work permits & reports", icon: "⏰" },
+                        { id: "student_graduate", title: "After Graduation", desc: "D-10 job seeker visa", icon: "🎓" },
+                        { id: "student_family", title: "Invite Family", desc: "Parent invitation", icon: "👨‍👩‍👧" }
+                    ]
+                },
+                worker: {
+                    question: "What do you need?",
+                    subtitle: "Select your employment service",
+                    options: [
+                        { id: "work_extend", title: "Extend Work Visa", desc: "E-7 visa renewal", icon: "📅" },
+                        { id: "work_change_job", title: "Change Workplace", desc: "New employer", icon: "🏢" },
+                        { id: "work_upgrade", title: "Upgrade to E-7-4", desc: "Skilled worker visa", icon: "🔧" },
+                        { id: "work_residence", title: "Get Residence Visa", desc: "F-2-7 points-based", icon: "⭐" },
+                        { id: "work_reports", title: "Employment Reports", desc: "Various notifications", icon: "📝" }
+                    ]
+                },
+                family_visa: {
+                    question: "What do you need?",
+                    subtitle: "Select your family service",
+                    options: [
+                        { id: "family_extend", title: "Extend Family Visa", desc: "F-1, F-3, F-6 renewal", icon: "📅" },
+                        { id: "family_marriage", title: "Marriage Visa (F-6)", desc: "Spouse of Korean", icon: "💍" },
+                        { id: "family_children", title: "Children's Visa", desc: "Child birth visa", icon: "👶" },
+                        { id: "family_invite", title: "Invite Family", desc: "From overseas", icon: "✈️" },
+                        { id: "family_permanent", title: "Permanent Residence", desc: "F-5 application", icon: "🏠" }
+                    ]
+                },
+                korean_ethnic: {
+                    question: "What do you need?",
+                    subtitle: "Select your service",
+                    options: [
+                        { id: "ethnic_f4", title: "F-4 Overseas Korean", desc: "Get or extend F-4", icon: "🎌" },
+                        { id: "ethnic_h2", title: "H-2 Working Visit", desc: "Extend H-2 visa", icon: "🛬" },
+                        { id: "ethnic_upgrade", title: "H-2 → F-4 Change", desc: "Upgrade to F-4", icon: "⬆️" },
+                        { id: "ethnic_register", title: "Registration/Docs", desc: "F-4 registration", icon: "📍" }
+                    ]
+                },
+                business_owner: {
+                    question: "What type of business?",
+                    subtitle: "Select your business service",
+                    options: [
+                        { id: "biz_startup", title: "Start a Business", desc: "D-8 corporate visa", icon: "🚀" },
+                        { id: "biz_trade", title: "Trade/Commerce", desc: "D-9 trade visa", icon: "🌐" },
+                        { id: "biz_extend", title: "Extend Business Visa", desc: "D-8, D-9 renewal", icon: "📅" },
+                        { id: "biz_invest_report", title: "Investment Reports", desc: "FIC, notifications", icon: "📋" }
+                    ]
+                },
+                permanent_citizen: {
+                    question: "What do you need?",
+                    subtitle: "Select your service",
+                    options: [
+                        { id: "perm_f2_extend", title: "Extend F-2 Visa", desc: "F-2 renewal", icon: "🏡" },
+                        { id: "perm_f5_apply", title: "Apply for F-5", desc: "Permanent residence", icon: "🏠" },
+                        { id: "perm_f5_renew", title: "Renew F-5 Card", desc: "10-year renewal", icon: "🔄" },
+                        { id: "perm_naturalize", title: "Naturalization", desc: "Korean citizenship", icon: "🏛️" },
+                        { id: "perm_nationality", title: "Nationality Services", desc: "Recovery, selection, etc.", icon: "🌍" }
+                    ]
+                },
+                need_help: {
                     question: "What is your situation?",
-                    subtitle: "We can help with urgent cases",
+                    subtitle: "Let us help you find the right service",
                     options: [
-                        { id: "voluntary", title: "Voluntary Departure", desc: "Want to leave legally" },
-                        { id: "deportation", title: "Deportation Order", desc: "Received removal notice" },
-                        { id: "legal_help", title: "Need Legal Advice", desc: "Understand my options" }
-                    ]
-                },
-                overseas: {
-                    question: "What is your purpose of visit?",
-                    subtitle: "Select your primary reason",
-                    options: [
-                        { id: "tourism", title: "Tourism / Short Visit", desc: "Less than 90 days" },
-                        { id: "work", title: "Employment", desc: "Work in Korea" },
-                        { id: "study", title: "Study / Training", desc: "Education purposes" },
-                        { id: "business", title: "Business / Investment", desc: "Start or invest in business" },
-                        { id: "family", title: "Family / Marriage", desc: "Join family in Korea" }
-                    ]
-                },
-                korean: {
-                    question: "Who needs immigration help?",
-                    subtitle: "Select your family situation",
-                    options: [
-                        { id: "spouse_invite", title: "Invite Foreign Spouse", desc: "Marriage visa (F-6)" },
-                        { id: "parent_invite", title: "Invite Parents", desc: "Family visitation (F-1)" },
-                        { id: "child_invite", title: "Invite Children", desc: "Dependent visa" },
-                        { id: "family_naturalize", title: "Family Naturalization", desc: "Help them become Korean" }
-                    ]
-                }
-            },
-            step3: {
-                // Valid Visa paths
-                extend: {
-                    question: "What type of visa do you have?",
-                    subtitle: "Select your current visa category",
-                    options: [
-                        { id: "ext_work", title: "Work Visa", desc: "E-1 to E-7, etc." },
-                        { id: "ext_study", title: "Student Visa", desc: "D-2, D-4" },
-                        { id: "ext_family", title: "Family Visa", desc: "F-1, F-2, F-6" },
-                        { id: "ext_other", title: "Other Visa", desc: "D-10, G-1, etc." }
-                    ]
-                },
-                change: {
-                    question: "What visa do you want to change to?",
-                    subtitle: "Select your target visa type",
-                    options: [
-                        { id: "chg_work", title: "Work Visa", desc: "Employment-based" },
-                        { id: "chg_family", title: "Family Visa", desc: "Marriage, dependent" },
-                        { id: "chg_business", title: "Business Visa", desc: "D-8, D-9" },
-                        { id: "chg_residence", title: "Long-term Residence", desc: "F-2, F-5" }
-                    ]
-                },
-                report: {
-                    question: "What do you need to report?",
-                    subtitle: "Select the type of change",
-                    options: [
-                        { id: "rep_address", title: "Address Change", desc: "Moved to new location" },
-                        { id: "rep_workplace", title: "Workplace Change", desc: "New employer or job" },
-                        { id: "rep_passport", title: "Passport Update", desc: "New passport issued" },
-                        { id: "rep_status", title: "Status Change", desc: "Marriage, divorce, etc." }
-                    ]
-                },
-                certificate: {
-                    question: "What document do you need?",
-                    subtitle: "Select the certificate type",
-                    options: [
-                        { id: "cert_alien", title: "Alien Registration", desc: "ID card related" },
-                        { id: "cert_entry", title: "Entry/Exit Records", desc: "Travel history" },
-                        { id: "cert_status", title: "Status Certificate", desc: "Visa status proof" },
-                        { id: "cert_invitation", title: "Invitation Letter", desc: "For family visits" }
-                    ]
-                },
-                permanent: {
-                    question: "What is your eligibility basis?",
-                    subtitle: "Select your qualification path",
-                    options: [
-                        { id: "perm_work", title: "Employment-based", desc: "5+ years with work visa" },
-                        { id: "perm_marriage", title: "Marriage-based", desc: "Married to Korean" },
-                        { id: "perm_invest", title: "Investment-based", desc: "Business investor" },
-                        { id: "perm_special", title: "Special Contribution", desc: "Exceptional cases" }
-                    ]
-                },
-                naturalize: {
-                    question: "What type of naturalization?",
-                    subtitle: "Select your path to citizenship",
-                    options: [
-                        { id: "nat_general", title: "General Naturalization", desc: "5+ years residence" },
-                        { id: "nat_simple", title: "Simplified Naturalization", desc: "Marriage to Korean" },
-                        { id: "nat_special", title: "Special Naturalization", desc: "Special contribution" }
-                    ]
-                },
-                // Overstay paths
-                voluntary: {
-                    question: "How long have you overstayed?",
-                    subtitle: "This affects your options",
-                    options: [
-                        { id: "vol_short", title: "Less than 3 months", desc: "Recent overstay" },
-                        { id: "vol_medium", title: "3 months to 1 year", desc: "Moderate period" },
-                        { id: "vol_long", title: "Over 1 year", desc: "Extended overstay" }
-                    ]
-                },
-                deportation: {
-                    question: "What stage are you at?",
-                    subtitle: "Select your current situation",
-                    options: [
-                        { id: "dep_notice", title: "Received Notice", desc: "Just got the order" },
-                        { id: "dep_detention", title: "In Detention", desc: "At immigration facility" },
-                        { id: "dep_appeal", title: "Want to Appeal", desc: "Challenge the decision" }
-                    ]
-                },
-                legal_help: {
-                    question: "What kind of legal help?",
-                    subtitle: "Select your concern",
-                    options: [
-                        { id: "legal_risk", title: "Risk Assessment", desc: "Understand my situation" },
-                        { id: "legal_options", title: "Legal Options", desc: "What can I do" },
-                        { id: "legal_represent", title: "Legal Representation", desc: "Need a lawyer" }
-                    ]
-                },
-                // Overseas paths
-                tourism: {
-                    question: "What's your nationality?",
-                    subtitle: "Visa requirements vary by country",
-                    options: [
-                        { id: "tour_exempt", title: "Visa-Exempt Country", desc: "US, EU, Japan, etc." },
-                        { id: "tour_required", title: "Visa Required", desc: "Need K-ETA or visa" }
-                    ]
-                },
-                work: {
-                    question: "What type of work?",
-                    subtitle: "Select your employment type",
-                    options: [
-                        { id: "work_pro", title: "Professional/Skilled", desc: "E-7, E-1~E-5" },
-                        { id: "work_eps", title: "EPS Worker", desc: "E-9 manufacturing" },
-                        { id: "work_teach", title: "Teaching", desc: "E-2 language teaching" },
-                        { id: "work_entertain", title: "Entertainment", desc: "E-6 arts/sports" }
-                    ]
-                },
-                study: {
-                    question: "What type of study?",
-                    subtitle: "Select your program",
-                    options: [
-                        { id: "study_degree", title: "Degree Program", desc: "D-2 university" },
-                        { id: "study_language", title: "Language Course", desc: "D-4 Korean study" },
-                        { id: "study_exchange", title: "Exchange Program", desc: "Short-term study" }
-                    ]
-                },
-                business: {
-                    question: "What's your business plan?",
-                    subtitle: "Select your investment type",
-                    options: [
-                        { id: "biz_startup", title: "Start a Business", desc: "D-8 corporate investor" },
-                        { id: "biz_invest", title: "Investment Only", desc: "D-8 investor" },
-                        { id: "biz_trade", title: "Trade Activities", desc: "D-9 trade manager" }
-                    ]
-                },
-                family: {
-                    question: "What's your relationship?",
-                    subtitle: "Select family type",
-                    options: [
-                        { id: "fam_spouse", title: "Marry Korean Citizen", desc: "F-6 marriage visa" },
-                        { id: "fam_join", title: "Join Family Member", desc: "F-1 family visit" },
-                        { id: "fam_ethnic", title: "Ethnic Korean", desc: "F-4 overseas Korean" }
-                    ]
-                },
-                // Korean citizen paths
-                spouse_invite: {
-                    question: "Where is your spouse now?",
-                    subtitle: "Select current location",
-                    options: [
-                        { id: "sp_overseas", title: "Still Overseas", desc: "Need to apply from abroad" },
-                        { id: "sp_korea", title: "Already in Korea", desc: "Status change needed" }
-                    ]
-                },
-                parent_invite: {
-                    question: "What type of visit?",
-                    subtitle: "Select visit duration",
-                    options: [
-                        { id: "par_short", title: "Short Visit", desc: "C-3 visitor visa" },
-                        { id: "par_long", title: "Long-term Stay", desc: "F-1 family visa" }
-                    ]
-                },
-                child_invite: {
-                    question: "Child's age and status?",
-                    subtitle: "Select applicable situation",
-                    options: [
-                        { id: "child_minor", title: "Minor Child", desc: "Under 18 years old" },
-                        { id: "child_adult", title: "Adult Child", desc: "18 or older" }
-                    ]
-                },
-                family_naturalize: {
-                    question: "Family member's status?",
-                    subtitle: "Current immigration status",
-                    options: [
-                        { id: "fnat_resident", title: "Already Residing", desc: "Has F-2 or F-5" },
-                        { id: "fnat_spouse", title: "Marriage Visa", desc: "Has F-6" },
-                        { id: "fnat_other", title: "Other Visa", desc: "Different visa type" }
+                        { id: "help_diagnosis", title: "Visa Pre-diagnosis", desc: "Expert consultation", icon: "🔍" },
+                        { id: "help_emergency", title: "Urgent/Legal Issue", desc: "Deportation, overstay", icon: "⚖️" },
+                        { id: "help_documents", title: "Need Documents", desc: "Certificates & proofs", icon: "📄" },
+                        { id: "help_all", title: "Browse All Services", desc: "See complete list", icon: "📋" }
                     ]
                 }
             }
         };
 
-        // Service Recommendations - using actual service IDs from service-apply-general.html
-        const serviceRecommendations = {
-            // Work visa extensions
-            ext_work: [
-                { name: "E-7 Visa Extension", desc: "Extend your E-7 professional work visa before expiration.", code: "e7-extension" }
-            ],
-            ext_study: [
-                { name: "D-2, D-4 Visa Extension", desc: "Extend your D-2 or D-4 student visa. Requires enrollment proof.", code: "d2-d4-extension" }
-            ],
-            ext_family: [
-                { name: "F-6 Visa Extension", desc: "Extend your F-6 marriage visa.", code: "f6-extension" },
-                { name: "F-2 Residence Extension", desc: "Extend your F-2 residence visa.", code: "f2-extension" }
-            ],
-            ext_other: [
-                { name: "D-10 Visa Extension", desc: "Extend your D-10 job seeker visa.", code: "d10-extension" }
-            ],
-            // Visa changes
-            chg_work: [
-                { name: "E-7 Professional Visa Change", desc: "Change your current visa to E-7 professional employment visa.", code: "e7-change" },
-                { name: "E-7-4 Skilled Worker Visa", desc: "E-9/H-2 skilled worker transition.", code: "e7-4-change" }
-            ],
-            chg_family: [
-                { name: "F-6 Marriage Immigration", desc: "Change to F-6 marriage visa.", code: "f6-change" },
-                { name: "F-3 Dependent Family Visa", desc: "Spouse/child accompanying visa.", code: "f3-change" },
-                { name: "F-1 Family Visit Visa", desc: "Relative long-term stay visa.", code: "f1-change" }
-            ],
-            chg_business: [
-                { name: "D-8-1 Corporate Investment", desc: "Corporate establishment visa.", code: "d8-1-change" },
-                { name: "D-9-1 Trade Business", desc: "Trading business visa.", code: "d9-1-change" }
-            ],
-            chg_residence: [
-                { name: "F-2-7 Points-based Residence", desc: "Outstanding talent residence visa.", code: "f2-7-change" },
-                { name: "F-5 Permanent Residence", desc: "Korea permanent residency.", code: "f5-change" }
-            ],
-            // Reports
-            rep_address: [
-                { name: "Address Change Report", desc: "Report your new address after moving.", code: "address-change" }
-            ],
-            rep_workplace: [
-                { name: "Workplace Change Report", desc: "Report new employer or workplace change.", code: "workplace-change-report" },
-                { name: "Workplace Change Permit", desc: "Pre-approval for job transfer.", code: "workplace-change-permit" }
-            ],
-            rep_passport: [
-                { name: "Passport/Info Change", desc: "Update your alien registration with new passport info.", code: "passport-change" }
-            ],
-            rep_status: [
-                { name: "Employment Info Update", desc: "Report workplace/salary changes.", code: "employment-info-change" }
-            ],
-            // Certificates
-            cert_alien: [
-                { name: "Alien Registration", desc: "Required within 90 days of entry.", code: "arc-registration" },
-                { name: "ARC Reissue", desc: "Lost/damaged card replacement.", code: "arc-reissue" }
-            ],
-            cert_entry: [
-                { name: "Entry/Exit Certificate", desc: "Official record of your travel history.", code: "cert-entry-exit" }
-            ],
-            cert_status: [
-                { name: "ARC Certificate", desc: "Proof of your registration status.", code: "cert-arc" }
-            ],
-            cert_invitation: [
-                { name: "Family Invitation Visa", desc: "Overseas family invitation service.", code: "family-invite" }
-            ],
-            // Permanent residence
-            perm_work: [
-                { name: "F-5 Permanent Residence", desc: "Apply for permanent residence based on employment history.", code: "f5-change" }
-            ],
-            perm_marriage: [
-                { name: "F-5 Permanent Residence", desc: "Apply for permanent residence as spouse of Korean.", code: "f5-change" }
-            ],
-            perm_invest: [
-                { name: "F-5 Permanent Residence", desc: "Apply for permanent residence as business investor.", code: "f5-change" }
-            ],
-            perm_special: [
-                { name: "F-5 Permanent Residence", desc: "Apply based on special contribution or merit.", code: "f5-change" }
-            ],
-            // Naturalization
-            nat_general: [
-                { name: "Naturalization Application", desc: "Become Korean citizen through standard process (5+ years).", code: "naturalization" }
-            ],
-            nat_simple: [
-                { name: "Naturalization Application", desc: "Faster path for spouses of Korean citizens.", code: "naturalization" }
-            ],
-            nat_special: [
-                { name: "Naturalization Application", desc: "Naturalization for those with special contributions.", code: "naturalization" }
-            ],
-            // Overstay - these go to emergency legal consultation
-            vol_short: [
-                { name: "Immigration Dispute Resolution", desc: "Consult with immigration attorneys about your situation.", code: "emergency-legal" }
-            ],
-            vol_medium: [
-                { name: "Immigration Dispute Resolution", desc: "Navigate the departure process with legal support.", code: "emergency-legal" }
-            ],
-            vol_long: [
-                { name: "Immigration Dispute Resolution", desc: "Legal representation for complex overstay cases.", code: "emergency-legal" }
-            ],
-            dep_notice: [
-                { name: "Immigration Dispute Resolution", desc: "Challenge deportation order with legal representation.", code: "emergency-legal" }
-            ],
-            dep_detention: [
-                { name: "Immigration Dispute Resolution", desc: "Legal assistance for release from detention.", code: "emergency-legal" }
-            ],
-            dep_appeal: [
-                { name: "Immigration Dispute Resolution", desc: "File administrative appeal against deportation.", code: "emergency-legal" }
-            ],
-            legal_risk: [
-                { name: "Visa Pre-diagnosis", desc: "Professional evaluation of your immigration situation.", code: "visa-prediagnosis" }
-            ],
-            legal_options: [
-                { name: "Visa Pre-diagnosis", desc: "Understand all available legal pathways.", code: "visa-prediagnosis" }
-            ],
-            legal_represent: [
-                { name: "Immigration Dispute Resolution", desc: "Full legal representation by licensed attorney.", code: "emergency-legal" }
-            ],
-            // Tourism - consultation
-            tour_exempt: [
-                { name: "Visa Pre-diagnosis", desc: "Verify your visa-exempt entry eligibility.", code: "visa-prediagnosis" }
-            ],
-            tour_required: [
-                { name: "Visa Pre-diagnosis", desc: "Get guidance on tourist visa application.", code: "visa-prediagnosis" }
-            ],
-            // Work visa from overseas
-            work_pro: [
-                { name: "E-7 Professional Visa Change", desc: "Skilled worker visa for professionals.", code: "e7-change" },
-                { name: "E-1~E-6 Professional Change", desc: "Professor, researcher, or technical specialist visa.", code: "e1-e6-change" }
-            ],
-            work_eps: [
-                { name: "E-9 Workplace Change", desc: "E-9 employment permit system support.", code: "e9-workplace-change" }
-            ],
-            work_teach: [
-                { name: "E-1~E-6 Professional Change", desc: "Teaching and education visa.", code: "e1-e6-change" }
-            ],
-            work_entertain: [
-                { name: "E-1~E-6 Professional Change", desc: "Arts, sports, and entertainment visa.", code: "e1-e6-change" }
-            ],
-            // Study
-            study_degree: [
-                { name: "D-4→D-2 Student Visa Change", desc: "University degree program visa.", code: "d4-to-d2-change" }
-            ],
-            study_language: [
-                { name: "D-2, D-4 Visa Extension", desc: "Korean language course visa support.", code: "d2-d4-extension" }
-            ],
-            study_exchange: [
-                { name: "D-2, D-4 Visa Extension", desc: "Short-term academic exchange visa.", code: "d2-d4-extension" }
-            ],
-            // Business
-            biz_startup: [
-                { name: "D-8-4 Tech Startup Visa", desc: "Student entrepreneur visa.", code: "d8-4-change" },
-                { name: "D-8-1 Corporate Investment", desc: "Corporate investor visa for starting business.", code: "d8-1-change" }
-            ],
-            biz_invest: [
-                { name: "D-8-2 Venture Investment", desc: "Venture company investment visa.", code: "d8-2-change" },
-                { name: "D-8-3 Individual Investment", desc: "Sole proprietor investment visa.", code: "d8-3-change" }
-            ],
-            biz_trade: [
-                { name: "D-9-1 Trade Business", desc: "Trade and business management visa.", code: "d9-1-change" }
-            ],
-            // Family overseas
-            fam_spouse: [
-                { name: "F-6 Marriage Immigration", desc: "Visa for spouse of Korean citizen.", code: "f6-change" }
-            ],
-            fam_join: [
-                { name: "F-1 Family Visit Visa", desc: "Family accompaniment or visit visa.", code: "f1-change" }
-            ],
-            fam_ethnic: [
-                { name: "F-4 Overseas Korean Visa", desc: "Visa for ethnic Koreans abroad.", code: "f4-change" }
-            ],
-            // Korean inviting spouse
-            sp_overseas: [
-                { name: "Family Invitation Visa", desc: "Complete F-6 visa application from abroad.", code: "family-invite" }
-            ],
-            sp_korea: [
-                { name: "F-6 Marriage Immigration", desc: "Change existing visa to F-6 marriage visa.", code: "f6-change" }
-            ],
-            // Parent invitation
-            par_short: [
-                { name: "Family Invitation Visa", desc: "Short-term visitor visa for parents.", code: "family-invite" }
-            ],
-            par_long: [
-                { name: "F-1 Family Visit Visa", desc: "Long-term family visa for parents.", code: "f1-change" }
-            ],
-            // Child invitation
-            child_minor: [
-                { name: "Child Birth Visa Grant", desc: "Dependent visa for minor children.", code: "visa-grant-child" }
-            ],
-            child_adult: [
-                { name: "F-1 Family Visit Visa", desc: "F-1 visa for adult children.", code: "f1-change" }
-            ],
-            // Family naturalization
-            fnat_resident: [
-                { name: "Naturalization Application", desc: "Naturalization for permanent residents.", code: "naturalization" }
-            ],
-            fnat_spouse: [
-                { name: "Naturalization Application", desc: "Simplified naturalization for F-6 holders.", code: "naturalization" }
-            ],
-            fnat_other: [
-                { name: "Visa Pre-diagnosis", desc: "Assess eligibility and plan naturalization.", code: "visa-prediagnosis" }
-            ]
+        // Service mappings for each final selection
+        const serviceMapping = {
+            // Valid visa paths
+            extend_visa: ['d2-d4-extension', 'd10-extension', 'e7-extension', 'f2-extension', 'f4-extension', 'f6-extension', 'h2-extension', 'business-extension'],
+            change_visa: ['e7-change', 'e7-4-change', 'f2-7-change', 'f6-change', 'f4-change', 'd8-1-change', 'd9-1-change'],
+            report_changes: ['address-change', 'f4-address-change', 'passport-change', 'workplace-change-report', 'employment-info-change'],
+            get_documents: ['arc-registration', 'arc-reissue', 'reentry-permit-multiple', 'reentry-permit-single', 'cert-entry-exit', 'cert-arc', 'cert-residence', 'cert-realestate', 'cert-arc-number-change', 'cert-nationality'],
+            upgrade_status: ['f2-7-change', 'f5-change', 'naturalization'],
+
+            // Student paths
+            student_extend: ['d2-d4-extension'],
+            student_change: ['d4-to-d2-change', 'e7-change', 'd10-1-change'],
+            student_work: ['parttime-permit', 'intern-report'],
+            student_graduate: ['d10-1-change', 'd10-2-change', 'd10-3-change', 'd10-t-change', 'd10-extension'],
+            student_family: ['parent-invite'],
+
+            // Worker paths
+            work_extend: ['e7-extension'],
+            work_change_job: ['workplace-change-permit', 'workplace-change-report', 'e9-workplace-change'],
+            work_upgrade: ['e7-4-change', 'e7-4r-change', 'e7-st-change'],
+            work_residence: ['f2-7-change', 'f2-r-change', 'f5-change'],
+            work_reports: ['employment-info-change', 'dispatch-report', 'income-report', 'foreign-worker-change', 'h2-work-start', 'outside-activity'],
+
+            // Family paths
+            family_extend: ['f1-change', 'f3-change', 'f6-extension'],
+            family_marriage: ['f6-change'],
+            family_children: ['visa-grant-child', 'visa-grant-f6-child'],
+            family_invite: ['family-invite'],
+            family_permanent: ['f5-change', 'naturalization'],
+
+            // Ethnic Korean paths
+            ethnic_f4: ['f4-change', 'f4-extension'],
+            ethnic_h2: ['h2-extension'],
+            ethnic_upgrade: ['h2-to-f4-change'],
+            ethnic_register: ['f4-registration', 'f4-address-change'],
+
+            // Business paths
+            biz_startup: ['d8-1-change', 'd8-2-change', 'd8-3-change', 'd8-4-change'],
+            biz_trade: ['d9-1-change', 'd9-2-change', 'd9-3-change', 'd9-4-change', 'd9-5-change'],
+            biz_extend: ['business-extension'],
+            biz_invest_report: ['fic-registration', 'fi-report'],
+
+            // Permanent/Citizen paths
+            perm_f2_extend: ['f2-extension'],
+            perm_f5_apply: ['f5-change'],
+            perm_f5_renew: ['f5-reissue'],
+            perm_naturalize: ['naturalization'],
+            perm_nationality: ['nationality-recovery', 'nationality-selection', 'nationality-renounce', 'nationality-loss', 'nationality-retention', 'nationality-acquisition', 'nationality-judgment'],
+
+            // Help paths
+            help_diagnosis: ['visa-prediagnosis'],
+            help_emergency: ['emergency-legal', 'visa-prediagnosis'],
+            help_documents: ['cert-entry-exit', 'cert-arc', 'cert-residence', 'cert-realestate', 'cert-nationality', 'arc-registration', 'arc-reissue'],
+            help_all: Object.keys(allServices) // All services
         };
 
         // State
         let currentStep = 1;
         let selections = [];
         let history = [];
+        let currentCategory = 'all';
 
         // Initialize
         function init() {
@@ -873,9 +769,6 @@
             } else if (currentStep === 2) {
                 const prevSelection = selections[0];
                 stepData = decisionTree.step2[prevSelection];
-            } else if (currentStep === 3) {
-                const prevSelection = selections[1];
-                stepData = decisionTree.step3[prevSelection];
             }
 
             if (!stepData) {
@@ -884,8 +777,8 @@
             }
 
             // Update progress
-            document.getElementById('progressText').textContent = `Step ${currentStep} of 4`;
-            document.getElementById('progressFill').style.width = `${currentStep * 25}%`;
+            document.getElementById('progressText').textContent = `Step ${currentStep} of 3`;
+            document.getElementById('progressFill').style.width = `${currentStep * 33}%`;
 
             // Update question
             document.getElementById('questionTitle').textContent = stepData.question;
@@ -895,6 +788,7 @@
             const optionsGrid = document.getElementById('optionsGrid');
             optionsGrid.innerHTML = stepData.options.map(opt => `
                 <button class="option-btn" onclick="selectOption('${opt.id}')">
+                    <div class="option-icon">${opt.icon || ''}</div>
                     <div class="option-title">${opt.title}</div>
                     ${opt.desc ? `<div class="option-desc">${opt.desc}</div>` : ''}
                 </button>
@@ -910,7 +804,7 @@
             selections[currentStep - 1] = optionId;
             currentStep++;
 
-            if (currentStep > 3 || !getNextStepData()) {
+            if (currentStep > 2 || !getNextStepData()) {
                 showResults();
             } else {
                 renderStep();
@@ -921,8 +815,6 @@
         function getNextStepData() {
             if (currentStep === 2) {
                 return decisionTree.step2[selections[0]];
-            } else if (currentStep === 3) {
-                return decisionTree.step3[selections[1]];
             }
             return null;
         }
@@ -934,26 +826,71 @@
             resultSection.style.display = 'block';
 
             // Update progress
-            document.getElementById('progressText').textContent = 'Complete';
+            document.getElementById('progressText').textContent = 'Results';
             document.getElementById('progressFill').style.width = '100%';
 
-            // Get recommendations based on last selection
+            // Get service IDs based on last selection
             const lastSelection = selections[selections.length - 1];
-            const services = serviceRecommendations[lastSelection] || [
-                { name: "General Consultation", desc: "Speak with our immigration experts to find the right solution.", code: "general-consult" }
-            ];
+            const serviceIds = serviceMapping[lastSelection] || Object.keys(allServices);
+
+            // Build category filter
+            const categories = new Set(['all']);
+            serviceIds.forEach(id => {
+                if (allServices[id]) {
+                    categories.add(allServices[id].category);
+                }
+            });
+
+            const filterContainer = document.getElementById('categoryFilter');
+            filterContainer.innerHTML = Array.from(categories).map(cat => `
+                <button class="category-btn ${cat === 'all' ? 'active' : ''}" onclick="filterCategory('${cat}', '${lastSelection}')">
+                    ${categoryNames[cat] || cat}
+                </button>
+            `).join('');
 
             // Render services
-            const servicesContainer = document.getElementById('recommendedServices');
-            servicesContainer.innerHTML = services.map(svc => `
-                <div class="service-card">
-                    <div class="service-name">${svc.name}</div>
-                    <div class="service-desc">${svc.desc}</div>
-                    <button class="apply-btn" onclick="applyService('${svc.code}')">
-                        Apply Now <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            `).join('');
+            renderServices(serviceIds, 'all');
+        }
+
+        // Render services with filter
+        function renderServices(serviceIds, category) {
+            currentCategory = category;
+            const servicesContainer = document.getElementById('servicesGrid');
+
+            let filteredIds = serviceIds;
+            if (category !== 'all') {
+                filteredIds = serviceIds.filter(id => allServices[id] && allServices[id].category === category);
+            }
+
+            servicesContainer.innerHTML = filteredIds.map(id => {
+                const svc = allServices[id];
+                if (!svc) return '';
+
+                const priceText = svc.consulting ? 'Consultation' : (svc.price === 0 ? 'Free Consultation' : `₩${svc.price.toLocaleString()}`);
+
+                return `
+                    <div class="service-item" onclick="applyService('${id}')">
+                        <div class="service-icon">${svc.icon}</div>
+                        <div class="title">${svc.name}</div>
+                        <div class="desc">${svc.desc}</div>
+                        <div class="price">${priceText}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Filter by category
+        function filterCategory(category, lastSelection) {
+            // Update active button
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.trim() === (categoryNames[category] || category)) {
+                    btn.classList.add('active');
+                }
+            });
+
+            const serviceIds = serviceMapping[lastSelection] || Object.keys(allServices);
+            renderServices(serviceIds, category);
         }
 
         // Apply for service
@@ -976,7 +913,7 @@
             if (currentStep > 1) {
                 prevStep();
             } else {
-                window.location.href = 'index-test.html';
+                window.location.href = 'index.html';
             }
         }
 
@@ -985,6 +922,7 @@
             currentStep = 1;
             selections = [];
             history = [];
+            currentCategory = 'all';
             renderStep();
         }
 
