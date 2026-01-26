@@ -451,115 +451,176 @@
         .lawfirm-intro-section {
             background: #FFFFFF;
             border-radius: 24px;
-            padding: 56px;
+            padding: 48px;
             margin-bottom: 30px;
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
             border: 1px solid #E2E8F0;
+            overflow: hidden;
         }
 
         .lawfirm-intro-content {
             display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 48px;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 40px;
             align-items: center;
         }
 
-        /* Left Column - Badge & Text */
+        /* Left Column - Text & Badge */
         .lawfirm-left {
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
-        /* Registration Badge - Authoritative Style */
+        .lawfirm-headline {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1E293B;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            letter-spacing: -0.3px;
+        }
+
+        /* Registration Badge - Between headline and subtext */
         .registration-badge {
             display: flex;
             align-items: center;
-            gap: 16px;
-            margin-bottom: 28px;
+            gap: 14px;
+            margin-bottom: 20px;
+            padding: 12px 0;
+            border-top: 1px solid #E2E8F0;
+            border-bottom: 1px solid #E2E8F0;
         }
 
         .moj-logo {
-            height: 64px;
+            height: 56px;
             width: auto;
         }
 
         .registration-text {
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 600;
-            color: #475569;
-            letter-spacing: 0.3px;
+            color: #64748B;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
             line-height: 1.5;
         }
 
-        .lawfirm-headline {
-            font-size: 22px;
-            font-weight: 700;
-            color: #1E293B;
-            line-height: 1.5;
-            margin-bottom: 14px;
-            letter-spacing: -0.3px;
-        }
-
         .lawfirm-subtext {
-            font-size: 16px;
+            font-size: 15px;
             color: #64748B;
             line-height: 1.7;
             font-weight: 500;
         }
 
-        /* Right Column - Attorneys Only */
+        /* Right Column - Attorney Carousel */
         .lawfirm-right {
-            display: flex;
-            justify-content: center;
+            position: relative;
         }
 
-        /* Attorneys Grid - Rectangular Photos */
-        .attorneys-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px 24px;
+        /* Attorneys Carousel */
+        .attorneys-carousel {
+            position: relative;
+            background: linear-gradient(135deg, #4A4A4A 0%, #2D2D2D 100%);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .attorneys-track {
+            display: flex;
+            transition: transform 0.4s ease;
+        }
+
+        .attorneys-slide {
+            display: flex;
+            gap: 0;
+            min-width: 100%;
         }
 
         .attorney-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
+            flex: 1;
+            position: relative;
+            overflow: hidden;
         }
 
         .attorney-photo {
-            width: 120px;
-            height: 140px;
-            border-radius: 12px;
+            width: 100%;
+            height: 280px;
             object-fit: cover;
             object-position: top center;
-            border: 1px solid #E2E8F0;
-            transition: all 0.2s ease;
-            background: #F8FAFC;
+            display: block;
         }
 
-        .attorney-photo:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
+        /* Name Overlay */
+        .attorney-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 16px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
         }
 
-        .attorney-name {
+        .attorney-name-kr {
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 2px;
+        }
+
+        .attorney-name-kr .title {
+            font-size: 14px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.8);
+            margin-left: 6px;
+        }
+
+        .attorney-name-en {
             font-size: 13px;
-            font-weight: 600;
-            color: #334155;
-            text-align: center;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Carousel Navigation */
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .carousel-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .carousel-prev {
+            left: 12px;
+        }
+
+        .carousel-next {
+            right: 12px;
         }
 
         @media (max-width: 968px) {
             .lawfirm-intro-section {
-                padding: 40px 32px;
+                padding: 32px 24px;
             }
 
             .lawfirm-intro-content {
                 grid-template-columns: 1fr;
-                gap: 40px;
+                gap: 32px;
             }
 
             .lawfirm-left {
@@ -571,54 +632,47 @@
             }
 
             .lawfirm-headline {
-                font-size: 20px;
-            }
-
-            .lawfirm-subtext {
-                font-size: 15px;
-            }
-
-            .attorneys-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 16px 20px;
+                font-size: 18px;
             }
 
             .attorney-photo {
-                width: 100px;
-                height: 120px;
+                height: 220px;
             }
 
-            .attorney-name {
+            .attorney-info {
+                padding: 16px 12px;
+            }
+
+            .attorney-name-kr {
+                font-size: 16px;
+            }
+
+            .attorney-name-en {
                 font-size: 12px;
             }
         }
 
         @media (max-width: 480px) {
             .lawfirm-intro-section {
-                padding: 32px 20px;
+                padding: 24px 16px;
             }
 
             .moj-logo {
-                height: 52px;
+                height: 44px;
             }
 
             .registration-text {
-                font-size: 11px;
-            }
-
-            .attorneys-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 12px 16px;
+                font-size: 10px;
             }
 
             .attorney-photo {
-                width: 85px;
-                height: 100px;
-                border-radius: 8px;
+                height: 180px;
             }
 
-            .attorney-name {
-                font-size: 11px;
+            .carousel-nav {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
             }
         }
 
@@ -1430,47 +1484,92 @@
         <!-- Law Firm Introduction Section -->
         <div class="lawfirm-intro-section">
             <div class="lawfirm-intro-content">
-                <!-- Left Column - Badge & Text -->
+                <!-- Left Column - Text & Badge -->
                 <div class="lawfirm-left">
+                    <p class="lawfirm-headline">Lawyeon's Visa & Immigration Center specializes in legal support for foreigners in Korea.</p>
                     <div class="registration-badge">
                         <img src="images/moj-badge.jpg" alt="Ministry of Justice" class="moj-logo">
                         <span class="registration-text">Registered Immigration Agency<br>#25-SM-RG-063</span>
                     </div>
-                    <p class="lawfirm-headline">Lawyeon's Visa & Immigration Center specializes in legal support for foreigners in Korea.</p>
                     <p class="lawfirm-subtext">Practicing in immigration office services and legal matters for foreigners and immigrants.</p>
                 </div>
 
-                <!-- Right Column - Attorneys Only -->
+                <!-- Right Column - Attorney Carousel -->
                 <div class="lawfirm-right">
-                    <div class="attorneys-grid">
-                        <div class="attorney-card">
-                            <img src="images/attorneys/bong.png" alt="S.H. Bong" class="attorney-photo">
-                            <span class="attorney-name">Atty. S.H. Bong</span>
+                    <div class="attorneys-carousel">
+                        <div class="attorneys-track" id="attorneysTrack">
+                            <!-- Slide 1: 3 attorneys -->
+                            <div class="attorneys-slide">
+                                <div class="attorney-card">
+                                    <img src="images/attorneys/bong.png" alt="S.H. Bong" class="attorney-photo">
+                                    <div class="attorney-info">
+                                        <div class="attorney-name-kr">봉석현 <span class="title">변호사</span></div>
+                                        <div class="attorney-name-en">S.H. Bong</div>
+                                    </div>
+                                </div>
+                                <div class="attorney-card">
+                                    <img src="images/attorneys/min.png" alt="J.W. Min" class="attorney-photo">
+                                    <div class="attorney-info">
+                                        <div class="attorney-name-kr">민정원 <span class="title">변호사</span></div>
+                                        <div class="attorney-name-en">J.W. Min</div>
+                                    </div>
+                                </div>
+                                <div class="attorney-card">
+                                    <img src="images/attorneys/nam.png" alt="D.H. Nam" class="attorney-photo">
+                                    <div class="attorney-info">
+                                        <div class="attorney-name-kr">남동현 <span class="title">변호사</span></div>
+                                        <div class="attorney-name-en">D.H. Nam</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Slide 2: 3 attorneys -->
+                            <div class="attorneys-slide">
+                                <div class="attorney-card">
+                                    <img src="images/attorneys/kim.png" alt="S.C. Kim" class="attorney-photo">
+                                    <div class="attorney-info">
+                                        <div class="attorney-name-kr">김수찬 <span class="title">변호사</span></div>
+                                        <div class="attorney-name-en">S.C. Kim</div>
+                                    </div>
+                                </div>
+                                <div class="attorney-card">
+                                    <img src="images/attorneys/hwang.jpg" alt="Y.H. Hwang" class="attorney-photo">
+                                    <div class="attorney-info">
+                                        <div class="attorney-name-kr">황유환 <span class="title">변호사</span></div>
+                                        <div class="attorney-name-en">Y.H. Hwang</div>
+                                    </div>
+                                </div>
+                                <div class="attorney-card">
+                                    <img src="images/attorneys/shin.jpg" alt="D.G. Shin" class="attorney-photo">
+                                    <div class="attorney-info">
+                                        <div class="attorney-name-kr">신동근 <span class="title">변호사</span></div>
+                                        <div class="attorney-name-en">D.G. Shin</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="attorney-card">
-                            <img src="images/attorneys/min.png" alt="J.W. Min" class="attorney-photo">
-                            <span class="attorney-name">Atty. J.W. Min</span>
-                        </div>
-                        <div class="attorney-card">
-                            <img src="images/attorneys/nam.png" alt="D.H. Nam" class="attorney-photo">
-                            <span class="attorney-name">Atty. D.H. Nam</span>
-                        </div>
-                        <div class="attorney-card">
-                            <img src="images/attorneys/kim.png" alt="S.C. Kim" class="attorney-photo">
-                            <span class="attorney-name">Atty. S.C. Kim</span>
-                        </div>
-                        <div class="attorney-card">
-                            <img src="images/attorneys/hwang.jpg" alt="Y.H. Hwang" class="attorney-photo">
-                            <span class="attorney-name">Atty. Y.H. Hwang</span>
-                        </div>
-                        <div class="attorney-card">
-                            <img src="images/attorneys/shin.jpg" alt="D.G. Shin" class="attorney-photo">
-                            <span class="attorney-name">Atty. D.G. Shin</span>
-                        </div>
+                        <button class="carousel-nav carousel-prev" onclick="slideAttorneys(-1)">‹</button>
+                        <button class="carousel-nav carousel-next" onclick="slideAttorneys(1)">›</button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <script>
+            let currentSlide = 0;
+            const totalSlides = 2;
+
+            function slideAttorneys(direction) {
+                currentSlide += direction;
+                if (currentSlide < 0) currentSlide = totalSlides - 1;
+                if (currentSlide >= totalSlides) currentSlide = 0;
+
+                const track = document.getElementById('attorneysTrack');
+                track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            }
+
+            // Auto-slide every 5 seconds
+            setInterval(() => slideAttorneys(1), 5000);
+        </script>
 
         <!-- 출입국 민원 대행 -->
         <div class="services-section">
