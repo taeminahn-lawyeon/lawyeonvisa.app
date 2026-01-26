@@ -1634,9 +1634,15 @@
         function renderMessageCard(msg) {
             // 발신자 판단 로직 개선:
             // 1. sender_type이 'admin' 또는 'staff'면 관리자
-            // 2. sender_id가 쓰레드 소유자(threadData.user_id)가 아니면 관리자로 간주
-            // 3. sender_id가 쓰레드 소유자와 같으면 고객
+            // 2. sender_id가 null이면 시스템 메시지 = 관리자
+            // 3. sender_id가 쓰레드 소유자와 다르면 관리자
+            // 4. sender_id가 쓰레드 소유자와 같으면 고객
             let isAdminMessage = msg.sender_type === 'admin' || msg.sender_type === 'staff';
+
+            // sender_id가 null인 경우 (시스템 메시지) = 관리자
+            if (!isAdminMessage && !msg.sender_id) {
+                isAdminMessage = true;
+            }
 
             // sender_type이 없거나 불분명한 경우, sender_id로 판단
             if (!isAdminMessage && msg.sender_id && threadData) {
