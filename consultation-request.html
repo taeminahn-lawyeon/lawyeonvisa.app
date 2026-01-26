@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2">
+    <title>상담 요청 - 법무법인 로연</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #f8f9fa;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 헤더 */
+        .header {
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
+            padding: 20px 0;
+            border-bottom: 3px solid #3182F6;
+        }
+
+        .header-inner {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .btn-back {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            opacity: 0.8;
+        }
+
+        .btn-back:hover {
+            opacity: 1;
+        }
+
+        /* 컨테이너 */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+        }
+
+        /* 섹션 카드 */
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 28px 24px;
+            margin: 20px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        /* 서비스 정보 */
+        .service-header {
+            margin-bottom: 24px;
+        }
+
+        .service-info h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #191F28;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .service-info p {
+            font-size: 15px;
+            color: #6B7280;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* 버튼 */
+        .btn-primary {
+            width: 100%;
+            height: 56px;
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            margin-top: 32px;
+            box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(49, 130, 246, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #D1D5DB;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-primary i {
+            margin-right: 6px;
+        }
+
+        .btn-primary.loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 상담 배너 */
+        .consulting-banner {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FFFBEB 100%);
+            border: 2px solid #F59E0B;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .consulting-banner i {
+            color: #D97706;
+            font-size: 22px;
+            margin-top: 2px;
+        }
+
+        .consulting-banner-content h3 {
+            font-size: 16px;
+            font-weight: 800;
+            color: #92400E;
+            margin-bottom: 6px;
+        }
+
+        .consulting-banner-content p {
+            font-size: 14px;
+            color: #78350F;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        /* 프로세스 리스트 */
+        .process-list {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin: 20px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .process-list h3 {
+            font-size: 18px;
+            font-weight: 800;
+            color: #191F28;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .process-list h3 i {
+            color: #10B981;
+        }
+
+        .process-step {
+            padding: 14px 0;
+            border-bottom: 1px solid #F3F4F6;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .process-step:last-child {
+            border-bottom: none;
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            background: #3182F6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            font-size: 15px;
+            color: #4E5968;
+            font-weight: 600;
+        }
+
+        .step-text strong {
+            color: #191F28;
+            font-weight: 700;
+        }
+
+        /* 로딩 */
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #E5E7EB;
+            border-top-color: #3182F6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        /* 모바일 대응 */
+        @media (max-width: 768px) {
+            .btn-primary {
+                font-size: 16px;
+                word-break: keep-all;
+                white-space: normal;
+                line-height: 1.3;
+                min-height: 52px;
+            }
+
+            .step-text {
+                font-size: 14px;
+                line-height: 1.5;
+                word-break: keep-all;
+            }
+
+            .consulting-banner-content h3 {
+                font-size: 15px;
+                line-height: 1.4;
+                word-break: keep-all;
+            }
+
+            .consulting-banner-content p {
+                font-size: 13px;
+                line-height: 1.5;
+                word-break: keep-all;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="javascript:history.back()" class="btn-back">
+                <i class="fas fa-arrow-left"></i> 뒤로
+            </a>
+            <div class="header-title">상담 요청</div>
+            <div style="width: 60px;"></div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- 로딩 -->
+        <div id="loading" class="loading-container">
+            <div class="loading-spinner"></div>
+        </div>
+
+        <!-- 상담 내용 -->
+        <div id="consultation-content" style="display: none;">
+            <!-- 배너 -->
+            <div class="consulting-banner">
+                <i class="fas fa-star"></i>
+                <div class="consulting-banner-content">
+                    <h3>무료 상담 신청</h3>
+                    <p>전문 행정사가 직접 상담해드립니다</p>
+                </div>
+            </div>
+
+            <!-- 서비스 정보 -->
+            <div class="card">
+                <div class="service-header">
+                    <div class="service-info">
+                        <h1 id="service-name">서비스명</h1>
+                        <p id="service-desc">서비스 설명</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 프로세스 -->
+            <div class="process-list">
+                <h3><i class="fas fa-list-check"></i> 어떻게 진행되나요?</h3>
+
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-text"><strong>상담 신청</strong> - 전용 쓰레드가 생성됩니다</div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-text"><strong>담당자 배정</strong> - 30분 내 연락드려요</div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-text"><strong>상황 파악</strong> - 케이스를 함께 검토해요</div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-text"><strong>견적 안내</strong> - 정확한 비용을 안내드려요</div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <div class="step-text"><strong>결제 & 진행</strong> - 서비스가 시작됩니다</div>
+                </div>
+            </div>
+
+            <!-- 신청 버튼 -->
+            <button class="btn-primary" id="consultBtn" onclick="applyForConsultation()">
+                <i class="fas fa-paper-plane"></i>
+                상담 요청하기
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // 서비스 정보 (블로그에서 링크되는 서비스들)
+        const serviceInfo = {
+            'd10-change': { name: 'D-10 구직비자 변경', desc: '졸업 후 구직활동을 위한 비자 변경' },
+            'd10-1-change': { name: 'D-10-1 일반구직 비자 변경', desc: '일반 구직비자 변경' },
+            'd10-2-change': { name: 'D-10-2 기술창업구직 비자 변경', desc: '창업 준비생 구직비자' },
+            'd10-3-change': { name: 'D-10-3 첨단기술인턴 비자 변경', desc: '첨단분야 인턴 비자' },
+            'd10-t-change': { name: 'D-10-T 최우수인재구직 비자 변경', desc: '우수대학 졸업자 구직비자' },
+            'd10-extension': { name: 'D-10 비자 연장', desc: '구직 비자 연장' },
+            'visa-prediagnosis': { name: '비자 사전진단', desc: '비자 변경·불법체류 위험·출입국관리법 위반 자문' },
+            'e7-change': { name: '특정활동 E-7 비자 변경', desc: '전문인력 취업비자' },
+            'f2-7-change': { name: '우수인재 거주 F-2-7 비자 변경', desc: '점수제 우수인재 거주비자' },
+            'default': { name: '비자 상담', desc: '출입국·비자 관련 전문 상담' }
+        };
+
+        let selectedService = null;
+
+        // 페이지 로드
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const serviceId = urlParams.get('service');
+
+            if (!serviceId) {
+                selectedService = serviceInfo['default'];
+            } else {
+                selectedService = serviceInfo[serviceId] || serviceInfo['default'];
+            }
+
+            selectedService.id = serviceId || 'general-consultation';
+
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('service-name').textContent = selectedService.name;
+                document.getElementById('service-desc').textContent = selectedService.desc;
+                document.getElementById('consultation-content').style.display = 'block';
+            }, 300);
+        });
+
+        async function applyForConsultation() {
+            const btn = document.getElementById('consultBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner"></i> 처리 중...';
+
+            try {
+                // 현재 로그인 사용자 확인
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    alert('로그인이 필요합니다.');
+                    window.location.href = 'index.html';
+                    return;
+                }
+
+                // Supabase에 상담용 쓰레드 생성
+                const threadResult = await createThread({
+                    service_name: selectedService.name + ' (상담)',
+                    status: 'document',
+                    amount: 0,
+                    order_id: 'CONSULT-' + Date.now(),
+                    is_consulting: true,
+                    organization: 'general'
+                });
+
+                if (!threadResult.success) {
+                    throw new Error('쓰레드 생성 실패');
+                }
+
+                alert('상담 요청이 완료되었습니다!\n\n센터 담당자가 쓰레드에서 곧 연락드릴게요!');
+                window.location.href = `thread-general.html?id=${threadResult.data.id}`;
+            } catch (error) {
+                console.error('상담 신청 오류:', error);
+                alert('상담 신청 중 오류가 발생했습니다.\n다시 시도해주세요.');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> 상담 요청하기';
+            }
+        }
+    </script>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js?v=20250119"></script>
+</body>
+</html>

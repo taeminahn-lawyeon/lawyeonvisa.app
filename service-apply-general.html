@@ -995,16 +995,13 @@
             setTimeout(() => {
                 document.getElementById('loading').style.display = 'none';
 
-                // PG사 심사 완료 전까지 모든 서비스를 상담으로 처리
-                // TODO: 결제 시스템 연동 후 아래 주석 해제
-                // if (serviceId === 'visa-prediagnosis') {
-                //     showPrediagnosisPayment();
-                // } else if (selectedService.consulting) {
-                //     showConsulting();
-                // } else {
-                //     showPayment(serviceId);
-                // }
-                showConsulting();
+                if (serviceId === 'visa-prediagnosis') {
+                    showPrediagnosisPayment();
+                } else if (selectedService.consulting) {
+                    showConsulting();
+                } else {
+                    showPayment(serviceId);
+                }
             }, 500);
         });
 
