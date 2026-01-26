@@ -40,21 +40,21 @@ const i18n = {
     init: function() {
         // localStorage에서 저장된 언어 불러오기
         const savedLanguage = localStorage.getItem('i18n_language');
-        
+
         if (savedLanguage && this.supportedLanguages[savedLanguage]) {
+            // 사용자가 이전에 선택한 언어가 있으면 해당 언어 사용
             this.currentLanguage = savedLanguage;
         } else {
-            // 브라우저 언어 감지
-            const browserLang = this.detectBrowserLanguage();
-            this.currentLanguage = browserLang;
+            // 저장된 언어가 없으면 항상 영어로 기본 설정 (브라우저 언어 감지 안함)
+            this.currentLanguage = 'en';
         }
-        
+
         // 번역 적용
         this.translatePage();
-        
+
         // 언어 선택기 초기화
         this.initLanguageSelector();
-        
+
         console.log(`[i18n] Initialized with language: ${this.currentLanguage}`);
     },
     
