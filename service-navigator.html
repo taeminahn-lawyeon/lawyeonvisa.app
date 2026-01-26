@@ -649,194 +649,202 @@
             }
         };
 
-        // Service Recommendations
+        // Service Recommendations - using actual service IDs from service-apply-general.html
         const serviceRecommendations = {
             // Work visa extensions
             ext_work: [
-                { name: "Work Visa Extension", desc: "Extend your E-series work visa before expiration. We handle all paperwork with immigration.", code: "work-visa-extension" },
-                { name: "Employment Contract Review", desc: "Ensure your employment documents meet visa requirements.", code: "employment-review" }
+                { name: "E-7 Visa Extension", desc: "Extend your E-7 professional work visa before expiration.", code: "e7-extension" }
             ],
             ext_study: [
-                { name: "Student Visa Extension", desc: "Extend your D-2 or D-4 student visa. Requires enrollment proof.", code: "student-visa-extension" }
+                { name: "D-2, D-4 Visa Extension", desc: "Extend your D-2 or D-4 student visa. Requires enrollment proof.", code: "d2-d4-extension" }
             ],
             ext_family: [
-                { name: "Family Visa Extension", desc: "Extend F-1, F-2, or F-6 family visas. Document preparation included.", code: "family-visa-extension" }
+                { name: "F-6 Visa Extension", desc: "Extend your F-6 marriage visa.", code: "f6-extension" },
+                { name: "F-2 Residence Extension", desc: "Extend your F-2 residence visa.", code: "f2-extension" }
             ],
             ext_other: [
-                { name: "Visa Extension Service", desc: "General visa extension for D-10, G-1 and other visa types.", code: "general-extension" }
+                { name: "D-10 Visa Extension", desc: "Extend your D-10 job seeker visa.", code: "d10-extension" }
             ],
             // Visa changes
             chg_work: [
-                { name: "Visa Status Change to Work", desc: "Change your current visa to employment-based E-series visa.", code: "change-to-work" }
+                { name: "E-7 Professional Visa Change", desc: "Change your current visa to E-7 professional employment visa.", code: "e7-change" },
+                { name: "E-7-4 Skilled Worker Visa", desc: "E-9/H-2 skilled worker transition.", code: "e7-4-change" }
             ],
             chg_family: [
-                { name: "Visa Status Change to Family", desc: "Change to F-1, F-2, or F-6 family visa.", code: "change-to-family" }
+                { name: "F-6 Marriage Immigration", desc: "Change to F-6 marriage visa.", code: "f6-change" },
+                { name: "F-3 Dependent Family Visa", desc: "Spouse/child accompanying visa.", code: "f3-change" },
+                { name: "F-1 Family Visit Visa", desc: "Relative long-term stay visa.", code: "f1-change" }
             ],
             chg_business: [
-                { name: "Business Visa Application", desc: "Change to D-8 investor or D-9 trade visa.", code: "change-to-business" }
+                { name: "D-8-1 Corporate Investment", desc: "Corporate establishment visa.", code: "d8-1-change" },
+                { name: "D-9-1 Trade Business", desc: "Trading business visa.", code: "d9-1-change" }
             ],
             chg_residence: [
-                { name: "Long-term Residence Visa", desc: "Apply for F-2 residence or F-5 permanent residence.", code: "change-to-residence" }
+                { name: "F-2-7 Points-based Residence", desc: "Outstanding talent residence visa.", code: "f2-7-change" },
+                { name: "F-5 Permanent Residence", desc: "Korea permanent residency.", code: "f5-change" }
             ],
             // Reports
             rep_address: [
-                { name: "Address Change Report", desc: "Report your new address within 14 days of moving.", code: "address-change" }
+                { name: "Address Change Report", desc: "Report your new address after moving.", code: "address-change" }
             ],
             rep_workplace: [
-                { name: "Workplace Change Report", desc: "Report new employer or workplace change.", code: "workplace-change" }
+                { name: "Workplace Change Report", desc: "Report new employer or workplace change.", code: "workplace-change-report" },
+                { name: "Workplace Change Permit", desc: "Pre-approval for job transfer.", code: "workplace-change-permit" }
             ],
             rep_passport: [
-                { name: "Passport Information Update", desc: "Update your alien registration with new passport info.", code: "passport-update" }
+                { name: "Passport/Info Change", desc: "Update your alien registration with new passport info.", code: "passport-change" }
             ],
             rep_status: [
-                { name: "Personal Status Change Report", desc: "Report marriage, divorce, or other status changes.", code: "status-change" }
+                { name: "Employment Info Update", desc: "Report workplace/salary changes.", code: "employment-info-change" }
             ],
             // Certificates
             cert_alien: [
-                { name: "Alien Registration Card Service", desc: "New card, replacement, or re-issuance.", code: "alien-card" }
+                { name: "Alien Registration", desc: "Required within 90 days of entry.", code: "arc-registration" },
+                { name: "ARC Reissue", desc: "Lost/damaged card replacement.", code: "arc-reissue" }
             ],
             cert_entry: [
-                { name: "Entry/Exit Certificate", desc: "Official record of your travel history.", code: "entry-exit-cert" }
+                { name: "Entry/Exit Certificate", desc: "Official record of your travel history.", code: "cert-entry-exit" }
             ],
             cert_status: [
-                { name: "Immigration Status Certificate", desc: "Proof of your current visa status.", code: "status-cert" }
+                { name: "ARC Certificate", desc: "Proof of your registration status.", code: "cert-arc" }
             ],
             cert_invitation: [
-                { name: "Invitation Letter Service", desc: "Official invitation for family visa applications.", code: "invitation-letter" }
+                { name: "Family Invitation Visa", desc: "Overseas family invitation service.", code: "family-invite" }
             ],
             // Permanent residence
             perm_work: [
-                { name: "F-5 Permanent Residence (Employment)", desc: "Apply for permanent residence based on employment history.", code: "f5-employment" }
+                { name: "F-5 Permanent Residence", desc: "Apply for permanent residence based on employment history.", code: "f5-change" }
             ],
             perm_marriage: [
-                { name: "F-5 Permanent Residence (Marriage)", desc: "Apply for permanent residence as spouse of Korean.", code: "f5-marriage" }
+                { name: "F-5 Permanent Residence", desc: "Apply for permanent residence as spouse of Korean.", code: "f5-change" }
             ],
             perm_invest: [
-                { name: "F-5 Permanent Residence (Investment)", desc: "Apply for permanent residence as business investor.", code: "f5-investment" }
+                { name: "F-5 Permanent Residence", desc: "Apply for permanent residence as business investor.", code: "f5-change" }
             ],
             perm_special: [
-                { name: "F-5 Special Permanent Residence", desc: "Apply based on special contribution or merit.", code: "f5-special" }
+                { name: "F-5 Permanent Residence", desc: "Apply based on special contribution or merit.", code: "f5-change" }
             ],
             // Naturalization
             nat_general: [
-                { name: "General Naturalization", desc: "Become Korean citizen through standard process (5+ years).", code: "naturalize-general" }
+                { name: "Naturalization Application", desc: "Become Korean citizen through standard process (5+ years).", code: "naturalization" }
             ],
             nat_simple: [
-                { name: "Simplified Naturalization", desc: "Faster path for spouses of Korean citizens.", code: "naturalize-simple" }
+                { name: "Naturalization Application", desc: "Faster path for spouses of Korean citizens.", code: "naturalization" }
             ],
             nat_special: [
-                { name: "Special Naturalization", desc: "Naturalization for those with special contributions.", code: "naturalize-special" }
+                { name: "Naturalization Application", desc: "Naturalization for those with special contributions.", code: "naturalization" }
             ],
-            // Overstay
+            // Overstay - these go to emergency legal consultation
             vol_short: [
-                { name: "Voluntary Departure Application", desc: "Leave Korea legally with minimal penalties.", code: "voluntary-departure" },
-                { name: "Legal Status Consultation", desc: "Explore options to regularize your status.", code: "overstay-consult" }
+                { name: "Immigration Dispute Resolution", desc: "Consult with immigration attorneys about your situation.", code: "emergency-legal" }
             ],
             vol_medium: [
-                { name: "Overstay Resolution Service", desc: "Navigate the departure process and minimize ban period.", code: "overstay-resolve" }
+                { name: "Immigration Dispute Resolution", desc: "Navigate the departure process with legal support.", code: "emergency-legal" }
             ],
             vol_long: [
-                { name: "Long-term Overstay Assistance", desc: "Legal representation for complex overstay cases.", code: "overstay-complex" }
+                { name: "Immigration Dispute Resolution", desc: "Legal representation for complex overstay cases.", code: "emergency-legal" }
             ],
             dep_notice: [
-                { name: "Deportation Defense", desc: "Challenge deportation order with legal representation.", code: "deportation-defense" }
+                { name: "Immigration Dispute Resolution", desc: "Challenge deportation order with legal representation.", code: "emergency-legal" }
             ],
             dep_detention: [
-                { name: "Detention Release Service", desc: "Legal assistance for release from detention.", code: "detention-release" }
+                { name: "Immigration Dispute Resolution", desc: "Legal assistance for release from detention.", code: "emergency-legal" }
             ],
             dep_appeal: [
-                { name: "Immigration Appeal Service", desc: "File administrative appeal against deportation.", code: "immigration-appeal" }
+                { name: "Immigration Dispute Resolution", desc: "File administrative appeal against deportation.", code: "emergency-legal" }
             ],
             legal_risk: [
-                { name: "Immigration Risk Assessment", desc: "Professional evaluation of your immigration situation.", code: "risk-assessment" }
+                { name: "Visa Pre-diagnosis", desc: "Professional evaluation of your immigration situation.", code: "visa-prediagnosis" }
             ],
             legal_options: [
-                { name: "Legal Options Consultation", desc: "Understand all available legal pathways.", code: "legal-consult" }
+                { name: "Visa Pre-diagnosis", desc: "Understand all available legal pathways.", code: "visa-prediagnosis" }
             ],
             legal_represent: [
-                { name: "Immigration Attorney Service", desc: "Full legal representation by licensed attorney.", code: "attorney-service" }
+                { name: "Immigration Dispute Resolution", desc: "Full legal representation by licensed attorney.", code: "emergency-legal" }
             ],
-            // Tourism
+            // Tourism - consultation
             tour_exempt: [
-                { name: "K-ETA Application", desc: "Electronic travel authorization for visa-exempt travelers.", code: "k-eta" }
+                { name: "Visa Pre-diagnosis", desc: "Verify your visa-exempt entry eligibility.", code: "visa-prediagnosis" }
             ],
             tour_required: [
-                { name: "Tourist Visa Application", desc: "C-3 visitor visa application service.", code: "tourist-visa" }
+                { name: "Visa Pre-diagnosis", desc: "Get guidance on tourist visa application.", code: "visa-prediagnosis" }
             ],
-            // Work
+            // Work visa from overseas
             work_pro: [
-                { name: "E-7 Professional Visa", desc: "Skilled worker visa for professionals.", code: "e7-visa" },
-                { name: "E-1~E-5 Specialist Visa", desc: "Professor, researcher, or technical specialist visa.", code: "specialist-visa" }
+                { name: "E-7 Professional Visa Change", desc: "Skilled worker visa for professionals.", code: "e7-change" },
+                { name: "E-1~E-6 Professional Change", desc: "Professor, researcher, or technical specialist visa.", code: "e1-e6-change" }
             ],
             work_eps: [
-                { name: "E-9 EPS Worker Visa", desc: "Employment Permit System manufacturing visa.", code: "e9-eps" }
+                { name: "E-9 Workplace Change", desc: "E-9 employment permit system support.", code: "e9-workplace-change" }
             ],
             work_teach: [
-                { name: "E-2 Teaching Visa", desc: "English/foreign language teaching visa.", code: "e2-teaching" }
+                { name: "E-1~E-6 Professional Change", desc: "Teaching and education visa.", code: "e1-e6-change" }
             ],
             work_entertain: [
-                { name: "E-6 Entertainment Visa", desc: "Arts, sports, and entertainment visa.", code: "e6-entertainment" }
+                { name: "E-1~E-6 Professional Change", desc: "Arts, sports, and entertainment visa.", code: "e1-e6-change" }
             ],
             // Study
             study_degree: [
-                { name: "D-2 Student Visa", desc: "University degree program visa.", code: "d2-student" }
+                { name: "D-4→D-2 Student Visa Change", desc: "University degree program visa.", code: "d4-to-d2-change" }
             ],
             study_language: [
-                { name: "D-4 Language Training Visa", desc: "Korean language course visa.", code: "d4-language" }
+                { name: "D-2, D-4 Visa Extension", desc: "Korean language course visa support.", code: "d2-d4-extension" }
             ],
             study_exchange: [
-                { name: "Exchange Student Visa", desc: "Short-term academic exchange visa.", code: "exchange-visa" }
+                { name: "D-2, D-4 Visa Extension", desc: "Short-term academic exchange visa.", code: "d2-d4-extension" }
             ],
             // Business
             biz_startup: [
-                { name: "D-8 Startup Visa", desc: "Corporate investor visa for starting business.", code: "d8-startup" }
+                { name: "D-8-4 Tech Startup Visa", desc: "Student entrepreneur visa.", code: "d8-4-change" },
+                { name: "D-8-1 Corporate Investment", desc: "Corporate investor visa for starting business.", code: "d8-1-change" }
             ],
             biz_invest: [
-                { name: "D-8 Investment Visa", desc: "Investment-based corporate visa.", code: "d8-investment" }
+                { name: "D-8-2 Venture Investment", desc: "Venture company investment visa.", code: "d8-2-change" },
+                { name: "D-8-3 Individual Investment", desc: "Sole proprietor investment visa.", code: "d8-3-change" }
             ],
             biz_trade: [
-                { name: "D-9 Trade Management Visa", desc: "Trade and business management visa.", code: "d9-trade" }
+                { name: "D-9-1 Trade Business", desc: "Trade and business management visa.", code: "d9-1-change" }
             ],
             // Family overseas
             fam_spouse: [
-                { name: "F-6 Marriage Visa", desc: "Visa for spouse of Korean citizen.", code: "f6-marriage" }
+                { name: "F-6 Marriage Immigration", desc: "Visa for spouse of Korean citizen.", code: "f6-change" }
             ],
             fam_join: [
-                { name: "F-1 Family Visit Visa", desc: "Family accompaniment or visit visa.", code: "f1-family" }
+                { name: "F-1 Family Visit Visa", desc: "Family accompaniment or visit visa.", code: "f1-change" }
             ],
             fam_ethnic: [
-                { name: "F-4 Overseas Korean Visa", desc: "Visa for ethnic Koreans abroad.", code: "f4-overseas" }
+                { name: "F-4 Overseas Korean Visa", desc: "Visa for ethnic Koreans abroad.", code: "f4-change" }
             ],
             // Korean inviting spouse
             sp_overseas: [
-                { name: "Spouse Invitation Service", desc: "Complete F-6 visa application from abroad.", code: "spouse-invite-abroad" }
+                { name: "Family Invitation Visa", desc: "Complete F-6 visa application from abroad.", code: "family-invite" }
             ],
             sp_korea: [
-                { name: "Spouse Status Change", desc: "Change existing visa to F-6 marriage visa.", code: "spouse-status-change" }
+                { name: "F-6 Marriage Immigration", desc: "Change existing visa to F-6 marriage visa.", code: "f6-change" }
             ],
             // Parent invitation
             par_short: [
-                { name: "Parent Short Visit Visa", desc: "C-3 visitor visa for parents.", code: "parent-c3" }
+                { name: "Family Invitation Visa", desc: "Short-term visitor visa for parents.", code: "family-invite" }
             ],
             par_long: [
-                { name: "Parent F-1 Visa", desc: "Long-term family visa for parents.", code: "parent-f1" }
+                { name: "F-1 Family Visit Visa", desc: "Long-term family visa for parents.", code: "f1-change" }
             ],
             // Child invitation
             child_minor: [
-                { name: "Minor Child Visa", desc: "Dependent visa for minor children.", code: "child-minor" }
+                { name: "Child Birth Visa Grant", desc: "Dependent visa for minor children.", code: "visa-grant-child" }
             ],
             child_adult: [
-                { name: "Adult Child Visa", desc: "F-1 visa for adult children.", code: "child-adult" }
+                { name: "F-1 Family Visit Visa", desc: "F-1 visa for adult children.", code: "f1-change" }
             ],
             // Family naturalization
             fnat_resident: [
-                { name: "F-5 Holder Naturalization", desc: "Naturalization for permanent residents.", code: "fnat-f5" }
+                { name: "Naturalization Application", desc: "Naturalization for permanent residents.", code: "naturalization" }
             ],
             fnat_spouse: [
-                { name: "Spouse Naturalization", desc: "Simplified naturalization for F-6 holders.", code: "fnat-spouse" }
+                { name: "Naturalization Application", desc: "Simplified naturalization for F-6 holders.", code: "naturalization" }
             ],
             fnat_other: [
-                { name: "Family Naturalization Consultation", desc: "Assess eligibility and plan naturalization.", code: "fnat-consult" }
+                { name: "Visa Pre-diagnosis", desc: "Assess eligibility and plan naturalization.", code: "visa-prediagnosis" }
             ]
         };
 
