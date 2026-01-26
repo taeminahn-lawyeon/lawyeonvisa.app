@@ -758,7 +758,7 @@
     <!-- Header -->
     <div class="header">
         <div class="header-inner">
-            <div class="header-title">Apply for Service</div>
+            <div class="header-title" data-i18n="serviceApply.header">Apply for Service</div>
             <a href="javascript:void(0)" onclick="goBack()" class="btn-back">
                 <i class="fas fa-times"></i>
             </a>
@@ -769,7 +769,7 @@
     <div class="main-container">
         <div id="loading" class="loading-container">
             <div class="spinner"></div>
-            <div class="loading-text">Loading service information...</div>
+            <div class="loading-text" data-i18n="serviceApply.loading">Loading service information...</div>
         </div>
 
         <!-- Main Content -->
@@ -788,22 +788,22 @@
 
                 <!-- Price Card (for payment services) -->
                 <div class="price-card" id="price-card">
-                    <h2>Price Details</h2>
+                    <h2 data-i18n="serviceApply.priceDetails">Price Details</h2>
                     <div class="price-row">
-                        <span class="price-label">Agency Fee</span>
+                        <span class="price-label" data-i18n="serviceApply.agencyFee">Agency Fee</span>
                         <span class="price-value" id="agency-fee">₩550,000</span>
                     </div>
                     <div class="price-row" id="govt-fee-row" style="display: none;">
-                        <span class="price-label">Immigration Fee</span>
+                        <span class="price-label" data-i18n="serviceApply.govtFee">Immigration Fee</span>
                         <span class="price-value" id="govt-fee">₩50,000</span>
                     </div>
                     <div class="price-total">
-                        <span class="label">Total</span>
+                        <span class="label" data-i18n="serviceApply.total">Total</span>
                         <span class="value" id="total-price">₩600,000</span>
                     </div>
                     <div class="govt-notice" id="govt-notice" style="display: none;">
                         <i class="fas fa-info-circle"></i>
-                        <span class="govt-notice-text">Immigration fee is included and paid by our center on your behalf.</span>
+                        <span class="govt-notice-text" data-i18n="serviceApply.govtNotice">Immigration fee is included and paid by our center on your behalf.</span>
                     </div>
                 </div>
 
@@ -986,34 +986,34 @@
 
                 <!-- Process Steps -->
                 <div class="process-steps">
-                    <h2><i class="fas fa-list-check"></i> How It Works</h2>
+                    <h2><i class="fas fa-list-check"></i> <span data-i18n="serviceApply.howItWorks">How It Works</span></h2>
 
                     <div class="step-item">
                         <div class="step-number">1</div>
                         <div class="step-content">
-                            <h3>Submit Application</h3>
-                            <p>A dedicated thread will be created instantly</p>
+                            <h3 data-i18n="serviceApply.step1Title">Submit Application</h3>
+                            <p data-i18n="serviceApply.step1Desc">A dedicated thread will be created instantly</p>
                         </div>
                     </div>
                     <div class="step-item">
                         <div class="step-number">2</div>
                         <div class="step-content">
-                            <h3>Specialist Assigned</h3>
-                            <p>We'll contact you within 30 minutes</p>
+                            <h3 data-i18n="serviceApply.step2Title">Specialist Assigned</h3>
+                            <p data-i18n="serviceApply.step2Desc">We'll contact you within 30 minutes</p>
                         </div>
                     </div>
                     <div class="step-item">
                         <div class="step-number">3</div>
                         <div class="step-content">
-                            <h3>Document Review</h3>
-                            <p>We'll guide you through required documents</p>
+                            <h3 data-i18n="serviceApply.step3Title">Document Review</h3>
+                            <p data-i18n="serviceApply.step3Desc">We'll guide you through required documents</p>
                         </div>
                     </div>
                     <div class="step-item">
                         <div class="step-number">4</div>
                         <div class="step-content">
-                            <h3>Service Complete</h3>
-                            <p>We'll handle everything until completion</p>
+                            <h3 data-i18n="serviceApply.step4Title">Service Complete</h3>
+                            <p data-i18n="serviceApply.step4Desc">We'll handle everything until completion</p>
                         </div>
                     </div>
                 </div>
@@ -1022,7 +1022,7 @@
                 <div class="cta-section">
                     <button class="btn-primary" id="payBtn" onclick="processPayment()">
                         <i class="fas fa-credit-card"></i>
-                        <span id="btn-text">Proceed to Payment</span>
+                        <span id="btn-text" data-i18n="serviceApply.proceedPayment">Proceed to Payment</span>
                     </button>
 
                     <div class="security-badge">
@@ -1570,5 +1570,9 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=20250119"></script>
+
+    <!-- i18n 다국어 지원 -->
+    <script src="js/translations.js?v=20250126"></script>
+    <script src="js/i18n.js?v=20250126"></script>
 </body>
 </html>
