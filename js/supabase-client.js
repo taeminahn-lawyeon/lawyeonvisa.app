@@ -859,7 +859,8 @@ async function createMessage(messageData) {
             content: messageData.content,
             file_url: messageData.file_url || null,
             file_name: messageData.file_name || null,
-            file_type: messageData.file_type || null
+            file_type: messageData.file_type || null,
+            attachments: messageData.attachments || null
         };
         console.log('📝 [createMessage] INSERT 데이터:', insertData);
 
@@ -916,6 +917,50 @@ async function getMessages(threadId) {
         return { success: true, data };
     } catch (error) {
         console.error('메시지 조회 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// ============================================
+// 환영 메시지 템플릿 함수
+// ============================================
+
+// 상담 쓰레드 환영 메시지 생성
+async function createWelcomeMessage(threadId, serviceName) {
+    try {
+        const formUrl = `${window.location.origin}/profile-submit.html?thread=${threadId}`;
+
+        const welcomeContent = `
+            <p>안녕하세요! <strong>${serviceName}</strong> 상담 요청을 해주셔서 감사합니다.</p>
+            <p>원활한 상담 진행을 위해 아래 기본 정보를 먼저 입력해 주세요.</p>
+            <p>입력해 주신 정보를 바탕으로 담당자가 30분 내에 연락드리겠습니다.</p>
+            <a href="${formUrl}" class="action-link-btn" target="_blank">
+                <i class="fas fa-file-alt"></i> 기본사항 입력하기
+            </a>
+        `;
+
+        // 시스템 메시지로 생성 (관리자 타입)
+        const { data, error } = await supabaseClient
+            .from('messages')
+            .insert({
+                thread_id: threadId,
+                sender_id: null, // 시스템 메시지는 sender_id가 없음
+                sender_type: 'admin',
+                sender_name: '법무법인 로연',
+                content: welcomeContent
+            })
+            .select()
+            .single();
+
+        if (error) {
+            console.error('❌ 환영 메시지 생성 오류:', error);
+            throw error;
+        }
+
+        console.log('✅ 환영 메시지 생성 성공:', data);
+        return { success: true, data };
+    } catch (error) {
+        console.error('환영 메시지 생성 오류:', error);
         return { success: false, error: error.message };
     }
 }
