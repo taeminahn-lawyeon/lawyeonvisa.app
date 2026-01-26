@@ -252,28 +252,51 @@ button, .btn, input[type="button"], input[type="submit"] {
 /* 모바일 대응 */
 @media (max-width: 768px) {
     .language-selector {
-        position: relative;
-        display: inline-block;
+        position: static; /* 모바일에서는 static으로 변경하여 dropdown이 header-actions 기준으로 위치 */
     }
-    
+
     #language-selector-btn {
         padding: 8px 14px;
         font-size: 13px;
         min-width: 100px;
     }
-    
+
     .language-flag {
         font-size: 16px;
     }
-    
+
     .language-name {
         display: inline; /* 모바일에서도 언어명 표시 */
     }
-    
+
     #language-dropdown {
-        right: 0;
-        left: auto;
-        min-width: 180px;
+        position: fixed;
+        top: auto;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        min-width: 200px;
+        max-width: calc(100vw - 32px);
+        margin-top: 8px;
+    }
+
+    #language-dropdown.hidden {
+        transform: translateX(-50%) translateY(-10px);
+    }
+}
+
+/* 매우 작은 화면 */
+@media (max-width: 480px) {
+    #language-dropdown {
+        left: 16px;
+        right: 16px;
+        transform: none;
+        min-width: auto;
+        width: calc(100vw - 32px);
+    }
+
+    #language-dropdown.hidden {
+        transform: translateY(-10px);
     }
 }
 
