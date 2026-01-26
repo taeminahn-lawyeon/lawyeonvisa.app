@@ -485,6 +485,78 @@
             text-decoration: underline;
         }
 
+        /* 메시지 내 구조적 요소 스타일 */
+        .message-body h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #191F28;
+            margin: 16px 0 8px 0;
+        }
+
+        .message-body h4:first-child {
+            margin-top: 0;
+        }
+
+        .message-body ul, .message-body ol {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .message-body li {
+            margin-bottom: 4px;
+        }
+
+        .message-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 14px;
+        }
+
+        .message-body table th,
+        .message-body table td {
+            border: 1px solid #E5E7EB;
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        .message-body table th {
+            background: #F9FAFB;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .message-body table td {
+            color: #4B5563;
+        }
+
+        .message-body .highlight {
+            background: #FEF3C7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .message-body .info-box {
+            background: #F9FAFB;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 12px 0;
+        }
+
+        .message-body .info-box-title {
+            font-weight: 700;
+            color: #191F28;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .message-body .emoji-point {
+            display: inline-block;
+            margin-right: 4px;
+        }
+
         /* Message Attachments */
         .message-attachments {
             margin-top: 16px;
@@ -535,54 +607,46 @@
             color: #9CA3AF;
         }
 
-        /* Payment Button in Message */
+        /* Payment Link in Message - 인라인 링크 스타일 */
         .payment-btn-inline {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 700;
-            text-decoration: none;
-            margin-top: 12px;
-            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline;
+            background: none;
+            color: #3182F6;
+            padding: 0;
+            font-size: inherit;
+            font-weight: 600;
+            text-decoration: underline;
+            text-underline-offset: 2px;
         }
 
         .payment-btn-inline:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
-            text-decoration: none;
-            color: white;
+            color: #2563EB;
+            text-decoration: underline;
         }
 
-        /* Action Link Button Style */
+        .payment-btn-inline i {
+            display: none;
+        }
+
+        /* Action Link - 인라인 링크 스타일 */
         .action-link-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
-            color: white !important;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 700;
-            text-decoration: none !important;
-            margin-top: 12px;
-            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline;
+            background: none;
+            color: #3182F6 !important;
+            padding: 0;
+            font-size: inherit;
+            font-weight: 600;
+            text-decoration: underline !important;
+            text-underline-offset: 2px;
         }
 
         .action-link-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
-            text-decoration: none !important;
-            color: white !important;
+            color: #2563EB !important;
+            text-decoration: underline !important;
         }
 
         .action-link-btn i {
-            font-size: 14px;
+            display: none;
         }
 
         /* Auto-converted link style */
@@ -1710,23 +1774,35 @@
             }
 
             let paymentUrl = '';
+            let serviceName = '';
+            let amount = '';
+
             if (serviceId === 'custom') {
-                const amount = document.getElementById('customAmount').value;
+                amount = document.getElementById('customAmount').value;
                 if (!amount) {
                     alert('금액을 입력해주세요.');
                     return;
                 }
                 paymentUrl = `${window.location.origin}/service-apply-general.html?service=custom&amount=${amount}&thread=${threadId}`;
+                serviceName = '맞춤 서비스';
             } else {
                 paymentUrl = `${window.location.origin}/service-apply-general.html?service=${serviceId}&thread=${threadId}`;
+                const serviceNames = {
+                    'd10-1-change': 'D-10-1 일반구직 비자 변경',
+                    'd10-2-change': 'D-10-2 기술창업구직 비자 변경',
+                    'e7-change': '특정활동 E-7 비자 변경'
+                };
+                serviceName = serviceNames[serviceId] || serviceId;
             }
 
-            // Create message with payment link
             const content = `
-                <p>결제를 진행해 주세요.</p>
-                <a href="${paymentUrl}" class="payment-btn-inline" target="_blank">
-                    <i class="fas fa-credit-card"></i> 결제하기
-                </a>
+                <h4>결제 안내</h4>
+                <p>상담 결과에 따라 아래 서비스로 진행됩니다.</p>
+                <div class="info-box">
+                    <div class="info-box-title">서비스: ${serviceName}</div>
+                    <p>아래 링크에서 결제를 진행해 주세요. <a href="${paymentUrl}" target="_blank">결제 페이지로 이동</a></p>
+                </div>
+                <p>결제 완료 후 자동으로 다음 단계로 진행됩니다.</p>
             `;
 
             await createMessage({
@@ -1744,11 +1820,18 @@
             const formUrl = `${window.location.origin}/profile-submit.html?thread=${threadId}`;
 
             let content = `
-                <p>서비스 진행을 위해 기본 정보를 입력해 주세요.</p>
+                <h4>기본 정보 요청</h4>
+                <p>서비스 진행을 위해 아래 정보가 필요합니다.</p>
                 ${additionalMessage ? `<p>${additionalMessage}</p>` : ''}
-                <a href="${formUrl}" class="payment-btn-inline" target="_blank">
-                    <i class="fas fa-file-alt"></i> 기본사항 입력하기
-                </a>
+                <div class="info-box">
+                    <div class="info-box-title">제출 항목</div>
+                    <ul>
+                        <li>여권 사본</li>
+                        <li>외국인등록증 (앞/뒷면)</li>
+                        <li>전자서명</li>
+                    </ul>
+                    <p><a href="${formUrl}" target="_blank">기본사항 입력하기</a></p>
+                </div>
             `;
 
             await createMessage({
