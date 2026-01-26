@@ -327,6 +327,8 @@ async function createThread(threadData) {
             order_id: threadData.order_id || null,
             payment_id: threadData.payment_id || null,
             organization: threadData.organization || null,
+            is_consulting: threadData.is_consulting || false,
+            current_stage: threadData.is_consulting ? 1 : 1,
             is_active: true,
             created_at: new Date().toISOString(),
             updated_at: new Date().toISOString()
@@ -890,6 +892,30 @@ async function createMessage(messageData) {
         return { success: true, data };
     } catch (error) {
         console.error('메시지 생성 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// 메시지 목록 조회
+async function getMessages(threadId) {
+    try {
+        console.log('📨 [getMessages] 메시지 조회 시작, threadId:', threadId);
+
+        const { data, error } = await supabaseClient
+            .from('messages')
+            .select('*, profiles:sender_id(name, email)')
+            .eq('thread_id', threadId)
+            .order('created_at', { ascending: true });
+
+        if (error) {
+            console.error('📨 [getMessages] 조회 오류:', error);
+            throw error;
+        }
+
+        console.log('📨 [getMessages] 조회 성공:', data?.length || 0, '건');
+        return { success: true, data };
+    } catch (error) {
+        console.error('메시지 조회 오류:', error);
         return { success: false, error: error.message };
     }
 }
