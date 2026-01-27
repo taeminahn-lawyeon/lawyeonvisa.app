@@ -1611,6 +1611,47 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                     throw new Error('Thread creation failed');
                 }
 
+                // Send automatic welcome message for consulting service
+                const welcomeMessage = `안녕하세요! 법무법인 로연 출입국이민지원센터입니다.
+
+비자 자문 서비스 신청이 접수되었습니다.
+정확한 자문을 위해 아래 정보를 제출해 주세요.
+
+■ 기본사항 제출
+<a href="profile-setup.html" target="_blank" style="color: #3182F6; font-weight: 600;">👉 기본사항 입력하기</a>
+
+■ 자문 요청 사항
+현재 상황과 궁금하신 점을 자유롭게 작성해 주세요.
+
+예시:
+• 비자 변경 예정
+• 영주권 또는 가족 초청
+• 회사 관련 비자 문제
+• 국적 취득 관련
+• 출입국 범칙금 또는 형사 사건
+
+담당자가 확인 후 자문 필요 서류를 안내드리겠습니다.
+감사합니다.`;
+
+                try {
+                    const { error: msgError } = await supabaseClient
+                        .from('messages')
+                        .insert({
+                            thread_id: threadResult.data.id,
+                            sender_id: null,
+                            sender_type: 'admin',
+                            sender_name: '법무법인 로연',
+                            content: welcomeMessage,
+                            created_at: new Date().toISOString()
+                        });
+
+                    if (msgError) {
+                        console.error('Welcome message failed:', msgError);
+                    }
+                } catch (msgErr) {
+                    console.error('Welcome message error:', msgErr);
+                }
+
                 alert('Your thread has been created!\n\nPayment of ₩' + selectedService.totalPrice.toLocaleString() + ' will be requested after consultation with our specialist.');
                 window.location.href = `thread-general-v2.html?id=${threadResult.data.id}`;
             } catch (error) {

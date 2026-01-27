@@ -529,7 +529,7 @@ const translations = {
         'common.serviceLoginRequired': 'Please sign in to submit service applications.',
         
         // === Site Information ===
-        'site.name': 'Lawyeon Immigration Support Center',
+        'site.name': 'Law Firm Lawyeon\'s Visa & Immigration Center',
         'site.company': 'Law Firm Lawyeon',
         'site.title': 'Law Firm Lawyeon LLC.',
         'site.visa': 'Visa',
@@ -668,7 +668,7 @@ const translations = {
         'footer.privacy': 'Privacy Policy',
         'footer.terms': 'Terms of Service',
         'footer.lawFirm': 'Law Firm Lawyeon',
-        'footer.copyright': 'Copyright © Lawyeon Immigration Support Center',
+        'footer.copyright': 'Copyright © Law Firm Lawyeon\'s Visa & Immigration Center',
         
         // === Individual Services ===
         // Visa Services
