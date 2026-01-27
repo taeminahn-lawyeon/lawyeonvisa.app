@@ -752,6 +752,31 @@
         .info-box strong {
             font-weight: 700;
         }
+
+        /* Deferred Payment Notice */
+        .deferred-notice {
+            background: linear-gradient(135deg, #EBF4FF 0%, #DBEAFE 100%);
+            border: 1px solid #93C5FD;
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-top: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .deferred-notice i {
+            color: #3182F6;
+            font-size: 18px;
+            margin-top: 2px;
+        }
+
+        .deferred-notice-text {
+            font-size: 14px;
+            color: #1E40AF;
+            font-weight: 600;
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body>
@@ -804,6 +829,10 @@
                     <div class="govt-notice" id="govt-notice" style="display: none;">
                         <i class="fas fa-info-circle"></i>
                         <span class="govt-notice-text" data-i18n="serviceApply.govtNotice">Immigration fee is included and paid by our center on your behalf.</span>
+                    </div>
+                    <div class="deferred-notice" id="deferred-notice" style="display: none;">
+                        <i class="fas fa-comments"></i>
+                        <span class="deferred-notice-text" data-i18n="serviceApply.deferredNotice">Payment will be requested after consultation with our specialist.</span>
                     </div>
                 </div>
 
@@ -1086,7 +1115,7 @@
         // Service Pricing (Agency fee, VAT included)
         const servicePricing = {
             // Premium Services
-            'visa-prediagnosis': { name: 'Visa Pre-diagnosis', price: 55000, govFee: 0, desc: 'Visa change, overstay risk, immigration law consultation', icon: '🔍' },
+            'visa-prediagnosis': { name: 'Visa Pre-diagnosis', price: 55000, govFee: 0, desc: 'Visa change, overstay risk, immigration law consultation', icon: '🔍', deferredPayment: true },
             'emergency-legal': { name: 'Immigration Dispute Resolution', price: 0, govFee: 0, desc: 'Criminal investigation, deportation defense, visa denial appeals', icon: '⚖️', consulting: true },
 
             // Education & Job Search
@@ -1280,6 +1309,33 @@
 
                 // Hide payment icon, show message icon
                 document.querySelector('#payBtn i').className = 'fas fa-paper-plane';
+            } else if (selectedService.deferredPayment) {
+                // Deferred payment mode - show price but open thread instead of payment
+                const agencyFee = selectedService.price;
+                const govtFee = selectedService.govFee || 0;
+                const totalPrice = agencyFee + govtFee;
+
+                document.getElementById('agency-fee').textContent = '₩' + agencyFee.toLocaleString();
+
+                if (govtFee > 0) {
+                    document.getElementById('govt-fee-row').style.display = 'flex';
+                    document.getElementById('govt-fee').textContent = '₩' + govtFee.toLocaleString();
+                    document.getElementById('govt-notice').style.display = 'flex';
+                }
+
+                document.getElementById('total-price').textContent = '₩' + totalPrice.toLocaleString();
+                document.getElementById('deferred-notice').style.display = 'flex';
+
+                // Change button to open thread
+                const btnText = document.getElementById('btn-text');
+                btnText.setAttribute('data-i18n', 'serviceApply.openThread');
+                btnText.textContent = typeof i18n !== 'undefined' ? i18n.translate('serviceApply.openThread') : 'Open Thread';
+                document.getElementById('payBtn').onclick = applyForDeferredPayment;
+                document.querySelector('#payBtn i').className = 'fas fa-comments';
+
+                selectedService.totalPrice = totalPrice;
+                selectedService.agencyFee = agencyFee;
+                selectedService.govtFee = govtFee;
             } else {
                 // Payment mode
                 const agencyFee = selectedService.price;
@@ -1525,6 +1581,44 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                 }
 
                 alert('Payment processing error. Please try again.');
+            }
+        }
+
+        async function applyForDeferredPayment() {
+            const btn = document.getElementById('payBtn');
+            btn.disabled = true;
+            btn.classList.add('loading');
+            btn.innerHTML = '<i class="fas fa-spinner"></i> Opening Thread...';
+
+            try {
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    alert('Login required.');
+                    window.location.href = 'index.html';
+                    return;
+                }
+
+                const threadResult = await createThread({
+                    service_name: selectedService.name,
+                    status: 'document',
+                    amount: selectedService.totalPrice,
+                    order_id: 'DEFERRED-' + Date.now(),
+                    is_deferred_payment: true,
+                    organization: 'general'
+                });
+
+                if (!threadResult.success) {
+                    throw new Error('Thread creation failed');
+                }
+
+                alert('Your thread has been created!\n\nPayment of ₩' + selectedService.totalPrice.toLocaleString() + ' will be requested after consultation with our specialist.');
+                window.location.href = `thread-general-v2.html?id=${threadResult.data.id}`;
+            } catch (error) {
+                console.error('Thread creation error:', error);
+                btn.disabled = false;
+                btn.classList.remove('loading');
+                btn.innerHTML = '<i class="fas fa-comments"></i> Open Thread';
+                alert('An error occurred. Please try again.');
             }
         }
 
