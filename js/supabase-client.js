@@ -333,7 +333,8 @@ async function createThread(threadData) {
             payment_id: threadData.payment_id || null,
             organization: threadData.organization || null,
             is_consulting: threadData.is_consulting || false,
-            current_stage: threadData.is_consulting ? 1 : 1,
+            is_deferred_payment: threadData.is_deferred_payment || false,
+            current_stage: 1,
             is_active: true,
             created_at: new Date().toISOString(),
             updated_at: new Date().toISOString()
