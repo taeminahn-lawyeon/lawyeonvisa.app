@@ -1298,16 +1298,13 @@
     <script>
         // Thread stages configuration
         const STAGES = {
+            // 자문 서비스 (상담 후 결제)
             consulting: [
-                { order: 1, name: '상담 신청', assignee: '고객' },
-                { order: 2, name: '상담 진행', assignee: '로연' },
-                { order: 3, name: '결제 및 서류 안내', assignee: '로연' },
-                { order: 4, name: '서류 제출', assignee: '고객' },
-                { order: 5, name: '서류 검토 및 보완', assignee: '로연' },
-                { order: 6, name: '출입국 신청 완료', assignee: '로연' },
-                { order: 7, name: '보완 요청 대응', assignee: '고객/로연' },
-                { order: 8, name: '허가 완료', assignee: '로연' }
+                { order: 1, name: '결제 및 서류 안내', assignee: '로연' },
+                { order: 2, name: '자문 검토', assignee: '로연' },
+                { order: 3, name: '자문 결과 전달', assignee: '로연' }
             ],
+            // 일반 결제 서비스
             payment: [
                 { order: 1, name: '결제 및 서류 안내', assignee: '로연' },
                 { order: 2, name: '서류 제출', assignee: '고객' },
@@ -1594,7 +1591,8 @@
         }
 
         function renderProgress(thread) {
-            const stageType = thread.is_consulting ? 'consulting' : 'payment';
+            // is_deferred_payment 또는 is_consulting이 true면 자문 단계 사용
+            const stageType = (thread.is_deferred_payment || thread.is_consulting) ? 'consulting' : 'payment';
             const stages = STAGES[stageType];
             const currentStage = thread.current_stage || 1;
 
