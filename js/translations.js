@@ -167,6 +167,13 @@ const translations = {
 
         // === 쓰레드 페이지 (Thread Page) ===
         'thread.header': '상담 쓰레드',
+        'thread.backToList': '목록',
+        'thread.reply': '답글',
+        'thread.submit': '작성',
+        'thread.fileUpload': '파일을 드래그하거나 클릭하여 업로드하세요',
+        'thread.progress': '진행 상황',
+        'thread.submittedDocs': '제출 서류',
+        'thread.noFiles': '아직 제출된 서류가 없습니다.',
         'thread.sendMessage': '메시지 보내기',
         'thread.placeholder': '메시지를 입력하세요...',
         'thread.attachFile': '파일 첨부',
@@ -632,6 +639,13 @@ const translations = {
 
         // === Thread Page ===
         'thread.header': 'Consultation Thread',
+        'thread.backToList': 'List',
+        'thread.reply': 'Reply',
+        'thread.submit': 'Send',
+        'thread.fileUpload': 'Drag and drop files or click to upload',
+        'thread.progress': 'Progress',
+        'thread.submittedDocs': 'Submitted Documents',
+        'thread.noFiles': 'No documents submitted yet.',
         'thread.sendMessage': 'Send Message',
         'thread.placeholder': 'Type your message...',
         'thread.attachFile': 'Attach File',
@@ -1265,6 +1279,13 @@ const translations = {
 
         // === 咨询线程页面 ===
         'thread.header': '咨询线程',
+        'thread.backToList': '列表',
+        'thread.reply': '回复',
+        'thread.submit': '发送',
+        'thread.fileUpload': '拖放文件或点击上传',
+        'thread.progress': '进度状态',
+        'thread.submittedDocs': '提交文件',
+        'thread.noFiles': '暂无提交文件。',
         'thread.sendMessage': '发送消息',
         'thread.placeholder': '输入消息...',
         'thread.attachFile': '附加文件',
@@ -1703,6 +1724,13 @@ const translations = {
 
         // === Trang Luồng Tư Vấn ===
         'thread.header': 'Luồng Tư Vấn',
+        'thread.backToList': 'Danh sách',
+        'thread.reply': 'Trả lời',
+        'thread.submit': 'Gửi',
+        'thread.fileUpload': 'Kéo thả tệp hoặc nhấp để tải lên',
+        'thread.progress': 'Tiến độ',
+        'thread.submittedDocs': 'Tài liệu đã nộp',
+        'thread.noFiles': 'Chưa có tài liệu nào.',
         'thread.sendMessage': 'Gửi Tin Nhắn',
         'thread.placeholder': 'Nhập tin nhắn...',
         'thread.attachFile': 'Đính Kèm Tệp',
@@ -2139,6 +2167,13 @@ const translations = {
 
         // === 相談スレッドページ ===
         'thread.header': '相談スレッド',
+        'thread.backToList': 'リスト',
+        'thread.reply': '返信',
+        'thread.submit': '送信',
+        'thread.fileUpload': 'ファイルをドラッグまたはクリックしてアップロード',
+        'thread.progress': '進行状況',
+        'thread.submittedDocs': '提出書類',
+        'thread.noFiles': 'まだ提出された書類がありません。',
         'thread.sendMessage': 'メッセージ送信',
         'thread.placeholder': 'メッセージを入力...',
         'thread.attachFile': 'ファイル添付',
@@ -2575,6 +2610,13 @@ const translations = {
 
         // === Зөвлөгөөний харилцааны хуудас ===
         'thread.header': 'Зөвлөгөөний харилцаа',
+        'thread.backToList': 'Жагсаалт',
+        'thread.reply': 'Хариулах',
+        'thread.submit': 'Илгээх',
+        'thread.fileUpload': 'Файлыг чирэх эсвэл дарж байршуулна уу',
+        'thread.progress': 'Явц',
+        'thread.submittedDocs': 'Ирүүлсэн баримт',
+        'thread.noFiles': 'Одоогоор баримт ирүүлээгүй байна.',
         'thread.sendMessage': 'Мессеж илгээх',
         'thread.placeholder': 'Мессежээ бичнэ үү...',
         'thread.attachFile': 'Файл хавсаргах',
@@ -3011,6 +3053,13 @@ const translations = {
 
         // === หน้าเธรดปรึกษา ===
         'thread.header': 'เธรดปรึกษา',
+        'thread.backToList': 'รายการ',
+        'thread.reply': 'ตอบกลับ',
+        'thread.submit': 'ส่ง',
+        'thread.fileUpload': 'ลากไฟล์มาวางหรือคลิกเพื่ออัปโหลด',
+        'thread.progress': 'ความคืบหน้า',
+        'thread.submittedDocs': 'เอกสารที่ส่ง',
+        'thread.noFiles': 'ยังไม่มีเอกสารที่ส่ง',
         'thread.sendMessage': 'ส่งข้อความ',
         'thread.placeholder': 'พิมพ์ข้อความ...',
         'thread.attachFile': 'แนบไฟล์',

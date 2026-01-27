@@ -1584,6 +1584,177 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
             }
         }
 
+        // Get welcome message in user's selected language
+        function getWelcomeMessage() {
+            const lang = localStorage.getItem('i18n_language') || 'en';
+
+            const messages = {
+                ko: `안녕하세요! 법무법인 로연 출입국이민지원센터입니다.
+
+비자 자문 서비스 신청이 접수되었습니다.
+정확한 자문을 위해 아래 정보를 제출해 주세요.
+
+■ 기본사항 제출
+<a href="profile-setup.html" target="_blank" style="color: #3182F6; font-weight: 600;">기본사항 입력하기</a>
+
+■ 자문 요청 사항
+현재 상황과 궁금하신 점을 자유롭게 작성해 주세요.
+
+예시:
+- 비자 변경 예정
+- 영주권 또는 가족 초청
+- 회사 관련 비자 문제
+- 국적 취득 관련
+- 출입국 범칙금 또는 형사 사건
+
+담당자가 확인 후 자문 필요 서류를 안내드리겠습니다.
+감사합니다.`,
+
+                en: `Hello! This is Lawyeon Immigration Center.
+
+Your visa consultation request has been received.
+Please submit the following information for accurate consultation.
+
+■ Basic Information
+<a href="profile-setup.html" target="_blank" style="color: #3182F6; font-weight: 600;">Enter Basic Information</a>
+
+■ Consultation Request
+Please describe your current situation and any questions you have.
+
+Examples:
+- Planning to change visa
+- Permanent residence or family invitation
+- Company-related visa issues
+- Nationality acquisition
+- Immigration fines or criminal cases
+
+Our staff will review and guide you on the required documents.
+Thank you.`,
+
+                zh: `您好！这里是律渊出入境移民支援中心。
+
+您的签证咨询申请已收到。
+为了准确咨询，请提交以下信息。
+
+■ 基本信息提交
+<a href="profile-setup.html" target="_blank" style="color: #3182F6; font-weight: 600;">填写基本信息</a>
+
+■ 咨询内容
+请自由描述您的当前情况和疑问。
+
+示例：
+- 计划变更签证
+- 永久居留权或家庭邀请
+- 公司相关签证问题
+- 国籍取得相关
+- 出入境罚款或刑事案件
+
+工作人员确认后将为您指导所需文件。
+谢谢。`,
+
+                vi: `Xin chao! Day la Trung tam Ho tro Di tru Lawyeon.
+
+Yeu cau tu van visa cua ban da duoc tiep nhan.
+Vui long cung cap thong tin sau de duoc tu van chinh xac.
+
+■ Thong tin co ban
+<a href="profile-setup.html" target="_blank" style="color: #3182F6; font-weight: 600;">Nhap thong tin co ban</a>
+
+■ Noi dung tu van
+Vui long mo ta tinh huong hien tai va cac thac mac cua ban.
+
+Vi du:
+- Du dinh doi visa
+- Thuong tru hoac moi gia dinh
+- Van de visa lien quan den cong ty
+- Nhap quoc tich
+- Phat vi pham xuat nhap canh hoac vu an hinh su
+
+Nhan vien se xem xet va huong dan ban ve cac tai lieu can thiet.
+Cam on.`,
+
+                ja: `こんにちは！ロヨン出入国移民支援センターです。
+
+ビザ相談の申請が受け付けられました。
+正確な相談のため、以下の情報をご提出ください。
+
+■ 基本情報の提出
+<a href="profile-setup.html" target="_blank" style="color: #3182F6; font-weight: 600;">基本情報を入力する</a>
+
+■ 相談内容
+現在の状況とご質問を自由にお書きください。
+
+例：
+- ビザ変更予定
+- 永住権または家族招待
+- 会社関連のビザ問題
+- 国籍取得関連
+- 出入国の罰金または刑事事件
+
+担当者が確認後、必要書類をご案内いたします。
+ありがとうございます。`,
+
+                mn: `Сайн байна уу! Lawyeon Цагаачлалын төв байна.
+
+Визийн зөвлөгөөний хүсэлт хүлээн авлаа.
+Зөв зөвлөгөө авахын тулд дараах мэдээллийг илгээнэ үү.
+
+■ Үндсэн мэдээлэл
+<a href="profile-setup.html" target="_blank" style="color: #3182F6; font-weight: 600;">Үндсэн мэдээлэл оруулах</a>
+
+■ Зөвлөгөөний агуулга
+Одоогийн нөхцөл байдал, асуултаа чөлөөтэй бичнэ үү.
+
+Жишээ:
+- Виз солих төлөвлөгөөтэй
+- Байнгын оршин суух эрх эсвэл гэр бүлийн урилга
+- Компанийн визтэй холбоотой асуудал
+- Иргэншил авах
+- Орох гарах торгууль эсвэл эрүүгийн хэрэг
+
+Ажилтан шалгаж, шаардлагатай бичиг баримтыг зааварчилна.
+Баярлалаа.`,
+
+                th: `สวัสดีครับ/ค่ะ! นี่คือศูนย์ตรวจคนเข้าเมือง Lawyeon
+
+คำขอปรึกษาวีซ่าของคุณได้รับแล้ว
+กรุณาส่งข้อมูลต่อไปนี้เพื่อการปรึกษาที่ถูกต้อง
+
+■ ข้อมูลพื้นฐาน
+<a href="profile-setup.html" target="_blank" style="color: #3182F6; font-weight: 600;">กรอกข้อมูลพื้นฐาน</a>
+
+■ เนื้อหาการปรึกษา
+กรุณาอธิบายสถานการณ์ปัจจุบันและคำถามของคุณ
+
+ตัวอย่าง:
+- วางแผนเปลี่ยนวีซ่า
+- ถิ่นที่อยู่ถาวรหรือเชิญครอบครัว
+- ปัญหาวีซ่าเกี่ยวกับบริษัท
+- การได้สัญชาติ
+- ค่าปรับตรวจคนเข้าเมืองหรือคดีอาญา
+
+เจ้าหน้าที่จะตรวจสอบและแนะนำเอกสารที่จำเป็น
+ขอบคุณครับ/ค่ะ`
+            };
+
+            return messages[lang] || messages.en;
+        }
+
+        // Get sender name in user's selected language
+        function getSenderName() {
+            const lang = localStorage.getItem('i18n_language') || 'en';
+            const names = {
+                ko: '법무법인 로연',
+                en: 'Lawyeon Law Firm',
+                zh: '律渊律师事务所',
+                vi: 'Cong ty Luat Lawyeon',
+                ja: 'ロヨン法律事務所',
+                mn: 'Lawyeon Хуулийн Фирм',
+                th: 'สำนักงานกฎหมาย Lawyeon'
+            };
+            return names[lang] || names.en;
+        }
+
         async function applyForDeferredPayment() {
             const btn = document.getElementById('payBtn');
             btn.disabled = true;
@@ -1611,26 +1782,8 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                 }
 
                 // Send automatic welcome message for consulting service
-                const welcomeMessage = `안녕하세요! 법무법인 로연 출입국이민지원센터입니다.
-
-비자 자문 서비스 신청이 접수되었습니다.
-정확한 자문을 위해 아래 정보를 제출해 주세요.
-
-■ 기본사항 제출
-<a href="profile-setup.html" target="_blank" style="color: #3182F6; font-weight: 600;">기본사항 입력하기</a>
-
-■ 자문 요청 사항
-현재 상황과 궁금하신 점을 자유롭게 작성해 주세요.
-
-예시:
-- 비자 변경 예정
-- 영주권 또는 가족 초청
-- 회사 관련 비자 문제
-- 국적 취득 관련
-- 출입국 범칙금 또는 형사 사건
-
-담당자가 확인 후 자문 필요 서류를 안내드리겠습니다.
-감사합니다.`;
+                const welcomeMessage = getWelcomeMessage();
+                const senderName = getSenderName();
 
                 try {
                     const { error: msgError } = await supabaseClient
@@ -1639,7 +1792,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                             thread_id: threadResult.data.id,
                             sender_id: null,
                             sender_type: 'admin',
-                            sender_name: '법무법인 로연',
+                            sender_name: senderName,
                             content: welcomeMessage,
                             created_at: new Date().toISOString()
                         });

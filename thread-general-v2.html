@@ -1159,7 +1159,7 @@
     <header class="thread-header">
         <div class="header-inner">
             <button class="back-btn" onclick="goBack()">
-                ← 목록
+                ← <span data-i18n="thread.backToList">목록</span>
             </button>
             <div class="header-title" data-i18n="thread.header">쓰레드</div>
             <div class="header-actions"></div>
@@ -1213,17 +1213,17 @@
                     <!-- Reply Section -->
                     <div class="reply-section" id="replySection" style="display: none;">
                         <div class="reply-section-inner">
-                            <div class="reply-header">답글</div>
+                            <div class="reply-header" data-i18n="thread.reply">답글</div>
                             <div class="editor-container">
                                 <div id="editor"></div>
                             </div>
                             <div class="file-upload-area" id="fileUploadArea" onclick="document.getElementById('fileInput').click()">
-                                <p>파일을 드래그하거나 클릭하여 업로드하세요</p>
+                                <p data-i18n="thread.fileUpload">파일을 드래그하거나 클릭하여 업로드하세요</p>
                             </div>
                             <input type="file" id="fileInput" multiple style="display: none;" onchange="handleFileSelect(event)">
                             <div class="pending-files" id="pendingFiles"></div>
                             <div class="reply-actions">
-                                <button class="submit-btn" id="submitBtn" onclick="submitReply()">
+                                <button class="submit-btn" id="submitBtn" onclick="submitReply()" data-i18n="thread.submit">
                                     작성
                                 </button>
                             </div>
@@ -1236,7 +1236,7 @@
                     <!-- Progress Tracker -->
                     <div class="progress-section">
                         <div class="progress-header" onclick="toggleProgress()">
-                            <h3>진행 상황</h3>
+                            <h3 data-i18n="thread.progress">진행 상황</h3>
                             <span class="progress-toggle" id="progressToggle">^</span>
                         </div>
                         <div class="progress-content" id="progressContent">
@@ -1247,7 +1247,7 @@
                     <!-- Submitted Files -->
                     <div class="submitted-files-section">
                         <div class="submitted-files-header">
-                            <h3>제출 서류</h3>
+                            <h3 data-i18n="thread.submittedDocs">제출 서류</h3>
                         </div>
                         <div class="submitted-files-content" id="submittedFilesContent">
                             <!-- Files will be rendered here -->
@@ -1616,7 +1616,8 @@
                     .single();
 
                 if (error || !profile) {
-                    container.innerHTML = '<div class="no-files-message">아직 제출된 서류가 없습니다.</div>';
+                    const noFilesText = window.i18n ? window.i18n.translate('thread.noFiles') : '아직 제출된 서류가 없습니다.';
+                    container.innerHTML = `<div class="no-files-message">${noFilesText}</div>`;
                     return;
                 }
 
