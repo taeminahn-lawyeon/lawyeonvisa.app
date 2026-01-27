@@ -2203,25 +2203,44 @@
                     const uploadResult = await uploadFile(file, threadId);
                     if (uploadResult.success) {
                         attachments.push({
-                            name: file.name,
+                            name: uploadResult.fileName || file.name,
                             size: file.size,
-                            url: uploadResult.url
+                            url: uploadResult.url,
+                            path: uploadResult.path,
+                            type: uploadResult.fileType || file.type
                         });
                     }
                 }
 
-                // Create message
-                const messageData = {
-                    thread_id: threadId,
-                    content: content,
-                    sender_type: isAdmin ? 'admin' : 'client',
-                    attachments: attachments.length > 0 ? attachments : null
-                };
+                // If we have files, send each file as a separate message with the file info
+                if (attachments.length > 0) {
+                    for (const attachment of attachments) {
+                        const fileMessageData = {
+                            thread_id: threadId,
+                            content: content || `File: ${attachment.name}`,
+                            sender_type: isAdmin ? 'admin' : 'client',
+                            file_url: attachment.url,
+                            file_name: attachment.name,
+                            file_type: attachment.type,
+                            attachments: [attachment]
+                        };
+                        await createMessage(fileMessageData);
+                        // Clear content after first file so subsequent files don't repeat the text
+                        content = '';
+                    }
+                } else {
+                    // Create message without files
+                    const messageData = {
+                        thread_id: threadId,
+                        content: content,
+                        sender_type: isAdmin ? 'admin' : 'client',
+                        attachments: null
+                    };
+                    const result = await createMessage(messageData);
 
-                const result = await createMessage(messageData);
-
-                if (!result.success) {
-                    throw new Error('메시지 전송 실패');
+                    if (!result.success) {
+                        throw new Error('메시지 전송 실패');
+                    }
                 }
 
                 // Clear editor
@@ -2243,18 +2262,20 @@
 
         async function uploadFile(file, threadId) {
             try {
-                const fileName = `${threadId}/${Date.now()}_${file.name}`;
-                const { data, error } = await supabaseClient.storage
-                    .from('thread-files')
-                    .upload(fileName, file);
+                // Use uploadThreadDocument from supabase-client.js
+                const result = await uploadThreadDocument(threadId, file);
 
-                if (error) throw error;
+                if (!result.success) {
+                    throw new Error(result.error || 'Upload failed');
+                }
 
-                const { data: urlData } = supabaseClient.storage
-                    .from('thread-files')
-                    .getPublicUrl(fileName);
-
-                return { success: true, url: urlData.publicUrl };
+                return {
+                    success: true,
+                    url: result.data.signedUrl,
+                    path: result.data.path,
+                    fileName: result.data.fileName,
+                    fileType: result.data.fileType
+                };
             } catch (error) {
                 console.error('File upload error:', error);
                 return { success: false };
