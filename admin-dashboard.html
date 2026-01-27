@@ -300,6 +300,11 @@
             color: #6B7684;
         }
 
+        .status-badge.received {
+            background: #E8F3FF;
+            color: #1B64DA;
+        }
+
         .priority-badge {
             display: inline-flex;
             align-items: center;
@@ -787,11 +792,9 @@
                     <label>상태</label>
                     <select id="filterStatus">
                         <option value="">전체</option>
-                        <option value="payment">결제 완료</option>
-                        <option value="document">서류 수집</option>
-                        <option value="processing">진행 중</option>
+                        <option value="received">신청 접수</option>
                         <option value="completed">완료</option>
-                        <option value="archived">보관됨</option>
+                        <option value="archived">보관</option>
                     </select>
                 </div>
                 <div class="filter-item">
@@ -804,11 +807,12 @@
                     </select>
                 </div>
                 <div class="filter-item">
-                    <label>서비스 유형</label>
+                    <label>진행 형태</label>
                     <select id="filterServiceType">
                         <option value="">전체</option>
-                        <option value="consulting">자문 서비스</option>
-                        <option value="payment">결제 서비스</option>
+                        <option value="consulting">자문</option>
+                        <option value="civil">민원</option>
+                        <option value="litigation">소송</option>
                     </select>
                 </div>
             </div>
@@ -946,13 +950,11 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>새로운 상태</label>
+                    <label>상태</label>
                     <select id="newStatus">
-                        <option value="payment">결제 완료</option>
-                        <option value="document">서류 수집</option>
-                        <option value="processing">진행 중</option>
+                        <option value="received">신청 접수</option>
                         <option value="completed">완료</option>
-                        <option value="archived">보관됨</option>
+                        <option value="archived">보관</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -964,16 +966,19 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <label>진행 형태</label>
+                    <select id="newServiceType" onchange="updateStageOptions()">
+                        <option value="consulting">자문 (4단계)</option>
+                        <option value="civil">민원 (6단계)</option>
+                        <option value="litigation">소송 (5단계)</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label>진행 단계</label>
                     <select id="newStage">
-                        <option value="1">1단계</option>
-                        <option value="2">2단계</option>
-                        <option value="3">3단계</option>
-                        <option value="4">4단계</option>
-                        <option value="5">5단계</option>
-                        <option value="6">6단계</option>
+                        <!-- 동적으로 채워짐 -->
                     </select>
-                    <p style="font-size: 12px; color: #6B7684; margin-top: 4px;">자문: 3단계 / 결제: 6단계</p>
+                    <p id="stageHint" style="font-size: 12px; color: #6B7684; margin-top: 4px;"></p>
                 </div>
                 <div class="form-group">
                     <label>메모 (선택사항)</label>
@@ -983,7 +988,7 @@
             <div class="modal-footer">
                 <button class="modal-btn secondary" onclick="closeStatusModal()">취소</button>
                 <button class="modal-btn primary" onclick="updateThreadStatus()">
-                    <i class="fas fa-save"></i> 저장
+                    저장
                 </button>
             </div>
         </div>
@@ -992,16 +997,13 @@
     <!-- 일괄 작업 바 -->
     <div class="bulk-action-bar" id="bulkActionBar">
         <span class="selected-count"><span id="selectedCount">0</span>건 선택됨</span>
-        <select id="bulkStageSelect">
-            <option value="">단계 선택</option>
-            <option value="1">1단계</option>
-            <option value="2">2단계</option>
-            <option value="3">3단계</option>
-            <option value="4">4단계</option>
-            <option value="5">5단계</option>
-            <option value="6">6단계</option>
+        <select id="bulkStatusSelect">
+            <option value="">상태 선택</option>
+            <option value="received">신청 접수</option>
+            <option value="completed">완료</option>
+            <option value="archived">보관</option>
         </select>
-        <button class="bulk-btn primary" onclick="bulkChangeStage()">일괄 변경</button>
+        <button class="bulk-btn primary" onclick="bulkChangeStatus()">일괄 변경</button>
         <button class="bulk-btn secondary" onclick="clearSelection()">선택 해제</button>
     </div>
 
@@ -1011,6 +1013,49 @@
         let filteredThreads = [];
         let currentThreadId = null;
         let selectedThreadIds = new Set();
+
+        // 진행 단계 정의
+        const STAGES = {
+            consulting: [
+                '결제 및 서류 안내',
+                '서류 제출',
+                '서류 검토',
+                '의견서 전달'
+            ],
+            civil: [
+                '결제 및 서류 안내',
+                '서류 제출',
+                '서류 검토 및 보완',
+                '출입국 신청 완료',
+                '보완 요청 대응',
+                '완료'
+            ],
+            litigation: [
+                '상담 진행',
+                '결제 및 서류 안내',
+                '서류 제출',
+                '소송 대리',
+                '완료'
+            ]
+        };
+
+        // 상태 라벨
+        const STATUS_LABELS = {
+            'received': '신청 접수',
+            'completed': '완료',
+            'archived': '보관',
+            // 기존 상태 호환
+            'payment': '신청 접수',
+            'document': '신청 접수',
+            'processing': '신청 접수'
+        };
+
+        // 서비스 타입 라벨
+        const SERVICE_TYPE_LABELS = {
+            'consulting': '자문',
+            'civil': '민원',
+            'litigation': '소송'
+        };
 
         // 페이지 로드 시 초기화
         window.addEventListener('DOMContentLoaded', async function() {
@@ -1071,6 +1116,19 @@
                             priority = 'urgent';
                         }
                         
+                        // 서비스 타입 결정 (consulting, civil, litigation)
+                        let serviceType = thread.service_type || 'civil'; // 기본값은 민원
+                        if (thread.is_consulting) {
+                            serviceType = 'consulting';
+                        }
+                        // 소송 관련 서비스 판별
+                        if (thread.service_name &&
+                            (thread.service_name.includes('소송') ||
+                             thread.service_name.includes('분쟁') ||
+                             thread.service_name.includes('Dispute'))) {
+                            serviceType = 'litigation';
+                        }
+
                         return {
                             id: thread.id,
                             customer_name: thread.profiles?.name || '알 수 없음',
@@ -1087,7 +1145,7 @@
                             updated_at: new Date(thread.updated_at).getTime(),
                             organization: thread.organization,
                             is_consulting: thread.is_consulting || false,
-                            is_deferred_payment: thread.is_deferred_payment || false,
+                            service_type: serviceType,
                             current_stage: thread.current_stage || 1
                         };
                     });
@@ -1209,53 +1267,59 @@
             `;
             
             filteredThreads.forEach(thread => {
-                const statusLabel = {
-                    'payment': '결제 완료',
-                    'document': '서류 수집',
-                    'processing': '진행 중',
-                    'completed': '완료',
-                    'archived': '보관됨'
-                }[thread.status];
-                
+                // 상태 라벨 (새로운 3단계 시스템, 기존 상태 호환)
+                const statusLabel = STATUS_LABELS[thread.status] || '신청 접수';
+
+                // 상태 배지 클래스 (새 상태로 변환)
+                let statusClass = thread.status;
+                if (['payment', 'document', 'processing'].includes(thread.status)) {
+                    statusClass = 'received';
+                }
+
                 const priorityLabel = {
                     'normal': '보통',
                     'high': '높음',
                     'urgent': '긴급'
                 }[thread.priority];
-                
-                const priorityIcon = {
-                    'normal': '',
-                    'high': '<i class="fas fa-exclamation-circle"></i>',
-                    'urgent': '<i class="fas fa-fire"></i>'
-                }[thread.priority];
-                
+
                 // 연락처 포맷팅
                 const phone = thread.customer_phone || '-';
-                const phoneDisplay = phone !== '-' 
+                const phoneDisplay = phone !== '-'
                     ? `<a href="tel:${phone}" style="color: #3182F6; text-decoration: none;">${phone}</a>`
                     : '-';
-                
+
                 // 주문번호 표시 (order_id 또는 payment_id)
-                const orderDisplay = thread.order_id 
+                const orderDisplay = thread.order_id
                     ? `<code style="font-size: 11px; background: #f3f4f6; padding: 2px 6px; border-radius: 4px;">${thread.order_id}</code>`
                     : '-';
-                
+
                 // 협약단체 표시
                 const organizationBadge = thread.organization === 'jnu'
-                    ? `<span class="org-badge" style="background: linear-gradient(135deg, #00A651 0%, #007A33 100%); color: white; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block;"><i class="fas fa-university"></i> 전남대</span>`
+                    ? `<span class="org-badge" style="background: linear-gradient(135deg, #00A651 0%, #007A33 100%); color: white; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block;">전남대</span>`
                     : thread.organization === 'snu'
-                    ? `<span class="org-badge" style="background: linear-gradient(135deg, #1D2088 0%, #0d1147 100%); color: white; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block;"><i class="fas fa-university"></i> 서울대</span>`
+                    ? `<span class="org-badge" style="background: linear-gradient(135deg, #1D2088 0%, #0d1147 100%); color: white; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block;">서울대</span>`
                     : `<span style="color: #9CA3AF; font-size: 12px;">일반</span>`;
 
-                // 진행 단계 표시 (자문: 3단계, 결제: 6단계)
-                const currentStage = thread.current_stage || 1;
-                const isConsulting = thread.is_consulting || thread.is_deferred_payment;
-                const totalStages = isConsulting ? 3 : 6;
-                const stageType = isConsulting ? '자문' : '결제';
-                const stageDisplay = `<span style="background: #EBF4FF; color: #1B64DA; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 600;">${currentStage}/${totalStages}</span> <span style="color: #6B7684; font-size: 11px;">${stageType}</span>`;
+                // 진행 단계 표시 (자문: 4단계, 민원: 6단계, 소송: 5단계)
+                const serviceType = thread.service_type || 'civil';
+                const stages = STAGES[serviceType] || STAGES.civil;
+                const currentStage = Math.min(thread.current_stage || 1, stages.length);
+                const totalStages = stages.length;
+                const stageName = stages[currentStage - 1] || stages[0];
+                const serviceTypeLabel = SERVICE_TYPE_LABELS[serviceType] || '민원';
+
+                // 서비스 타입별 색상
+                const typeColors = {
+                    'consulting': { bg: '#FEF3C7', color: '#D97706' },
+                    'civil': { bg: '#EBF4FF', color: '#1B64DA' },
+                    'litigation': { bg: '#FCE7F3', color: '#BE185D' }
+                };
+                const typeColor = typeColors[serviceType] || typeColors.civil;
+
+                const stageDisplay = `<span style="background: ${typeColor.bg}; color: ${typeColor.color}; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 600;">${currentStage}/${totalStages}</span> <span style="color: #6B7684; font-size: 11px;">${serviceTypeLabel}</span>`;
 
                 tableHTML += `
-                    <tr data-thread-id="${thread.id}" data-is-consulting="${isConsulting}">
+                    <tr data-thread-id="${thread.id}" data-service-type="${serviceType}">
                         <td><input type="checkbox" class="row-checkbox" onchange="toggleRowSelect(this, '${thread.id}')"></td>
                         <td>
                             <div><strong>${thread.customer_name}</strong></div>
@@ -1265,9 +1329,9 @@
                         <td>${thread.service_name}</td>
                         <td>${organizationBadge}</td>
                         <td>${orderDisplay}</td>
-                        <td><span class="status-badge ${thread.status}">${statusLabel}</span></td>
+                        <td><span class="status-badge ${statusClass}">${statusLabel}</span></td>
                         <td>${stageDisplay}</td>
-                        <td><strong>₩${thread.amount.toLocaleString()}</strong></td>
+                        <td><strong>${thread.amount.toLocaleString()}원</strong></td>
                         <td>${new Date(thread.created_at).toLocaleDateString()}</td>
                         <td>
                             <button class="action-btn view" onclick="viewThread('${thread.id}')">보기</button>
@@ -1296,13 +1360,18 @@
             filteredThreads = allThreads.filter(thread => {
                 if (nameFilter && !thread.customer_name.toLowerCase().includes(nameFilter)) return false;
                 if (serviceFilter && !thread.service_name.toLowerCase().includes(serviceFilter)) return false;
-                if (statusFilter && thread.status !== statusFilter) return false;
+
+                // 상태 필터 (기존 상태도 호환)
+                if (statusFilter) {
+                    const normalizedStatus = ['payment', 'document', 'processing'].includes(thread.status) ? 'received' : thread.status;
+                    if (normalizedStatus !== statusFilter) return false;
+                }
+
                 if (priorityFilter && thread.priority !== priorityFilter) return false;
-                // 서비스 유형 필터 (자문/결제)
+
+                // 서비스 유형 필터 (자문/민원/소송)
                 if (serviceTypeFilter) {
-                    const isConsulting = thread.is_consulting || thread.is_deferred_payment;
-                    if (serviceTypeFilter === 'consulting' && !isConsulting) return false;
-                    if (serviceTypeFilter === 'payment' && isConsulting) return false;
+                    if (thread.service_type !== serviceTypeFilter) return false;
                 }
                 return true;
             });
@@ -1378,12 +1447,12 @@
             updateBulkActionBar();
         }
 
-        // 일괄 단계 변경
-        async function bulkChangeStage() {
-            const newStage = document.getElementById('bulkStageSelect').value;
+        // 일괄 상태 변경
+        async function bulkChangeStatus() {
+            const newStatus = document.getElementById('bulkStatusSelect').value;
 
-            if (!newStage) {
-                alert('변경할 단계를 선택해주세요.');
+            if (!newStatus) {
+                alert('변경할 상태를 선택해주세요.');
                 return;
             }
 
@@ -1392,8 +1461,8 @@
                 return;
             }
 
-            const stageNum = parseInt(newStage);
-            const confirmMsg = `선택된 ${selectedThreadIds.size}건의 쓰레드를 ${stageNum}단계로 변경하시겠습니까?`;
+            const statusLabel = STATUS_LABELS[newStatus];
+            const confirmMsg = `선택된 ${selectedThreadIds.size}건의 쓰레드를 "${statusLabel}"(으)로 변경하시겠습니까?`;
 
             if (!confirm(confirmMsg)) return;
 
@@ -1403,7 +1472,7 @@
                 const { error } = await supabaseClient
                     .from('threads')
                     .update({
-                        current_stage: stageNum,
+                        status: newStatus,
                         updated_at: new Date().toISOString()
                     })
                     .in('id', threadIds);
@@ -1414,17 +1483,17 @@
                 threadIds.forEach(id => {
                     const thread = allThreads.find(t => t.id === id);
                     if (thread) {
-                        thread.current_stage = stageNum;
+                        thread.status = newStatus;
                     }
                 });
 
-                alert(`${selectedThreadIds.size}건의 단계가 변경되었습니다.`);
+                alert(`${selectedThreadIds.size}건의 상태가 변경되었습니다.`);
                 clearSelection();
                 renderThreadsTable();
 
             } catch (error) {
-                console.error('일괄 단계 변경 오류:', error);
-                alert('단계 변경 중 오류가 발생했습니다.');
+                console.error('일괄 상태 변경 오류:', error);
+                alert('상태 변경 중 오류가 발생했습니다.');
             }
         }
 
@@ -1434,16 +1503,56 @@
             window.location.href = `admin-thread.html?id=${threadId}`;
         }
 
+        // 진행 단계 옵션 업데이트
+        function updateStageOptions(serviceType) {
+            const stageSelect = document.getElementById('newStage');
+            const stageHint = document.getElementById('stageHint');
+
+            if (!serviceType) {
+                serviceType = document.getElementById('newServiceType').value;
+            }
+
+            const stages = STAGES[serviceType] || STAGES.civil;
+            stageSelect.innerHTML = '';
+
+            stages.forEach((stage, index) => {
+                const option = document.createElement('option');
+                option.value = index + 1;
+                option.textContent = `${index + 1}단계: ${stage}`;
+                stageSelect.appendChild(option);
+            });
+
+            // 힌트 업데이트
+            const hints = {
+                'consulting': '자문: 결제 및 서류 안내 > 서류 제출 > 서류 검토 > 의견서 전달',
+                'civil': '민원: 결제 및 서류 안내 > 서류 제출 > 서류 검토 및 보완 > 출입국 신청 완료 > 보완 요청 대응 > 완료',
+                'litigation': '소송: 상담 진행 > 결제 및 서류 안내 > 서류 제출 > 소송 대리 > 완료'
+            };
+            stageHint.textContent = hints[serviceType] || '';
+        }
+
         // 상태 변경 모달 열기
         function openStatusModal(threadId) {
             currentThreadId = threadId;
             const thread = allThreads.find(t => t.id === threadId);
 
             if (thread) {
-                document.getElementById('newStatus').value = thread.status;
+                // 상태 정규화 (기존 상태를 새 상태로 변환)
+                let normalizedStatus = thread.status;
+                if (['payment', 'document', 'processing'].includes(thread.status)) {
+                    normalizedStatus = 'received';
+                }
+
+                document.getElementById('newStatus').value = normalizedStatus;
                 document.getElementById('newPriority').value = thread.priority || 'normal';
-                document.getElementById('newStage').value = thread.current_stage || 1;
+                document.getElementById('newServiceType').value = thread.service_type || 'civil';
                 document.getElementById('statusMemo').value = '';
+
+                // 서비스 타입에 맞는 단계 옵션 생성
+                updateStageOptions(thread.service_type || 'civil');
+
+                // 현재 단계 선택
+                document.getElementById('newStage').value = thread.current_stage || 1;
 
                 document.getElementById('statusModal').classList.add('active');
             }
@@ -1458,75 +1567,72 @@
         // 쓰레드 상태 업데이트
         async function updateThreadStatus() {
             if (!currentThreadId) {
-                console.error('❌ currentThreadId가 없습니다');
+                console.error('currentThreadId가 없습니다');
                 return;
             }
 
             const newStatus = document.getElementById('newStatus').value;
             const newPriority = document.getElementById('newPriority').value;
+            const newServiceType = document.getElementById('newServiceType').value;
             const newStage = parseInt(document.getElementById('newStage').value);
             const memo = document.getElementById('statusMemo').value;
 
-            console.log('🔄 상태 업데이트 시작:', {
+            console.log('상태 업데이트 시작:', {
                 threadId: currentThreadId,
                 newStatus,
                 newPriority,
+                newServiceType,
                 newStage,
                 memo
             });
 
             try {
-                // 🔥 Supabase에 실제 업데이트
+                // Supabase에 실제 업데이트
                 const { data, error } = await supabaseClient
                     .from('threads')
                     .update({
                         status: newStatus,
                         priority: newPriority,
+                        service_type: newServiceType,
                         current_stage: newStage,
+                        is_consulting: newServiceType === 'consulting',
                         updated_at: new Date().toISOString()
                     })
                     .eq('id', currentThreadId)
                     .select()
                     .single();
-                
+
                 if (error) {
-                    console.error('❌ Supabase 업데이트 에러:', error);
+                    console.error('Supabase 업데이트 에러:', error);
                     throw error;
                 }
-                
-                console.log('✅ Supabase 상태 업데이트 성공:', data);
-                console.log('  - Thread ID:', data.id);
-                console.log('  - New Status:', data.status);
-                console.log('  - Updated At:', data.updated_at);
-                
+
+                console.log('Supabase 상태 업데이트 성공:', data);
+
                 // 로컬 배열도 업데이트
                 const thread = allThreads.find(t => t.id === currentThreadId);
                 if (thread) {
                     thread.status = newStatus;
                     thread.priority = newPriority;
+                    thread.service_type = newServiceType;
                     thread.current_stage = newStage;
+                    thread.is_consulting = newServiceType === 'consulting';
                     thread.updated_at = new Date().toISOString();
-                    console.log('✅ 로컬 배열 업데이트 완료');
-                } else {
-                    console.warn('⚠️ 로컬 배열에서 쓰레드를 찾을 수 없음');
                 }
-                
+
                 updateStatistics();
                 applyFilters();
                 closeStatusModal();
-                
+
                 alert('쓰레드 상태가 업데이트되었습니다!');
-                
-                // 🔥 즉시 새로고침하여 DB 상태 재확인
+
+                // 데이터 새로고침
                 setTimeout(() => {
-                    console.log('🔄 데이터 새로고침 중...');
-                    loadThreadsData();
+                    loadDashboardData();
                 }, 500);
-                
+
             } catch (error) {
-                console.error('❌ 쓰레드 상태 업데이트 실패:', error);
-                console.error('  - Error name:', error.name);
-                console.error('  - Error message:', error.message);
+                console.error('쓰레드 상태 업데이트 실패:', error);
                 alert('상태 업데이트 중 오류가 발생했습니다: ' + error.message);
             }
         }

@@ -1030,11 +1030,9 @@
                             <div class="control-group">
                                 <div class="control-label">상태</div>
                                 <select class="control-select" id="threadStatus" onchange="updateThreadStatus()">
-                                    <option value="payment">결제 완료</option>
-                                    <option value="document">서류 수집</option>
-                                    <option value="processing">진행 중</option>
+                                    <option value="received">신청 접수</option>
                                     <option value="completed">완료</option>
-                                    <option value="archived">보관됨</option>
+                                    <option value="archived">보관</option>
                                 </select>
                             </div>
                             <div class="control-group">
@@ -1170,23 +1168,50 @@
     <script src="js/supabase-client.js?v=20250127"></script>
 
     <script>
-        // Thread stages configuration
+        // Thread stages configuration - 진행 형태별 단계
         const STAGES = {
-            // 자문 서비스 (상담 후 결제)
+            // 자문 서비스 (4단계)
             consulting: [
                 { order: 1, name: '결제 및 서류 안내', assignee: '로연' },
-                { order: 2, name: '자문 검토', assignee: '로연' },
-                { order: 3, name: '자문 결과 전달', assignee: '로연' }
+                { order: 2, name: '서류 제출', assignee: '고객' },
+                { order: 3, name: '서류 검토', assignee: '로연' },
+                { order: 4, name: '의견서 전달', assignee: '로연' }
             ],
-            // 일반 결제 서비스
-            payment: [
+            // 민원 서비스 (6단계)
+            civil: [
                 { order: 1, name: '결제 및 서류 안내', assignee: '로연' },
                 { order: 2, name: '서류 제출', assignee: '고객' },
                 { order: 3, name: '서류 검토 및 보완', assignee: '로연' },
                 { order: 4, name: '출입국 신청 완료', assignee: '로연' },
                 { order: 5, name: '보완 요청 대응', assignee: '고객/로연' },
-                { order: 6, name: '허가 완료', assignee: '로연' }
+                { order: 6, name: '완료', assignee: '로연' }
+            ],
+            // 소송 서비스 (5단계)
+            litigation: [
+                { order: 1, name: '상담 진행', assignee: '로연' },
+                { order: 2, name: '결제 및 서류 안내', assignee: '로연' },
+                { order: 3, name: '서류 제출', assignee: '고객' },
+                { order: 4, name: '소송 대리', assignee: '로연' },
+                { order: 5, name: '완료', assignee: '로연' }
             ]
+        };
+
+        // 상태 라벨
+        const STATUS_LABELS = {
+            'received': '신청 접수',
+            'completed': '완료',
+            'archived': '보관',
+            // 기존 상태 호환
+            'payment': '신청 접수',
+            'document': '신청 접수',
+            'processing': '신청 접수'
+        };
+
+        // 서비스 타입 라벨
+        const SERVICE_TYPE_LABELS = {
+            'consulting': '자문',
+            'civil': '민원',
+            'litigation': '소송'
         };
 
         let threadId = null;
@@ -1369,8 +1394,12 @@
             document.getElementById('customerNationality').textContent = customerData?.nationality || '-';
             document.getElementById('customerVisa').textContent = customerData?.visa_type || '-';
 
-            // Status controls
-            document.getElementById('threadStatus').value = threadData.status || 'document';
+            // Status controls - 기존 상태를 새 상태로 정규화
+            let normalizedStatus = threadData.status || 'received';
+            if (['payment', 'document', 'processing'].includes(normalizedStatus)) {
+                normalizedStatus = 'received';
+            }
+            document.getElementById('threadStatus').value = normalizedStatus;
             document.getElementById('threadPriority').value = threadData.priority || 'normal';
 
             // Fee info
@@ -1388,14 +1417,47 @@
             }
         }
 
+        function getServiceType() {
+            // 서비스 타입 결정 (consulting, civil, litigation)
+            if (threadData.service_type) {
+                return threadData.service_type;
+            }
+            // 기존 is_consulting 플래그로 판별
+            if (threadData.is_consulting) {
+                return 'consulting';
+            }
+            // 소송 관련 서비스 판별
+            if (threadData.service_name &&
+                (threadData.service_name.includes('소송') ||
+                 threadData.service_name.includes('분쟁') ||
+                 threadData.service_name.includes('Dispute'))) {
+                return 'litigation';
+            }
+            // 기본값은 민원
+            return 'civil';
+        }
+
         function renderProgress() {
-            // is_deferred_payment 또는 is_consulting이 true면 자문 단계 사용
-            const isConsulting = threadData.is_deferred_payment || threadData.is_consulting;
-            const stages = isConsulting ? STAGES.consulting : STAGES.payment;
-            const currentStage = threadData.current_stage || 1;
+            const serviceType = getServiceType();
+            const stages = STAGES[serviceType] || STAGES.civil;
+            const currentStage = Math.min(threadData.current_stage || 1, stages.length);
+            const serviceTypeLabel = SERVICE_TYPE_LABELS[serviceType] || '민원';
 
             const container = document.getElementById('progressContent');
-            container.innerHTML = stages.map((stage, index) => {
+
+            // 서비스 타입 표시
+            const typeColors = {
+                'consulting': { bg: '#FEF3C7', color: '#D97706' },
+                'civil': { bg: '#EBF4FF', color: '#1B64DA' },
+                'litigation': { bg: '#FCE7F3', color: '#BE185D' }
+            };
+            const typeColor = typeColors[serviceType] || typeColors.civil;
+
+            container.innerHTML = `
+                <div style="margin-bottom: 16px; padding: 8px 12px; background: ${typeColor.bg}; border-radius: 8px; text-align: center;">
+                    <span style="color: ${typeColor.color}; font-weight: 700; font-size: 13px;">${serviceTypeLabel} (${stages.length}단계)</span>
+                </div>
+            ` + stages.map((stage, index) => {
                 const stageNum = index + 1;
                 let statusClass = 'pending';
                 let indicatorContent = stageNum;
@@ -1412,7 +1474,7 @@
                         <div class="step-indicator ${statusClass}">${indicatorContent}</div>
                         <div class="step-info">
                             <div class="step-name ${statusClass}">${stage.name}</div>
-                            <div class="step-assignee">by ${stage.assignee}</div>
+                            <div class="step-assignee">담당: ${stage.assignee}</div>
                         </div>
                     </div>
                 `;
@@ -1747,12 +1809,13 @@
         }
 
         function openStageChangeModal() {
-            const isConsulting = threadData.is_deferred_payment || threadData.is_consulting;
-            const stages = isConsulting ? STAGES.consulting : STAGES.payment;
+            const serviceType = getServiceType();
+            const stages = STAGES[serviceType] || STAGES.civil;
             const currentStage = threadData.current_stage || 1;
+            const serviceTypeLabel = SERVICE_TYPE_LABELS[serviceType] || '민원';
 
             const options = stages.map((s, i) => `${i + 1}. ${s.name}`).join('\n');
-            const newStage = prompt(`변경할 단계를 입력하세요 (1-${stages.length}):\n\n${options}`, currentStage);
+            const newStage = prompt(`[${serviceTypeLabel}] 변경할 단계를 입력하세요 (1-${stages.length}):\n\n${options}`, currentStage);
 
             if (newStage && !isNaN(newStage)) {
                 const stage = parseInt(newStage);

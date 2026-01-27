@@ -1295,23 +1295,39 @@
     <script src="js/i18n.js?v=20250126"></script>
 
     <script>
-        // Thread stages configuration
+        // Thread stages configuration - 진행 형태별 단계
         const STAGES = {
-            // 자문 서비스 (상담 후 결제)
+            // 자문 서비스 (4단계)
             consulting: [
                 { order: 1, name: '결제 및 서류 안내', assignee: '로연' },
-                { order: 2, name: '자문 검토', assignee: '로연' },
-                { order: 3, name: '자문 결과 전달', assignee: '로연' }
+                { order: 2, name: '서류 제출', assignee: '고객' },
+                { order: 3, name: '서류 검토', assignee: '로연' },
+                { order: 4, name: '의견서 전달', assignee: '로연' }
             ],
-            // 일반 결제 서비스
-            payment: [
+            // 민원 서비스 (6단계)
+            civil: [
                 { order: 1, name: '결제 및 서류 안내', assignee: '로연' },
                 { order: 2, name: '서류 제출', assignee: '고객' },
                 { order: 3, name: '서류 검토 및 보완', assignee: '로연' },
                 { order: 4, name: '출입국 신청 완료', assignee: '로연' },
                 { order: 5, name: '보완 요청 대응', assignee: '고객/로연' },
-                { order: 6, name: '허가 완료', assignee: '로연' }
+                { order: 6, name: '완료', assignee: '로연' }
+            ],
+            // 소송 서비스 (5단계)
+            litigation: [
+                { order: 1, name: '상담 진행', assignee: '로연' },
+                { order: 2, name: '결제 및 서류 안내', assignee: '로연' },
+                { order: 3, name: '서류 제출', assignee: '고객' },
+                { order: 4, name: '소송 대리', assignee: '로연' },
+                { order: 5, name: '완료', assignee: '로연' }
             ]
+        };
+
+        // 서비스 타입 라벨
+        const SERVICE_TYPE_LABELS = {
+            'consulting': '자문',
+            'civil': '민원',
+            'litigation': '소송'
         };
 
         let threadId = null;
@@ -1576,14 +1592,46 @@
             }
         }
 
+        function getServiceType(thread) {
+            // 서비스 타입 결정 (consulting, civil, litigation)
+            if (thread.service_type) {
+                return thread.service_type;
+            }
+            // 기존 is_consulting 플래그로 판별
+            if (thread.is_consulting) {
+                return 'consulting';
+            }
+            // 소송 관련 서비스 판별
+            if (thread.service_name &&
+                (thread.service_name.includes('소송') ||
+                 thread.service_name.includes('분쟁') ||
+                 thread.service_name.includes('Dispute'))) {
+                return 'litigation';
+            }
+            // 기본값은 민원
+            return 'civil';
+        }
+
         function renderProgress(thread) {
-            // is_deferred_payment 또는 is_consulting이 true면 자문 단계 사용
-            const stageType = (thread.is_deferred_payment || thread.is_consulting) ? 'consulting' : 'payment';
-            const stages = STAGES[stageType];
-            const currentStage = thread.current_stage || 1;
+            const serviceType = getServiceType(thread);
+            const stages = STAGES[serviceType] || STAGES.civil;
+            const currentStage = Math.min(thread.current_stage || 1, stages.length);
+            const serviceTypeLabel = SERVICE_TYPE_LABELS[serviceType] || '민원';
+
+            // 서비스 타입별 색상
+            const typeColors = {
+                'consulting': { bg: '#FEF3C7', color: '#D97706' },
+                'civil': { bg: '#EBF4FF', color: '#1B64DA' },
+                'litigation': { bg: '#FCE7F3', color: '#BE185D' }
+            };
+            const typeColor = typeColors[serviceType] || typeColors.civil;
 
             const container = document.getElementById('progressContent');
-            container.innerHTML = stages.map((stage, index) => {
+            container.innerHTML = `
+                <div style="margin-bottom: 16px; padding: 8px 12px; background: ${typeColor.bg}; border-radius: 8px; text-align: center;">
+                    <span style="color: ${typeColor.color}; font-weight: 700; font-size: 13px;">${serviceTypeLabel} (${stages.length}단계)</span>
+                </div>
+            ` + stages.map((stage, index) => {
                 const stageNum = index + 1;
                 let statusClass = 'pending';
                 let indicatorContent = stageNum;
@@ -1600,7 +1648,7 @@
                         <div class="step-indicator ${statusClass}">${indicatorContent}</div>
                         <div class="step-info">
                             <div class="step-name ${statusClass}">${stage.name}</div>
-                            <div class="step-assignee">by ${stage.assignee}</div>
+                            <div class="step-assignee">담당: ${stage.assignee}</div>
                         </div>
                     </div>
                 `;
