@@ -582,6 +582,139 @@
             font-style: normal;
         }
 
+        /* Enhanced Quill Toolbar */
+        .ql-snow .ql-picker.ql-background .ql-picker-label,
+        .ql-snow .ql-picker.ql-color .ql-picker-label {
+            padding: 2px 4px;
+        }
+
+        /* Admin Template Toolbar */
+        .admin-template-toolbar {
+            display: flex;
+            gap: 8px;
+            padding: 10px 12px;
+            background: #FEF3C7;
+            border-bottom: 1px solid #FCD34D;
+            flex-wrap: wrap;
+        }
+
+        .template-btn {
+            padding: 6px 12px;
+            background: white;
+            border: 1px solid #D97706;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #92400E;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .template-btn:hover {
+            background: #D97706;
+            color: white;
+        }
+
+        /* Styled content inside editor and messages */
+        .info-box, .ql-editor .info-box {
+            background: #EBF4FF;
+            border-left: 4px solid #3182F6;
+            padding: 16px 20px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box, .ql-editor .warning-box {
+            background: #FEF3C7;
+            border-left: 4px solid #F59E0B;
+            padding: 16px 20px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .success-box, .ql-editor .success-box {
+            background: #D1FAE5;
+            border-left: 4px solid #10B981;
+            padding: 16px 20px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .numbered-steps, .ql-editor .numbered-steps {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 12px 0;
+        }
+
+        .numbered-steps .step, .ql-editor .numbered-steps .step {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .numbered-steps .step:last-child, .ql-editor .numbered-steps .step:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .numbered-steps .step:first-child, .ql-editor .numbered-steps .step:first-child {
+            padding-top: 0;
+        }
+
+        .numbered-steps .step-num, .ql-editor .numbered-steps .step-num {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .numbered-steps .step-content, .ql-editor .numbered-steps .step-content {
+            flex: 1;
+        }
+
+        .numbered-steps .step-title, .ql-editor .numbered-steps .step-title {
+            font-weight: 700;
+            color: #1E293B;
+            margin-bottom: 4px;
+        }
+
+        .numbered-steps .step-desc, .ql-editor .numbered-steps .step-desc {
+            font-size: 14px;
+            color: #64748B;
+        }
+
+        .action-link-btn, .ql-editor .action-link-btn {
+            display: inline-block;
+            background: #3182F6;
+            color: white !important;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none !important;
+            margin: 8px 0;
+        }
+
+        .action-link-btn:hover {
+            background: #2563EB;
+        }
+
+        /* Highlight styles */
+        .highlight-yellow { background-color: #FEF08A; padding: 2px 4px; border-radius: 3px; }
+        .highlight-green { background-color: #BBF7D0; padding: 2px 4px; border-radius: 3px; }
+        .highlight-blue { background-color: #BFDBFE; padding: 2px 4px; border-radius: 3px; }
+        .highlight-pink { background-color: #FBCFE8; padding: 2px 4px; border-radius: 3px; }
+
         /* File Upload */
         .file-upload-area {
             margin-top: 16px;
@@ -1097,6 +1230,15 @@
                 <div class="reply-section">
                     <div class="reply-header">답글 작성</div>
                     <div class="editor-container">
+                        <!-- Admin Template Toolbar -->
+                        <div class="admin-template-toolbar">
+                            <button type="button" class="template-btn" onclick="insertInfoBox()">안내 박스</button>
+                            <button type="button" class="template-btn" onclick="insertWarningBox()">주의 박스</button>
+                            <button type="button" class="template-btn" onclick="insertSuccessBox()">완료 박스</button>
+                            <button type="button" class="template-btn" onclick="insertNumberedSteps()">단계 안내</button>
+                            <button type="button" class="template-btn" onclick="insertActionButton()">액션 버튼</button>
+                            <button type="button" class="template-btn" onclick="insertHighlight('yellow')">하이라이트</button>
+                        </div>
                         <div id="editor"></div>
                     </div>
                     <div class="file-upload-area" id="fileUploadArea" onclick="document.getElementById('fileInput').click()">
@@ -1270,12 +1412,91 @@
                 placeholder: '메시지를 입력하세요...',
                 modules: {
                     toolbar: [
-                        ['bold', 'italic', 'underline'],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'color': [] }, { 'background': [] }],
                         ['link', 'image'],
-                        [{ 'list': 'ordered'}, { 'list': 'bullet' }]
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        ['blockquote'],
+                        ['clean']
                     ]
                 }
             });
+        }
+
+        // Template insertion functions
+        function insertInfoBox() {
+            const html = `<div class="info-box"><strong>안내</strong><br>내용을 입력하세요.</div><p><br></p>`;
+            insertHtmlToEditor(html);
+        }
+
+        function insertWarningBox() {
+            const html = `<div class="warning-box"><strong>주의사항</strong><br>내용을 입력하세요.</div><p><br></p>`;
+            insertHtmlToEditor(html);
+        }
+
+        function insertSuccessBox() {
+            const html = `<div class="success-box"><strong>완료</strong><br>내용을 입력하세요.</div><p><br></p>`;
+            insertHtmlToEditor(html);
+        }
+
+        function insertNumberedSteps() {
+            const html = `
+<div class="numbered-steps">
+<div class="step">
+<div class="step-num">1</div>
+<div class="step-content">
+<div class="step-title">첫 번째 단계</div>
+<div class="step-desc">설명을 입력하세요.</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">2</div>
+<div class="step-content">
+<div class="step-title">두 번째 단계</div>
+<div class="step-desc">설명을 입력하세요.</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">3</div>
+<div class="step-content">
+<div class="step-title">세 번째 단계</div>
+<div class="step-desc">설명을 입력하세요.</div>
+</div>
+</div>
+</div>
+<p><br></p>`;
+            insertHtmlToEditor(html);
+        }
+
+        function insertActionButton() {
+            const url = prompt('링크 URL을 입력하세요:', 'https://');
+            const text = prompt('버튼 텍스트를 입력하세요:', '버튼 텍스트');
+            if (url && text) {
+                const html = `<a href="${url}" target="_blank" class="action-link-btn">${text}</a><p><br></p>`;
+                insertHtmlToEditor(html);
+            }
+        }
+
+        function insertHighlight(color) {
+            const selection = quillEditor.getSelection();
+            if (selection && selection.length > 0) {
+                const colors = {
+                    'yellow': '#FEF08A',
+                    'green': '#BBF7D0',
+                    'blue': '#BFDBFE',
+                    'pink': '#FBCFE8'
+                };
+                quillEditor.format('background', colors[color] || colors.yellow);
+            } else {
+                alert('하이라이트할 텍스트를 먼저 선택해주세요.');
+            }
+        }
+
+        function insertHtmlToEditor(html) {
+            const selection = quillEditor.getSelection();
+            const index = selection ? selection.index : quillEditor.getLength();
+            quillEditor.clipboard.dangerouslyPasteHTML(index, html);
+            quillEditor.setSelection(index + 1);
         }
 
         function setupFileUpload() {
@@ -1614,17 +1835,28 @@
         function processMessageContent(content) {
             if (!content) return '';
 
+            // 이미 HTML 구조가 있는 경우 (Quill에서 작성된 경우) 그대로 반환
+            if (content.includes('class="info-box"') ||
+                content.includes('class="warning-box"') ||
+                content.includes('class="success-box"') ||
+                content.includes('class="numbered-steps"') ||
+                content.includes('class="action-link-btn"') ||
+                content.includes('class="ql-')) {
+                // URL 변환만 수행 (이미 링크가 아닌 경우)
+                return content;
+            }
+
             // 줄바꿈을 <br>로 변환
             content = content.replace(/\n/g, '<br>');
 
             // URL을 링크로 변환
             const urlPattern = /(https?:\/\/[^\s<>"']+)/gi;
             content = content.replace(urlPattern, (match) => {
-                if (match.includes('profile-submit.html')) {
-                    return `<a href="${match}" target="_blank" style="color: #3182F6; font-weight: 600;">기본사항 입력하기</a>`;
+                if (match.includes('profile-setup.html') || match.includes('profile-submit.html')) {
+                    return `<a href="${match}" target="_blank" class="action-link-btn">기본사항 입력하기</a>`;
                 }
                 if (match.includes('service-apply')) {
-                    return `<a href="${match}" target="_blank" style="color: #3182F6; font-weight: 600;">결제하기</a>`;
+                    return `<a href="${match}" target="_blank" class="action-link-btn">결제하기</a>`;
                 }
                 return `<a href="${match}" target="_blank" style="color: #3182F6;">${match}</a>`;
             });

@@ -1599,15 +1599,12 @@
             });
 
             try {
-                // Supabase에 실제 업데이트
+                // Supabase에 실제 업데이트 (데이터베이스에 존재하는 필드만)
                 const { data, error } = await supabaseClient
                     .from('threads')
                     .update({
                         status: newStatus,
                         priority: newPriority,
-                        service_type: newServiceType,
-                        current_stage: newStage,
-                        is_consulting: newServiceType === 'consulting',
                         updated_at: new Date().toISOString()
                     })
                     .eq('id', currentThreadId)
@@ -1621,14 +1618,11 @@
 
                 console.log('Supabase 상태 업데이트 성공:', data);
 
-                // 로컬 배열도 업데이트
+                // 로컬 배열도 업데이트 (UI 표시용 - DB에 없는 필드 포함)
                 const thread = allThreads.find(t => t.id === currentThreadId);
                 if (thread) {
                     thread.status = newStatus;
                     thread.priority = newPriority;
-                    thread.service_type = newServiceType;
-                    thread.current_stage = newStage;
-                    thread.is_consulting = newServiceType === 'consulting';
                     thread.updated_at = new Date().toISOString();
                 }
 
