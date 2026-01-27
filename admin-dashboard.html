@@ -725,6 +725,14 @@
                         <option value="normal">보통</option>
                     </select>
                 </div>
+                <div class="filter-item">
+                    <label>서비스 유형</label>
+                    <select id="filterServiceType">
+                        <option value="">전체</option>
+                        <option value="consulting">자문 서비스</option>
+                        <option value="payment">결제 서비스</option>
+                    </select>
+                </div>
             </div>
             <div class="filter-actions">
                 <button class="filter-btn primary" onclick="applyFilters()">
@@ -886,10 +894,8 @@
                         <option value="4">4단계</option>
                         <option value="5">5단계</option>
                         <option value="6">6단계</option>
-                        <option value="7">7단계</option>
-                        <option value="8">8단계</option>
                     </select>
-                    <p style="font-size: 12px; color: #6B7684; margin-top: 4px;">상담: 8단계 / 결제: 6단계</p>
+                    <p style="font-size: 12px; color: #6B7684; margin-top: 4px;">자문: 3단계 / 결제: 6단계</p>
                 </div>
                 <div class="form-group">
                     <label>메모 (선택사항)</label>
@@ -984,7 +990,10 @@
                             payment_id: thread.payment_id,
                             created_at: new Date(thread.created_at).getTime(),
                             updated_at: new Date(thread.updated_at).getTime(),
-                            organization: thread.organization
+                            organization: thread.organization,
+                            is_consulting: thread.is_consulting || false,
+                            is_deferred_payment: thread.is_deferred_payment || false,
+                            current_stage: thread.current_stage || 1
                         };
                     });
                     
@@ -1139,10 +1148,11 @@
                     ? `<span class="org-badge" style="background: linear-gradient(135deg, #1D2088 0%, #0d1147 100%); color: white; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block;"><i class="fas fa-university"></i> 서울대</span>`
                     : `<span style="color: #9CA3AF; font-size: 12px;">일반</span>`;
 
-                // 진행 단계 표시
+                // 진행 단계 표시 (자문: 3단계, 결제: 6단계)
                 const currentStage = thread.current_stage || 1;
-                const totalStages = thread.is_consulting ? 8 : 6;
-                const stageType = thread.is_consulting ? '상담' : '결제';
+                const isConsulting = thread.is_consulting || thread.is_deferred_payment;
+                const totalStages = isConsulting ? 3 : 6;
+                const stageType = isConsulting ? '자문' : '결제';
                 const stageDisplay = `<span style="background: #EBF4FF; color: #1B64DA; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 600;">${currentStage}/${totalStages}</span> <span style="color: #6B7684; font-size: 11px;">${stageType}</span>`;
 
                 tableHTML += `
@@ -1185,15 +1195,22 @@
             const serviceFilter = document.getElementById('filterService').value.toLowerCase();
             const statusFilter = document.getElementById('filterStatus').value;
             const priorityFilter = document.getElementById('filterPriority').value;
-            
+            const serviceTypeFilter = document.getElementById('filterServiceType').value;
+
             filteredThreads = allThreads.filter(thread => {
                 if (nameFilter && !thread.customer_name.toLowerCase().includes(nameFilter)) return false;
                 if (serviceFilter && !thread.service_name.toLowerCase().includes(serviceFilter)) return false;
                 if (statusFilter && thread.status !== statusFilter) return false;
                 if (priorityFilter && thread.priority !== priorityFilter) return false;
+                // 서비스 유형 필터 (자문/결제)
+                if (serviceTypeFilter) {
+                    const isConsulting = thread.is_consulting || thread.is_deferred_payment;
+                    if (serviceTypeFilter === 'consulting' && !isConsulting) return false;
+                    if (serviceTypeFilter === 'payment' && isConsulting) return false;
+                }
                 return true;
             });
-            
+
             renderThreadsTable();
         }
 
@@ -1203,7 +1220,8 @@
             document.getElementById('filterService').value = '';
             document.getElementById('filterStatus').value = '';
             document.getElementById('filterPriority').value = '';
-            
+            document.getElementById('filterServiceType').value = '';
+
             filteredThreads = [...allThreads];
             renderThreadsTable();
         }
