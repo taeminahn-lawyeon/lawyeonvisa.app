@@ -1816,6 +1816,21 @@
 
         async function loadSubmittedFiles(userId) {
             const container = document.getElementById('submittedFilesContent');
+            const lang = localStorage.getItem('i18n_language') || 'en';
+
+            // Multilingual labels
+            const labels = {
+                passport: { ko: '여권 사본', en: 'Passport Copy', zh: '护照复印件', vi: 'Bản sao hộ chiếu', ja: 'パスポートコピー', mn: 'Паспортын хуулбар', th: 'สำเนาพาสปอร์ต' },
+                alienCard: { ko: '외국인등록증', en: 'Alien Registration Card', zh: '外国人登录证', vi: 'Thẻ đăng ký người nước ngoài', ja: '外国人登録証', mn: 'Гадаадын иргэний бүртгэлийн карт', th: 'บัตรประจำตัวคนต่างด้าว' },
+                signature: { ko: '전자서명', en: 'Digital Signature', zh: '电子签名', vi: 'Chữ ký điện tử', ja: '電子署名', mn: 'Цахим гарын үсэг', th: 'ลายเซ็นดิจิทัล' },
+                submitted: { ko: '제출 완료', en: 'Submitted', zh: '已提交', vi: 'Đã nộp', ja: '提出済み', mn: 'Илгээсэн', th: 'ส่งแล้ว' },
+                notSubmitted: { ko: '미제출', en: 'Not Submitted', zh: '未提交', vi: 'Chưa nộp', ja: '未提出', mn: 'Илгээгээгүй', th: 'ยังไม่ส่ง' },
+                noFiles: { ko: '아직 제출된 서류가 없습니다.', en: 'No documents submitted yet.', zh: '尚未提交任何文件。', vi: 'Chưa có tài liệu nào được nộp.', ja: 'まだ書類が提出されていません。', mn: 'Одоогоор ямар ч баримт бичиг ирүүлээгүй байна.', th: 'ยังไม่มีเอกสารที่ส่ง' },
+                errorLoading: { ko: '서류 정보를 불러올 수 없습니다.', en: 'Unable to load document information.', zh: '无法加载文件信息。', vi: 'Không thể tải thông tin tài liệu.', ja: '書類情報を読み込めません。', mn: 'Баримт бичгийн мэдээллийг ачаалах боломжгүй.', th: 'ไม่สามารถโหลดข้อมูลเอกสาร' },
+                threadFiles: { ko: '쓰레드 첨부 파일', en: 'Thread Attachments', zh: '会话附件', vi: 'Tệp đính kèm', ja: '添付ファイル', mn: 'Хавсралт файлууд', th: 'ไฟล์แนบ' }
+            };
+
+            const getLabel = (key) => labels[key]?.[lang] || labels[key]?.en || key;
 
             try {
                 // profiles 테이블에서 제출 파일 정보 조회
@@ -1825,44 +1840,67 @@
                     .eq('id', userId)
                     .single();
 
-                if (error || !profile) {
-                    const noFilesText = window.i18n ? window.i18n.translate('thread.noFiles') : '아직 제출된 서류가 없습니다.';
-                    container.innerHTML = `<div class="no-files-message">${noFilesText}</div>`;
-                    return;
-                }
+                // Also fetch files from thread messages
+                const { data: threadMessages } = await supabaseClient
+                    .from('messages')
+                    .select('file_url, file_name, file_type, created_at')
+                    .eq('thread_id', threadId)
+                    .not('file_url', 'is', null)
+                    .order('created_at', { ascending: false });
 
                 const files = [];
 
-                // 여권
-                files.push({
-                    type: 'passport',
-                    label: '여권 사본',
-                    path: profile.passport_file,
-                    submitted: !!profile.passport_file
-                });
+                // Profile documents
+                if (profile) {
+                    files.push({
+                        type: 'passport',
+                        label: getLabel('passport'),
+                        path: profile.passport_file,
+                        submitted: !!profile.passport_file,
+                        bucket: 'profile-documents'
+                    });
 
-                // 외국인등록증
-                files.push({
-                    type: 'alien-card',
-                    label: '외국인등록증',
-                    path: profile.alien_card_file,
-                    submitted: !!profile.alien_card_file
-                });
+                    files.push({
+                        type: 'alien-card',
+                        label: getLabel('alienCard'),
+                        path: profile.alien_card_file,
+                        submitted: !!profile.alien_card_file,
+                        bucket: 'profile-documents'
+                    });
 
-                // 전자서명
-                files.push({
-                    type: 'signature',
-                    label: '전자서명',
-                    path: profile.signature_file,
-                    submitted: !!profile.signature_file
-                });
+                    files.push({
+                        type: 'signature',
+                        label: getLabel('signature'),
+                        path: profile.signature_file,
+                        submitted: !!profile.signature_file,
+                        bucket: 'profile-documents'
+                    });
+                }
+
+                // Thread uploaded files
+                if (threadMessages && threadMessages.length > 0) {
+                    threadMessages.forEach(msg => {
+                        files.push({
+                            type: 'thread-file',
+                            label: msg.file_name || 'File',
+                            url: msg.file_url,
+                            submitted: true,
+                            isDirectUrl: true
+                        });
+                    });
+                }
+
+                if (files.length === 0) {
+                    container.innerHTML = `<div class="no-files-message">${getLabel('noFiles')}</div>`;
+                    return;
+                }
 
                 container.innerHTML = files.map(file => `
-                    <div class="submitted-file-item" onclick="${file.submitted ? `viewSubmittedFile('${file.path}')` : ''}">
+                    <div class="submitted-file-item ${file.submitted ? 'clickable' : ''}" onclick="${file.submitted ? (file.isDirectUrl ? `window.open('${file.url}', '_blank')` : `viewSubmittedFile('${file.path}', '${file.bucket || 'profile-documents'}')`) : ''}">
                         <div class="submitted-file-info">
                             <div class="submitted-file-label">${file.label}</div>
                             <div class="submitted-file-status ${file.submitted ? 'submitted' : ''}">
-                                ${file.submitted ? '제출 완료' : '미제출'}
+                                ${file.submitted ? getLabel('submitted') : getLabel('notSubmitted')}
                             </div>
                         </div>
                     </div>
@@ -1870,16 +1908,16 @@
 
             } catch (error) {
                 console.error('Error loading submitted files:', error);
-                container.innerHTML = '<div class="no-files-message">서류 정보를 불러올 수 없습니다.</div>';
+                container.innerHTML = `<div class="no-files-message">${getLabel('errorLoading')}</div>`;
             }
         }
 
-        async function viewSubmittedFile(filePath) {
+        async function viewSubmittedFile(filePath, bucket = 'profile-documents') {
             if (!filePath) return;
 
             try {
                 const { data, error } = await supabaseClient.storage
-                    .from('profile-documents')
+                    .from(bucket)
                     .createSignedUrl(filePath, 3600);
 
                 if (error) throw error;
@@ -1887,7 +1925,17 @@
                 window.open(data.signedUrl, '_blank');
             } catch (error) {
                 console.error('Error getting file URL:', error);
-                alert('파일을 열 수 없습니다.');
+                const lang = localStorage.getItem('i18n_language') || 'en';
+                const errorMsg = {
+                    ko: '파일을 열 수 없습니다.',
+                    en: 'Unable to open file.',
+                    zh: '无法打开文件。',
+                    vi: 'Không thể mở tệp.',
+                    ja: 'ファイルを開けません。',
+                    mn: 'Файлыг нээх боломжгүй.',
+                    th: 'ไม่สามารถเปิดไฟล์ได้'
+                };
+                alert(errorMsg[lang] || errorMsg.en);
             }
         }
 
@@ -2029,16 +2077,32 @@
             // Parse message content and convert links
             let content = processMessageContent(msg.content || '');
 
-            // Handle file attachments
+            // Handle file attachments - check both attachments JSONB and individual file columns
             let attachmentsHtml = '';
+            let fileAttachments = [];
+
+            // First check attachments JSONB column
             if (msg.attachments && msg.attachments.length > 0) {
+                fileAttachments = msg.attachments;
+            }
+            // Also check individual file_url column (new method)
+            else if (msg.file_url) {
+                fileAttachments = [{
+                    url: msg.file_url,
+                    name: msg.file_name || 'File',
+                    type: msg.file_type || '',
+                    size: 0
+                }];
+            }
+
+            if (fileAttachments.length > 0) {
                 attachmentsHtml = `
                     <div class="message-attachments">
-                        ${msg.attachments.map(att => `
+                        ${fileAttachments.map(att => `
                             <div class="attachment-item" onclick="downloadFile('${att.url}', '${att.name}')">
                                 <div class="attachment-info">
                                     <div class="attachment-name">${att.name}</div>
-                                    <div class="attachment-size">${formatFileSize(att.size)}</div>
+                                    ${att.size ? `<div class="attachment-size">${formatFileSize(att.size)}</div>` : ''}
                                 </div>
                             </div>
                         `).join('')}
