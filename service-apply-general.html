@@ -1600,10 +1600,9 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
 
                 const threadResult = await createThread({
                     service_name: selectedService.name,
-                    status: 'document',
+                    status: 'received',
                     amount: selectedService.totalPrice,
                     order_id: 'DEFERRED-' + Date.now(),
-                    is_consulting: true,
                     organization: 'general'
                 });
 

@@ -318,44 +318,45 @@ async function createThread(threadData) {
     try {
         const user = await getCurrentUser();
         if (!user) {
-            console.error('❌ 사용자 없음 - 로그인 필요');
+            console.error('사용자 없음 - 로그인 필요');
             throw new Error('로그인이 필요합니다');
         }
-        
+
+        // 기본 필드만 포함 (데이터베이스 스키마에 확실히 존재하는 필드)
         const threadRecord = {
             user_id: user.id,
-            user_email: user.email,
             service_name: threadData.service_name,
-            status: threadData.status || 'document',
+            status: threadData.status || 'received',
             amount: threadData.amount || 0,
-            government_fee: threadData.government_fee || 0,
             order_id: threadData.order_id || null,
-            payment_id: threadData.payment_id || null,
-            organization: threadData.organization || null,
-            is_consulting: threadData.is_consulting || false,
-            current_stage: 1,
-            is_active: true,
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString()
+            organization: threadData.organization || null
         };
-        
-        console.log('🔄 쓰레드 생성 시도:', threadRecord);
-        
+
+        // 선택적 필드 추가 (존재할 수 있는 필드)
+        if (threadData.government_fee) {
+            threadRecord.government_fee = threadData.government_fee;
+        }
+        if (threadData.payment_id) {
+            threadRecord.payment_id = threadData.payment_id;
+        }
+
+        console.log('쓰레드 생성 시도:', threadRecord);
+
         const { data, error } = await supabaseClient
             .from('threads')
             .insert(threadRecord)
             .select()
             .single();
-        
+
         if (error) {
-            console.error('❌ Supabase 쓰레드 생성 오류:', error);
+            console.error('Supabase 쓰레드 생성 오류:', error);
             throw error;
         }
-        
-        console.log('✅ 쓰레드 생성 성공:', data);
+
+        console.log('쓰레드 생성 성공:', data);
         return { success: true, data };
     } catch (error) {
-        console.error('❌ 쓰레드 생성 실패:', error);
+        console.error('쓰레드 생성 실패:', error);
         return { success: false, error: error.message };
     }
 }
