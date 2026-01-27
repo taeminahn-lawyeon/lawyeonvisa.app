@@ -162,6 +162,8 @@ const translations = {
         'serviceApply.step4Title': '서비스 완료',
         'serviceApply.step4Desc': '완료까지 모든 과정을 처리해 드립니다',
         'serviceApply.proceedPayment': '결제하기',
+        'serviceApply.openThread': '쓰레드 열기',
+        'serviceApply.deferredNotice': '상담 후 결제가 요청됩니다.',
 
         // === 쓰레드 페이지 (Thread Page) ===
         'thread.header': '상담 쓰레드',
@@ -625,6 +627,8 @@ const translations = {
         'serviceApply.step4Title': 'Service Complete',
         'serviceApply.step4Desc': "We'll handle everything until completion",
         'serviceApply.proceedPayment': 'Proceed to Payment',
+        'serviceApply.openThread': 'Open Thread',
+        'serviceApply.deferredNotice': 'Payment will be requested after consultation with our specialist.',
 
         // === Thread Page ===
         'thread.header': 'Consultation Thread',
@@ -1256,6 +1260,8 @@ const translations = {
         'serviceApply.step4Title': '服务完成',
         'serviceApply.step4Desc': '全程办理直至完成',
         'serviceApply.proceedPayment': '去支付',
+        'serviceApply.openThread': '开启咨询',
+        'serviceApply.deferredNotice': '咨询后将请求支付。',
 
         // === 咨询线程页面 ===
         'thread.header': '咨询线程',
@@ -1692,6 +1698,8 @@ const translations = {
         'serviceApply.step4Title': 'Hoàn Thành',
         'serviceApply.step4Desc': 'Xử lý mọi thứ cho đến khi hoàn tất',
         'serviceApply.proceedPayment': 'Tiến Hành Thanh Toán',
+        'serviceApply.openThread': 'Mở Cuộc Tư Vấn',
+        'serviceApply.deferredNotice': 'Thanh toán sẽ được yêu cầu sau khi tư vấn.',
 
         // === Trang Luồng Tư Vấn ===
         'thread.header': 'Luồng Tư Vấn',
@@ -2126,6 +2134,8 @@ const translations = {
         'serviceApply.step4Title': 'サービス完了',
         'serviceApply.step4Desc': '完了まで全て対応いたします',
         'serviceApply.proceedPayment': '支払いへ進む',
+        'serviceApply.openThread': 'スレッドを開く',
+        'serviceApply.deferredNotice': '相談後にお支払いをご案内いたします。',
 
         // === 相談スレッドページ ===
         'thread.header': '相談スレッド',
@@ -2560,6 +2570,8 @@ const translations = {
         'serviceApply.step4Title': 'Үйлчилгээ дуусав',
         'serviceApply.step4Desc': 'Дуустал бүгдийг зохицуулна',
         'serviceApply.proceedPayment': 'Төлбөр хийх',
+        'serviceApply.openThread': 'Харилцаа нээх',
+        'serviceApply.deferredNotice': 'Зөвлөгөө авсны дараа төлбөр хийгдэнэ.',
 
         // === Зөвлөгөөний харилцааны хуудас ===
         'thread.header': 'Зөвлөгөөний харилцаа',
@@ -2994,6 +3006,8 @@ const translations = {
         'serviceApply.step4Title': 'บริการเสร็จสิ้น',
         'serviceApply.step4Desc': 'เราจะดูแลทุกอย่างจนเสร็จสิ้น',
         'serviceApply.proceedPayment': 'ดำเนินการชำระเงิน',
+        'serviceApply.openThread': 'เปิดการสนทนา',
+        'serviceApply.deferredNotice': 'การชำระเงินจะถูกร้องขอหลังจากการปรึกษา',
 
         // === หน้าเธรดปรึกษา ===
         'thread.header': 'เธรดปรึกษา',
