@@ -971,7 +971,7 @@
     <header class="thread-header">
         <div class="header-inner">
             <button class="back-btn" onclick="goBack()">
-                <i class="fas fa-arrow-left"></i> 대시보드
+                ← 대시보드
             </button>
             <div class="header-title">
                 <span class="admin-badge">관리자</span>
@@ -979,7 +979,7 @@
             </div>
             <div class="header-actions">
                 <button class="header-btn" onclick="sendEmailNotification()">
-                    <i class="fas fa-envelope"></i> 이메일
+                    이메일
                 </button>
             </div>
         </div>
@@ -998,7 +998,7 @@
                 <!-- Customer Info -->
                 <div class="customer-card">
                     <div class="customer-card-header">
-                        <h3><i class="fas fa-user"></i> 고객 정보</h3>
+                        <h3>고객 정보</h3>
                     </div>
                     <div class="customer-card-content">
                         <div class="info-item">
@@ -1052,7 +1052,7 @@
                 <!-- Customer Documents -->
                 <div class="customer-card" id="customerDocuments" style="display: none;">
                     <div class="customer-card-header">
-                        <h3><i class="fas fa-paperclip"></i> 고객 제출 서류</h3>
+                        <h3>고객 제출 서류</h3>
                     </div>
                     <div class="customer-card-content" id="documentsList">
                         <!-- 동적으로 생성 -->
@@ -1066,8 +1066,8 @@
                 <div class="thread-info-card">
                     <h1 class="thread-title" id="threadTitle">로딩 중...</h1>
                     <div class="thread-meta">
-                        <span><i class="fas fa-user"></i> <span id="threadUser">-</span></span>
-                        <span><i class="fas fa-calendar"></i> <span id="threadDate">-</span></span>
+                        <span><span id="threadUser">-</span></span>
+                        <span><span id="threadDate">-</span></span>
                         <span><span class="order-id" id="orderId">-</span></span>
                     </div>
                 </div>
@@ -1075,17 +1075,17 @@
                 <!-- Admin Tools -->
                 <div class="admin-tools">
                     <div class="admin-tools-title">
-                        <i class="fas fa-tools"></i> 관리자 도구
+                        관리자 도구
                     </div>
                     <div class="admin-buttons">
                         <button class="admin-btn" onclick="openPaymentLinkModal()">
-                            <i class="fas fa-credit-card"></i> 결제 링크 전송
+                            결제 링크 전송
                         </button>
                         <button class="admin-btn" onclick="openBasicInfoModal()">
-                            <i class="fas fa-file-alt"></i> 기본사항 요청
+                            기본사항 요청
                         </button>
                         <button class="admin-btn" onclick="openStageChangeModal()">
-                            <i class="fas fa-exchange-alt"></i> 단계 변경
+                            단계 변경
                         </button>
                     </div>
                 </div>
@@ -1102,14 +1102,13 @@
                         <div id="editor"></div>
                     </div>
                     <div class="file-upload-area" id="fileUploadArea" onclick="document.getElementById('fileInput').click()">
-                        <i class="fas fa-cloud-upload-alt"></i>
                         <p>파일을 드래그하거나 클릭하여 업로드</p>
                     </div>
                     <input type="file" id="fileInput" multiple style="display: none;" onchange="handleFileSelect(event)">
                     <div class="pending-files" id="pendingFiles"></div>
                     <div class="reply-actions">
                         <button class="submit-btn" id="submitBtn" onclick="submitReply()">
-                            <i class="fas fa-paper-plane"></i> 전송
+                            전송
                         </button>
                     </div>
                 </div>
@@ -1120,7 +1119,7 @@
                 <!-- Progress Tracker -->
                 <div class="progress-section">
                     <div class="progress-header">
-                        <h3><i class="fas fa-list-check"></i> 진행 상황</h3>
+                        <h3>진행 상황</h3>
                     </div>
                     <div class="progress-content" id="progressContent">
                         <!-- Progress steps will be rendered here -->
@@ -1130,7 +1129,7 @@
                 <!-- Fee Info -->
                 <div class="fee-section">
                     <div class="fee-header">
-                        <h3><i class="fas fa-won-sign"></i> 금액 정보</h3>
+                        <h3>금액 정보</h3>
                     </div>
                     <div class="fee-content">
                         <div class="fee-row total">
@@ -1151,12 +1150,12 @@
                 <!-- Admin Notes -->
                 <div class="notes-section">
                     <div class="notes-header">
-                        <h3><i class="fas fa-lock"></i> 내부 메모 (고객 비공개)</h3>
+                        <h3>내부 메모 (고객 비공개)</h3>
                     </div>
                     <div class="notes-content">
                         <textarea class="notes-textarea" id="adminNotes" placeholder="관리자 메모 입력..."></textarea>
                         <button class="notes-save-btn" onclick="saveAdminNotes()">
-                            <i class="fas fa-save"></i> 저장
+                            저장
                         </button>
                     </div>
                 </div>
@@ -1295,11 +1294,8 @@
             const container = document.getElementById('pendingFiles');
             container.innerHTML = pendingFiles.map((file, index) => `
                 <div class="pending-file">
-                    <i class="fas fa-file"></i>
                     <span class="pending-file-name">${file.name}</span>
-                    <span class="pending-file-remove" onclick="removePendingFile(${index})">
-                        <i class="fas fa-times"></i>
-                    </span>
+                    <span class="pending-file-remove" onclick="removePendingFile(${index})">X</span>
                 </div>
             `).join('');
         }
@@ -1406,7 +1402,7 @@
 
                 if (stageNum < currentStage) {
                     statusClass = 'completed';
-                    indicatorContent = '<i class="fas fa-check"></i>';
+                    indicatorContent = 'V';
                 } else if (stageNum === currentStage) {
                     statusClass = 'current';
                 }
@@ -1432,16 +1428,16 @@
             const documents = [];
 
             if (customerData.arc_front_url) {
-                documents.push({ name: '외국인등록증 (앞)', path: customerData.arc_front_url, icon: 'fa-id-card' });
+                documents.push({ name: '외국인등록증 (앞)', path: customerData.arc_front_url });
             }
             if (customerData.arc_back_url) {
-                documents.push({ name: '외국인등록증 (뒤)', path: customerData.arc_back_url, icon: 'fa-id-card' });
+                documents.push({ name: '외국인등록증 (뒤)', path: customerData.arc_back_url });
             }
             if (customerData.passport_url) {
-                documents.push({ name: '여권', path: customerData.passport_url, icon: 'fa-passport' });
+                documents.push({ name: '여권', path: customerData.passport_url });
             }
             if (customerData.signature_url) {
-                documents.push({ name: '전자서명', path: customerData.signature_url, icon: 'fa-signature' });
+                documents.push({ name: '전자서명', path: customerData.signature_url });
             }
 
             if (documents.length === 0) {
@@ -1452,9 +1448,7 @@
             section.style.display = 'block';
             list.innerHTML = documents.map(doc => `
                 <button class="doc-btn" onclick="viewDocument('${doc.path}')">
-                    <i class="fas ${doc.icon}"></i>
                     <span class="doc-name">${doc.name}</span>
-                    <i class="fas fa-external-link-alt" style="color: #9CA3AF;"></i>
                 </button>
             `).join('');
         }
@@ -1480,29 +1474,13 @@
 
                 const container = document.getElementById('messagesSection');
 
-                // 환영 메시지
-                const welcomeHtml = `
-                    <div class="message-card">
-                        <div class="message-header">
-                            <div class="message-author">
-                                <span class="author-badge admin">법무법인 로연</span>
-                            </div>
-                            <div class="message-time">
-                                <i class="fas fa-clock"></i>
-                                ${formatDateTime(threadData.created_at)}
-                            </div>
-                        </div>
-                        <div class="message-body">
-                            <p>안녕하세요! 법무법인 로연 출입국이민지원센터입니다.</p>
-                            <p>신청이 접수되었습니다. 센터 담당자가 곧 연락드리겠습니다.</p>
-                        </div>
-                    </div>
-                `;
-
-                let messagesHtml = welcomeHtml;
+                // 메시지가 있으면 렌더링 (환영 메시지는 쓰레드 생성 시 DB에 저장됨)
+                let messagesHtml = '';
 
                 if (messages && messages.length > 0) {
-                    messagesHtml += messages.map(msg => renderMessageCard(msg)).join('');
+                    messagesHtml = messages.map(msg => renderMessageCard(msg)).join('');
+                } else {
+                    messagesHtml = '<p style="text-align: center; color: #6B7684; padding: 40px;">아직 메시지가 없습니다.</p>';
                 }
 
                 container.innerHTML = messagesHtml;
@@ -1529,9 +1507,6 @@
                     <div class="message-attachments">
                         ${msg.attachments.map(att => `
                             <div class="attachment-item" onclick="window.open('${att.url}', '_blank')">
-                                <div class="attachment-icon">
-                                    <i class="fas fa-file"></i>
-                                </div>
                                 <div class="attachment-info">
                                     <div class="attachment-name">${att.name}</div>
                                     <div class="attachment-size">${formatFileSize(att.size)}</div>
@@ -1549,10 +1524,7 @@
                             <span class="author-badge ${badgeClass}">${badgeText}</span>
                         </div>
                         <div class="message-time">
-                            <button class="message-edit-btn" onclick="editMessage('${msg.id}')">
-                                <i class="fas fa-edit"></i> 편집
-                            </button>
-                            <i class="fas fa-clock"></i>
+                            <button class="message-edit-btn" onclick="editMessage('${msg.id}')">편집</button>
                             ${formatDateTime(msg.created_at)}
                         </div>
                     </div>
@@ -1593,7 +1565,7 @@
 
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 전송 중...';
+            submitBtn.innerHTML = '전송 중...';
 
             try {
                 // Upload files
@@ -1634,7 +1606,7 @@
                 alert('메시지 전송 중 오류가 발생했습니다.');
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> 전송';
+                submitBtn.innerHTML = '전송';
             }
         }
 
