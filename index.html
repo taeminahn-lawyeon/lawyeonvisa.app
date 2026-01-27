@@ -1103,12 +1103,12 @@
             #createProfileBtn, #editProfileBtn {
                 /* display는 JS에서 제어하므로 여기서 설정하지 않음 */
             }
-            
-            /* 다른 버튼들만 display: inline-flex 적용 */
-            .logout-btn, .google-login-button, #language-selector-btn {
+
+            /* 다른 버튼들만 display: inline-flex 적용 (google-login-button 제외 - JS로 제어) */
+            .logout-btn, #language-selector-btn {
                 display: inline-flex !important;
             }
-            
+
             .user-greeting {
                 width: 100%;
                 justify-content: center;
