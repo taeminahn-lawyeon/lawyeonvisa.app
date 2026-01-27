@@ -1603,6 +1603,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                     status: 'document',
                     amount: selectedService.totalPrice,
                     order_id: 'DEFERRED-' + Date.now(),
+                    is_consulting: true,
                     is_deferred_payment: true,
                     organization: 'general'
                 });

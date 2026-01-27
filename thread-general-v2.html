@@ -1071,7 +1071,7 @@
     <header class="thread-header">
         <div class="header-inner">
             <button class="back-btn" onclick="goBack()">
-                <i class="fas fa-arrow-left"></i> 목록
+                ← 목록
             </button>
             <div class="header-title" data-i18n="thread.header">쓰레드</div>
             <div class="header-actions"></div>
@@ -1090,8 +1090,8 @@
             <div class="thread-info-card">
                 <h1 class="thread-title" id="threadTitle">로딩 중...</h1>
                 <div class="thread-meta">
-                    <span><i class="fas fa-user"></i> <span id="threadUser">-</span></span>
-                    <span><i class="fas fa-calendar"></i> <span id="threadDate">-</span></span>
+                    <span><span id="threadUser">-</span></span>
+                    <span><span id="threadDate">-</span></span>
                 </div>
             </div>
 
@@ -1102,17 +1102,17 @@
                     <!-- Admin Tools (hidden by default) -->
                     <div class="admin-tools" id="adminTools">
                         <div class="admin-tools-title">
-                            <i class="fas fa-tools"></i> 관리자 도구
+                            관리자 도구
                         </div>
                         <div class="admin-buttons">
                             <button class="admin-btn" onclick="openPaymentLinkModal()">
-                                <i class="fas fa-credit-card"></i> 결제 링크 전송
+                                결제 링크 전송
                             </button>
                             <button class="admin-btn" onclick="openBasicInfoModal()">
-                                <i class="fas fa-file-alt"></i> 기본사항 요청
+                                기본사항 요청
                             </button>
                             <button class="admin-btn" onclick="openStageChangeModal()">
-                                <i class="fas fa-exchange-alt"></i> 단계 변경
+                                단계 변경
                             </button>
                         </div>
                     </div>
@@ -1130,7 +1130,6 @@
                                 <div id="editor"></div>
                             </div>
                             <div class="file-upload-area" id="fileUploadArea" onclick="document.getElementById('fileInput').click()">
-                                <i class="fas fa-cloud-upload-alt"></i>
                                 <p>파일을 드래그하거나 클릭하여 업로드하세요</p>
                             </div>
                             <input type="file" id="fileInput" multiple style="display: none;" onchange="handleFileSelect(event)">
@@ -1149,8 +1148,8 @@
                     <!-- Progress Tracker -->
                     <div class="progress-section">
                         <div class="progress-header" onclick="toggleProgress()">
-                            <h3><i class="fas fa-list-check"></i> 진행 상황</h3>
-                            <span class="progress-toggle" id="progressToggle"><i class="fas fa-chevron-up"></i></span>
+                            <h3>진행 상황</h3>
+                            <span class="progress-toggle" id="progressToggle">^</span>
                         </div>
                         <div class="progress-content" id="progressContent">
                             <!-- Progress steps will be rendered here -->
@@ -1160,7 +1159,7 @@
                     <!-- Submitted Files -->
                     <div class="submitted-files-section">
                         <div class="submitted-files-header">
-                            <h3><i class="fas fa-folder-open"></i> 제출 서류</h3>
+                            <h3>제출 서류</h3>
                         </div>
                         <div class="submitted-files-content" id="submittedFilesContent">
                             <!-- Files will be rendered here -->
@@ -1425,11 +1424,8 @@
             const container = document.getElementById('pendingFiles');
             container.innerHTML = pendingFiles.map((file, index) => `
                 <div class="pending-file">
-                    <i class="fas fa-file"></i>
                     <span class="pending-file-name">${file.name}</span>
-                    <span class="pending-file-remove" onclick="removePendingFile(${index})">
-                        <i class="fas fa-times"></i>
-                    </span>
+                    <span class="pending-file-remove" onclick="removePendingFile(${index})">X</span>
                 </div>
             `).join('');
         }
@@ -1526,8 +1522,6 @@
                 files.push({
                     type: 'passport',
                     label: '여권 사본',
-                    icon: 'fa-passport',
-                    iconClass: 'passport',
                     path: profile.passport_file,
                     submitted: !!profile.passport_file
                 });
@@ -1536,8 +1530,6 @@
                 files.push({
                     type: 'alien-card',
                     label: '외국인등록증',
-                    icon: 'fa-id-card',
-                    iconClass: 'alien-card',
                     path: profile.alien_card_file,
                     submitted: !!profile.alien_card_file
                 });
@@ -1546,24 +1538,18 @@
                 files.push({
                     type: 'signature',
                     label: '전자서명',
-                    icon: 'fa-signature',
-                    iconClass: 'signature',
                     path: profile.signature_file,
                     submitted: !!profile.signature_file
                 });
 
                 container.innerHTML = files.map(file => `
                     <div class="submitted-file-item" onclick="${file.submitted ? `viewSubmittedFile('${file.path}')` : ''}">
-                        <div class="submitted-file-icon ${file.iconClass}">
-                            <i class="fas ${file.icon}"></i>
-                        </div>
                         <div class="submitted-file-info">
                             <div class="submitted-file-label">${file.label}</div>
                             <div class="submitted-file-status ${file.submitted ? 'submitted' : ''}">
                                 ${file.submitted ? '제출 완료' : '미제출'}
                             </div>
                         </div>
-                        ${file.submitted ? '<i class="fas fa-external-link-alt" style="color: #9CA3AF; font-size: 12px;"></i>' : ''}
                     </div>
                 `).join('');
 
@@ -1604,7 +1590,7 @@
 
                 if (stageNum < currentStage) {
                     statusClass = 'completed';
-                    indicatorContent = '<i class="fas fa-check"></i>';
+                    indicatorContent = 'V';
                 } else if (stageNum === currentStage) {
                     statusClass = 'current';
                 }
@@ -1688,9 +1674,6 @@
                     <div class="message-attachments">
                         ${msg.attachments.map(att => `
                             <div class="attachment-item" onclick="downloadFile('${att.url}', '${att.name}')">
-                                <div class="attachment-icon">
-                                    <i class="fas fa-${getFileIcon(att.name)}"></i>
-                                </div>
                                 <div class="attachment-info">
                                     <div class="attachment-name">${att.name}</div>
                                     <div class="attachment-size">${formatFileSize(att.size)}</div>
@@ -1703,9 +1686,7 @@
 
             // 관리자만 편집 버튼 표시
             const editBtnHtml = isAdmin ? `
-                <button class="message-edit-btn" onclick="openEditMessageModal('${msg.id}')">
-                    <i class="fas fa-edit"></i> 편집
-                </button>
+                <button class="message-edit-btn" onclick="openEditMessageModal('${msg.id}')">편집</button>
             ` : '';
 
             return `
@@ -1716,7 +1697,6 @@
                         </div>
                         <div class="message-time">
                             ${editBtnHtml}
-                            <i class="fas fa-clock"></i>
                             ${formatDateTime(msg.created_at)}
                         </div>
                     </div>
@@ -1750,11 +1730,11 @@
             const urlPattern = /(https?:\/\/[^\s<>"']+)/gi;
             content = content.replace(urlPattern, (match) => {
                 // 특정 페이지는 버튼 스타일로
-                if (match.includes('profile-submit.html')) {
-                    return `<a href="${match}" class="action-link-btn" target="_blank"><i class="fas fa-file-alt"></i> 기본사항 입력하기</a>`;
+                if (match.includes('profile-submit.html') || match.includes('profile-setup.html')) {
+                    return `<a href="${match}" class="action-link-btn" target="_blank">기본사항 입력하기</a>`;
                 }
                 if (match.includes('service-apply')) {
-                    return `<a href="${match}" class="action-link-btn" target="_blank"><i class="fas fa-credit-card"></i> 결제하기</a>`;
+                    return `<a href="${match}" class="action-link-btn" target="_blank">결제하기</a>`;
                 }
                 // 일반 링크
                 return `<a href="${match}" class="auto-link" target="_blank">${match}</a>`;
@@ -1764,11 +1744,11 @@
             content = content.replace(/__ANCHOR_(\d+)__/g, (match, idx) => {
                 let originalAnchor = anchorPlaceholders[parseInt(idx)];
 
-                // profile-submit 링크면 스타일 업그레이드
-                if (originalAnchor.includes('profile-submit.html') && !originalAnchor.includes('action-link-btn')) {
+                // profile-submit 또는 profile-setup 링크면 스타일 업그레이드
+                if ((originalAnchor.includes('profile-submit.html') || originalAnchor.includes('profile-setup.html')) && !originalAnchor.includes('action-link-btn')) {
                     const hrefMatch = originalAnchor.match(/href="([^"]*)"/i);
                     if (hrefMatch) {
-                        return `<a href="${hrefMatch[1]}" class="action-link-btn" target="_blank"><i class="fas fa-file-alt"></i> 기본사항 입력하기</a>`;
+                        return `<a href="${hrefMatch[1]}" class="action-link-btn" target="_blank">기본사항 입력하기</a>`;
                     }
                 }
 
@@ -1776,7 +1756,7 @@
                 if (originalAnchor.includes('service-apply') && !originalAnchor.includes('action-link-btn')) {
                     const hrefMatch = originalAnchor.match(/href="([^"]*)"/i);
                     if (hrefMatch) {
-                        return `<a href="${hrefMatch[1]}" class="action-link-btn" target="_blank"><i class="fas fa-credit-card"></i> 결제하기</a>`;
+                        return `<a href="${hrefMatch[1]}" class="action-link-btn" target="_blank">결제하기</a>`;
                     }
                 }
 
@@ -1820,7 +1800,7 @@
 
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 전송 중...';
+            submitBtn.innerHTML = '전송 중...';
 
             try {
                 // Upload files first
@@ -2182,10 +2162,10 @@
 
             if (content.classList.contains('collapsed')) {
                 content.classList.remove('collapsed');
-                toggle.innerHTML = '<i class="fas fa-chevron-up"></i>';
+                toggle.innerHTML = '^';
             } else {
                 content.classList.add('collapsed');
-                toggle.innerHTML = '<i class="fas fa-chevron-down"></i>';
+                toggle.innerHTML = 'v';
             }
         }
 
