@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>기본 사항 제출 - 법무법인 로연 출입국이민지원센터</title>
+    <title>Basic Information Submission - Lawyeon Immigration Center</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
@@ -501,127 +501,127 @@
 </head>
 <body>
     <div class="container">
-        <!-- 헤더 -->
+        <!-- Header -->
         <div class="header" style="position: relative;">
-            <!-- 뒤로가기 버튼 -->
+            <!-- Back Button -->
             <button id="backButton" style="position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.95); border: 2px solid rgba(255,255,255,1); color: #2563EB; padding: 12px 24px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
                 <i class="fas fa-arrow-left"></i>
-                <span data-i18n="common.back">뒤로가기</span>
+                <span>Back</span>
             </button>
-            
-            <h1 data-i18n="profile.title">기본 사항 제출</h1>
-            <p data-i18n="profile.subtitle">모든 서비스 이용을 위해 필요한 기본 정보를 입력해주세요</p>
+
+            <h1>Basic Information Submission</h1>
+            <p>Please enter the required basic information for all services</p>
         </div>
 
-        <!-- 진행 단계 -->
+        <!-- Progress Steps -->
         <div class="progress-bar">
             <div class="progress-steps">
                 <div class="progress-line" id="progressLine" style="width: 0%;"></div>
                 <div class="step active" data-step="1">
                     <div class="step-circle">1</div>
-                    <div class="step-label" data-i18n="profile.step1">기본정보</div>
+                    <div class="step-label">Basic Info</div>
                 </div>
                 <div class="step" data-step="2">
                     <div class="step-circle">2</div>
-                    <div class="step-label" data-i18n="profile.step2">체류정보</div>
+                    <div class="step-label">Residence</div>
                 </div>
                 <div class="step" data-step="3">
                     <div class="step-circle">3</div>
-                    <div class="step-label" data-i18n="profile.step3">서류등록</div>
+                    <div class="step-label">Documents</div>
                 </div>
             </div>
         </div>
 
         <!-- 폼 -->
         <form id="profileForm">
-            <!-- Step 1: 기본정보 -->
+            <!-- Step 1: Basic Info -->
             <div class="form-card" id="step1">
                 <div class="form-section">
                     <div class="section-title">
                         <span class="icon">👤</span>
-                        <span data-i18n="profile.basicInfo">기본 정보</span>
+                        <span>Basic Information</span>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label><span data-i18n="profile.lastName">영문 성 (Last Name)</span> <span class="required" data-i18n="profile.required">*</span></label>
-                            <input type="text" name="lastName" required data-i18n-placeholder="profile.lastNamePlaceholder" placeholder="예) KIM">
+                            <label><span>Last Name</span> <span class="required">*</span></label>
+                            <input type="text" name="lastName" required placeholder="e.g. KIM">
                         </div>
                         <div class="form-group">
-                            <label><span data-i18n="profile.firstName">영문 이름 (First Name)</span> <span class="required" data-i18n="profile.required">*</span></label>
-                            <input type="text" name="firstName" required data-i18n-placeholder="profile.firstNamePlaceholder" placeholder="예) MINHO">
+                            <label><span>First Name</span> <span class="required">*</span></label>
+                            <input type="text" name="firstName" required placeholder="e.g. MINHO">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label><span data-i18n="profile.birthDate">생년월일</span> <span class="required" data-i18n="profile.required">*</span></label>
+                            <label><span>Date of Birth</span> <span class="required">*</span></label>
                             <input type="date" name="birthDate" value="2000-01-01" required>
                         </div>
                         <div class="form-group">
-                            <label><span data-i18n="profile.phone">전화번호</span> <span class="required" data-i18n="profile.required">*</span></label>
-                            <input type="tel" name="phone" required data-i18n-placeholder="profile.phonePlaceholder" placeholder="010-0000-0000">
+                            <label><span>Phone Number</span> <span class="required">*</span></label>
+                            <input type="tel" name="phone" required placeholder="010-0000-0000">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label><span data-i18n="profile.messenger">선호 메신저</span> <span class="required" data-i18n="profile.required">*</span></label>
+                            <label><span>Preferred Messenger</span> <span class="required">*</span></label>
                             <select name="preferredMessenger" required>
-                                <option value="" data-i18n="profile.selectMessenger">메신저를 선택하세요</option>
-                                <option value="whatsapp">WhatsApp (왓츠앱)</option>
-                                <option value="wechat">WeChat (위챗)</option>
-                                <option value="telegram">Telegram (텔레그램)</option>
-                                <option value="kakaotalk">KakaoTalk (카카오톡)</option>
-                                <option value="line">LINE (라인)</option>
-                                <option value="zalo">Zalo (잘로)</option>
+                                <option value="">Select a messenger</option>
+                                <option value="whatsapp">WhatsApp</option>
+                                <option value="wechat">WeChat</option>
+                                <option value="telegram">Telegram</option>
+                                <option value="kakaotalk">KakaoTalk</option>
+                                <option value="line">LINE</option>
+                                <option value="zalo">Zalo</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label><span data-i18n="profile.messengerId">메신저 ID/전화번호</span> <span class="required" data-i18n="profile.required">*</span></label>
-                            <input type="text" name="messengerId" required data-i18n-placeholder="profile.messengerPlaceholder" placeholder="메신저 ID 또는 전화번호">
+                            <label><span>Messenger ID / Phone</span> <span class="required">*</span></label>
+                            <input type="text" name="messengerId" required placeholder="Messenger ID or phone number">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label><span data-i18n="profile.nationality">국적</span> <span class="required" data-i18n="profile.required">*</span></label>
+                        <label><span>Nationality</span> <span class="required">*</span></label>
                         <select name="nationality" required>
-                            <option value="" data-i18n="profile.selectNationality">국적을 선택하세요</option>
-                            <optgroup label="아시아">
-                                <option value="CN">중국</option>
-                                <option value="VN">베트남</option>
-                                <option value="UZ">우즈베키스탄</option>
-                                <option value="TH">태국</option>
-                                <option value="MN">몽골</option>
-                                <option value="ID">인도네시아</option>
-                                <option value="PH">필리핀</option>
-                                <option value="KH">캄보디아</option>
-                                <option value="NP">네팔</option>
-                                <option value="MM">미얀마</option>
-                                <option value="PK">파키스탄</option>
-                                <option value="JP">일본</option>
-                                <option value="BD">방글라데시</option>
-                                <option value="IN">인도</option>
-                                <option value="LK">스리랑카</option>
+                            <option value="">Select your nationality</option>
+                            <optgroup label="Asia">
+                                <option value="CN">China</option>
+                                <option value="VN">Vietnam</option>
+                                <option value="UZ">Uzbekistan</option>
+                                <option value="TH">Thailand</option>
+                                <option value="MN">Mongolia</option>
+                                <option value="ID">Indonesia</option>
+                                <option value="PH">Philippines</option>
+                                <option value="KH">Cambodia</option>
+                                <option value="NP">Nepal</option>
+                                <option value="MM">Myanmar</option>
+                                <option value="PK">Pakistan</option>
+                                <option value="JP">Japan</option>
+                                <option value="BD">Bangladesh</option>
+                                <option value="IN">India</option>
+                                <option value="LK">Sri Lanka</option>
                             </optgroup>
-                            <optgroup label="북미">
-                                <option value="US">미국</option>
-                                <option value="CA">캐나다</option>
+                            <optgroup label="North America">
+                                <option value="US">United States</option>
+                                <option value="CA">Canada</option>
                             </optgroup>
-                            <optgroup label="유럽">
-                                <option value="RU">러시아</option>
-                                <option value="GB">영국</option>
-                                <option value="FR">프랑스</option>
-                                <option value="DE">독일</option>
-                                <option value="IT">이탈리아</option>
-                                <option value="ES">스페인</option>
+                            <optgroup label="Europe">
+                                <option value="RU">Russia</option>
+                                <option value="GB">United Kingdom</option>
+                                <option value="FR">France</option>
+                                <option value="DE">Germany</option>
+                                <option value="IT">Italy</option>
+                                <option value="ES">Spain</option>
                             </optgroup>
-                            <optgroup label="오세아니아">
-                                <option value="AU">호주</option>
-                                <option value="NZ">뉴질랜드</option>
+                            <optgroup label="Oceania">
+                                <option value="AU">Australia</option>
+                                <option value="NZ">New Zealand</option>
                             </optgroup>
-                            <optgroup label="기타">
-                                <option value="OTHER">기타</option>
+                            <optgroup label="Other">
+                                <option value="OTHER">Other</option>
                             </optgroup>
                         </select>
                     </div>
@@ -629,164 +629,164 @@
 
                 <div class="submit-section">
                     <button type="button" class="submit-btn" onclick="goToStep(2)">
-                        <span data-i18n="profile.next">다음 단계</span> <i class="fas fa-arrow-right"></i>
+                        <span>Next Step</span> <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- Step 2: 체류정보 -->
+            <!-- Step 2: Residence Information -->
             <div class="form-card" id="step2" style="display: none;">
                 <div class="form-section">
                     <div class="section-title">
                         <span class="icon">📋</span>
-                        <span data-i18n="profile.residenceInfo">체류 정보</span>
+                        <span>Residence Information</span>
                     </div>
 
                     <div class="form-group">
-                        <label><span data-i18n="profile.visaType">체류자격</span> <span class="required" data-i18n="profile.required">*</span></label>
+                        <label><span>Visa Type</span> <span class="required">*</span></label>
                         <select name="visaType" required>
-                            <option value="" data-i18n="profile.selectVisa">체류자격을 선택하세요</option>
-                            <optgroup label="단기체류 (C)">
-                                <option value="C-1">C-1 일시취재</option>
-                                <option value="C-3">C-3 단기방문</option>
-                                <option value="C-4">C-4 단기취업</option>
+                            <option value="">Select your visa type</option>
+                            <optgroup label="Short-term Stay (C)">
+                                <option value="C-1">C-1 Temporary Journalism</option>
+                                <option value="C-3">C-3 Short-term Visit</option>
+                                <option value="C-4">C-4 Short-term Employment</option>
                             </optgroup>
-                            <optgroup label="유학/연수 (D)">
-                                <option value="D-1">D-1 문화예술</option>
-                                <option value="D-2">D-2 유학</option>
-                                <option value="D-3">D-3 기술연수</option>
-                                <option value="D-4">D-4 일반연수</option>
-                                <option value="D-5">D-5 취재</option>
-                                <option value="D-6">D-6 종교</option>
-                                <option value="D-7">D-7 주재</option>
-                                <option value="D-8">D-8 기업투자</option>
-                                <option value="D-9">D-9 무역경영</option>
-                                <option value="D-10">D-10 구직</option>
+                            <optgroup label="Study/Training (D)">
+                                <option value="D-1">D-1 Culture & Arts</option>
+                                <option value="D-2">D-2 Student</option>
+                                <option value="D-3">D-3 Technical Training</option>
+                                <option value="D-4">D-4 General Training</option>
+                                <option value="D-5">D-5 Journalism</option>
+                                <option value="D-6">D-6 Religious</option>
+                                <option value="D-7">D-7 Intra-company Transfer</option>
+                                <option value="D-8">D-8 Corporate Investment</option>
+                                <option value="D-9">D-9 Trade & Business</option>
+                                <option value="D-10">D-10 Job Seeking</option>
                             </optgroup>
-                            <optgroup label="취업 (E)">
-                                <option value="E-1">E-1 교수</option>
-                                <option value="E-2">E-2 회화지도</option>
-                                <option value="E-3">E-3 연구</option>
-                                <option value="E-4">E-4 기술지도</option>
-                                <option value="E-5">E-5 전문직업</option>
-                                <option value="E-6">E-6 예술흥행</option>
-                                <option value="E-7">E-7 특정활동</option>
-                                <option value="E-9">E-9 비전문취업</option>
-                                <option value="E-10">E-10 선원취업</option>
+                            <optgroup label="Employment (E)">
+                                <option value="E-1">E-1 Professor</option>
+                                <option value="E-2">E-2 Foreign Language Instructor</option>
+                                <option value="E-3">E-3 Research</option>
+                                <option value="E-4">E-4 Technology Transfer</option>
+                                <option value="E-5">E-5 Professional</option>
+                                <option value="E-6">E-6 Arts & Entertainment</option>
+                                <option value="E-7">E-7 Specific Activities</option>
+                                <option value="E-9">E-9 Non-professional Employment</option>
+                                <option value="E-10">E-10 Crew Member</option>
                             </optgroup>
-                            <optgroup label="방문취업 (H)">
-                                <option value="H-1">H-1 관광취업</option>
-                                <option value="H-2">H-2 방문취업</option>
+                            <optgroup label="Working Visit (H)">
+                                <option value="H-1">H-1 Working Holiday</option>
+                                <option value="H-2">H-2 Working Visit</option>
                             </optgroup>
-                            <optgroup label="재외동포/영주 (F)">
-                                <option value="F-1">F-1 방문동거</option>
-                                <option value="F-2">F-2 거주</option>
-                                <option value="F-4">F-4 재외동포</option>
-                                <option value="F-5">F-5 영주</option>
-                                <option value="F-6">F-6 결혼이민</option>
+                            <optgroup label="Overseas Korean/Residence (F)">
+                                <option value="F-1">F-1 Family Visit</option>
+                                <option value="F-2">F-2 Residence</option>
+                                <option value="F-4">F-4 Overseas Korean</option>
+                                <option value="F-5">F-5 Permanent Residence</option>
+                                <option value="F-6">F-6 Marriage Migration</option>
                             </optgroup>
-                            <optgroup label="기타">
-                                <option value="G-1">G-1 기타</option>
-                                <option value="A-1">A-1 외교</option>
-                                <option value="A-2">A-2 공무</option>
-                                <option value="A-3">A-3 협정</option>
+                            <optgroup label="Other">
+                                <option value="G-1">G-1 Other</option>
+                                <option value="A-1">A-1 Diplomatic</option>
+                                <option value="A-2">A-2 Official</option>
+                                <option value="A-3">A-3 Agreement</option>
                             </optgroup>
                         </select>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label><span data-i18n="profile.visaExpiry">체류기간 만료일</span> <span class="required" data-i18n="profile.required">*</span></label>
+                            <label><span>Visa Expiry Date</span> <span class="required">*</span></label>
                             <input type="date" name="stayExpiry" required>
                         </div>
                         <div class="form-group">
-                            <label><span data-i18n="profile.foreignerNumber">외국인등록번호</span> <span class="required" data-i18n="profile.required">*</span></label>
-                            <input type="text" name="foreignerNumber" required data-i18n-placeholder="profile.foreignerPlaceholder" placeholder="000000-0000000">
+                            <label><span>Alien Registration Number</span> <span class="required">*</span></label>
+                            <input type="text" name="foreignerNumber" required placeholder="000000-0000000">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label><span data-i18n="profile.address">국내 거주지</span> <span class="required" data-i18n="profile.required">*</span></label>
+                        <label><span>Address in Korea</span> <span class="required">*</span></label>
                         <div class="address-search">
-                            <input type="text" id="postcode" name="postcode" data-i18n-placeholder="profile.postcodePlaceholder" placeholder="우편번호" readonly required>
+                            <input type="text" id="postcode" name="postcode" placeholder="Postal Code" readonly required>
                             <button type="button" onclick="execDaumPostcode()">
-                                <i class="fas fa-search"></i> <span data-i18n="profile.searchAddress">주소 검색</span>
+                                <i class="fas fa-search"></i> <span>Search Address</span>
                             </button>
                         </div>
-                        <input type="text" id="address" name="address" data-i18n-placeholder="profile.addressPlaceholder" placeholder="주소" readonly required style="margin-bottom: 12px;">
-                        <input type="text" name="detailAddress" data-i18n-placeholder="profile.addressDetailPlaceholder" placeholder="상세주소 (동/호수)" required>
+                        <input type="text" id="address" name="address" placeholder="Address" readonly required style="margin-bottom: 12px;">
+                        <input type="text" name="detailAddress" placeholder="Detailed Address (Apt/Unit)" required>
                     </div>
                 </div>
 
                 <div class="submit-section">
                     <button type="button" class="submit-btn" style="background: #9CA3AF; margin-bottom: 12px;" onclick="goToStep(1)">
-                        <i class="fas fa-arrow-left"></i> <span data-i18n="profile.prev">이전 단계</span>
+                        <i class="fas fa-arrow-left"></i> <span>Previous</span>
                     </button>
                     <button type="button" class="submit-btn" onclick="goToStep(3)">
-                        <span data-i18n="profile.next">다음 단계</span> <i class="fas fa-arrow-right"></i>
+                        <span>Next Step</span> <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- Step 3: 서류등록 -->
+            <!-- Step 3: Document Registration -->
             <div class="form-card" id="step3" style="display: none;">
                 <div class="form-section">
                     <div class="section-title">
                         <span class="icon">📄</span>
-                        <span data-i18n="profile.documents">필수 서류 등록</span>
+                        <span>Required Documents</span>
                     </div>
 
                     <div class="form-group">
-                        <label>외국인등록증 (앞면) <span class="required">*</span></label>
-                        <div class="file-upload-area" onclick="document.getElementById('arcFront').click()" 
-                             ondrop="handleDrop(event, 'arcFront')" 
+                        <label>Alien Registration Card (Front) <span class="required">*</span></label>
+                        <div class="file-upload-area" onclick="document.getElementById('arcFront').click()"
+                             ondrop="handleDrop(event, 'arcFront')"
                              ondragover="handleDragOver(event)"
                              ondragleave="handleDragLeave(event)">
                             <div class="icon">📸</div>
-                            <p>클릭하여 파일 선택 또는 드래그 & 드롭</p>
-                            <small>JPG, PNG 파일 (최대 10MB)</small>
+                            <p>Click to select file or drag & drop</p>
+                            <small>JPG, PNG files (max 10MB)</small>
                         </div>
                         <input type="file" id="arcFront" name="arcFront" accept="image/*" style="display: none;" onchange="previewFile(this, 'arcFrontPreview')" required>
                         <div class="file-preview" id="arcFrontPreview"></div>
                     </div>
 
                     <div class="form-group">
-                        <label>외국인등록증 (뒷면) <span class="required">*</span></label>
+                        <label>Alien Registration Card (Back) <span class="required">*</span></label>
                         <div class="file-upload-area" onclick="document.getElementById('arcBack').click()"
-                             ondrop="handleDrop(event, 'arcBack')" 
+                             ondrop="handleDrop(event, 'arcBack')"
                              ondragover="handleDragOver(event)"
                              ondragleave="handleDragLeave(event)">
                             <div class="icon">📸</div>
-                            <p>클릭하여 파일 선택 또는 드래그 & 드롭</p>
-                            <small>JPG, PNG 파일 (최대 10MB)</small>
+                            <p>Click to select file or drag & drop</p>
+                            <small>JPG, PNG files (max 10MB)</small>
                         </div>
                         <input type="file" id="arcBack" name="arcBack" accept="image/*" capture="environment" style="display: none;" onchange="previewFile(this, 'arcBackPreview')" required>
                         <div class="file-preview" id="arcBackPreview"></div>
                     </div>
 
                     <div class="form-group">
-                        <label>여권 (사진면) <span class="required">*</span></label>
+                        <label>Passport (Photo Page) <span class="required">*</span></label>
                         <div class="file-upload-area" onclick="document.getElementById('passport').click()"
-                             ondrop="handleDrop(event, 'passport')" 
+                             ondrop="handleDrop(event, 'passport')"
                              ondragover="handleDragOver(event)"
                              ondragleave="handleDragLeave(event)">
                             <div class="icon">📸</div>
-                            <p>클릭하여 파일 선택 또는 드래그 & 드롭</p>
-                            <small>JPG, PNG 파일 (최대 10MB)</small>
+                            <p>Click to select file or drag & drop</p>
+                            <small>JPG, PNG files (max 10MB)</small>
                         </div>
                         <input type="file" id="passport" name="passport" accept="image/*" style="display: none;" onchange="previewFile(this, 'passportPreview')" required>
                         <div class="file-preview" id="passportPreview"></div>
                     </div>
 
                     <div class="form-group">
-                        <label>서명 (통합신청서 제출용) <span class="required">*</span></label>
+                        <label>Signature (for Immigration Application) <span class="required">*</span></label>
                         <p style="font-size: 14px; color: #6B7280; margin-bottom: 12px;">
-                            아래 서명란에 본인의 서명을 작성해주세요. 작성하신 서명은 출입국 통합신청서에 사용됩니다.
+                            Please sign in the box below. Your signature will be used on immigration application forms.
                         </p>
                         <canvas id="signaturePad" class="signature-pad"></canvas>
                         <div class="signature-controls">
                             <button type="button" onclick="clearSignature()">
-                                <i class="fas fa-redo"></i> 다시 작성
+                                <i class="fas fa-redo"></i> Clear
                             </button>
                         </div>
                     </div>
@@ -794,10 +794,10 @@
 
                 <div class="submit-section">
                     <button type="button" class="submit-btn" style="background: #9CA3AF; margin-bottom: 12px;" onclick="goToStep(2)">
-                        <i class="fas fa-arrow-left"></i> 이전 단계
+                        <i class="fas fa-arrow-left"></i> Previous
                     </button>
                     <button type="submit" class="submit-btn">
-                        <i class="fas fa-check-circle"></i> 제출 완료
+                        <i class="fas fa-check-circle"></i> Submit
                     </button>
                 </div>
             </div>
@@ -872,7 +872,7 @@
                 });
 
                 if (!isValid) {
-                    alert('필수 항목을 모두 입력해주세요.');
+                    alert('Please fill in all required fields.');
                     return;
                 }
             }
@@ -1143,23 +1143,23 @@
         document.getElementById('profileForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            // 서명 확인
+            // Check signature
             if (signaturePad.isEmpty()) {
-                alert('전자서명을 작성해주세요.');
+                alert('Please provide your signature.');
                 return;
             }
 
-            // 로딩 표시
+            // Loading display
             const submitBtn = this.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
             submitBtn.disabled = true;
-            submitBtn.textContent = '저장 중...';
+            submitBtn.textContent = 'Saving...';
 
             try {
-                // 현재 사용자 확인
+                // Check current user
                 const session = await checkSession();
                 if (!session || !session.user) {
-                    alert('로그인이 필요합니다.');
+                    alert('Login is required.');
                     window.location.href = 'index.html';
                     return;
                 }
@@ -1176,7 +1176,7 @@
                 let passportUrl = null;
                 let signatureUrl = null;
                 
-                submitBtn.textContent = '파일 업로드 중...';
+                submitBtn.textContent = 'Uploading files...';
                 
                 // 🔄 파일 업로드 처리
                 const userId = session.user.id;
@@ -1226,7 +1226,7 @@
                     }
                 }
                 
-                submitBtn.textContent = '프로필 저장 중...';
+                submitBtn.textContent = 'Saving profile...';
 
                 // Supabase에 저장할 프로필 데이터 (role은 기존 값 유지)
                 const profileData = {
@@ -1261,8 +1261,8 @@
                     // ✅ 프로필 데이터를 sessionStorage에 캐싱
                     sessionStorage.setItem('userProfileCache', JSON.stringify(profileData));
                     
-                    // 🔄 사용자의 활성 쓰레드에 업로드한 파일들을 추가
-                    submitBtn.textContent = '쓰레드 업데이트 중...';
+                    // Update user's active threads with uploaded files
+                    submitBtn.textContent = 'Updating threads...';
                     await uploadFilesToActiveThreads(
                         session.user.id, 
                         arcFrontFile, 
@@ -1275,7 +1275,7 @@
                         signatureUrl
                     );
                     
-                    alert('기본 사항 제출이 완료되었습니다!\n\n이제 서비스를 이용하실 수 있습니다.');
+                    alert('Basic information submission complete!\n\nYou can now use our services.');
                     
                     // ✅ 1초 대기 후 리다이렉트 (Supabase 동기화 시간)
                     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -1285,8 +1285,8 @@
                     throw new Error(result.error);
                 }
             } catch (error) {
-                console.error('프로필 저장 오류:', error);
-                alert('저장 중 오류가 발생했습니다: ' + error.message);
+                console.error('Profile save error:', error);
+                alert('An error occurred while saving: ' + error.message);
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalText;
             }
