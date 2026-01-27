@@ -1121,11 +1121,23 @@
                         if (thread.is_consulting) {
                             serviceType = 'consulting';
                         }
+
+                        const serviceName = thread.service_name || '';
+
+                        // 자문 관련 서비스 판별
+                        if (serviceName.includes('자문') ||
+                            serviceName.includes('Pre-diagnosis') ||
+                            serviceName.includes('사전 진단') ||
+                            serviceName.includes('Consultation') ||
+                            serviceName.includes('상담')) {
+                            serviceType = 'consulting';
+                        }
+
                         // 소송 관련 서비스 판별
-                        if (thread.service_name &&
-                            (thread.service_name.includes('소송') ||
-                             thread.service_name.includes('분쟁') ||
-                             thread.service_name.includes('Dispute'))) {
+                        if (serviceName.includes('소송') ||
+                            serviceName.includes('분쟁') ||
+                            serviceName.includes('Dispute') ||
+                            serviceName.includes('Litigation')) {
                             serviceType = 'litigation';
                         }
 
