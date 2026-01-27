@@ -592,12 +592,13 @@
             }
 
             .lawfirm-intro-content {
-                grid-template-columns: 1fr;
+                flex-direction: column;
                 gap: 32px;
             }
 
             .lawfirm-left {
                 text-align: center;
+                max-width: 100%;
             }
 
             .registration-badge {
@@ -609,12 +610,13 @@
             }
 
             .lawfirm-right {
+                width: 100%;
                 display: flex;
                 justify-content: center;
             }
 
             .attorneys-carousel {
-                max-width: none;
+                max-width: 100%;
             }
 
             .attorney-card {
@@ -636,11 +638,19 @@
 
         @media (max-width: 480px) {
             .lawfirm-intro-section {
-                padding: 24px 16px;
+                padding: 20px 16px;
+            }
+
+            .lawfirm-headline {
+                font-size: 16px;
+            }
+
+            .lawfirm-subtext {
+                font-size: 14px;
             }
 
             .moj-logo {
-                height: 60px;
+                height: 56px;
             }
 
             .registration-text {
@@ -648,15 +658,19 @@
             }
 
             .attorney-card {
-                width: 140px;
+                width: 120px;
             }
 
             .attorney-photo {
-                height: 180px;
+                height: 160px;
             }
 
             .attorney-name {
-                font-size: 12px;
+                font-size: 11px;
+            }
+
+            .attorney-info {
+                padding: 10px 8px;
             }
         }
 
