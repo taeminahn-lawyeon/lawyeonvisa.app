@@ -1601,13 +1601,26 @@
             if (thread.is_consulting) {
                 return 'consulting';
             }
+
+            const serviceName = thread.service_name || '';
+
+            // 자문 관련 서비스 판별
+            if (serviceName.includes('자문') ||
+                serviceName.includes('Pre-diagnosis') ||
+                serviceName.includes('사전 진단') ||
+                serviceName.includes('Consultation') ||
+                serviceName.includes('상담')) {
+                return 'consulting';
+            }
+
             // 소송 관련 서비스 판별
-            if (thread.service_name &&
-                (thread.service_name.includes('소송') ||
-                 thread.service_name.includes('분쟁') ||
-                 thread.service_name.includes('Dispute'))) {
+            if (serviceName.includes('소송') ||
+                serviceName.includes('분쟁') ||
+                serviceName.includes('Dispute') ||
+                serviceName.includes('Litigation')) {
                 return 'litigation';
             }
+
             // 기본값은 민원
             return 'civil';
         }
@@ -1756,14 +1769,18 @@
             `;
         }
 
-        // 메시지 내용 처리 - URL을 클릭 가능한 링크로 변환
+        // 메시지 내용 처리 - URL을 클릭 가능한 링크로 변환, 줄바꿈 처리
         function processMessageContent(content) {
             if (!content) return '';
 
             // 이미 처리된 HTML인지 확인 (action-link-btn 또는 payment-btn-inline 클래스가 있으면 스킵)
             if (content.includes('action-link-btn') || content.includes('payment-btn-inline')) {
-                return content;
+                // 줄바꿈만 처리
+                return content.replace(/\n/g, '<br>');
             }
+
+            // 줄바꿈을 <br>로 변환 (HTML 태그가 아닌 경우)
+            content = content.replace(/\n/g, '<br>');
 
             // 1. 기존 앵커 태그를 임시 마커로 치환
             const anchorPlaceholders = [];

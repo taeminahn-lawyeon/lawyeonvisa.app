@@ -1426,13 +1426,26 @@
             if (threadData.is_consulting) {
                 return 'consulting';
             }
+
+            const serviceName = threadData.service_name || '';
+
+            // 자문 관련 서비스 판별
+            if (serviceName.includes('자문') ||
+                serviceName.includes('Pre-diagnosis') ||
+                serviceName.includes('사전 진단') ||
+                serviceName.includes('Consultation') ||
+                serviceName.includes('상담')) {
+                return 'consulting';
+            }
+
             // 소송 관련 서비스 판별
-            if (threadData.service_name &&
-                (threadData.service_name.includes('소송') ||
-                 threadData.service_name.includes('분쟁') ||
-                 threadData.service_name.includes('Dispute'))) {
+            if (serviceName.includes('소송') ||
+                serviceName.includes('분쟁') ||
+                serviceName.includes('Dispute') ||
+                serviceName.includes('Litigation')) {
                 return 'litigation';
             }
+
             // 기본값은 민원
             return 'civil';
         }
@@ -1600,6 +1613,9 @@
 
         function processMessageContent(content) {
             if (!content) return '';
+
+            // 줄바꿈을 <br>로 변환
+            content = content.replace(/\n/g, '<br>');
 
             // URL을 링크로 변환
             const urlPattern = /(https?:\/\/[^\s<>"']+)/gi;
