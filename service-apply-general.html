@@ -1241,7 +1241,7 @@
 
                 const serviceId = urlParams.get('service');
                 if (!serviceId || !servicePricing[serviceId]) {
-                    alert('Invalid service.');
+                    alert(getUIMessage('invalidService'));
                     window.location.href = 'index.html';
                     return;
                 }
@@ -1263,7 +1263,7 @@
                 const currentUrl = window.location.href;
                 localStorage.setItem('redirectAfterLogin', currentUrl);
 
-                if (confirm('Login required.\n\nSign in with Google?')) {
+                if (confirm(getUIMessage('loginConfirm'))) {
                     await signInWithGoogle();
                 }
                 return;
@@ -1281,7 +1281,7 @@
             const serviceId = urlParams.get('service');
 
             if (!serviceId || !servicePricing[serviceId]) {
-                alert('Invalid access.');
+                alert(getUIMessage('invalidAccess'));
                 window.history.back();
                 return;
             }
@@ -1410,7 +1410,7 @@
             for (const field of requiredFields) {
                 const element = document.getElementById(field.id);
                 if (!element || !element.value.trim()) {
-                    alert(`Please fill in: ${field.name}`);
+                    alert(getUIMessage('fillInField', { field: field.name }));
                     element?.focus();
                     return false;
                 }
@@ -1419,7 +1419,7 @@
             // Check residence proof radio
             const residenceProof = document.querySelector('input[name="d10-residence-proof"]:checked');
             if (!residenceProof) {
-                alert('Please select your Proof of Residence type');
+                alert(getUIMessage('selectResidenceProof'));
                 return false;
             }
 
@@ -1474,7 +1474,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
             const btn = document.getElementById('payBtn');
             btn.disabled = true;
             btn.classList.add('loading');
-            btn.innerHTML = '<i class="fas fa-spinner"></i> Processing...';
+            btn.innerHTML = '<i class="fas fa-spinner"></i> ' + getUIMessage('processing');
 
             try {
                 let profile = null;
@@ -1492,7 +1492,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                 } else {
                     session = await checkSession();
                     if (!session || !session.user) {
-                        alert('Login required.');
+                        alert(getUIMessage('loginRequired'));
                         window.location.href = 'index.html';
                         return;
                     }
@@ -1580,7 +1580,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                     return;
                 }
 
-                alert('Payment processing error. Please try again.');
+                alert(getUIMessage('paymentError'));
             }
         }
 
@@ -1755,16 +1755,161 @@ Cam on.`,
             return names[lang] || names.en;
         }
 
+        // Get UI messages in user's selected language
+        function getUIMessage(key, params = {}) {
+            const lang = localStorage.getItem('i18n_language') || 'en';
+            const messages = {
+                loginRequired: {
+                    ko: '로그인이 필요합니다.',
+                    en: 'Login required.',
+                    zh: '需要登录。',
+                    vi: 'Can dang nhap.',
+                    ja: 'ログインが必要です。',
+                    mn: 'Нэвтрэх шаардлагатай.',
+                    th: 'ต้องเข้าสู่ระบบ'
+                },
+                loginConfirm: {
+                    ko: '로그인이 필요합니다.\n\nGoogle 계정으로 로그인하시겠습니까?',
+                    en: 'Login required.\n\nSign in with Google?',
+                    zh: '需要登录。\n\n使用Google账户登录？',
+                    vi: 'Can dang nhap.\n\nDang nhap bang Google?',
+                    ja: 'ログインが必要です。\n\nGoogleアカウントでログインしますか？',
+                    mn: 'Нэвтрэх шаардлагатай.\n\nGoogle-ээр нэвтрэх үү?',
+                    th: 'ต้องเข้าสู่ระบบ\n\nเข้าสู่ระบบด้วย Google?'
+                },
+                openingThread: {
+                    ko: '쓰레드 열는 중...',
+                    en: 'Opening Thread...',
+                    zh: '正在打开线程...',
+                    vi: 'Dang mo chuoi...',
+                    ja: 'スレッドを開いています...',
+                    mn: 'Нээж байна...',
+                    th: 'กำลังเปิดเธรด...'
+                },
+                processing: {
+                    ko: '처리 중...',
+                    en: 'Processing...',
+                    zh: '处理中...',
+                    vi: 'Dang xu ly...',
+                    ja: '処理中...',
+                    mn: 'Боловсруулж байна...',
+                    th: 'กำลังประมวลผล...'
+                },
+                submitting: {
+                    ko: '제출 중...',
+                    en: 'Submitting...',
+                    zh: '提交中...',
+                    vi: 'Dang gui...',
+                    ja: '送信中...',
+                    mn: 'Илгээж байна...',
+                    th: 'กำลังส่ง...'
+                },
+                threadCreated: {
+                    ko: '쓰레드가 생성되었습니다!\n\n담당자와 상담 후 ₩{amount} 결제가 안내됩니다.',
+                    en: 'Your thread has been created!\n\nPayment of ₩{amount} will be requested after consultation with our specialist.',
+                    zh: '您的线程已创建！\n\n与专员咨询后将收取 ₩{amount} 的费用。',
+                    vi: 'Chuoi cua ban da duoc tao!\n\nSau khi tu van voi chuyen gia, ban se duoc yeu cau thanh toan ₩{amount}.',
+                    ja: 'スレッドが作成されました！\n\n担当者との相談後、₩{amount}の決済をご案内いたします。',
+                    mn: 'Таны хүсэлт илгээгдлээ!\n\nМэргэжилтэнтэй зөвлөлдсөний дараа ₩{amount} төлбөр хүсэх болно.',
+                    th: 'สร้างเธรดแล้ว!\n\nหลังจากปรึกษากับผู้เชี่ยวชาญจะแจ้งการชำระเงิน ₩{amount}'
+                },
+                quoteSubmitted: {
+                    ko: '견적 요청이 제출되었습니다!\n\n담당자가 곧 전용 쓰레드를 통해 연락드리겠습니다.',
+                    en: 'Quote request submitted!\n\nOur specialist will contact you shortly through your dedicated thread.',
+                    zh: '报价请求已提交！\n\n我们的专员将通过您的专用线程与您联系。',
+                    vi: 'Yeu cau bao gia da gui!\n\nChuyen gia cua chung toi se lien he voi ban qua chuoi rieng.',
+                    ja: '見積もり依頼が送信されました！\n\n担当者が専用スレッドを通じてご連絡いたします。',
+                    mn: 'Үнийн санал илгээгдлээ!\n\nМэргэжилтэн таны хүсэлтийг хянаж удахгүй холбогдоно.',
+                    th: 'ส่งคำขอใบเสนอราคาแล้ว!\n\nผู้เชี่ยวชาญจะติดต่อคุณผ่านเธรดเร็วๆ นี้'
+                },
+                errorOccurred: {
+                    ko: '오류가 발생했습니다. 다시 시도해주세요.',
+                    en: 'An error occurred. Please try again.',
+                    zh: '发生错误，请重试。',
+                    vi: 'Da xay ra loi. Vui long thu lai.',
+                    ja: 'エラーが発生しました。もう一度お試しください。',
+                    mn: 'Алдаа гарлаа. Дахин оролдоно уу.',
+                    th: 'เกิดข้อผิดพลาด กรุณาลองใหม่'
+                },
+                paymentError: {
+                    ko: '결제 처리 오류가 발생했습니다. 다시 시도해주세요.',
+                    en: 'Payment processing error. Please try again.',
+                    zh: '支付处理错误，请重试。',
+                    vi: 'Loi xu ly thanh toan. Vui long thu lai.',
+                    ja: '決済処理エラーが発生しました。もう一度お試しください。',
+                    mn: 'Төлбөрийн алдаа. Дахин оролдоно уу.',
+                    th: 'เกิดข้อผิดพลาดในการชำระเงิน กรุณาลองใหม่'
+                },
+                invalidService: {
+                    ko: '유효하지 않은 서비스입니다.',
+                    en: 'Invalid service.',
+                    zh: '无效的服务。',
+                    vi: 'Dich vu khong hop le.',
+                    ja: '無効なサービスです。',
+                    mn: 'Үйлчилгээ буруу байна.',
+                    th: 'บริการไม่ถูกต้อง'
+                },
+                invalidAccess: {
+                    ko: '잘못된 접근입니다.',
+                    en: 'Invalid access.',
+                    zh: '无效访问。',
+                    vi: 'Truy cap khong hop le.',
+                    ja: '無効なアクセスです。',
+                    mn: 'Хүчингүй хандалт.',
+                    th: 'การเข้าถึงไม่ถูกต้อง'
+                },
+                selectResidenceProof: {
+                    ko: '거주 증명 유형을 선택해주세요',
+                    en: 'Please select your Proof of Residence type',
+                    zh: '请选择您的居住证明类型',
+                    vi: 'Vui long chon loai chung minh cu tru',
+                    ja: '居住証明の種類を選択してください',
+                    mn: 'Оршин суугаа баталгааны төрлийг сонгоно уу',
+                    th: 'กรุณาเลือกประเภทหลักฐานการพำนัก'
+                },
+                fillInField: {
+                    ko: '다음 항목을 입력해주세요: {field}',
+                    en: 'Please fill in: {field}',
+                    zh: '请填写：{field}',
+                    vi: 'Vui long dien: {field}',
+                    ja: '次の項目を入力してください：{field}',
+                    mn: 'Бөглөнө үү: {field}',
+                    th: 'กรุณากรอก: {field}'
+                },
+                openThread: {
+                    ko: '쓰레드 열기',
+                    en: 'Open Thread',
+                    zh: '打开线程',
+                    vi: 'Mo chuoi',
+                    ja: 'スレッドを開く',
+                    mn: 'Нээх',
+                    th: 'เปิดเธรด'
+                }
+            };
+
+            let msg = messages[key];
+            if (!msg) return key;
+
+            let text = msg[lang] || msg.en;
+
+            // Replace parameters like {amount}
+            Object.keys(params).forEach(param => {
+                text = text.replace(`{${param}}`, params[param]);
+            });
+
+            return text;
+        }
+
         async function applyForDeferredPayment() {
             const btn = document.getElementById('payBtn');
             btn.disabled = true;
             btn.classList.add('loading');
-            btn.innerHTML = '<i class="fas fa-spinner"></i> Opening Thread...';
+            btn.innerHTML = '<i class="fas fa-spinner"></i> ' + getUIMessage('openingThread');
 
             try {
                 const session = await checkSession();
                 if (!session || !session.user) {
-                    alert('Login required.');
+                    alert(getUIMessage('loginRequired'));
                     window.location.href = 'index.html';
                     return;
                 }
@@ -1804,14 +1949,14 @@ Cam on.`,
                     console.error('Welcome message error:', msgErr);
                 }
 
-                alert('Your thread has been created!\n\nPayment of ₩' + selectedService.totalPrice.toLocaleString() + ' will be requested after consultation with our specialist.');
+                alert(getUIMessage('threadCreated', { amount: selectedService.totalPrice.toLocaleString() }));
                 window.location.href = `thread-general-v2.html?id=${threadResult.data.id}`;
             } catch (error) {
                 console.error('Thread creation error:', error);
                 btn.disabled = false;
                 btn.classList.remove('loading');
-                btn.innerHTML = '<i class="fas fa-comments"></i> Open Thread';
-                alert('An error occurred. Please try again.');
+                btn.innerHTML = '<i class="fas fa-comments"></i> ' + getUIMessage('openThread');
+                alert(getUIMessage('errorOccurred'));
             }
         }
 
@@ -1819,12 +1964,12 @@ Cam on.`,
             const btn = document.getElementById('payBtn');
             btn.disabled = true;
             btn.classList.add('loading');
-            btn.innerHTML = '<i class="fas fa-spinner"></i> Submitting...';
+            btn.innerHTML = '<i class="fas fa-spinner"></i> ' + getUIMessage('submitting');
 
             try {
                 const session = await checkSession();
                 if (!session || !session.user) {
-                    alert('Login required.');
+                    alert(getUIMessage('loginRequired'));
                     window.location.href = 'index.html';
                     return;
                 }
@@ -1842,14 +1987,14 @@ Cam on.`,
                     throw new Error('Thread creation failed');
                 }
 
-                alert('Quote request submitted!\n\nOur specialist will contact you shortly through your dedicated thread.');
+                alert(getUIMessage('quoteSubmitted'));
                 window.location.href = `thread-general-v2.html?id=${threadResult.data.id}`;
             } catch (error) {
                 console.error('Consultation request error:', error);
                 btn.disabled = false;
                 btn.classList.remove('loading');
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Request Quote';
-                alert('An error occurred. Please try again.');
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> ' + getUIMessage('openThread');
+                alert(getUIMessage('errorOccurred'));
             }
         }
     </script>
