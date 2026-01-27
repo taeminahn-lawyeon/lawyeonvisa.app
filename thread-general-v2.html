@@ -1682,9 +1682,14 @@
         }
 
         function initEditor() {
+            // Get multilingual placeholder
+            const placeholder = (typeof i18n !== 'undefined' && i18n.translate)
+                ? i18n.translate('thread.placeholder')
+                : 'Type your message...';
+
             quillEditor = new Quill('#editor', {
                 theme: 'snow',
-                placeholder: '내용을 입력하세요...',
+                placeholder: placeholder,
                 modules: {
                     toolbar: [
                         ['bold', 'italic', 'underline'],
@@ -2564,7 +2569,23 @@
 
         function formatDate(dateStr) {
             const date = new Date(dateStr);
-            return date.toLocaleDateString('ko-KR', {
+            // Use i18n if available
+            if (typeof i18n !== 'undefined' && i18n.formatDate) {
+                return i18n.formatDate(date);
+            }
+            // Fallback to locale-based formatting
+            const lang = getCurrentLang();
+            const localeMap = {
+                'ko': 'ko-KR',
+                'en': 'en-US',
+                'zh': 'zh-CN',
+                'vi': 'vi-VN',
+                'ja': 'ja-JP',
+                'mn': 'mn-MN',
+                'th': 'th-TH'
+            };
+            const locale = localeMap[lang] || 'en-US';
+            return date.toLocaleDateString(locale, {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'
@@ -2573,7 +2594,18 @@
 
         function formatDateTime(dateStr) {
             const date = new Date(dateStr);
-            return date.toLocaleDateString('ko-KR', {
+            const lang = getCurrentLang();
+            const localeMap = {
+                'ko': 'ko-KR',
+                'en': 'en-US',
+                'zh': 'zh-CN',
+                'vi': 'vi-VN',
+                'ja': 'ja-JP',
+                'mn': 'mn-MN',
+                'th': 'th-TH'
+            };
+            const locale = localeMap[lang] || 'en-US';
+            return date.toLocaleString(locale, {
                 year: 'numeric',
                 month: '2-digit',
                 day: '2-digit',
