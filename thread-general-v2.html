@@ -537,13 +537,101 @@
             font-weight: 600;
         }
 
-        .message-body .info-box {
-            background: #F9FAFB;
-            border: 1px solid #E5E7EB;
-            border-radius: 8px;
-            padding: 12px 16px;
+        /* Admin styled boxes */
+        .message-body .info-box,
+        .info-box {
+            background: #EBF4FF;
+            border-left: 4px solid #3182F6;
+            padding: 16px 20px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .message-body .warning-box,
+        .warning-box {
+            background: #FEF3C7;
+            border-left: 4px solid #F59E0B;
+            padding: 16px 20px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .message-body .success-box,
+        .success-box {
+            background: #D1FAE5;
+            border-left: 4px solid #10B981;
+            padding: 16px 20px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .message-body .numbered-steps,
+        .numbered-steps {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 20px;
             margin: 12px 0;
         }
+
+        .message-body .numbered-steps .step,
+        .numbered-steps .step {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .message-body .numbered-steps .step:last-child,
+        .numbered-steps .step:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .message-body .numbered-steps .step:first-child,
+        .numbered-steps .step:first-child {
+            padding-top: 0;
+        }
+
+        .message-body .numbered-steps .step-num,
+        .numbered-steps .step-num {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .message-body .numbered-steps .step-content,
+        .numbered-steps .step-content {
+            flex: 1;
+        }
+
+        .message-body .numbered-steps .step-title,
+        .numbered-steps .step-title {
+            font-weight: 700;
+            color: #1E293B;
+            margin-bottom: 4px;
+        }
+
+        .message-body .numbered-steps .step-desc,
+        .numbered-steps .step-desc {
+            font-size: 14px;
+            color: #64748B;
+        }
+
+        /* Highlight styles */
+        .highlight-yellow { background-color: #FEF08A; padding: 2px 4px; border-radius: 3px; }
+        .highlight-green { background-color: #BBF7D0; padding: 2px 4px; border-radius: 3px; }
+        .highlight-blue { background-color: #BFDBFE; padding: 2px 4px; border-radius: 3px; }
+        .highlight-pink { background-color: #FBCFE8; padding: 2px 4px; border-radius: 3px; }
 
         .message-body .info-box-title {
             font-weight: 700;
@@ -1773,8 +1861,14 @@
         function processMessageContent(content) {
             if (!content) return '';
 
-            // 이미 처리된 HTML인지 확인 (action-link-btn 또는 payment-btn-inline 클래스가 있으면 스킵)
-            if (content.includes('action-link-btn') || content.includes('payment-btn-inline')) {
+            // 이미 처리된 HTML인지 확인 (스타일드 컴포넌트가 있으면 그대로 반환)
+            if (content.includes('class="info-box"') ||
+                content.includes('class="warning-box"') ||
+                content.includes('class="success-box"') ||
+                content.includes('class="numbered-steps"') ||
+                content.includes('action-link-btn') ||
+                content.includes('payment-btn-inline') ||
+                content.includes('class="ql-')) {
                 // 줄바꿈만 처리
                 return content.replace(/\n/g, '<br>');
             }
