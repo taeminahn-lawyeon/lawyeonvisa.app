@@ -1469,7 +1469,7 @@
                         <div class="desc-item" data-i18n="emergency.legal.item2">Administrative appeals & litigation</div>
                         <div class="desc-item" data-i18n="emergency.legal.item3">Criminal defense for foreigners</div>
                     </div>
-                    <button class="cta-btn" onclick="location.href='consultation-request.html?type=emergency'"><span data-i18n="emergency.legal.cta">Emergency Consultation</span> <span class="arrow">→</span></button>
+                    <button class="cta-btn" onclick="event.stopPropagation(); location.href='consultation-request.html?type=emergency'"><span data-i18n="emergency.legal.cta">Emergency Consultation</span> <span class="arrow">→</span></button>
                 </div>
                 <!-- Card 2: 서비스 네비게이터 (중앙) -->
                 <div class="premium-service-card" id="serviceNavigatorCard">
@@ -1478,7 +1478,7 @@
                         <div class="desc-item" data-i18n="emergency.navigator.item1">Find the right service for your case</div>
                         <div class="desc-item" data-i18n="emergency.navigator.item2">Guided service consultation</div>
                     </div>
-                    <button class="cta-btn" onclick="location.href='service-navigator.html'"><span data-i18n="emergency.navigator.cta">Start Navigator</span> <span class="arrow">→</span></button>
+                    <button class="cta-btn" onclick="event.stopPropagation(); location.href='service-navigator.html'"><span data-i18n="emergency.navigator.cta">Start Navigator</span> <span class="arrow">→</span></button>
                 </div>
                 <!-- Card 3: 비자 진단 및 자문 (우측) -->
                 <div class="premium-service-card" id="visaDiagnosisCard">
@@ -1488,7 +1488,7 @@
                         <div class="desc-item" data-i18n="emergency.diagnosis.item2">Immigration law violation consultation</div>
                         <div class="desc-item" data-i18n="emergency.diagnosis.item3">Overstay risk assessment</div>
                     </div>
-                    <button class="cta-btn" onclick="location.href='service-apply-general.html?service=visa-prediagnosis'"><span data-i18n="emergency.diagnosis.cta">Request Diagnosis</span> <span class="arrow">→</span></button>
+                    <button class="cta-btn" onclick="event.stopPropagation(); location.href='service-apply-general.html?service=visa-prediagnosis'"><span data-i18n="emergency.diagnosis.cta">Request Diagnosis</span> <span class="arrow">→</span></button>
                 </div>
             </div>
         </div>
@@ -1901,15 +1901,9 @@
                 });
             });
 
-            // 긴급 구제 카드 클릭 이벤트
+            // 긴급 구제 카드 클릭 이벤트 - 상세 페이지로 바로 이동 (기본사항은 쓰레드에서 요청)
             document.getElementById('emergencyLegalCard').addEventListener('click', async function() {
                 console.log('👉 긴급 구제 카드 클릭');
-
-                // ✅ 관리자 로그인 체크
-                if (window.isAdminLoggedIn && window.isAdminLoggedIn()) {
-                    alert('즉시 결제가 필요하지 않은 서비스입니다.');
-                    return;
-                }
 
                 // ✅ Supabase 세션 체크
                 const session = await checkSession();
@@ -1921,33 +1915,17 @@
                     return;
                 }
 
-                // ✅ 프로필 체크 (캐시 우선)
-                const cachedProfile = sessionStorage.getItem('userProfileCache');
-                if (cachedProfile) {
-                    console.log('✅ 캐시된 프로필 사용');
-                    window.location.href = 'service-apply-general.html?service=emergency-legal';
-                    return;
-                }
-
-                const profileResult = await getUserProfile(session.user.id);
-                console.log('🔍 프로필 조회:', profileResult);
-
-                if (!profileResult.success || !profileResult.data) {
-                    alert('프로필 설정이 필요합니다.');
-                    window.location.href = 'profile-setup.html';
-                    return;
-                }
-
-                // 변호사 전담 대응 서비스로 이동
-                window.location.href = 'service-apply-general.html?service=emergency-legal';
+                // 상담 요청 페이지로 이동 (기본사항은 쓰레드에서 요청)
+                window.location.href = 'consultation-request.html?type=emergency';
             });
 
+            // 비자 사전진단 카드 클릭 이벤트 - 상세 페이지로 바로 이동 (기본사항은 쓰레드에서 요청)
             document.getElementById('visaDiagnosisCard').addEventListener('click', async function() {
                 console.log('👉 비자 사전진단 카드 클릭');
 
                 // ✅ 관리자 로그인 체크 - 바로 결제 페이지로 이동
                 if (window.isAdminLoggedIn && window.isAdminLoggedIn()) {
-                    console.log('✅ 관리자 로그인 상태 - 프로필 체크 생략');
+                    console.log('✅ 관리자 로그인 상태');
                     window.location.href = 'service-apply-general.html?service=visa-prediagnosis&admin=true';
                     return;
                 }
@@ -1962,24 +1940,7 @@
                     return;
                 }
 
-                // ✅ 프로필 체크 (캐시 우선)
-                const cachedProfile = sessionStorage.getItem('userProfileCache');
-                if (cachedProfile) {
-                    console.log('✅ 캐시된 프로필 사용');
-                    window.location.href = 'service-apply-general.html?service=visa-prediagnosis';
-                    return;
-                }
-                
-                const profileResult = await getUserProfile(session.user.id);
-                console.log('🔍 프로필 조회:', profileResult);
-                
-                if (!profileResult.success || !profileResult.data) {
-                    alert('프로필 설정이 필요합니다.');
-                    window.location.href = 'profile-setup.html';
-                    return;
-                }
-                
-                // 비자 사전진단 서비스로 이동
+                // 비자 사전진단 서비스로 이동 (기본사항은 쓰레드에서 요청)
                 window.location.href = 'service-apply-general.html?service=visa-prediagnosis';
             });
         });
