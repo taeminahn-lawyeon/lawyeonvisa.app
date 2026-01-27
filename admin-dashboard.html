@@ -354,6 +354,84 @@
             background: #E5E8EB;
         }
 
+        /* 일괄 선택 체크박스 */
+        .row-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #3182F6;
+        }
+
+        .threads-table th:first-child,
+        .threads-table td:first-child {
+            width: 40px;
+            text-align: center;
+        }
+
+        /* 일괄 작업 바 */
+        .bulk-action-bar {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #191F28;
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            z-index: 999;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .bulk-action-bar.active {
+            display: flex;
+        }
+
+        .bulk-action-bar .selected-count {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .bulk-action-bar .bulk-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .bulk-action-bar .bulk-btn.primary {
+            background: #3182F6;
+            color: white;
+        }
+
+        .bulk-action-bar .bulk-btn.primary:hover {
+            background: #1B64DA;
+        }
+
+        .bulk-action-bar .bulk-btn.secondary {
+            background: #4E5968;
+            color: white;
+        }
+
+        .bulk-action-bar .bulk-btn.secondary:hover {
+            background: #6B7684;
+        }
+
+        .bulk-action-bar select {
+            padding: 10px 16px;
+            border: 1px solid #4E5968;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #2D3540;
+            color: white;
+            cursor: pointer;
+        }
+
         /* 모달 */
         .modal {
             display: none;
@@ -911,11 +989,28 @@
         </div>
     </div>
 
+    <!-- 일괄 작업 바 -->
+    <div class="bulk-action-bar" id="bulkActionBar">
+        <span class="selected-count"><span id="selectedCount">0</span>건 선택됨</span>
+        <select id="bulkStageSelect">
+            <option value="">단계 선택</option>
+            <option value="1">1단계</option>
+            <option value="2">2단계</option>
+            <option value="3">3단계</option>
+            <option value="4">4단계</option>
+            <option value="5">5단계</option>
+            <option value="6">6단계</option>
+        </select>
+        <button class="bulk-btn primary" onclick="bulkChangeStage()">일괄 변경</button>
+        <button class="bulk-btn secondary" onclick="clearSelection()">선택 해제</button>
+    </div>
+
     <script>
         // 전역 변수
         let allThreads = [];
         let filteredThreads = [];
         let currentThreadId = null;
+        let selectedThreadIds = new Set();
 
         // 페이지 로드 시 초기화
         window.addEventListener('DOMContentLoaded', async function() {
@@ -1079,11 +1174,14 @@
         function renderThreadsTable() {
             const container = document.getElementById('threadsTableContainer');
             document.getElementById('threadCount').textContent = `총 ${filteredThreads.length}건`;
-            
+
+            // 선택 상태 초기화
+            selectedThreadIds.clear();
+            updateBulkActionBar();
+
             if (filteredThreads.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
-                        <i class="fas fa-inbox"></i>
                         <p>검색 결과가 없습니다.</p>
                     </div>
                 `;
@@ -1094,6 +1192,7 @@
                 <table class="threads-table">
                     <thead>
                         <tr>
+                            <th><input type="checkbox" class="row-checkbox" id="selectAll" onchange="toggleSelectAll(this)"></th>
                             <th>고객명</th>
                             <th>연락처</th>
                             <th>서비스명</th>
@@ -1156,7 +1255,8 @@
                 const stageDisplay = `<span style="background: #EBF4FF; color: #1B64DA; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 600;">${currentStage}/${totalStages}</span> <span style="color: #6B7684; font-size: 11px;">${stageType}</span>`;
 
                 tableHTML += `
-                    <tr>
+                    <tr data-thread-id="${thread.id}" data-is-consulting="${isConsulting}">
+                        <td><input type="checkbox" class="row-checkbox" onchange="toggleRowSelect(this, '${thread.id}')"></td>
                         <td>
                             <div><strong>${thread.customer_name}</strong></div>
                             <div style="font-size: 12px; color: #6B7280;">${thread.customer_email}</div>
@@ -1170,12 +1270,8 @@
                         <td><strong>₩${thread.amount.toLocaleString()}</strong></td>
                         <td>${new Date(thread.created_at).toLocaleDateString()}</td>
                         <td>
-                            <button class="action-btn view" onclick="viewThread('${thread.id}')">
-                                <i class="fas fa-eye"></i> 보기
-                            </button>
-                            <button class="action-btn edit" onclick="openStatusModal('${thread.id}')">
-                                <i class="fas fa-edit"></i> 수정
-                            </button>
+                            <button class="action-btn view" onclick="viewThread('${thread.id}')">보기</button>
+                            <button class="action-btn edit" onclick="openStatusModal('${thread.id}')">수정</button>
                         </td>
                     </tr>
                 `;
@@ -1224,6 +1320,112 @@
 
             filteredThreads = [...allThreads];
             renderThreadsTable();
+        }
+
+        // 전체 선택/해제
+        function toggleSelectAll(checkbox) {
+            const rowCheckboxes = document.querySelectorAll('tbody .row-checkbox');
+            rowCheckboxes.forEach(cb => {
+                cb.checked = checkbox.checked;
+                const threadId = cb.closest('tr').dataset.threadId;
+                if (checkbox.checked) {
+                    selectedThreadIds.add(threadId);
+                } else {
+                    selectedThreadIds.delete(threadId);
+                }
+            });
+            updateBulkActionBar();
+        }
+
+        // 개별 행 선택/해제
+        function toggleRowSelect(checkbox, threadId) {
+            if (checkbox.checked) {
+                selectedThreadIds.add(threadId);
+            } else {
+                selectedThreadIds.delete(threadId);
+            }
+
+            // 전체 선택 체크박스 상태 업데이트
+            const rowCheckboxes = document.querySelectorAll('tbody .row-checkbox');
+            const allChecked = Array.from(rowCheckboxes).every(cb => cb.checked);
+            const selectAllCheckbox = document.getElementById('selectAll');
+            if (selectAllCheckbox) {
+                selectAllCheckbox.checked = allChecked;
+            }
+
+            updateBulkActionBar();
+        }
+
+        // 일괄 작업 바 업데이트
+        function updateBulkActionBar() {
+            const bulkBar = document.getElementById('bulkActionBar');
+            const countSpan = document.getElementById('selectedCount');
+
+            countSpan.textContent = selectedThreadIds.size;
+
+            if (selectedThreadIds.size > 0) {
+                bulkBar.classList.add('active');
+            } else {
+                bulkBar.classList.remove('active');
+            }
+        }
+
+        // 선택 해제
+        function clearSelection() {
+            selectedThreadIds.clear();
+            const checkboxes = document.querySelectorAll('.row-checkbox');
+            checkboxes.forEach(cb => cb.checked = false);
+            updateBulkActionBar();
+        }
+
+        // 일괄 단계 변경
+        async function bulkChangeStage() {
+            const newStage = document.getElementById('bulkStageSelect').value;
+
+            if (!newStage) {
+                alert('변경할 단계를 선택해주세요.');
+                return;
+            }
+
+            if (selectedThreadIds.size === 0) {
+                alert('선택된 항목이 없습니다.');
+                return;
+            }
+
+            const stageNum = parseInt(newStage);
+            const confirmMsg = `선택된 ${selectedThreadIds.size}건의 쓰레드를 ${stageNum}단계로 변경하시겠습니까?`;
+
+            if (!confirm(confirmMsg)) return;
+
+            try {
+                const threadIds = Array.from(selectedThreadIds);
+
+                const { error } = await supabaseClient
+                    .from('threads')
+                    .update({
+                        current_stage: stageNum,
+                        updated_at: new Date().toISOString()
+                    })
+                    .in('id', threadIds);
+
+                if (error) throw error;
+
+                // 로컬 데이터 업데이트
+                threadIds.forEach(id => {
+                    const thread = allThreads.find(t => t.id === id);
+                    if (thread) {
+                        thread.current_stage = stageNum;
+                    }
+                });
+
+                alert(`${selectedThreadIds.size}건의 단계가 변경되었습니다.`);
+                clearSelection();
+                renderThreadsTable();
+
+            } catch (error) {
+                console.error('일괄 단계 변경 오류:', error);
+                alert('단계 변경 중 오류가 발생했습니다.');
+            }
         }
 
         // 쓰레드 상세보기
