@@ -370,7 +370,7 @@
             <button class="back-btn" onclick="goBack()">
                 <i class="fas fa-arrow-left"></i>
             </button>
-            <h1 class="header-title">Service Navigator</h1>
+            <h1 class="header-title" data-i18n="navigator.header">Service Navigator</h1>
         </div>
     </div>
 
@@ -388,10 +388,10 @@
             <div class="options-grid" id="optionsGrid"></div>
             <div class="nav-section">
                 <button class="nav-btn secondary" id="prevBtn" onclick="prevStep()" disabled>
-                    <i class="fas fa-arrow-left"></i> Back
+                    <i class="fas fa-arrow-left"></i> <span data-i18n="navigator.back">Back</span>
                 </button>
                 <button class="nav-btn secondary" onclick="restart()">
-                    Start Over
+                    <span data-i18n="navigator.startOver">Start Over</span>
                 </button>
             </div>
         </div>
@@ -399,13 +399,13 @@
         <div class="result-section" id="resultSection">
             <div class="question-card">
                 <div class="result-header">
-                    <h2 class="result-title">Recommended Services</h2>
-                    <p class="result-subtitle">Based on your selections, here are the available services:</p>
+                    <h2 class="result-title" data-i18n="navigator.recommendedServices">Recommended Services</h2>
+                    <p class="result-subtitle" data-i18n="navigator.resultSubtitle">Based on your selections, here are the available services:</p>
                 </div>
                 <div class="category-filter" id="categoryFilter"></div>
                 <div class="services-grid" id="servicesGrid"></div>
                 <button class="restart-btn" onclick="restart()">
-                    <i class="fas fa-redo"></i> Start Over
+                    <i class="fas fa-redo"></i> <span data-i18n="navigator.startOver">Start Over</span>
                 </button>
             </div>
         </div>
@@ -413,201 +413,217 @@
 
     <script>
         // ============================================================
-        // 서비스 목록 (service-apply-general.html의 servicePricing과 동일)
+        // 다국어 지원 헬퍼 함수
+        // ============================================================
+        function t(key, fallback) {
+            if (typeof i18n !== 'undefined' && i18n.translate) {
+                const result = i18n.translate(key);
+                return result !== key ? result : fallback || key;
+            }
+            return fallback || key;
+        }
+
+        // ============================================================
+        // 서비스 목록 - 서비스 ID만 저장, 이름/설명은 translations.js 참조
         // ============================================================
         const allServices = {
             // Premium Services (2)
-            'visa-prediagnosis': { name: 'Visa Pre-diagnosis', desc: 'Visa change, overstay risk, immigration law consultation', category: 'premium' },
-            'emergency-legal': { name: 'Immigration Dispute Resolution', desc: 'Criminal investigation, deportation defense, visa denial appeals', category: 'premium' },
+            'visa-prediagnosis': { nameKey: 'service.visa_prediagnosis', descKey: 'service.visa_prediagnosis.desc', category: 'premium' },
+            'emergency-legal': { nameKey: 'service.emergency_legal', descKey: 'service.emergency_legal.desc', category: 'premium' },
 
             // Education & Job Search (10)
-            'd4-to-d2-change': { name: 'D-4→D-2 Student Visa Change', desc: 'Language course to degree program', category: 'education' },
-            'd10-1-change': { name: 'D-10-1 Job Seeker Visa Change', desc: 'General job seeking visa', category: 'education' },
-            'd10-2-change': { name: 'D-10-2 Tech Startup Job Seeker', desc: 'Startup preparation visa', category: 'education' },
-            'd10-3-change': { name: 'D-10-3 High-tech Intern Visa', desc: 'Advanced technology internship', category: 'education' },
-            'd10-t-change': { name: 'D-10-T Top Talent Job Seeker', desc: 'Elite university graduate visa', category: 'education' },
-            'd2-d4-extension': { name: 'D-2, D-4 Visa Extension', desc: 'Student visa renewal', category: 'education' },
-            'd10-extension': { name: 'D-10 Visa Extension', desc: 'Job seeker visa renewal', category: 'education' },
-            'parttime-permit': { name: 'Part-time Work Permit', desc: 'D-2, D-4 part-time employment', category: 'education' },
-            'intern-report': { name: 'Internship Start/Change Report', desc: 'D-10 internship notification', category: 'education' },
-            'parent-invite': { name: 'Student Parent Invitation', desc: 'Excellent student parent visa', category: 'education' },
+            'd4-to-d2-change': { nameKey: 'service.d4_d2_change', descKey: 'service.d4_d2_change.desc', category: 'education' },
+            'd10-1-change': { nameKey: 'service.d10_1_change', descKey: 'service.d10_1_change.desc', category: 'education' },
+            'd10-2-change': { nameKey: 'service.d10_2_change', descKey: 'service.d10_2_change.desc', category: 'education' },
+            'd10-3-change': { nameKey: 'service.d10_3_change', descKey: 'service.d10_3_change.desc', category: 'education' },
+            'd10-t-change': { nameKey: 'service.d10_t_change', descKey: 'service.d10_t_change.desc', category: 'education' },
+            'd2-d4-extension': { nameKey: 'service.d2_d4_extension', descKey: 'service.d2_d4_extension.desc', category: 'education' },
+            'd10-extension': { nameKey: 'service.d10_extension', descKey: 'service.d10_extension.desc', category: 'education' },
+            'parttime-permit': { nameKey: 'service.parttime_permit', descKey: 'service.parttime_permit.desc', category: 'education' },
+            'intern-report': { nameKey: 'service.intern_report', descKey: 'service.intern_report.desc', category: 'education' },
+            'parent-invite': { nameKey: 'service.parent_invite', descKey: 'service.parent_invite.desc', category: 'education' },
 
             // Employment (18)
-            'e7-4-change': { name: 'E-7-4 Skilled Worker Visa', desc: 'E-9/H-2 skilled transition', category: 'employment' },
-            'e7-4r-change': { name: 'E-7-4R Regional Skilled Worker', desc: 'Depopulated area skilled worker', category: 'employment' },
-            'e7-change': { name: 'E-7 Professional Visa Change', desc: 'Professional employment visa', category: 'employment' },
-            'f2-7-change': { name: 'F-2-7 Points-based Residence', desc: 'Outstanding talent residence', category: 'employment' },
-            'f2-r-change': { name: 'F-2-R Regional Residence Visa', desc: 'Depopulated area residence', category: 'employment' },
-            'e7-st-change': { name: 'E-7-S/T Elite Professional', desc: 'High-tech/high-income talent', category: 'employment' },
-            'e1-e6-change': { name: 'E-1~E-6 Professional Change', desc: 'Professor, researcher, specialist', category: 'employment' },
-            'e7-extension': { name: 'E-7 Visa Extension', desc: 'Professional visa renewal', category: 'employment' },
-            'e9-workplace-change': { name: 'E-9 Workplace Change', desc: 'E-9 employer change', category: 'employment' },
-            'workplace-change-permit': { name: 'Workplace Change Permit', desc: 'Job transfer pre-approval', category: 'employment' },
-            'outside-activity': { name: 'Additional Activity Permit', desc: 'Activities beyond visa scope', category: 'employment' },
-            'h2-work-start': { name: 'H-2 Employment Start Report', desc: 'Working visit job notification', category: 'employment' },
-            'workplace-change-report': { name: 'Workplace Change Report', desc: 'Job transfer post-notification', category: 'employment' },
-            'employment-info-change': { name: 'Employment Info Update', desc: 'Workplace/salary change report', category: 'employment' },
-            'dispatch-report': { name: 'Dispatch Work Report', desc: 'Subsidiary assignment report', category: 'employment' },
-            'income-report': { name: 'Annual Income Report', desc: 'Job and income notification', category: 'employment' },
-            'foreign-worker-change': { name: 'Foreign Worker Status Report', desc: 'Resignation/departure report', category: 'employment' },
+            'e7-4-change': { nameKey: 'service.e7_4_change', descKey: 'service.e7_4_change.desc', category: 'employment' },
+            'e7-4r-change': { nameKey: 'service.e7_4r_change', descKey: 'service.e7_4r_change.desc', category: 'employment' },
+            'e7-change': { nameKey: 'service.e7_change', descKey: 'service.e7_change.desc', category: 'employment' },
+            'f2-7-change': { nameKey: 'service.f2_7_change', descKey: 'service.f2_7_change.desc', category: 'employment' },
+            'f2-r-change': { nameKey: 'service.f2_r_change', descKey: 'service.f2_r_change.desc', category: 'employment' },
+            'e7-st-change': { nameKey: 'service.e7_st_change', descKey: 'service.e7_st_change.desc', category: 'employment' },
+            'e1-e6-change': { nameKey: 'service.e1_e6_change', descKey: 'service.e1_e6_change.desc', category: 'employment' },
+            'e7-extension': { nameKey: 'service.e7_extension', descKey: 'service.e7_extension.desc', category: 'employment' },
+            'e9-workplace-change': { nameKey: 'service.e9_workplace_change', descKey: 'service.e9_workplace_change.desc', category: 'employment' },
+            'workplace-change-permit': { nameKey: 'service.workplace_change_permit', descKey: 'service.workplace_change_permit.desc', category: 'employment' },
+            'outside-activity': { nameKey: 'service.outside_activity', descKey: 'service.outside_activity.desc', category: 'employment' },
+            'h2-work-start': { nameKey: 'service.h2_work_start', descKey: 'service.h2_work_start.desc', category: 'employment' },
+            'workplace-change-report': { nameKey: 'service.workplace_change_report', descKey: 'service.workplace_change_report.desc', category: 'employment' },
+            'employment-info-change': { nameKey: 'service.employment_info_change', descKey: 'service.employment_info_change.desc', category: 'employment' },
+            'dispatch-report': { nameKey: 'service.dispatch_report', descKey: 'service.dispatch_report.desc', category: 'employment' },
+            'income-report': { nameKey: 'service.income_report', descKey: 'service.income_report.desc', category: 'employment' },
+            'foreign-worker-change': { nameKey: 'service.foreign_worker_change', descKey: 'service.foreign_worker_change.desc', category: 'employment' },
 
             // Business & Investment (12)
-            'd8-1-change': { name: 'D-8-1 Corporate Investment', desc: 'Corporate establishment visa', category: 'business' },
-            'd8-2-change': { name: 'D-8-2 Venture Investment', desc: 'Venture company investment', category: 'business' },
-            'd8-3-change': { name: 'D-8-3 Individual Investment', desc: 'Sole proprietor investment', category: 'business' },
-            'd8-4-change': { name: 'D-8-4 Tech Startup Visa', desc: 'Student entrepreneur visa', category: 'business' },
-            'd9-1-change': { name: 'D-9-1 Trade Business', desc: 'Trading business visa', category: 'business' },
-            'd9-2-change': { name: 'D-9-2 Export Equipment', desc: 'Export facility management', category: 'business' },
-            'd9-3-change': { name: 'D-9-3 Shipbuilding Supervisor', desc: 'Ship/equipment supervision', category: 'business' },
-            'd9-4-change': { name: 'D-9-4 Commercial Business', desc: 'Individual commercial visa', category: 'business' },
-            'd9-5-change': { name: 'D-9-5 Graduate Entrepreneur', desc: 'Former student business', category: 'business' },
-            'business-extension': { name: 'D-8, D-9 Business Extension', desc: 'Investment visa renewal', category: 'business' },
-            'fic-registration': { name: 'Foreign Investment Registration', desc: 'FIC certificate issuance', category: 'business' },
-            'fi-report': { name: 'Foreign Investment Report', desc: 'Investment pre-notification', category: 'business' },
+            'd8-1-change': { nameKey: 'service.d8_1_change', descKey: 'service.d8_1_change.desc', category: 'business' },
+            'd8-2-change': { nameKey: 'service.d8_2_change', descKey: 'service.d8_2_change.desc', category: 'business' },
+            'd8-3-change': { nameKey: 'service.d8_3_change', descKey: 'service.d8_3_change.desc', category: 'business' },
+            'd8-4-change': { nameKey: 'service.d8_4_change', descKey: 'service.d8_4_change.desc', category: 'business' },
+            'd9-1-change': { nameKey: 'service.d9_1_change', descKey: 'service.d9_1_change.desc', category: 'business' },
+            'd9-2-change': { nameKey: 'service.d9_2_change', descKey: 'service.d9_2_change.desc', category: 'business' },
+            'd9-3-change': { nameKey: 'service.d9_3_change', descKey: 'service.d9_3_change.desc', category: 'business' },
+            'd9-4-change': { nameKey: 'service.d9_4_change', descKey: 'service.d9_4_change.desc', category: 'business' },
+            'd9-5-change': { nameKey: 'service.d9_5_change', descKey: 'service.d9_5_change.desc', category: 'business' },
+            'business-extension': { nameKey: 'service.business_extension', descKey: 'service.business_extension.desc', category: 'business' },
+            'fic-registration': { nameKey: 'service.fic_registration', descKey: 'service.fic_registration.desc', category: 'business' },
+            'fi-report': { nameKey: 'service.fi_report', descKey: 'service.fi_report.desc', category: 'business' },
 
             // Ethnic Korean & Family (13)
-            'h2-to-f4-change': { name: 'H-2→F-4 Overseas Korean', desc: 'Working visit to overseas Korean', category: 'family' },
-            'f4-change': { name: 'F-4 Overseas Korean Visa', desc: 'Overseas Korean status', category: 'family' },
-            'f4-registration': { name: 'F-4 Residence Registration', desc: 'F-4 residence card issuance', category: 'family' },
-            'f4-extension': { name: 'F-4 Visa Extension', desc: 'F-4 residence renewal', category: 'family' },
-            'h2-extension': { name: 'H-2 Visa Extension', desc: 'Working visit renewal', category: 'family' },
-            'f6-change': { name: 'F-6 Marriage Immigration', desc: 'Spouse visa acquisition', category: 'family' },
-            'f6-extension': { name: 'F-6 Visa Extension', desc: 'Marriage visa renewal', category: 'family' },
-            'f3-change': { name: 'F-3 Dependent Family Visa', desc: 'Spouse/child accompanying', category: 'family' },
-            'f1-change': { name: 'F-1 Family Visit Visa', desc: 'Relative long-term stay', category: 'family' },
-            'visa-grant-child': { name: 'Child Birth Visa Grant', desc: 'Newborn child visa', category: 'family' },
-            'visa-grant-f6-child': { name: 'F-6 Child Visa Grant', desc: 'Marriage immigrant child', category: 'family' },
-            'family-invite': { name: 'Family Invitation Visa', desc: 'Overseas family invitation', category: 'family' },
-            'housework-report': { name: 'Domestic Work Report', desc: 'Household help notification', category: 'family' },
+            'h2-to-f4-change': { nameKey: 'service.h2_f4_change', descKey: 'service.h2_f4_change.desc', category: 'family' },
+            'f4-change': { nameKey: 'service.f4_change', descKey: 'service.f4_change.desc', category: 'family' },
+            'f4-registration': { nameKey: 'service.f4_registration', descKey: 'service.f4_registration.desc', category: 'family' },
+            'f4-extension': { nameKey: 'service.f4_extension', descKey: 'service.f4_extension.desc', category: 'family' },
+            'h2-extension': { nameKey: 'service.h2_extension', descKey: 'service.h2_extension.desc', category: 'family' },
+            'f6-change': { nameKey: 'service.f6_change', descKey: 'service.f6_change.desc', category: 'family' },
+            'f6-extension': { nameKey: 'service.f6_extension', descKey: 'service.f6_extension.desc', category: 'family' },
+            'f3-change': { nameKey: 'service.f3_change', descKey: 'service.f3_change.desc', category: 'family' },
+            'f1-change': { nameKey: 'service.f1_change', descKey: 'service.f1_change.desc', category: 'family' },
+            'visa-grant-child': { nameKey: 'service.visa_grant_child', descKey: 'service.visa_grant_child.desc', category: 'family' },
+            'visa-grant-f6-child': { nameKey: 'service.visa_grant_f6_child', descKey: 'service.visa_grant_f6_child.desc', category: 'family' },
+            'family-invite': { nameKey: 'service.family_invite', descKey: 'service.family_invite.desc', category: 'family' },
+            'housework-report': { nameKey: 'service.housework_report', descKey: 'service.housework_report.desc', category: 'family' },
 
             // Residence & Citizenship (11)
-            'f5-change': { name: 'F-5 Permanent Residence', desc: 'Korea permanent residency', category: 'residence' },
-            'f5-reissue': { name: 'F-5 Card Renewal (10yr)', desc: 'Permanent residence card', category: 'residence' },
-            'f2-extension': { name: 'F-2 Residence Extension', desc: 'Residence visa renewal', category: 'residence' },
-            'naturalization': { name: 'Naturalization Application', desc: 'Korean citizenship', category: 'residence' },
-            'nationality-recovery': { name: 'Nationality Recovery', desc: 'Former Korean citizenship', category: 'residence' },
-            'nationality-selection': { name: 'Nationality Selection', desc: 'Dual citizen selection', category: 'residence' },
-            'nationality-renounce': { name: 'Nationality Renunciation', desc: 'Korean citizenship waiver', category: 'residence' },
-            'nationality-loss': { name: 'Nationality Loss Report', desc: 'Foreign citizenship report', category: 'residence' },
-            'nationality-retention': { name: 'Nationality Retention', desc: 'Citizenship retention intent', category: 'residence' },
-            'nationality-acquisition': { name: 'Nationality Acquisition', desc: 'Recognition-based citizenship', category: 'residence' },
-            'nationality-judgment': { name: 'Nationality Determination', desc: 'Nationality status inquiry', category: 'residence' },
+            'f5-change': { nameKey: 'service.f5_change', descKey: 'service.f5_change.desc', category: 'residence' },
+            'f5-reissue': { nameKey: 'service.f5_reissue', descKey: 'service.f5_reissue.desc', category: 'residence' },
+            'f2-extension': { nameKey: 'service.f2_extension', descKey: 'service.f2_extension.desc', category: 'residence' },
+            'naturalization': { nameKey: 'service.naturalization', descKey: 'service.naturalization.desc', category: 'residence' },
+            'nationality-recovery': { nameKey: 'service.nationality_recovery', descKey: 'service.nationality_recovery.desc', category: 'residence' },
+            'nationality-selection': { nameKey: 'service.nationality_selection', descKey: 'service.nationality_selection.desc', category: 'residence' },
+            'nationality-renounce': { nameKey: 'service.nationality_renounce', descKey: 'service.nationality_renounce.desc', category: 'residence' },
+            'nationality-loss': { nameKey: 'service.nationality_loss', descKey: 'service.nationality_loss.desc', category: 'residence' },
+            'nationality-retention': { nameKey: 'service.nationality_retention', descKey: 'service.nationality_retention.desc', category: 'residence' },
+            'nationality-acquisition': { nameKey: 'service.nationality_acquisition', descKey: 'service.nationality_acquisition.desc', category: 'residence' },
+            'nationality-judgment': { nameKey: 'service.nationality_judgment', descKey: 'service.nationality_judgment.desc', category: 'residence' },
 
             // General Registration & Certificates (13)
-            'arc-registration': { name: 'Alien Registration', desc: 'Required within 90 days', category: 'registration' },
-            'arc-reissue': { name: 'ARC Reissue', desc: 'Lost/damaged card replacement', category: 'registration' },
-            'address-change': { name: 'Address Change Report', desc: 'Moving address update', category: 'registration' },
-            'f4-address-change': { name: 'F-4 Address Change', desc: 'Overseas Korean address', category: 'registration' },
-            'passport-change': { name: 'Passport/Info Change', desc: 'Passport/name update', category: 'registration' },
-            'reentry-permit-multiple': { name: 'Multiple Re-entry Permit', desc: 'Multiple border crossings', category: 'registration' },
-            'reentry-permit-single': { name: 'Single Re-entry Permit', desc: 'One-time border crossing', category: 'registration' },
-            'cert-entry-exit': { name: 'Entry/Exit Certificate', desc: 'Travel history record', category: 'registration' },
-            'cert-arc': { name: 'ARC Certificate', desc: 'Registration proof', category: 'registration' },
-            'cert-residence': { name: 'Residence Certificate', desc: 'F-4 residence proof', category: 'registration' },
-            'cert-realestate': { name: 'Real Estate Registration ID', desc: 'Property transaction', category: 'registration' },
-            'cert-arc-number-change': { name: 'ARC Number Change Cert', desc: 'Number change confirmation', category: 'registration' },
-            'cert-nationality': { name: 'Nationality Certificate', desc: 'Nationality status proof', category: 'registration' }
+            'arc-registration': { nameKey: 'service.arc_registration', descKey: 'service.arc_registration.desc', category: 'registration' },
+            'arc-reissue': { nameKey: 'service.arc_reissue', descKey: 'service.arc_reissue.desc', category: 'registration' },
+            'address-change': { nameKey: 'service.address_change', descKey: 'service.address_change.desc', category: 'registration' },
+            'f4-address-change': { nameKey: 'service.f4_address_change', descKey: 'service.f4_address_change.desc', category: 'registration' },
+            'passport-change': { nameKey: 'service.passport_change', descKey: 'service.passport_change.desc', category: 'registration' },
+            'reentry-permit-multiple': { nameKey: 'service.reentry_multiple', descKey: 'service.reentry_multiple.desc', category: 'registration' },
+            'reentry-permit-single': { nameKey: 'service.reentry_single', descKey: 'service.reentry_single.desc', category: 'registration' },
+            'cert-entry-exit': { nameKey: 'service.cert_entry_exit', descKey: 'service.cert_entry_exit.desc', category: 'registration' },
+            'cert-arc': { nameKey: 'service.cert_arc', descKey: 'service.cert_arc.desc', category: 'registration' },
+            'cert-residence': { nameKey: 'service.cert_residence', descKey: 'service.cert_residence.desc', category: 'registration' },
+            'cert-realestate': { nameKey: 'service.cert_realestate', descKey: 'service.cert_realestate.desc', category: 'registration' },
+            'cert-arc-number-change': { nameKey: 'service.cert_number_change', descKey: 'service.cert_number_change.desc', category: 'registration' },
+            'cert-nationality': { nameKey: 'service.cert_nationality', descKey: 'service.cert_nationality.desc', category: 'registration' }
         };
 
-        // 카테고리 이름
-        const categoryNames = {
-            'all': 'All Services',
-            'premium': 'Premium',
-            'education': 'Education & Job',
-            'employment': 'Employment',
-            'business': 'Business',
-            'family': 'Family & Korean',
-            'residence': 'Residence & Citizenship',
-            'registration': 'Registration & Certs'
+        // 카테고리 키 (번역 키로 사용)
+        const categoryKeys = {
+            'all': 'navigator.category.all',
+            'premium': 'navigator.category.premium',
+            'education': 'navigator.category.education',
+            'employment': 'navigator.category.employment',
+            'business': 'navigator.category.business',
+            'family': 'navigator.category.family',
+            'residence': 'navigator.category.residence',
+            'registration': 'navigator.category.registration'
         };
+
+        // 카테고리 이름 가져오기
+        function getCategoryName(cat) {
+            return t(categoryKeys[cat], cat);
+        }
 
         // ============================================================
-        // 질문 흐름 정의
+        // 질문 흐름 정의 - 번역 키 사용
         // ============================================================
         const questions = {
             step1: {
-                title: "What would you like to do?",
-                subtitle: "Select your primary purpose",
+                titleKey: "navigator.step1.title",
+                subtitleKey: "navigator.step1.subtitle",
                 options: [
-                    { id: "change_visa", title: "Change Visa Type", desc: "Switch to a different visa category" },
-                    { id: "extend_visa", title: "Extend Current Visa", desc: "Renew before expiration" },
-                    { id: "register_report", title: "Registration & Reports", desc: "ARC, address, workplace changes" },
-                    { id: "get_certificate", title: "Get Certificates", desc: "Official documents & permits" },
-                    { id: "residence_citizenship", title: "Residence & Citizenship", desc: "F-5, F-2, naturalization" },
-                    { id: "need_consultation", title: "Need Consultation", desc: "Not sure what I need" }
+                    { id: "change_visa", titleKey: "navigator.step1.change_visa", descKey: "navigator.step1.change_visa.desc" },
+                    { id: "extend_visa", titleKey: "navigator.step1.extend_visa", descKey: "navigator.step1.extend_visa.desc" },
+                    { id: "register_report", titleKey: "navigator.step1.register_report", descKey: "navigator.step1.register_report.desc" },
+                    { id: "get_certificate", titleKey: "navigator.step1.get_certificate", descKey: "navigator.step1.get_certificate.desc" },
+                    { id: "residence_citizenship", titleKey: "navigator.step1.residence_citizenship", descKey: "navigator.step1.residence_citizenship.desc" },
+                    { id: "need_consultation", titleKey: "navigator.step1.need_consultation", descKey: "navigator.step1.need_consultation.desc" }
                 ]
             },
             step2: {
                 change_visa: {
-                    title: "What type of visa do you want?",
-                    subtitle: "Select your target visa category",
+                    titleKey: "navigator.step2.change_visa.title",
+                    subtitleKey: "navigator.step2.change_visa.subtitle",
                     options: [
-                        { id: "visa_work", title: "Work Visa", desc: "E-7, E-1~E-6 employment" },
-                        { id: "visa_skilled", title: "Skilled Worker (E-7-4)", desc: "E-9/H-2 transition" },
-                        { id: "visa_business", title: "Business/Investment", desc: "D-8, D-9 investor visa" },
-                        { id: "visa_student", title: "Student Visa", desc: "D-2, D-4 study visa" },
-                        { id: "visa_jobseeker", title: "Job Seeker (D-10)", desc: "After graduation" },
-                        { id: "visa_family", title: "Family/Marriage", desc: "F-1, F-3, F-6 family visa" },
-                        { id: "visa_korean", title: "Overseas Korean (F-4)", desc: "Ethnic Korean status" },
-                        { id: "visa_residence", title: "Residence (F-2)", desc: "Points-based residence" }
+                        { id: "visa_work", titleKey: "navigator.step2.visa_work", descKey: "navigator.step2.visa_work.desc" },
+                        { id: "visa_skilled", titleKey: "navigator.step2.visa_skilled", descKey: "navigator.step2.visa_skilled.desc" },
+                        { id: "visa_business", titleKey: "navigator.step2.visa_business", descKey: "navigator.step2.visa_business.desc" },
+                        { id: "visa_student", titleKey: "navigator.step2.visa_student", descKey: "navigator.step2.visa_student.desc" },
+                        { id: "visa_jobseeker", titleKey: "navigator.step2.visa_jobseeker", descKey: "navigator.step2.visa_jobseeker.desc" },
+                        { id: "visa_family", titleKey: "navigator.step2.visa_family", descKey: "navigator.step2.visa_family.desc" },
+                        { id: "visa_korean", titleKey: "navigator.step2.visa_korean", descKey: "navigator.step2.visa_korean.desc" },
+                        { id: "visa_residence", titleKey: "navigator.step2.visa_residence", descKey: "navigator.step2.visa_residence.desc" }
                     ]
                 },
                 extend_visa: {
-                    title: "Which visa do you need to extend?",
-                    subtitle: "Select your current visa type",
+                    titleKey: "navigator.step2.extend_visa.title",
+                    subtitleKey: "navigator.step2.extend_visa.subtitle",
                     options: [
-                        { id: "ext_student", title: "Student (D-2, D-4)", desc: "Student visa renewal" },
-                        { id: "ext_jobseeker", title: "Job Seeker (D-10)", desc: "D-10 extension" },
-                        { id: "ext_work", title: "Work Visa (E-7)", desc: "E-7 professional visa" },
-                        { id: "ext_business", title: "Business (D-8, D-9)", desc: "Investment visa renewal" },
-                        { id: "ext_family", title: "Family (F-1, F-3, F-6)", desc: "Family visa renewal" },
-                        { id: "ext_korean", title: "Overseas Korean (F-4, H-2)", desc: "F-4 or H-2 renewal" },
-                        { id: "ext_residence", title: "Residence (F-2)", desc: "F-2 extension" }
+                        { id: "ext_student", titleKey: "navigator.step2.ext_student", descKey: "navigator.step2.ext_student.desc" },
+                        { id: "ext_jobseeker", titleKey: "navigator.step2.ext_jobseeker", descKey: "navigator.step2.ext_jobseeker.desc" },
+                        { id: "ext_work", titleKey: "navigator.step2.ext_work", descKey: "navigator.step2.ext_work.desc" },
+                        { id: "ext_business", titleKey: "navigator.step2.ext_business", descKey: "navigator.step2.ext_business.desc" },
+                        { id: "ext_family", titleKey: "navigator.step2.ext_family", descKey: "navigator.step2.ext_family.desc" },
+                        { id: "ext_korean", titleKey: "navigator.step2.ext_korean", descKey: "navigator.step2.ext_korean.desc" },
+                        { id: "ext_residence", titleKey: "navigator.step2.ext_residence", descKey: "navigator.step2.ext_residence.desc" }
                     ]
                 },
                 register_report: {
-                    title: "What do you need to register or report?",
-                    subtitle: "Select the type of registration",
+                    titleKey: "navigator.step2.register_report.title",
+                    subtitleKey: "navigator.step2.register_report.subtitle",
                     options: [
-                        { id: "reg_arc", title: "Alien Registration", desc: "New ARC or reissue" },
-                        { id: "reg_address", title: "Address Change", desc: "Moving notification" },
-                        { id: "reg_passport", title: "Passport/Info Change", desc: "Update personal info" },
-                        { id: "reg_workplace", title: "Workplace Changes", desc: "Job change reports" },
-                        { id: "reg_employment", title: "Employment Reports", desc: "Income, dispatch, etc." },
-                        { id: "reg_student", title: "Student Work/Intern", desc: "Part-time, internship" },
-                        { id: "reg_family", title: "Family Reports", desc: "Housework, F-4 address" },
-                        { id: "reg_investment", title: "Investment Reports", desc: "FIC, foreign investment" }
+                        { id: "reg_arc", titleKey: "navigator.step2.reg_arc", descKey: "navigator.step2.reg_arc.desc" },
+                        { id: "reg_address", titleKey: "navigator.step2.reg_address", descKey: "navigator.step2.reg_address.desc" },
+                        { id: "reg_passport", titleKey: "navigator.step2.reg_passport", descKey: "navigator.step2.reg_passport.desc" },
+                        { id: "reg_workplace", titleKey: "navigator.step2.reg_workplace", descKey: "navigator.step2.reg_workplace.desc" },
+                        { id: "reg_employment", titleKey: "navigator.step2.reg_employment", descKey: "navigator.step2.reg_employment.desc" },
+                        { id: "reg_student", titleKey: "navigator.step2.reg_student", descKey: "navigator.step2.reg_student.desc" },
+                        { id: "reg_family", titleKey: "navigator.step2.reg_family", descKey: "navigator.step2.reg_family.desc" },
+                        { id: "reg_investment", titleKey: "navigator.step2.reg_investment", descKey: "navigator.step2.reg_investment.desc" }
                     ]
                 },
                 get_certificate: {
-                    title: "What certificate do you need?",
-                    subtitle: "Select the document type",
+                    titleKey: "navigator.step2.get_certificate.title",
+                    subtitleKey: "navigator.step2.get_certificate.subtitle",
                     options: [
-                        { id: "cert_arc", title: "ARC Certificate", desc: "Registration proof" },
-                        { id: "cert_travel", title: "Entry/Exit Records", desc: "Travel history" },
-                        { id: "cert_reentry", title: "Re-entry Permit", desc: "Border crossing permit" },
-                        { id: "cert_residence", title: "Residence Certificate", desc: "F-4 residence proof" },
-                        { id: "cert_other", title: "Other Certificates", desc: "Real estate, nationality, etc." }
+                        { id: "cert_arc", titleKey: "navigator.step2.cert_arc", descKey: "navigator.step2.cert_arc.desc" },
+                        { id: "cert_travel", titleKey: "navigator.step2.cert_travel", descKey: "navigator.step2.cert_travel.desc" },
+                        { id: "cert_reentry", titleKey: "navigator.step2.cert_reentry", descKey: "navigator.step2.cert_reentry.desc" },
+                        { id: "cert_residence", titleKey: "navigator.step2.cert_residence", descKey: "navigator.step2.cert_residence.desc" },
+                        { id: "cert_other", titleKey: "navigator.step2.cert_other", descKey: "navigator.step2.cert_other.desc" }
                     ]
                 },
                 residence_citizenship: {
-                    title: "What are you applying for?",
-                    subtitle: "Select your goal",
+                    titleKey: "navigator.step2.residence_citizenship.title",
+                    subtitleKey: "navigator.step2.residence_citizenship.subtitle",
                     options: [
-                        { id: "res_f5", title: "Permanent Residence (F-5)", desc: "Korea permanent residency" },
-                        { id: "res_f2", title: "F-2 Residence Visa", desc: "Points-based or regional" },
-                        { id: "res_naturalize", title: "Naturalization", desc: "Korean citizenship" },
-                        { id: "res_nationality", title: "Nationality Services", desc: "Recovery, selection, etc." },
-                        { id: "res_f5_renew", title: "F-5 Card Renewal", desc: "10-year card renewal" }
+                        { id: "res_f5", titleKey: "navigator.step2.res_f5", descKey: "navigator.step2.res_f5.desc" },
+                        { id: "res_f2", titleKey: "navigator.step2.res_f2", descKey: "navigator.step2.res_f2.desc" },
+                        { id: "res_naturalize", titleKey: "navigator.step2.res_naturalize", descKey: "navigator.step2.res_naturalize.desc" },
+                        { id: "res_nationality", titleKey: "navigator.step2.res_nationality", descKey: "navigator.step2.res_nationality.desc" },
+                        { id: "res_f5_renew", titleKey: "navigator.step2.res_f5_renew", descKey: "navigator.step2.res_f5_renew.desc" }
                     ]
                 },
                 need_consultation: {
-                    title: "What is your situation?",
-                    subtitle: "We'll help you find the right service",
+                    titleKey: "navigator.step2.need_consultation.title",
+                    subtitleKey: "navigator.step2.need_consultation.subtitle",
                     options: [
-                        { id: "consult_diagnosis", title: "Visa Pre-diagnosis", desc: "Expert consultation on options" },
-                        { id: "consult_emergency", title: "Urgent/Legal Issue", desc: "Deportation, overstay, denial" },
-                        { id: "consult_browse", title: "Browse All Services", desc: "See complete service list" }
+                        { id: "consult_diagnosis", titleKey: "navigator.step2.consult_diagnosis", descKey: "navigator.step2.consult_diagnosis.desc" },
+                        { id: "consult_emergency", titleKey: "navigator.step2.consult_emergency", descKey: "navigator.step2.consult_emergency.desc" },
+                        { id: "consult_browse", titleKey: "navigator.step2.consult_browse", descKey: "navigator.step2.consult_browse.desc" }
                     ]
                 }
             }
@@ -698,22 +714,29 @@
                 return;
             }
 
-            // 진행률 업데이트
-            document.getElementById('progressText').textContent = `Step ${currentStep} of 3`;
+            // 진행률 업데이트 (다국어)
+            const stepText = t('navigator.stepOf', 'Step {0} of {1}')
+                .replace('{0}', currentStep)
+                .replace('{1}', '3');
+            document.getElementById('progressText').textContent = stepText;
             document.getElementById('progressFill').style.width = `${currentStep * 33}%`;
 
-            // 질문 업데이트
-            document.getElementById('questionTitle').textContent = stepData.title;
-            document.getElementById('questionSubtitle').textContent = stepData.subtitle;
+            // 질문 업데이트 (다국어)
+            document.getElementById('questionTitle').textContent = t(stepData.titleKey, stepData.title || '');
+            document.getElementById('questionSubtitle').textContent = t(stepData.subtitleKey, stepData.subtitle || '');
 
-            // 옵션 렌더링
+            // 옵션 렌더링 (다국어)
             const optionsGrid = document.getElementById('optionsGrid');
-            optionsGrid.innerHTML = stepData.options.map(opt => `
+            optionsGrid.innerHTML = stepData.options.map(opt => {
+                const title = t(opt.titleKey, opt.title || '');
+                const desc = t(opt.descKey, opt.desc || '');
+                return `
                 <button class="option-btn" onclick="selectOption('${opt.id}')">
-                    <div class="option-title">${opt.title}</div>
-                    ${opt.desc ? `<div class="option-desc">${opt.desc}</div>` : ''}
+                    <div class="option-title">${title}</div>
+                    ${desc ? `<div class="option-desc">${desc}</div>` : ''}
                 </button>
-            `).join('');
+            `;
+            }).join('');
 
             // 뒤로가기 버튼
             document.getElementById('prevBtn').disabled = currentStep === 1;
@@ -738,14 +761,14 @@
             const resultSection = document.getElementById('resultSection');
             resultSection.style.display = 'block';
 
-            document.getElementById('progressText').textContent = 'Results';
+            document.getElementById('progressText').textContent = t('navigator.results', 'Results');
             document.getElementById('progressFill').style.width = '100%';
 
             // 마지막 선택에 해당하는 서비스 가져오기
             const lastSelection = selections[selections.length - 1];
             const serviceIds = serviceMapping[lastSelection] || Object.keys(allServices);
 
-            // 카테고리 필터 생성
+            // 카테고리 필터 생성 (다국어)
             const categories = new Set(['all']);
             serviceIds.forEach(id => {
                 if (allServices[id]) {
@@ -756,14 +779,14 @@
             const filterContainer = document.getElementById('categoryFilter');
             filterContainer.innerHTML = Array.from(categories).map(cat => `
                 <button class="category-btn ${cat === 'all' ? 'active' : ''}" onclick="filterCategory('${cat}', '${lastSelection}')">
-                    ${categoryNames[cat] || cat}
+                    ${getCategoryName(cat)}
                 </button>
             `).join('');
 
             renderServices(serviceIds, 'all');
         }
 
-        // 서비스 렌더링
+        // 서비스 렌더링 (다국어)
         function renderServices(serviceIds, category) {
             const servicesContainer = document.getElementById('servicesGrid');
 
@@ -776,20 +799,24 @@
                 const svc = allServices[id];
                 if (!svc) return '';
 
+                // 다국어 서비스명/설명
+                const name = t(svc.nameKey, svc.name || id);
+                const desc = t(svc.descKey, svc.desc || '');
+
                 return `
                     <div class="service-item" onclick="applyService('${id}')">
-                        <div class="title">${svc.name}</div>
-                        <div class="desc">${svc.desc}</div>
+                        <div class="title">${name}</div>
+                        <div class="desc">${desc}</div>
                     </div>
                 `;
             }).join('');
         }
 
-        // 카테고리 필터
+        // 카테고리 필터 (다국어)
         function filterCategory(category, lastSelection) {
             document.querySelectorAll('.category-btn').forEach(btn => {
                 btn.classList.remove('active');
-                if (btn.textContent.trim() === (categoryNames[category] || category)) {
+                if (btn.textContent.trim() === getCategoryName(category)) {
                     btn.classList.add('active');
                 }
             });
@@ -830,12 +857,44 @@
             renderStep();
         }
 
-        // 초기화 실행
-        init();
+        // 다국어 변경 시 화면 갱신
+        function refreshForLanguage() {
+            // 정적 요소 i18n 적용
+            if (typeof i18n !== 'undefined' && i18n.applyTranslations) {
+                i18n.applyTranslations();
+            }
+            // 동적 콘텐츠 재렌더링
+            const resultSection = document.getElementById('resultSection');
+            if (resultSection && resultSection.style.display !== 'none') {
+                // 결과 페이지일 때
+                const lastSelection = selections[selections.length - 1];
+                showResults();
+            } else {
+                // 질문 페이지일 때
+                renderStep();
+            }
+        }
+
+        // 언어 변경 이벤트 리스너
+        document.addEventListener('languageChanged', refreshForLanguage);
+
+        // 초기화 실행 (i18n 로드 후)
+        function initWhenReady() {
+            if (typeof i18n !== 'undefined') {
+                init();
+            } else {
+                // i18n 로드 대기
+                setTimeout(initWhenReady, 50);
+            }
+        }
     </script>
 
     <!-- i18n 다국어 지원 -->
     <script src="js/translations.js?v=20250128"></script>
     <script src="js/i18n.js?v=20250128"></script>
+    <script>
+        // i18n 로드 후 초기화
+        initWhenReady();
+    </script>
 </body>
 </html>
