@@ -411,13 +411,6 @@
                         <input type="text" class="form-input" id="lectureCode" required>
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label">
-                            Student ID <span class="required">*</span>
-                        </label>
-                        <input type="text" class="form-input" id="studentId" required>
-                    </div>
-
                     <div class="login-form" id="loginForm">
                         <div class="divider">
                             <div class="divider-line"></div>
@@ -452,7 +445,8 @@
         </div>
 
         <div class="footer">
-            Powered by <a href="https://lawyeonvisa.app">Lawyeon Visa Center</a>
+            <img src="favicon.png" alt="Lawyeon" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 6px; border-radius: 4px;">
+            Powered by <a href="https://lawyeonvisa.app">Law Firm Lawyeon Visa & Immigration Center</a>
         </div>
     </div>
 
@@ -483,16 +477,10 @@
 
         async function handleGoogleLogin() {
             const lectureCode = document.getElementById('lectureCode').value.trim();
-            const studentId = document.getElementById('studentId').value.trim();
 
             // Validate inputs
             if (!lectureCode) {
                 showError('Please enter the lecture code.');
-                return;
-            }
-
-            if (!studentId) {
-                showError('Please enter your student ID.');
                 return;
             }
 
@@ -543,10 +531,9 @@
             }
 
             const lectureCode = document.getElementById('lectureCode').value.trim();
-            const studentId = document.getElementById('studentId').value.trim();
 
-            if (!lectureCode || !studentId) {
-                showError('Please fill in all required fields.');
+            if (!lectureCode) {
+                showError('Please enter the lecture code.');
                 return;
             }
 
@@ -565,7 +552,7 @@
 
             try {
                 // Create thread
-                const thread = await createDeferredThread(lectureCode, studentId);
+                const thread = await createDeferredThread(lectureCode);
 
                 if (thread) {
                     // Redirect to thread
@@ -582,7 +569,7 @@
             }
         }
 
-        async function createDeferredThread(lectureCode, studentId) {
+        async function createDeferredThread(lectureCode) {
             try {
                 // Ensure profile exists
                 const profileResult = await getUserProfile(currentUser.id);
@@ -614,7 +601,7 @@
                 console.log('Thread created:', threadId);
 
                 // Send D-10-1 form data message (deferred payment welcome)
-                await sendDHUWelcomeMessage(threadId, lectureCode, studentId);
+                await sendDHUWelcomeMessage(threadId, lectureCode);
 
                 return threadResult.data;
             } catch (error) {
@@ -623,7 +610,7 @@
             }
         }
 
-        async function sendDHUWelcomeMessage(threadId, lectureCode, studentId) {
+        async function sendDHUWelcomeMessage(threadId, lectureCode) {
             try {
                 const profileSubmitUrl = `${window.location.origin}/service-apply-general.html?service=d10-1-change&thread=${threadId}&org=dhu`;
 
@@ -631,7 +618,6 @@
 
 **University:** Daegu Haany University
 **Lecture Code:** ${lectureCode}
-**Student ID:** ${studentId}
 
 Please complete the D-10-1 application form:
 ${profileSubmitUrl}
