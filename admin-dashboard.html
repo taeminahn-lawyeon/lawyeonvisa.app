@@ -359,6 +359,15 @@
             background: #E5E8EB;
         }
 
+        .action-btn.delete {
+            background: #FEE2E2;
+            color: #DC2626;
+        }
+
+        .action-btn.delete:hover {
+            background: #FECACA;
+        }
+
         /* 일괄 선택 체크박스 */
         .row-checkbox {
             width: 18px;
@@ -1004,6 +1013,7 @@
             <option value="archived">보관</option>
         </select>
         <button class="bulk-btn primary" onclick="bulkChangeStatus()">일괄 변경</button>
+        <button class="bulk-btn" style="background: #DC2626; color: white;" onclick="bulkDeleteThreads()">일괄 삭제</button>
         <button class="bulk-btn secondary" onclick="clearSelection()">선택 해제</button>
     </div>
 
@@ -1348,6 +1358,7 @@
                         <td>
                             <button class="action-btn view" onclick="viewThread('${thread.id}')">보기</button>
                             <button class="action-btn edit" onclick="openStatusModal('${thread.id}')">수정</button>
+                            <button class="action-btn delete" onclick="deleteThread('${thread.id}')">삭제</button>
                         </td>
                     </tr>
                 `;
@@ -1513,6 +1524,95 @@
         function viewThread(threadId) {
             // 관리자 전용 쓰레드 페이지로 이동
             window.location.href = `admin-thread.html?id=${threadId}`;
+        }
+
+        // 쓰레드 삭제
+        async function deleteThread(threadId) {
+            const thread = allThreads.find(t => t.id === threadId);
+            const threadName = thread ? `${thread.customer_name} - ${thread.service_name}` : threadId;
+
+            if (!confirm(`정말 이 쓰레드를 삭제하시겠습니까?\n\n"${threadName}"\n\n⚠️ 삭제된 데이터는 복구할 수 없습니다.`)) {
+                return;
+            }
+
+            try {
+                // 먼저 해당 쓰레드의 메시지들 삭제
+                const { error: messagesError } = await supabaseClient
+                    .from('messages')
+                    .delete()
+                    .eq('thread_id', threadId);
+
+                if (messagesError) {
+                    console.warn('메시지 삭제 오류 (무시):', messagesError);
+                }
+
+                // 쓰레드 삭제
+                const { error } = await supabaseClient
+                    .from('threads')
+                    .delete()
+                    .eq('id', threadId);
+
+                if (error) throw error;
+
+                // 로컬 배열에서도 제거
+                allThreads = allThreads.filter(t => t.id !== threadId);
+                filteredThreads = filteredThreads.filter(t => t.id !== threadId);
+
+                alert('쓰레드가 삭제되었습니다.');
+                updateStatistics();
+                renderThreadsTable();
+
+            } catch (error) {
+                console.error('쓰레드 삭제 실패:', error);
+                alert('삭제 중 오류가 발생했습니다: ' + error.message);
+            }
+        }
+
+        // 일괄 삭제
+        async function bulkDeleteThreads() {
+            if (selectedThreadIds.size === 0) {
+                alert('선택된 항목이 없습니다.');
+                return;
+            }
+
+            const confirmMsg = `선택된 ${selectedThreadIds.size}건의 쓰레드를 정말 삭제하시겠습니까?\n\n⚠️ 삭제된 데이터는 복구할 수 없습니다.`;
+
+            if (!confirm(confirmMsg)) return;
+
+            try {
+                const threadIds = Array.from(selectedThreadIds);
+
+                // 먼저 해당 쓰레드들의 메시지들 삭제
+                const { error: messagesError } = await supabaseClient
+                    .from('messages')
+                    .delete()
+                    .in('thread_id', threadIds);
+
+                if (messagesError) {
+                    console.warn('메시지 삭제 오류 (무시):', messagesError);
+                }
+
+                // 쓰레드들 삭제
+                const { error } = await supabaseClient
+                    .from('threads')
+                    .delete()
+                    .in('id', threadIds);
+
+                if (error) throw error;
+
+                // 로컬 배열에서도 제거
+                allThreads = allThreads.filter(t => !threadIds.includes(t.id));
+                filteredThreads = filteredThreads.filter(t => !threadIds.includes(t.id));
+
+                alert(`${selectedThreadIds.size}건의 쓰레드가 삭제되었습니다.`);
+                clearSelection();
+                updateStatistics();
+                renderThreadsTable();
+
+            } catch (error) {
+                console.error('일괄 삭제 오류:', error);
+                alert('삭제 중 오류가 발생했습니다: ' + error.message);
+            }
         }
 
         // 진행 단계 옵션 업데이트
