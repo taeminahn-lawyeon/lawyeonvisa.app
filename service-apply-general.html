@@ -320,48 +320,65 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Payment Buttons */
+        /* Payment Buttons - Modern Split Design */
         .btn-payment {
             width: 100%;
-            height: 56px;
+            height: 64px;
             border: none;
-            border-radius: 14px;
-            font-size: 16px;
+            border-radius: 16px;
+            font-size: 17px;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
-            justify-content: center;
+            overflow: hidden;
             position: relative;
-            padding: 0 60px;
         }
 
         .btn-payment .btn-text {
             flex: 1;
             text-align: center;
+            padding: 0 20px;
+            letter-spacing: 0.3px;
         }
 
-        .btn-payment .btn-logo-right {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            height: 28px;
+        .btn-payment .btn-logo-area {
+            height: 100%;
+            width: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .btn-payment .btn-logo-area img {
+            height: 36px;
             width: auto;
             object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-payment:hover:not(:disabled) .btn-logo-area img {
+            transform: scale(1.1);
         }
 
         /* Toss Card Payment Button */
         .btn-toss {
-            background: linear-gradient(135deg, #3182F6 0%, #1E6CE0 100%);
+            background: linear-gradient(135deg, #3182F6 0%, #1A6DE0 100%);
             color: white;
-            box-shadow: 0 4px 16px rgba(49, 130, 246, 0.3);
+            box-shadow: 0 4px 20px rgba(49, 130, 246, 0.35);
+        }
+
+        .btn-toss .btn-logo-area {
+            background: rgba(255, 255, 255, 0.2);
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .btn-toss:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(49, 130, 246, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(49, 130, 246, 0.5);
         }
 
         .btn-toss:disabled {
@@ -371,18 +388,22 @@
             box-shadow: none;
         }
 
-
         /* WISE Bank Transfer Button */
         .btn-wise {
-            background: linear-gradient(135deg, #9FE870 0%, #76D943 100%);
+            background: linear-gradient(135deg, #9FE870 0%, #6BD341 100%);
             color: #163300;
-            box-shadow: 0 4px 16px rgba(159, 232, 112, 0.3);
+            box-shadow: 0 4px 20px rgba(159, 232, 112, 0.35);
             margin-top: 12px;
         }
 
+        .btn-wise .btn-logo-area {
+            background: rgba(22, 51, 0, 0.12);
+            border-left: 1px solid rgba(22, 51, 0, 0.15);
+        }
+
         .btn-wise:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(159, 232, 112, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(159, 232, 112, 0.5);
         }
 
         .btn-wise:disabled {
@@ -1330,12 +1351,16 @@
                 <div class="cta-section">
                     <button class="btn-payment btn-toss" id="payBtn" onclick="processPayment()">
                         <span id="btn-text" class="btn-text" data-i18n="payment.payWithCard">Pay with Card</span>
-                        <img src="TOSS.png" alt="Toss" class="btn-logo-right">
+                        <div class="btn-logo-area">
+                            <img src="TOSS.png" alt="Toss">
+                        </div>
                     </button>
 
                     <button class="btn-payment btn-wise" id="wiseBtn" onclick="processWisePayment()">
                         <span class="btn-text" data-i18n="payment.bankTransfer">Bank Transfer</span>
-                        <img src="WISE.png" alt="Wise" class="btn-logo-right">
+                        <div class="btn-logo-area">
+                            <img src="WISE.png" alt="Wise">
+                        </div>
                     </button>
 
                     <div class="security-badges">
