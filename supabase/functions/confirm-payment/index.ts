@@ -33,8 +33,8 @@ serve(async (req) => {
       )
     }
 
-    // 토스페이먼츠 시크릿 키 (환경변수에서 가져오기)
-    const secretKey = Deno.env.get('TOSS_SECRET_KEY') || 'test_sk_zXLkKEypNArWmo50nX3lmeaxYG5R'
+    // 토스페이먼츠 시크릿 키 (환경변수에서 가져오기, 라이브 키)
+    const secretKey = Deno.env.get('TOSS_SECRET_KEY') || 'live_gsk_E92LAa5PVbNXBA4qxBvzV7YmpXyJ'
     
     // Base64 인코딩 (시크릿키 + ":")
     const encryptedSecretKey = 'Basic ' + btoa(secretKey + ':')
