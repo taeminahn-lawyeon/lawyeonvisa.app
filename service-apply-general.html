@@ -427,12 +427,12 @@
         }
 
         .wise-security-badge {
-            background: #F0FBE8;
-            color: #163300;
+            background: #F0F6FF;
+            color: #3182F6;
         }
 
         .wise-security-badge i {
-            color: #76D943;
+            color: #3182F6;
         }
 
         /* Right Column - Thread Preview */
@@ -597,73 +597,6 @@
             font-size: 13px;
             color: #166534;
             font-weight: 600;
-        }
-
-        /* Payment Method Selector */
-        .payment-methods {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #E5E7EB;
-        }
-
-        .payment-methods-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 12px;
-        }
-
-        .payment-method-options {
-            display: flex;
-            gap: 12px;
-        }
-
-        .payment-method-btn {
-            flex: 1;
-            padding: 16px;
-            border: 2px solid #E5E7EB;
-            border-radius: 12px;
-            background: white;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .payment-method-btn:hover {
-            border-color: #3182F6;
-            background: #F8FAFC;
-        }
-
-        .payment-method-btn.selected {
-            border-color: #3182F6;
-            background: #EFF6FF;
-        }
-
-        .payment-method-btn .method-icon {
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .payment-method-btn .method-icon img {
-            height: 24px;
-            width: auto;
-        }
-
-        .payment-method-btn .method-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: #191F28;
-        }
-
-        .payment-method-btn .method-desc {
-            font-size: 11px;
-            color: #3182F6;
-            font-weight: 500;
         }
 
         /* Loading State */
@@ -1184,32 +1117,6 @@
                         <span class="deferred-notice-text" data-i18n="serviceApply.deferredNotice">Payment will be requested after consultation with our specialist.</span>
                     </div>
 
-                    <!-- Payment Method Selector -->
-                    <div class="payment-methods" id="payment-methods">
-                        <div class="payment-methods-title">Payment Method</div>
-                        <div class="payment-method-options">
-                            <button type="button" class="payment-method-btn selected" onclick="selectPaymentMethod('card')" id="method-card">
-                                <div class="method-icon">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#3182F6"/>
-                                        <path d="M8.5 9.5h7v5h-7v-5z" fill="white"/>
-                                    </svg>
-                                </div>
-                                <span class="method-name">Pay with Card</span>
-                                <span class="method-desc">Secured by Toss Payments</span>
-                            </button>
-                            <button type="button" class="payment-method-btn" onclick="selectPaymentMethod('wise')" id="method-wise">
-                                <div class="method-icon">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="12" cy="12" r="10" fill="#9FE870"/>
-                                        <path d="M7 12l3 3 7-7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                </div>
-                                <span class="method-name">Pay with Wise</span>
-                                <span class="method-desc">International Transfer</span>
-                            </button>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Consulting Notice (for consulting services) -->
@@ -1451,7 +1358,7 @@
                         </div>
                         <div class="security-badge wise-security-badge">
                             <i class="fas fa-lock"></i>
-                            <span data-i18n="payment.securedByWise">Wise is FCA regulated · 16M+ customers</span>
+                            <span data-i18n="payment.securedByWise">Wise is FCA regulated</span>
                         </div>
                     </div>
                 </div>
@@ -1639,7 +1546,6 @@
         };
 
         let selectedService = null;
-        let selectedPaymentMethod = 'card';
 
         function goBack() {
             const referrer = document.referrer;
@@ -1647,24 +1553,6 @@
                 window.location.href = referrer;
             } else {
                 window.location.href = 'index.html';
-            }
-        }
-
-        function selectPaymentMethod(method) {
-            selectedPaymentMethod = method;
-
-            // Update button states
-            document.querySelectorAll('.payment-method-btn').forEach(btn => {
-                btn.classList.remove('selected');
-            });
-            document.getElementById('method-' + method).classList.add('selected');
-
-            // Update pay button text
-            const payBtn = document.getElementById('payBtn');
-            if (method === 'wise') {
-                payBtn.innerHTML = '<i class="fas fa-university"></i> <span id="btn-text">Pay with Wise Transfer</span>';
-            } else {
-                payBtn.innerHTML = '<i class="fas fa-credit-card"></i> <span id="btn-text">Proceed to Payment</span>';
             }
         }
 
@@ -1967,7 +1855,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                     customerName: profile.name || session.user.email,
                     customerEmail: profile.email || session.user.email,
                     customerPhone: profile.phone || '',
-                    paymentMethod: selectedPaymentMethod,
+                    paymentMethod: 'card',
                     timestamp: new Date().toISOString()
                 };
 
@@ -1990,16 +1878,6 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                     organization: paymentOrg,
                     lectureCode: paymentLectureCode
                 }));
-
-                // Handle different payment methods
-                if (selectedPaymentMethod === 'wise') {
-                    // Show WISE modal instead of redirect
-                    showWiseModal(orderInfo);
-                    btn.disabled = false;
-                    btn.classList.remove('loading');
-                    btn.innerHTML = '<i class="fas fa-credit-card"></i> Proceed to Payment';
-                    return;
-                }
 
                 // Card payment with Toss
                 if (!tossPayments) {
