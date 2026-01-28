@@ -5,8 +5,8 @@
 // Toss Payments Global 연동
 // ========================================
 
-// Toss Payments 클라이언트 키 (라이브)
-const TOSS_CLIENT_KEY = 'live_gck_Poxy1XQL8RPY4bvZ7EMKV7nO5WmI';
+// API 개별 연동 클라이언트 키 (라이브)
+const TOSS_CLIENT_KEY = 'live_ck_0RnYX2w53270jwylQ4PRVNeyqApQ';
 
 // Toss Payments 초기화
 let tossPayments = null;
