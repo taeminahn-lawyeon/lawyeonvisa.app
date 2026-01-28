@@ -6,7 +6,7 @@
 // ========================================
 
 // Toss Payments 클라이언트 키 (라이브)
-const TOSS_CLIENT_KEY = 'live_gck_Poxy1XQL8RPY4bvZ7EMKV7nO5WmI';
+const TOSS_CLIENT_KEY = 'live_gck_Poxy1XQL8RPY4bvZ7EMKV7nO5Wml';
 
 // Toss Payments 초기화
 let tossPayments = null;
