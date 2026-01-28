@@ -1222,7 +1222,10 @@
                             </div>
                             <input type="file" id="fileInput" multiple style="display: none;" onchange="handleFileSelect(event)">
                             <div class="pending-files" id="pendingFiles"></div>
-                            <div class="reply-actions">
+                            <div class="reply-actions" style="display: flex; gap: 12px; justify-content: space-between; align-items: center;">
+                                <button class="submit-btn" id="d10FormBtn" onclick="openD10FormModal()" style="display: none; background: #10B981; padding: 10px 16px; font-size: 13px;">
+                                    📋 Submit D-10-1 Application Info
+                                </button>
                                 <button class="submit-btn" id="submitBtn" onclick="submitReply()" data-i18n="thread.submit">
                                     작성
                                 </button>
@@ -1370,6 +1373,136 @@
             <div class="modal-actions">
                 <button class="btn-secondary" onclick="closeModal('editMessageModal')">취소</button>
                 <button class="btn-primary" onclick="saveMessageEdit()">저장</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- D-10-1 Application Form Modal -->
+    <div class="modal-overlay" id="d10FormModal">
+        <div class="modal edit-modal" style="max-width: 700px;">
+            <div class="modal-header">
+                <h2 class="modal-title">📋 D-10-1 Application Information</h2>
+                <button class="modal-close" onclick="closeModal('d10FormModal')">&times;</button>
+            </div>
+            <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+                <p style="color: #64748B; margin-bottom: 20px; font-size: 14px;">Please provide the following information to process your D-10-1 visa application. Our specialist will review and contact you.</p>
+
+                <div style="font-weight: 600; color: #191F28; margin: 16px 0 12px; font-size: 14px;">📋 Basic Eligibility</div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label class="form-label">Current Visa Status <span style="color: #EF4444;">*</span></label>
+                    <select class="form-select" id="modal-d10-current-visa" required>
+                        <option value="">Select your current visa</option>
+                        <option value="D-2-1">D-2-1 (Associate Degree)</option>
+                        <option value="D-2-2">D-2-2 (Bachelor's Degree)</option>
+                        <option value="D-2-3">D-2-3 (Master's Degree)</option>
+                        <option value="D-2-4">D-2-4 (Doctoral Degree)</option>
+                        <option value="D-2-5">D-2-5 (Research)</option>
+                        <option value="D-2-6">D-2-6 (Exchange Student)</option>
+                        <option value="D-2-7">D-2-7 (Language + Degree)</option>
+                        <option value="D-2-8">D-2-8 (Short-term Study)</option>
+                        <option value="D-4">D-4 (Language Training)</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label class="form-label">Visa Expiry Date <span style="color: #EF4444;">*</span></label>
+                        <input type="date" class="form-select" id="modal-d10-visa-expiry" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Graduation Date <span style="color: #EF4444;">*</span></label>
+                        <input type="date" class="form-select" id="modal-d10-graduation-date" required>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label class="form-label">Degree Type <span style="color: #EF4444;">*</span></label>
+                        <select class="form-select" id="modal-d10-degree-type" required>
+                            <option value="">Select degree type</option>
+                            <option value="Associate">Associate Degree (2-year)</option>
+                            <option value="Bachelor">Bachelor's Degree (4-year)</option>
+                            <option value="Master">Master's Degree</option>
+                            <option value="Doctoral">Doctoral Degree (PhD)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Korean Language Level</label>
+                        <select class="form-select" id="modal-d10-korean-level">
+                            <option value="">Select if applicable</option>
+                            <option value="TOPIK-1">TOPIK Level 1</option>
+                            <option value="TOPIK-2">TOPIK Level 2</option>
+                            <option value="TOPIK-3">TOPIK Level 3</option>
+                            <option value="TOPIK-4">TOPIK Level 4</option>
+                            <option value="TOPIK-5">TOPIK Level 5</option>
+                            <option value="TOPIK-6">TOPIK Level 6</option>
+                            <option value="KIIP-5">KIIP Level 5</option>
+                            <option value="None">No certification</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label class="form-label">University Name (in Korea) <span style="color: #EF4444;">*</span></label>
+                    <input type="text" class="form-select" id="modal-d10-university" placeholder="e.g., Seoul National University" required>
+                </div>
+
+                <div style="font-weight: 600; color: #191F28; margin: 20px 0 12px; font-size: 14px;">🏠 Residence Information</div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label class="form-label">Current Address in Korea <span style="color: #EF4444;">*</span></label>
+                    <input type="text" class="form-select" id="modal-d10-address" placeholder="e.g., 123 Gangnam-daero, Gangnam-gu, Seoul" required>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label class="form-label">Proof of Residence <span style="color: #EF4444;">*</span></label>
+                    <div style="display: flex; gap: 20px; margin-top: 8px;">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="radio" name="modal-d10-residence-proof" value="lease"> Lease contract (본인 명의)
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="radio" name="modal-d10-residence-proof" value="dormitory"> University dormitory
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="radio" name="modal-d10-residence-proof" value="family"> Living with family
+                        </label>
+                    </div>
+                </div>
+
+                <div style="font-weight: 600; color: #191F28; margin: 20px 0 12px; font-size: 14px;">💼 Employment Plans</div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label class="form-label">Target Industry <span style="color: #EF4444;">*</span></label>
+                    <input type="text" class="form-select" id="modal-d10-target-industry" placeholder="e.g., IT, Manufacturing, Trading, etc." required>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label class="form-label">Job Seeking Plan <span style="color: #EF4444;">*</span></label>
+                    <textarea class="form-select" id="modal-d10-job-plan" rows="3" placeholder="Briefly describe your job search plan..." required style="resize: vertical;"></textarea>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label class="form-label">Do you have internship plans?</label>
+                    <div style="display: flex; gap: 20px; margin-top: 8px;">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="radio" name="modal-d10-internship-plan" value="yes"> Yes
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="radio" name="modal-d10-internship-plan" value="no" checked> No
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label class="form-label">Additional Notes (Optional)</label>
+                    <textarea class="form-select" id="modal-d10-additional-notes" rows="2" placeholder="Any additional information..." style="resize: vertical;"></textarea>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="closeModal('d10FormModal')">Cancel</button>
+                <button class="btn-primary" onclick="submitD10Form()">Submit Application Info</button>
             </div>
         </div>
     </div>
@@ -1800,6 +1933,12 @@
                 // Show admin tools if admin
                 if (isAdmin) {
                     document.getElementById('adminTools').classList.add('visible');
+                }
+
+                // Show D-10-1 form button for D-10 services
+                const serviceName = thread.service_name || '';
+                if (serviceName.includes('D-10-1') || serviceName.includes('D-10-2') || serviceName.includes('D-10-3') || serviceName.includes('D-10-T')) {
+                    document.getElementById('d10FormBtn').style.display = 'block';
                 }
 
                 // Load messages
@@ -2705,6 +2844,125 @@
             a.download = filename;
             a.target = '_blank';
             a.click();
+        }
+
+        // ============================================
+        // D-10-1 Application Form Functions
+        // ============================================
+
+        function openD10FormModal() {
+            document.getElementById('d10FormModal').classList.add('active');
+        }
+
+        async function submitD10Form() {
+            // Validate required fields
+            const requiredFields = [
+                { id: 'modal-d10-current-visa', name: 'Current Visa Status' },
+                { id: 'modal-d10-visa-expiry', name: 'Visa Expiry Date' },
+                { id: 'modal-d10-graduation-date', name: 'Graduation Date' },
+                { id: 'modal-d10-degree-type', name: 'Degree Type' },
+                { id: 'modal-d10-university', name: 'University Name' },
+                { id: 'modal-d10-address', name: 'Current Address' },
+                { id: 'modal-d10-target-industry', name: 'Target Industry' },
+                { id: 'modal-d10-job-plan', name: 'Job Seeking Plan' }
+            ];
+
+            for (const field of requiredFields) {
+                const element = document.getElementById(field.id);
+                if (!element || !element.value.trim()) {
+                    alert(`Please fill in: ${field.name}`);
+                    element?.focus();
+                    return;
+                }
+            }
+
+            // Check residence proof radio
+            const residenceProof = document.querySelector('input[name="modal-d10-residence-proof"]:checked');
+            if (!residenceProof) {
+                alert('Please select your proof of residence type.');
+                return;
+            }
+
+            try {
+                // Collect form data
+                const internshipPlan = document.querySelector('input[name="modal-d10-internship-plan"]:checked');
+
+                const formData = {
+                    currentVisa: document.getElementById('modal-d10-current-visa').value,
+                    visaExpiry: document.getElementById('modal-d10-visa-expiry').value,
+                    graduationDate: document.getElementById('modal-d10-graduation-date').value,
+                    degreeType: document.getElementById('modal-d10-degree-type').value,
+                    koreanLevel: document.getElementById('modal-d10-korean-level').value,
+                    university: document.getElementById('modal-d10-university').value,
+                    address: document.getElementById('modal-d10-address').value,
+                    residenceProof: residenceProof.value,
+                    targetIndustry: document.getElementById('modal-d10-target-industry').value,
+                    jobPlan: document.getElementById('modal-d10-job-plan').value,
+                    internshipPlan: internshipPlan ? internshipPlan.value : 'no',
+                    additionalNotes: document.getElementById('modal-d10-additional-notes').value
+                };
+
+                // Format message content
+                const formattedMessage = formatD10FormMessage(formData);
+
+                // Get user profile
+                const profile = await getUserProfile(currentUser.id);
+                const senderName = profile?.data?.name || currentUser.email?.split('@')[0] || 'Applicant';
+
+                // Send as user message
+                const { error } = await supabaseClient
+                    .from('messages')
+                    .insert({
+                        thread_id: threadId,
+                        sender_id: currentUser.id,
+                        sender_type: 'user',
+                        sender_name: senderName,
+                        content: formattedMessage
+                    });
+
+                if (error) throw error;
+
+                // Close modal and refresh messages
+                closeModal('d10FormModal');
+                await loadMessages();
+
+                // Hide the button after successful submission
+                document.getElementById('d10FormBtn').style.display = 'none';
+
+                alert('D-10-1 Application Information submitted successfully!');
+
+            } catch (error) {
+                console.error('Error submitting D-10-1 form:', error);
+                alert('Failed to submit form. Please try again.');
+            }
+        }
+
+        function formatD10FormMessage(data) {
+            const residenceProofLabels = {
+                'lease': 'Lease contract (본인 명의)',
+                'dormitory': 'University dormitory',
+                'family': 'Living with family'
+            };
+
+            return `📋 **D-10-1 Application Information**
+
+**Basic Eligibility**
+• Current Visa Status: ${data.currentVisa}
+• Visa Expiry Date: ${data.visaExpiry}
+• Graduation Date: ${data.graduationDate}
+• Degree Type: ${data.degreeType}
+• Korean Language: ${data.koreanLevel || 'Not specified'}
+• University: ${data.university}
+
+**Residence Information**
+• Current Address: ${data.address}
+• Proof of Residence: ${residenceProofLabels[data.residenceProof] || data.residenceProof}
+
+**Employment Plans**
+• Target Industry: ${data.targetIndustry}
+• Job Seeking Plan: ${data.jobPlan}
+• Internship Plans: ${data.internshipPlan === 'yes' ? 'Yes' : 'No'}
+${data.additionalNotes ? `\n**Additional Notes**\n${data.additionalNotes}` : ''}`;
         }
     </script>
 </body>

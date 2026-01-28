@@ -1391,10 +1391,8 @@
                 selectedService.govtFee = govtFee;
             }
 
-            // Show D-10-1 specific form
-            if (serviceId === 'd10-1-change' || serviceId === 'd10-1-dhu') {
-                document.getElementById('d10-1-form').style.display = 'block';
-            }
+            // D-10-1 form is now submitted within the thread, not on payment page
+            // Keep form hidden - users will fill it out in the thread after payment
 
             document.getElementById('main-content').style.display = 'grid';
         }
