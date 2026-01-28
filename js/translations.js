@@ -164,6 +164,10 @@ const translations = {
         'serviceApply.proceedPayment': '결제하기',
         'serviceApply.openThread': '쓰레드 열기',
         'serviceApply.deferredNotice': '상담 후 결제가 요청됩니다.',
+        'serviceApply.visaService': '비자 서비스',
+        'serviceApply.dedicatedThread': '전용 상담 쓰레드',
+        'serviceApply.realtimeComm': '담당자와 실시간 소통',
+        'serviceApply.trackProgress': '전용 쓰레드에서 실시간으로 진행 상황을 확인하세요',
 
         // === 쓰레드 페이지 (Thread Page) ===
         'thread.header': '상담 쓰레드',
@@ -640,6 +644,10 @@ const translations = {
         'serviceApply.proceedPayment': 'Proceed to Payment',
         'serviceApply.openThread': 'Open Thread',
         'serviceApply.deferredNotice': 'Payment will be requested after consultation with our specialist.',
+        'serviceApply.visaService': 'Visa Service',
+        'serviceApply.dedicatedThread': 'Your Dedicated Thread',
+        'serviceApply.realtimeComm': 'Real-time communication with our team',
+        'serviceApply.trackProgress': 'Track your progress in real-time through your dedicated thread',
 
         // === Thread Page ===
         'thread.header': 'Consultation Thread',
@@ -1284,6 +1292,10 @@ const translations = {
         'serviceApply.proceedPayment': '去支付',
         'serviceApply.openThread': '开启咨询',
         'serviceApply.deferredNotice': '咨询后将请求支付。',
+        'serviceApply.visaService': '签证服务',
+        'serviceApply.dedicatedThread': '您的专属沟通渠道',
+        'serviceApply.realtimeComm': '与我们团队实时沟通',
+        'serviceApply.trackProgress': '通过专属渠道实时跟踪您的进度',
 
         // === 咨询线程页面 ===
         'thread.header': '咨询线程',
@@ -1399,7 +1411,11 @@ const translations = {
         'payment.payButton': '立即支付',
         'payment.agree': '我同意继续支付',
         'payment.termsAgree': '我同意服务条款和隐私政策',
-        
+        'payment.payWithCard': '卡支付',
+        'payment.bankTransfer': '银行转账',
+        'payment.securedByToss': 'Toss Payments 安全支付 · PCI DSS 认证',
+        'payment.securedByWise': 'Wise受FCA监管 · 1600万+客户',
+
         'paymentSuccess.title': '支付完成',
         'paymentSuccess.heading': '支付成功！',
         'paymentSuccess.message': '申请已正常提交。<br>中心负责人将通过线程与您联系。',
@@ -1729,6 +1745,10 @@ const translations = {
         'serviceApply.proceedPayment': 'Tiến Hành Thanh Toán',
         'serviceApply.openThread': 'Mở Cuộc Tư Vấn',
         'serviceApply.deferredNotice': 'Thanh toán sẽ được yêu cầu sau khi tư vấn.',
+        'serviceApply.visaService': 'Dịch Vụ Visa',
+        'serviceApply.dedicatedThread': 'Kênh Liên Lạc Riêng',
+        'serviceApply.realtimeComm': 'Giao tiếp trực tiếp với đội ngũ chúng tôi',
+        'serviceApply.trackProgress': 'Theo dõi tiến trình theo thời gian thực qua kênh riêng của bạn',
 
         // === Trang Luồng Tư Vấn ===
         'thread.header': 'Luồng Tư Vấn',
@@ -1844,7 +1864,11 @@ const translations = {
         'payment.payButton': 'Thanh Toán Ngay',
         'payment.agree': 'Tôi đồng ý tiến hành thanh toán',
         'payment.termsAgree': 'Tôi đồng ý với Điều Khoản Dịch Vụ và Chính Sách Bảo Mật',
-        
+        'payment.payWithCard': 'Thanh toán bằng thẻ',
+        'payment.bankTransfer': 'Chuyển khoản ngân hàng',
+        'payment.securedByToss': 'Bảo mật bởi Toss Payments · PCI DSS',
+        'payment.securedByWise': 'Wise được FCA quản lý · 16M+ khách hàng',
+
         'paymentSuccess.title': 'Thanh Toán Hoàn Tất',
         'paymentSuccess.heading': 'Thanh Toán Thành Công!',
         'paymentSuccess.message': 'Đơn đã được gửi thành công.<br>Nhân viên trung tâm sẽ liên hệ với bạn qua thread.',
@@ -2172,6 +2196,10 @@ const translations = {
         'serviceApply.proceedPayment': '支払いへ進む',
         'serviceApply.openThread': 'スレッドを開く',
         'serviceApply.deferredNotice': '相談後にお支払いをご案内いたします。',
+        'serviceApply.visaService': 'ビザサービス',
+        'serviceApply.dedicatedThread': '専用スレッド',
+        'serviceApply.realtimeComm': '担当者とリアルタイムでやり取り',
+        'serviceApply.trackProgress': '専用スレッドで進捗状況をリアルタイムで確認',
 
         // === 相談スレッドページ ===
         'thread.header': '相談スレッド',
@@ -2287,7 +2315,11 @@ const translations = {
         'payment.payButton': '今すぐ支払う',
         'payment.agree': '決済を続行することに同意します',
         'payment.termsAgree': '利用規約とプライバシーポリシーに同意します',
-        
+        'payment.payWithCard': 'カード決済',
+        'payment.bankTransfer': '銀行振込',
+        'payment.securedByToss': 'Toss Payments セキュリティ決済 · PCI DSS認証',
+        'payment.securedByWise': 'Wise FCA規制 · 1600万人以上の利用者',
+
         'paymentSuccess.title': '決済完了',
         'paymentSuccess.heading': '決済が完了しました！',
         'paymentSuccess.message': '申請が正常に提出されました。<br>センター担当者がスレッドを通じてご連絡いたします。',
@@ -2615,6 +2647,10 @@ const translations = {
         'serviceApply.proceedPayment': 'Төлбөр хийх',
         'serviceApply.openThread': 'Харилцаа нээх',
         'serviceApply.deferredNotice': 'Зөвлөгөө авсны дараа төлбөр хийгдэнэ.',
+        'serviceApply.visaService': 'Виз Үйлчилгээ',
+        'serviceApply.dedicatedThread': 'Таны Тусгай Харилцаа',
+        'serviceApply.realtimeComm': 'Манай багтай бодит цаг хугацаанд харилцах',
+        'serviceApply.trackProgress': 'Тусгай харилцаагаар ахиц дэвшлээ бодит цагт хянах',
 
         // === Зөвлөгөөний харилцааны хуудас ===
         'thread.header': 'Зөвлөгөөний харилцаа',
@@ -2730,7 +2766,11 @@ const translations = {
         'payment.payButton': 'Одоо Төлөх',
         'payment.agree': 'Төлбөр хийхийг зөвшөөрч байна',
         'payment.termsAgree': 'Үйлчилгээний Нөхцөл болон Нууцлалын Бодлогыг зөвшөөрч байна',
-        
+        'payment.payWithCard': 'Картаар төлөх',
+        'payment.bankTransfer': 'Банкны шилжүүлэг',
+        'payment.securedByToss': 'Toss Payments хамгаалалт · PCI DSS баталгаа',
+        'payment.securedByWise': 'Wise FCA зохицуулалт · 16M+ хэрэглэгч',
+
         'paymentSuccess.title': 'Төлбөр Дууссан',
         'paymentSuccess.heading': 'Төлбөр Амжилттай!',
         'paymentSuccess.message': 'Өргөдөл амжилттай илгээгдсэн.<br>Төвийн ажилтан thread-ээр холбогдоно.',
@@ -3058,6 +3098,10 @@ const translations = {
         'serviceApply.proceedPayment': 'ดำเนินการชำระเงิน',
         'serviceApply.openThread': 'เปิดการสนทนา',
         'serviceApply.deferredNotice': 'การชำระเงินจะถูกร้องขอหลังจากการปรึกษา',
+        'serviceApply.visaService': 'บริการวีซ่า',
+        'serviceApply.dedicatedThread': 'ช่องทางสื่อสารเฉพาะของคุณ',
+        'serviceApply.realtimeComm': 'สื่อสารแบบเรียลไทม์กับทีมของเรา',
+        'serviceApply.trackProgress': 'ติดตามความคืบหน้าแบบเรียลไทม์ผ่านช่องทางเฉพาะของคุณ',
 
         // === หน้าเธรดปรึกษา ===
         'thread.header': 'เธรดปรึกษา',
@@ -3173,7 +3217,11 @@ const translations = {
         'payment.payButton': 'ชำระเงินตอนนี้',
         'payment.agree': 'ฉันยินยอมดำเนินการชำระเงิน',
         'payment.termsAgree': 'ฉันยอมรับข้อกำหนดการให้บริการและนโยบายความเป็นส่วนตัว',
-        
+        'payment.payWithCard': 'ชำระด้วยบัตร',
+        'payment.bankTransfer': 'โอนเงินผ่านธนาคาร',
+        'payment.securedByToss': 'Toss Payments ปลอดภัย · PCI DSS รับรอง',
+        'payment.securedByWise': 'Wise ควบคุมโดย FCA · 16M+ ลูกค้า',
+
         'paymentSuccess.title': 'ชำระเงินเสร็จสมบูรณ์',
         'paymentSuccess.heading': 'ชำระเงินสำเร็จ!',
         'paymentSuccess.message': 'คำขอของคุณถูกส่งสำเร็จแล้ว<br>เจ้าหน้าที่ของเราจะติดต่อคุณผ่านเธรด',
