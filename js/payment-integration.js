@@ -5,8 +5,8 @@
 // Toss Payments Global 연동
 // ========================================
 
-// Toss Payments 클라이언트 키 (실제 운영 시 환경변수로 관리)
-const TOSS_CLIENT_KEY = 'test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm';  // 테스트용 Global 키
+// Toss Payments 클라이언트 키 (라이브)
+const TOSS_CLIENT_KEY = 'live_gck_Poxy1XQL8RPY4bvZ7EMKV7nO5WmI';
 
 // Toss Payments 초기화
 let tossPayments = null;
