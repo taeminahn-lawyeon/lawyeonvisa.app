@@ -445,7 +445,11 @@ const translations = {
         'payment.payButton': '결제하기',
         'payment.agree': '결제 진행에 동의합니다',
         'payment.termsAgree': '서비스 이용약관 및 개인정보 처리방침에 동의합니다',
-        
+        'payment.payWithCard': '카드 결제하기',
+        'payment.bankTransfer': '계좌 이체하기',
+        'payment.securedByToss': 'Toss Payments 보안 결제 · PCI DSS 인증',
+        'payment.securedByWise': 'Wise FCA 규제 · 1,600만+ 고객 신뢰',
+
         // === 결제 성공/실패 페이지 ===
         'paymentSuccess.title': '결제 완료',
         'paymentSuccess.message': '결제가 정상적으로 완료되었습니다',
@@ -946,7 +950,11 @@ const translations = {
         'payment.payButton': 'Pay Now',
         'payment.agree': 'I agree to proceed with payment',
         'payment.termsAgree': 'I agree to the Terms of Service and Privacy Policy',
-        
+        'payment.payWithCard': 'Pay with Card',
+        'payment.bankTransfer': 'Bank Transfer',
+        'payment.securedByToss': 'Secured by Toss Payments · PCI DSS Certified',
+        'payment.securedByWise': 'Wise is FCA regulated · 16M+ customers',
+
         'paymentSuccess.title': 'Payment Completed',
         'paymentSuccess.heading': 'Payment Successful!',
         'paymentSuccess.message': 'Your application has been submitted successfully.<br>Our staff will contact you through the thread.',

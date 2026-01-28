@@ -320,23 +320,52 @@
             to { transform: rotate(360deg); }
         }
 
-        /* WISE Button */
-        .btn-wise {
+        /* Payment Buttons */
+        .btn-payment {
             width: 100%;
             height: 56px;
-            background: linear-gradient(135deg, #9FE870 0%, #7DD957 100%);
-            color: #1A1A1A;
             border: none;
             border-radius: 14px;
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 4px 16px rgba(159, 232, 112, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
+        }
+
+        .btn-payment .btn-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        /* Toss Card Payment Button */
+        .btn-toss {
+            background: linear-gradient(135deg, #3182F6 0%, #1E6CE0 100%);
+            color: white;
+            box-shadow: 0 4px 16px rgba(49, 130, 246, 0.3);
+        }
+
+        .btn-toss:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(49, 130, 246, 0.4);
+        }
+
+        .btn-toss:disabled {
+            background: #94A3B8;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* WISE Bank Transfer Button */
+        .btn-wise {
+            background: linear-gradient(135deg, #9FE870 0%, #76D943 100%);
+            color: #163300;
+            box-shadow: 0 4px 16px rgba(159, 232, 112, 0.3);
             margin-top: 12px;
         }
 
@@ -347,9 +376,63 @@
 
         .btn-wise:disabled {
             background: #CBD5E1;
+            color: #64748B;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
+        }
+
+        .btn-wise .wise-badge {
+            background: #163300;
+            color: #9FE870;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-wise .wise-logo {
+            background: white;
+            border-radius: 50%;
+            padding: 2px;
+        }
+
+        /* Security Badges */
+        .security-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .toss-badge {
+            background: #F0F6FF;
+            color: #3182F6;
+        }
+
+        .toss-badge i {
+            color: #3182F6;
+        }
+
+        .wise-security-badge {
+            background: #F0FBE8;
+            color: #163300;
+        }
+
+        .wise-security-badge i {
+            color: #76D943;
         }
 
         /* Right Column - Thread Preview */
@@ -1081,17 +1164,34 @@
 
                 <!-- CTA Buttons -->
                 <div class="cta-section">
-                    <button class="btn-primary" id="payBtn" onclick="processPayment()">
-                        <span id="btn-text">카드 결제하기</span>
+                    <button class="btn-payment btn-toss" id="payBtn" onclick="processPayment()">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="24" height="24" rx="4" fill="white" fill-opacity="0.2"/>
+                            <path d="M4 10C4 8.89543 4.89543 8 6 8H18C19.1046 8 20 8.89543 20 10V11H4V10Z" fill="currentColor"/>
+                            <rect x="4" y="12" width="16" height="6" rx="1" fill="currentColor"/>
+                            <rect x="6" y="14" width="4" height="2" rx="0.5" fill="white" fill-opacity="0.5"/>
+                        </svg>
+                        <span id="btn-text" data-i18n="payment.payWithCard">Pay with Card</span>
                     </button>
 
-                    <button class="btn-wise" id="wiseBtn" onclick="processWisePayment()">
-                        <span>계좌 이체하기 (WISE)</span>
+                    <button class="btn-payment btn-wise" id="wiseBtn" onclick="processWisePayment()">
+                        <svg class="btn-icon wise-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" fill="#9FE870"/>
+                            <path d="M7 12L10 15L17 8" stroke="#163300" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span data-i18n="payment.bankTransfer">Bank Transfer</span>
+                        <span class="wise-badge">WISE</span>
                     </button>
 
-                    <div class="security-badge">
-                        <i class="fas fa-shield-alt"></i>
-                        <span class="security-badge-text">Secured by Toss Payments · PCI DSS Certified</span>
+                    <div class="security-badges">
+                        <div class="security-badge toss-badge">
+                            <i class="fas fa-shield-alt"></i>
+                            <span data-i18n="payment.securedByToss">Secured by Toss Payments · PCI DSS Certified</span>
+                        </div>
+                        <div class="security-badge wise-security-badge">
+                            <i class="fas fa-lock"></i>
+                            <span data-i18n="payment.securedByWise">Wise is FCA regulated · 16M+ customers</span>
+                        </div>
                     </div>
                 </div>
             </div>
