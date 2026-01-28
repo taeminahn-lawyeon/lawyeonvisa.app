@@ -1902,43 +1902,90 @@ Cam on.`,
                     return;
                 }
 
-                const threadResult = await createThread({
-                    service_name: selectedService.name,
-                    status: 'received',
-                    amount: selectedService.totalPrice,
-                    order_id: 'DEFERRED-' + Date.now(),
-                    organization: 'general'
-                });
+                // Check if we have an existing thread from URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const existingThreadId = urlParams.get('thread');
+                const organization = urlParams.get('org') || 'general';
 
-                if (!threadResult.success) {
-                    throw new Error('Thread creation failed');
-                }
+                let threadId;
 
-                // Send automatic welcome message for consulting service
-                const welcomeMessage = getWelcomeMessage();
-                const senderName = getSenderName();
+                if (existingThreadId) {
+                    // Use existing thread
+                    threadId = existingThreadId;
+                    console.log('Using existing thread:', threadId);
+                } else {
+                    // Create new thread
+                    const threadResult = await createThread({
+                        service_name: selectedService.name,
+                        status: 'received',
+                        amount: selectedService.totalPrice,
+                        order_id: 'DEFERRED-' + Date.now(),
+                        organization: organization
+                    });
 
-                try {
-                    const { error: msgError } = await supabaseClient
-                        .from('messages')
-                        .insert({
-                            thread_id: threadResult.data.id,
-                            sender_id: null,
-                            sender_type: 'admin',
-                            sender_name: senderName,
-                            content: welcomeMessage,
-                            created_at: new Date().toISOString()
-                        });
-
-                    if (msgError) {
-                        console.error('Welcome message failed:', msgError);
+                    if (!threadResult.success) {
+                        throw new Error('Thread creation failed');
                     }
-                } catch (msgErr) {
-                    console.error('Welcome message error:', msgErr);
+                    threadId = threadResult.data.id;
                 }
 
-                alert(getUIMessage('threadCreated', { amount: selectedService.totalPrice.toLocaleString() }));
-                window.location.href = `thread-general-v2.html?id=${threadResult.data.id}`;
+                // Get D-10-1 form data if available
+                const d10FormData = getD10FormData();
+                const d10FormattedMessage = d10FormData ? formatD10DataForMessage(d10FormData) : null;
+
+                // Send D-10-1 form data as user message if available
+                if (d10FormattedMessage) {
+                    const profile = await getUserProfile(session.user.id);
+                    try {
+                        const { error: d10Error } = await supabaseClient
+                            .from('messages')
+                            .insert({
+                                thread_id: threadId,
+                                sender_id: session.user.id,
+                                sender_type: 'user',
+                                sender_name: profile?.data?.name || session.user.email?.split('@')[0] || 'Applicant',
+                                content: d10FormattedMessage,
+                                created_at: new Date().toISOString()
+                            });
+
+                        if (d10Error) {
+                            console.error('D-10-1 form message failed:', d10Error);
+                        } else {
+                            console.log('✅ D-10-1 form data sent to thread');
+                        }
+                    } catch (d10Err) {
+                        console.error('D-10-1 form message error:', d10Err);
+                    }
+                }
+
+                // Only send welcome message if creating new thread (not for existing thread)
+                if (!existingThreadId) {
+                    const welcomeMessage = `📋 Please submit your basic information.\n\n${window.location.origin}/profile-submit.html?thread=${threadId}`;
+                    const senderName = getSenderName();
+
+                    try {
+                        const { error: msgError } = await supabaseClient
+                            .from('messages')
+                            .insert({
+                                thread_id: threadId,
+                                sender_id: null,
+                                sender_type: 'system',
+                                sender_name: senderName,
+                                content: welcomeMessage,
+                                created_at: new Date().toISOString()
+                            });
+
+                        if (msgError) {
+                            console.error('Welcome message failed:', msgError);
+                        }
+                    } catch (msgErr) {
+                        console.error('Welcome message error:', msgErr);
+                    }
+
+                    alert(getUIMessage('threadCreated', { amount: selectedService.totalPrice.toLocaleString() }));
+                }
+
+                window.location.href = `thread-general-v2.html?id=${threadId}`;
             } catch (error) {
                 console.error('Thread creation error:', error);
                 btn.disabled = false;

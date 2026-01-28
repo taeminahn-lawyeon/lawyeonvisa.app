@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png?v=3">
+    <title>D-10-1 Visa Service - Daegu Haany University</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #3CB3A0 0%, #3B4D7D 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #3CB3A0 0%, #3B4D7D 100%);
+            padding: 32px 24px;
+            text-align: center;
+        }
+
+        .logo-container {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 20px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo-container img {
+            width: 80px;
+            height: auto;
+        }
+
+        .university-name {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+
+        .service-title {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .card-body {
+            padding: 32px 24px;
+        }
+
+        .welcome-text {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .welcome-text h2 {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .welcome-text p {
+            font-size: 14px;
+            color: #6B7280;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-label span.required {
+            color: #EF4444;
+            margin-left: 2px;
+        }
+
+        .form-input {
+            width: 100%;
+            height: 52px;
+            padding: 0 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #1a1a2e;
+            transition: all 0.2s;
+            background: #F9FAFB;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3CB3A0;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(60, 179, 160, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #9CA3AF;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 24px 0;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: #E5E7EB;
+        }
+
+        .divider-text {
+            padding: 0 16px;
+            font-size: 13px;
+            color: #9CA3AF;
+            font-weight: 500;
+        }
+
+        .btn-google {
+            width: 100%;
+            height: 56px;
+            background: white;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.2s;
+        }
+
+        .btn-google:hover {
+            background: #F9FAFB;
+            border-color: #D1D5DB;
+        }
+
+        .btn-google:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-google img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            height: 56px;
+            background: linear-gradient(135deg, #3CB3A0 0%, #3B4D7D 100%);
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 14px rgba(59, 77, 125, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 77, 125, 0.4);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-submit.loading {
+            pointer-events: none;
+        }
+
+        .btn-submit.loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #EFF6FF 0%, #E0F2FE 100%);
+            border: 1px solid #BAE6FD;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 24px;
+        }
+
+        .info-box-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #0369A1;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box-content {
+            font-size: 13px;
+            color: #0284C7;
+            line-height: 1.6;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Login state */
+        .user-info {
+            display: none;
+            background: #F0FDF4;
+            border: 1px solid #BBF7D0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .user-info.show {
+            display: block;
+        }
+
+        .user-info-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #3CB3A0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .user-details {
+            flex: 1;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #166534;
+        }
+
+        .user-email {
+            font-size: 12px;
+            color: #15803D;
+        }
+
+        .check-icon {
+            color: #22C55E;
+            font-size: 20px;
+        }
+
+        /* Hide form when logged in */
+        .login-form.hidden {
+            display: none;
+        }
+
+        /* Error message */
+        .error-message {
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+            color: #DC2626;
+            font-size: 13px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Mobile optimization */
+        @media (max-width: 480px) {
+            body {
+                padding: 16px;
+                align-items: flex-start;
+                padding-top: 40px;
+            }
+
+            .card-header {
+                padding: 24px 20px;
+            }
+
+            .logo-container {
+                width: 80px;
+                height: 80px;
+            }
+
+            .logo-container img {
+                width: 64px;
+            }
+
+            .card-body {
+                padding: 24px 20px;
+            }
+
+            .welcome-text h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <div class="logo-container">
+                    <img src="대구한의대학교 심볼마크.jpg" alt="DHU Logo">
+                </div>
+                <div class="university-name">Daegu Haany University</div>
+                <div class="service-title">D-10-1 Visa Change Service</div>
+            </div>
+
+            <div class="card-body">
+                <div class="welcome-text">
+                    <h2>Welcome</h2>
+                    <p>Please enter your information to apply for the D-10-1 visa change service.</p>
+                </div>
+
+                <div class="error-message" id="errorMessage"></div>
+
+                <div class="user-info" id="userInfo">
+                    <div class="user-info-header">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <div class="user-details">
+                            <div class="user-name" id="userName">User</div>
+                            <div class="user-email" id="userEmail">user@email.com</div>
+                        </div>
+                        <i class="fas fa-check-circle check-icon"></i>
+                    </div>
+                </div>
+
+                <form id="applicationForm">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Lecture Code <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-input" id="lectureCode" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            Student ID <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-input" id="studentId" required>
+                    </div>
+
+                    <div class="login-form" id="loginForm">
+                        <div class="divider">
+                            <div class="divider-line"></div>
+                            <div class="divider-text">Sign in with</div>
+                            <div class="divider-line"></div>
+                        </div>
+
+                        <button type="button" class="btn-google" id="googleLoginBtn">
+                            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+                            Continue with Google
+                        </button>
+                    </div>
+
+                    <div id="submitSection" style="display: none;">
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            <i class="fas fa-paper-plane"></i>
+                            Start Application
+                        </button>
+                    </div>
+                </form>
+
+                <div class="info-box">
+                    <div class="info-box-title">
+                        <i class="fas fa-info-circle"></i>
+                        Service Information
+                    </div>
+                    <div class="info-box-content">
+                        After signing in, you will be connected with a dedicated specialist through your personal thread. Payment will be processed after consultation.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Powered by <a href="https://lawyeonvisa.app">Lawyeon Visa Center</a>
+        </div>
+    </div>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js?v=20250119"></script>
+
+    <script>
+        let currentUser = null;
+
+        // Valid lecture codes for DHU
+        const validLectureCodes = ['DHU2026', 'DHU-VISA', 'DHUVISA'];
+
+        window.addEventListener('DOMContentLoaded', async function() {
+            // Check existing session
+            const session = await checkSession();
+            if (session && session.user) {
+                currentUser = session.user;
+                showLoggedInState(session.user);
+            }
+
+            // Google login button
+            document.getElementById('googleLoginBtn').addEventListener('click', handleGoogleLogin);
+
+            // Form submit
+            document.getElementById('applicationForm').addEventListener('submit', handleSubmit);
+        });
+
+        async function handleGoogleLogin() {
+            const lectureCode = document.getElementById('lectureCode').value.trim();
+            const studentId = document.getElementById('studentId').value.trim();
+
+            // Validate inputs
+            if (!lectureCode) {
+                showError('Please enter the lecture code.');
+                return;
+            }
+
+            if (!studentId) {
+                showError('Please enter your student ID.');
+                return;
+            }
+
+            // Validate lecture code
+            if (!validLectureCodes.includes(lectureCode.toUpperCase())) {
+                showError('Invalid lecture code. Please check and try again.');
+                return;
+            }
+
+            hideError();
+
+            const btn = document.getElementById('googleLoginBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+
+            try {
+                await signInWithGoogle();
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('Login failed. Please try again.');
+                btn.disabled = false;
+                btn.innerHTML = '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google"> Continue with Google';
+            }
+        }
+
+        function showLoggedInState(user) {
+            currentUser = user;
+
+            // Show user info
+            const userInfo = document.getElementById('userInfo');
+            userInfo.classList.add('show');
+
+            document.getElementById('userName').textContent = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('userAvatar').textContent = (user.user_metadata?.full_name || user.email || 'U')[0].toUpperCase();
+
+            // Hide login form, show submit button
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('submitSection').style.display = 'block';
+        }
+
+        async function handleSubmit(e) {
+            e.preventDefault();
+
+            if (!currentUser) {
+                showError('Please sign in with Google first.');
+                return;
+            }
+
+            const lectureCode = document.getElementById('lectureCode').value.trim();
+            const studentId = document.getElementById('studentId').value.trim();
+
+            if (!lectureCode || !studentId) {
+                showError('Please fill in all required fields.');
+                return;
+            }
+
+            // Validate lecture code again
+            if (!validLectureCodes.includes(lectureCode.toUpperCase())) {
+                showError('Invalid lecture code.');
+                return;
+            }
+
+            hideError();
+
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.classList.add('loading');
+            btn.innerHTML = '<i class="fas fa-spinner"></i> Creating your thread...';
+
+            try {
+                // Create thread
+                const thread = await createDeferredThread(lectureCode, studentId);
+
+                if (thread) {
+                    // Redirect to thread
+                    window.location.href = `thread-general-v2.html?id=${thread.id}`;
+                } else {
+                    throw new Error('Failed to create thread');
+                }
+            } catch (error) {
+                console.error('Submit error:', error);
+                showError('Failed to create application. Please try again.');
+                btn.disabled = false;
+                btn.classList.remove('loading');
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Start Application';
+            }
+        }
+
+        async function createDeferredThread(lectureCode, studentId) {
+            try {
+                // Ensure profile exists
+                const profileResult = await getUserProfile(currentUser.id);
+                if (!profileResult.success || !profileResult.data) {
+                    console.log('Creating profile...');
+                    await createOrUpdateProfile(currentUser.id, {
+                        name: currentUser.user_metadata?.full_name || '',
+                        email: currentUser.email || '',
+                        phone: ''
+                    });
+                }
+
+                // Create thread with deferred payment status
+                const threadResult = await createThread({
+                    service_name: 'D-10-1 General Job Seeker Visa (DHU)',
+                    status: 'pending',
+                    amount: 0,
+                    government_fee: 0,
+                    order_id: 'DHU-' + Date.now(),
+                    organization: 'dhu',
+                    payment_id: null
+                });
+
+                if (!threadResult.success) {
+                    throw new Error(threadResult.error || 'Thread creation failed');
+                }
+
+                const threadId = threadResult.data.id;
+                console.log('Thread created:', threadId);
+
+                // Send D-10-1 form data message (deferred payment welcome)
+                await sendDHUWelcomeMessage(threadId, lectureCode, studentId);
+
+                return threadResult.data;
+            } catch (error) {
+                console.error('Thread creation error:', error);
+                throw error;
+            }
+        }
+
+        async function sendDHUWelcomeMessage(threadId, lectureCode, studentId) {
+            try {
+                const profileSubmitUrl = `${window.location.origin}/service-apply-general.html?service=d10-1-change&thread=${threadId}&org=dhu`;
+
+                const welcomeMessage = `📋 **D-10-1 Visa Application Started**
+
+**University:** Daegu Haany University
+**Lecture Code:** ${lectureCode}
+**Student ID:** ${studentId}
+
+Please complete the D-10-1 application form:
+${profileSubmitUrl}
+
+Our specialist will contact you within 30 minutes after you submit the form.`;
+
+                const { error } = await supabaseClient
+                    .from('messages')
+                    .insert({
+                        thread_id: threadId,
+                        sender_id: null,
+                        sender_type: 'system',
+                        sender_name: 'Lawyeon Visa Center',
+                        content: welcomeMessage,
+                        created_at: new Date().toISOString()
+                    });
+
+                if (error) {
+                    console.error('Welcome message error:', error);
+                }
+            } catch (error) {
+                console.error('Welcome message error:', error);
+            }
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('errorMessage');
+            errorEl.textContent = message;
+            errorEl.classList.add('show');
+        }
+
+        function hideError() {
+            document.getElementById('errorMessage').classList.remove('show');
+        }
+    </script>
+</body>
+</html>
