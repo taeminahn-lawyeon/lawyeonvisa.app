@@ -4,9 +4,21 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+// 허용된 도메인 목록
+const ALLOWED_ORIGINS = [
+  'https://lawyeonvisa.app',
+  'https://www.lawyeonvisa.app',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000'
+]
+
+function getCorsHeaders(origin: string | null) {
+  const allowedOrigin = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0]
+  return {
+    'Access-Control-Allow-Origin': allowedOrigin,
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  }
 }
 
 // 메신저별 API 설정 (환경 변수에서 로드)
@@ -355,6 +367,9 @@ async function sendWeChat(recipient: string, template: NotificationPayload['temp
 
 // 메인 핸들러
 serve(async (req) => {
+  const origin = req.headers.get('origin')
+  const corsHeaders = getCorsHeaders(origin)
+
   // CORS preflight
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
