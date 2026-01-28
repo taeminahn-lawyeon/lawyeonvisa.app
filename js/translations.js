@@ -448,7 +448,7 @@ const translations = {
         'payment.payWithCard': '카드 결제하기',
         'payment.bankTransfer': '계좌 이체하기',
         'payment.securedByToss': 'Toss Payments 보안 결제 · PCI DSS 인증',
-        'payment.securedByWise': 'Wise FCA 규제 · 1,600만+ 고객 신뢰',
+        'payment.securedByWise': 'Wise FCA 규제',
 
         // === 결제 성공/실패 페이지 ===
         'paymentSuccess.title': '결제 완료',
@@ -953,7 +953,7 @@ const translations = {
         'payment.payWithCard': 'Pay with Card',
         'payment.bankTransfer': 'Bank Transfer',
         'payment.securedByToss': 'Secured by Toss Payments · PCI DSS Certified',
-        'payment.securedByWise': 'Wise is FCA regulated · 16M+ customers',
+        'payment.securedByWise': 'Wise is FCA regulated',
 
         'paymentSuccess.title': 'Payment Completed',
         'paymentSuccess.heading': 'Payment Successful!',
