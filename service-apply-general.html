@@ -333,13 +333,23 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            position: relative;
+            padding: 0 60px;
         }
 
-        .btn-payment .btn-icon {
-            width: 24px;
-            height: 24px;
-            flex-shrink: 0;
+        .btn-payment .btn-text {
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-payment .btn-logo-right {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 28px;
+            width: auto;
+            object-fit: contain;
         }
 
         /* Toss Card Payment Button */
@@ -361,15 +371,6 @@
             box-shadow: none;
         }
 
-        .btn-toss .toss-badge {
-            background: white;
-            color: #3182F6;
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
 
         /* WISE Bank Transfer Button */
         .btn-wise {
@@ -392,30 +393,6 @@
             box-shadow: none;
         }
 
-        .btn-wise .wise-badge {
-            background: #163300;
-            color: #9FE870;
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-        }
-
-        .btn-wise .wise-logo {
-            background: white;
-            border-radius: 50%;
-            padding: 2px;
-        }
-
-        .btn-logo {
-            width: 28px;
-            height: 28px;
-            object-fit: contain;
-            border-radius: 6px;
-            background: white;
-            padding: 2px;
-        }
 
         /* Security Badges */
         .security-badges {
@@ -1352,15 +1329,13 @@
                 <!-- CTA Buttons -->
                 <div class="cta-section">
                     <button class="btn-payment btn-toss" id="payBtn" onclick="processPayment()">
-                        <img src="TOSS.png" alt="Toss" class="btn-icon btn-logo">
-                        <span id="btn-text" data-i18n="payment.payWithCard">Pay with Card</span>
-                        <span class="toss-badge">TOSS</span>
+                        <span id="btn-text" class="btn-text" data-i18n="payment.payWithCard">Pay with Card</span>
+                        <img src="TOSS.png" alt="Toss" class="btn-logo-right">
                     </button>
 
                     <button class="btn-payment btn-wise" id="wiseBtn" onclick="processWisePayment()">
-                        <img src="WISE.png" alt="Wise" class="btn-icon btn-logo">
-                        <span data-i18n="payment.bankTransfer">Bank Transfer</span>
-                        <span class="wise-badge">WISE</span>
+                        <span class="btn-text" data-i18n="payment.bankTransfer">Bank Transfer</span>
+                        <img src="WISE.png" alt="Wise" class="btn-logo-right">
                     </button>
 
                     <div class="security-badges">
