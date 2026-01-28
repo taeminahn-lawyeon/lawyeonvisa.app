@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay with Wise - Lawyeon Visa Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F8FAFC;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 16px 24px;
+            border-bottom: 1px solid #E5E7EB;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #374151;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .wise-logo {
+            width: 32px;
+            height: 32px;
+            background: #9FE870;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wise-logo svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .header-text h1 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #191F28;
+        }
+
+        .header-text p {
+            font-size: 13px;
+            color: #6B7280;
+        }
+
+        /* Container */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 24px 16px 40px;
+        }
+
+        /* Order Summary */
+        .order-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .order-card h2 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #191F28;
+            margin-bottom: 16px;
+        }
+
+        .order-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #F3F4F6;
+        }
+
+        .order-row:last-child {
+            border-bottom: none;
+        }
+
+        .order-row.total {
+            padding-top: 16px;
+            margin-top: 8px;
+            border-top: 2px solid #E5E7EB;
+            border-bottom: none;
+        }
+
+        .order-label {
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        .order-value {
+            color: #191F28;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .order-row.total .order-label {
+            font-size: 16px;
+            font-weight: 700;
+            color: #191F28;
+        }
+
+        .order-row.total .order-value {
+            font-size: 20px;
+            font-weight: 800;
+            color: #3182F6;
+        }
+
+        /* Bank Details */
+        .bank-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .bank-card h2 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #191F28;
+            margin-bottom: 8px;
+        }
+
+        .bank-card p {
+            font-size: 13px;
+            color: #6B7280;
+            margin-bottom: 20px;
+        }
+
+        .bank-detail {
+            background: #F8FAFC;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .bank-detail-label {
+            font-size: 12px;
+            color: #6B7280;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bank-detail-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: #191F28;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copy-btn {
+            background: #EFF6FF;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            color: #3182F6;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #DBEAFE;
+        }
+
+        .copy-btn.copied {
+            background: #D1FAE5;
+            color: #059669;
+        }
+
+        /* Important Notice */
+        .notice-card {
+            background: #FEF3C7;
+            border: 1px solid #FCD34D;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .notice-card h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #92400E;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .notice-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .notice-card li {
+            font-size: 13px;
+            color: #92400E;
+            padding: 4px 0;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .notice-card li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+        }
+
+        /* Security Badge */
+        .security-info {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .security-icon {
+            width: 40px;
+            height: 40px;
+            background: #9FE870;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .security-icon i {
+            color: white;
+            font-size: 18px;
+        }
+
+        .security-text {
+            flex: 1;
+        }
+
+        .security-text strong {
+            display: block;
+            font-size: 14px;
+            color: #191F28;
+            margin-bottom: 2px;
+        }
+
+        .security-text span {
+            font-size: 12px;
+            color: #3182F6;
+            font-weight: 500;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            width: 100%;
+            height: 56px;
+            background: linear-gradient(135deg, #9FE870 0%, #7DD956 100%);
+            color: #1F2937;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(159, 232, 112, 0.4);
+        }
+
+        .btn-secondary {
+            width: 100%;
+            height: 48px;
+            background: white;
+            color: #6B7280;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: #F9FAFB;
+            border-color: #D1D5DB;
+        }
+
+        /* Loading */
+        .btn-primary.loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .fa-spinner {
+            animation: spin 0.8s linear infinite;
+        }
+
+        /* Mobile */
+        @media (max-width: 480px) {
+            .container {
+                padding: 16px 12px 32px;
+            }
+
+            .bank-detail-value {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-inner">
+            <button class="back-btn" onclick="history.back()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="header-title">
+                <div class="wise-logo">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M7 12l3 3 7-7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="header-text">
+                    <h1>Pay with Wise</h1>
+                    <p>International Bank Transfer</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Order Summary -->
+        <div class="order-card">
+            <h2>Order Summary</h2>
+            <div class="order-row">
+                <span class="order-label">Service</span>
+                <span class="order-value" id="serviceName">-</span>
+            </div>
+            <div class="order-row">
+                <span class="order-label">Order ID</span>
+                <span class="order-value" id="orderId">-</span>
+            </div>
+            <div class="order-row total">
+                <span class="order-label">Amount Due</span>
+                <span class="order-value" id="amount">-</span>
+            </div>
+        </div>
+
+        <!-- Bank Details -->
+        <div class="bank-card">
+            <h2>Wise Transfer Details</h2>
+            <p>Send payment to our Wise account using the details below</p>
+
+            <div class="bank-detail">
+                <div class="bank-detail-label">Recipient Name</div>
+                <div class="bank-detail-value">
+                    <span>LAW FIRM LAWYEON</span>
+                    <button class="copy-btn" onclick="copyToClipboard('LAW FIRM LAWYEON', this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="bank-detail">
+                <div class="bank-detail-label">Wise Email</div>
+                <div class="bank-detail-value">
+                    <span>payment@lawyeon.com</span>
+                    <button class="copy-btn" onclick="copyToClipboard('payment@lawyeon.com', this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="bank-detail">
+                <div class="bank-detail-label">Reference (Order ID)</div>
+                <div class="bank-detail-value">
+                    <span id="orderIdCopy">-</span>
+                    <button class="copy-btn" onclick="copyToClipboard(document.getElementById('orderIdCopy').textContent, this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="bank-detail">
+                <div class="bank-detail-label">Amount (KRW)</div>
+                <div class="bank-detail-value">
+                    <span id="amountCopy">-</span>
+                    <button class="copy-btn" onclick="copyToClipboard(document.getElementById('amountCopy').textContent.replace(/[^0-9]/g, ''), this)">Copy</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Important Notice -->
+        <div class="notice-card">
+            <h3><i class="fas fa-exclamation-triangle"></i> Important</h3>
+            <ul>
+                <li>Include your Order ID in the transfer reference</li>
+                <li>Payment confirmation takes 1-2 business days</li>
+                <li>We'll send a confirmation email once received</li>
+                <li>Contact us if payment isn't confirmed within 3 days</li>
+            </ul>
+        </div>
+
+        <!-- Security Badge -->
+        <div class="security-info">
+            <div class="security-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="security-text">
+                <strong>Secured by Wise</strong>
+                <span>Fast, secure international transfers</span>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <button class="btn-primary" onclick="confirmPayment()">
+            <i class="fas fa-check"></i>
+            I've Completed the Transfer
+        </button>
+        <button class="btn-secondary" onclick="history.back()">
+            Choose Different Payment Method
+        </button>
+    </div>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js?v=20250126"></script>
+
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('orderId') || 'N/A';
+        const amount = parseInt(urlParams.get('amount')) || 0;
+        const serviceName = urlParams.get('service') || 'Service';
+
+        // Display order info
+        document.getElementById('serviceName').textContent = serviceName;
+        document.getElementById('orderId').textContent = orderId;
+        document.getElementById('orderIdCopy').textContent = orderId;
+        document.getElementById('amount').textContent = '₩' + amount.toLocaleString();
+        document.getElementById('amountCopy').textContent = '₩' + amount.toLocaleString();
+
+        function copyToClipboard(text, btn) {
+            navigator.clipboard.writeText(text).then(() => {
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = 'Copy';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        async function confirmPayment() {
+            const btn = document.querySelector('.btn-primary');
+            btn.disabled = true;
+            btn.classList.add('loading');
+            btn.innerHTML = '<i class="fas fa-spinner"></i> Processing...';
+
+            try {
+                // Get pending payment info
+                const pendingPayment = sessionStorage.getItem('pendingPayment');
+                let paymentInfo = pendingPayment ? JSON.parse(pendingPayment) : null;
+
+                // Check user session
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    alert('Please log in to continue.');
+                    window.location.href = 'index.html';
+                    return;
+                }
+
+                // Create thread for Wise payment (pending confirmation)
+                const threadResult = await createThread({
+                    service_name: paymentInfo?.serviceName || serviceName,
+                    status: 'payment',
+                    amount: amount,
+                    government_fee: paymentInfo?.govtFee || 0,
+                    order_id: orderId,
+                    organization: paymentInfo?.organization || 'general',
+                    payment_id: 'WISE-' + orderId
+                });
+
+                if (!threadResult.success) {
+                    throw new Error('Thread creation failed');
+                }
+
+                const threadId = threadResult.data.id;
+
+                // Send welcome message with Wise payment info
+                const welcomeMessage = `📋 **Payment Pending - Wise Transfer**
+
+Your order has been received. We're waiting for your Wise transfer to be confirmed.
+
+**Order ID:** ${orderId}
+**Amount:** ₩${amount.toLocaleString()}
+**Payment Method:** Wise International Transfer
+
+⏳ Payment confirmation typically takes 1-2 business days.
+
+Once confirmed, our specialist will contact you to proceed with your application.
+
+Please submit your basic information:
+${window.location.origin}/profile-submit.html?thread=${threadId}`;
+
+                await supabaseClient
+                    .from('messages')
+                    .insert({
+                        thread_id: threadId,
+                        sender_id: null,
+                        sender_type: 'admin',
+                        sender_name: 'Lawyeon Visa Center',
+                        content: welcomeMessage
+                    });
+
+                // Clear pending payment
+                sessionStorage.removeItem('pendingPayment');
+
+                // Redirect to thread
+                alert('Thank you! We\'ll confirm your payment within 1-2 business days.');
+                window.location.href = `thread-general-v2.html?id=${threadId}`;
+
+            } catch (error) {
+                console.error('Error:', error);
+                btn.disabled = false;
+                btn.classList.remove('loading');
+                btn.innerHTML = '<i class="fas fa-check"></i> I\'ve Completed the Transfer';
+                alert('An error occurred. Please try again.');
+            }
+        }
+    </script>
+</body>
+</html>

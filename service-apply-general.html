@@ -599,6 +599,73 @@
             font-weight: 600;
         }
 
+        /* Payment Method Selector */
+        .payment-methods {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        .payment-methods-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 12px;
+        }
+
+        .payment-method-options {
+            display: flex;
+            gap: 12px;
+        }
+
+        .payment-method-btn {
+            flex: 1;
+            padding: 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .payment-method-btn:hover {
+            border-color: #3182F6;
+            background: #F8FAFC;
+        }
+
+        .payment-method-btn.selected {
+            border-color: #3182F6;
+            background: #EFF6FF;
+        }
+
+        .payment-method-btn .method-icon {
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-method-btn .method-icon img {
+            height: 24px;
+            width: auto;
+        }
+
+        .payment-method-btn .method-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #191F28;
+        }
+
+        .payment-method-btn .method-desc {
+            font-size: 11px;
+            color: #3182F6;
+            font-weight: 500;
+        }
+
         /* Loading State */
         .loading-container {
             min-height: 400px;
@@ -892,6 +959,173 @@
             font-weight: 600;
             line-height: 1.5;
         }
+
+        /* WISE Modal */
+        .wise-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .wise-modal-overlay.active {
+            display: flex;
+        }
+
+        .wise-modal {
+            background: white;
+            border-radius: 20px;
+            max-width: 420px;
+            width: 100%;
+            padding: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .wise-modal-icon {
+            width: 64px;
+            height: 64px;
+            background: #9FE870;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .wise-modal h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #191F28;
+            margin-bottom: 4px;
+        }
+
+        .wise-modal h2 span {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #6B7280;
+            margin-top: 4px;
+        }
+
+        .wise-modal-info {
+            background: #F8FAFC;
+            border-radius: 12px;
+            padding: 16px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .wise-modal-info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .wise-modal-info-row:last-child {
+            border-bottom: none;
+        }
+
+        .wise-modal-info-row.total {
+            padding-top: 12px;
+            margin-top: 4px;
+            border-top: 2px solid #E5E7EB;
+            border-bottom: none;
+        }
+
+        .wise-modal-info-label {
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        .wise-modal-info-value {
+            color: #191F28;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .wise-modal-info-row.total .wise-modal-info-label {
+            font-weight: 700;
+            color: #191F28;
+        }
+
+        .wise-modal-info-row.total .wise-modal-info-value {
+            font-size: 18px;
+            font-weight: 800;
+            color: #3182F6;
+        }
+
+        .wise-modal-notice {
+            background: #F0FDF4;
+            border: 1px solid #86EFAC;
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .wise-modal-notice strong {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: #166534;
+            margin-bottom: 6px;
+        }
+
+        .wise-modal-notice p {
+            font-size: 13px;
+            color: #166534;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .wise-modal-btn {
+            width: 100%;
+            height: 52px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 10px;
+        }
+
+        .wise-modal-btn.primary {
+            background: linear-gradient(135deg, #9FE870 0%, #7DD956 100%);
+            color: #1F2937;
+        }
+
+        .wise-modal-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(159, 232, 112, 0.4);
+        }
+
+        .wise-modal-btn.secondary {
+            background: white;
+            color: #6B7280;
+            border: 2px solid #E5E7EB;
+        }
+
+        .wise-modal-btn.secondary:hover {
+            background: #F9FAFB;
+        }
+
+        .wise-modal-btn.loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -948,6 +1182,33 @@
                     <div class="deferred-notice" id="deferred-notice" style="display: none;">
                         <i class="fas fa-comments"></i>
                         <span class="deferred-notice-text" data-i18n="serviceApply.deferredNotice">Payment will be requested after consultation with our specialist.</span>
+                    </div>
+
+                    <!-- Payment Method Selector -->
+                    <div class="payment-methods" id="payment-methods">
+                        <div class="payment-methods-title">Payment Method</div>
+                        <div class="payment-method-options">
+                            <button type="button" class="payment-method-btn selected" onclick="selectPaymentMethod('card')" id="method-card">
+                                <div class="method-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#3182F6"/>
+                                        <path d="M8.5 9.5h7v5h-7v-5z" fill="white"/>
+                                    </svg>
+                                </div>
+                                <span class="method-name">Pay with Card</span>
+                                <span class="method-desc">Secured by Toss Payments</span>
+                            </button>
+                            <button type="button" class="payment-method-btn" onclick="selectPaymentMethod('wise')" id="method-wise">
+                                <div class="method-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" fill="#9FE870"/>
+                                        <path d="M7 12l3 3 7-7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <span class="method-name">Pay with Wise</span>
+                                <span class="method-desc">International Transfer</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -1221,6 +1482,42 @@
         </div>
     </div>
 
+    <!-- WISE Modal -->
+    <div class="wise-modal-overlay" id="wiseModalOverlay" onclick="closeWiseModal(event)">
+        <div class="wise-modal" onclick="event.stopPropagation()">
+            <div class="wise-modal-icon">W</div>
+            <h2>WISE 계좌 이체<span>Bank Transfer via WISE</span></h2>
+
+            <div class="wise-modal-info">
+                <div class="wise-modal-info-row">
+                    <span class="wise-modal-info-label">서비스 / Service</span>
+                    <span class="wise-modal-info-value" id="wiseServiceName">-</span>
+                </div>
+                <div class="wise-modal-info-row">
+                    <span class="wise-modal-info-label">주문번호 / Order ID</span>
+                    <span class="wise-modal-info-value" id="wiseOrderId">-</span>
+                </div>
+                <div class="wise-modal-info-row total">
+                    <span class="wise-modal-info-label">결제 금액 / Amount</span>
+                    <span class="wise-modal-info-value" id="wiseAmount">-</span>
+                </div>
+            </div>
+
+            <div class="wise-modal-notice">
+                <strong>안내 / Instructions:</strong>
+                <p>아래 버튼을 클릭하여 WISE로 결제해 주세요.<br>Click the button below to pay via WISE.</p>
+                <p style="margin-top: 8px;">결제 후 관리자가 확인하면 서비스가 시작됩니다.<br>Service will start after admin confirms payment.</p>
+            </div>
+
+            <button class="wise-modal-btn primary" id="wisePayBtn" onclick="processWisePayment()">
+                WISE로 결제하기 / Pay with WISE
+            </button>
+            <button class="wise-modal-btn secondary" onclick="closeWiseModal()">
+                닫기 / Close
+            </button>
+        </div>
+    </div>
+
     <script>
         // Immigration Fees (Based on Immigration Control Act)
         const govtFees = {
@@ -1250,7 +1547,7 @@
         // Service Pricing (Agency fee, VAT included)
         const servicePricing = {
             // Premium Services
-            'visa-prediagnosis': { name: 'Visa Pre-diagnosis', price: 55000, govFee: 0, desc: 'Visa change, overstay risk, immigration law consultation', icon: '🔍', deferredPayment: true },
+            'visa-prediagnosis': { name: 'Visa Pre-diagnosis', price: 55000, govFee: 0, desc: 'Visa change, overstay risk, immigration law consultation', icon: '🔍' },
             'emergency-legal': { name: 'Immigration Dispute Resolution', price: 0, govFee: 0, desc: 'Criminal investigation, deportation defense, visa denial appeals', icon: '⚖️', consulting: true },
 
             // Education & Job Search
@@ -1352,6 +1649,24 @@
                 window.location.href = referrer;
             } else {
                 window.location.href = 'index.html';
+            }
+        }
+
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+
+            // Update button states
+            document.querySelectorAll('.payment-method-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            document.getElementById('method-' + method).classList.add('selected');
+
+            // Update pay button text
+            const payBtn = document.getElementById('payBtn');
+            if (method === 'wise') {
+                payBtn.innerHTML = '<i class="fas fa-university"></i> <span id="btn-text">Pay with Wise Transfer</span>';
+            } else {
+                payBtn.innerHTML = '<i class="fas fa-credit-card"></i> <span id="btn-text">Proceed to Payment</span>';
             }
         }
 
@@ -1678,6 +1993,17 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                     lectureCode: paymentLectureCode
                 }));
 
+                // Handle different payment methods
+                if (selectedPaymentMethod === 'wise') {
+                    // Show WISE modal instead of redirect
+                    showWiseModal(orderInfo);
+                    btn.disabled = false;
+                    btn.classList.remove('loading');
+                    btn.innerHTML = '<i class="fas fa-credit-card"></i> Proceed to Payment';
+                    return;
+                }
+
+                // Card payment with Toss
                 if (!tossPayments) {
                     throw new Error('Payment system not initialized');
                 }
@@ -2236,6 +2562,119 @@ Cam on.`,
             });
 
             return text;
+        }
+
+        // WISE Modal Functions
+        let wiseOrderInfo = null;
+
+        function showWiseModal(orderInfo) {
+            wiseOrderInfo = orderInfo;
+            document.getElementById('wiseServiceName').textContent = orderInfo.orderName;
+            document.getElementById('wiseOrderId').textContent = 'WISE-' + orderInfo.orderId;
+            document.getElementById('wiseAmount').textContent = '₩' + orderInfo.amount.toLocaleString();
+            document.getElementById('wiseModalOverlay').classList.add('active');
+        }
+
+        function closeWiseModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            document.getElementById('wiseModalOverlay').classList.remove('active');
+            wiseOrderInfo = null;
+        }
+
+        async function processWisePayment() {
+            if (!wiseOrderInfo) return;
+
+            const btn = document.getElementById('wisePayBtn');
+            btn.disabled = true;
+            btn.classList.add('loading');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 처리 중...';
+
+            try {
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    alert(getUIMessage('loginRequired'));
+                    window.location.href = 'index.html';
+                    return;
+                }
+
+                // Get D-10-1 form data if applicable
+                const d10Data = getD10FormData();
+
+                // Get pending payment info from session storage
+                const pendingPayment = sessionStorage.getItem('pendingPayment');
+                let paymentInfo = pendingPayment ? JSON.parse(pendingPayment) : {};
+
+                // Create thread for Wise payment (pending confirmation)
+                const threadResult = await createThread({
+                    service_name: wiseOrderInfo.orderName,
+                    status: 'payment',
+                    amount: wiseOrderInfo.amount,
+                    government_fee: wiseOrderInfo.govtFee || 0,
+                    order_id: 'WISE-' + wiseOrderInfo.orderId,
+                    organization: paymentInfo.organization || 'general',
+                    payment_id: 'WISE-' + wiseOrderInfo.orderId
+                });
+
+                if (!threadResult.success) {
+                    throw new Error('Thread creation failed');
+                }
+
+                const threadId = threadResult.data.id;
+
+                // Send welcome message with Wise payment info
+                const welcomeMessage = `📋 **Payment Pending - Wise Transfer**
+
+Your order has been received. We're waiting for your Wise transfer to be confirmed.
+
+**Order ID:** WISE-${wiseOrderInfo.orderId}
+**Amount:** ₩${wiseOrderInfo.amount.toLocaleString()}
+**Payment Method:** Wise International Transfer
+
+⏳ Payment confirmation typically takes 1-2 business days.
+
+Once confirmed, our specialist will contact you to proceed with your application.
+
+Please submit your basic information:
+${window.location.origin}/profile-submit.html?thread=${threadId}`;
+
+                await supabaseClient
+                    .from('messages')
+                    .insert({
+                        thread_id: threadId,
+                        sender_id: null,
+                        sender_type: 'admin',
+                        sender_name: 'Lawyeon Visa Center',
+                        content: welcomeMessage
+                    });
+
+                // Send D-10-1 form data if applicable
+                if (d10Data && paymentInfo.d10FormattedMessage) {
+                    await supabaseClient
+                        .from('messages')
+                        .insert({
+                            thread_id: threadId,
+                            sender_id: session.user.id,
+                            sender_type: 'customer',
+                            sender_name: wiseOrderInfo.customerName || 'Customer',
+                            content: paymentInfo.d10FormattedMessage
+                        });
+                }
+
+                // Clear pending payment
+                sessionStorage.removeItem('pendingPayment');
+
+                // Close modal and redirect to thread
+                closeWiseModal();
+                alert('Thank you! We\'ll confirm your payment within 1-2 business days.');
+                window.location.href = `thread-general-v2.html?id=${threadId}`;
+
+            } catch (error) {
+                console.error('Error:', error);
+                btn.disabled = false;
+                btn.classList.remove('loading');
+                btn.innerHTML = 'WISE로 결제하기 / Pay with WISE';
+                alert('An error occurred. Please try again.');
+            }
         }
 
         async function applyForDeferredPayment() {
