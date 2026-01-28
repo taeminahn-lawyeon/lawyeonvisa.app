@@ -450,7 +450,7 @@
     <!-- Header -->
     <div class="header">
         <div class="header-inner">
-            <div class="header-title">Consultation Request</div>
+            <div class="header-title" data-i18n="consultation.header">Consultation Request</div>
             <a href="javascript:history.back()" class="btn-back">
                 <i class="fas fa-times"></i>
             </a>
@@ -461,7 +461,7 @@
     <div class="main-container">
         <div id="loading" class="loading-container">
             <div class="spinner"></div>
-            <div class="loading-text">Loading...</div>
+            <div class="loading-text" data-i18n="common.loading">Loading...</div>
         </div>
 
         <!-- Main Content -->
@@ -474,8 +474,8 @@
                         <i class="fas fa-comments"></i>
                     </div>
                     <div class="consultation-banner-content">
-                        <h1>Consultation Request</h1>
-                        <p>Request a consultation to review your case. We'll provide procedure guidance and a detailed cost estimate.</p>
+                        <h1 data-i18n="consultation.title">Consultation Request</h1>
+                        <p data-i18n="consultation.desc">Request a consultation to review your case. We'll provide procedure guidance and a detailed cost estimate.</p>
                     </div>
                 </div>
 
@@ -483,7 +483,7 @@
                 <div class="service-card">
                     <div class="service-badge">
                         <i class="fas fa-star"></i>
-                        <span>Consultation</span>
+                        <span data-i18n="consultation.badge">Consultation</span>
                     </div>
                     <h2 id="service-name">Visa Consultation</h2>
                     <p id="service-desc">Professional consultation on immigration matters</p>
@@ -491,34 +491,34 @@
 
                 <!-- Process Steps -->
                 <div class="process-steps">
-                    <h2><i class="fas fa-list-check"></i> How It Works</h2>
+                    <h2><i class="fas fa-list-check"></i> <span data-i18n="consultation.howItWorks">How It Works</span></h2>
 
                     <div class="step-item">
                         <div class="step-number">1</div>
                         <div class="step-content">
-                            <h3>Submit Request</h3>
-                            <p>A dedicated thread will be created for your case</p>
+                            <h3 data-i18n="consultation.step1Title">Submit Request</h3>
+                            <p data-i18n="consultation.step1Desc">A dedicated thread will be created for your case</p>
                         </div>
                     </div>
                     <div class="step-item">
                         <div class="step-number">2</div>
                         <div class="step-content">
-                            <h3>Fact-Finding Review</h3>
-                            <p>Our specialist will verify your situation and documents</p>
+                            <h3 data-i18n="consultation.step2Title">Fact-Finding Review</h3>
+                            <p data-i18n="consultation.step2Desc">Our specialist will verify your situation and documents</p>
                         </div>
                     </div>
                     <div class="step-item">
                         <div class="step-number">3</div>
                         <div class="step-content">
-                            <h3>Procedure Guidance</h3>
-                            <p>Receive detailed steps for your immigration case</p>
+                            <h3 data-i18n="consultation.step3Title">Procedure Guidance</h3>
+                            <p data-i18n="consultation.step3Desc">Receive detailed steps for your immigration case</p>
                         </div>
                     </div>
                     <div class="step-item">
                         <div class="step-number">4</div>
                         <div class="step-content">
-                            <h3>Cost Estimate</h3>
-                            <p>Get a detailed breakdown of fees and costs</p>
+                            <h3 data-i18n="consultation.step4Title">Cost Estimate</h3>
+                            <p data-i18n="consultation.step4Desc">Get a detailed breakdown of fees and costs</p>
                         </div>
                     </div>
                 </div>
@@ -527,12 +527,12 @@
                 <div class="cta-section">
                     <button class="btn-primary" id="consultBtn" onclick="applyForConsultation()">
                         <i class="fas fa-paper-plane"></i>
-                        <span>Request Consultation</span>
+                        <span data-i18n="consultation.requestBtn">Request Consultation</span>
                     </button>
 
                     <div class="free-badge" style="background: #EFF6FF; border-color: #93C5FD;">
                         <i class="fas fa-info-circle" style="color: #3B82F6;"></i>
-                        <span class="free-badge-text" style="color: #1E40AF;">Service fees will be quoted after case review</span>
+                        <span class="free-badge-text" style="color: #1E40AF;" data-i18n="consultation.feeNotice">Service fees will be quoted after case review</span>
                     </div>
                 </div>
             </div>
@@ -545,8 +545,8 @@
                             <i class="fas fa-comments"></i>
                         </div>
                         <div class="thread-preview-title">
-                            <h3>Your Dedicated Thread</h3>
-                            <p>Real-time communication with our team</p>
+                            <h3 data-i18n="serviceApply.dedicatedThread">Your Dedicated Thread</h3>
+                            <p data-i18n="serviceApply.realtimeComm">Real-time communication with our team</p>
                         </div>
                     </div>
 
@@ -554,9 +554,7 @@
                         <img src="images/thread-preview.png" alt="Thread Preview" style="width: 100%; height: auto; display: block;">
                     </div>
 
-                    <div class="thread-preview-caption">
-                        <strong>Track your progress</strong> in real-time through your dedicated thread
-                    </div>
+                    <div class="thread-preview-caption" data-i18n="serviceApply.trackProgress">Track your progress in real-time through your dedicated thread</div>
                 </div>
             </div>
         </div>
@@ -721,5 +719,9 @@
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=20250119"></script>
+
+    <!-- i18n 다국어 지원 -->
+    <script src="js/translations.js?v=20250128"></script>
+    <script src="js/i18n.js?v=20250128"></script>
 </body>
 </html>
