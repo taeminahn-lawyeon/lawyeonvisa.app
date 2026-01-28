@@ -169,6 +169,23 @@ const translations = {
         'serviceApply.realtimeComm': '담당자와 실시간 소통',
         'serviceApply.trackProgress': '전용 쓰레드에서 실시간으로 진행 상황을 확인하세요',
 
+        // === 상담 신청 페이지 (Consultation Request) ===
+        'consultation.header': '상담 신청',
+        'consultation.title': '상담 신청',
+        'consultation.desc': '귀하의 사례를 검토하기 위한 상담을 신청하세요. 절차 안내 및 상세 비용 견적을 제공해 드립니다.',
+        'consultation.badge': '상담',
+        'consultation.howItWorks': '진행 절차',
+        'consultation.step1Title': '신청서 제출',
+        'consultation.step1Desc': '귀하의 사례를 위한 전용 쓰레드가 생성됩니다',
+        'consultation.step2Title': '사실 확인 검토',
+        'consultation.step2Desc': '전문가가 귀하의 상황과 서류를 확인합니다',
+        'consultation.step3Title': '절차 안내',
+        'consultation.step3Desc': '출입국 사건에 대한 상세 단계를 받아보세요',
+        'consultation.step4Title': '비용 견적',
+        'consultation.step4Desc': '수수료 및 비용의 상세 내역을 받아보세요',
+        'consultation.requestBtn': '상담 신청',
+        'consultation.feeNotice': '사례 검토 후 서비스 비용이 안내됩니다',
+
         // === 쓰레드 페이지 (Thread Page) ===
         'thread.header': '상담 쓰레드',
         'thread.backToList': '목록',
@@ -648,6 +665,23 @@ const translations = {
         'serviceApply.dedicatedThread': 'Your Dedicated Thread',
         'serviceApply.realtimeComm': 'Real-time communication with our team',
         'serviceApply.trackProgress': 'Track your progress in real-time through your dedicated thread',
+
+        // === Consultation Request Page ===
+        'consultation.header': 'Consultation Request',
+        'consultation.title': 'Consultation Request',
+        'consultation.desc': 'Request a consultation to review your case. We\'ll provide procedure guidance and a detailed cost estimate.',
+        'consultation.badge': 'Consultation',
+        'consultation.howItWorks': 'How It Works',
+        'consultation.step1Title': 'Submit Request',
+        'consultation.step1Desc': 'A dedicated thread will be created for your case',
+        'consultation.step2Title': 'Fact-Finding Review',
+        'consultation.step2Desc': 'Our specialist will verify your situation and documents',
+        'consultation.step3Title': 'Procedure Guidance',
+        'consultation.step3Desc': 'Receive detailed steps for your immigration case',
+        'consultation.step4Title': 'Cost Estimate',
+        'consultation.step4Desc': 'Get a detailed breakdown of fees and costs',
+        'consultation.requestBtn': 'Request Consultation',
+        'consultation.feeNotice': 'Service fees will be quoted after case review',
 
         // === Thread Page ===
         'thread.header': 'Consultation Thread',
@@ -1297,6 +1331,23 @@ const translations = {
         'serviceApply.realtimeComm': '与我们团队实时沟通',
         'serviceApply.trackProgress': '通过专属渠道实时跟踪您的进度',
 
+        // === 咨询申请页面 ===
+        'consultation.header': '咨询申请',
+        'consultation.title': '咨询申请',
+        'consultation.desc': '申请咨询以审核您的案件。我们将提供程序指导和详细的费用估算。',
+        'consultation.badge': '咨询',
+        'consultation.howItWorks': '流程说明',
+        'consultation.step1Title': '提交申请',
+        'consultation.step1Desc': '将为您的案件创建专属线程',
+        'consultation.step2Title': '事实核查',
+        'consultation.step2Desc': '专员将核实您的情况和文件',
+        'consultation.step3Title': '程序指导',
+        'consultation.step3Desc': '接收移民案件的详细步骤',
+        'consultation.step4Title': '费用估算',
+        'consultation.step4Desc': '获取费用和成本的详细明细',
+        'consultation.requestBtn': '申请咨询',
+        'consultation.feeNotice': '案件审核后将报价服务费用',
+
         // === 咨询线程页面 ===
         'thread.header': '咨询线程',
         'thread.backToList': '列表',
@@ -1750,6 +1801,23 @@ const translations = {
         'serviceApply.realtimeComm': 'Giao tiếp trực tiếp với đội ngũ chúng tôi',
         'serviceApply.trackProgress': 'Theo dõi tiến trình theo thời gian thực qua kênh riêng của bạn',
 
+        // === Trang Yêu Cầu Tư Vấn ===
+        'consultation.header': 'Yêu Cầu Tư Vấn',
+        'consultation.title': 'Yêu Cầu Tư Vấn',
+        'consultation.desc': 'Yêu cầu tư vấn để xem xét trường hợp của bạn. Chúng tôi sẽ cung cấp hướng dẫn thủ tục và báo giá chi tiết.',
+        'consultation.badge': 'Tư Vấn',
+        'consultation.howItWorks': 'Quy Trình',
+        'consultation.step1Title': 'Gửi Yêu Cầu',
+        'consultation.step1Desc': 'Kênh riêng sẽ được tạo cho trường hợp của bạn',
+        'consultation.step2Title': 'Xác Minh Thông Tin',
+        'consultation.step2Desc': 'Chuyên gia sẽ xác minh tình hình và tài liệu của bạn',
+        'consultation.step3Title': 'Hướng Dẫn Thủ Tục',
+        'consultation.step3Desc': 'Nhận các bước chi tiết cho trường hợp nhập cư',
+        'consultation.step4Title': 'Báo Giá Chi Phí',
+        'consultation.step4Desc': 'Nhận bảng phân tích chi tiết về phí và chi phí',
+        'consultation.requestBtn': 'Yêu Cầu Tư Vấn',
+        'consultation.feeNotice': 'Phí dịch vụ sẽ được báo giá sau khi xem xét trường hợp',
+
         // === Trang Luồng Tư Vấn ===
         'thread.header': 'Luồng Tư Vấn',
         'thread.backToList': 'Danh sách',
@@ -2200,6 +2268,23 @@ const translations = {
         'serviceApply.dedicatedThread': '専用スレッド',
         'serviceApply.realtimeComm': '担当者とリアルタイムでやり取り',
         'serviceApply.trackProgress': '専用スレッドで進捗状況をリアルタイムで確認',
+
+        // === 相談申請ページ ===
+        'consultation.header': '相談申請',
+        'consultation.title': '相談申請',
+        'consultation.desc': 'ケースを検討するための相談を申請してください。手続きガイダンスと詳細な費用見積もりを提供します。',
+        'consultation.badge': '相談',
+        'consultation.howItWorks': '手続き手順',
+        'consultation.step1Title': '申請書提出',
+        'consultation.step1Desc': 'ケース専用のスレッドが作成されます',
+        'consultation.step2Title': '事実確認審査',
+        'consultation.step2Desc': '専門家が状況と書類を確認します',
+        'consultation.step3Title': '手続き案内',
+        'consultation.step3Desc': '出入国案件の詳細な手順をお伝えします',
+        'consultation.step4Title': '費用見積',
+        'consultation.step4Desc': '手数料と費用の詳細内訳をお知らせします',
+        'consultation.requestBtn': '相談を申請',
+        'consultation.feeNotice': 'ケース審査後にサービス料金をご案内します',
 
         // === 相談スレッドページ ===
         'thread.header': '相談スレッド',
@@ -2652,6 +2737,23 @@ const translations = {
         'serviceApply.realtimeComm': 'Манай багтай бодит цаг хугацаанд харилцах',
         'serviceApply.trackProgress': 'Тусгай харилцаагаар ахиц дэвшлээ бодит цагт хянах',
 
+        // === Зөвлөгөө хүсэлтийн хуудас ===
+        'consultation.header': 'Зөвлөгөө Хүсэх',
+        'consultation.title': 'Зөвлөгөө Хүсэх',
+        'consultation.desc': 'Таны хэргийг хянахын тулд зөвлөгөө хүсээрэй. Бид журам зааварчилгаа болон дэлгэрэнгүй зардлын тооцоог өгнө.',
+        'consultation.badge': 'Зөвлөгөө',
+        'consultation.howItWorks': 'Хэрхэн ажилладаг',
+        'consultation.step1Title': 'Хүсэлт илгээх',
+        'consultation.step1Desc': 'Таны хэрэгт зориулсан тусгай харилцаа үүсгэнэ',
+        'consultation.step2Title': 'Баримт шалгалт',
+        'consultation.step2Desc': 'Манай мэргэжилтэн таны нөхцөл байдал, баримт бичгийг шалгана',
+        'consultation.step3Title': 'Журам зааварчилгаа',
+        'consultation.step3Desc': 'Цагаачлалын хэргийн дэлгэрэнгүй алхамуудыг хүлээн авна',
+        'consultation.step4Title': 'Зардлын тооцоо',
+        'consultation.step4Desc': 'Хураамж, зардлын дэлгэрэнгүй тайланг авна',
+        'consultation.requestBtn': 'Зөвлөгөө хүсэх',
+        'consultation.feeNotice': 'Хэрэг шалгасны дараа үйлчилгээний хөлс зарлагдана',
+
         // === Зөвлөгөөний харилцааны хуудас ===
         'thread.header': 'Зөвлөгөөний харилцаа',
         'thread.backToList': 'Жагсаалт',
@@ -3102,6 +3204,23 @@ const translations = {
         'serviceApply.dedicatedThread': 'ช่องทางสื่อสารเฉพาะของคุณ',
         'serviceApply.realtimeComm': 'สื่อสารแบบเรียลไทม์กับทีมของเรา',
         'serviceApply.trackProgress': 'ติดตามความคืบหน้าแบบเรียลไทม์ผ่านช่องทางเฉพาะของคุณ',
+
+        // === หน้าขอคำปรึกษา ===
+        'consultation.header': 'ขอคำปรึกษา',
+        'consultation.title': 'ขอคำปรึกษา',
+        'consultation.desc': 'ขอคำปรึกษาเพื่อตรวจสอบกรณีของคุณ เราจะให้คำแนะนำขั้นตอนและประเมินค่าใช้จ่ายโดยละเอียด',
+        'consultation.badge': 'ปรึกษา',
+        'consultation.howItWorks': 'ขั้นตอนการดำเนินการ',
+        'consultation.step1Title': 'ส่งคำขอ',
+        'consultation.step1Desc': 'เธรดเฉพาะจะถูกสร้างสำหรับกรณีของคุณ',
+        'consultation.step2Title': 'ตรวจสอบข้อเท็จจริง',
+        'consultation.step2Desc': 'ผู้เชี่ยวชาญจะตรวจสอบสถานการณ์และเอกสารของคุณ',
+        'consultation.step3Title': 'คำแนะนำขั้นตอน',
+        'consultation.step3Desc': 'รับขั้นตอนโดยละเอียดสำหรับกรณีตรวจคนเข้าเมือง',
+        'consultation.step4Title': 'ประเมินค่าใช้จ่าย',
+        'consultation.step4Desc': 'รับรายละเอียดค่าธรรมเนียมและค่าใช้จ่าย',
+        'consultation.requestBtn': 'ขอคำปรึกษา',
+        'consultation.feeNotice': 'ค่าบริการจะแจ้งหลังจากตรวจสอบกรณี',
 
         // === หน้าเธรดปรึกษา ===
         'thread.header': 'เธรดปรึกษา',
