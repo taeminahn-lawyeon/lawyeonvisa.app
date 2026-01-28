@@ -548,21 +548,28 @@
             const btn = document.getElementById('submitBtn');
             btn.disabled = true;
             btn.classList.add('loading');
-            btn.innerHTML = '<i class="fas fa-spinner"></i> Creating your thread...';
+            btn.innerHTML = '<i class="fas fa-spinner"></i> Redirecting to payment...';
 
             try {
-                // Create thread
-                const thread = await createDeferredThread(lectureCode);
-
-                if (thread) {
-                    // Redirect to thread
-                    window.location.href = `thread-general-v2.html?id=${thread.id}`;
-                } else {
-                    throw new Error('Failed to create thread');
+                // Ensure profile exists before redirecting to payment
+                const profileResult = await getUserProfile(currentUser.id);
+                if (!profileResult.success || !profileResult.data) {
+                    console.log('Creating profile...');
+                    await createOrUpdateProfile(currentUser.id, {
+                        name: currentUser.user_metadata?.full_name || '',
+                        email: currentUser.email || '',
+                        phone: ''
+                    });
                 }
+
+                // Store lecture code for later use
+                sessionStorage.setItem('dhu_lecture_code', lectureCode);
+
+                // Redirect to payment page with DHU service
+                window.location.href = `service-apply-general.html?service=d10-1-dhu&org=dhu&lectureCode=${encodeURIComponent(lectureCode)}`;
             } catch (error) {
                 console.error('Submit error:', error);
-                showError('Failed to create application. Please try again.');
+                showError('Failed to proceed. Please try again.');
                 btn.disabled = false;
                 btn.classList.remove('loading');
                 btn.innerHTML = '<i class="fas fa-paper-plane"></i> Start Application';
@@ -624,22 +631,27 @@ ${profileSubmitUrl}
 
 Our specialist will contact you within 30 minutes after you submit the form.`;
 
-                const { error } = await supabaseClient
+                const { data, error } = await supabaseClient
                     .from('messages')
                     .insert({
                         thread_id: threadId,
                         sender_id: null,
-                        sender_type: 'system',
+                        sender_type: 'admin',
                         sender_name: 'Lawyeon Visa Center',
-                        content: welcomeMessage,
-                        created_at: new Date().toISOString()
-                    });
+                        content: welcomeMessage
+                    })
+                    .select()
+                    .single();
 
                 if (error) {
                     console.error('Welcome message error:', error);
+                    throw error;
                 }
+
+                console.log('✅ DHU Welcome message sent:', data);
             } catch (error) {
                 console.error('Welcome message error:', error);
+                // Don't throw - let the thread creation continue even if message fails
             }
         }
 
