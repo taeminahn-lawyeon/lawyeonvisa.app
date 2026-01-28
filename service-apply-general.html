@@ -320,6 +320,38 @@
             to { transform: rotate(360deg); }
         }
 
+        /* WISE Button */
+        .btn-wise {
+            width: 100%;
+            height: 56px;
+            background: linear-gradient(135deg, #9FE870 0%, #7DD957 100%);
+            color: #1A1A1A;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 16px rgba(159, 232, 112, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .btn-wise:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(159, 232, 112, 0.4);
+        }
+
+        .btn-wise:disabled {
+            background: #CBD5E1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
         /* Right Column - Thread Preview */
         .right-column {
             position: sticky;
@@ -1047,11 +1079,14 @@
                     </div>
                 </div>
 
-                <!-- CTA Button -->
+                <!-- CTA Buttons -->
                 <div class="cta-section">
                     <button class="btn-primary" id="payBtn" onclick="processPayment()">
-                        <i class="fas fa-credit-card"></i>
-                        <span id="btn-text" data-i18n="serviceApply.proceedPayment">Proceed to Payment</span>
+                        <span id="btn-text">카드 결제하기</span>
+                    </button>
+
+                    <button class="btn-wise" id="wiseBtn" onclick="processWisePayment()">
+                        <span>계좌 이체하기 (WISE)</span>
                     </button>
 
                     <div class="security-badge">
@@ -1303,8 +1338,8 @@
                 document.getElementById('btn-text').textContent = 'Request Quote';
                 document.getElementById('payBtn').onclick = applyForConsulting;
 
-                // Hide payment icon, show message icon
-                document.querySelector('#payBtn i').className = 'fas fa-paper-plane';
+                // Hide WISE button for consulting
+                document.getElementById('wiseBtn').style.display = 'none';
             } else if (selectedService.deferredPayment) {
                 // Deferred payment mode - show price but open thread instead of payment
                 const agencyFee = selectedService.price;
@@ -1327,7 +1362,9 @@
                 btnText.setAttribute('data-i18n', 'serviceApply.openThread');
                 btnText.textContent = typeof i18n !== 'undefined' ? i18n.translate('serviceApply.openThread') : 'Open Thread';
                 document.getElementById('payBtn').onclick = applyForDeferredPayment;
-                document.querySelector('#payBtn i').className = 'fas fa-comments';
+
+                // Hide WISE button for deferred payment
+                document.getElementById('wiseBtn').style.display = 'none';
 
                 selectedService.totalPrice = totalPrice;
                 selectedService.agencyFee = agencyFee;
@@ -1562,7 +1599,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                 console.error('Payment error:', error);
                 btn.disabled = false;
                 btn.classList.remove('loading');
-                btn.innerHTML = '<i class="fas fa-credit-card"></i> Proceed to Payment';
+                btn.innerHTML = '<span id="btn-text">카드 결제하기</span>';
 
                 if (error.code === 'PAY_PROCESS_CANCELED') {
                     return;
@@ -1570,6 +1607,171 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
 
                 alert(getUIMessage('paymentError'));
             }
+        }
+
+        // WISE 결제 처리
+        async function processWisePayment() {
+            // 현재 로그인 사용자 확인
+            const session = await checkSession();
+            if (!session || !session.user) {
+                const currentUrl = window.location.href;
+                localStorage.setItem('redirectAfterLogin', currentUrl);
+
+                if (confirm(getUIMessage('loginConfirm'))) {
+                    await signInWithGoogle();
+                }
+                return;
+            }
+
+            // 주문 정보 생성
+            const orderId = 'WISE-' + Date.now();
+            const amount = selectedService.totalPrice;
+            const serviceName = selectedService.name;
+
+            // WISE 결제 모달 표시
+            showWisePaymentModal({
+                orderId: orderId,
+                serviceName: serviceName,
+                amount: amount,
+                customerEmail: session.user.email
+            });
+        }
+
+        // WISE 결제 모달 표시
+        function showWisePaymentModal(orderInfo) {
+            // 기존 모달이 있으면 제거
+            const existingModal = document.getElementById('wisePaymentModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+
+            const modal = document.createElement('div');
+            modal.id = 'wisePaymentModal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.6);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                padding: 20px;
+            `;
+
+            modal.innerHTML = `
+                <div style="
+                    background: white;
+                    border-radius: 20px;
+                    max-width: 480px;
+                    width: 100%;
+                    padding: 32px;
+                    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                ">
+                    <div style="text-align: center; margin-bottom: 24px;">
+                        <div style="
+                            width: 64px;
+                            height: 64px;
+                            background: linear-gradient(135deg, #9FE870 0%, #7DD957 100%);
+                            border-radius: 16px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            margin: 0 auto 16px;
+                        ">
+                            <span style="font-size: 28px; font-weight: bold; color: #1A1A1A;">W</span>
+                        </div>
+                        <h2 style="font-size: 22px; font-weight: 800; color: #1A1A1A; margin: 0;">WISE 계좌 이체</h2>
+                        <p style="color: #6B7280; margin-top: 8px;">Bank Transfer via WISE</p>
+                    </div>
+
+                    <div style="
+                        background: #F8FAFC;
+                        border-radius: 12px;
+                        padding: 20px;
+                        margin-bottom: 24px;
+                    ">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                            <span style="color: #6B7280; font-size: 14px;">서비스 / Service</span>
+                            <span style="font-weight: 600; color: #1A1A1A; font-size: 14px;">${orderInfo.serviceName}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                            <span style="color: #6B7280; font-size: 14px;">주문번호 / Order ID</span>
+                            <span style="font-weight: 600; color: #1A1A1A; font-size: 14px;">${orderInfo.orderId}</span>
+                        </div>
+                        <div style="
+                            display: flex;
+                            justify-content: space-between;
+                            padding-top: 12px;
+                            border-top: 1px solid #E5E7EB;
+                        ">
+                            <span style="color: #1A1A1A; font-weight: 700;">결제 금액 / Amount</span>
+                            <span style="font-weight: 800; color: #059669; font-size: 20px;">₩${orderInfo.amount.toLocaleString()}</span>
+                        </div>
+                    </div>
+
+                    <div style="
+                        background: #ECFDF5;
+                        border: 1px solid #A7F3D0;
+                        border-radius: 12px;
+                        padding: 16px;
+                        margin-bottom: 24px;
+                    ">
+                        <p style="color: #065F46; font-size: 14px; margin: 0; line-height: 1.6;">
+                            <strong>안내 / Instructions:</strong><br>
+                            아래 버튼을 클릭하여 WISE로 결제해 주세요.<br>
+                            Click the button below to pay via WISE.<br><br>
+                            결제 후 관리자가 확인하면 서비스가 시작됩니다.<br>
+                            Service will start after admin confirms payment.
+                        </p>
+                    </div>
+
+                    <a href="https://wise.com/pay/me/lawyeon" target="_blank" style="
+                        display: block;
+                        width: 100%;
+                        height: 56px;
+                        background: linear-gradient(135deg, #9FE870 0%, #7DD957 100%);
+                        color: #1A1A1A;
+                        border: none;
+                        border-radius: 14px;
+                        font-size: 17px;
+                        font-weight: 700;
+                        cursor: pointer;
+                        text-decoration: none;
+                        text-align: center;
+                        line-height: 56px;
+                        box-shadow: 0 4px 16px rgba(159, 232, 112, 0.3);
+                    ">
+                        WISE로 결제하기 / Pay with WISE
+                    </a>
+
+                    <button onclick="document.getElementById('wisePaymentModal').remove()" style="
+                        width: 100%;
+                        height: 48px;
+                        background: transparent;
+                        color: #6B7280;
+                        border: 1px solid #E5E7EB;
+                        border-radius: 12px;
+                        font-size: 15px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        margin-top: 12px;
+                    ">
+                        닫기 / Close
+                    </button>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            // 모달 외부 클릭 시 닫기
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
         }
 
         // Get welcome message in user's selected language
