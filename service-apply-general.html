@@ -1609,6 +1609,40 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
             }
         }
 
+        // WISE 결제 링크 (금액별)
+        const wisePaymentLinks = {
+            24000: 'https://wise.com/pay/r/1IF6cGVkIsF9Phs',
+            33000: 'https://wise.com/pay/r/ThTuo2OBnRXSNzA',
+            55000: 'https://wise.com/pay/r/D0roIixIfjDM75o',
+            83300: 'https://wise.com/pay/r/3cpuwd5jgDJvRWI',
+            96300: 'https://wise.com/pay/r/xm5CL2eyBlhEUPo',
+            110000: 'https://wise.com/pay/r/ck3gsRVGWcZpoeE',
+            130000: 'https://wise.com/pay/r/hXGMfv9e6L2dg78',
+            140000: 'https://wise.com/pay/r/PkdBQb9xgn4SOLM',
+            145000: 'https://wise.com/pay/r/Y1MSgycmIZMV4MU',
+            160000: 'https://wise.com/pay/r/qHAyX6cHMWRdVls',
+            170000: 'https://wise.com/pay/r/ev-p0-QK7Uymogo',
+            220000: 'https://wise.com/pay/r/TfzM0z6uzy90szg',
+            229000: 'https://wise.com/pay/r/EbYeYimivPXNvIs',
+            260000: 'https://wise.com/pay/r/I09u0zn6y1dlMkw',
+            280000: 'https://wise.com/pay/r/fpxp4Ko0ttWuS5g',
+            300000: 'https://wise.com/pay/r/TdxN_6ncwsAW460',
+            319000: 'https://wise.com/pay/r/gOlOHagrUvwG6zs',
+            320000: 'https://wise.com/pay/r/-CjjhEWULXbz0rk',
+            330000: 'https://wise.com/pay/r/84ApB3e-b9aCpPk',
+            339000: 'https://wise.com/pay/r/4qzd0KQCWf3o-Ls',
+            340000: 'https://wise.com/pay/r/tdJ55UOW4bOEQlU',
+            390000: 'https://wise.com/pay/r/I5OTBday1hGlEMs',
+            430000: 'https://wise.com/pay/r/MST3-o_g9BBc1d8',
+            610000: 'https://wise.com/pay/r/cjgZCYNgy0agO24',
+            650000: 'https://wise.com/pay/r/LtBfptW0Uo6loss',
+            669000: 'https://wise.com/pay/r/7nzDH3XWRbw-ty8',
+            750000: 'https://wise.com/pay/r/NyVuEVRRg0Dcnzw',
+            1200000: 'https://wise.com/pay/r/xaC-lXmieWY_O50',
+            1300000: 'https://wise.com/pay/r/tEFm5TAgSAzHHF0',
+            1400000: 'https://wise.com/pay/r/3Z1Ac7naWvLabmw'
+        };
+
         // WISE 결제 처리
         async function processWisePayment() {
             // 현재 로그인 사용자 확인
@@ -1627,13 +1661,20 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
             const orderId = 'WISE-' + Date.now();
             const amount = selectedService.totalPrice;
             const serviceName = selectedService.name;
+            const wiseLink = wisePaymentLinks[amount] || null;
+
+            if (!wiseLink) {
+                alert('WISE 결제 링크를 찾을 수 없습니다. 관리자에게 문의해주세요.');
+                return;
+            }
 
             // WISE 결제 모달 표시
             showWisePaymentModal({
                 orderId: orderId,
                 serviceName: serviceName,
                 amount: amount,
-                customerEmail: session.user.email
+                customerEmail: session.user.email,
+                wiseLink: wiseLink
             });
         }
 
@@ -1728,7 +1769,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                         </p>
                     </div>
 
-                    <a href="https://wise.com/pay/me/lawyeon" target="_blank" style="
+                    <a href="${orderInfo.wiseLink}" target="_blank" style="
                         display: block;
                         width: 100%;
                         height: 56px;
