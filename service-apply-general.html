@@ -8,8 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
 
-    <!-- Toss Payments SDK v2 -->
-    <script src="https://js.tosspayments.com/v2/standard"></script>
+    <!-- Toss Payments SDK v1 -->
+    <script src="https://js.tosspayments.com/v1/payment"></script>
 
     <style>
         * {
@@ -1231,10 +1231,7 @@
                 console.log('✅ Admin mode - skipping session check');
 
                 try {
-                    const tossPaymentsInstance = TossPayments(clientKey);
-                    tossPayments = tossPaymentsInstance.payment({
-                        customerKey: 'admin_' + Date.now()
-                    });
+                    tossPayments = TossPayments(clientKey);
                 } catch (error) {
                     console.error('❌ Toss Payments init failed:', error);
                 }
@@ -1270,10 +1267,7 @@
             }
 
             try {
-                const tossPaymentsInstance = TossPayments(clientKey);
-                tossPayments = tossPaymentsInstance.payment({
-                    customerKey: session.user.id
-                });
+                tossPayments = TossPayments(clientKey);
             } catch (error) {
                 console.error('❌ Toss Payments init failed:', error);
             }
@@ -1545,31 +1539,16 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
 
                 const currentUrl = window.location.origin;
 
-                const paymentRequest = {
-                    method: 'CARD',
-                    amount: {
-                        currency: 'KRW',
-                        value: orderInfo.amount
-                    },
+                // V1 SDK 결제 요청
+                await tossPayments.requestPayment('카드', {
+                    amount: orderInfo.amount,
                     orderId: orderInfo.orderId,
                     orderName: orderInfo.orderName,
-                    successUrl: currentUrl + '/payment-success.html',
-                    failUrl: currentUrl + '/payment-fail.html',
-                    customerEmail: orderInfo.customerEmail,
                     customerName: orderInfo.customerName,
-                    card: {
-                        useEscrow: false,
-                        flowMode: 'DEFAULT',
-                        useCardPoint: false,
-                        useAppCardOnly: false
-                    }
-                };
-
-                if (orderInfo.customerPhone && orderInfo.customerPhone.trim()) {
-                    paymentRequest.customerMobilePhone = orderInfo.customerPhone.replace(/-/g, '');
-                }
-
-                await tossPayments.requestPayment(paymentRequest);
+                    customerEmail: orderInfo.customerEmail,
+                    successUrl: currentUrl + '/payment-success.html',
+                    failUrl: currentUrl + '/payment-fail.html'
+                });
 
             } catch (error) {
                 console.error('Payment error:', error);
