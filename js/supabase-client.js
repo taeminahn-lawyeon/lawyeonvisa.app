@@ -943,19 +943,19 @@ async function createWelcomeMessage(threadId, serviceName) {
             <h4>진행 절차 안내</h4>
             <p>원활한 상담 진행을 위해 아래 순서대로 진행해 주세요.</p>
 
-            <div class="info-box">
-                <div class="info-box-title">1. 기본 정보 입력</div>
-                <p>상담에 필요한 기본 정보를 입력해 주세요. <a href="${formUrl}" target="_blank">기본사항 입력하기</a></p>
+            <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
+                <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">1. 기본 정보 입력</div>
+                <div style="color: #374151; line-height: 1.6;">상담에 필요한 기본 정보를 입력해 주세요. <a href="${formUrl}" target="_blank" style="color: #3182F6; font-weight: 600;">기본사항 입력하기</a></div>
             </div>
 
-            <div class="info-box">
-                <div class="info-box-title">2. 담당자 배정</div>
-                <p>기본 정보 확인 후, 담당자가 <span class="highlight">30분 내</span> 연락드립니다.</p>
+            <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
+                <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">2. 담당자 배정</div>
+                <div style="color: #374151; line-height: 1.6;">기본 정보 확인 후, 담당자가 <span class="highlight" style="background: #191F28; color: white; padding: 2px 8px; border-radius: 4px; font-weight: 600;">30분 내</span> 연락드립니다.</div>
             </div>
 
-            <div class="info-box">
-                <div class="info-box-title">3. 상담 진행</div>
-                <p>케이스 검토 후 정확한 비용과 필요 서류를 안내드립니다.</p>
+            <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
+                <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">3. 상담 진행</div>
+                <div style="color: #374151; line-height: 1.6;">케이스 검토 후 정확한 비용과 필요 서류를 안내드립니다.</div>
             </div>
 
             <p>추가 문의사항은 이 쓰레드에 답글로 남겨주세요.</p>

@@ -399,11 +399,12 @@
         /* Survey CTA Button in Messages */
         .survey-cta-btn {
             display: inline-block;
-            padding: 12px 32px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 15px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
             color: white;
+            background: #191F28;
             border: none;
             cursor: pointer;
             transition: all 0.2s;
@@ -411,44 +412,25 @@
         }
 
         .survey-cta-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .survey-cta-btn.d10-1 {
-            background: #10B981;
-        }
-
-        .survey-cta-btn.d10-1:hover {
-            background: #059669;
-        }
-
-        .survey-cta-btn.visa-legal {
-            background: #3B82F6;
-        }
-
-        .survey-cta-btn.visa-legal:hover {
-            background: #2563EB;
+            background: #374151;
         }
 
         .survey-cta-btn:disabled {
             background: #9CA3AF !important;
             cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
         }
 
         .survey-completed-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: #F0FDF4;
-            border: 1px solid #86EFAC;
-            color: #166534;
-            padding: 10px 24px;
-            border-radius: 10px;
+            background: #F3F4F6;
+            border: 1px solid #E5E7EB;
+            color: #374151;
+            padding: 8px 16px;
+            border-radius: 8px;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         /* Visa Legal Survey Modal */
@@ -1508,13 +1490,13 @@
     <div class="modal-overlay" id="d10FormModal">
         <div class="modal edit-modal" style="max-width: 700px;">
             <div class="modal-header">
-                <h2 class="modal-title">📋 D-10-1 Application Information</h2>
+                <h2 class="modal-title">D-10-1 Application Information</h2>
                 <button class="modal-close" onclick="closeModal('d10FormModal')">&times;</button>
             </div>
             <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
                 <p style="color: #64748B; margin-bottom: 20px; font-size: 14px;">Please provide the following information to process your D-10-1 visa application. Our specialist will review and contact you.</p>
 
-                <div style="font-weight: 600; color: #191F28; margin: 16px 0 12px; font-size: 14px;">📋 Basic Eligibility</div>
+                <div style="font-weight: 600; color: #191F28; margin: 16px 0 12px; font-size: 14px;">Basic Eligibility</div>
 
                 <div class="form-group" style="margin-bottom: 16px;">
                     <label class="form-label">Current Visa Status <span style="color: #EF4444;">*</span></label>
@@ -1576,7 +1558,7 @@
                     <input type="text" class="form-select" id="modal-d10-university" placeholder="e.g., Seoul National University" required>
                 </div>
 
-                <div style="font-weight: 600; color: #191F28; margin: 20px 0 12px; font-size: 14px;">🏠 Residence Information</div>
+                <div style="font-weight: 600; color: #191F28; margin: 20px 0 12px; font-size: 14px;">Residence Information</div>
 
                 <div class="form-group" style="margin-bottom: 16px;">
                     <label class="form-label">Current Address in Korea <span style="color: #EF4444;">*</span></label>
@@ -1598,7 +1580,7 @@
                     </div>
                 </div>
 
-                <div style="font-weight: 600; color: #191F28; margin: 20px 0 12px; font-size: 14px;">💼 Employment Plans</div>
+                <div style="font-weight: 600; color: #191F28; margin: 20px 0 12px; font-size: 14px;">Employment Plans</div>
 
                 <div class="form-group" style="margin-bottom: 16px;">
                     <label class="form-label">Target Industry <span style="color: #EF4444;">*</span></label>
@@ -1638,7 +1620,7 @@
     <div class="modal-overlay" id="visaLegalSurveyModal">
         <div class="modal edit-modal" style="max-width: 700px;">
             <div class="modal-header">
-                <h2 class="modal-title">⚖️ 외국인유학생 비자 진단 설문</h2>
+                <h2 class="modal-title">외국인유학생 비자 진단 설문</h2>
                 <button class="modal-close" onclick="closeModal('visaLegalSurveyModal')">&times;</button>
             </div>
             <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
@@ -2554,7 +2536,7 @@
                     } else {
                         content = content.replace(
                             /<span class="survey-action-marker" data-action="d10-1"[^>]*>[^<]*<\/span>/,
-                            '<button class="survey-cta-btn d10-1" onclick="openD10FormModal()">D-10-1 정보 제출하기</button>'
+                            '<button class="survey-cta-btn" onclick="openD10FormModal()">D-10-1 정보 제출하기</button>'
                         );
                     }
                 }
@@ -2568,7 +2550,7 @@
                     } else {
                         content = content.replace(
                             /<span class="survey-action-marker" data-action="visa-legal"[^>]*>[^<]*<\/span>/,
-                            '<button class="survey-cta-btn visa-legal" onclick="openVisaLegalSurveyModal()">비자 진단 설문 작성하기</button>'
+                            '<button class="survey-cta-btn" onclick="openVisaLegalSurveyModal()">비자 진단 설문 작성하기</button>'
                         );
                     }
                 }
@@ -3301,7 +3283,7 @@
                 'family': 'Living with family'
             };
 
-            return `<div data-survey-result="d10-1"></div>📋 **D-10-1 Application Information**
+            return `<div data-survey-result="d10-1"></div>**D-10-1 Application Information**
 
 **Basic Eligibility**
 • Current Visa Status: ${data.currentVisa}
@@ -3431,7 +3413,7 @@ ${data.additionalNotes ? `\n**Additional Notes**\n${data.additionalNotes}` : ''}
             const q5Labels = { A: '식음료 배달', B: '물류창고 상하차 업무', C: '건설 현장 보조 업무', D: '제조공장 생산/포장 업무', E: '개인 과외 또는 학원 강의 보조', F: '해당사항 없음' };
             const yesNoLabels = { A: '예, 있습니다.', B: '아니오, 없습니다.' };
 
-            let message = `<div data-survey-result="visa-legal"></div>⚖️ **외국인유학생 비자 진단 설문 결과**
+            let message = `<div data-survey-result="visa-legal"></div>**외국인유학생 비자 진단 설문 결과**
 
 **1. 현재 거주 주소가 ARC 뒷면 주소와 일치합니까?**
 → ${q1Labels[data.q1]}
