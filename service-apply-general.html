@@ -320,11 +320,10 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Payment Buttons - Modern Split Design */
+        /* Payment Buttons - Clean Card Design */
         .btn-payment {
             width: 100%;
-            height: 64px;
-            border: none;
+            height: 68px;
             border-radius: 16px;
             font-size: 17px;
             font-weight: 700;
@@ -334,55 +333,78 @@
             align-items: center;
             overflow: hidden;
             position: relative;
-        }
-
-        .btn-payment .btn-text {
-            flex: 1;
-            text-align: center;
-            padding: 0 20px;
-            letter-spacing: 0.3px;
+            background: #ffffff;
         }
 
         .btn-payment .btn-logo-area {
+            width: 72px;
             height: 100%;
-            width: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            transition: all 0.3s ease;
         }
 
         .btn-payment .btn-logo-area img {
-            height: 36px;
-            width: auto;
+            height: 40px;
+            width: 40px;
             object-fit: contain;
             transition: transform 0.3s ease;
         }
 
+        .btn-payment .btn-text {
+            flex: 1;
+            text-align: left;
+            font-size: 16px;
+            letter-spacing: 0.2px;
+        }
+
+        .btn-payment .btn-arrow {
+            width: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            opacity: 0.4;
+            transition: all 0.3s ease;
+        }
+
+        .btn-payment:hover:not(:disabled) .btn-arrow {
+            opacity: 0.8;
+            transform: translateX(3px);
+        }
+
         .btn-payment:hover:not(:disabled) .btn-logo-area img {
-            transform: scale(1.1);
+            transform: scale(1.08);
         }
 
         /* Toss Card Payment Button */
         .btn-toss {
-            background: linear-gradient(135deg, #3182F6 0%, #1A6DE0 100%);
-            color: white;
-            box-shadow: 0 4px 20px rgba(49, 130, 246, 0.35);
+            border: 2px solid #3182F6;
+            color: #1a1a1a;
+            box-shadow: 0 2px 12px rgba(49, 130, 246, 0.12);
         }
 
         .btn-toss .btn-logo-area {
-            background: rgba(255, 255, 255, 0.2);
-            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            background: #EBF4FF;
+            border-right: 1px solid #D0E3FF;
+        }
+
+        .btn-toss .btn-arrow {
+            color: #3182F6;
         }
 
         .btn-toss:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(49, 130, 246, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(49, 130, 246, 0.2);
+            background: #F5F9FF;
+            border-color: #1A6DE0;
         }
 
         .btn-toss:disabled {
-            background: #94A3B8;
+            background: #F1F5F9;
+            border-color: #CBD5E1;
+            color: #94A3B8;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
@@ -390,25 +412,32 @@
 
         /* WISE Bank Transfer Button */
         .btn-wise {
-            background: linear-gradient(135deg, #9FE870 0%, #6BD341 100%);
-            color: #163300;
-            box-shadow: 0 4px 20px rgba(159, 232, 112, 0.35);
+            border: 2px solid #9FE870;
+            color: #1a1a1a;
+            box-shadow: 0 2px 12px rgba(159, 232, 112, 0.12);
             margin-top: 12px;
         }
 
         .btn-wise .btn-logo-area {
-            background: rgba(22, 51, 0, 0.12);
-            border-left: 1px solid rgba(22, 51, 0, 0.15);
+            background: #F0FCEB;
+            border-right: 1px solid #D4F4C0;
+        }
+
+        .btn-wise .btn-arrow {
+            color: #4CAF50;
         }
 
         .btn-wise:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(159, 232, 112, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(159, 232, 112, 0.25);
+            background: #F7FEF3;
+            border-color: #76D943;
         }
 
         .btn-wise:disabled {
-            background: #CBD5E1;
-            color: #64748B;
+            background: #F1F5F9;
+            border-color: #CBD5E1;
+            color: #94A3B8;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
@@ -1350,17 +1379,19 @@
                 <!-- CTA Buttons -->
                 <div class="cta-section">
                     <button class="btn-payment btn-toss" id="payBtn" onclick="processPayment()">
-                        <span id="btn-text" class="btn-text" data-i18n="payment.payWithCard">Pay with Card</span>
                         <div class="btn-logo-area">
                             <img src="TOSS.png" alt="Toss">
                         </div>
+                        <span id="btn-text" class="btn-text" data-i18n="payment.payWithCard">Pay with Card</span>
+                        <span class="btn-arrow">&rsaquo;</span>
                     </button>
 
                     <button class="btn-payment btn-wise" id="wiseBtn" onclick="processWisePayment()">
-                        <span class="btn-text" data-i18n="payment.bankTransfer">Bank Transfer</span>
                         <div class="btn-logo-area">
                             <img src="WISE.png" alt="Wise">
                         </div>
+                        <span class="btn-text" data-i18n="payment.bankTransfer">Bank Transfer</span>
+                        <span class="btn-arrow">&rsaquo;</span>
                     </button>
 
                     <div class="security-badges">
@@ -1826,7 +1857,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
             const btn = document.getElementById('payBtn');
             btn.disabled = true;
             btn.classList.add('loading');
-            btn.innerHTML = '<i class="fas fa-spinner"></i> ' + getUIMessage('processing');
+            document.getElementById('btn-text').innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + getUIMessage('processing');
 
             try {
                 let profile = null;
@@ -1925,7 +1956,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                 console.error('Payment error:', error);
                 btn.disabled = false;
                 btn.classList.remove('loading');
-                btn.innerHTML = '<span id="btn-text">카드 결제하기</span>';
+                document.getElementById('btn-text').textContent = 'Pay with Card';
 
                 if (error.code === 'PAY_PROCESS_CANCELED') {
                     return;
