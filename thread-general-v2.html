@@ -2107,7 +2107,7 @@
                     .eq('id', userId)
                     .single();
 
-                return data?.role === 'admin' || data?.role === 'staff';
+                return data?.role === 'super_admin' || data?.role === 'admin' || data?.role === 'staff';
             } catch (e) {
                 return false;
             }
@@ -2776,7 +2776,7 @@
                         const fileMessageData = {
                             thread_id: threadId,
                             content: content || `File: ${attachment.name}`,
-                            sender_type: isAdmin ? 'admin' : 'client',
+                            sender_type: 'user',
                             file_url: attachment.url,
                             file_name: attachment.name,
                             file_type: attachment.type,
