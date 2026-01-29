@@ -1810,12 +1810,9 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                 const isAdminMode = window.isAdminLoggedIn && window.isAdminLoggedIn();
 
                 if (isAdminMode) {
-                    profile = {
-                        name: 'Admin Test',
-                        email: 'admin@lawyeon.com',
-                        phone: '010-0000-0000'
-                    };
-                    session = { user: { id: 'admin_' + Date.now(), email: 'admin@lawyeon.com' } };
+                    // 관리자 모드: 결제 건너뛰고 바로 쓰레드 생성
+                    await createAdminTestThread();
+                    return;
                 } else {
                     session = await checkSession();
                     if (!session || !session.user) {
@@ -1907,6 +1904,80 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                 }
 
                 alert(getUIMessage('paymentError'));
+            }
+        }
+
+        // 관리자 테스트용: 결제 없이 바로 쓰레드 생성
+        async function createAdminTestThread() {
+            const btn = document.getElementById('payBtn');
+            try {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner"></i> 쓰레드 생성 중...';
+
+                // Supabase 세션 확인 (Google 로그인 상태)
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    alert('관리자 테스트를 위해 Google 로그인이 필요합니다.');
+                    window.location.href = 'index.html';
+                    return;
+                }
+
+                // 프로필 확인/생성
+                const profileResult = await getUserProfile(session.user.id);
+                if (!profileResult.success || !profileResult.data) {
+                    await createOrUpdateProfile(session.user.id, {
+                        name: session.user.email.split('@')[0],
+                        email: session.user.email,
+                        phone: ''
+                    });
+                }
+
+                const urlParams = new URLSearchParams(window.location.search);
+                const organization = urlParams.get('org') || 'general';
+
+                // 쓰레드 생성 (결제 완료 상태로)
+                const threadResult = await createThread({
+                    service_name: selectedService.name,
+                    status: 'payment',
+                    amount: selectedService.totalPrice,
+                    government_fee: selectedService.govtFee || 0,
+                    order_id: 'ADMIN-TEST-' + Date.now(),
+                    organization: organization
+                });
+
+                if (!threadResult.success) {
+                    throw new Error(threadResult.error || '쓰레드 생성 실패');
+                }
+
+                const threadId = threadResult.data.id;
+
+                // 환영 메시지 전송
+                await createWelcomeMessage(threadId, selectedService.name);
+
+                // D-10-1 폼 데이터가 있으면 전송
+                const d10Data = getD10FormData();
+                if (d10Data) {
+                    const d10Msg = formatD10DataForMessage(d10Data);
+                    if (d10Msg) {
+                        const profile = await getUserProfile(session.user.id);
+                        await supabaseClient.from('messages').insert({
+                            thread_id: threadId,
+                            sender_id: session.user.id,
+                            sender_type: 'user',
+                            sender_name: profile?.data?.name || session.user.email.split('@')[0],
+                            content: d10Msg
+                        });
+                    }
+                }
+
+                alert('테스트 쓰레드가 생성되었습니다.');
+                window.location.href = `thread-general-v2.html?id=${threadId}`;
+
+            } catch (error) {
+                console.error('Admin test thread creation error:', error);
+                alert('쓰레드 생성 실패: ' + error.message);
+                btn.disabled = false;
+                btn.innerHTML = '<span id="btn-text">카드 결제하기</span>';
             }
         }
 

@@ -1567,7 +1567,7 @@
 
                 <div class="form-group" style="margin-bottom: 16px;">
                     <label class="form-label">Proof of Residence <span style="color: #EF4444;">*</span></label>
-                    <div style="display: flex; gap: 20px; margin-top: 8px;">
+                    <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 8px;">
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                             <input type="radio" name="modal-d10-residence-proof" value="lease"> Lease contract (본인 명의)
                         </label>
@@ -1575,7 +1575,7 @@
                             <input type="radio" name="modal-d10-residence-proof" value="dormitory"> University dormitory
                         </label>
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                            <input type="radio" name="modal-d10-residence-proof" value="family"> Living with family
+                            <input type="radio" name="modal-d10-residence-proof" value="residence-cert"> Residence certificate (거주지제공사실확인서)
                         </label>
                     </div>
                 </div>
@@ -2459,6 +2459,7 @@
 
         // 설문 제출 여부 추적
         let submittedSurveys = new Set();
+        let latestSurveyRequestMsgId = {};
 
         async function loadMessages() {
             try {
@@ -2475,10 +2476,20 @@
                     return;
                 }
 
-                // 설문 결과 메시지 스캔하여 제출된 설문 유형 추적
+                // 설문 요청/결과 메시지 스캔 (순서대로)
+                // 새 요청이 오면 제출 상태 리셋 → 재제출 가능
                 submittedSurveys = new Set();
+                latestSurveyRequestMsgId = {};
                 result.data.forEach(msg => {
                     const content = msg.content || '';
+                    if (content.includes('data-survey-type="d10-1"')) {
+                        latestSurveyRequestMsgId['d10-1'] = msg.id;
+                        submittedSurveys.delete('d10-1');
+                    }
+                    if (content.includes('data-survey-type="visa-legal"')) {
+                        latestSurveyRequestMsgId['visa-legal'] = msg.id;
+                        submittedSurveys.delete('visa-legal');
+                    }
                     if (content.includes('data-survey-result="d10-1"')) {
                         submittedSurveys.add('d10-1');
                     }
@@ -2528,29 +2539,31 @@
             if (!isAdmin && content.includes('survey-action-marker')) {
                 // D-10-1 설문 요청
                 if (content.includes('data-action="d10-1"')) {
-                    if (submittedSurveys.has('d10-1')) {
+                    const isLatest = msg.id === latestSurveyRequestMsgId['d10-1'];
+                    if (isLatest && !submittedSurveys.has('d10-1')) {
                         content = content.replace(
                             /<span class="survey-action-marker" data-action="d10-1"[^>]*>[^<]*<\/span>/,
-                            '<span class="survey-completed-badge">&#10003; 정보 제출 완료</span>'
+                            '<button class="survey-cta-btn" onclick="openD10FormModal()">D-10-1 정보 제출하기</button>'
                         );
                     } else {
                         content = content.replace(
                             /<span class="survey-action-marker" data-action="d10-1"[^>]*>[^<]*<\/span>/,
-                            '<button class="survey-cta-btn" onclick="openD10FormModal()">D-10-1 정보 제출하기</button>'
+                            '<span class="survey-completed-badge">&#10003; 정보 제출 완료</span>'
                         );
                     }
                 }
                 // 비자 법률자문 설문 요청
                 if (content.includes('data-action="visa-legal"')) {
-                    if (submittedSurveys.has('visa-legal')) {
+                    const isLatest = msg.id === latestSurveyRequestMsgId['visa-legal'];
+                    if (isLatest && !submittedSurveys.has('visa-legal')) {
                         content = content.replace(
                             /<span class="survey-action-marker" data-action="visa-legal"[^>]*>[^<]*<\/span>/,
-                            '<span class="survey-completed-badge">&#10003; 설문 제출 완료</span>'
+                            '<button class="survey-cta-btn" onclick="openVisaLegalSurveyModal()">비자 진단 설문 작성하기</button>'
                         );
                     } else {
                         content = content.replace(
                             /<span class="survey-action-marker" data-action="visa-legal"[^>]*>[^<]*<\/span>/,
-                            '<button class="survey-cta-btn" onclick="openVisaLegalSurveyModal()">비자 진단 설문 작성하기</button>'
+                            '<span class="survey-completed-badge">&#10003; 설문 제출 완료</span>'
                         );
                     }
                 }
@@ -3280,7 +3293,7 @@
             const residenceProofLabels = {
                 'lease': 'Lease contract (본인 명의)',
                 'dormitory': 'University dormitory',
-                'family': 'Living with family'
+                'residence-cert': 'Residence certificate (거주지제공사실확인서)'
             };
 
             return `<div data-survey-result="d10-1"></div>**D-10-1 Application Information**
