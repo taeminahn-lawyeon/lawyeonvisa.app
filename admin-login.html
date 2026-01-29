@@ -429,7 +429,12 @@
                         const profile = profileResult.data;
 
                         // 관리자 또는 담당자 권한 확인
-                        if (profile.role === 'super_admin') {
+                        if (profile.role === 'super_admin' || profile.role === 'admin' || profile.role === 'staff') {
+                            // sessionStorage에도 관리자 정보 저장
+                            sessionStorage.setItem('adminLoggedIn', 'true');
+                            sessionStorage.setItem('adminId', email);
+                            sessionStorage.setItem('adminRole', profile.role);
+
                             // 성공 메시지 표시
                             successMessage.textContent = '✅ 관리자 로그인 성공! 대시보드로 이동합니다...';
                             successMessage.classList.add('show');
@@ -445,6 +450,11 @@
                             }, 1500);
 
                         } else if (profile.role === 'partner_admin') {
+                            // sessionStorage에도 관리자 정보 저장
+                            sessionStorage.setItem('adminLoggedIn', 'true');
+                            sessionStorage.setItem('adminId', email);
+                            sessionStorage.setItem('adminRole', profile.role);
+
                             // 담당자 계정
                             successMessage.textContent = '✅ 담당자 로그인 성공! 대시보드로 이동합니다...';
                             successMessage.classList.add('show');

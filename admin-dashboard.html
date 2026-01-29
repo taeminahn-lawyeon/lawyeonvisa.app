@@ -1078,19 +1078,26 @@
             loadDashboardData();
         });
 
-        // 관리자 권한 확인 (Supabase 세션 기반)
+        // 관리자 권한 확인 (Supabase 세션 기반 + sessionStorage 폴백)
         async function checkAdminAccess() {
             const session = await checkSession();
-            
-            if (!session || !session.user) {
-                alert('로그인이 필요합니다.');
-                location.href = 'admin-login.html';
-                return false;
+
+            if (session && session.user) {
+                // Supabase 세션 있음 - 정상 접근
+                console.log('관리자 접근 허용 (Supabase 세션):', session.user.email);
+                return true;
             }
-            
-            // admin-login.html에서 이미 권한 체크 완료됨
-            console.log('관리자 접근 허용:', session.user.email);
-            return true;
+
+            // Supabase 세션 없음 - sessionStorage 관리자 로그인 확인
+            if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+                console.log('관리자 접근 허용 (sessionStorage):', sessionStorage.getItem('adminId'));
+                return true;
+            }
+
+            // 둘 다 없으면 로그인 페이지로 이동
+            alert('로그인이 필요합니다.');
+            location.href = 'admin-login.html';
+            return false;
         }
 
         // 대시보드 데이터 로드
@@ -1746,8 +1753,16 @@
         // 로그아웃
         async function logout() {
             if (confirm('로그아웃하시겠습니까?')) {
+                // sessionStorage 관리자 정보도 정리
+                sessionStorage.removeItem('adminLoggedIn');
+                sessionStorage.removeItem('adminId');
+                sessionStorage.removeItem('adminRole');
+
                 const result = await signOut();
                 if (result.success) {
+                    window.location.href = 'admin-login.html';
+                } else {
+                    // signOut 실패해도 로그인 페이지로 이동
                     window.location.href = 'admin-login.html';
                 }
             }
