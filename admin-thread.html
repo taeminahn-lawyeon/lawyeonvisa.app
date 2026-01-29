@@ -2083,12 +2083,14 @@
         function processMessageContent(content) {
             if (!content) return '';
 
-            // 이미 HTML 구조가 있는 경우 (Quill에서 작성된 경우) 그대로 반환
+            // 이미 HTML 구조가 있는 경우 그대로 반환
             if (content.includes('class="info-box"') ||
                 content.includes('class="warning-box"') ||
                 content.includes('class="success-box"') ||
                 content.includes('class="numbered-steps"') ||
                 content.includes('class="action-link-btn"') ||
+                content.includes('data-survey-result') ||
+                content.includes('survey-request-card') ||
                 content.includes('class="ql-')) {
                 // URL 변환만 수행 (이미 링크가 아닌 경우)
                 return content;
