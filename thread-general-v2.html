@@ -404,7 +404,7 @@
             font-weight: 600;
             font-size: 14px;
             color: white;
-            background: #191F28;
+            background: #3182F6;
             border: none;
             cursor: pointer;
             transition: all 0.2s;
@@ -412,7 +412,7 @@
         }
 
         .survey-cta-btn:hover {
-            background: #374151;
+            background: #2563EB;
         }
 
         .survey-cta-btn:disabled {
@@ -2229,10 +2229,8 @@
                 // Render progress
                 renderProgress(thread);
 
-                // Show admin tools if admin
-                if (isAdmin) {
-                    document.getElementById('adminTools').classList.add('visible');
-                }
+                // 고객 쓰레드에서는 관리자 도구 숨김 (관리자 도구는 admin-thread.html에서만 사용)
+                // isAdmin이어도 자신의 쓰레드를 고객으로 보고 있으므로 도구 표시하지 않음
 
                 // Load messages
                 await loadMessages();
@@ -2640,8 +2638,8 @@
                 content.includes('survey-request-card') ||
                 content.includes('data-survey-result') ||
                 content.includes('class="ql-')) {
-                // 줄바꿈만 처리
-                return content.replace(/\n/g, '<br>');
+                // HTML 구조가 있으면 그대로 반환 (줄바꿈 변환하지 않음)
+                return content;
             }
 
             // 줄바꿈을 <br>로 변환 (HTML 태그가 아닌 경우)
