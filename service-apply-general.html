@@ -333,29 +333,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
+            gap: 10px;
             padding: 0 20px;
         }
 
         .btn-payment .btn-logo-area {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .btn-payment .btn-logo-area img {
-            height: 40px;
-            width: 40px;
-            object-fit: contain;
-            border-radius: 10px;
+            flex-shrink: 0;
         }
 
         .btn-payment .btn-text {
-            text-align: center;
             letter-spacing: 0.2px;
         }
 
@@ -364,6 +353,13 @@
             background: #3182F6;
             color: white;
             box-shadow: 0 2px 12px rgba(49, 130, 246, 0.3);
+        }
+
+        .btn-toss .btn-logo-area img {
+            height: 28px;
+            width: auto;
+            object-fit: contain;
+            margin-top: 3px;
         }
 
         .btn-toss:hover:not(:disabled) {
@@ -389,6 +385,12 @@
             color: #163300;
             box-shadow: 0 2px 12px rgba(159, 232, 112, 0.3);
             margin-top: 12px;
+        }
+
+        .btn-wise .btn-logo-area img {
+            height: 18px;
+            width: auto;
+            object-fit: contain;
         }
 
         .btn-wise:hover:not(:disabled) {
@@ -1346,14 +1348,14 @@
                 <div class="cta-section">
                     <button class="btn-payment btn-toss" id="payBtn" onclick="processPayment()">
                         <div class="btn-logo-area">
-                            <img src="TOSS.png" alt="Toss">
+                            <img src="Toss_Logo_Button_Type.png" alt="Toss">
                         </div>
                         <span id="btn-text" class="btn-text" data-i18n="payment.payWithCard">Pay with Card</span>
                     </button>
 
                     <button class="btn-payment btn-wise" id="wiseBtn" onclick="processWisePayment()">
                         <div class="btn-logo-area">
-                            <img src="WISE.png" alt="Wise">
+                            <img src="wise_logo.png" alt="Wise">
                         </div>
                         <span class="btn-text" data-i18n="payment.bankTransfer">Bank Transfer</span>
                     </button>
