@@ -2229,10 +2229,8 @@
                 // Render progress
                 renderProgress(thread);
 
-                // Show admin tools if admin
-                if (isAdmin) {
-                    document.getElementById('adminTools').classList.add('visible');
-                }
+                // 고객 쓰레드에서는 관리자 도구 숨김 (관리자 도구는 admin-thread.html에서만 사용)
+                // isAdmin이어도 자신의 쓰레드를 고객으로 보고 있으므로 도구 표시하지 않음
 
                 // Load messages
                 await loadMessages();
