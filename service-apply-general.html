@@ -1934,11 +1934,11 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                 btn.disabled = true;
                 btn.innerHTML = '<i class="fas fa-spinner"></i> 쓰레드 생성 중...';
 
-                // Supabase 세션 확인 (Google 로그인 상태)
+                // Supabase 세션 확인 (이메일/비밀번호 또는 Google 로그인)
                 const session = await checkSession();
                 if (!session || !session.user) {
-                    alert('관리자 테스트를 위해 Google 로그인이 필요합니다.');
-                    window.location.href = 'index.html';
+                    alert('로그인이 필요합니다. 관리자 로그인 페이지에서 로그인해주세요.');
+                    window.location.href = 'admin-login.html';
                     return;
                 }
 

@@ -1432,17 +1432,18 @@
                     <span data-i18n="login.google">Google 로그인</span>
                 </button>
 
-                <!-- 관리자 로그인 링크 -->
-                <a href="admin-test-login.html" id="adminLoginLink" class="header-btn" style="display: inline-flex; align-items: center; gap: 8px; background: #1a1a2e; color: white; text-decoration: none;">관리자</a>
+                <!-- 관리자 로그인: admin-login.html로만 접근 (index에서는 숨김) -->
+                <a href="admin-login.html" id="adminLoginLink" class="header-btn" style="display: none;">관리자</a>
 
-                <!-- 관리자 로그인 상태 표시 -->
+                <!-- 관리자 로그인 상태 표시 (관리자 세션 있을 때 표시) -->
                 <div id="adminLoggedInStatus" class="header-btn" style="display: none; align-items: center; gap: 8px; background: #1a1a2e; color: white; cursor: default;">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
-                    <span>관리자 로그인 중</span>
-                    <button id="adminLogoutBtn" style="background: transparent; border: 1px solid rgba(255,255,255,0.5); color: white; padding: 2px 8px; border-radius: 4px; cursor: pointer; font-size: 12px; margin-left: 4px;">로그아웃</button>
+                    <span>관리자</span>
+                    <button id="adminDashboardBtn" onclick="window.location.href='admin-dashboard.html'" style="background: transparent; border: 1px solid rgba(255,255,255,0.5); color: white; padding: 2px 8px; border-radius: 4px; cursor: pointer; font-size: 12px; margin-left: 4px;">대시보드</button>
+                    <button id="adminLogoutBtn" style="background: transparent; border: 1px solid rgba(255,255,255,0.5); color: white; padding: 2px 8px; border-radius: 4px; cursor: pointer; font-size: 12px; margin-left: 2px;">로그아웃</button>
                 </div>
 
                 <!-- 로그인 후 -->
@@ -1817,9 +1818,11 @@
                 // 관리자 로그아웃 버튼 이벤트
                 var adminLogoutBtn = document.getElementById('adminLogoutBtn');
                 if (adminLogoutBtn) {
-                    adminLogoutBtn.addEventListener('click', function() {
+                    adminLogoutBtn.addEventListener('click', async function() {
                         sessionStorage.removeItem('adminLoggedIn');
                         sessionStorage.removeItem('adminId');
+                        sessionStorage.removeItem('adminRole');
+                        await signOut();
                         window.location.reload();
                     });
                 }
