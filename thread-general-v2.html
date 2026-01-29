@@ -3294,25 +3294,37 @@
                 'residence-cert': 'Residence certificate (거주지제공사실확인서)'
             };
 
-            return `<div data-survey-result="d10-1"></div>**D-10-1 Application Information**
-
-**Basic Eligibility**
-• Current Visa Status: ${data.currentVisa}
-• Visa Expiry Date: ${data.visaExpiry}
-• Graduation Date: ${data.graduationDate}
-• Degree Type: ${data.degreeType}
-• Korean Language: ${data.koreanLevel || 'Not specified'}
-• University: ${data.university}
-
-**Residence Information**
-• Current Address: ${data.address}
-• Proof of Residence: ${residenceProofLabels[data.residenceProof] || data.residenceProof}
-
-**Employment Plans**
-• Target Industry: ${data.targetIndustry}
-• Job Seeking Plan: ${data.jobPlan}
-• Internship Plans: ${data.internshipPlan === 'yes' ? 'Yes' : 'No'}
-${data.additionalNotes ? `\n**Additional Notes**\n${data.additionalNotes}` : ''}`;
+            let html = `<div data-survey-result="d10-1" style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 20px; margin: 4px 0;">
+<div style="font-weight: 700; font-size: 15px; color: #191F28; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #E2E8F0;">D-10-1 Application Information</div>
+<div style="margin-bottom: 14px;">
+<div style="font-weight: 600; color: #374151; margin-bottom: 8px;">Basic Eligibility</div>
+<table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+<tr><td style="padding: 6px 10px; color: #6B7280; width: 40%; border-bottom: 1px solid #F1F5F9;">Current Visa Status</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${data.currentVisa}</td></tr>
+<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">Visa Expiry Date</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${data.visaExpiry}</td></tr>
+<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">Graduation Date</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${data.graduationDate}</td></tr>
+<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">Degree Type</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${data.degreeType}</td></tr>
+<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">Korean Language</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${data.koreanLevel || 'Not specified'}</td></tr>
+<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">University</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${data.university}</td></tr>
+</table>
+</div>
+<div style="margin-bottom: 14px;">
+<div style="font-weight: 600; color: #374151; margin-bottom: 8px;">Residence Information</div>
+<table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+<tr><td style="padding: 6px 10px; color: #6B7280; width: 40%; border-bottom: 1px solid #F1F5F9;">Current Address</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${data.address}</td></tr>
+<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">Proof of Residence</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${residenceProofLabels[data.residenceProof] || data.residenceProof}</td></tr>
+</table>
+</div>
+<div>
+<div style="font-weight: 600; color: #374151; margin-bottom: 8px;">Employment Plans</div>
+<table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+<tr><td style="padding: 6px 10px; color: #6B7280; width: 40%; border-bottom: 1px solid #F1F5F9;">Target Industry</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${data.targetIndustry}</td></tr>
+<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">Job Seeking Plan</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${data.jobPlan}</td></tr>
+<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">Internship Plans</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${data.internshipPlan === 'yes' ? 'Yes' : 'No'}</td></tr>
+</table>
+</div>
+${data.additionalNotes ? `<div style="margin-top: 14px;"><div style="font-weight: 600; color: #374151; margin-bottom: 8px;">Additional Notes</div><div style="color: #374151; font-size: 14px; line-height: 1.6; background: white; padding: 10px 12px; border-radius: 8px; border: 1px solid #E2E8F0;">${data.additionalNotes}</div></div>` : ''}
+</div>`;
+            return html;
         }
 
         // ============================================
@@ -3424,39 +3436,32 @@ ${data.additionalNotes ? `\n**Additional Notes**\n${data.additionalNotes}` : ''}
             const q5Labels = { A: '식음료 배달', B: '물류창고 상하차 업무', C: '건설 현장 보조 업무', D: '제조공장 생산/포장 업무', E: '개인 과외 또는 학원 강의 보조', F: '해당사항 없음' };
             const yesNoLabels = { A: '예, 있습니다.', B: '아니오, 없습니다.' };
 
-            let message = `<div data-survey-result="visa-legal"></div>**외국인유학생 비자 진단 설문 결과**
-
-**1. 현재 거주 주소가 ARC 뒷면 주소와 일치합니까?**
-→ ${q1Labels[data.q1]}
-
-**2. 마지막 비자 신청 이후 여권을 새로 발급받으셨나요?**
-→ ${q2Labels[data.q2]}
-
-**3. 은행 계좌로 장학금 외 수당을 받는 취업활동을 한 적이 있나요?**
-→ ${q3Labels[data.q3]}`;
-
-            if (data.q3 === 'A') {
-                message += `
-
-**4. 취업활동 시 급여를 어떤 방식으로 받으셨나요?**
-→ ${q4Labels[data.q4]}
-
-**5. 취업활동 중 해당하는 업무:**
-→ ${data.q5.map(v => q5Labels[v]).join(', ')}`;
+            function row(num, question, answer) {
+                return `<tr>
+<td style="padding: 8px 12px; color: #6B7280; font-size: 13px; border-bottom: 1px solid #F1F5F9; vertical-align: top; width: 50%;">${num}. ${question}</td>
+<td style="padding: 8px 12px; color: #191F28; font-size: 14px; font-weight: 500; border-bottom: 1px solid #F1F5F9; vertical-align: top;">${answer}</td>
+</tr>`;
             }
 
-            message += `
+            let qNum = 1;
+            let rows = '';
+            rows += row(qNum++, '현재 거주 주소가 ARC 뒷면 주소와 일치합니까?', q1Labels[data.q1]);
+            rows += row(qNum++, '마지막 비자 신청 이후 여권을 새로 발급받으셨나요?', q2Labels[data.q2]);
+            rows += row(qNum++, '은행 계좌로 장학금 외 수당을 받는 취업활동을 한 적이 있나요?', q3Labels[data.q3]);
 
-**${data.q3 === 'A' ? '6' : '4'}. 잔고증명서 발급 전후 예금 잔액 급격 변동 여부**
-→ ${yesNoLabels[data.q6]}
+            if (data.q3 === 'A') {
+                rows += row(qNum++, '취업활동 시 급여를 어떤 방식으로 받으셨나요?', q4Labels[data.q4]);
+                rows += row(qNum++, '취업활동 중 해당하는 업무', data.q5.map(v => q5Labels[v]).join(', '));
+            }
 
-**${data.q3 === 'A' ? '7' : '5'}. 개인 간 송금 서비스/비공식 환전 앱 이용 여부**
-→ ${yesNoLabels[data.q7]}
+            rows += row(qNum++, '잔고증명서 발급 전후 예금 잔액 급격 변동 여부', yesNoLabels[data.q6]);
+            rows += row(qNum++, '개인 간 송금 서비스/비공식 환전 앱 이용 여부', yesNoLabels[data.q7]);
+            rows += row(qNum++, '최근 1년 내 출입국관리사무소 범칙금/경찰 벌금 납부 여부', yesNoLabels[data.q8]);
 
-**${data.q3 === 'A' ? '8' : '6'}. 최근 1년 내 출입국관리사무소 범칙금/경찰 벌금 납부 여부**
-→ ${yesNoLabels[data.q8]}`;
-
-            return message;
+            return `<div data-survey-result="visa-legal" style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 20px; margin: 4px 0;">
+<div style="font-weight: 700; font-size: 15px; color: #191F28; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #E2E8F0;">외국인유학생 비자 진단 설문 결과</div>
+<table style="width: 100%; border-collapse: collapse;">${rows}</table>
+</div>`;
         }
     </script>
 </body>
