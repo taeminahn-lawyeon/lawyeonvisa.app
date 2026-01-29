@@ -615,6 +615,17 @@
             color: white;
         }
 
+        .template-btn.survey-btn {
+            background: #ECFDF5;
+            border-color: #059669;
+            color: #065F46;
+        }
+
+        .template-btn.survey-btn:hover {
+            background: #059669;
+            color: white;
+        }
+
         /* Styled content inside editor and messages */
         .info-box, .ql-editor .info-box {
             background: #EBF4FF;
@@ -1220,6 +1231,8 @@
                             <button type="button" class="template-btn" onclick="insertLinkButton()">링크 첨부</button>
                             <button type="button" class="template-btn" onclick="insertGrayBox()">회색 박스</button>
                             <button type="button" class="template-btn" onclick="openStageChangeModal()">단계 변경</button>
+                            <button type="button" class="template-btn survey-btn" id="d10InfoRequestBtn" onclick="sendD10InfoRequest()" style="display: none;">D-10-1 정보 요청</button>
+                            <button type="button" class="template-btn survey-btn" id="visaLegalSurveyBtn" onclick="sendVisaLegalSurveyRequest()" style="display: none;">비자 법률자문 설문 요청</button>
                         </div>
                         <div id="editor"></div>
                     </div>
@@ -1434,6 +1447,80 @@
 
             const html = `<p><a href="${url}" target="_blank" class="action-link-btn">${text}</a></p><p><br></p>`;
             insertHtmlToEditor(html);
+        }
+
+        // ============================================
+        // 설문 요청 전송 함수
+        // ============================================
+
+        async function sendD10InfoRequest() {
+            if (!confirm('D-10-1 정보 요청 메시지를 고객에게 전송하시겠습니까?')) return;
+
+            const content = `<div class="survey-request-card" data-survey-type="d10-1" style="background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); border: 2px solid #10B981; border-radius: 16px; padding: 24px; margin: 8px 0;">
+<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+<span style="font-size: 28px;">📋</span>
+<div>
+<div style="font-weight: 700; font-size: 16px; color: #065F46;">D-10-1 비자 변경 신청 정보 요청</div>
+<div style="font-size: 13px; color: #047857; margin-top: 4px;">Please submit your D-10-1 visa application information</div>
+</div>
+</div>
+<p style="font-size: 14px; color: #064E3B; line-height: 1.6; margin-bottom: 16px;">비자 변경 신청에 필요한 정보를 아래 버튼을 눌러 제출해 주세요.<br>Please click the button below to submit required information.</p>
+<div style="text-align: center;">
+<span class="survey-action-marker" data-action="d10-1" style="display: inline-block; background: #10B981; color: white; padding: 12px 32px; border-radius: 10px; font-weight: 700; font-size: 15px;">D-10-1 정보 제출하기</span>
+</div>
+</div>`;
+
+            try {
+                const result = await createMessage({
+                    thread_id: threadId,
+                    sender_type: 'admin',
+                    content: content
+                });
+
+                if (result.success) {
+                    await loadMessages();
+                } else {
+                    throw new Error(result.error);
+                }
+            } catch (error) {
+                console.error('D-10-1 정보 요청 전송 실패:', error);
+                alert('메시지 전송에 실패했습니다.');
+            }
+        }
+
+        async function sendVisaLegalSurveyRequest() {
+            if (!confirm('비자 법률자문 설문 요청 메시지를 고객에게 전송하시겠습니까?')) return;
+
+            const content = `<div class="survey-request-card" data-survey-type="visa-legal" style="background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%); border: 2px solid #3B82F6; border-radius: 16px; padding: 24px; margin: 8px 0;">
+<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+<span style="font-size: 28px;">⚖️</span>
+<div>
+<div style="font-weight: 700; font-size: 16px; color: #1E40AF;">비자 법률자문 진단 설문</div>
+<div style="font-size: 13px; color: #2563EB; margin-top: 4px;">Visa Legal Consultation Diagnostic Survey</div>
+</div>
+</div>
+<p style="font-size: 14px; color: #1E3A5F; line-height: 1.6; margin-bottom: 16px;">비자 진단을 위해 아래 설문을 작성해 주세요. 변호사법에 의해 비밀이 보장되며, 오직 법률 자문 목적으로만 이용됩니다.<br>Please complete the survey below for visa diagnosis.</p>
+<div style="text-align: center;">
+<span class="survey-action-marker" data-action="visa-legal" style="display: inline-block; background: #3B82F6; color: white; padding: 12px 32px; border-radius: 10px; font-weight: 700; font-size: 15px;">비자 진단 설문 작성하기</span>
+</div>
+</div>`;
+
+            try {
+                const result = await createMessage({
+                    thread_id: threadId,
+                    sender_type: 'admin',
+                    content: content
+                });
+
+                if (result.success) {
+                    await loadMessages();
+                } else {
+                    throw new Error(result.error);
+                }
+            } catch (error) {
+                console.error('비자 법률자문 설문 요청 전송 실패:', error);
+                alert('메시지 전송에 실패했습니다.');
+            }
         }
 
         function insertGrayBox() {
@@ -1798,6 +1885,15 @@
             // Admin notes
             if (threadData.admin_notes) {
                 document.getElementById('adminNotes').value = threadData.admin_notes;
+            }
+
+            // 서비스별 설문 요청 버튼 표시
+            const serviceName = threadData.service_name || '';
+            if (serviceName.includes('D-10-1') || serviceName.includes('D-10-2') || serviceName.includes('D-10-3') || serviceName.includes('D-10-T') || serviceName.includes('D-10-t')) {
+                document.getElementById('d10InfoRequestBtn').style.display = 'inline-block';
+            }
+            if (serviceName.includes('Legal Advice') || serviceName.includes('법률자문') || serviceName.includes('Pre-diagnosis') || serviceName.includes('사전 진단') || serviceName.includes('prediagnosis')) {
+                document.getElementById('visaLegalSurveyBtn').style.display = 'inline-block';
             }
         }
 
