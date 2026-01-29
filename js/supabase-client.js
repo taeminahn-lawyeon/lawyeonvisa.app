@@ -950,7 +950,7 @@ async function createWelcomeMessage(threadId, serviceName) {
 
             <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
                 <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">2. 담당자 배정</div>
-                <div style="color: #374151; line-height: 1.6;">기본 정보 확인 후, 담당자가 <span class="highlight" style="background: #191F28; color: white; padding: 2px 8px; border-radius: 4px; font-weight: 600;">30분 내</span> 연락드립니다.</div>
+                <div style="color: #374151; line-height: 1.6;">기본 정보 확인 후, 담당자가 <span class="highlight" style="background: #FEF3C7; color: #191F28; padding: 2px 8px; border-radius: 4px; font-weight: 700;">30분 내</span> 연락드립니다.</div>
             </div>
 
             <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">

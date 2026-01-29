@@ -404,7 +404,7 @@
             font-weight: 600;
             font-size: 14px;
             color: white;
-            background: #191F28;
+            background: #3182F6;
             border: none;
             cursor: pointer;
             transition: all 0.2s;
@@ -412,7 +412,7 @@
         }
 
         .survey-cta-btn:hover {
-            background: #374151;
+            background: #2563EB;
         }
 
         .survey-cta-btn:disabled {
@@ -2638,8 +2638,8 @@
                 content.includes('survey-request-card') ||
                 content.includes('data-survey-result') ||
                 content.includes('class="ql-')) {
-                // 줄바꿈만 처리
-                return content.replace(/\n/g, '<br>');
+                // HTML 구조가 있으면 그대로 반환 (줄바꿈 변환하지 않음)
+                return content;
             }
 
             // 줄바꿈을 <br>로 변환 (HTML 태그가 아닌 경우)
