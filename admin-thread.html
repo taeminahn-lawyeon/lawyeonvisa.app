@@ -1372,20 +1372,25 @@
                 return;
             }
 
-            // Check session and admin permission
+            // Check session and admin permission (Supabase 세션 + sessionStorage 폴백)
             const session = await checkSession();
-            if (!session || !session.user) {
+            if (session && session.user) {
+                currentUser = session.user;
+
+                // Verify admin role
+                const profileResult = await getUserProfile(currentUser.id);
+                if (!profileResult.success || !['super_admin', 'partner_admin', 'admin', 'staff'].includes(profileResult.data?.role)) {
+                    alert('관리자 권한이 필요합니다.');
+                    window.location.href = 'admin-dashboard.html';
+                    return;
+                }
+            } else if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+                // sessionStorage 관리자 로그인 폴백
+                console.log('관리자 접근 허용 (sessionStorage):', sessionStorage.getItem('adminId'));
+                currentUser = { id: 'admin-session', email: sessionStorage.getItem('adminId') || 'admin' };
+            } else {
                 alert('로그인이 필요합니다.');
                 window.location.href = 'admin-login.html';
-                return;
-            }
-            currentUser = session.user;
-
-            // Verify admin role
-            const profileResult = await getUserProfile(currentUser.id);
-            if (!profileResult.success || !['super_admin', 'partner_admin', 'admin', 'staff'].includes(profileResult.data?.role)) {
-                alert('관리자 권한이 필요합니다.');
-                window.location.href = 'admin-dashboard.html';
                 return;
             }
 
