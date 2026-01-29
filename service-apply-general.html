@@ -323,42 +323,39 @@
         /* Payment Buttons */
         .btn-payment {
             width: 100%;
-            height: 64px;
+            height: 60px;
             border: none;
-            border-radius: 16px;
-            font-size: 17px;
+            border-radius: 14px;
+            font-size: 16px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
-            gap: 14px;
-            padding: 0 24px;
+            justify-content: center;
             position: relative;
-            overflow: hidden;
+            padding: 0 20px;
         }
 
         .btn-payment .btn-logo-area {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            background: white;
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .btn-payment .btn-logo-area img {
-            height: 30px;
-            width: 30px;
+            height: 40px;
+            width: 40px;
             object-fit: contain;
+            border-radius: 10px;
         }
 
         .btn-payment .btn-text {
-            flex: 1;
-            text-align: left;
+            text-align: center;
             letter-spacing: 0.2px;
         }
 
@@ -366,18 +363,17 @@
         .btn-toss {
             background: #3182F6;
             color: white;
-            box-shadow: 0 4px 16px rgba(49, 130, 246, 0.35);
+            box-shadow: 0 2px 12px rgba(49, 130, 246, 0.3);
         }
 
         .btn-toss:hover:not(:disabled) {
             background: #1B6DE0;
             transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(49, 130, 246, 0.45);
+            box-shadow: 0 6px 20px rgba(49, 130, 246, 0.4);
         }
 
         .btn-toss:active:not(:disabled) {
             transform: translateY(0);
-            box-shadow: 0 2px 8px rgba(49, 130, 246, 0.3);
         }
 
         .btn-toss:disabled {
@@ -389,21 +385,20 @@
 
         /* Wise Transfer Button */
         .btn-wise {
-            background: #163300;
-            color: #9FE870;
-            box-shadow: 0 4px 16px rgba(22, 51, 0, 0.25);
+            background: #9FE870;
+            color: #163300;
+            box-shadow: 0 2px 12px rgba(159, 232, 112, 0.3);
             margin-top: 12px;
         }
 
         .btn-wise:hover:not(:disabled) {
-            background: #1E4400;
+            background: #8AD85E;
             transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(22, 51, 0, 0.35);
+            box-shadow: 0 6px 20px rgba(159, 232, 112, 0.4);
         }
 
         .btn-wise:active:not(:disabled) {
             transform: translateY(0);
-            box-shadow: 0 2px 8px rgba(22, 51, 0, 0.2);
         }
 
         .btn-wise:disabled {
