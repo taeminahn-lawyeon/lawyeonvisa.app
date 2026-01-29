@@ -396,6 +396,136 @@
             color: #6B7280;
         }
 
+        /* Survey CTA Button in Messages */
+        .survey-cta-btn {
+            display: inline-block;
+            padding: 12px 32px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 15px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .survey-cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .survey-cta-btn.d10-1 {
+            background: #10B981;
+        }
+
+        .survey-cta-btn.d10-1:hover {
+            background: #059669;
+        }
+
+        .survey-cta-btn.visa-legal {
+            background: #3B82F6;
+        }
+
+        .survey-cta-btn.visa-legal:hover {
+            background: #2563EB;
+        }
+
+        .survey-cta-btn:disabled {
+            background: #9CA3AF !important;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .survey-completed-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #F0FDF4;
+            border: 1px solid #86EFAC;
+            color: #166534;
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Visa Legal Survey Modal */
+        .survey-question {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .survey-question-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1E293B;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .survey-question-title .required {
+            color: #EF4444;
+        }
+
+        .survey-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .survey-option:hover {
+            background: #EFF6FF;
+        }
+
+        .survey-option input[type="radio"],
+        .survey-option input[type="checkbox"] {
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        .survey-option label {
+            font-size: 14px;
+            color: #334155;
+            cursor: pointer;
+            line-height: 1.5;
+        }
+
+        .survey-option-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            background: #3B82F6;
+            color: white;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .survey-conditional {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .survey-conditional.hidden {
+            max-height: 0;
+            opacity: 0;
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+
         /* Messages Section */
         .messages-section {
             margin-bottom: 24px;
@@ -1222,10 +1352,7 @@
                             </div>
                             <input type="file" id="fileInput" multiple style="display: none;" onchange="handleFileSelect(event)">
                             <div class="pending-files" id="pendingFiles"></div>
-                            <div class="reply-actions" style="display: flex; gap: 12px; justify-content: space-between; align-items: center;">
-                                <button class="submit-btn" id="d10FormBtn" onclick="openD10FormModal()" style="display: none; background: #10B981; padding: 10px 16px; font-size: 13px;">
-                                    📋 Submit D-10-1 Application Info
-                                </button>
+                            <div class="reply-actions" style="display: flex; gap: 12px; justify-content: flex-end; align-items: center;">
                                 <button class="submit-btn" id="submitBtn" onclick="submitReply()" data-i18n="thread.submit">
                                     작성
                                 </button>
@@ -1503,6 +1630,196 @@
             <div class="modal-actions">
                 <button class="btn-secondary" onclick="closeModal('d10FormModal')">Cancel</button>
                 <button class="btn-primary" onclick="submitD10Form()">Submit Application Info</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visa Legal Consultation Survey Modal -->
+    <div class="modal-overlay" id="visaLegalSurveyModal">
+        <div class="modal edit-modal" style="max-width: 700px;">
+            <div class="modal-header">
+                <h2 class="modal-title">⚖️ 외국인유학생 비자 진단 설문</h2>
+                <button class="modal-close" onclick="closeModal('visaLegalSurveyModal')">&times;</button>
+            </div>
+            <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+                <p style="color: #64748B; margin-bottom: 20px; font-size: 14px; line-height: 1.6;">
+                    이 설문은 법무법인 로연 출입국이민지원센터의 비자 진단을 위한 것입니다. 변호사법에 의해 비밀이 보장되며, 오직 법률 자문 목적으로만 이용됩니다.
+                </p>
+
+                <!-- Q1 -->
+                <div class="survey-question">
+                    <div class="survey-question-title">
+                        1. 현재 거주 중인 주소가 외국인등록증(ARC) 뒷면에 적힌 주소와 일치합니까? <span class="required">*</span>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">A</span>
+                        <input type="radio" name="vl-q1" value="A" id="vl-q1-a">
+                        <label for="vl-q1-a">네, 그렇습니다.</label>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">B</span>
+                        <input type="radio" name="vl-q1" value="B" id="vl-q1-b">
+                        <label for="vl-q1-b">아니오, 일치하지 않습니다.</label>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">C</span>
+                        <input type="radio" name="vl-q1" value="C" id="vl-q1-c">
+                        <label for="vl-q1-c">거주지 변경 신고를 했습니다.</label>
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="survey-question">
+                    <div class="survey-question-title">
+                        2. 마지막 비자 신청 이후 여권을 새로 발급받으셨나요? <span class="required">*</span>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">A</span>
+                        <input type="radio" name="vl-q2" value="A" id="vl-q2-a">
+                        <label for="vl-q2-a">네, 그렇습니다.</label>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">B</span>
+                        <input type="radio" name="vl-q2" value="B" id="vl-q2-b">
+                        <label for="vl-q2-b">여권 변경 신고를 했습니다.</label>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">C</span>
+                        <input type="radio" name="vl-q2" value="C" id="vl-q2-c">
+                        <label for="vl-q2-c">아니오, 그렇지 않습니다.</label>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="survey-question">
+                    <div class="survey-question-title">
+                        3. 한국 내 은행 계좌로 장학금 외 수당을 받는 취업활동을 한 적이 있나요? <span class="required">*</span>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">A</span>
+                        <input type="radio" name="vl-q3" value="A" id="vl-q3-a" onchange="toggleConditionalQuestions()">
+                        <label for="vl-q3-a">네, 있습니다.</label>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">B</span>
+                        <input type="radio" name="vl-q3" value="B" id="vl-q3-b" onchange="toggleConditionalQuestions()">
+                        <label for="vl-q3-b">아니오, 없습니다.</label>
+                    </div>
+                </div>
+
+                <!-- Q4 (conditional - shown when Q3 = A) -->
+                <div class="survey-question survey-conditional hidden" id="vl-q4-container">
+                    <div class="survey-question-title">
+                        4. 취업활동 시에 급여를 어떤 방식으로 받으셨나요? <span class="required">*</span>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">A</span>
+                        <input type="radio" name="vl-q4" value="A" id="vl-q4-a">
+                        <label for="vl-q4-a">전부 본인 명의 계좌로 입금 받았습니다.</label>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">B</span>
+                        <input type="radio" name="vl-q4" value="B" id="vl-q4-b">
+                        <label for="vl-q4-b">일부는 계좌 입금, 일부는 현금으로 직접 받았습니다.</label>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">C</span>
+                        <input type="radio" name="vl-q4" value="C" id="vl-q4-c">
+                        <label for="vl-q4-c">지인이나 가족 계좌로 대신 받았습니다.</label>
+                    </div>
+                </div>
+
+                <!-- Q5 (conditional - shown when Q3 = A) -->
+                <div class="survey-question survey-conditional hidden" id="vl-q5-container">
+                    <div class="survey-question-title">
+                        5. 취업활동 중 아래에 해당하는 업무를 한 적이 있나요? <span class="required">*</span>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">A</span>
+                        <input type="checkbox" name="vl-q5" value="A" id="vl-q5-a">
+                        <label for="vl-q5-a">식음료 배달</label>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">B</span>
+                        <input type="checkbox" name="vl-q5" value="B" id="vl-q5-b">
+                        <label for="vl-q5-b">물류창고 상하차 업무</label>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">C</span>
+                        <input type="checkbox" name="vl-q5" value="C" id="vl-q5-c">
+                        <label for="vl-q5-c">건설 현장 보조 업무</label>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">D</span>
+                        <input type="checkbox" name="vl-q5" value="D" id="vl-q5-d">
+                        <label for="vl-q5-d">제조공장 생산/포장 업무</label>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">E</span>
+                        <input type="checkbox" name="vl-q5" value="E" id="vl-q5-e">
+                        <label for="vl-q5-e">개인 과외 또는 학원 강의 보조</label>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">F</span>
+                        <input type="checkbox" name="vl-q5" value="F" id="vl-q5-f">
+                        <label for="vl-q5-f">해당사항 없음</label>
+                    </div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="survey-question">
+                    <div class="survey-question-title">
+                        6. 비자 연장용 잔고증명서 발급 전후로, 예금 잔액이 급격히 변동된 적이 있나요? <span class="required">*</span>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">A</span>
+                        <input type="radio" name="vl-q6" value="A" id="vl-q6-a">
+                        <label for="vl-q6-a">예, 있습니다.</label>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">B</span>
+                        <input type="radio" name="vl-q6" value="B" id="vl-q6-b">
+                        <label for="vl-q6-b">아니오, 없습니다.</label>
+                    </div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="survey-question">
+                    <div class="survey-question-title">
+                        7. 은행을 통하지 않고 개인 간 송금 서비스나 비공식 환전 앱을 이용해 보신 적이 있나요? <span class="required">*</span>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">A</span>
+                        <input type="radio" name="vl-q7" value="A" id="vl-q7-a">
+                        <label for="vl-q7-a">예, 있습니다.</label>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">B</span>
+                        <input type="radio" name="vl-q7" value="B" id="vl-q7-b">
+                        <label for="vl-q7-b">아니오, 없습니다.</label>
+                    </div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="survey-question">
+                    <div class="survey-question-title">
+                        8. 최근 1년 이내에 출입국관리사무소 범칙금 또는 경찰 벌금을 낸 적이 있나요? <span class="required">*</span>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">A</span>
+                        <input type="radio" name="vl-q8" value="A" id="vl-q8-a">
+                        <label for="vl-q8-a">예, 있습니다.</label>
+                    </div>
+                    <div class="survey-option">
+                        <span class="survey-option-badge">B</span>
+                        <input type="radio" name="vl-q8" value="B" id="vl-q8-b">
+                        <label for="vl-q8-b">아니오, 없습니다.</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="closeModal('visaLegalSurveyModal')">취소</button>
+                <button class="btn-primary" onclick="submitVisaLegalSurvey()">설문 제출</button>
             </div>
         </div>
     </div>
@@ -1935,12 +2252,6 @@
                     document.getElementById('adminTools').classList.add('visible');
                 }
 
-                // Show D-10-1 form button for D-10 services
-                const serviceName = thread.service_name || '';
-                if (serviceName.includes('D-10-1') || serviceName.includes('D-10-2') || serviceName.includes('D-10-3') || serviceName.includes('D-10-T')) {
-                    document.getElementById('d10FormBtn').style.display = 'block';
-                }
-
                 // Load messages
                 await loadMessages();
 
@@ -2164,6 +2475,9 @@
             `).join('');
         }
 
+        // 설문 제출 여부 추적
+        let submittedSurveys = new Set();
+
         async function loadMessages() {
             try {
                 const result = await getMessages(threadId);
@@ -2178,6 +2492,18 @@
                     container.innerHTML = '<p style="text-align: center; color: #9CA3AF; padding: 40px;">아직 메시지가 없습니다.</p>';
                     return;
                 }
+
+                // 설문 결과 메시지 스캔하여 제출된 설문 유형 추적
+                submittedSurveys = new Set();
+                result.data.forEach(msg => {
+                    const content = msg.content || '';
+                    if (content.includes('data-survey-result="d10-1"')) {
+                        submittedSurveys.add('d10-1');
+                    }
+                    if (content.includes('data-survey-result="visa-legal"')) {
+                        submittedSurveys.add('visa-legal');
+                    }
+                });
 
                 container.innerHTML = result.data.map(msg => renderMessageCard(msg)).join('');
 
@@ -2215,6 +2541,38 @@
 
             // Parse message content and convert links
             let content = processMessageContent(msg.content || '');
+
+            // 설문 요청 메시지에서 CTA 버튼 렌더링 (고객 뷰에서만)
+            if (!isAdmin && content.includes('survey-action-marker')) {
+                // D-10-1 설문 요청
+                if (content.includes('data-action="d10-1"')) {
+                    if (submittedSurveys.has('d10-1')) {
+                        content = content.replace(
+                            /<span class="survey-action-marker" data-action="d10-1"[^>]*>[^<]*<\/span>/,
+                            '<span class="survey-completed-badge">&#10003; 정보 제출 완료</span>'
+                        );
+                    } else {
+                        content = content.replace(
+                            /<span class="survey-action-marker" data-action="d10-1"[^>]*>[^<]*<\/span>/,
+                            '<button class="survey-cta-btn d10-1" onclick="openD10FormModal()">D-10-1 정보 제출하기</button>'
+                        );
+                    }
+                }
+                // 비자 법률자문 설문 요청
+                if (content.includes('data-action="visa-legal"')) {
+                    if (submittedSurveys.has('visa-legal')) {
+                        content = content.replace(
+                            /<span class="survey-action-marker" data-action="visa-legal"[^>]*>[^<]*<\/span>/,
+                            '<span class="survey-completed-badge">&#10003; 설문 제출 완료</span>'
+                        );
+                    } else {
+                        content = content.replace(
+                            /<span class="survey-action-marker" data-action="visa-legal"[^>]*>[^<]*<\/span>/,
+                            '<button class="survey-cta-btn visa-legal" onclick="openVisaLegalSurveyModal()">비자 진단 설문 작성하기</button>'
+                        );
+                    }
+                }
+            }
 
             // Handle file attachments - check both attachments JSONB and individual file columns
             let attachmentsHtml = '';
@@ -2284,6 +2642,8 @@
                 content.includes('class="numbered-steps"') ||
                 content.includes('action-link-btn') ||
                 content.includes('payment-btn-inline') ||
+                content.includes('survey-request-card') ||
+                content.includes('data-survey-result') ||
                 content.includes('class="ql-')) {
                 // 줄바꿈만 처리
                 return content.replace(/\n/g, '<br>');
@@ -2926,9 +3286,6 @@
                 closeModal('d10FormModal');
                 await loadMessages();
 
-                // Hide the button after successful submission
-                document.getElementById('d10FormBtn').style.display = 'none';
-
                 alert('D-10-1 Application Information submitted successfully!');
 
             } catch (error) {
@@ -2944,7 +3301,7 @@
                 'family': 'Living with family'
             };
 
-            return `📋 **D-10-1 Application Information**
+            return `<div data-survey-result="d10-1"></div>📋 **D-10-1 Application Information**
 
 **Basic Eligibility**
 • Current Visa Status: ${data.currentVisa}
@@ -2963,6 +3320,150 @@
 • Job Seeking Plan: ${data.jobPlan}
 • Internship Plans: ${data.internshipPlan === 'yes' ? 'Yes' : 'No'}
 ${data.additionalNotes ? `\n**Additional Notes**\n${data.additionalNotes}` : ''}`;
+        }
+
+        // ============================================
+        // 비자 법률자문 설문 Functions
+        // ============================================
+
+        function openVisaLegalSurveyModal() {
+            // 폼 초기화
+            const form = document.getElementById('visaLegalSurveyModal');
+            form.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+            form.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
+            // 조건부 질문 숨기기
+            document.getElementById('vl-q4-container').classList.add('hidden');
+            document.getElementById('vl-q5-container').classList.add('hidden');
+            form.classList.add('active');
+        }
+
+        function toggleConditionalQuestions() {
+            const q3Value = document.querySelector('input[name="vl-q3"]:checked')?.value;
+            const q4Container = document.getElementById('vl-q4-container');
+            const q5Container = document.getElementById('vl-q5-container');
+
+            if (q3Value === 'A') {
+                q4Container.classList.remove('hidden');
+                q5Container.classList.remove('hidden');
+            } else {
+                q4Container.classList.add('hidden');
+                q5Container.classList.add('hidden');
+                // 숨길 때 선택 초기화
+                document.querySelectorAll('input[name="vl-q4"]').forEach(r => r.checked = false);
+                document.querySelectorAll('input[name="vl-q5"]').forEach(c => c.checked = false);
+            }
+        }
+
+        async function submitVisaLegalSurvey() {
+            // 필수 항목 검증
+            const q1 = document.querySelector('input[name="vl-q1"]:checked');
+            const q2 = document.querySelector('input[name="vl-q2"]:checked');
+            const q3 = document.querySelector('input[name="vl-q3"]:checked');
+            const q6 = document.querySelector('input[name="vl-q6"]:checked');
+            const q7 = document.querySelector('input[name="vl-q7"]:checked');
+            const q8 = document.querySelector('input[name="vl-q8"]:checked');
+
+            if (!q1 || !q2 || !q3 || !q6 || !q7 || !q8) {
+                alert('모든 필수 항목을 선택해 주세요.');
+                return;
+            }
+
+            // Q3이 A인 경우 Q4, Q5도 필수
+            if (q3.value === 'A') {
+                const q4 = document.querySelector('input[name="vl-q4"]:checked');
+                const q5Checked = document.querySelectorAll('input[name="vl-q5"]:checked');
+                if (!q4) {
+                    alert('질문 4번을 선택해 주세요.');
+                    return;
+                }
+                if (q5Checked.length === 0) {
+                    alert('질문 5번에서 하나 이상 선택해 주세요.');
+                    return;
+                }
+            }
+
+            try {
+                // 설문 데이터 수집
+                const surveyData = {
+                    q1: q1.value,
+                    q2: q2.value,
+                    q3: q3.value,
+                    q4: q3.value === 'A' ? document.querySelector('input[name="vl-q4"]:checked')?.value : null,
+                    q5: q3.value === 'A' ? Array.from(document.querySelectorAll('input[name="vl-q5"]:checked')).map(c => c.value) : [],
+                    q6: q6.value,
+                    q7: q7.value,
+                    q8: q8.value
+                };
+
+                const formattedMessage = formatVisaLegalSurveyMessage(surveyData);
+
+                const profile = await getUserProfile(currentUser.id);
+                const senderName = profile?.data?.name || currentUser.email?.split('@')[0] || 'Applicant';
+
+                const { error } = await supabaseClient
+                    .from('messages')
+                    .insert({
+                        thread_id: threadId,
+                        sender_id: currentUser.id,
+                        sender_type: 'user',
+                        sender_name: senderName,
+                        content: formattedMessage
+                    });
+
+                if (error) throw error;
+
+                closeModal('visaLegalSurveyModal');
+                await loadMessages();
+
+                alert('비자 진단 설문이 제출되었습니다.');
+
+            } catch (error) {
+                console.error('비자 법률자문 설문 제출 오류:', error);
+                alert('설문 제출에 실패했습니다. 다시 시도해 주세요.');
+            }
+        }
+
+        function formatVisaLegalSurveyMessage(data) {
+            const q1Labels = { A: '네, 그렇습니다.', B: '아니오, 일치하지 않습니다.', C: '거주지 변경 신고를 했습니다.' };
+            const q2Labels = { A: '네, 그렇습니다.', B: '여권 변경 신고를 했습니다.', C: '아니오, 그렇지 않습니다.' };
+            const q3Labels = { A: '네, 있습니다.', B: '아니오, 없습니다.' };
+            const q4Labels = { A: '전부 본인 명의 계좌로 입금 받았습니다.', B: '일부는 계좌 입금, 일부는 현금으로 직접 받았습니다.', C: '지인이나 가족 계좌로 대신 받았습니다.' };
+            const q5Labels = { A: '식음료 배달', B: '물류창고 상하차 업무', C: '건설 현장 보조 업무', D: '제조공장 생산/포장 업무', E: '개인 과외 또는 학원 강의 보조', F: '해당사항 없음' };
+            const yesNoLabels = { A: '예, 있습니다.', B: '아니오, 없습니다.' };
+
+            let message = `<div data-survey-result="visa-legal"></div>⚖️ **외국인유학생 비자 진단 설문 결과**
+
+**1. 현재 거주 주소가 ARC 뒷면 주소와 일치합니까?**
+→ ${q1Labels[data.q1]}
+
+**2. 마지막 비자 신청 이후 여권을 새로 발급받으셨나요?**
+→ ${q2Labels[data.q2]}
+
+**3. 은행 계좌로 장학금 외 수당을 받는 취업활동을 한 적이 있나요?**
+→ ${q3Labels[data.q3]}`;
+
+            if (data.q3 === 'A') {
+                message += `
+
+**4. 취업활동 시 급여를 어떤 방식으로 받으셨나요?**
+→ ${q4Labels[data.q4]}
+
+**5. 취업활동 중 해당하는 업무:**
+→ ${data.q5.map(v => q5Labels[v]).join(', ')}`;
+            }
+
+            message += `
+
+**${data.q3 === 'A' ? '6' : '4'}. 잔고증명서 발급 전후 예금 잔액 급격 변동 여부**
+→ ${yesNoLabels[data.q6]}
+
+**${data.q3 === 'A' ? '7' : '5'}. 개인 간 송금 서비스/비공식 환전 앱 이용 여부**
+→ ${yesNoLabels[data.q7]}
+
+**${data.q3 === 'A' ? '8' : '6'}. 최근 1년 내 출입국관리사무소 범칙금/경찰 벌금 납부 여부**
+→ ${yesNoLabels[data.q8]}`;
+
+            return message;
         }
     </script>
 </body>
