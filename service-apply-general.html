@@ -320,123 +320,94 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Payment Buttons - Clean Card Design */
+        /* Payment Buttons */
         .btn-payment {
             width: 100%;
-            height: 68px;
+            height: 64px;
+            border: none;
             border-radius: 16px;
             font-size: 17px;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
-            overflow: hidden;
+            gap: 14px;
+            padding: 0 24px;
             position: relative;
-            background: #ffffff;
+            overflow: hidden;
         }
 
         .btn-payment .btn-logo-area {
-            width: 72px;
-            height: 100%;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: white;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .btn-payment .btn-logo-area img {
-            height: 40px;
-            width: 40px;
+            height: 30px;
+            width: 30px;
             object-fit: contain;
-            transition: transform 0.3s ease;
         }
 
         .btn-payment .btn-text {
             flex: 1;
             text-align: left;
-            font-size: 16px;
             letter-spacing: 0.2px;
         }
 
-        .btn-payment .btn-arrow {
-            width: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            opacity: 0.4;
-            transition: all 0.3s ease;
-        }
-
-        .btn-payment:hover:not(:disabled) .btn-arrow {
-            opacity: 0.8;
-            transform: translateX(3px);
-        }
-
-        .btn-payment:hover:not(:disabled) .btn-logo-area img {
-            transform: scale(1.08);
-        }
-
-        /* Toss Card Payment Button */
+        /* Toss Card Button */
         .btn-toss {
-            border: 2px solid #3182F6;
-            color: #1a1a1a;
-            box-shadow: 0 2px 12px rgba(49, 130, 246, 0.12);
-        }
-
-        .btn-toss .btn-logo-area {
-            background: #EBF4FF;
-            border-right: 1px solid #D0E3FF;
-        }
-
-        .btn-toss .btn-arrow {
-            color: #3182F6;
+            background: #3182F6;
+            color: white;
+            box-shadow: 0 4px 16px rgba(49, 130, 246, 0.35);
         }
 
         .btn-toss:hover:not(:disabled) {
+            background: #1B6DE0;
             transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(49, 130, 246, 0.2);
-            background: #F5F9FF;
-            border-color: #1A6DE0;
+            box-shadow: 0 8px 28px rgba(49, 130, 246, 0.45);
+        }
+
+        .btn-toss:active:not(:disabled) {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(49, 130, 246, 0.3);
         }
 
         .btn-toss:disabled {
-            background: #F1F5F9;
-            border-color: #CBD5E1;
-            color: #94A3B8;
+            background: #94A3B8;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
         }
 
-        /* WISE Bank Transfer Button */
+        /* Wise Transfer Button */
         .btn-wise {
-            border: 2px solid #9FE870;
-            color: #1a1a1a;
-            box-shadow: 0 2px 12px rgba(159, 232, 112, 0.12);
+            background: #163300;
+            color: #9FE870;
+            box-shadow: 0 4px 16px rgba(22, 51, 0, 0.25);
             margin-top: 12px;
         }
 
-        .btn-wise .btn-logo-area {
-            background: #F0FCEB;
-            border-right: 1px solid #D4F4C0;
-        }
-
-        .btn-wise .btn-arrow {
-            color: #4CAF50;
-        }
-
         .btn-wise:hover:not(:disabled) {
+            background: #1E4400;
             transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(159, 232, 112, 0.25);
-            background: #F7FEF3;
-            border-color: #76D943;
+            box-shadow: 0 8px 28px rgba(22, 51, 0, 0.35);
+        }
+
+        .btn-wise:active:not(:disabled) {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(22, 51, 0, 0.2);
         }
 
         .btn-wise:disabled {
-            background: #F1F5F9;
-            border-color: #CBD5E1;
+            background: #CBD5E1;
             color: #94A3B8;
             cursor: not-allowed;
             transform: none;
@@ -1383,7 +1354,6 @@
                             <img src="TOSS.png" alt="Toss">
                         </div>
                         <span id="btn-text" class="btn-text" data-i18n="payment.payWithCard">Pay with Card</span>
-                        <span class="btn-arrow">&rsaquo;</span>
                     </button>
 
                     <button class="btn-payment btn-wise" id="wiseBtn" onclick="processWisePayment()">
@@ -1391,7 +1361,6 @@
                             <img src="WISE.png" alt="Wise">
                         </div>
                         <span class="btn-text" data-i18n="payment.bankTransfer">Bank Transfer</span>
-                        <span class="btn-arrow">&rsaquo;</span>
                     </button>
 
                     <div class="security-badges">
