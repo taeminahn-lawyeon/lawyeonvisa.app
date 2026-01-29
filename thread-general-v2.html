@@ -2533,8 +2533,8 @@
             // Parse message content and convert links
             let content = processMessageContent(msg.content || '');
 
-            // 설문 요청 메시지에서 CTA 버튼 렌더링 (고객 뷰에서만)
-            if (!isAdmin && content.includes('survey-action-marker')) {
+            // 설문 요청 메시지에서 CTA 버튼 렌더링 (고객 쓰레드에서는 항상 표시)
+            if (content.includes('survey-action-marker')) {
                 // D-10-1 설문 요청
                 if (content.includes('data-action="d10-1"')) {
                     const isLatest = msg.id === latestSurveyRequestMsgId['d10-1'];
