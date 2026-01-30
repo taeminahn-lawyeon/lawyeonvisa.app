@@ -1288,7 +1288,7 @@
         <div id="threadContent" style="display: none;">
             <!-- Thread Info -->
             <div class="thread-info-card">
-                <h1 class="thread-title" id="threadTitle">로딩 중...</h1>
+                <h1 class="thread-title" id="threadTitle">Loading...</h1>
                 <div class="thread-meta">
                     <span><span id="threadUser">-</span></span>
                     <span><span id="threadDate">-</span></span>
@@ -1820,6 +1820,23 @@
             return localStorage.getItem('i18n_language') || 'en';
         }
 
+        // Thread UI translations
+        const THREAD_UI = {
+            loading: { ko: '로딩 중...', en: 'Loading...', zh: '加载中...', vi: 'Đang tải...', ja: '読み込み中...', mn: 'Уншиж байна...', th: 'กำลังโหลด...' },
+            consultation: { ko: '상담', en: 'Consultation', zh: '咨询', vi: 'Tư vấn', ja: '相談', mn: 'Зөвлөгөө', th: 'ปรึกษา' },
+            client: { ko: '고객', en: 'Client', zh: '客户', vi: 'Khách hàng', ja: '顧客', mn: 'Үйлчлүүлэгч', th: 'ลูกค้า' },
+            submit: { ko: '작성', en: 'Submit', zh: '提交', vi: 'Gửi', ja: '送信', mn: 'Илгээх', th: 'ส่ง' },
+            sendError: { ko: '메시지 전송 중 오류가 발생했습니다.', en: 'An error occurred while sending the message.', zh: '发送消息时出错。', vi: 'Lỗi khi gửi tin nhắn.', ja: 'メッセージ送信中にエラーが発生しました。', mn: 'Мессеж илгээхэд алдаа гарлаа.', th: 'เกิดข้อผิดพลาดในการส่งข้อความ' },
+            saveError: { ko: '메시지 저장 중 오류가 발생했습니다.', en: 'An error occurred while saving the message.', zh: '保存消息时出错。', vi: 'Lỗi khi lưu tin nhắn.', ja: 'メッセージ保存中にエラーが発生しました。', mn: 'Мессеж хадгалахад алдаа гарлаа.', th: 'เกิดข้อผิดพลาดในการบันทึกข้อความ' }
+        };
+
+        function getThreadMsg(key) {
+            const lang = getCurrentLang();
+            const msg = THREAD_UI[key];
+            if (!msg) return key;
+            return msg[lang] || msg.en || key;
+        }
+
         // Multilingual stages configuration
         const STAGES_I18N = {
             consulting: {
@@ -2222,8 +2239,8 @@
                 document.getElementById('threadContent').style.display = 'block';
                 document.getElementById('replySection').style.display = 'block';
 
-                document.getElementById('threadTitle').textContent = thread.service_name || '상담';
-                document.getElementById('threadUser').textContent = thread.profiles?.name || thread.profiles?.email?.split('@')[0] || '고객';
+                document.getElementById('threadTitle').textContent = thread.service_name || getThreadMsg('consultation');
+                document.getElementById('threadUser').textContent = thread.profiles?.name || thread.profiles?.email?.split('@')[0] || getThreadMsg('client');
                 document.getElementById('threadDate').textContent = formatDate(thread.created_at);
 
                 // Render progress
@@ -2809,10 +2826,10 @@
 
             } catch (error) {
                 console.error('Error submitting reply:', error);
-                alert('메시지 전송 중 오류가 발생했습니다.');
+                alert(getThreadMsg('sendError'));
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = '작성';
+                submitBtn.innerHTML = getThreadMsg('submit');
             }
         }
 
@@ -3057,7 +3074,7 @@
 
             } catch (error) {
                 console.error('Error saving message:', error);
-                alert('메시지 저장 중 오류가 발생했습니다.');
+                alert(getThreadMsg('saveError'));
             }
         }
 

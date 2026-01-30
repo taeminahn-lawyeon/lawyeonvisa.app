@@ -1405,34 +1405,34 @@
     <div class="wise-modal-overlay" id="wiseModalOverlay" onclick="closeWiseModal(event)">
         <div class="wise-modal" onclick="event.stopPropagation()">
             <div class="wise-modal-icon">W</div>
-            <h2>WISE 계좌 이체<span>Bank Transfer via WISE</span></h2>
+            <h2 id="wiseModalTitle">Bank Transfer via WISE</h2>
 
             <div class="wise-modal-info">
                 <div class="wise-modal-info-row">
-                    <span class="wise-modal-info-label">서비스 / Service</span>
+                    <span class="wise-modal-info-label" id="wiseServiceLabel">Service</span>
                     <span class="wise-modal-info-value" id="wiseServiceName">-</span>
                 </div>
                 <div class="wise-modal-info-row">
-                    <span class="wise-modal-info-label">주문번호 / Order ID</span>
+                    <span class="wise-modal-info-label" id="wiseOrderLabel">Order ID</span>
                     <span class="wise-modal-info-value" id="wiseOrderId">-</span>
                 </div>
                 <div class="wise-modal-info-row total">
-                    <span class="wise-modal-info-label">결제 금액 / Amount</span>
+                    <span class="wise-modal-info-label" id="wiseAmountLabel">Amount</span>
                     <span class="wise-modal-info-value" id="wiseAmount">-</span>
                 </div>
             </div>
 
-            <div class="wise-modal-notice">
-                <strong>안내 / Instructions:</strong>
-                <p>아래 버튼을 클릭하여 WISE로 결제해 주세요.<br>Click the button below to pay via WISE.</p>
-                <p style="margin-top: 8px;">결제 후 관리자가 확인하면 서비스가 시작됩니다.<br>Service will start after admin confirms payment.</p>
+            <div class="wise-modal-notice" id="wiseNotice">
+                <strong>Instructions:</strong>
+                <p>Click the button below to pay via WISE.</p>
+                <p style="margin-top: 8px;">Service will start after admin confirms payment.</p>
             </div>
 
             <button class="wise-modal-btn primary" id="wisePayBtn" onclick="processWiseModalPayment()">
-                WISE로 결제하기 / Pay with WISE
+                Pay with WISE
             </button>
-            <button class="wise-modal-btn secondary" onclick="closeWiseModal()">
-                닫기 / Close
+            <button class="wise-modal-btn secondary" id="wiseCloseBtn" onclick="closeWiseModal()">
+                Close
             </button>
         </div>
     </div>
@@ -1944,7 +1944,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                 // Supabase 세션 확인 (이메일/비밀번호 또는 Google 로그인)
                 const session = await checkSession();
                 if (!session || !session.user) {
-                    alert('로그인이 필요합니다. 관리자 로그인 페이지에서 로그인해주세요.');
+                    alert(getUIMessage('loginRequired'));
                     window.location.href = 'admin-login.html';
                     return;
                 }
@@ -2064,7 +2064,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
             const wiseLink = wisePaymentLinks[amount] || null;
 
             if (!wiseLink) {
-                alert('WISE 결제 링크를 찾을 수 없습니다. 관리자에게 문의해주세요.');
+                alert(getUIMessage('wiseLinkNotFound'));
                 return;
             }
 
@@ -2124,8 +2124,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                         ">
                             <span style="font-size: 28px; font-weight: bold; color: #1A1A1A;">W</span>
                         </div>
-                        <h2 style="font-size: 22px; font-weight: 800; color: #1A1A1A; margin: 0;">WISE 계좌 이체</h2>
-                        <p style="color: #6B7280; margin-top: 8px;">Bank Transfer via WISE</p>
+                        <h2 style="font-size: 22px; font-weight: 800; color: #1A1A1A; margin: 0;">${getUIMessage('wiseTitle')}</h2>
                     </div>
 
                     <div style="
@@ -2135,11 +2134,11 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                         margin-bottom: 24px;
                     ">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                            <span style="color: #6B7280; font-size: 14px;">서비스 / Service</span>
+                            <span style="color: #6B7280; font-size: 14px;">${getUIMessage('wiseServiceLabel')}</span>
                             <span style="font-weight: 600; color: #1A1A1A; font-size: 14px;">${orderInfo.serviceName}</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                            <span style="color: #6B7280; font-size: 14px;">주문번호 / Order ID</span>
+                            <span style="color: #6B7280; font-size: 14px;">${getUIMessage('wiseOrderLabel')}</span>
                             <span style="font-weight: 600; color: #1A1A1A; font-size: 14px;">${orderInfo.orderId}</span>
                         </div>
                         <div style="
@@ -2148,7 +2147,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                             padding-top: 12px;
                             border-top: 1px solid #E5E7EB;
                         ">
-                            <span style="color: #1A1A1A; font-weight: 700;">결제 금액 / Amount</span>
+                            <span style="color: #1A1A1A; font-weight: 700;">${getUIMessage('wiseAmountLabel')}</span>
                             <span style="font-weight: 800; color: #059669; font-size: 20px;">₩${orderInfo.amount.toLocaleString()}</span>
                         </div>
                     </div>
@@ -2161,11 +2160,9 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                         margin-bottom: 24px;
                     ">
                         <p style="color: #065F46; font-size: 14px; margin: 0; line-height: 1.6;">
-                            <strong>안내 / Instructions:</strong><br>
-                            아래 버튼을 클릭하여 WISE로 결제해 주세요.<br>
-                            Click the button below to pay via WISE.<br><br>
-                            결제 후 관리자가 확인하면 서비스가 시작됩니다.<br>
-                            Service will start after admin confirms payment.
+                            <strong>${getUIMessage('wiseInstructions')}:</strong><br>
+                            ${getUIMessage('wiseInstruction1')}<br><br>
+                            ${getUIMessage('wiseInstruction2')}
                         </p>
                     </div>
 
@@ -2185,7 +2182,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                         line-height: 56px;
                         box-shadow: 0 4px 16px rgba(159, 232, 112, 0.3);
                     ">
-                        WISE로 결제하기 / Pay with WISE
+                        ${getUIMessage('wisePayBtn')}
                     </a>
 
                     <button onclick="document.getElementById('wisePaymentModal').remove()" style="
@@ -2200,7 +2197,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                         cursor: pointer;
                         margin-top: 12px;
                     ">
-                        닫기 / Close
+                        ${getUIMessage('wiseClose')}
                     </button>
                 </div>
             `;
@@ -2515,6 +2512,105 @@ Cam on.`,
                     ja: 'スレッドを開く',
                     mn: 'Нээх',
                     th: 'เปิดเธรด'
+                },
+                wiseTitle: {
+                    ko: 'WISE 계좌 이체',
+                    en: 'Bank Transfer via WISE',
+                    zh: 'WISE银行转账',
+                    vi: 'Chuyển khoản qua WISE',
+                    ja: 'WISE銀行振込',
+                    mn: 'WISE банк шилжүүлэг',
+                    th: 'โอนเงินผ่าน WISE'
+                },
+                wiseServiceLabel: {
+                    ko: '서비스',
+                    en: 'Service',
+                    zh: '服务',
+                    vi: 'Dịch vụ',
+                    ja: 'サービス',
+                    mn: 'Үйлчилгээ',
+                    th: 'บริการ'
+                },
+                wiseOrderLabel: {
+                    ko: '주문번호',
+                    en: 'Order ID',
+                    zh: '订单号',
+                    vi: 'Mã đơn hàng',
+                    ja: '注文番号',
+                    mn: 'Захиалгын дугаар',
+                    th: 'หมายเลขคำสั่งซื้อ'
+                },
+                wiseAmountLabel: {
+                    ko: '결제 금액',
+                    en: 'Amount',
+                    zh: '支付金额',
+                    vi: 'Số tiền',
+                    ja: '決済金額',
+                    mn: 'Төлбөрийн дүн',
+                    th: 'จำนวนเงิน'
+                },
+                wiseInstructions: {
+                    ko: '안내',
+                    en: 'Instructions',
+                    zh: '说明',
+                    vi: 'Hướng dẫn',
+                    ja: 'ご案内',
+                    mn: 'Заавар',
+                    th: 'คำแนะนำ'
+                },
+                wiseInstruction1: {
+                    ko: '아래 버튼을 클릭하여 WISE로 결제해 주세요.',
+                    en: 'Click the button below to pay via WISE.',
+                    zh: '请点击下方按钮通过WISE支付。',
+                    vi: 'Nhấn nút bên dưới để thanh toán qua WISE.',
+                    ja: '下のボタンをクリックしてWISEで決済してください。',
+                    mn: 'Доорх товчийг дарж WISE-ээр төлнө үү.',
+                    th: 'คลิกปุ่มด้านล่างเพื่อชำระผ่าน WISE'
+                },
+                wiseInstruction2: {
+                    ko: '결제 후 관리자가 확인하면 서비스가 시작됩니다.',
+                    en: 'Service will start after admin confirms payment.',
+                    zh: '管理员确认付款后服务将开始。',
+                    vi: 'Dịch vụ sẽ bắt đầu sau khi quản trị viên xác nhận thanh toán.',
+                    ja: '管理者が入金確認後、サービスが開始されます。',
+                    mn: 'Админ төлбөрийг баталгаажуулсны дараа үйлчилгээ эхэлнэ.',
+                    th: 'บริการจะเริ่มหลังจากผู้ดูแลยืนยันการชำระเงิน'
+                },
+                wisePayBtn: {
+                    ko: 'WISE로 결제하기',
+                    en: 'Pay with WISE',
+                    zh: '使用WISE支付',
+                    vi: 'Thanh toán qua WISE',
+                    ja: 'WISEで支払う',
+                    mn: 'WISE-ээр төлөх',
+                    th: 'ชำระผ่าน WISE'
+                },
+                wiseClose: {
+                    ko: '닫기',
+                    en: 'Close',
+                    zh: '关闭',
+                    vi: 'Đóng',
+                    ja: '閉じる',
+                    mn: 'Хаах',
+                    th: 'ปิด'
+                },
+                wiseLinkNotFound: {
+                    ko: 'WISE 결제 링크를 찾을 수 없습니다. 관리자에게 문의해주세요.',
+                    en: 'WISE payment link not found. Please contact admin.',
+                    zh: '未找到WISE支付链接。请联系管理员。',
+                    vi: 'Không tìm thấy liên kết WISE. Vui lòng liên hệ quản trị viên.',
+                    ja: 'WISE決済リンクが見つかりません。管理者にお問い合わせください。',
+                    mn: 'WISE төлбөрийн линк олдсонгүй. Админтай холбогдоно уу.',
+                    th: 'ไม่พบลิงก์ WISE กรุณาติดต่อผู้ดูแล'
+                },
+                wiseConfirmMsg: {
+                    ko: '감사합니다! 1-2 영업일 이내에 결제를 확인하겠습니다.',
+                    en: 'Thank you! We\'ll confirm your payment within 1-2 business days.',
+                    zh: '谢谢！我们将在1-2个工作日内确认您的付款。',
+                    vi: 'Cảm ơn! Chúng tôi sẽ xác nhận thanh toán trong 1-2 ngày làm việc.',
+                    ja: 'ありがとうございます！1-2営業日以内にお支払いを確認いたします。',
+                    mn: 'Баярлалаа! 1-2 ажлын өдрийн дотор төлбөрийг баталгаажуулна.',
+                    th: 'ขอบคุณ! เราจะยืนยันการชำระเงินภายใน 1-2 วันทำการ'
                 }
             };
 
@@ -2536,6 +2632,15 @@ Cam on.`,
 
         function showWiseModal(orderInfo) {
             wiseOrderInfo = orderInfo;
+            // Translate modal labels
+            document.getElementById('wiseModalTitle').textContent = getUIMessage('wiseTitle');
+            document.getElementById('wiseServiceLabel').textContent = getUIMessage('wiseServiceLabel');
+            document.getElementById('wiseOrderLabel').textContent = getUIMessage('wiseOrderLabel');
+            document.getElementById('wiseAmountLabel').textContent = getUIMessage('wiseAmountLabel');
+            document.getElementById('wiseNotice').innerHTML = '<strong>' + getUIMessage('wiseInstructions') + ':</strong><p>' + getUIMessage('wiseInstruction1') + '</p><p style="margin-top: 8px;">' + getUIMessage('wiseInstruction2') + '</p>';
+            document.getElementById('wisePayBtn').textContent = getUIMessage('wisePayBtn');
+            document.getElementById('wiseCloseBtn').textContent = getUIMessage('wiseClose');
+            // Set order info
             document.getElementById('wiseServiceName').textContent = orderInfo.orderName;
             document.getElementById('wiseOrderId').textContent = 'WISE-' + orderInfo.orderId;
             document.getElementById('wiseAmount').textContent = '₩' + orderInfo.amount.toLocaleString();
@@ -2554,7 +2659,7 @@ Cam on.`,
             const btn = document.getElementById('wisePayBtn');
             btn.disabled = true;
             btn.classList.add('loading');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 처리 중...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + getUIMessage('processing');
 
             try {
                 const session = await checkSession();
@@ -2632,15 +2737,15 @@ ${window.location.origin}/profile-submit.html?thread=${threadId}`;
 
                 // Close modal and redirect to thread
                 closeWiseModal();
-                alert('Thank you! We\'ll confirm your payment within 1-2 business days.');
+                alert(getUIMessage('wiseConfirmMsg'));
                 window.location.href = `thread-general-v2.html?id=${threadId}`;
 
             } catch (error) {
                 console.error('Error:', error);
                 btn.disabled = false;
                 btn.classList.remove('loading');
-                btn.innerHTML = 'WISE로 결제하기 / Pay with WISE';
-                alert('An error occurred. Please try again.');
+                btn.innerHTML = getUIMessage('wisePayBtn');
+                alert(getUIMessage('errorOccurred'));
             }
         }
 
