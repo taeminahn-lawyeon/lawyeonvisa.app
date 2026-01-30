@@ -2789,7 +2789,7 @@
                     const messageData = {
                         thread_id: threadId,
                         content: content,
-                        sender_type: isAdmin ? 'admin' : 'client',
+                        sender_type: 'user',
                         attachments: null
                     };
                     const result = await createMessage(messageData);
