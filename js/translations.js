@@ -62,6 +62,7 @@ const translations = {
         'common.loginRequired': '로그인이 필요합니다.',
         'common.comingSoon': '준비중입니다',
         'common.serviceLoginRequired': '서비스 신청은 로그인이 필요합니다.',
+        'common.serviceLoginConfirm': '서비스 신청은 로그인이 필요합니다.\n\nGoogle 계정으로 로그인하시겠습니까?',
         
         // === 사이트 정보 (Site Information) ===
         'site.name': '법무법인 로연 출입국이민지원센터',
@@ -683,6 +684,7 @@ const translations = {
         'common.loginRequired': 'Please sign in to continue.',
         'common.comingSoon': 'Coming Soon',
         'common.serviceLoginRequired': 'Please sign in to submit service applications.',
+        'common.serviceLoginConfirm': 'Sign in is required to apply for services.\n\nSign in with Google?',
         
         // === Site Information ===
         'site.name': 'Law Firm Lawyeon\'s Visa & Immigration Center',
@@ -1321,6 +1323,7 @@ const translations = {
         'common.loginRequired': '需要登录。',
         'common.comingSoon': '准备中',
         'common.serviceLoginRequired': '申请服务需要登录。',
+        'common.serviceLoginConfirm': '申请服务需要登录。\n\n使用Google账户登录？',
         'common.logout': '退出',
         'login.google': 'Google 登录',
         'site.name': '律渊律师事务所 出入境移民支援中心',
@@ -1914,6 +1917,7 @@ const translations = {
         'common.loginRequired': 'Cần đăng nhập.',
         'common.comingSoon': 'Sắp ra mắt',
         'common.serviceLoginRequired': 'Đăng nhập để sử dụng dịch vụ.',
+        'common.serviceLoginConfirm': 'Đăng nhập để sử dụng dịch vụ.\n\nĐăng nhập bằng Google?',
         'common.logout': 'Đăng xuất',
         'login.google': 'Đăng nhập Google',
         'site.name': 'Trung Tâm Hỗ Trợ Xuất Nhập Cảnh Lawyeon',
@@ -2507,6 +2511,7 @@ const translations = {
         'common.loginRequired': 'ログインが必要です。',
         'common.comingSoon': '準備中',
         'common.serviceLoginRequired': 'サービスの申請にはログインが必要です。',
+        'common.serviceLoginConfirm': 'サービスの申請にはログインが必要です。\n\nGoogleアカウントでログインしますか？',
         'common.logout': 'ログアウト',
         'login.google': 'Google ログイン',
         'site.name': 'ロヨン法律事務所出入国移民支援センター',
@@ -3098,6 +3103,7 @@ const translations = {
         'common.loginRequired': 'Нэвтрэх шаардлагатай.',
         'common.comingSoon': 'Удахгүй',
         'common.serviceLoginRequired': 'Үйлчилгээ авахын тулд нэвтэрнэ үү.',
+        'common.serviceLoginConfirm': 'Үйлчилгээ авахын тулд нэвтэрнэ үү.\n\nGoogle-ээр нэвтрэх үү?',
         'common.logout': 'Гарах',
         'login.google': 'Google нэвтрэх',
         'site.name': 'Lawyeon Хуулийн Фирм Цагаачлалын Тусламжийн Төв',
@@ -3689,6 +3695,7 @@ const translations = {
         'common.loginRequired': 'จำเป็นต้องเข้าสู่ระบบ',
         'common.comingSoon': 'เร็วๆ นี้',
         'common.serviceLoginRequired': 'ต้องเข้าสู่ระบบเพื่อใช้บริการ',
+        'common.serviceLoginConfirm': 'ต้องเข้าสู่ระบบเพื่อใช้บริการ\n\nเข้าสู่ระบบด้วย Google?',
         'common.logout': 'ออกจากระบบ',
         'login.google': 'เข้าสู่ระบบ Google',
         'site.name': 'ศูนย์สนับสนุนตรวจคนเข้าเมือง Lawyeon',

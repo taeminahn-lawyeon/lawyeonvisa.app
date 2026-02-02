@@ -1467,7 +1467,7 @@
         const servicePricing = {
             // Premium Services
             'visa-prediagnosis': { name: 'Visa Legal Advice', price: 55000, govFee: 0, desc: 'Visa change, overstay risk, immigration law consultation', icon: '🔍', badge: 'Legal Advice' },
-            'emergency-legal': { name: 'Immigration Dispute Resolution', price: 0, govFee: 0, desc: 'Criminal investigation, deportation defense, visa denial appeals', icon: '⚖️', consulting: true },
+            'emergency-legal': { name: 'Immigration Dispute Resolution', price: 0, govFee: 0, desc: 'Criminal investigation, deportation defense, visa denial appeals', icon: '⚖️', deferredPayment: true },
 
             // Education & Job Search
             'd4-to-d2-change': { name: 'D-4→D-2 Student Visa Change', price: 110000, govFee: 119000, desc: 'Language course to degree program', icon: '🎓' },
@@ -2441,6 +2441,15 @@ Cam on.`,
                     mn: 'Таны хүсэлт илгээгдлээ!\n\nМэргэжилтэнтэй зөвлөлдсөний дараа ₩{amount} төлбөр хүсэх болно.',
                     th: 'สร้างเธรดแล้ว!\n\nหลังจากปรึกษากับผู้เชี่ยวชาญจะแจ้งการชำระเงิน ₩{amount}'
                 },
+                threadCreatedConsultFirst: {
+                    ko: '쓰레드가 생성되었습니다!\n\n담당자와 상담 후 결제가 안내됩니다.',
+                    en: 'Your thread has been created!\n\nPayment details will be provided after consultation with our specialist.',
+                    zh: '您的线程已创建！\n\n与专员咨询后将提供付款详情。',
+                    vi: 'Chuoi cua ban da duoc tao!\n\nChi tiet thanh toan se duoc cung cap sau khi tu van.',
+                    ja: 'スレッドが作成されました！\n\n担当者との相談後、お支払いをご案内いたします。',
+                    mn: 'Таны хүсэлт илгээгдлээ!\n\nМэргэжилтэнтэй зөвлөлдсөний дараа төлбөрийг мэдэгдэнэ.',
+                    th: 'สร้างเธรดแล้ว!\n\nรายละเอียดการชำระเงินจะแจ้งหลังจากปรึกษากับผู้เชี่ยวชาญ'
+                },
                 quoteSubmitted: {
                     ko: '견적 요청이 제출되었습니다!\n\n담당자가 곧 전용 쓰레드를 통해 연락드리겠습니다.',
                     en: 'Quote request submitted!\n\nOur specialist will contact you shortly through your dedicated thread.',
@@ -2859,7 +2868,11 @@ Our specialist will contact you within 30 minutes after you submit your informat
                         console.error('Welcome message error:', msgErr);
                     }
 
-                    alert(getUIMessage('threadCreated', { amount: selectedService.totalPrice.toLocaleString() }));
+                    if (selectedService.totalPrice > 0) {
+                        alert(getUIMessage('threadCreated', { amount: selectedService.totalPrice.toLocaleString() }));
+                    } else {
+                        alert(getUIMessage('threadCreatedConsultFirst'));
+                    }
                 }
 
                 window.location.href = `thread-general-v2.html?id=${threadId}`;
