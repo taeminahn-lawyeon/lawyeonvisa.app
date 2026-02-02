@@ -1782,14 +1782,9 @@
                 const universityCode = localStorage.getItem('universityCode');
                 console.log('🎓 대학 코드:', universityCode);
                 
-                if (universityCode === 'jnu') {
-                    console.log('➡️ 전남대 학생 - login-jnu.html로 즉시 리디렉션');
-                    window.location.replace('login-jnu.html' + window.location.search + window.location.hash);
-                    return;
-                } else if (universityCode === 'korea') {
-                    console.log('➡️ 한국대 학생 - login-korea.html로 즉시 리디렉션');
-                    window.location.replace('login-korea.html' + window.location.search + window.location.hash);
-                    return;
+                // 협약 대학 코드 처리 (현재 DHU만 활성)
+                if (universityCode) {
+                    console.log('🎓 대학 코드 감지:', universityCode, '- index.html에서 처리');
                 }
             }
         })();
@@ -2072,17 +2067,9 @@
                 
                 console.log('🔍 관리자 체크:', adminData);
                 
-                // 🚨 대학 관리자 거부 (admins 테이블에 있으면 관리자)
+                // 🚨 관리자 권한 확인
                 if (adminData && adminData.role) {
-                    if (adminData.role === 'partner_jnu' || adminData.role === 'partner_korea') {
-                        console.log('❌ 협약 기관 관리자 감지:', adminData.role);
-                        alert('협약 기관 관리자 전용 페이지를 이용해주세요.\n\n권한이 없습니다.');
-                        await signOut();
-                        window.location.reload();
-                        return;
-                    }
-                    // 일반 관리자(super_admin)는 index.html 사용 가능
-                    console.log('✅ 슈퍼 관리자 - index.html 접근 허용');
+                    console.log('✅ 관리자 - index.html 접근 허용');
                 }
                 
                 // 🔍 일반 사용자 프로필 확인
@@ -2091,17 +2078,6 @@
                 
                 // ✅ 프로필 데이터 사용 (위에서 이미 조회함)
                 const profileData = userProfile;
-                
-                // 🚨 협약 기관 학생 리디렉션 (organization이 'jnu' 또는 'korea'인 경우)
-                if (profileData && profileData.organization === 'jnu') {
-                    console.log('🔄 전남대 학생 감지 → dashboard-jnu.html로 리디렉션');
-                    window.location.href = 'dashboard-jnu.html';
-                    return;
-                } else if (profileData && profileData.organization === 'korea') {
-                    console.log('🔄 한국대 학생 감지 → dashboard-korea.html로 리디렉션');
-                    window.location.href = 'dashboard-korea.html';
-                    return;
-                }
                 
                 if (profileData) {
                     console.log('✅ 프로필 데이터 확인 완료 (일반 사용자)');
@@ -2195,16 +2171,9 @@
                     const universityCode = localStorage.getItem('universityCode');
                     console.log('🔍 프로필 없음 - universityCode:', universityCode);
                     
-                    if (universityCode === 'jnu') {
-                        // 전남대 학생 → login-jnu.html로 리디렉션 (프로필 생성 위해)
-                        console.log('➡️ 전남대 학생 - login-jnu.html로 리디렉션');
-                        window.location.href = 'login-jnu.html';
-                        return;
-                    } else if (universityCode === 'korea') {
-                        // 한국대 학생 → login-korea.html로 리디렉션 (프로필 생성 위해)
-                        console.log('➡️ 한국대 학생 - login-korea.html로 리디렉션');
-                        window.location.href = 'login-korea.html';
-                        return;
+                    // 대학 코드가 있어도 일반 프로필 생성 흐름 사용
+                    if (universityCode) {
+                        console.log('🎓 대학 코드 감지:', universityCode, '- 일반 흐름으로 진행');
                     }
                     
                     // 일반 사용자 - 기본사항 제출로 이동 (단, 사용자가 뒤로가기를 누른 경우 제외)

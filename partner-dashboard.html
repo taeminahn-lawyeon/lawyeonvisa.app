@@ -27,12 +27,8 @@
             border-bottom: 3px solid #FFD700;
         }
 
-        .header.jnu {
-            background: linear-gradient(135deg, #00A651 0%, #007A33 50%, #005A25 100%);
-        }
-
-        .header.snu {
-            background: linear-gradient(135deg, #0E4A84 0%, #0C3D6E 50%, #093057 100%);
+        .header.dhu {
+            background: linear-gradient(135deg, #3CB3A0 0%, #3B4D7D 50%, #2D3748 100%);
         }
 
         .header-content {
@@ -683,7 +679,7 @@
         window.addEventListener('DOMContentLoaded', function() {
             // URL 파라미터에서 조직 코드 가져오기
             const urlParams = new URLSearchParams(window.location.search);
-            orgCode = urlParams.get('org') || 'jnu'; // 기본값: jnu
+            orgCode = urlParams.get('org') || 'dhu'; // 기본값: dhu
             
             // 담당자 권한 확인
             checkPartnerAccess();
@@ -719,7 +715,7 @@
             }
             
             // organization 설정
-            orgCode = profile.organization || 'jnu';
+            orgCode = profile.organization || 'dhu';
             
             return true;
         }
@@ -727,8 +723,7 @@
         // 조직별 브랜드 적용
         function applyOrgBranding() {
             const orgNames = {
-                'jnu': '전남대학교',
-                'snu': '서울대학교'
+                'dhu': '대구한의대학교'
             };
             
             document.getElementById('orgHeader').classList.add(orgCode);
