@@ -1489,7 +1489,7 @@
                         <div class="desc-item" data-i18n="emergency.diagnosis.item2">Immigration law violation consultation</div>
                         <div class="desc-item" data-i18n="emergency.diagnosis.item3">Overstay risk assessment</div>
                     </div>
-                    <button class="cta-btn" onclick="event.stopPropagation(); location.href='service-apply-general.html?service=visa-prediagnosis'"><span data-i18n="emergency.diagnosis.cta">Request Diagnosis</span> <span class="arrow">→</span></button>
+                    <button class="cta-btn" onclick="event.stopPropagation(); goToConsent({id: 'visa-prediagnosis'})"><span data-i18n="emergency.diagnosis.cta">Request Diagnosis</span> <span class="arrow">→</span></button>
                 </div>
             </div>
         </div>
@@ -2505,8 +2505,10 @@
             console.log('🔍 세션:', session);
             
             if (!session || !session.user) {
-                alert(window.i18n.translate('common.serviceLoginRequired'));
-                document.getElementById('googleLoginBtn').scrollIntoView({ behavior: 'smooth' });
+                localStorage.setItem('redirectAfterLogin', window.location.origin + '/service-apply-general.html?service=' + service.id);
+                if (confirm(window.i18n.translate('common.serviceLoginConfirm'))) {
+                    await signInWithGoogle();
+                }
                 return;
             }
             
