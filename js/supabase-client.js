@@ -49,27 +49,7 @@ async function signInWithGoogle() {
         let redirectUrl = window.location.href;
 
         // 🚨 페이지별 리디렉션 URL 및 universityCode 설정
-        if (currentPage === 'login-jnu.html') {
-            // 전남대 학생 로그인
-            localStorage.setItem('universityCode', 'jnu');
-            redirectUrl = window.location.origin + '/login-jnu.html';
-            console.log('✅ 전남대 학생 로그인 - 대학 코드 설정');
-        } else if (currentPage === 'login-korea.html') {
-            // 한국대 학생 로그인
-            localStorage.setItem('universityCode', 'korea');
-            redirectUrl = window.location.origin + '/login-korea.html';
-            console.log('✅ 한국대 학생 로그인 - 대학 코드 설정');
-        } else if (currentPage === 'partner-login-jnu.html') {
-            // 전남대 관리자 로그인 (universityCode 사용 안 함)
-            localStorage.removeItem('universityCode');
-            redirectUrl = window.location.origin + '/partner-login-jnu.html';
-            console.log('✅ 전남대 관리자 로그인');
-        } else if (currentPage === 'partner-login-korea.html') {
-            // 한국대 관리자 로그인 (universityCode 사용 안 함)
-            localStorage.removeItem('universityCode');
-            redirectUrl = window.location.origin + '/partner-login-korea.html';
-            console.log('✅ 한국대 관리자 로그인');
-        } else if (currentPage === 'service-apply-general.html') {
+        if (currentPage === 'service-apply-general.html') {
             // 서비스 신청 페이지 - 현재 URL 유지 (쿼리 파라미터 포함)
             localStorage.removeItem('universityCode');
             redirectUrl = window.location.href; // 현재 URL 그대로 사용 (service ID 포함)

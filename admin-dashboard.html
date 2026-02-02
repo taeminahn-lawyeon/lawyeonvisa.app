@@ -882,7 +882,7 @@
                     <select id="customerFilterOrg">
                         <option value="">전체</option>
                         <option value="lawyeon">법무법인 로연</option>
-                        <option value="jnu">전남대학교</option>
+                        <option value="dhu">대구한의대학교</option>
                     </select>
                 </div>
                 <div class="filter-item">
@@ -1326,10 +1326,8 @@
                     : '-';
 
                 // 협약단체 표시
-                const organizationBadge = thread.organization === 'jnu'
-                    ? `<span class="org-badge" style="background: linear-gradient(135deg, #00A651 0%, #007A33 100%); color: white; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block;">전남대</span>`
-                    : thread.organization === 'snu'
-                    ? `<span class="org-badge" style="background: linear-gradient(135deg, #1D2088 0%, #0d1147 100%); color: white; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block;">서울대</span>`
+                const organizationBadge = thread.organization === 'dhu'
+                    ? `<span class="org-badge" style="background: linear-gradient(135deg, #3CB3A0 0%, #3B4D7D 100%); color: white; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block;">대구한의대</span>`
                     : `<span style="color: #9CA3AF; font-size: 12px;">일반</span>`;
 
                 // 진행 단계 표시 (자문: 4단계, 민원: 6단계, 소송: 5단계)

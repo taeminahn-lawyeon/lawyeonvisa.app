@@ -296,9 +296,6 @@ function getUserType() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const email = user.email || '';
     
-    // 전남대, 서울대 이메일 체크
-    if (email.includes('@jnu.ac.kr') || email.includes('@snu.ac.kr')) {
-        return 'partner';
-    }
+    // 협약 대학 이메일 체크 (현재 해당 없음 - DHU는 특강코드 인증 방식)
     return 'general';
 }
