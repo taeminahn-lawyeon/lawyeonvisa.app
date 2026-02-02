@@ -912,6 +912,86 @@
             line-height: 1.5;
         }
 
+        /* Service Consent Checkbox */
+        .service-consent-area {
+            margin-top: 20px;
+            padding: 16px 20px;
+            background: #F9FAFB;
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+        }
+
+        .service-consent-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .service-consent-label input[type="checkbox"] {
+            display: none;
+        }
+
+        .service-consent-label .consent-mark {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            border: 2px solid #D1D5DB;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            margin-top: 1px;
+        }
+
+        .service-consent-label .consent-mark::after {
+            content: '';
+            display: none;
+            width: 5px;
+            height: 9px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            margin-top: -2px;
+        }
+
+        .service-consent-label input[type="checkbox"]:checked + .consent-mark {
+            background: #3182F6;
+            border-color: #3182F6;
+        }
+
+        .service-consent-label input[type="checkbox"]:checked + .consent-mark::after {
+            display: block;
+        }
+
+        .service-consent-text {
+            font-size: 13px;
+            color: #374151;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .service-consent-links {
+            margin-top: 6px;
+            margin-left: 30px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .service-consent-links a {
+            font-size: 12px;
+            color: #3182F6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .service-consent-links a:hover {
+            text-decoration: underline;
+        }
+
         /* WISE Modal */
         .wise-modal-overlay {
             display: none;
@@ -1349,16 +1429,29 @@
                     </div>
                 </div>
 
+                <!-- Service Consent -->
+                <div class="service-consent-area" id="service-consent-area">
+                    <label class="service-consent-label">
+                        <input type="checkbox" id="serviceConsentCheck" onchange="onServiceConsentChange()">
+                        <span class="consent-mark"></span>
+                        <span class="service-consent-text" id="serviceConsentText"></span>
+                    </label>
+                    <div class="service-consent-links">
+                        <a href="terms-of-service.html" target="_blank"><i class="fas fa-external-link-alt"></i> <span data-i18n="consent.termsLink">Terms of Service</span></a>
+                        <a href="privacy-policy.html" target="_blank"><i class="fas fa-external-link-alt"></i> <span data-i18n="consent.privacyLink">Privacy Policy</span></a>
+                    </div>
+                </div>
+
                 <!-- CTA Buttons -->
                 <div class="cta-section">
-                    <button class="btn-payment btn-toss" id="payBtn" onclick="processPayment()">
+                    <button class="btn-payment btn-toss" id="payBtn" onclick="processPayment()" disabled>
                         <div class="btn-logo-area">
                             <img src="Toss_Logo_Button_Type.png" alt="Toss">
                         </div>
                         <span id="btn-text" class="btn-text" data-i18n="payment.payWithCard">Pay with Card</span>
                     </button>
 
-                    <button class="btn-payment btn-wise" id="wiseBtn" onclick="processWisePayment()">
+                    <button class="btn-payment btn-wise" id="wiseBtn" onclick="processWisePayment()" disabled>
                         <div class="btn-logo-area">
                             <img src="wise_logo.png" alt="Wise" style="height: 52px; width: 52px;">
                         </div>
@@ -1716,6 +1809,9 @@
             // Keep form hidden - users will fill it out in the thread after payment
 
             document.getElementById('main-content').style.display = 'grid';
+
+            // Initialize consent text
+            initServiceConsentText();
         }
 
         // Get D-10-1 form data
@@ -1817,9 +1913,37 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
 
         // API 개별 연동 클라이언트 키 (라이브)
         const clientKey = 'live_ck_mBZ1gQ4YVX55PNLM1vkarl2KPoqN';
+        // Consent checkbox handler
+        function onServiceConsentChange() {
+            const checked = document.getElementById('serviceConsentCheck').checked;
+            const payBtn = document.getElementById('payBtn');
+            const wiseBtn = document.getElementById('wiseBtn');
+            if (payBtn) payBtn.disabled = !checked;
+            if (wiseBtn) wiseBtn.disabled = !checked;
+        }
+
+        function initServiceConsentText() {
+            const textEl = document.getElementById('serviceConsentText');
+            if (textEl) {
+                textEl.textContent = getUIMessage('serviceConsentLabel');
+            }
+        }
+
+        function checkServiceConsent() {
+            const check = document.getElementById('serviceConsentCheck');
+            if (!check || !check.checked) {
+                alert(getUIMessage('consentRequired'));
+                return false;
+            }
+            return true;
+        }
+
         let tossPayments = null;
 
         async function processPayment() {
+            // Validate consent
+            if (!checkServiceConsent()) return;
+
             // Validate D-10-1 form if applicable
             if (!validateD10Form()) {
                 return;
@@ -2045,6 +2169,9 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
 
         // WISE 결제 처리
         async function processWisePayment() {
+            // Validate consent
+            if (!checkServiceConsent()) return;
+
             // 현재 로그인 사용자 확인
             const session = await checkSession();
             if (!session || !session.user) {
@@ -2495,6 +2622,24 @@ Cam on.`,
                     mn: 'Хүчингүй хандалт.',
                     th: 'การเข้าถึงไม่ถูกต้อง'
                 },
+                consentRequired: {
+                    ko: '서비스 신청을 위해 이용약관 및 개인정보 처리방침에 동의해 주세요.',
+                    en: 'Please agree to the Terms of Service and Privacy Policy to proceed.',
+                    zh: '请同意服务条款和隐私政策后再继续。',
+                    vi: 'Vui long dong y voi Dieu khoan va Chinh sach bao mat de tiep tuc.',
+                    ja: '利用規約とプライバシーポリシーに同意してください。',
+                    mn: 'Үйлчилгээний нөхцөл болон Нууцлалын бодлогыг зөвшөөрнө үү.',
+                    th: 'กรุณายอมรับข้อกำหนดการใช้งานและนโยบายความเป็นส่วนตัว'
+                },
+                serviceConsentLabel: {
+                    ko: '서비스 이용약관 및 개인정보 처리방침에 동의합니다. 출입국 민원 대행 위임에 동의하며, 개인정보가 법무부 출입국·외국인정책본부에 제공될 수 있음을 확인합니다.',
+                    en: 'I agree to the Terms of Service and Privacy Policy. I consent to the delegation of immigration civil affairs and acknowledge that my personal information may be provided to the Ministry of Justice.',
+                    zh: '我同意服务条款和隐私政策。我同意委托办理出入境事务，并确认我的个人信息可能会提供给法务部。',
+                    vi: 'Toi dong y voi Dieu khoan dich vu va Chinh sach bao mat. Toi dong y uy quyen xu ly thu tuc xuat nhap canh va xac nhan thong tin ca nhan co the duoc cung cap cho Bo Tu phap.',
+                    ja: '利用規約とプライバシーポリシーに同意します。出入国民事委任に同意し、個人情報が法務部に提供される場合があることを確認します。',
+                    mn: 'Үйлчилгээний нөхцөл болон Нууцлалын бодлогыг зөвшөөрч байна. Цагаачлалын үйлчилгээг даалгахыг зөвшөөрч, хувийн мэдээллийг Хууль зүйн яаманд өгч болохыг баталж байна.',
+                    th: 'ข้าพเจ้ายอมรับข้อกำหนดการใช้งานและนโยบายความเป็นส่วนตัว ข้าพเจ้ายินยอมมอบอำนาจในการดำเนินการตรวจคนเข้าเมือง'
+                },
                 selectResidenceProof: {
                     ko: '거주 증명 유형을 선택해주세요',
                     en: 'Please select your Proof of Residence type',
@@ -2759,6 +2904,9 @@ ${window.location.origin}/profile-submit.html?thread=${threadId}`;
         }
 
         async function applyForDeferredPayment() {
+            // Validate consent
+            if (!checkServiceConsent()) return;
+
             const btn = document.getElementById('payBtn');
             btn.disabled = true;
             btn.classList.add('loading');
@@ -2886,6 +3034,9 @@ Our specialist will contact you within 30 minutes after you submit your informat
         }
 
         async function applyForConsulting() {
+            // Validate consent
+            if (!checkServiceConsent()) return;
+
             const btn = document.getElementById('payBtn');
             btn.disabled = true;
             btn.classList.add('loading');
