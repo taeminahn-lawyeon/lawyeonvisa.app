@@ -151,6 +151,194 @@
             color: #3182F6;
         }
 
+        /* 동의 영역 */
+        .consent-all-box {
+            background: #EFF6FF;
+            border: 2px solid #3182F6;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+        }
+
+        .consent-all-label .consent-text-main {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1B64DA;
+        }
+
+        .consent-item {
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            background: #FAFAFA;
+            transition: border-color 0.2s;
+        }
+
+        .consent-item:hover {
+            border-color: #3182F6;
+        }
+
+        .consent-checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .consent-checkbox-label input[type="checkbox"] {
+            display: none;
+        }
+
+        .consent-checkbox-label .checkmark {
+            width: 22px;
+            height: 22px;
+            min-width: 22px;
+            border: 2px solid #D1D5DB;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            margin-top: 2px;
+        }
+
+        .consent-checkbox-label .checkmark::after {
+            content: '';
+            display: none;
+            width: 6px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2.5px 2.5px 0;
+            transform: rotate(45deg);
+            margin-top: -2px;
+        }
+
+        .consent-checkbox-label input[type="checkbox"]:checked + .checkmark {
+            background: #3182F6;
+            border-color: #3182F6;
+        }
+
+        .consent-checkbox-label input[type="checkbox"]:checked + .checkmark::after {
+            display: block;
+        }
+
+        .consent-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            line-height: 1.5;
+        }
+
+        .consent-toggle-btn {
+            background: none;
+            border: none;
+            color: #6B7280;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 4px 8px;
+            margin-top: 8px;
+            margin-left: 34px;
+            transition: transform 0.2s;
+        }
+
+        .consent-toggle-btn.open {
+            transform: rotate(180deg);
+        }
+
+        .consent-detail {
+            display: none;
+            margin-top: 12px;
+            margin-left: 34px;
+            padding: 16px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #E5E7EB;
+            font-size: 13px;
+            color: #4B5563;
+            line-height: 1.7;
+        }
+
+        .consent-detail.open {
+            display: block;
+        }
+
+        .consent-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 8px 0;
+        }
+
+        .consent-table th,
+        .consent-table td {
+            border: 1px solid #E5E7EB;
+            padding: 10px 12px;
+            font-size: 13px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .consent-table th {
+            background: #F9FAFB;
+            font-weight: 600;
+            color: #374151;
+            width: 120px;
+        }
+
+        .consent-note {
+            font-size: 12px;
+            color: #6B7280;
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: #FEF3C7;
+            border-radius: 6px;
+            line-height: 1.6;
+        }
+
+        .consent-links {
+            margin-top: 8px;
+            margin-left: 34px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .consent-links a {
+            font-size: 13px;
+            color: #3182F6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .consent-links a:hover {
+            text-decoration: underline;
+        }
+
+        .delegation-content {
+            line-height: 1.8;
+        }
+
+        .delegation-content p {
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .delegation-content ul {
+            margin: 4px 0 12px 20px;
+            font-size: 13px;
+        }
+
+        .delegation-content li {
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         /* 폼 카드 */
         .form-card {
             background: white;
@@ -513,6 +701,10 @@
                     <div class="step-circle">3</div>
                     <div class="step-label">Documents</div>
                 </div>
+                <div class="step" data-step="4">
+                    <div class="step-circle">4</div>
+                    <div class="step-label">Consent</div>
+                </div>
             </div>
         </div>
 
@@ -765,8 +957,178 @@
                     <button type="button" class="submit-btn prev-btn" onclick="goToStep(2)">
                         <i class="fas fa-arrow-left"></i> Previous
                     </button>
-                    <button type="submit" class="submit-btn">
-                        <i class="fas fa-check-circle"></i> Submit
+                    <button type="button" class="submit-btn" onclick="goToStep(4)">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 4: 동의 -->
+            <div class="form-card" id="step4" style="display: none;">
+                <div class="form-section">
+                    <div class="section-title">
+                        <span class="icon">📋</span>
+                        <span>Consent & Agreement</span>
+                    </div>
+                    <p style="font-size: 14px; color: #6B7280; margin-bottom: 20px;">
+                        Please review and agree to the following before submitting your information.<br>
+                        정보 제출 전 아래 내용을 확인하고 동의해 주세요.
+                    </p>
+
+                    <!-- 전체 동의 -->
+                    <div class="consent-all-box">
+                        <label class="consent-checkbox-label consent-all-label">
+                            <input type="checkbox" id="consentAll" onchange="toggleAllConsent(this.checked)">
+                            <span class="checkmark"></span>
+                            <span class="consent-text-main">Agree to All / 전체 동의합니다</span>
+                        </label>
+                    </div>
+
+                    <!-- 개인정보 수집·이용 동의 -->
+                    <div class="consent-item">
+                        <label class="consent-checkbox-label">
+                            <input type="checkbox" class="consent-check" id="consentPrivacy" onchange="updateConsentAll()">
+                            <span class="checkmark"></span>
+                            <span class="consent-text">[Required] Consent to Collection and Use of Personal Information<br>[필수] 개인정보 수집·이용 동의</span>
+                        </label>
+                        <button type="button" class="consent-toggle-btn" onclick="toggleConsentDetail('privacyDetail')">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="consent-detail" id="privacyDetail">
+                            <table class="consent-table">
+                                <tr>
+                                    <th>Items Collected<br>수집항목</th>
+                                    <td>Name, date of birth, nationality, phone number, messenger info, visa type, visa expiry date, alien registration number, address, passport photo, alien registration card photo, electronic signature<br>
+                                    성명, 생년월일, 국적, 전화번호, 메신저 정보, 체류자격, 체류만료일, 외국인등록번호, 주소, 여권사진, 외국인등록증 사진, 전자서명</td>
+                                </tr>
+                                <tr>
+                                    <th>Purpose<br>이용목적</th>
+                                    <td>Immigration civil affairs proxy application (visa extension, status change, alien registration, etc.), legal consultation, identity verification, service communication<br>
+                                    출입국 민원 대리 신청(비자 연장, 체류자격 변경, 외국인등록 등), 법률 상담, 본인확인, 서비스 연락</td>
+                                </tr>
+                                <tr>
+                                    <th>Retention Period<br>보유기간</th>
+                                    <td>5 years after service completion (Attorney Act Article 26, case record preservation obligation)<br>
+                                    서비스 완료 후 5년 (변호사법 제26조, 사건기록 보존의무)</td>
+                                </tr>
+                            </table>
+                            <p class="consent-note">You may refuse to consent, but the service cannot be provided without consent.<br>
+                            동의를 거부할 수 있으나, 동의 없이는 서비스 제공이 불가합니다.</p>
+                        </div>
+                    </div>
+
+                    <!-- 개인정보 제3자 제공 동의 -->
+                    <div class="consent-item">
+                        <label class="consent-checkbox-label">
+                            <input type="checkbox" class="consent-check" id="consentThirdParty" onchange="updateConsentAll()">
+                            <span class="checkmark"></span>
+                            <span class="consent-text">[Required] Consent to Provision of Personal Information to Third Parties<br>[필수] 개인정보 제3자 제공 동의</span>
+                        </label>
+                        <button type="button" class="consent-toggle-btn" onclick="toggleConsentDetail('thirdPartyDetail')">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="consent-detail" id="thirdPartyDetail">
+                            <table class="consent-table">
+                                <tr>
+                                    <th>Recipient<br>제공받는 자</th>
+                                    <td>Ministry of Justice, Immigration & Foreign Policy Headquarters<br>법무부 출입국·외국인정책본부</td>
+                                </tr>
+                                <tr>
+                                    <th>Items Provided<br>제공항목</th>
+                                    <td>Name, nationality, alien registration number/passport number, visa type, civil affair application details<br>
+                                    성명, 국적, 외국인등록번호/여권번호, 체류자격, 신청 민원 내용</td>
+                                </tr>
+                                <tr>
+                                    <th>Purpose<br>제공목적</th>
+                                    <td>Visa extension/change, alien registration, and other immigration civil affairs processing<br>
+                                    비자 연장·변경, 외국인등록 등 출입국 민원 처리</td>
+                                </tr>
+                                <tr>
+                                    <th>Retention Period<br>보유기간</th>
+                                    <td>Per Ministry of Justice internal regulations<br>법무부 자체 규정에 따름</td>
+                                </tr>
+                            </table>
+                            <p class="consent-note">Information is provided only when you request civil affairs proxy application. It is not provided for simple legal consultation.<br>
+                            민원 대리 신청을 요청한 경우에만 제공되며, 단순 법률 상담 시에는 제공되지 않습니다.</p>
+                        </div>
+                    </div>
+
+                    <!-- 출입국 민원 대행 위임 동의 -->
+                    <div class="consent-item">
+                        <label class="consent-checkbox-label">
+                            <input type="checkbox" class="consent-check" id="consentDelegation" onchange="updateConsentAll()">
+                            <span class="checkmark"></span>
+                            <span class="consent-text">[Required] Consent to Delegation of Immigration Civil Affairs<br>[필수] 출입국 민원 신청 대행 위임 동의</span>
+                        </label>
+                        <button type="button" class="consent-toggle-btn" onclick="toggleConsentDetail('delegationDetail')">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="consent-detail" id="delegationDetail">
+                            <div class="delegation-content">
+                                <p><strong>Delegation Agreement / 위임 동의서</strong></p>
+                                <p>By agreeing to this, I (the "Delegator") delegate to Law Firm Lawyeon (the "Delegate") the following immigration civil affairs proxy services:<br>
+                                본인(위임인)은 법무법인 로연(수임인)에게 다음의 출입국 민원 대행 업무를 위임합니다:</p>
+                                <ul>
+                                    <li>Visa extension, status change, alien registration, and all related immigration civil affairs for the applied service<br>
+                                    신청한 서비스와 관련된 비자 연장, 체류자격 변경, 외국인등록 등 출입국 민원 일체</li>
+                                </ul>
+
+                                <p><strong>Delegator's Obligations / 위임인의 의무:</strong></p>
+                                <ul>
+                                    <li>Provide accurate and truthful information. If false information is provided, the Delegator bears full responsibility.<br>
+                                    정확하고 진실한 정보를 제공할 의무가 있으며, 허위 정보 제공 시 위임인이 전적으로 책임을 집니다.</li>
+                                    <li>Cooperate with document submission requests in a timely manner.<br>
+                                    서류 제출 요청에 적시에 협조할 의무가 있습니다.</li>
+                                </ul>
+
+                                <p><strong>Delegate's Obligations / 수임인의 의무:</strong></p>
+                                <ul>
+                                    <li>Handle delegated matters with due care of a good manager (선관주의의무).<br>
+                                    선량한 관리자의 주의의무로 위임 업무를 처리합니다.</li>
+                                    <li>Process delegated matters only within the scope of the delegation purpose.<br>
+                                    위임 목적 범위 내에서만 업무를 처리합니다.</li>
+                                    <li>Report progress to the Delegator and notify of important matters promptly.<br>
+                                    위임인에게 진행 상황을 보고하고 중요한 사항은 지체 없이 알립니다.</li>
+                                </ul>
+
+                                <p><strong>Important Notice / 유의사항:</strong></p>
+                                <ul>
+                                    <li>Final decisions on visa applications are at the discretion of the immigration authorities. The Delegate is not responsible for rejection decisions.<br>
+                                    비자 신청에 대한 최종 결정은 출입국관리당국의 재량이며, 수임인은 거부 결정에 대해 책임을 지지 않습니다.</li>
+                                    <li>This delegation is governed by the laws of the Republic of Korea.<br>
+                                    본 위임은 대한민국 법률에 따라 규율됩니다.</li>
+                                </ul>
+
+                                <p class="consent-note">
+                                    Delegate: Law Firm Lawyeon LLC. (Representative Attorney Min Jun-woo)<br>
+                                    수임인: 법무법인 로연 (대표변호사 민준우)<br>
+                                    Immigration Agency Registration: #25-SM-RG-063<br>
+                                    출입국이민지원센터 등록번호: 제25-SM-RG-063호
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 서비스 이용약관 동의 -->
+                    <div class="consent-item">
+                        <label class="consent-checkbox-label">
+                            <input type="checkbox" class="consent-check" id="consentTerms" onchange="updateConsentAll()">
+                            <span class="checkmark"></span>
+                            <span class="consent-text">[Required] Agree to Terms of Service and Privacy Policy<br>[필수] 서비스 이용약관 및 개인정보 처리방침 동의</span>
+                        </label>
+                        <div class="consent-links">
+                            <a href="terms-of-service.html" target="_blank"><i class="fas fa-external-link-alt"></i> Terms of Service / 이용약관</a>
+                            <a href="privacy-policy.html" target="_blank"><i class="fas fa-external-link-alt"></i> Privacy Policy / 개인정보 처리방침</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="submit-section">
+                    <button type="button" class="submit-btn prev-btn" onclick="goToStep(3)">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button type="submit" class="submit-btn" id="submitBtn" disabled>
+                        <i class="fas fa-check-circle"></i> Agree & Submit
                     </button>
                 </div>
             </div>
@@ -885,6 +1247,66 @@
             if (signaturePad) signaturePad.clear();
         }
 
+        // 동의 기능
+        function toggleConsentDetail(id) {
+            const detail = document.getElementById(id);
+            const btn = detail.previousElementSibling;
+            detail.classList.toggle('open');
+            if (btn && btn.classList.contains('consent-toggle-btn')) {
+                btn.classList.toggle('open');
+            } else {
+                // Find the toggle button within the same consent-item
+                const consentItem = detail.closest('.consent-item');
+                const toggleBtn = consentItem ? consentItem.querySelector('.consent-toggle-btn') : null;
+                if (toggleBtn) toggleBtn.classList.toggle('open');
+            }
+        }
+
+        function toggleAllConsent(checked) {
+            document.querySelectorAll('.consent-check').forEach(cb => {
+                cb.checked = checked;
+            });
+            updateSubmitButton();
+        }
+
+        function updateConsentAll() {
+            const allChecks = document.querySelectorAll('.consent-check');
+            const allChecked = Array.from(allChecks).every(cb => cb.checked);
+            document.getElementById('consentAll').checked = allChecked;
+            updateSubmitButton();
+        }
+
+        function updateSubmitButton() {
+            const allChecks = document.querySelectorAll('.consent-check');
+            const allChecked = Array.from(allChecks).every(cb => cb.checked);
+            const submitBtn = document.getElementById('submitBtn');
+            if (submitBtn) {
+                submitBtn.disabled = !allChecked;
+            }
+        }
+
+        function validateConsent() {
+            const checks = ['consentPrivacy', 'consentThirdParty', 'consentDelegation', 'consentTerms'];
+            for (const id of checks) {
+                if (!document.getElementById(id).checked) {
+                    alert('Please agree to all required consent items.\n모든 필수 동의 항목에 동의해 주세요.');
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function getConsentData() {
+            return {
+                privacy_collection: document.getElementById('consentPrivacy').checked,
+                third_party_provision: document.getElementById('consentThirdParty').checked,
+                delegation: document.getElementById('consentDelegation').checked,
+                terms_and_privacy_policy: document.getElementById('consentTerms').checked,
+                consented_at: new Date().toISOString(),
+                consent_version: '2025-02-02'
+            };
+        }
+
         // 단계 이동
         function goToStep(step) {
             if (step > 1) {
@@ -904,6 +1326,14 @@
 
                 if (!isValid) {
                     alert('Please fill in all required fields.\n필수 항목을 모두 입력해주세요.');
+                    return;
+                }
+            }
+
+            // Step 3 → 4: validate signature
+            if (step === 4) {
+                if (!signaturePad || signaturePad.isEmpty()) {
+                    alert('Please provide your signature before proceeding.\n전자서명을 작성해주세요.');
                     return;
                 }
             }
@@ -1014,6 +1444,11 @@
                 return;
             }
 
+            // Validate consent
+            if (!validateConsent()) {
+                return;
+            }
+
             const submitBtn = this.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
             submitBtn.disabled = true;
@@ -1093,6 +1528,9 @@
                 // 쓰레드에 기본정보 요약 메시지 전송
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving profile...';
 
+                // Get consent data
+                const consentData = getConsentData();
+
                 const profileSummary = `
 📋 **Basic Information Submitted**
 
@@ -1111,6 +1549,13 @@
 
 **Uploaded Documents:**
 ${uploadedFiles.map(f => `• ${f.name}`).join('\n')}
+
+**Consent (v${consentData.consent_version}):**
+• Personal Info Collection: ${consentData.privacy_collection ? 'Agreed' : 'Not agreed'}
+• Third Party Provision: ${consentData.third_party_provision ? 'Agreed' : 'Not agreed'}
+• Immigration Delegation: ${consentData.delegation ? 'Agreed' : 'Not agreed'}
+• Terms & Privacy Policy: ${consentData.terms_and_privacy_policy ? 'Agreed' : 'Not agreed'}
+• Consented at: ${consentData.consented_at}
                 `.trim();
 
                 // 메시지 생성
@@ -1148,6 +1593,27 @@ ${uploadedFiles.map(f => `• ${f.name}`).join('\n')}
                 };
 
                 await createUserProfile(session.user.id, profileData);
+
+                // Save consent record to Supabase
+                try {
+                    await supabaseClient
+                        .from('consent_records')
+                        .insert({
+                            user_id: session.user.id,
+                            thread_id: threadId,
+                            consent_type: 'service_application',
+                            privacy_collection: consentData.privacy_collection,
+                            third_party_provision: consentData.third_party_provision,
+                            delegation: consentData.delegation,
+                            terms_and_privacy_policy: consentData.terms_and_privacy_policy,
+                            consent_version: consentData.consent_version,
+                            consented_at: consentData.consented_at
+                        });
+                    console.log('✅ Consent record saved');
+                } catch (consentErr) {
+                    // Consent record save failure should not block the submission
+                    console.error('Consent record save error (non-blocking):', consentErr);
+                }
 
                 // 쓰레드 상태 업데이트 (document로 변경)
                 await updateThreadStatus(threadId, 'document');
