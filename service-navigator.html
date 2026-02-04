@@ -538,92 +538,188 @@
         }
 
         // ============================================================
-        // 질문 흐름 정의 - 번역 키 사용
+        // 3단계 분류 체계 - STEP 1: 현재 비자 유형
         // ============================================================
         const questions = {
             step1: {
                 titleKey: "navigator.step1.title",
                 subtitleKey: "navigator.step1.subtitle",
                 options: [
-                    { id: "change_visa", titleKey: "navigator.step1.change_visa", descKey: "navigator.step1.change_visa.desc" },
-                    { id: "extend_visa", titleKey: "navigator.step1.extend_visa", descKey: "navigator.step1.extend_visa.desc" },
-                    { id: "register_report", titleKey: "navigator.step1.register_report", descKey: "navigator.step1.register_report.desc" },
-                    { id: "get_certificate", titleKey: "navigator.step1.get_certificate", descKey: "navigator.step1.get_certificate.desc" },
-                    { id: "residence_citizenship", titleKey: "navigator.step1.residence_citizenship", descKey: "navigator.step1.residence_citizenship.desc" },
-                    { id: "need_consultation", titleKey: "navigator.step1.need_consultation", descKey: "navigator.step1.need_consultation.desc" }
+                    { id: "student", titleKey: "navigator.step1.student", descKey: "navigator.step1.student.desc" },
+                    { id: "jobseeker", titleKey: "navigator.step1.jobseeker", descKey: "navigator.step1.jobseeker.desc" },
+                    { id: "worker", titleKey: "navigator.step1.worker", descKey: "navigator.step1.worker.desc" },
+                    { id: "business", titleKey: "navigator.step1.business", descKey: "navigator.step1.business.desc" },
+                    { id: "korean_diaspora", titleKey: "navigator.step1.korean_diaspora", descKey: "navigator.step1.korean_diaspora.desc" },
+                    { id: "family", titleKey: "navigator.step1.family", descKey: "navigator.step1.family.desc" },
+                    { id: "resident", titleKey: "navigator.step1.resident", descKey: "navigator.step1.resident.desc" },
+                    { id: "corporate_hr", titleKey: "navigator.step1.corporate_hr", descKey: "navigator.step1.corporate_hr.desc" },
+                    { id: "short_term", titleKey: "navigator.step1.short_term", descKey: "navigator.step1.short_term.desc" },
+                    { id: "d7_expat", titleKey: "navigator.step1.d7_expat", descKey: "navigator.step1.d7_expat.desc" }
                 ]
             },
+            // STEP 2: 하고 싶은 일 (비자 유형별)
             step2: {
-                change_visa: {
-                    titleKey: "navigator.step2.change_visa.title",
-                    subtitleKey: "navigator.step2.change_visa.subtitle",
+                // 유학생 (D-2, D-4)
+                student: {
+                    titleKey: "navigator.step2.student.title",
+                    subtitleKey: "navigator.step2.student.subtitle",
                     options: [
-                        { id: "visa_work", titleKey: "navigator.step2.visa_work", descKey: "navigator.step2.visa_work.desc" },
-                        { id: "visa_skilled", titleKey: "navigator.step2.visa_skilled", descKey: "navigator.step2.visa_skilled.desc" },
-                        { id: "visa_business", titleKey: "navigator.step2.visa_business", descKey: "navigator.step2.visa_business.desc" },
-                        { id: "visa_student", titleKey: "navigator.step2.visa_student", descKey: "navigator.step2.visa_student.desc" },
-                        { id: "visa_jobseeker", titleKey: "navigator.step2.visa_jobseeker", descKey: "navigator.step2.visa_jobseeker.desc" },
-                        { id: "visa_family", titleKey: "navigator.step2.visa_family", descKey: "navigator.step2.visa_family.desc" },
-                        { id: "visa_korean", titleKey: "navigator.step2.visa_korean", descKey: "navigator.step2.visa_korean.desc" },
-                        { id: "visa_residence", titleKey: "navigator.step2.visa_residence", descKey: "navigator.step2.visa_residence.desc" }
+                        { id: "stu_upgrade", titleKey: "navigator.step2.stu_upgrade", descKey: "navigator.step2.stu_upgrade.desc" },
+                        { id: "stu_extend", titleKey: "navigator.step2.stu_extend", descKey: "navigator.step2.stu_extend.desc" },
+                        { id: "stu_parttime", titleKey: "navigator.step2.stu_parttime", descKey: "navigator.step2.stu_parttime.desc" },
+                        { id: "stu_jobsearch", titleKey: "navigator.step2.stu_jobsearch", descKey: "navigator.step2.stu_jobsearch.desc" },
+                        { id: "stu_employment", titleKey: "navigator.step2.stu_employment", descKey: "navigator.step2.stu_employment.desc" },
+                        { id: "stu_startup", titleKey: "navigator.step2.stu_startup", descKey: "navigator.step2.stu_startup.desc" },
+                        { id: "stu_family", titleKey: "navigator.step2.stu_family", descKey: "navigator.step2.stu_family.desc" },
+                        { id: "stu_general", titleKey: "navigator.step2.general", descKey: "navigator.step2.general.desc" }
                     ]
                 },
-                extend_visa: {
-                    titleKey: "navigator.step2.extend_visa.title",
-                    subtitleKey: "navigator.step2.extend_visa.subtitle",
+                // 구직자 (D-10)
+                jobseeker: {
+                    titleKey: "navigator.step2.jobseeker.title",
+                    subtitleKey: "navigator.step2.jobseeker.subtitle",
                     options: [
-                        { id: "ext_student", titleKey: "navigator.step2.ext_student", descKey: "navigator.step2.ext_student.desc" },
-                        { id: "ext_jobseeker", titleKey: "navigator.step2.ext_jobseeker", descKey: "navigator.step2.ext_jobseeker.desc" },
-                        { id: "ext_work", titleKey: "navigator.step2.ext_work", descKey: "navigator.step2.ext_work.desc" },
-                        { id: "ext_business", titleKey: "navigator.step2.ext_business", descKey: "navigator.step2.ext_business.desc" },
-                        { id: "ext_family", titleKey: "navigator.step2.ext_family", descKey: "navigator.step2.ext_family.desc" },
-                        { id: "ext_korean", titleKey: "navigator.step2.ext_korean", descKey: "navigator.step2.ext_korean.desc" },
-                        { id: "ext_residence", titleKey: "navigator.step2.ext_residence", descKey: "navigator.step2.ext_residence.desc" }
+                        { id: "job_extend", titleKey: "navigator.step2.job_extend", descKey: "navigator.step2.job_extend.desc" },
+                        { id: "job_employment", titleKey: "navigator.step2.job_employment", descKey: "navigator.step2.job_employment.desc" },
+                        { id: "job_intern", titleKey: "navigator.step2.job_intern", descKey: "navigator.step2.job_intern.desc" },
+                        { id: "job_startup", titleKey: "navigator.step2.job_startup", descKey: "navigator.step2.job_startup.desc" },
+                        { id: "job_family", titleKey: "navigator.step2.job_family", descKey: "navigator.step2.job_family.desc" },
+                        { id: "job_general", titleKey: "navigator.step2.general", descKey: "navigator.step2.general.desc" }
                     ]
                 },
-                register_report: {
-                    titleKey: "navigator.step2.register_report.title",
-                    subtitleKey: "navigator.step2.register_report.subtitle",
+                // 취업자 (E-1~E-7)
+                worker: {
+                    titleKey: "navigator.step2.worker.title",
+                    subtitleKey: "navigator.step2.worker.subtitle",
                     options: [
-                        { id: "reg_arc", titleKey: "navigator.step2.reg_arc", descKey: "navigator.step2.reg_arc.desc" },
-                        { id: "reg_address", titleKey: "navigator.step2.reg_address", descKey: "navigator.step2.reg_address.desc" },
-                        { id: "reg_passport", titleKey: "navigator.step2.reg_passport", descKey: "navigator.step2.reg_passport.desc" },
-                        { id: "reg_workplace", titleKey: "navigator.step2.reg_workplace", descKey: "navigator.step2.reg_workplace.desc" },
-                        { id: "reg_employment", titleKey: "navigator.step2.reg_employment", descKey: "navigator.step2.reg_employment.desc" },
-                        { id: "reg_student", titleKey: "navigator.step2.reg_student", descKey: "navigator.step2.reg_student.desc" },
-                        { id: "reg_family", titleKey: "navigator.step2.reg_family", descKey: "navigator.step2.reg_family.desc" },
-                        { id: "reg_investment", titleKey: "navigator.step2.reg_investment", descKey: "navigator.step2.reg_investment.desc" }
+                        { id: "work_extend", titleKey: "navigator.step2.work_extend", descKey: "navigator.step2.work_extend.desc" },
+                        { id: "work_change_job", titleKey: "navigator.step2.work_change_job", descKey: "navigator.step2.work_change_job.desc" },
+                        { id: "work_outside", titleKey: "navigator.step2.work_outside", descKey: "navigator.step2.work_outside.desc" },
+                        { id: "work_skilled", titleKey: "navigator.step2.work_skilled", descKey: "navigator.step2.work_skilled.desc" },
+                        { id: "work_f27", titleKey: "navigator.step2.work_f27", descKey: "navigator.step2.work_f27.desc" },
+                        { id: "work_d10", titleKey: "navigator.step2.work_d10", descKey: "navigator.step2.work_d10.desc" },
+                        { id: "work_family", titleKey: "navigator.step2.work_family", descKey: "navigator.step2.work_family.desc" },
+                        { id: "work_general", titleKey: "navigator.step2.general", descKey: "navigator.step2.general.desc" }
                     ]
                 },
-                get_certificate: {
-                    titleKey: "navigator.step2.get_certificate.title",
-                    subtitleKey: "navigator.step2.get_certificate.subtitle",
+                // 사업자/투자자 (D-8, D-9)
+                business: {
+                    titleKey: "navigator.step2.business.title",
+                    subtitleKey: "navigator.step2.business.subtitle",
                     options: [
-                        { id: "cert_arc", titleKey: "navigator.step2.cert_arc", descKey: "navigator.step2.cert_arc.desc" },
-                        { id: "cert_travel", titleKey: "navigator.step2.cert_travel", descKey: "navigator.step2.cert_travel.desc" },
-                        { id: "cert_reentry", titleKey: "navigator.step2.cert_reentry", descKey: "navigator.step2.cert_reentry.desc" },
-                        { id: "cert_residence", titleKey: "navigator.step2.cert_residence", descKey: "navigator.step2.cert_residence.desc" },
-                        { id: "cert_other", titleKey: "navigator.step2.cert_other", descKey: "navigator.step2.cert_other.desc" }
+                        { id: "biz_extend", titleKey: "navigator.step2.biz_extend", descKey: "navigator.step2.biz_extend.desc" },
+                        { id: "biz_e7", titleKey: "navigator.step2.biz_e7", descKey: "navigator.step2.biz_e7.desc" },
+                        { id: "biz_f27", titleKey: "navigator.step2.biz_f27", descKey: "navigator.step2.biz_f27.desc" },
+                        { id: "biz_report", titleKey: "navigator.step2.biz_report", descKey: "navigator.step2.biz_report.desc" },
+                        { id: "biz_family", titleKey: "navigator.step2.biz_family", descKey: "navigator.step2.biz_family.desc" },
+                        { id: "biz_general", titleKey: "navigator.step2.general", descKey: "navigator.step2.general.desc" }
                     ]
                 },
-                residence_citizenship: {
-                    titleKey: "navigator.step2.residence_citizenship.title",
-                    subtitleKey: "navigator.step2.residence_citizenship.subtitle",
+                // 재외동포 (F-4, H-2)
+                korean_diaspora: {
+                    titleKey: "navigator.step2.korean_diaspora.title",
+                    subtitleKey: "navigator.step2.korean_diaspora.subtitle",
                     options: [
-                        { id: "res_f5", titleKey: "navigator.step2.res_f5", descKey: "navigator.step2.res_f5.desc" },
-                        { id: "res_f2", titleKey: "navigator.step2.res_f2", descKey: "navigator.step2.res_f2.desc" },
+                        { id: "kd_f4_extend", titleKey: "navigator.step2.kd_f4_extend", descKey: "navigator.step2.kd_f4_extend.desc" },
+                        { id: "kd_h2_extend", titleKey: "navigator.step2.kd_h2_extend", descKey: "navigator.step2.kd_h2_extend.desc" },
+                        { id: "kd_h2_to_f4", titleKey: "navigator.step2.kd_h2_to_f4", descKey: "navigator.step2.kd_h2_to_f4.desc" },
+                        { id: "kd_work_start", titleKey: "navigator.step2.kd_work_start", descKey: "navigator.step2.kd_work_start.desc" },
+                        { id: "kd_f5", titleKey: "navigator.step2.kd_f5", descKey: "navigator.step2.kd_f5.desc" },
+                        { id: "kd_registration", titleKey: "navigator.step2.kd_registration", descKey: "navigator.step2.kd_registration.desc" },
+                        { id: "kd_general", titleKey: "navigator.step2.general", descKey: "navigator.step2.general.desc" }
+                    ]
+                },
+                // 가족/결혼 (F-3, F-6, F-1)
+                family: {
+                    titleKey: "navigator.step2.family.title",
+                    subtitleKey: "navigator.step2.family.subtitle",
+                    options: [
+                        { id: "fam_f6_extend", titleKey: "navigator.step2.fam_f6_extend", descKey: "navigator.step2.fam_f6_extend.desc" },
+                        { id: "fam_f3_change", titleKey: "navigator.step2.fam_f3_change", descKey: "navigator.step2.fam_f3_change.desc" },
+                        { id: "fam_f1_change", titleKey: "navigator.step2.fam_f1_change", descKey: "navigator.step2.fam_f1_change.desc" },
+                        { id: "fam_f5", titleKey: "navigator.step2.fam_f5", descKey: "navigator.step2.fam_f5.desc" },
+                        { id: "fam_child", titleKey: "navigator.step2.fam_child", descKey: "navigator.step2.fam_child.desc" },
+                        { id: "fam_housework", titleKey: "navigator.step2.fam_housework", descKey: "navigator.step2.fam_housework.desc" },
+                        { id: "fam_general", titleKey: "navigator.step2.general", descKey: "navigator.step2.general.desc" }
+                    ]
+                },
+                // 영주권자/장기체류 (F-5, F-2)
+                resident: {
+                    titleKey: "navigator.step2.resident.title",
+                    subtitleKey: "navigator.step2.resident.subtitle",
+                    options: [
+                        { id: "res_f2_extend", titleKey: "navigator.step2.res_f2_extend", descKey: "navigator.step2.res_f2_extend.desc" },
+                        { id: "res_f5_reissue", titleKey: "navigator.step2.res_f5_reissue", descKey: "navigator.step2.res_f5_reissue.desc" },
                         { id: "res_naturalize", titleKey: "navigator.step2.res_naturalize", descKey: "navigator.step2.res_naturalize.desc" },
                         { id: "res_nationality", titleKey: "navigator.step2.res_nationality", descKey: "navigator.step2.res_nationality.desc" },
-                        { id: "res_f5_renew", titleKey: "navigator.step2.res_f5_renew", descKey: "navigator.step2.res_f5_renew.desc" }
+                        { id: "res_general", titleKey: "navigator.step2.general", descKey: "navigator.step2.general.desc" }
                     ]
                 },
-                need_consultation: {
-                    titleKey: "navigator.step2.need_consultation.title",
-                    subtitleKey: "navigator.step2.need_consultation.subtitle",
+                // 기업 HR
+                corporate_hr: {
+                    titleKey: "navigator.step2.corporate_hr.title",
+                    subtitleKey: "navigator.step2.corporate_hr.subtitle",
                     options: [
-                        { id: "consult_diagnosis", titleKey: "navigator.step2.consult_diagnosis", descKey: "navigator.step2.consult_diagnosis.desc" },
-                        { id: "consult_emergency", titleKey: "navigator.step2.consult_emergency", descKey: "navigator.step2.consult_emergency.desc" },
-                        { id: "consult_browse", titleKey: "navigator.step2.consult_browse", descKey: "navigator.step2.consult_browse.desc" }
+                        { id: "hr_e7", titleKey: "navigator.step2.hr_e7", descKey: "navigator.step2.hr_e7.desc" },
+                        { id: "hr_f3", titleKey: "navigator.step2.hr_f3", descKey: "navigator.step2.hr_f3.desc" },
+                        { id: "hr_intern", titleKey: "navigator.step2.hr_intern", descKey: "navigator.step2.hr_intern.desc" },
+                        { id: "hr_worker_change", titleKey: "navigator.step2.hr_worker_change", descKey: "navigator.step2.hr_worker_change.desc" },
+                        { id: "hr_short_visit", titleKey: "navigator.step2.hr_short_visit", descKey: "navigator.step2.hr_short_visit.desc" },
+                        { id: "hr_general", titleKey: "navigator.step2.general", descKey: "navigator.step2.general.desc" }
+                    ]
+                },
+                // C비자 (C-3, C-4)
+                short_term: {
+                    titleKey: "navigator.step2.short_term.title",
+                    subtitleKey: "navigator.step2.short_term.subtitle",
+                    options: [
+                        { id: "st_d9_invest", titleKey: "navigator.step2.st_d9_invest", descKey: "navigator.step2.st_d9_invest.desc" },
+                        { id: "st_e7_work", titleKey: "navigator.step2.st_e7_work", descKey: "navigator.step2.st_e7_work.desc" },
+                        { id: "st_d2_study", titleKey: "navigator.step2.st_d2_study", descKey: "navigator.step2.st_d2_study.desc" },
+                        { id: "st_general", titleKey: "navigator.step2.general", descKey: "navigator.step2.general.desc" }
+                    ]
+                },
+                // D-7 주재
+                d7_expat: {
+                    titleKey: "navigator.step2.d7_expat.title",
+                    subtitleKey: "navigator.step2.d7_expat.subtitle",
+                    options: [
+                        { id: "d7_e7", titleKey: "navigator.step2.d7_e7", descKey: "navigator.step2.d7_e7.desc" },
+                        { id: "d7_f27", titleKey: "navigator.step2.d7_f27", descKey: "navigator.step2.d7_f27.desc" },
+                        { id: "d7_family", titleKey: "navigator.step2.d7_family", descKey: "navigator.step2.d7_family.desc" },
+                        { id: "d7_general", titleKey: "navigator.step2.general", descKey: "navigator.step2.general.desc" }
+                    ]
+                }
+            },
+            // STEP 3: 세부 선택이 필요한 경우
+            step3: {
+                // 유학생 → 창업
+                stu_startup: {
+                    titleKey: "navigator.step3.startup.title",
+                    subtitleKey: "navigator.step3.startup.subtitle",
+                    options: [
+                        { id: "startup_tech", titleKey: "navigator.step3.startup_tech", descKey: "navigator.step3.startup_tech.desc" },
+                        { id: "startup_personal", titleKey: "navigator.step3.startup_personal", descKey: "navigator.step3.startup_personal.desc" }
+                    ]
+                },
+                // 구직자 → 창업
+                job_startup: {
+                    titleKey: "navigator.step3.startup.title",
+                    subtitleKey: "navigator.step3.startup.subtitle",
+                    options: [
+                        { id: "startup_tech", titleKey: "navigator.step3.startup_tech", descKey: "navigator.step3.startup_tech.desc" },
+                        { id: "startup_personal", titleKey: "navigator.step3.startup_personal", descKey: "navigator.step3.startup_personal.desc" }
+                    ]
+                },
+                // C비자 → 투자
+                st_d9_invest: {
+                    titleKey: "navigator.step3.c_invest.title",
+                    subtitleKey: "navigator.step3.c_invest.subtitle",
+                    options: [
+                        { id: "c_d8_corporate", titleKey: "navigator.step3.c_d8_corporate", descKey: "navigator.step3.c_d8_corporate.desc" },
+                        { id: "c_d9_trade", titleKey: "navigator.step3.c_d9_trade", descKey: "navigator.step3.c_d9_trade.desc" },
+                        { id: "c_d92_machine", titleKey: "navigator.step3.c_d92_machine", descKey: "navigator.step3.c_d92_machine.desc" },
+                        { id: "c_d93_ship", titleKey: "navigator.step3.c_d93_ship", descKey: "navigator.step3.c_d93_ship.desc" }
                     ]
                 }
             }
@@ -633,53 +729,93 @@
         // 서비스 매핑 (각 선택에 해당하는 서비스 ID 배열)
         // ============================================================
         const serviceMapping = {
-            // Step 2: Change Visa
-            visa_work: ['e7-change', 'e1-e6-change', 'e7-st-change'],
-            visa_skilled: ['e7-4-change', 'e7-4r-change'],
-            visa_business: ['d8-1-change', 'd8-2-change', 'd8-3-change', 'd8-4-change', 'd9-1-change', 'd9-2-change', 'd9-3-change', 'd9-4-change', 'd9-5-change'],
-            visa_student: ['d4-to-d2-change', 'd2-d4-extension'],
-            visa_jobseeker: ['d10-1-change', 'd10-2-change', 'd10-3-change', 'd10-t-change'],
-            visa_family: ['f6-change', 'f3-change', 'f1-change', 'family-invite', 'visa-grant-child', 'visa-grant-f6-child'],
-            visa_korean: ['f4-change', 'h2-to-f4-change'],
-            visa_residence: ['f2-7-change', 'f2-r-change'],
+            // === 유학생 (D-2, D-4) ===
+            stu_upgrade: ['d4-to-d2-change'],
+            stu_extend: ['d2-d4-extension'],
+            stu_parttime: ['parttime-permit'],
+            stu_jobsearch: ['d10-1-change', 'd10-2-change', 'd10-3-change', 'd10-t-change'],
+            stu_employment: ['e7-change', 'e7-st-change'],
+            stu_family: ['parent-invite', 'family-invite'],
+            stu_general: ['arc-registration', 'arc-reissue', 'address-change', 'passport-change', 'reentry-permit-multiple', 'reentry-permit-single', 'cert-entry-exit', 'cert-arc', 'cert-residence'],
+            // 유학생 창업 - STEP 3
+            startup_tech: ['d8-4-change', 'd9-5-change'],
+            startup_personal: ['d9-4-change'],
 
-            // Step 2: Extend Visa
-            ext_student: ['d2-d4-extension'],
-            ext_jobseeker: ['d10-extension'],
-            ext_work: ['e7-extension'],
-            ext_business: ['business-extension'],
-            ext_family: ['f6-extension', 'f1-change', 'f3-change'],
-            ext_korean: ['f4-extension', 'h2-extension'],
-            ext_residence: ['f2-extension'],
+            // === 구직자 (D-10) ===
+            job_extend: ['d10-extension'],
+            job_employment: ['e7-change', 'e7-st-change'],
+            job_intern: ['intern-report'],
+            job_family: ['family-invite'],
+            job_general: ['arc-registration', 'arc-reissue', 'address-change', 'passport-change', 'reentry-permit-multiple', 'reentry-permit-single', 'cert-entry-exit', 'cert-arc', 'cert-residence'],
 
-            // Step 2: Registration & Reports
-            reg_arc: ['arc-registration', 'arc-reissue'],
-            reg_address: ['address-change', 'f4-address-change'],
-            reg_passport: ['passport-change'],
-            reg_workplace: ['workplace-change-permit', 'workplace-change-report', 'e9-workplace-change', 'outside-activity'],
-            reg_employment: ['employment-info-change', 'dispatch-report', 'income-report', 'foreign-worker-change', 'h2-work-start'],
-            reg_student: ['parttime-permit', 'intern-report', 'parent-invite'],
-            reg_family: ['housework-report', 'f4-address-change', 'f4-registration'],
-            reg_investment: ['fic-registration', 'fi-report'],
+            // === 취업자 (E-1~E-7) ===
+            work_extend: ['e7-extension'],
+            work_change_job: ['workplace-change-permit', 'workplace-change-report'],
+            work_outside: ['outside-activity'],
+            work_skilled: ['e7-4-change', 'e7-4r-change'],
+            work_f27: ['f2-7-change', 'f2-r-change'],
+            work_d10: ['d10-1-change', 'd10-2-change', 'd10-3-change', 'd10-t-change'],
+            work_family: ['f3-change', 'family-invite'],
+            work_general: ['arc-registration', 'arc-reissue', 'address-change', 'passport-change', 'employment-info-change', 'dispatch-report', 'income-report', 'reentry-permit-multiple', 'reentry-permit-single', 'cert-entry-exit', 'cert-arc', 'cert-residence'],
 
-            // Step 2: Certificates
-            cert_arc: ['cert-arc', 'cert-arc-number-change'],
-            cert_travel: ['cert-entry-exit'],
-            cert_reentry: ['reentry-permit-multiple', 'reentry-permit-single'],
-            cert_residence: ['cert-residence'],
-            cert_other: ['cert-realestate', 'cert-nationality'],
+            // === 사업자/투자자 (D-8, D-9) ===
+            biz_extend: ['business-extension'],
+            biz_e7: ['e7-change'],
+            biz_f27: ['f2-7-change', 'f2-r-change'],
+            biz_report: ['fic-registration', 'fi-report'],
+            biz_family: ['f3-change', 'family-invite'],
+            biz_general: ['arc-registration', 'arc-reissue', 'address-change', 'passport-change', 'reentry-permit-multiple', 'reentry-permit-single', 'cert-entry-exit', 'cert-arc', 'cert-residence'],
 
-            // Step 2: Residence & Citizenship
-            res_f5: ['f5-change'],
-            res_f2: ['f2-7-change', 'f2-r-change', 'f2-extension'],
+            // === 재외동포 (F-4, H-2) ===
+            kd_f4_extend: ['f4-extension'],
+            kd_h2_extend: ['h2-extension'],
+            kd_h2_to_f4: ['h2-to-f4-change', 'f4-change'],
+            kd_work_start: ['h2-work-start'],
+            kd_f5: ['f5-change'],
+            kd_registration: ['f4-registration', 'f4-address-change'],
+            kd_general: ['arc-registration', 'arc-reissue', 'address-change', 'passport-change', 'housework-report', 'reentry-permit-multiple', 'reentry-permit-single', 'cert-entry-exit', 'cert-arc', 'cert-residence'],
+
+            // === 가족/결혼 (F-3, F-6, F-1) ===
+            fam_f6_extend: ['f6-extension'],
+            fam_f3_change: ['f3-change'],
+            fam_f1_change: ['f1-change', 'f6-change'],
+            fam_f5: ['f5-change'],
+            fam_child: ['visa-grant-child', 'visa-grant-f6-child'],
+            fam_housework: ['housework-report'],
+            fam_general: ['arc-registration', 'arc-reissue', 'address-change', 'passport-change', 'reentry-permit-multiple', 'reentry-permit-single', 'cert-entry-exit', 'cert-arc', 'cert-residence'],
+
+            // === 영주권자/장기체류 (F-5, F-2) ===
+            res_f2_extend: ['f2-extension'],
+            res_f5_reissue: ['f5-reissue'],
             res_naturalize: ['naturalization'],
             res_nationality: ['nationality-recovery', 'nationality-selection', 'nationality-renounce', 'nationality-loss', 'nationality-retention', 'nationality-acquisition', 'nationality-judgment'],
-            res_f5_renew: ['f5-reissue'],
+            res_general: ['arc-registration', 'arc-reissue', 'address-change', 'passport-change', 'reentry-permit-multiple', 'reentry-permit-single', 'cert-entry-exit', 'cert-arc', 'cert-residence', 'cert-realestate', 'cert-arc-number-change', 'cert-nationality'],
 
-            // Step 2: Consultation
-            consult_diagnosis: ['visa-prediagnosis'],
-            consult_emergency: ['emergency-legal', 'visa-prediagnosis'],
-            consult_browse: Object.keys(allServices) // 전체 서비스
+            // === 기업 HR ===
+            hr_e7: ['e7-change', 'e1-e6-change', 'e7-st-change'],
+            hr_f3: ['f3-change'],
+            hr_intern: ['intern-report'],
+            hr_worker_change: ['foreign-worker-change', 'employment-info-change', 'dispatch-report', 'income-report', 'workplace-change-report', 'e9-workplace-change'],
+            hr_short_visit: ['visa-prediagnosis'],
+            hr_general: ['visa-prediagnosis', 'emergency-legal'],
+
+            // === C비자 (C-3, C-4) → STEP 3 세부 ===
+            c_d8_corporate: ['d8-1-change', 'd8-2-change', 'd8-3-change'],
+            c_d9_trade: ['d9-1-change', 'd9-4-change'],
+            c_d92_machine: ['d9-2-change'],
+            c_d93_ship: ['d9-3-change'],
+            st_e7_work: ['e7-change', 'e1-e6-change'],
+            st_d2_study: ['d4-to-d2-change'],
+            st_general: ['visa-prediagnosis', 'emergency-legal'],
+
+            // === D-7 주재 ===
+            d7_e7: ['e7-change'],
+            d7_f27: ['f2-7-change', 'f2-r-change'],
+            d7_family: ['f3-change', 'family-invite'],
+            d7_general: ['arc-registration', 'arc-reissue', 'address-change', 'passport-change', 'reentry-permit-multiple', 'reentry-permit-single', 'cert-entry-exit', 'cert-arc', 'cert-residence'],
+
+            // === 상담 (마지막 폴백) ===
+            need_consultation: ['visa-prediagnosis', 'emergency-legal']
         };
 
         // ============================================================
@@ -703,10 +839,16 @@
             resultSection.style.display = 'none';
 
             let stepData;
+            let totalSteps = 3;
+
             if (currentStep === 1) {
                 stepData = questions.step1;
             } else if (currentStep === 2) {
                 stepData = questions.step2[selections[0]];
+            } else if (currentStep === 3) {
+                // STEP 3는 특정 경로에서만 필요
+                const step2Selection = selections[1];
+                stepData = questions.step3[step2Selection];
             }
 
             if (!stepData) {
@@ -717,7 +859,7 @@
             // 진행률 업데이트 (다국어)
             const stepText = t('navigator.stepOf', 'Step {0} of {1}')
                 .replace('{0}', currentStep)
-                .replace('{1}', '3');
+                .replace('{1}', totalSteps);
             document.getElementById('progressText').textContent = stepText;
             document.getElementById('progressFill').style.width = `${currentStep * 33}%`;
 
@@ -727,7 +869,7 @@
 
             // 옵션 렌더링 (다국어)
             const optionsGrid = document.getElementById('optionsGrid');
-            optionsGrid.innerHTML = stepData.options.map(opt => {
+            let optionsHtml = stepData.options.map(opt => {
                 const title = t(opt.titleKey, opt.title || '');
                 const desc = t(opt.descKey, opt.desc || '');
                 return `
@@ -738,6 +880,20 @@
             `;
             }).join('');
 
+            // STEP 2, 3에서만 "상담이 필요해요" 옵션 추가
+            if (currentStep >= 2) {
+                const consultTitle = t('navigator.need_consultation', '상담이 필요해요');
+                const consultDesc = t('navigator.need_consultation.desc', '어떤 서비스가 필요한지 모르겠어요');
+                optionsHtml += `
+                <button class="option-btn" onclick="openConsultation()" style="border: 2px dashed #8B95A1;">
+                    <div class="option-title">${consultTitle}</div>
+                    <div class="option-desc">${consultDesc}</div>
+                </button>
+                `;
+            }
+
+            optionsGrid.innerHTML = optionsHtml;
+
             // 뒤로가기 버튼
             document.getElementById('prevBtn').disabled = currentStep === 1;
         }
@@ -746,13 +902,31 @@
         function selectOption(optionId) {
             history.push({ step: currentStep, selections: [...selections] });
             selections[currentStep - 1] = optionId;
-            currentStep++;
 
-            if (currentStep > 2 || !questions.step2[selections[0]]) {
+            // STEP 3가 필요한지 확인
+            if (currentStep === 2 && questions.step3[optionId]) {
+                currentStep = 3;
+                renderStep();
+                return;
+            }
+
+            // 서비스 매핑이 있으면 결과 표시
+            if (serviceMapping[optionId]) {
                 showResults();
             } else {
-                renderStep();
+                currentStep++;
+                if (currentStep > 3) {
+                    showResults();
+                } else {
+                    renderStep();
+                }
             }
+        }
+
+        // 상담 신청 (결제 없이 쓰레드 열기)
+        function openConsultation() {
+            // consultation 파라미터로 service-apply-general로 이동
+            window.location.href = 'service-apply-general.html?service=consultation&mode=free';
         }
 
         // 결과 표시
@@ -766,7 +940,12 @@
 
             // 마지막 선택에 해당하는 서비스 가져오기
             const lastSelection = selections[selections.length - 1];
-            const serviceIds = serviceMapping[lastSelection] || Object.keys(allServices);
+            let serviceIds = serviceMapping[lastSelection];
+
+            // 매핑이 없으면 상담 서비스로 폴백
+            if (!serviceIds || serviceIds.length === 0) {
+                serviceIds = ['visa-prediagnosis', 'emergency-legal'];
+            }
 
             // 카테고리 필터 생성 (다국어)
             const categories = new Set(['all']);
