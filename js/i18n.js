@@ -20,8 +20,16 @@
  */
 
 const i18n = {
-    // 현재 언어 (기본값: 영어)
-    currentLanguage: 'en',
+    // 현재 언어 (localStorage에서 읽거나 기본값: 영어)
+    currentLanguage: (function() {
+        try {
+            const saved = localStorage.getItem('i18n_language');
+            const supported = ['en', 'ko', 'zh', 'vi', 'ja', 'mn', 'th'];
+            return (saved && supported.includes(saved)) ? saved : 'en';
+        } catch (e) {
+            return 'en';
+        }
+    })(),
 
     // 지원 언어 목록 (7개 언어만 지원) - English first, Korean second
     supportedLanguages: {

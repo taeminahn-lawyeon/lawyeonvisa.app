@@ -982,9 +982,10 @@
                 const svc = allServices[id];
                 if (!svc) return '';
 
-                // 서비스명/설명 (한국어 기본, 다국어는 번역 키로 확장 가능)
-                const name = svc.name || id;
-                const desc = svc.desc || '';
+                // 서비스명/설명 다국어 지원 (ID를 번역키로 변환: d10-1-change → service.d10_1_change.title)
+                const keyId = id.replace(/-/g, '_');
+                const name = t('service.' + keyId + '.title', svc.name || id);
+                const desc = t('service.' + keyId + '.desc', svc.desc || '');
 
                 return `
                     <div class="service-item" onclick="applyService('${id}')">
@@ -1074,7 +1075,7 @@
 
     <!-- i18n 다국어 지원 -->
     <script src="js/translations.js?v=20260205"></script>
-    <script src="js/i18n.js?v=20250128"></script>
+    <script src="js/i18n.js?v=20260205"></script>
     <script>
         // i18n 로드 후 초기화
         initWhenReady();
