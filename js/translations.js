@@ -369,10 +369,10 @@ const translations = {
         // Step 3: 창업 세부 선택
         'navigator.step3.startup.title': '어떤 창업을 하시나요?',
         'navigator.step3.startup.subtitle': '창업 유형을 선택하세요',
-        'navigator.step3.startup_tech': '기술창업/벤처투자',
-        'navigator.step3.startup_tech.desc': 'D-8-4 기술창업, D-9-5 벤처투자',
-        'navigator.step3.startup_personal': '개인사업자',
-        'navigator.step3.startup_personal.desc': 'D-9-4 개인투자',
+        'navigator.step3.startup_tech': '기술창업 (D-8-4)',
+        'navigator.step3.startup_tech.desc': '유학생 기술창업 비자',
+        'navigator.step3.startup_personal': '개인사업자 (D-9-4, D-9-5)',
+        'navigator.step3.startup_personal.desc': '영리 개인사업 / 유학생 특례',
         // Step 3: C비자 → 투자 세부 선택
         'navigator.step3.c_invest.title': '어떤 투자 활동인가요?',
         'navigator.step3.c_invest.subtitle': '투자 유형을 선택하세요',
@@ -1068,10 +1068,10 @@ const translations = {
         // Step 3: Startup Details
         'navigator.step3.startup.title': 'What type of startup?',
         'navigator.step3.startup.subtitle': 'Select your startup type',
-        'navigator.step3.startup_tech': 'Tech Startup/Venture',
-        'navigator.step3.startup_tech.desc': 'D-8-4 tech startup, D-9-5 venture',
-        'navigator.step3.startup_personal': 'Personal Business',
-        'navigator.step3.startup_personal.desc': 'D-9-4 personal investment',
+        'navigator.step3.startup_tech': 'Tech Startup (D-8-4)',
+        'navigator.step3.startup_tech.desc': 'Student tech startup visa',
+        'navigator.step3.startup_personal': 'Personal Business (D-9-4, D-9-5)',
+        'navigator.step3.startup_personal.desc': 'Individual business / Student special rate',
         // Step 3: C Visa → Investment Details
         'navigator.step3.c_invest.title': 'What type of investment?',
         'navigator.step3.c_invest.subtitle': 'Select your investment type',
