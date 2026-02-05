@@ -1561,6 +1561,7 @@
             // Premium Services
             'visa-prediagnosis': { name: 'Visa Legal Advice', price: 55000, govFee: 0, desc: 'Visa change, overstay risk, immigration law consultation', icon: '🔍', badge: 'Legal Advice' },
             'emergency-legal': { name: 'Immigration Dispute Resolution', price: 0, govFee: 0, desc: 'Criminal investigation, deportation defense, visa denial appeals', icon: '⚖️', deferredPayment: true },
+            'pre-consultation': { name: 'Pre-Consultation', nameKo: '사전 상담', price: 0, govFee: 0, desc: 'Free initial consultation via navigator', descKo: '네비게이터를 통한 무료 사전 상담', icon: '💬', deferredPayment: true, hidden: true },
 
             // Education & Job Search
             'd4-to-d2-change': { name: 'D-4→D-2 Student Visa Change', price: 110000, govFee: 119000, desc: 'Language course to degree program', icon: '🎓' },
@@ -1735,8 +1736,13 @@
         });
 
         function showContent(serviceId) {
-            document.getElementById('service-name').textContent = selectedService.name;
-            document.getElementById('service-desc').textContent = selectedService.desc;
+            // 한국어인 경우 nameKo, descKo 사용
+            const isKorean = typeof i18n !== 'undefined' && i18n.currentLanguage === 'ko';
+            const serviceName = (isKorean && selectedService.nameKo) ? selectedService.nameKo : selectedService.name;
+            const serviceDesc = (isKorean && selectedService.descKo) ? selectedService.descKo : selectedService.desc;
+
+            document.getElementById('service-name').textContent = serviceName;
+            document.getElementById('service-desc').textContent = serviceDesc;
 
             // Set badge text
             const badgeText = document.getElementById('service-badge-text');
