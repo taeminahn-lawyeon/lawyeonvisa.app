@@ -581,6 +581,7 @@
                     options: [
                         { id: "job_extend", titleKey: "navigator.step2.job_extend", descKey: "navigator.step2.job_extend.desc" },
                         { id: "job_employment", titleKey: "navigator.step2.job_employment", descKey: "navigator.step2.job_employment.desc" },
+                        { id: "job_parttime", titleKey: "navigator.step2.job_parttime", descKey: "navigator.step2.job_parttime.desc" },
                         { id: "job_intern", titleKey: "navigator.step2.job_intern", descKey: "navigator.step2.job_intern.desc" },
                         { id: "job_startup", titleKey: "navigator.step2.job_startup", descKey: "navigator.step2.job_startup.desc" },
                         { id: "job_family", titleKey: "navigator.step2.job_family", descKey: "navigator.step2.job_family.desc" },
@@ -610,6 +611,7 @@
                         { id: "biz_extend", titleKey: "navigator.step2.biz_extend", descKey: "navigator.step2.biz_extend.desc" },
                         { id: "biz_e7", titleKey: "navigator.step2.biz_e7", descKey: "navigator.step2.biz_e7.desc" },
                         { id: "biz_f27", titleKey: "navigator.step2.biz_f27", descKey: "navigator.step2.biz_f27.desc" },
+                        { id: "biz_f5", titleKey: "navigator.step2.biz_f5", descKey: "navigator.step2.biz_f5.desc" },
                         { id: "biz_report", titleKey: "navigator.step2.biz_report", descKey: "navigator.step2.biz_report.desc" },
                         { id: "biz_family", titleKey: "navigator.step2.biz_family", descKey: "navigator.step2.biz_family.desc" },
                         { id: "biz_general", titleKey: "navigator.step2.general", descKey: "navigator.step2.general.desc" }
@@ -738,12 +740,13 @@
             stu_family: ['parent-invite', 'family-invite'],
             stu_general: ['arc-registration', 'arc-reissue', 'address-change', 'passport-change', 'reentry-permit-multiple', 'reentry-permit-single', 'cert-entry-exit', 'cert-arc', 'cert-residence'],
             // 유학생 창업 - STEP 3
-            startup_tech: ['d8-4-change', 'd9-5-change'],
-            startup_personal: ['d9-4-change'],
+            startup_tech: ['d8-4-change'],
+            startup_personal: ['d9-4-change', 'd9-5-change'],
 
             // === 구직자 (D-10) ===
             job_extend: ['d10-extension'],
             job_employment: ['e7-change', 'e7-st-change'],
+            job_parttime: ['parttime-permit'],
             job_intern: ['intern-report'],
             job_family: ['family-invite'],
             job_general: ['arc-registration', 'arc-reissue', 'address-change', 'passport-change', 'reentry-permit-multiple', 'reentry-permit-single', 'cert-entry-exit', 'cert-arc', 'cert-residence'],
@@ -762,6 +765,7 @@
             biz_extend: ['business-extension'],
             biz_e7: ['e7-change'],
             biz_f27: ['f2-7-change', 'f2-r-change'],
+            biz_f5: ['f5-change'],
             biz_report: ['fic-registration', 'fi-report'],
             biz_family: ['f3-change', 'family-invite'],
             biz_general: ['arc-registration', 'arc-reissue', 'address-change', 'passport-change', 'reentry-permit-multiple', 'reentry-permit-single', 'cert-entry-exit', 'cert-arc', 'cert-residence'],
