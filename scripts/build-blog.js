@@ -136,8 +136,16 @@ function renderBlock(block, index) {
     }
 }
 
+// 블로그 언어 감지 (제목 기준)
+function getCTAText(title) {
+    const isKorean = /[가-힣]/.test(title);
+    return isKorean
+        ? { apply: '신청하기', midQ: '대행 서비스가 필요하신가요?', midBtn: '신청하기 →', bottomTitle: '관련 서비스 신청', bottomDesc: '전문가의 도움이 필요하신가요? 지금 바로 서비스를 신청하세요.' }
+        : { apply: 'Apply Now', midQ: 'Need help with your application?', midBtn: 'Apply Now →', bottomTitle: 'Related Services', bottomDesc: 'Need professional assistance? Apply for our service now.' };
+}
+
 // 콘텐츠 렌더링
-function renderContent(content, services) {
+function renderContent(content, services, cta) {
     try {
         const blocks = JSON.parse(content);
         const hasLinkButton = blocks.some(b => b.type === 'link-button');
@@ -150,9 +158,9 @@ function renderContent(content, services) {
             if (insertMidCTA && index === midIndex) {
                 html += `
                 <div class="mid-cta-banner">
-                    <div class="mid-cta-text"><strong>${escapeHtml(service.name)}</strong> 대행 서비스가 필요하신가요?</div>
+                    <div class="mid-cta-text"><strong>${escapeHtml(service.name)}</strong> — ${cta.midQ}</div>
                     <a href="/service-apply-general.html?service=${escapeHtml(service.id)}" class="mid-cta-link">
-                        신청하기 →
+                        ${cta.midBtn}
                     </a>
                 </div>`;
             }
@@ -194,11 +202,12 @@ function generateTOC(content) {
 }
 
 // 서비스 버튼 렌더링
-function renderServiceButtons(relatedServices) {
+function renderServiceButtons(relatedServices, cta) {
     if (!relatedServices || relatedServices.length === 0) {
+        const browseText = cta.apply === 'Apply Now' ? 'Browse Services' : '서비스 둘러보기';
         return `
                                 <a href="/index.html#services" class="service-cta-btn">
-                                    <span>서비스 둘러보기</span>
+                                    <span>${browseText}</span>
                                     <span class="arrow">→</span>
                                 </a>
         `;
@@ -206,7 +215,7 @@ function renderServiceButtons(relatedServices) {
 
     return relatedServices.map(service => `
                                 <a href="/service-apply-general.html?service=${escapeHtml(service.id)}" class="service-cta-btn">
-                                    <span>${escapeHtml(service.name)}</span>
+                                    <span>${escapeHtml(service.name)} ${cta.apply}</span>
                                     <span class="arrow">→</span>
                                 </a>
     `).join('');
@@ -222,6 +231,7 @@ function generatePostHTML(post, relatedPosts) {
 
     const toc = generateTOC(post.content);
     const relatedServices = post.related_services ? JSON.parse(post.related_services) : [];
+    const ctaText = getCTAText(post.title);
 
     // 관련 글 HTML
     const relatedPostsHTML = relatedPosts.length > 0 ? `
@@ -494,23 +504,22 @@ function generatePostHTML(post, relatedPosts) {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
-            margin: 40px 0;
-            padding: 20px 24px;
-            background: #f8faff;
-            border: 1px solid #d4e3fc;
-            border-left: 4px solid #3182f6;
-            border-radius: 0 10px 10px 0;
+            gap: 20px;
+            margin: 48px 0;
+            padding: 24px 28px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(26, 26, 46, 0.15);
         }
 
         .mid-cta-text {
-            font-size: 15px;
-            color: #4e5968;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.85);
             line-height: 1.5;
         }
 
         .mid-cta-text strong {
-            color: #191f28;
+            color: #ffffff;
         }
 
         .mid-cta-link {
@@ -518,25 +527,31 @@ function generatePostHTML(post, relatedPosts) {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 10px 20px;
-            background: #3182f6;
-            color: white;
+            padding: 12px 24px;
+            background: white;
+            color: #1a1a2e;
             border-radius: 8px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
+            font-weight: 700;
+            font-size: 15px;
             transition: all 0.2s;
         }
 
         .mid-cta-link:hover {
-            background: #1b64da;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
         }
 
         @media (max-width: 768px) {
             .mid-cta-banner {
                 flex-direction: column;
                 align-items: flex-start;
+                padding: 20px;
+            }
+
+            .mid-cta-link {
+                width: 100%;
+                justify-content: center;
             }
         }
 
@@ -1022,22 +1037,22 @@ function generatePostHTML(post, relatedPosts) {
                     </button>
                     ${relatedServices.length > 0 ? `
                     <a href="/service-apply-general.html?service=${escapeHtml(relatedServices[0].id)}" class="header-cta-btn">
-                        <span>${escapeHtml(relatedServices[0].name)} 신청하기</span>
+                        <span>${escapeHtml(relatedServices[0].name)} ${ctaText.apply}</span>
                         <span class="arrow">→</span>
                     </a>` : ''}
                 </div>
             </header>
 
             <div class="article-content">
-                ${renderContent(post.content, relatedServices)}
+                ${renderContent(post.content, relatedServices, ctaText)}
             </div>
 
             <!-- 서비스 CTA -->
             <div class="service-cta-section">
-                <div class="service-cta-title">${relatedServices.length > 0 ? escapeHtml(relatedServices[0].name) + ' 신청' : '관련 서비스 신청'}</div>
-                <div class="service-cta-desc">전문가의 도움이 필요하신가요? 지금 바로 서비스를 신청하세요.</div>
+                <div class="service-cta-title">${ctaText.bottomTitle}</div>
+                <div class="service-cta-desc">${ctaText.bottomDesc}</div>
                 <div class="service-cta-buttons">
-                    ${renderServiceButtons(relatedServices)}
+                    ${renderServiceButtons(relatedServices, ctaText)}
                 </div>
             </div>
 
