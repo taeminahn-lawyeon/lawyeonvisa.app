@@ -1237,7 +1237,7 @@
                     maxWidth: 3
                 });
 
-                console.log('✓ SignaturePad initialized');
+                // console.log('✓ SignaturePad initialized');
             } catch (error) {
                 console.error('SignaturePad init error:', error);
             }
@@ -1609,7 +1609,7 @@ ${uploadedFiles.map(f => `• ${f.name}`).join('\n')}
                             consent_version: consentData.consent_version,
                             consented_at: consentData.consented_at
                         });
-                    console.log('✅ Consent record saved');
+                    // console.log('✅ Consent record saved');
                 } catch (consentErr) {
                     // Consent record save failure should not block the submission
                     console.error('Consent record save error (non-blocking):', consentErr);

@@ -554,7 +554,7 @@
                 // Ensure profile exists before redirecting to payment
                 const profileResult = await getUserProfile(currentUser.id);
                 if (!profileResult.success || !profileResult.data) {
-                    console.log('Creating profile...');
+                    // console.log('Creating profile...');
                     await createOrUpdateProfile(currentUser.id, {
                         name: currentUser.user_metadata?.full_name || '',
                         email: currentUser.email || '',
@@ -581,7 +581,7 @@
                 // Ensure profile exists
                 const profileResult = await getUserProfile(currentUser.id);
                 if (!profileResult.success || !profileResult.data) {
-                    console.log('Creating profile...');
+                    // console.log('Creating profile...');
                     await createOrUpdateProfile(currentUser.id, {
                         name: currentUser.user_metadata?.full_name || '',
                         email: currentUser.email || '',
@@ -605,7 +605,7 @@
                 }
 
                 const threadId = threadResult.data.id;
-                console.log('Thread created:', threadId);
+                // console.log('Thread created:', threadId);
 
                 // Send D-10-1 form data message (deferred payment welcome)
                 await sendDHUWelcomeMessage(threadId, lectureCode);
@@ -648,7 +648,7 @@ Our specialist will contact you within 30 minutes after you submit the form.`;
                     throw error;
                 }
 
-                console.log('✅ DHU Welcome message sent:', data);
+                // console.log('✅ DHU Welcome message sent:', data);
             } catch (error) {
                 console.error('Welcome message error:', error);
                 // Don't throw - let the thread creation continue even if message fails

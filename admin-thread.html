@@ -1304,6 +1304,7 @@
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=20250127"></script>
+    <script src="js/ui-components.js?v=20260206"></script>
 
     <script>
         // Thread stages configuration - 진행 형태별 단계
@@ -1386,7 +1387,7 @@
                 }
             } else if (sessionStorage.getItem('adminLoggedIn') === 'true') {
                 // sessionStorage 관리자 로그인 폴백
-                console.log('관리자 접근 허용 (sessionStorage):', sessionStorage.getItem('adminId'));
+                // console.log('관리자 접근 허용 (sessionStorage):', sessionStorage.getItem('adminId'));
                 currentUser = { id: 'admin-session', email: sessionStorage.getItem('adminId') || 'admin' };
             } else {
                 alert('로그인이 필요합니다.');
@@ -2044,19 +2045,22 @@
 
             let content = processMessageContent(msg.content || '');
 
-            // Attachments
+            // Attachments (XSS 방어: URL 및 파일명 이스케이프)
             let attachmentsHtml = '';
             if (msg.attachments && msg.attachments.length > 0) {
                 attachmentsHtml = `
                     <div class="message-attachments">
-                        ${msg.attachments.map(att => `
-                            <div class="attachment-item" onclick="window.open('${att.url}', '_blank')">
+                        ${msg.attachments.map(att => {
+                            const safeUrl = typeof sanitizeUrl === 'function' ? sanitizeUrl(att.url) : encodeURI(att.url);
+                            const safeName = typeof escapeHtml === 'function' ? escapeHtml(att.name) : att.name;
+                            return `
+                            <div class="attachment-item" onclick="window.open('${safeUrl}', '_blank')">
                                 <div class="attachment-info">
-                                    <div class="attachment-name">${att.name}</div>
+                                    <div class="attachment-name">${safeName}</div>
                                     <div class="attachment-size">${formatFileSize(att.size)}</div>
                                 </div>
-                            </div>
-                        `).join('')}
+                            </div>`;
+                        }).join('')}
                     </div>
                 `;
             }
@@ -2083,7 +2087,8 @@
         function processMessageContent(content) {
             if (!content) return '';
 
-            // 이미 HTML 구조가 있는 경우 그대로 반환
+            // 이미 HTML 구조가 있는 경우 (관리자가 생성한 리치 콘텐츠)
+            // XSS 방어: sanitizeHtml로 위험한 태그/속성 제거
             if (content.includes('class="info-box"') ||
                 content.includes('class="warning-box"') ||
                 content.includes('class="success-box"') ||
@@ -2092,9 +2097,11 @@
                 content.includes('data-survey-result') ||
                 content.includes('survey-request-card') ||
                 content.includes('class="ql-')) {
-                // URL 변환만 수행 (이미 링크가 아닌 경우)
-                return content;
+                return typeof sanitizeHtml === 'function' ? sanitizeHtml(content) : content;
             }
+
+            // 평문 메시지: HTML 엔티티 이스케이프 후 줄바꿈/URL 변환
+            content = typeof escapeHtml === 'function' ? escapeHtml(content) : content;
 
             // 줄바꿈을 <br>로 변환
             content = content.replace(/\n/g, '<br>');
@@ -2102,13 +2109,15 @@
             // URL을 링크로 변환
             const urlPattern = /(https?:\/\/[^\s<>"']+)/gi;
             content = content.replace(urlPattern, (match) => {
-                if (match.includes('profile-setup.html') || match.includes('profile-submit.html')) {
-                    return `<a href="${match}" target="_blank" class="action-link-btn">기본사항 입력하기</a>`;
+                const safeUrl = typeof sanitizeUrl === 'function' ? sanitizeUrl(match) : match;
+                if (!safeUrl) return match;
+                if (safeUrl.includes('profile-setup.html') || safeUrl.includes('profile-submit.html')) {
+                    return `<a href="${safeUrl}" target="_blank" class="action-link-btn">기본사항 입력하기</a>`;
                 }
-                if (match.includes('service-apply')) {
-                    return `<a href="${match}" target="_blank" class="action-link-btn">결제하기</a>`;
+                if (safeUrl.includes('service-apply')) {
+                    return `<a href="${safeUrl}" target="_blank" class="action-link-btn">결제하기</a>`;
                 }
-                return `<a href="${match}" target="_blank" style="color: #3182F6;">${match}</a>`;
+                return `<a href="${safeUrl}" target="_blank" style="color: #3182F6;">${safeUrl}</a>`;
             });
 
             return content;
@@ -2203,13 +2212,23 @@
                     table: 'messages',
                     filter: `thread_id=eq.${threadId}`
                 }, (payload) => {
-                    // 고객 메시지만 리로드 (관리자가 보낸 건 이미 표시됨)
                     if (payload.new.sender_type !== 'admin') {
                         loadMessages();
                     }
                 })
-                .subscribe();
+                .subscribe((status, err) => {
+                    if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+                        console.error('Realtime subscription error:', status, err);
+                    }
+                });
         }
+
+        // Realtime 구독 정리 (메모리 누수 방지)
+        window.addEventListener('beforeunload', () => {
+            if (messageChannel) {
+                supabaseClient.removeChannel(messageChannel);
+            }
+        });
 
         // Status updates
         async function updateThreadStatus() {

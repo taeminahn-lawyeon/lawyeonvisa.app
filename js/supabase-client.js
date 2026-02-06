@@ -2,18 +2,13 @@
 // Supabase 클라이언트 초기화
 // ============================================
 
-// ⚠️ 중요: 아래 값들을 실제 Supabase 프로젝트 정보로 교체하세요
-// Settings > API에서 확인 가능
+// 프로덕션 환경에서 민감한 로그 비활성화
+const IS_PRODUCTION = window.location.hostname !== 'localhost' && !window.location.hostname.includes('127.0.0.1');
+const debugLog = IS_PRODUCTION ? () => {} : console.log.bind(console);
 
-// ⚠️ Supabase Dashboard → Settings → API에서 확인
+// Supabase Dashboard → Settings → API에서 확인
 const SUPABASE_URL = 'https://gqistzsergddnpcvuzba.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxaXN0enNlcmdkZG5wY3Z1emJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNTEyMjEsImV4cCI6MjA4MDcyNzIyMX0.X_GgShObq9OJ6z7aEKdUCoyHYo-OJL-I5hcIDt4komg';
-
-// 연결 테스트 (콘솔 로그)
-console.log('🔍 Supabase 설정:', {
-  url: SUPABASE_URL,
-  keyPreview: SUPABASE_ANON_KEY.substring(0, 50) + '...'
-});
 
 // Supabase 클라이언트 초기화
 let supabaseClient;
@@ -21,15 +16,12 @@ let supabaseClient;
 // Supabase CDN 로드 대기
 if (window.supabase) {
     supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    console.log('✅ Supabase 클라이언트 즉시 초기화');
 } else {
-    console.warn('⚠️ Supabase CDN이 아직 로드되지 않음 - DOMContentLoaded 이벤트 대기');
     window.addEventListener('DOMContentLoaded', () => {
         if (window.supabase) {
             supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            console.log('✅ Supabase 클라이언트 지연 초기화');
         } else {
-            console.error('❌ Supabase CDN 로드 실패');
+            console.error('Supabase CDN load failed');
         }
     });
 }
@@ -41,29 +33,21 @@ if (window.supabase) {
 // Google 로그인
 async function signInWithGoogle() {
     try {
-        // 🚨 현재 페이지 URL 확인
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-        console.log('🔍 현재 페이지:', currentPage);
 
         // 현재 페이지로 리디렉션
         let redirectUrl = window.location.href;
 
-        // 🚨 페이지별 리디렉션 URL 및 universityCode 설정
+        // 페이지별 리디렉션 URL 및 universityCode 설정
         if (currentPage === 'service-apply-general.html') {
-            // 서비스 신청 페이지 - 현재 URL 유지 (쿼리 파라미터 포함)
-            localStorage.removeItem('universityCode');
-            redirectUrl = window.location.href; // 현재 URL 그대로 사용 (service ID 포함)
-            console.log('✅ 서비스 신청 페이지 로그인 - 현재 URL 유지:', redirectUrl);
-        } else if (currentPage === 'consultation-request.html') {
-            // 상담 요청 페이지 - 현재 URL 유지 (service 파라미터 포함)
             localStorage.removeItem('universityCode');
             redirectUrl = window.location.href;
-            console.log('✅ 상담 요청 페이지 로그인 - 현재 URL 유지:', redirectUrl);
+        } else if (currentPage === 'consultation-request.html') {
+            localStorage.removeItem('universityCode');
+            redirectUrl = window.location.href;
         } else {
-            // 일반 페이지 (index.html 등) - universityCode 삭제
             localStorage.removeItem('universityCode');
             redirectUrl = window.location.origin + '/index.html';
-            console.log('✅ 일반 사용자 로그인 - 대학 코드 삭제');
         }
 
         const { data, error } = await supabaseClient.auth.signInWithOAuth({
@@ -190,7 +174,7 @@ async function createUserProfile(userId, profileData) {
             .single();
         
         if (error) throw error;
-        console.log('✅ 프로필 저장 성공 (upsert):', data);
+        debugLog('✅ 프로필 저장 성공 (upsert):', data);
         return { success: true, data };
     } catch (error) {
         console.error('프로필 생성/업데이트 오류:', error);
@@ -201,7 +185,7 @@ async function createUserProfile(userId, profileData) {
 // 프로필 조회
 async function getUserProfile(userId) {
     try {
-        console.log('프로필 조회 시도 - User ID:', userId);
+        debugLog('프로필 조회 시도 - User ID:', userId);
         
         const { data, error } = await supabaseClient
             .from('profiles')
@@ -209,11 +193,11 @@ async function getUserProfile(userId) {
             .eq('id', userId)
             .single();
         
-        console.log('Supabase 응답 - data:', data, 'error:', error);
+        debugLog('Supabase 응답 - data:', data, 'error:', error);
         
         // PGRST116 에러는 "프로필 없음"을 의미 (정상)
         if (error && error.code === 'PGRST116') {
-            console.log('프로필 없음 (PGRST116) - 정상');
+            debugLog('프로필 없음 (PGRST116) - 정상');
             return { success: false, data: null, error: 'Profile not found' };
         }
         
@@ -259,7 +243,7 @@ async function updateUserProfile(userId, updates) {
 // 프로필 생성 또는 업데이트 (upsert)
 async function createOrUpdateProfile(userId, profileData) {
     try {
-        console.log('🔄 프로필 생성/업데이트 시도:', { userId, profileData });
+        debugLog('🔄 프로필 생성/업데이트 시도:', { userId, profileData });
 
         const { data, error } = await supabaseClient
             .from('profiles')
@@ -281,7 +265,7 @@ async function createOrUpdateProfile(userId, profileData) {
             throw error;
         }
 
-        console.log('✅ 프로필 생성/업데이트 성공:', data);
+        debugLog('✅ 프로필 생성/업데이트 성공:', data);
         return { success: true, data };
     } catch (error) {
         console.error('❌ 프로필 생성/업데이트 오류:', error);
@@ -320,7 +304,7 @@ async function createThread(threadData) {
             threadRecord.payment_id = threadData.payment_id;
         }
 
-        console.log('쓰레드 생성 시도:', threadRecord);
+        debugLog('쓰레드 생성 시도:', threadRecord);
 
         const { data, error } = await supabaseClient
             .from('threads')
@@ -333,7 +317,7 @@ async function createThread(threadData) {
             throw error;
         }
 
-        console.log('쓰레드 생성 성공:', data);
+        debugLog('쓰레드 생성 성공:', data);
         return { success: true, data };
     } catch (error) {
         console.error('쓰레드 생성 실패:', error);
@@ -391,7 +375,7 @@ async function updateThreadStatus(threadId, status) {
 // 쓰레드 메시지 조회
 async function getThreadMessages(threadId) {
     try {
-        console.log('📨 [getThreadMessages] 조회 시작, threadId:', threadId);
+        debugLog('📨 [getThreadMessages] 조회 시작, threadId:', threadId);
         const { data, error } = await supabaseClient
             .from('messages')
             .select('*')
@@ -402,7 +386,7 @@ async function getThreadMessages(threadId) {
             console.error('📨 [getThreadMessages] Supabase 오류:', error);
             throw error;
         }
-        console.log('📨 [getThreadMessages] 조회 성공, 개수:', data?.length || 0, '데이터:', data);
+        debugLog('📨 [getThreadMessages] 조회 성공, 개수:', data?.length || 0, '데이터:', data);
         return { success: true, data };
     } catch (error) {
         console.error('메시지 조회 오류:', error);
@@ -465,7 +449,7 @@ async function uploadProfileDocument(filePath, file) {
         
         if (error) throw error;
         
-        console.log('✅ 프로필 문서 업로드 성공:', data);
+        debugLog('✅ 프로필 문서 업로드 성공:', data);
         return { success: true, data };
     } catch (error) {
         console.error('프로필 문서 업로드 오류:', error);
@@ -498,7 +482,7 @@ async function createPayment(paymentData) {
         const user = await getCurrentUser();
         if (!user) throw new Error('로그인이 필요합니다');
         
-        console.log('💳 결제 정보 저장 시도:', paymentData);
+        debugLog('💳 결제 정보 저장 시도:', paymentData);
         
         const paymentRecord = {
             user_id: user.id,
@@ -512,7 +496,7 @@ async function createPayment(paymentData) {
             organization: paymentData.organization || null
         };
         
-        console.log('📝 저장할 데이터:', paymentRecord);
+        debugLog('📝 저장할 데이터:', paymentRecord);
         
         const { data, error } = await supabaseClient
             .from('payments')
@@ -523,7 +507,7 @@ async function createPayment(paymentData) {
             throw error;
         }
         
-        console.log('✅ 결제 정보 저장 성공');
+        debugLog('✅ 결제 정보 저장 성공');
         return { success: true, data: paymentRecord };
     } catch (error) {
         console.error('❌ 결제 기록 저장 실패:', error);
@@ -746,7 +730,7 @@ async function uploadThreadDocument(threadId, file) {
         const sanitizedFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
         const filePath = `${threadId}/${timestamp}_${sanitizedFileName}`;
         
-        console.log('📤 파일 업로드 시작:', filePath);
+        debugLog('📤 파일 업로드 시작:', filePath);
         
         // Supabase Storage에 업로드
         const { data: uploadData, error: uploadError } = await supabaseClient.storage
@@ -761,7 +745,7 @@ async function uploadThreadDocument(threadId, file) {
             throw uploadError;
         }
         
-        console.log('✅ 파일 업로드 성공:', uploadData);
+        debugLog('✅ 파일 업로드 성공:', uploadData);
         
         // 서명된 URL 생성 (1년 유효)
         const { data: urlData, error: urlError } = await supabaseClient.storage
@@ -824,18 +808,18 @@ async function deleteThreadDocument(filePath) {
 // 메시지 생성 (파일 첨부 지원 + SNS 알림)
 async function createMessage(messageData) {
     try {
-        console.log('📝 [createMessage] 메시지 생성 시작:', messageData);
+        debugLog('📝 [createMessage] 메시지 생성 시작:', messageData);
 
         const user = await getCurrentUser();
         if (!user) throw new Error('로그인이 필요합니다');
-        console.log('📝 [createMessage] 현재 사용자:', user.id, user.email);
+        debugLog('📝 [createMessage] 현재 사용자:', user.id, user.email);
 
         // 프로필 정보 가져오기 (sender_name 용)
         const profileResult = await getUserProfile(user.id);
         const senderName = profileResult.success && profileResult.data
             ? profileResult.data.name
             : user.email;
-        console.log('📝 [createMessage] sender_name:', senderName);
+        debugLog('📝 [createMessage] sender_name:', senderName);
 
         const insertData = {
             thread_id: messageData.thread_id,
@@ -848,7 +832,7 @@ async function createMessage(messageData) {
             file_type: messageData.file_type || null,
             attachments: messageData.attachments || null
         };
-        console.log('📝 [createMessage] INSERT 데이터:', insertData);
+        debugLog('📝 [createMessage] INSERT 데이터:', insertData);
 
         const { data, error } = await supabaseClient
             .from('messages')
@@ -860,20 +844,20 @@ async function createMessage(messageData) {
             console.error('📝 [createMessage] Supabase INSERT 오류:', error);
             throw error;
         }
-        console.log('📝 [createMessage] INSERT 성공:', data);
+        debugLog('📝 [createMessage] INSERT 성공:', data);
 
         // 📱 관리자가 보낸 메시지인 경우 사용자에게 SNS 알림 발송
         if (messageData.sender_type === 'admin' && typeof notifyUserOnNewMessage === 'function') {
-            console.log('📱 [createMessage] 관리자 메시지 - SNS 알림 발송');
+            debugLog('📱 [createMessage] 관리자 메시지 - SNS 알림 발송');
             notifyUserOnNewMessage(messageData.thread_id, messageData.content)
                 .then(result => {
                     if (result.success) {
-                        console.log('📱 [createMessage] SNS 알림 발송 성공');
+                        debugLog('📱 [createMessage] SNS 알림 발송 성공');
                     } else {
-                        console.log('📱 [createMessage] SNS 알림 발송 실패 (무시):', result.error);
+                        debugLog('📱 [createMessage] SNS 알림 발송 실패 (무시):', result.error);
                     }
                 })
-                .catch(err => console.log('📱 [createMessage] SNS 알림 오류 (무시):', err));
+                .catch(err => debugLog('SNS notification error (ignored):', err));
         }
 
         return { success: true, data };
@@ -886,7 +870,7 @@ async function createMessage(messageData) {
 // 메시지 목록 조회
 async function getMessages(threadId) {
     try {
-        console.log('📨 [getMessages] 메시지 조회 시작, threadId:', threadId);
+        debugLog('📨 [getMessages] 메시지 조회 시작, threadId:', threadId);
 
         const { data, error } = await supabaseClient
             .from('messages')
@@ -899,7 +883,7 @@ async function getMessages(threadId) {
             throw error;
         }
 
-        console.log('📨 [getMessages] 조회 성공:', data?.length || 0, '건');
+        debugLog('📨 [getMessages] 조회 성공:', data?.length || 0, '건');
         return { success: true, data };
     } catch (error) {
         console.error('메시지 조회 오류:', error);
@@ -959,7 +943,7 @@ async function createWelcomeMessage(threadId, serviceName) {
             throw error;
         }
 
-        console.log('✅ 환영 메시지 생성 성공:', data);
+        debugLog('✅ 환영 메시지 생성 성공:', data);
         return { success: true, data };
     } catch (error) {
         console.error('환영 메시지 생성 오류:', error);
@@ -974,15 +958,15 @@ async function createWelcomeMessage(threadId, serviceName) {
 // 인증 상태 변경 감지
 if (supabaseClient) {
     supabaseClient.auth.onAuthStateChange((event, session) => {
-        console.log('인증 상태 변경:', event, session);
+        debugLog('인증 상태 변경:', event, session);
         
         if (event === 'SIGNED_IN') {
-            console.log('로그인 성공:', session?.user?.email);
+            debugLog('로그인 성공:', session?.user?.email);
             // 프로필 체크는 각 페이지의 checkUserLogin()에서 처리
         } else if (event === 'SIGNED_OUT') {
-            console.log('로그아웃 완료');
+            debugLog('로그아웃 완료');
         }
     });
 }
 
-console.log('✅ Supabase 클라이언트 스크립트 로드 완료');
+// Supabase client loaded

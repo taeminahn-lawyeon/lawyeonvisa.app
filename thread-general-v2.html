@@ -1809,6 +1809,7 @@
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=20250126"></script>
+    <script src="js/ui-components.js?v=20260206"></script>
 
     <!-- i18n 다국어 지원 -->
     <script src="js/translations.js?v=20260205"></script>
@@ -2645,7 +2646,8 @@
         function processMessageContent(content) {
             if (!content) return '';
 
-            // 이미 처리된 HTML인지 확인 (스타일드 컴포넌트가 있으면 그대로 반환)
+            // 이미 처리된 HTML인지 확인 (관리자가 생성한 리치 콘텐츠)
+            // XSS 방어: sanitizeHtml로 위험한 태그/속성 제거
             if (content.includes('class="info-box"') ||
                 content.includes('class="warning-box"') ||
                 content.includes('class="success-box"') ||
@@ -2655,9 +2657,11 @@
                 content.includes('survey-request-card') ||
                 content.includes('data-survey-result') ||
                 content.includes('class="ql-')) {
-                // HTML 구조가 있으면 그대로 반환 (줄바꿈 변환하지 않음)
-                return content;
+                return typeof sanitizeHtml === 'function' ? sanitizeHtml(content) : content;
             }
+
+            // 평문 메시지: HTML 엔티티 이스케이프 후 줄바꿈/URL 변환
+            content = typeof escapeHtml === 'function' ? escapeHtml(content) : content;
 
             // 줄바꿈을 <br>로 변환 (HTML 태그가 아닌 경우)
             content = content.replace(/\n/g, '<br>');
@@ -2855,8 +2859,14 @@
             }
         }
 
+        let messageChannel = null;
+
         function subscribeToMessages() {
-            supabaseClient
+            if (messageChannel) {
+                supabaseClient.removeChannel(messageChannel);
+            }
+
+            messageChannel = supabaseClient
                 .channel(`thread-${threadId}`)
                 .on('postgres_changes', {
                     event: 'INSERT',
@@ -2864,11 +2874,21 @@
                     table: 'messages',
                     filter: `thread_id=eq.${threadId}`
                 }, payload => {
-                    // Reload messages when new message arrives
                     loadMessages();
                 })
-                .subscribe();
+                .subscribe((status, err) => {
+                    if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+                        console.error('Realtime subscription error:', status, err);
+                    }
+                });
         }
+
+        // Realtime 구독 정리 (메모리 누수 방지)
+        window.addEventListener('beforeunload', () => {
+            if (messageChannel) {
+                supabaseClient.removeChannel(messageChannel);
+            }
+        });
 
         // Admin functions
         function openPaymentLinkModal() {

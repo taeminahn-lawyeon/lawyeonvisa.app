@@ -5,8 +5,8 @@
 // Toss Payments Global 연동
 // ========================================
 
-// 결제위젯 연동 클라이언트 키 (라이브)
-const TOSS_CLIENT_KEY = 'live_gck_Poxy1XQL8RPY4bvZ7EMKV7nO5WmI';
+// 결제위젯 연동 클라이언트 키 (HTML에서 window.__PAYMENT_CONFIG__으로 주입)
+const TOSS_CLIENT_KEY = window.__PAYMENT_CONFIG__?.tossClientKey;
 
 // Toss Payments 초기화
 let tossPayments = null;
@@ -20,7 +20,7 @@ function initTossPayments() {
         }
 
         tossPayments = TossPayments(TOSS_CLIENT_KEY);
-        console.log('✅ Toss Payments 초기화 완료');
+        // Toss Payments initialized
         return true;
     } catch (error) {
         console.error('Toss Payments 초기화 실패:', error);
@@ -83,11 +83,11 @@ async function requestTossPayment(applicationData) {
 }
 
 // ========================================
-// PayPal 연동
+// PayPal 연동 (현재 미사용 - 비활성화)
 // ========================================
+// PayPal 결제를 사용할 경우 아래 주석을 해제하고 설정하세요
 
-// PayPal 클라이언트 ID (실제 운영 시 환경변수로 관리)
-const PAYPAL_CLIENT_ID = 'AaQXEKTYX_4mOy7LPiJQ7VRwVzC-9A6SWdkU-XZk5jkX8kP7kI7hLjGIKn3HEyWFPH-_xGw4rKvGxCxR';  // 테스트용
+const PAYPAL_CLIENT_ID = null; // PayPal 미사용
 
 let paypalLoaded = false;
 
@@ -112,7 +112,7 @@ function loadPayPalSDK() {
         
         script.onload = () => {
             paypalLoaded = true;
-            console.log('✅ PayPal SDK 로드 완료');
+            // PayPal SDK loaded
             resolve(true);
         };
 
@@ -125,9 +125,13 @@ function loadPayPalSDK() {
     });
 }
 
-// PayPal 결제 처리
+// PayPal 결제 처리 (현재 미사용)
 async function requestPayPalPayment(applicationData) {
     try {
+        if (!PAYPAL_CLIENT_ID) {
+            alert('PayPal 결제는 현재 지원되지 않습니다. Toss Payments를 이용해주세요.');
+            return false;
+        }
         // PayPal SDK 로드
         await loadPayPalSDK();
 
@@ -155,11 +159,33 @@ async function requestPayPalPayment(applicationData) {
             });
         };
 
-        // PayPal 결제 승인
+        // PayPal 결제 승인 (서버 측 검증 포함)
         const onApprove = async (data, actions) => {
             try {
                 const order = await actions.order.capture();
-                console.log('✅ PayPal 결제 승인:', order);
+
+                // 서버 측 결제 검증 (금액 위변조 방지)
+                const expectedAmount = amount;
+                const capturedAmount = order.purchase_units?.[0]?.payments?.captures?.[0]?.amount?.value;
+
+                if (capturedAmount && parseFloat(capturedAmount) !== parseFloat(expectedAmount)) {
+                    console.error('Payment amount mismatch:', { expected: expectedAmount, captured: capturedAmount });
+                    alert('결제 금액 검증 실패. 관리자에게 문의하세요.');
+                    return false;
+                }
+
+                if (order.status !== 'COMPLETED') {
+                    console.error('Payment not completed:', order.status);
+                    alert('결제가 완료되지 않았습니다. 다시 시도해주세요.');
+                    return false;
+                }
+
+                // TODO: 서버 측 PayPal 주문 검증 API 호출 (Supabase Edge Function 등)
+                // const verifyResult = await fetch('/api/verify-paypal-payment', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify({ orderId: order.id, expectedAmount: expectedAmount })
+                // });
 
                 // 결제 성공 처리
                 applicationData.payment = {
@@ -167,18 +193,19 @@ async function requestPayPalPayment(applicationData) {
                     orderId: order.id,
                     status: order.status,
                     payer: order.payer,
-                    amount: amount,
+                    amount: expectedAmount,
+                    capturedAmount: capturedAmount,
                     timestamp: new Date().toISOString()
                 };
 
                 saveApplication(applicationData);
-                
+
                 // 성공 페이지로 이동
-                window.location.href = `payment-success.html?orderId=${order.id}`;
-                
+                window.location.href = `payment-success.html?orderId=${encodeURIComponent(order.id)}`;
+
                 return true;
             } catch (error) {
-                console.error('PayPal 결제 승인 실패:', error);
+                console.error('PayPal payment capture failed:', error);
                 alert('결제 처리 중 오류가 발생했습니다');
                 return false;
             }
@@ -186,7 +213,7 @@ async function requestPayPalPayment(applicationData) {
 
         // PayPal 결제 취소
         const onCancel = (data) => {
-            console.log('PayPal 결제 취소:', data);
+            // PayPal payment cancelled
             alert('결제가 취소되었습니다');
         };
 
@@ -295,7 +322,7 @@ function saveApplication(applicationData) {
         applications.push(applicationData);
         localStorage.setItem('applications', JSON.stringify(applications));
 
-        console.log('✅ 신청 데이터 저장 완료:', applicationData.id);
+        // Application data saved
         
         // TODO: Firebase/백엔드 API로 전송
         // await fetch('/api/applications', {
@@ -357,7 +384,7 @@ function createChatRoom(applicationData) {
         chatRooms.push(chatRoom);
         localStorage.setItem('chatRooms', JSON.stringify(chatRooms));
 
-        console.log('✅ 채팅방 생성 완료:', chatRoom.id);
+        // Chat room created
         return chatRoom;
     } catch (error) {
         console.error('채팅방 생성 실패:', error);

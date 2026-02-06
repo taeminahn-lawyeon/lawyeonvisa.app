@@ -8,6 +8,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
 
+    <!-- 결제 키 설정 (SDK 로드 전에 선언) -->
+    <script>
+        window.__PAYMENT_CONFIG__ = {
+            tossClientKey: 'live_ck_mBZ1gQ4YVX55PNLM1vkarl2KPoqN'
+        };
+    </script>
     <!-- Toss Payments SDK v1 (API 개별 연동) -->
     <script src="https://js.tosspayments.com/v1/payment"></script>
 
@@ -1653,7 +1659,22 @@
             'cert-nationality': { name: 'Nationality Certificate', price: 22000, govFee: 2000, desc: 'Nationality status proof', icon: '📜' }
         };
 
+        // 가격 위변조 방지: servicePricing 객체를 완전히 동결
+        Object.values(servicePricing).forEach(v => Object.freeze(v));
+        Object.freeze(servicePricing);
+
         let selectedService = null;
+
+        // 결제 시 원본 가격을 재계산하여 위변조 검증
+        function getVerifiedPrice(serviceId) {
+            const original = servicePricing[serviceId];
+            if (!original) return null;
+            return {
+                price: original.price,
+                govFee: original.govFee || 0,
+                totalPrice: original.price + (original.govFee || 0)
+            };
+        }
 
         function goBack() {
             const referrer = document.referrer;
@@ -1665,21 +1686,57 @@
         }
 
         window.isAdminLoggedIn = function() {
-            return sessionStorage.getItem('adminLoggedIn') === 'true';
+            // 보안 강화: sessionStorage만으로는 불충분 - Supabase 세션 + role 검증 필요
+            return sessionStorage.getItem('adminLoggedIn') === 'true' &&
+                   sessionStorage.getItem('adminRole') &&
+                   ['super_admin', 'admin', 'staff'].includes(sessionStorage.getItem('adminRole'));
         };
+
+        // 서버 측 관리자 권한 검증
+        async function verifyAdminRole() {
+            try {
+                const session = await checkSession();
+                if (!session || !session.user) return false;
+
+                // Supabase에서 실제 role 확인
+                const { data: profile, error } = await supabaseClient
+                    .from('profiles')
+                    .select('role')
+                    .eq('id', session.user.id)
+                    .single();
+
+                if (error || !profile) return false;
+
+                return ['super_admin', 'admin', 'staff'].includes(profile.role);
+            } catch (e) {
+                console.error('Admin role verification failed:', e);
+                return false;
+            }
+        }
 
         window.addEventListener('DOMContentLoaded', async function() {
             const urlParams = new URLSearchParams(window.location.search);
-            const isAdminMode = urlParams.get('admin') === 'true' || window.isAdminLoggedIn();
+            // 보안 수정: URL 파라미터 ?admin=true 만으로는 admin 모드 진입 불가
+            // 반드시 서버 측 role 검증을 거쳐야 함
+            let isAdminMode = false;
+
+            if (urlParams.get('admin') === 'true' || window.isAdminLoggedIn()) {
+                // 서버 측에서 실제 관리자 role 검증
+                isAdminMode = await verifyAdminRole();
+                if (!isAdminMode) {
+                    console.warn('Admin access denied: insufficient privileges');
+                    // admin 파라미터 제거하고 일반 사용자 흐름으로 진행
+                    const cleanUrl = new URL(window.location.href);
+                    cleanUrl.searchParams.delete('admin');
+                    window.history.replaceState({}, '', cleanUrl.toString());
+                }
+            }
 
             if (isAdminMode) {
-                console.log('✅ Admin mode - skipping session check');
-
                 try {
                     tossPayments = TossPayments(clientKey);
-                    console.log('✅ Toss Payments 초기화 완료 (Admin)');
                 } catch (error) {
-                    console.error('❌ Toss Payments init failed:', error);
+                    console.error('Toss Payments init failed:', error);
                 }
 
                 const serviceId = urlParams.get('service');
@@ -1714,7 +1771,7 @@
 
             try {
                 tossPayments = TossPayments(clientKey);
-                console.log('✅ Toss Payments 초기화 완료');
+                // Toss Payments initialized
             } catch (error) {
                 console.error('❌ Toss Payments init failed:', error);
             }
@@ -1917,8 +1974,8 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
 `;
         }
 
-        // API 개별 연동 클라이언트 키 (라이브)
-        const clientKey = 'live_ck_mBZ1gQ4YVX55PNLM1vkarl2KPoqN';
+        // API 개별 연동 클라이언트 키 (HTML <head>의 __PAYMENT_CONFIG__에서 주입)
+        const clientKey = window.__PAYMENT_CONFIG__?.tossClientKey;
         // Consent checkbox handler
         function onServiceConsentChange() {
             const checked = document.getElementById('serviceConsentCheck').checked;
@@ -1993,12 +2050,20 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                 // Get D-10-1 form data if applicable
                 const d10Data = getD10FormData();
 
+                // 가격 위변조 방지: 원본 servicePricing에서 가격 재계산
+                const payServiceId = new URLSearchParams(window.location.search).get('service');
+                const verified = getVerifiedPrice(payServiceId);
+                if (!verified || verified.totalPrice !== selectedService.totalPrice) {
+                    alert('결제 금액 검증 실패. 페이지를 새로고침 해주세요.');
+                    return;
+                }
+
                 const orderInfo = {
                     orderId: 'ORD' + Date.now(),
                     orderName: selectedService.name,
-                    amount: selectedService.totalPrice,
-                    agencyFee: selectedService.agencyFee,
-                    govtFee: selectedService.govtFee,
+                    amount: verified.totalPrice,
+                    agencyFee: verified.price,
+                    govtFee: verified.govFee,
                     customerName: profile.name || session.user.email,
                     customerEmail: profile.email || session.user.email,
                     customerPhone: profile.phone || '',
@@ -2936,7 +3001,7 @@ ${window.location.origin}/profile-submit.html?thread=${threadId}`;
                 if (existingThreadId) {
                     // Use existing thread
                     threadId = existingThreadId;
-                    console.log('Using existing thread:', threadId);
+                    // console.log('Using existing thread:', threadId);
                 } else {
                     // Create new thread
                     const threadResult = await createThread({
@@ -2975,7 +3040,7 @@ ${window.location.origin}/profile-submit.html?thread=${threadId}`;
                         if (d10Error) {
                             console.error('D-10-1 form message failed:', d10Error);
                         } else {
-                            console.log('✅ D-10-1 form data sent to thread');
+                            // console.log('✅ D-10-1 form data sent to thread');
                         }
                     } catch (d10Err) {
                         console.error('D-10-1 form message error:', d10Err);
