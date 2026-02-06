@@ -66,7 +66,7 @@ async function getUserEncryptionKey(userId) {
  * 파일 업로드 전 암호화
  */
 async function encryptFile(file, userId) {
-    console.log(`🔒 파일 암호화 시작: ${file.name}`);
+    // File encryption started
     
     // 1. 암호화 키 가져오기
     const key = await getUserEncryptionKey(userId);
@@ -92,16 +92,14 @@ async function encryptFile(file, userId) {
     encryptedFile.set(iv, 0);
     encryptedFile.set(new Uint8Array(encryptedData), iv.length);
     
-    // 6. 원본 파일명 암호화 (파일명도 민감정보일 수 있음)
-    const encryptedFileName = await encryptFileName(file.name, key, iv);
-    
-    console.log(`✅ 파일 암호화 완료`);
-    console.log(`원본 크기: ${file.size} bytes`);
-    console.log(`암호화 크기: ${encryptedFile.length} bytes`);
+    // 6. 원본 파일명 암호화 (별도 IV 사용 - AES-GCM에서 동일 key+IV 재사용 금지)
+    const fileNameIv = window.crypto.getRandomValues(new Uint8Array(12));
+    const encryptedFileName = await encryptFileName(file.name, key, fileNameIv);
     
     return {
         encryptedData: encryptedFile,
         encryptedFileName: encryptedFileName,
+        fileNameIv: arrayBufferToBase64(fileNameIv.buffer),  // 파일명 복호화용 IV (파일 IV와 별도)
         originalName: file.name,  // 메타데이터용 (해시로 변환 권장)
         size: file.size,
         type: file.type,
@@ -137,7 +135,7 @@ async function encryptFileName(fileName, key, iv) {
  * 다운로드 후 파일 복호화
  */
 async function decryptFile(encryptedFile, userId, metadata) {
-    console.log(`🔓 파일 복호화 시작`);
+    // File decryption started
     
     // 1. 암호화 키 가져오기
     const key = await getUserEncryptionKey(userId);
@@ -167,7 +165,7 @@ async function decryptFile(encryptedFile, userId, metadata) {
             encryptedData
         );
         
-        console.log(`✅ 파일 복호화 완료`);
+        // File decryption complete
         
         // 5. Blob으로 변환 (다운로드 가능하게)
         const blob = new Blob([decryptedData], { type: metadata.type });
@@ -229,7 +227,7 @@ async function uploadSecureFile(file, userId, category = 'documents') {
         
         if (dbError) throw dbError;
         
-        console.log('✅ 보안 업로드 완료:', fileRecord);
+        // Secure upload complete
         
         return {
             fileId: fileRecord.id,
@@ -288,7 +286,7 @@ async function downloadSecureFile(fileId, userId) {
         // 5. 접근 로그 기록
         await logFileAccess(fileId, userId, 'download');
         
-        console.log('✅ 보안 다운로드 완료');
+        // Secure download complete
         
         return decrypted;
         
