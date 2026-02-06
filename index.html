@@ -2458,21 +2458,21 @@
         }
 
 
-        // 서비스 신청 - 로그인 필요
+        // 서비스 신청 - 로그인 필요 (기본사항은 쓰레드에서 요청)
         async function goToConsent(service) {
             // console.log('👉 민원 신청 카드 클릭:', service);
-            
+
             // ✅ 관리자 로그인 체크 - 관리자는 프로필 없이 바로 진행
             if (window.isAdminLoggedIn && window.isAdminLoggedIn()) {
                 // console.log('✅ 관리자 로그인 상태 - 프로필 체크 생략');
                 window.location.href = 'service-apply-general.html?service=' + service.id + '&admin=true';
                 return;
             }
-            
+
             // ✅ Supabase 세션 체크
             const session = await checkSession();
             // console.log('🔍 세션:', session);
-            
+
             if (!session || !session.user) {
                 localStorage.setItem('redirectAfterLogin', window.location.origin + '/service-apply-general.html?service=' + service.id);
                 if (confirm(window.i18n.translate('common.serviceLoginConfirm'))) {
@@ -2480,25 +2480,9 @@
                 }
                 return;
             }
-            
-            // ✅ 프로필 체크 (캐시 우선)
-            const cachedProfile = sessionStorage.getItem('userProfileCache');
-            if (cachedProfile) {
-                // console.log('✅ 캐시된 프로필 사용');
-                window.location.href = 'service-apply-general.html?service=' + service.id;
-                return;
-            }
-            
-            const profileResult = await getUserProfile(session.user.id);
-            // console.log('🔍 프로필 조회:', profileResult);
-            
-            if (!profileResult.success || !profileResult.data) {
-                alert('프로필 설정이 필요합니다.');
-                window.location.href = 'profile-setup.html';
-                return;
-            }
-            
-            // 프로필까지 있으면 서비스 신청 페이지로
+
+            // 로그인 세션 있으면 바로 서비스 신청 페이지로 이동
+            // (기본사항 제출은 결제 후 쓰레드에서 요청)
             window.location.href = 'service-apply-general.html?service=' + service.id;
         }
 
