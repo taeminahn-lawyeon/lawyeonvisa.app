@@ -1659,7 +1659,22 @@
             'cert-nationality': { name: 'Nationality Certificate', price: 22000, govFee: 2000, desc: 'Nationality status proof', icon: '📜' }
         };
 
+        // 가격 위변조 방지: servicePricing 객체를 완전히 동결
+        Object.values(servicePricing).forEach(v => Object.freeze(v));
+        Object.freeze(servicePricing);
+
         let selectedService = null;
+
+        // 결제 시 원본 가격을 재계산하여 위변조 검증
+        function getVerifiedPrice(serviceId) {
+            const original = servicePricing[serviceId];
+            if (!original) return null;
+            return {
+                price: original.price,
+                govFee: original.govFee || 0,
+                totalPrice: original.price + (original.govFee || 0)
+            };
+        }
 
         function goBack() {
             const referrer = document.referrer;
@@ -1959,9 +1974,8 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
 `;
         }
 
-        // API 개별 연동 클라이언트 키
-        // ⚠️ 보안 경고: 라이브 키는 서버 측에서 관리. 클라이언트에는 테스트 키 사용
-        const clientKey = window.__PAYMENT_CONFIG__?.tossClientKey || 'test_ck_docs_Ovk5rk1EwkEbP0W23n07xlzm';
+        // API 개별 연동 클라이언트 키 (HTML <head>의 __PAYMENT_CONFIG__에서 주입)
+        const clientKey = window.__PAYMENT_CONFIG__?.tossClientKey;
         // Consent checkbox handler
         function onServiceConsentChange() {
             const checked = document.getElementById('serviceConsentCheck').checked;
@@ -2036,12 +2050,20 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                 // Get D-10-1 form data if applicable
                 const d10Data = getD10FormData();
 
+                // 가격 위변조 방지: 원본 servicePricing에서 가격 재계산
+                const payServiceId = new URLSearchParams(window.location.search).get('service');
+                const verified = getVerifiedPrice(payServiceId);
+                if (!verified || verified.totalPrice !== selectedService.totalPrice) {
+                    alert('결제 금액 검증 실패. 페이지를 새로고침 해주세요.');
+                    return;
+                }
+
                 const orderInfo = {
                     orderId: 'ORD' + Date.now(),
                     orderName: selectedService.name,
-                    amount: selectedService.totalPrice,
-                    agencyFee: selectedService.agencyFee,
-                    govtFee: selectedService.govtFee,
+                    amount: verified.totalPrice,
+                    agencyFee: verified.price,
+                    govtFee: verified.govFee,
                     customerName: profile.name || session.user.email,
                     customerEmail: profile.email || session.user.email,
                     customerPhone: profile.phone || '',
@@ -2979,7 +3001,7 @@ ${window.location.origin}/profile-submit.html?thread=${threadId}`;
                 if (existingThreadId) {
                     // Use existing thread
                     threadId = existingThreadId;
-                    console.log('Using existing thread:', threadId);
+                    // console.log('Using existing thread:', threadId);
                 } else {
                     // Create new thread
                     const threadResult = await createThread({
@@ -3018,7 +3040,7 @@ ${window.location.origin}/profile-submit.html?thread=${threadId}`;
                         if (d10Error) {
                             console.error('D-10-1 form message failed:', d10Error);
                         } else {
-                            console.log('✅ D-10-1 form data sent to thread');
+                            // console.log('✅ D-10-1 form data sent to thread');
                         }
                     } catch (d10Err) {
                         console.error('D-10-1 form message error:', d10Err);

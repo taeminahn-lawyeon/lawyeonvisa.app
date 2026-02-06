@@ -364,7 +364,7 @@
             blogList.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>글을 불러오는 중...</p></div>';
 
             try {
-                console.log('Loading posts, category:', category);
+                // console.log('Loading posts, category:', category);
 
                 let query = supabaseClient
                     .from('blog_posts')
@@ -375,9 +375,9 @@
                     query = query.eq('category', category);
                 }
 
-                console.log('Executing query...');
+                // console.log('Executing query...');
                 const { data: posts, error } = await query;
-                console.log('Query result:', { posts, error });
+                // console.log('Query result:', { posts, error });
 
                 // 테이블이 없거나 에러인 경우
                 if (error) {

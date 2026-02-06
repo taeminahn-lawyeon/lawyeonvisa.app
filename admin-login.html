@@ -421,9 +421,9 @@
 
                 if (result.success) {
                     // 프로필 확인 (관리자 권한 체크)
-                    console.log('로그인 성공! User ID:', result.data.user.id);
+                    // console.log('로그인 성공! User ID:', result.data.user.id);
                     const profileResult = await getUserProfile(result.data.user.id);
-                    console.log('프로필 조회 결과:', profileResult);
+                    // console.log('프로필 조회 결과:', profileResult);
 
                     if (profileResult.success) {
                         const profile = profileResult.data;

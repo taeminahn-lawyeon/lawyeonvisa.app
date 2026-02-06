@@ -721,7 +721,7 @@
                         timestamp: Date.now()
                     }));
 
-                    console.log('📋 Saved consultation info, starting Google login');
+                    // console.log('📋 Saved consultation info, starting Google login');
 
                     const result = await signInWithGoogle();
                     if (!result.success) {
@@ -787,7 +787,7 @@
 
                 // Only process requests within 10 minutes
                 if (Date.now() - pendingData.timestamp > 10 * 60 * 1000) {
-                    console.log('⏰ Pending consultation expired');
+                    // console.log('⏰ Pending consultation expired');
                     localStorage.removeItem('pendingConsultation');
                     return;
                 }
@@ -798,7 +798,7 @@
                     return;
                 }
 
-                console.log('✅ Login complete - processing pending consultation');
+                // console.log('✅ Login complete - processing pending consultation');
 
                 // Restore selectedService if not set
                 if (!selectedService || selectedService.id !== pendingData.serviceId) {

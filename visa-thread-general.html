@@ -753,7 +753,7 @@
         function showToast(message, type = 'info', duration = 3000) {
             // 간단한 alert로 대체 (ui-components.js 로드 실패 시)
             if (typeof ToastNotification === 'undefined') {
-                console.log(`[Toast ${type}] ${message}`);
+                // console.log(`[Toast ${type}] ${message}`);
                 return;
             }
             
@@ -768,7 +768,7 @@
         let messageChannel = null;  // 실시간 메시지 구독 채널
 
         window.addEventListener('DOMContentLoaded', async function() {
-            console.log('🔍 [쓰레드] 페이지 로드 시작');
+            // console.log('🔍 [쓰레드] 페이지 로드 시작');
             
             // Supabase 클라이언트 확인
             if (typeof supabaseClient === 'undefined') {
@@ -776,11 +776,11 @@
                 alert('시스템 초기화 중 오류가 발생했습니다.\n\n페이지를 새로고침해주세요.');
                 return;
             }
-            console.log('✅ [쓰레드] supabaseClient 확인됨');
+            // console.log('✅ [쓰레드] supabaseClient 확인됨');
             
             const urlParams = new URLSearchParams(window.location.search);
             threadId = urlParams.get('thread_id') || urlParams.get('id');
-            console.log('🔍 [쓰레드] URL 파라미터:', { thread_id: threadId });
+            // console.log('🔍 [쓰레드] URL 파라미터:', { thread_id: threadId });
 
             if (!threadId) {
                 console.error('❌ [쓰레드] 쓰레드 ID가 없습니다');
@@ -790,11 +790,11 @@
             }
 
             // Supabase 세션 확인
-            console.log('🔍 [쓰레드] 세션 확인 중...');
+            // console.log('🔍 [쓰레드] 세션 확인 중...');
             let session;
             try {
                 session = await checkSession();
-                console.log('✅ [쓰레드] 세션 확인 완료:', session ? '로그인됨' : '로그아웃됨');
+                // console.log('✅ [쓰레드] 세션 확인 완료:', session ? '로그인됨' : '로그아웃됨');
             } catch (error) {
                 console.error('❌ [쓰레드] 세션 확인 실패:', error);
                 alert('로그인 확인 중 오류가 발생했습니다.\n\n다시 로그인해주세요.');
@@ -808,7 +808,7 @@
                 window.location.href = 'index.html';
                 return;
             }
-            console.log('✅ [쓰레드] 사용자 이메일:', session.user.email);
+            // console.log('✅ [쓰레드] 사용자 이메일:', session.user.email);
             
             // 프로필 정보 가져오기
             const profileResult = await getUserProfile(session.user.id);
@@ -849,7 +849,7 @@
                 return;
             }
             
-            console.log('🔔 [Realtime] 메시지 구독 시작, threadId:', threadId);
+            // console.log('🔔 [Realtime] 메시지 구독 시작, threadId:', threadId);
             
             if (messageChannel) {
                 supabaseClient.removeChannel(messageChannel);
@@ -863,12 +863,12 @@
                     table: 'messages',
                     filter: `thread_id=eq.${threadId}`
                 }, (payload) => {
-                    console.log('📩 [Realtime] 새 메시지 수신:', payload.new);
+                    // console.log('📩 [Realtime] 새 메시지 수신:', payload.new);
                     
                     const newMessage = payload.new;
                     
                     if (currentUser && newMessage.sender_id === currentUser.id) {
-                        console.log('⏭️ [Realtime] 본인 메시지 스킵');
+                        // console.log('⏭️ [Realtime] 본인 메시지 스킵');
                         return;
                     }
                     
@@ -903,7 +903,7 @@
                     }
                 })
                 .subscribe((status) => {
-                    console.log('🔔 [Realtime] 구독 상태:', status);
+                    // console.log('🔔 [Realtime] 구독 상태:', status);
                 });
         }
         
@@ -924,19 +924,19 @@
                 return;
             }
             
-            console.log('🔍 [loadThread] 쓰레드 로드 시작, ID:', threadId);
+            // console.log('🔍 [loadThread] 쓰레드 로드 시작, ID:', threadId);
             
             try {
                 // 현재 사용자 프로필 확인 (관리자 권한 체크)
-                console.log('🔍 [loadThread] 프로필 확인 중...');
+                // console.log('🔍 [loadThread] 프로필 확인 중...');
                 const profileResult = await getUserProfile(currentUser.id);
                 const isAdmin = profileResult.success && 
                                profileResult.data && 
                                (profileResult.data.role === 'super_admin' || profileResult.data.role === 'partner_admin');
-                console.log('✅ [loadThread] 관리자 권한:', isAdmin);
+                // console.log('✅ [loadThread] 관리자 권한:', isAdmin);
                 
                 // Supabase에서 쓰레드 정보 가져오기
-                console.log('🔍 [loadThread] Supabase에서 쓰레드 조회 중...');
+                // console.log('🔍 [loadThread] Supabase에서 쓰레드 조회 중...');
                 let query = supabaseClient
                     .from('threads')
                     .select(`
@@ -954,7 +954,7 @@
                     query = query
                         .eq('user_id', currentUser.id)
                         .neq('status', 'archived'); // 고객은 보관된 쓰레드 볼 수 없음
-                    console.log('🔍 [loadThread] 일반 사용자 필터 적용');
+                    // console.log('🔍 [loadThread] 일반 사용자 필터 적용');
                 }
                 
                 const { data: thread, error } = await query.single();
@@ -996,7 +996,7 @@
                     return;
                 }
                 
-                console.log('✅ [loadThread] 쓰레드 조회 성공:', thread);
+                // console.log('✅ [loadThread] 쓰레드 조회 성공:', thread);
                 
                 // UI 업데이트
                 document.getElementById('serviceTitle').textContent = thread.service_name || '서비스명 없음';
@@ -1287,7 +1287,7 @@
                     throw new Error(uploadResult.error);
                 }
                 
-                console.log('✅ 파일 업로드 성공:', uploadResult.data);
+                // console.log('✅ 파일 업로드 성공:', uploadResult.data);
                 
                 // 메시지로 파일 정보 전송
                 const messageResult = await createMessage({
