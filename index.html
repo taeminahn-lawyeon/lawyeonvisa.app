@@ -2051,13 +2051,18 @@
 
         // 사용자 로그인 체크 및 정보 표시
         async function checkUserLogin() {
+            // 관리자 모드면 일반 사용자 UI 처리를 건너뜀
+            if (window.isAdminLoggedIn && window.isAdminLoggedIn()) {
+                return;
+            }
+
             // Supabase 세션 확인
             const session = await checkSession();
             // console.log('🔍 checkUserLogin - 세션:', session);
-            
+
             if (session && session.user) {
                 // console.log('✅ 세션 존재:', session.user.email);
-                
+
                 // 🚫 관리자 권한 체크 (admins 테이블 확인)
                 const { data: adminData } = await supabaseClient
                     .from('admins')
