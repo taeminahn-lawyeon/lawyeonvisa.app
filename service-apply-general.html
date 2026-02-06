@@ -8,6 +8,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
 
+    <!-- 결제 키 설정 (SDK 로드 전에 선언) -->
+    <script>
+        window.__PAYMENT_CONFIG__ = {
+            tossClientKey: 'live_ck_mBZ1gQ4YVX55PNLM1vkarl2KPoqN'
+        };
+    </script>
     <!-- Toss Payments SDK v1 (API 개별 연동) -->
     <script src="https://js.tosspayments.com/v1/payment"></script>
 
