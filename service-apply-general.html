@@ -2041,7 +2041,13 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                 let profile = null;
                 let session = null;
 
-                const isAdminMode = window.isAdminLoggedIn && window.isAdminLoggedIn();
+                // 관리자 모드 확인: sessionStorage 체크 + 서버 측 검증
+                let isAdminMode = window.isAdminLoggedIn && window.isAdminLoggedIn();
+
+                // sessionStorage에 adminLoggedIn만 있고 adminRole이 없는 경우도 서버 검증으로 보완
+                if (!isAdminMode && sessionStorage.getItem('adminLoggedIn') === 'true') {
+                    isAdminMode = await verifyAdminRole();
+                }
 
                 if (isAdminMode) {
                     // 관리자 모드: 결제 건너뛰고 바로 쓰레드 생성
@@ -2194,26 +2200,34 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
 
                 const threadId = threadResult.data.id;
 
-                // 환영 메시지 전송
-                await createWelcomeMessage(threadId, selectedService.name);
-
-                // D-10-1 폼 데이터가 있으면 전송
-                const d10Data = getD10FormData();
-                if (d10Data) {
-                    const d10Msg = formatD10DataForMessage(d10Data);
-                    if (d10Msg) {
-                        const profile = await getUserProfile(session.user.id);
-                        await supabaseClient.from('messages').insert({
-                            thread_id: threadId,
-                            sender_id: session.user.id,
-                            sender_type: 'user',
-                            sender_name: profile?.data?.name || session.user.email.split('@')[0],
-                            content: d10Msg
-                        });
-                    }
+                // 환영 메시지 전송 (실패해도 쓰레드 이동은 계속)
+                try {
+                    await createWelcomeMessage(threadId, selectedService.name);
+                } catch (msgErr) {
+                    console.error('Welcome message failed (non-blocking):', msgErr);
                 }
 
-                alert('테스트 쓰레드가 생성되었습니다.');
+                // D-10-1 폼 데이터가 있으면 전송 (실패해도 쓰레드 이동은 계속)
+                try {
+                    const d10Data = getD10FormData();
+                    if (d10Data) {
+                        const d10Msg = formatD10DataForMessage(d10Data);
+                        if (d10Msg) {
+                            const profile = await getUserProfile(session.user.id);
+                            await supabaseClient.from('messages').insert({
+                                thread_id: threadId,
+                                sender_id: session.user.id,
+                                sender_type: 'user',
+                                sender_name: profile?.data?.name || session.user.email.split('@')[0],
+                                content: d10Msg
+                            });
+                        }
+                    }
+                } catch (d10Err) {
+                    console.error('D-10-1 form message failed (non-blocking):', d10Err);
+                }
+
+                // 쓰레드로 바로 이동
                 window.location.href = `thread-general-v2.html?id=${threadId}`;
 
             } catch (error) {
