@@ -652,16 +652,16 @@
             <div class="thread-header">
                 <div class="header-top">
                     <button class="back-btn" onclick="goBack()">
-                        <i class="fas fa-arrow-left"></i> 돌아가기
+                        <i class="fas fa-arrow-left"></i> <span data-i18n="thread.back">돌아가기</span>
                     </button>
-                    <div class="status-badge processing" id="statusBadge">진행중</div>
+                    <div class="status-badge processing" id="statusBadge" data-i18n="thread.status.processing">진행중</div>
                 </div>
                 <div class="thread-info">
                     <div>
-                        <div class="service-title" id="serviceTitle">로딩 중...</div>
+                        <div class="service-title" id="serviceTitle" data-i18n="common.loading">로딩 중...</div>
                         <div class="service-meta">
                             <span><i class="fas fa-calendar"></i> <span id="threadDate">-</span></span>
-                            <span><i class="fas fa-building"></i> 센터 담당자</span>
+                            <span><i class="fas fa-building"></i> <span data-i18n="thread.centerStaff">센터 담당자</span></span>
                         </div>
                     </div>
                 </div>
@@ -670,7 +670,7 @@
             <div class="messages-area" id="messagesArea">
                 <div class="system-message">
                     <div class="system-message-content">
-                        <i class="fas fa-check-circle"></i> 상담이 시작되었습니다
+                        <i class="fas fa-check-circle"></i> <span data-i18n="thread.systemMessage.started">상담이 시작되었습니다</span>
                     </div>
                 </div>
 
@@ -688,9 +688,10 @@
                         </button>
                     </div>
                     <div class="message-input-wrapper" style="flex: 1;">
-                        <textarea 
-                            class="message-input" 
-                            id="messageInput" 
+                        <textarea
+                            class="message-input"
+                            id="messageInput"
+                            data-i18n-placeholder="thread.input.placeholder"
                             placeholder="메시지를 입력하세요 (Shift+Enter: 줄바꿈, Enter: 전송)"
                             rows="1"
                             style="width: 100%; min-height: 42px; max-height: 120px; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 15px; font-family: 'Noto Sans KR', sans-serif; resize: none;"
@@ -706,40 +707,40 @@
 
         <div class="thread-sidebar">
             <div class="sidebar-section">
-                <h3><i class="fas fa-info-circle"></i> 신청 정보</h3>
+                <h3><i class="fas fa-info-circle"></i> <span data-i18n="thread.info.title">신청 정보</span></h3>
                 <div class="info-item">
-                    <div class="info-label">신청 번호</div>
+                    <div class="info-label" data-i18n="thread.info.applicationNumber">신청 번호</div>
                     <div class="info-value" id="applicationId">-</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">신청일</div>
+                    <div class="info-label" data-i18n="thread.info.applicationDate">신청일</div>
                     <div class="info-value" id="applicationDate">-</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">결제 금액</div>
+                    <div class="info-label" data-i18n="thread.info.paymentAmount">결제 금액</div>
                     <div class="info-value" id="amount">-</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">센터 담당자</div>
-                    <div class="info-value">법무법인 로연</div>
+                    <div class="info-label" data-i18n="thread.info.staff">센터 담당자</div>
+                    <div class="info-value" data-i18n="thread.info.lawFirm">법무법인 로연</div>
                 </div>
             </div>
 
             <div class="sidebar-section">
-                <h3><i class="fas fa-file-alt"></i> 첨부 서류</h3>
+                <h3><i class="fas fa-file-alt"></i> <span data-i18n="thread.documents.title">첨부 서류</span></h3>
                 <div id="documentsList">
-                    <p style="color: #6B7280; font-size: 14px; padding: 12px 0;">아직 첨부된 서류가 없습니다.</p>
+                    <p style="color: #6B7280; font-size: 14px; padding: 12px 0;" data-i18n="thread.documents.empty">아직 첨부된 서류가 없습니다.</p>
                 </div>
             </div>
 
             <div class="sidebar-section">
-                <h3><i class="fas fa-clock"></i> 진행 현황</h3>
+                <h3><i class="fas fa-clock"></i> <span data-i18n="thread.progress.title">진행 현황</span></h3>
                 <div class="info-item">
-                    <div class="info-label">현재 단계</div>
-                    <div class="info-value" id="currentStatus">접수 완료</div>
+                    <div class="info-label" data-i18n="thread.progress.currentStatus">현재 단계</div>
+                    <div class="info-value" id="currentStatus" data-i18n="thread.progress.status.received">접수 완료</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">예상 완료일</div>
+                    <div class="info-label" data-i18n="thread.progress.expectedDate">예상 완료일</div>
                     <div class="info-value" id="expectedDate">-</div>
                 </div>
             </div>
@@ -763,6 +764,15 @@
             toast.show(message, type, duration);
         }
         
+        // i18n 헬퍼 함수
+        function t(key, fallback) {
+            if (typeof i18n !== 'undefined' && i18n.translate) {
+                const result = i18n.translate(key);
+                return result !== key ? result : (fallback || key);
+            }
+            return fallback || key;
+        }
+
         // 페이지 로드
         let threadId = null;
         let currentUser = null;
@@ -873,31 +883,31 @@
                         return;
                     }
                     
-                    const messageTime = new Date(newMessage.created_at).toLocaleTimeString('ko-KR', {
+                    const messageTime = new Date(newMessage.created_at).toLocaleTimeString(i18n?.currentLanguage === 'ko' ? 'ko-KR' : 'en-US', {
                         hour: '2-digit',
                         minute: '2-digit'
                     });
-                    
+
                     // sender_type 매핑: 'system', 'admin' -> 'admin'
                     const isAdmin = newMessage.sender_type === 'admin' || newMessage.sender_type === 'system';
 
                     const msg = {
                         sender: isAdmin ? 'admin' : 'user',
-                        name: newMessage.sender_name || (isAdmin ? '법무법인 로연' : '상대방'),
+                        name: newMessage.sender_name || (isAdmin ? t('thread.info.lawFirm', '법무법인 로연') : t('thread.sender.other', '상대방')),
                         content: newMessage.content,
                         time: messageTime,
-                        avatar: isAdmin ? '로' : '나',
+                        avatar: isAdmin ? t('thread.avatar.center', '로') : t('thread.avatar.self', '나'),
                         file_url: newMessage.file_url,
                         file_name: newMessage.file_name,
                         file_type: newMessage.file_type
                     };
-                    
+
                     appendMessage(msg);
                     scrollToBottom();
-                    showToast('새 메시지가 도착했습니다.', 'info', 3000);
-                    
+                    showToast(t('thread.toast.newMessage', '새 메시지가 도착했습니다.'), 'info', 3000);
+
                     if (Notification.permission === 'granted') {
-                        new Notification('법무법인 로연', {
+                        new Notification(t('thread.info.lawFirm', '법무법인 로연'), {
                             body: newMessage.content.substring(0, 50) + (newMessage.content.length > 50 ? '...' : ''),
                             icon: '/favicon.png'
                         });
@@ -1000,10 +1010,10 @@
                 // console.log('✅ [loadThread] 쓰레드 조회 성공:', thread);
                 
                 // UI 업데이트
-                document.getElementById('serviceTitle').textContent = thread.service_name || '서비스명 없음';
-                document.getElementById('threadDate').textContent = new Date(thread.created_at).toLocaleDateString('ko-KR');
+                document.getElementById('serviceTitle').textContent = thread.service_name || t('thread.noServiceName', '서비스명 없음');
+                document.getElementById('threadDate').textContent = typeof i18n !== 'undefined' ? i18n.formatDate(thread.created_at) : new Date(thread.created_at).toLocaleDateString('ko-KR');
                 document.getElementById('applicationId').textContent = thread.order_id || thread.id;
-                document.getElementById('applicationDate').textContent = new Date(thread.created_at).toLocaleDateString('ko-KR');
+                document.getElementById('applicationDate').textContent = typeof i18n !== 'undefined' ? i18n.formatDate(thread.created_at) : new Date(thread.created_at).toLocaleDateString('ko-KR');
                 
                 // 비자 사전진단의 경우 55,000원으로 고정 표시
                 if (thread.service_name && thread.service_name.includes('비자 사전진단')) {
@@ -1016,12 +1026,12 @@
                 
                 // 상태 업데이트
                 const statusMap = {
-                    'document': '서류 대기',
-                    'payment': '결제 완료',
-                    'processing': '진행 중',
-                    'completed': '완료'
+                    'document': t('thread.progress.status.document', '서류 대기'),
+                    'payment': t('thread.progress.status.payment', '결제 완료'),
+                    'processing': t('thread.progress.status.processing', '진행 중'),
+                    'completed': t('thread.progress.status.completed', '완료')
                 };
-                document.getElementById('currentStatus').textContent = statusMap[thread.status] || '접수 완료';
+                document.getElementById('currentStatus').textContent = statusMap[thread.status] || t('thread.progress.status.received', '접수 완료');
                 
                 // 예상 완료일 제거
                 const expectedDate = document.getElementById('expectedDate');
@@ -1032,14 +1042,14 @@
                 // 상태 배지 업데이트
                 const statusBadge = document.getElementById('statusBadge');
                 const statusMapBadge = {
-                    'payment': { text: '결제 완료', class: 'processing' },
-                    'document': { text: '서류 수집 중', class: 'pending' },
-                    'processing': { text: '신청 진행 중', class: 'processing' },
-                    'completed': { text: '처리 완료', class: 'completed' },
-                    'archived': { text: '완료 (보관)', class: 'completed' }
+                    'payment': { text: t('thread.status.payment', '결제 완료'), class: 'processing' },
+                    'document': { text: t('thread.status.document', '서류 수집 중'), class: 'pending' },
+                    'processing': { text: t('thread.status.processing', '신청 진행 중'), class: 'processing' },
+                    'completed': { text: t('thread.status.completed', '처리 완료'), class: 'completed' },
+                    'archived': { text: t('thread.status.archived', '완료 (보관)'), class: 'completed' }
                 };
-                
-                const status = statusMapBadge[thread.status] || { text: '진행 중', class: 'processing' };
+
+                const status = statusMapBadge[thread.status] || { text: t('thread.status.processing', '진행 중'), class: 'processing' };
                 statusBadge.textContent = status.text;
                 statusBadge.className = 'status-badge ' + status.class;
             } catch (error) {
@@ -1070,16 +1080,16 @@
                     // 환영 메시지 추가 (첫 메시지로)
                     const welcomeMessage = {
                         sender: 'admin',
-                        name: '법무법인 로연',
-                        content: '안녕하세요! 법무법인 로연 출입국이민지원센터입니다.\n\n신청이 접수되었습니다.\n센터 담당자가 곧 연락드리겠습니다.',
-                        time: new Date(result.data[0].created_at).toLocaleTimeString('ko-KR', { 
-                            hour: '2-digit', 
-                            minute: '2-digit' 
+                        name: t('thread.info.lawFirm', '법무법인 로연'),
+                        content: t('thread.welcomeMessage', '안녕하세요! 법무법인 로연 출입국이민지원센터입니다.\n\n신청이 접수되었습니다.\n센터 담당자가 곧 연락드리겠습니다.'),
+                        time: new Date(result.data[0].created_at).toLocaleTimeString(i18n?.currentLanguage === 'ko' ? 'ko-KR' : 'en-US', {
+                            hour: '2-digit',
+                            minute: '2-digit'
                         }),
-                        avatar: '로'
+                        avatar: t('thread.avatar.center', '로')
                     };
                     appendMessage(welcomeMessage);
-                    
+
                     // 나머지 메시지 표시
                     result.data.forEach(msg => {
                         // sender_type 매핑: 'system', 'admin' -> 'admin', 'user', 'customer' -> 'user'
@@ -1092,13 +1102,13 @@
 
                         const messageData = {
                             sender: mappedSender,
-                            name: mappedSender === 'user' ? '본인' : (msg.sender_name || '법무법인 로연'),
+                            name: mappedSender === 'user' ? t('thread.sender.self', '본인') : (msg.sender_name || t('thread.info.lawFirm', '법무법인 로연')),
                             content: msg.content,
-                            time: new Date(msg.created_at).toLocaleTimeString('ko-KR', {
+                            time: new Date(msg.created_at).toLocaleTimeString(i18n?.currentLanguage === 'ko' ? 'ko-KR' : 'en-US', {
                                 hour: '2-digit',
                                 minute: '2-digit'
                             }),
-                            avatar: mappedSender === 'user' ? '나' : '로',
+                            avatar: mappedSender === 'user' ? t('thread.avatar.self', '나') : t('thread.avatar.center', '로'),
                             file_url: msg.file_url,
                             file_name: msg.file_name,
                             file_type: msg.file_type
@@ -1109,13 +1119,13 @@
                     // 메시지 없을 때도 환영 메시지 추가
                     const welcomeMessage = {
                         sender: 'admin',
-                        name: '법무법인 로연',
-                        content: '안녕하세요! 법무법인 로연 출입국이민지원센터입니다.\n\n신청이 접수되었습니다.\n센터 담당자가 곧 연락드리겠습니다.',
-                        time: new Date().toLocaleTimeString('ko-KR', { 
-                            hour: '2-digit', 
-                            minute: '2-digit' 
+                        name: t('thread.info.lawFirm', '법무법인 로연'),
+                        content: t('thread.welcomeMessage', '안녕하세요! 법무법인 로연 출입국이민지원센터입니다.\n\n신청이 접수되었습니다.\n센터 담당자가 곧 연락드리겠습니다.'),
+                        time: new Date().toLocaleTimeString(i18n?.currentLanguage === 'ko' ? 'ko-KR' : 'en-US', {
+                            hour: '2-digit',
+                            minute: '2-digit'
                         }),
-                        avatar: '로'
+                        avatar: t('thread.avatar.center', '로')
                     };
                     appendMessage(welcomeMessage);
                 }
@@ -1160,7 +1170,7 @@
                         <div class="file-icon">${fileIcon}</div>
                         <div class="file-info">
                             <div class="file-name">${safeFileName}</div>
-                            <div class="file-size">클릭하여 다운로드</div>
+                            <div class="file-size">${t('thread.file.clickToDownload', '클릭하여 다운로드')}</div>
                         </div>
                     </div>
                 `;
@@ -1203,10 +1213,10 @@
             try {
                 // 새 탭에서 파일 열기
                 window.open(fileUrl, '_blank');
-                showToast('파일 다운로드를 시작합니다.', 'success', 2000);
+                showToast(t('thread.toast.downloadStart', '파일 다운로드를 시작합니다.'), 'success', 2000);
             } catch (error) {
                 console.error('파일 다운로드 오류:', error);
-                showToast('파일 다운로드에 실패했습니다.', 'error', 2000);
+                showToast(t('thread.toast.downloadFailed', '파일 다운로드에 실패했습니다.'), 'error', 2000);
             }
         }
 
@@ -1216,7 +1226,7 @@
             const content = input.value.trim();
 
             if (!content) {
-                showToast('메시지를 입력하세요.', 'warning');
+                showToast(t('thread.toast.inputEmpty', '메시지를 입력하세요.'), 'warning');
                 return;
             }
 
@@ -1239,10 +1249,10 @@
                 // UI에 메시지 추가
                 const message = {
                     sender: 'user',
-                    name: '본인',
+                    name: t('thread.sender.self', '본인'),
                     content: content,
                     time: time,
-                    avatar: '나'
+                    avatar: t('thread.avatar.self', '나')
                 };
                 
                 appendMessage(message);
@@ -1250,10 +1260,10 @@
                 input.style.height = 'auto';
                 scrollToBottom();
                 
-                showToast('메시지가 전송되었습니다.', 'success', 2000);
+                showToast(t('thread.toast.messageSent', '메시지가 전송되었습니다.'), 'success', 2000);
             } catch (error) {
                 console.error('메시지 전송 실패:', error);
-                showToast('메시지 전송에 실패했습니다.', 'error', 2000);
+                showToast(t('thread.toast.sendFailed', '메시지 전송에 실패했습니다.'), 'error', 2000);
             }
         }
 
@@ -1274,11 +1284,11 @@
             
             // 파일 크기 제한 (10MB)
             if (file.size > 10 * 1024 * 1024) {
-                showToast('파일 크기는 10MB 이하여야 합니다.', 'error', 3000);
+                showToast(t('thread.file.sizeLimit', '파일 크기는 10MB 이하여야 합니다.'), 'error', 3000);
                 return;
             }
-            
-            showToast('파일 업로드 중...', 'info', 2000);
+
+            showToast(t('thread.toast.uploadStart', '파일 업로드 중...'), 'info', 2000);
             
             try {
                 // Supabase Storage에 파일 업로드
@@ -1304,7 +1314,7 @@
                     throw new Error(messageResult.error);
                 }
                 
-                showToast(`${file.name} 파일이 업로드되었습니다.`, 'success', 3000);
+                showToast(t('thread.toast.uploadSuccess', '파일이 업로드되었습니다.'), 'success', 3000);
                 
                 // 메시지 목록 새로고침
                 await loadMessages();
@@ -1314,7 +1324,7 @@
                 
             } catch (error) {
                 console.error('파일 업로드 실패:', error);
-                showToast('파일 업로드에 실패했습니다.', 'error', 3000);
+                showToast(t('thread.toast.uploadFailed', '파일 업로드에 실패했습니다.'), 'error', 3000);
             }
         }
 

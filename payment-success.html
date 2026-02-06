@@ -454,7 +454,7 @@
         <div class="header-inner">
             <div class="header-title">
                 <i class="fas fa-check-circle"></i>
-                결제 완료
+                <span data-i18n="payment.success.headerTitle">결제 완료</span>
             </div>
         </div>
     </div>
@@ -465,7 +465,7 @@
             <div class="card">
                 <div class="loading-container">
                     <div class="spinner"></div>
-                    <div class="loading-text">결제 완료 처리 중...</div>
+                    <div class="loading-text" data-i18n="payment.success.loading">결제 완료 처리 중...</div>
                 </div>
             </div>
         </div>
@@ -478,7 +478,20 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=20250119"></script>
 
+    <!-- 다국어 시스템 -->
+    <script src="js/translations.js?v=20260206"></script>
+    <script src="js/i18n.js?v=20260206"></script>
+
     <script>
+        // i18n 헬퍼 함수
+        function t(key, fallback) {
+            if (typeof i18n !== 'undefined' && i18n.translate) {
+                const result = i18n.translate(key);
+                return result !== key ? result : (fallback || key);
+            }
+            return fallback || key;
+        }
+
         let createdThreadId = null;
 
         window.addEventListener('DOMContentLoaded', async function() {
@@ -486,7 +499,7 @@
                 // 현재 로그인 사용자 확인
                 const session = await checkSession();
                 if (!session || !session.user) {
-                    displayError('로그인이 필요합니다.');
+                    displayError(t('payment.success.error.loginRequired', '로그인이 필요합니다.'));
                     setTimeout(() => { window.location.href = 'index.html'; }, 2000);
                     return;
                 }
@@ -500,7 +513,7 @@
                 // console.log('💳 결제 성공 페이지 로드:', { orderId, paymentKey: paymentKey?.substring(0, 20) + '...', amount });
 
                 if (!orderId || !paymentKey || !amount) {
-                    displayError('결제 정보가 올바르지 않습니다.');
+                    displayError(t('payment.success.error.invalidPayment', '결제 정보가 올바르지 않습니다.'));
                     return;
                 }
 
@@ -537,7 +550,7 @@
                 if (!confirmResult.success) {
                     // 결제 승인 실패
                     console.error('❌ 결제 승인 실패:', confirmResult);
-                    displayError(`결제 승인 실패: ${confirmResult.message || '알 수 없는 오류'}`);
+                    displayError(`${t('payment.success.error.confirmFailed', '결제 승인 실패')}: ${confirmResult.message || t('common.unknownError', '알 수 없는 오류')}`);
                     return;
                 }
 
@@ -580,7 +593,7 @@
                 displaySuccess(paymentData, thread);
             } catch (error) {
                 console.error('❌ 결제 완료 처리 오류:', error);
-                displayError('결제 처리 중 오류가 발생했습니다.\n\n고객센터로 문의해주세요.');
+                displayError(t('payment.success.error.processing', '결제 처리 중 오류가 발생했습니다.\n\n고객센터로 문의해주세요.'));
             }
         });
 
@@ -669,7 +682,7 @@ ${profileSubmitUrl}
 
 Our specialist will contact you within 30 minutes after you submit your information.`;
                 } else {
-                    welcomeMessage = `📋 기본 정보를 제출해 주세요. Please submit your basic information.\n\n${profileSubmitUrl}`;
+                    welcomeMessage = `📋 ${t('thread.welcomeSubmitInfo', '기본 정보를 제출해 주세요. Please submit your basic information.')}\n\n${profileSubmitUrl}`;
                 }
 
                 // 시스템 메시지로 발송 (sender_type: 'admin' for RLS compatibility)
@@ -736,8 +749,8 @@ Our specialist will contact you within 30 minutes after you submit your informat
 
             // 쓰레드 생성 여부에 따른 메시지
             const threadMessage = thread
-                ? '센터 담당자가 전용 쓰레드에서 곧 연락드립니다'
-                : '결제가 완료되었습니다. 곧 담당자가 연락드립니다';
+                ? t('payment.success.threadCreated', '센터 담당자가 전용 쓰레드에서 곧 연락드립니다')
+                : t('payment.success.noThread', '결제가 완료되었습니다. 곧 담당자가 연락드립니다');
 
             // XSS 방지를 위한 데이터 이스케이프
             const safeServiceName = escapeHtml(paymentData.service_name);
@@ -751,7 +764,7 @@ Our specialist will contact you within 30 minutes after you submit your informat
                     <div class="success-icon">
                         <i class="fas fa-check"></i>
                     </div>
-                    <div class="success-title">결제가 완료되었습니다!</div>
+                    <div class="success-title">${escapeHtml(t('payment.success.title', '결제가 완료되었습니다!'))}</div>
                     <div class="success-message">${escapeHtml(threadMessage)}</div>
                 </div>
 
@@ -759,22 +772,22 @@ Our specialist will contact you within 30 minutes after you submit your informat
                 <div class="card">
                     <div class="card-title">
                         <i class="fas fa-receipt"></i>
-                        결제 정보
+                        ${escapeHtml(t('payment.success.paymentInfo', '결제 정보'))}
                     </div>
                     <div class="info-row">
-                        <span class="info-label">신청 서비스</span>
+                        <span class="info-label">${escapeHtml(t('payment.success.serviceName', '신청 서비스'))}</span>
                         <span class="info-value">${safeServiceName}</span>
                     </div>
                     <div class="info-row">
-                        <span class="info-label">주문번호</span>
+                        <span class="info-label">${escapeHtml(t('payment.success.orderId', '주문번호'))}</span>
                         <span class="info-value">${safeOrderId}</span>
                     </div>
                     <div class="info-row">
-                        <span class="info-label">결제 수단</span>
+                        <span class="info-label">${escapeHtml(t('payment.success.paymentMethod', '결제 수단'))}</span>
                         <span class="info-value">${safePaymentMethod}</span>
                     </div>
                     <div class="info-row total">
-                        <span class="info-label">결제 금액</span>
+                        <span class="info-label">${escapeHtml(t('payment.success.totalAmount', '결제 금액'))}</span>
                         <span class="info-value">₩${safeAmount.toLocaleString()}</span>
                     </div>
                 </div>
@@ -783,23 +796,23 @@ Our specialist will contact you within 30 minutes after you submit your informat
                 <div class="next-steps">
                     <div class="next-steps-title">
                         <i class="fas fa-list-check"></i>
-                        다음 단계
+                        ${escapeHtml(t('payment.success.nextSteps', '다음 단계'))}
                     </div>
                     <ul class="steps-list">
-                        <li><i class="fas fa-check-circle"></i> <span>센터 담당자가 전용 쓰레드에서 연락드립니다</span></li>
-                        <li><i class="fas fa-check-circle"></i> <span>쓰레드에서 추가 서류를 요청드립니다</span></li>
-                        <li><i class="fas fa-check-circle"></i> <span>진행 상황은 쓰레드에서 실시간 확인 가능합니다</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span>${escapeHtml(t('payment.success.step1', '센터 담당자가 전용 쓰레드에서 연락드립니다'))}</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span>${escapeHtml(t('payment.success.step2', '쓰레드에서 추가 서류를 요청드립니다'))}</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span>${escapeHtml(t('payment.success.step3', '진행 상황은 쓰레드에서 실시간 확인 가능합니다'))}</span></li>
                     </ul>
                 </div>
 
                 <!-- 버튼 -->
                 ${thread ? `
                     <button class="btn-primary" onclick="goToThread()">
-                        <i class="fas fa-comments"></i> 쓰레드로 이동
+                        <i class="fas fa-comments"></i> ${escapeHtml(t('payment.success.goToThread', '쓰레드로 이동'))}
                     </button>
                 ` : ''}
                 <button class="btn-secondary" onclick="goToHome()">
-                    <i class="fas fa-home"></i> 메인으로 이동
+                    <i class="fas fa-home"></i> ${escapeHtml(t('payment.success.goToHome', '메인으로 이동'))}
                 </button>
             `;
         }
@@ -818,7 +831,7 @@ Our specialist will contact you within 30 minutes after you submit your informat
                     <div class="error-icon">
                         <i class="fas fa-exclamation-triangle"></i>
                     </div>
-                    <div class="success-title">오류가 발생했습니다</div>
+                    <div class="success-title">${escapeHtml(t('payment.success.error.title', '오류가 발생했습니다'))}</div>
                     <div class="success-message">${safeMessage}</div>
                 </div>
 
@@ -826,26 +839,27 @@ Our specialist will contact you within 30 minutes after you submit your informat
                 <div class="error-steps">
                     <div class="next-steps-title">
                         <i class="fas fa-info-circle"></i>
-                        안내
+                        ${escapeHtml(t('payment.success.error.guidance', '안내'))}
                     </div>
                     <ul class="steps-list">
-                        <li><i class="fas fa-arrow-right"></i> <span>잠시 후 메인 페이지로 이동합니다</span></li>
-                        <li><i class="fas fa-arrow-right"></i> <span>문제가 지속되면 고객센터로 문의해주세요</span></li>
+                        <li><i class="fas fa-arrow-right"></i> <span>${escapeHtml(t('payment.success.error.redirecting', '잠시 후 메인 페이지로 이동합니다'))}</span></li>
+                        <li><i class="fas fa-arrow-right"></i> <span>${escapeHtml(t('payment.success.error.contactSupport', '문제가 지속되면 고객센터로 문의해주세요'))}</span></li>
                     </ul>
                 </div>
 
                 <!-- 버튼 -->
                 <button class="btn-primary" onclick="goToHome()">
-                    <i class="fas fa-home"></i> 메인으로 이동
+                    <i class="fas fa-home"></i> ${escapeHtml(t('payment.success.goToHome', '메인으로 이동'))}
                 </button>
             `;
         }
 
         function getPaymentMethodName(method) {
+            const cardLabel = t('payment.success.method.card', '신용/체크카드');
             const methodMap = {
-                'card': '신용/체크카드',
-                'CARD': '신용/체크카드',
-                '카드': '신용/체크카드',
+                'card': cardLabel,
+                'CARD': cardLabel,
+                '카드': cardLabel,
                 'paypal': 'PayPal',
                 'PAYPAL': 'PayPal'
             };
