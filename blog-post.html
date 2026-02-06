@@ -755,10 +755,10 @@
 <body>
     <header class="header">
         <div class="header-content">
-            <h1><a href="index.html">법무법인 로연</a></h1>
+            <h1><a href="index.html" data-i18n="common.lawFirm">법무법인 로연</a></h1>
             <nav class="header-nav">
-                <a href="index.html">서비스</a>
-                <a href="blog.html">뉴스 & 인사이트</a>
+                <a href="index.html" data-i18n="blog.nav.services">서비스</a>
+                <a href="blog.html" data-i18n="blog.nav.newsInsights">뉴스 & 인사이트</a>
             </nav>
         </div>
     </header>
@@ -808,13 +808,37 @@
         })();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- 다국어 시스템 -->
+    <script src="js/translations.js?v=20260206"></script>
+    <script src="js/i18n.js?v=20260206"></script>
     <script>
         // Supabase 초기화 (리다이렉트 후에는 이 코드 실행 안됨)
         const SUPABASE_URL = 'https://gqistzsergddnpcvuzba.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxaXN0enNlcmdkZG5wY3Z1emJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNTEyMjEsImV4cCI6MjA4MDcyNzIyMX0.X_GgShObq9OJ6z7aEKdUCoyHYo-OJL-I5hcIDt4komg';
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // 카테고리 매핑
+        // i18n 헬퍼 함수
+        function t(key, fallback) {
+            if (typeof i18n !== 'undefined' && i18n.translate) {
+                const result = i18n.translate(key);
+                return result !== key ? result : (fallback || key);
+            }
+            return fallback || key;
+        }
+
+        // 카테고리 매핑 (동적 번역)
+        function getCategoryName(cat) {
+            const map = {
+                'citizenship': t('blog.category.citizenship', '국적·귀화·난민'),
+                'admin': t('blog.category.admin', '공통 행정 신고'),
+                'work': t('blog.category.work', '취업·워크'),
+                'education': t('blog.category.education', '교육·구직'),
+                'business': t('blog.category.business', '사업·투자'),
+                'family': t('blog.category.family', '동포·가족·결혼'),
+                'residence': t('blog.category.residence', '거주·영주')
+            };
+            return map[cat] || cat;
+        }
         const categoryNames = {
             'citizenship': '국적·귀화·난민',
             'admin': '공통 행정 신고',
@@ -846,9 +870,9 @@
                 if (error || !post) {
                     document.getElementById('mainContent').innerHTML = `
                         <div class="article" style="grid-column: 1 / -1; text-align: center; padding: 100px 24px;">
-                            <h2 style="margin-bottom: 16px;">글을 찾을 수 없습니다</h2>
-                            <p style="color: #8b95a1; margin-bottom: 24px;">요청하신 글이 존재하지 않거나 삭제되었습니다.</p>
-                            <a href="blog.html" class="back-to-list">← 목록으로 돌아가기</a>
+                            <h2 style="margin-bottom: 16px;">${t('blog.post.notFound.title', '글을 찾을 수 없습니다')}</h2>
+                            <p style="color: #8b95a1; margin-bottom: 24px;">${t('blog.post.notFound.desc', '요청하신 글이 존재하지 않거나 삭제되었습니다.')}</p>
+                            <a href="blog.html" class="back-to-list">← ${t('blog.post.backToList', '목록으로 돌아가기')}</a>
                         </div>
                     `;
                     return;
@@ -866,11 +890,14 @@
                 // 관련 서비스 버튼 생성
                 const relatedServices = post.related_services ? JSON.parse(post.related_services) : [];
 
-                // 블로그 언어 감지 (제목 기준)
-                const isKorean = /[가-힣]/.test(post.title);
-                const ctaText = isKorean
-                    ? { apply: '신청하기', midQ: '대행 서비스가 필요하신가요?', midBtn: '신청하기 →', bottomTitle: '관련 서비스 신청', bottomDesc: '전문가의 도움이 필요하신가요? 지금 바로 서비스를 신청하세요.' }
-                    : { apply: 'Apply Now', midQ: 'Need help with your application?', midBtn: 'Apply Now →', bottomTitle: 'Related Services', bottomDesc: 'Need professional assistance? Apply for our service now.' };
+                // CTA 텍스트 (다국어 지원)
+                const ctaText = {
+                    apply: t('blog.post.ctaApply', '신청하기'),
+                    midQ: t('blog.post.ctaMidQ', '대행 서비스가 필요하신가요?'),
+                    midBtn: t('blog.post.ctaMidBtn', '신청하기 →'),
+                    bottomTitle: t('blog.post.relatedServices', '관련 서비스 신청'),
+                    bottomDesc: t('blog.post.relatedServicesDesc', '전문가의 도움이 필요하신가요? 지금 바로 서비스를 신청하세요.')
+                };
 
                 // 메인 콘텐츠 렌더링
                 document.getElementById('mainContent').innerHTML = `
@@ -878,15 +905,15 @@
                         <!-- 모바일 목차 토글 -->
                         <button class="mobile-toc-toggle" onclick="toggleMobileToc()">
                             <span>📑</span>
-                            <span>목차 보기</span>
+                            <span>${t('blog.post.tocToggle', '목차 보기')}</span>
                         </button>
                         <div class="mobile-toc" id="mobileToc">
-                            <div class="toc-title">목차</div>
+                            <div class="toc-title">${t('blog.post.toc', '목차')}</div>
                             <ul class="toc-list">${toc.html}</ul>
                         </div>
 
                         <header class="article-header">
-                            <span class="article-category">${categoryNames[post.category] || post.category}</span>
+                            <span class="article-category">${getCategoryName(post.category)}</span>
                             <h1 class="article-title">${post.title}</h1>
                             <div class="article-meta">
                                 <span class="article-meta-item">
@@ -895,7 +922,7 @@
                                 </span>
                                 ${post.updated_at !== post.created_at ? `
                                     <span class="article-meta-item">
-                                        <span>수정:</span>
+                                        <span>${t('blog.post.modified', '수정')}:</span>
                                         <span>${formatDate(post.updated_at)}</span>
                                     </span>
                                 ` : ''}
@@ -903,7 +930,7 @@
                             <div class="share-buttons">
                                 <button class="share-btn" onclick="copyLink()">
                                     <span>🔗</span>
-                                    <span>링크 복사</span>
+                                    <span>${t('blog.post.shareLink', '링크 복사')}</span>
                                 </button>
                                 ${relatedServices.length > 0 ? `
                                 <a href="/service-apply-general.html?service=${relatedServices[0].id}" class="header-cta-btn">
@@ -919,8 +946,8 @@
 
                         <!-- 서비스 CTA -->
                         <div class="service-cta-section">
-                            <div class="service-cta-title">${ctaText.bottomTitle}</div>
-                            <div class="service-cta-desc">${ctaText.bottomDesc}</div>
+                            <div class="service-cta-title">${t('blog.post.relatedServices', '관련 서비스 신청')}</div>
+                            <div class="service-cta-desc">${t('blog.post.relatedServicesDesc', '전문가의 도움이 필요하신가요? 지금 바로 서비스를 신청하세요.')}</div>
                             <div class="service-cta-buttons" id="serviceCTAButtons">
                                 ${renderServiceButtons(relatedServices, ctaText)}
                             </div>
@@ -931,12 +958,12 @@
                             <div class="loading-spinner"></div>
                         </div>
 
-                        <a href="blog.html" class="back-to-list">← 목록으로 돌아가기</a>
+                        <a href="blog.html" class="back-to-list">← ${t('blog.post.backToList', '목록으로 돌아가기')}</a>
                     </article>
 
                     <aside class="sidebar">
                         <nav class="toc">
-                            <div class="toc-title">목차</div>
+                            <div class="toc-title">${t('blog.post.toc', '목차')}</div>
                             <ul class="toc-list" id="tocList">${toc.html}</ul>
                         </nav>
                     </aside>
@@ -1085,10 +1112,9 @@
         // 서비스 버튼 렌더링
         function renderServiceButtons(services, cta) {
             if (!services || services.length === 0) {
-                const browseText = cta.apply === 'Apply Now' ? 'Browse Services' : '서비스 둘러보기';
                 return `
                     <a href="/index.html#services" class="service-cta-btn">
-                        <span>${browseText}</span>
+                        <span>${t('blog.post.browseServices', '서비스 둘러보기')}</span>
                         <span class="arrow">→</span>
                     </a>
                 `;
@@ -1123,7 +1149,7 @@
                 const emojis = { 'citizenship': '🛂', 'admin': '📋', 'work': '💼', 'education': '🎓', 'business': '🏢', 'family': '👨‍👩‍👧', 'residence': '🏠' };
 
                 container.innerHTML = `
-                    <h3 class="related-posts-title">관련 글</h3>
+                    <h3 class="related-posts-title">${t('blog.post.relatedPosts', '관련 글')}</h3>
                     <div class="related-posts-grid">
                         ${posts.map(post => `
                             <a href="blog-post.html?slug=${post.slug}" class="related-post-card">
@@ -1134,7 +1160,7 @@
                                     }
                                 </div>
                                 <div class="related-post-content">
-                                    <div class="related-post-category">${categoryNames[post.category] || post.category}</div>
+                                    <div class="related-post-category">${getCategoryName(post.category)}</div>
                                     <div class="related-post-title">${post.title}</div>
                                 </div>
                             </a>
@@ -1175,7 +1201,7 @@
         // 링크 복사
         function copyLink() {
             navigator.clipboard.writeText(window.location.href).then(() => {
-                alert('링크가 복사되었습니다.');
+                alert(t('blog.post.linkCopied', '링크가 복사되었습니다.'));
             });
         }
 
