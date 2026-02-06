@@ -422,6 +422,29 @@
             box-shadow: none;
         }
 
+        /* Admin Thread Button */
+        .btn-admin-thread {
+            background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
+            color: white;
+            box-shadow: 0 2px 12px rgba(124, 58, 237, 0.3);
+            font-size: 17px;
+            font-weight: 800;
+            gap: 10px;
+        }
+
+        .btn-admin-thread i {
+            font-size: 20px;
+        }
+
+        .btn-admin-thread:hover {
+            background: linear-gradient(135deg, #6D28D9 0%, #5B21B6 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .btn-admin-thread:active {
+            transform: translateY(0);
+        }
 
         /* Security Badges */
         .security-badges {
@@ -1450,6 +1473,12 @@
 
                 <!-- CTA Buttons -->
                 <div class="cta-section">
+                    <!-- 관리자 전용: 쓰레드 열기 버튼 (관리자 모드일 때만 표시) -->
+                    <button class="btn-payment btn-admin-thread" id="adminThreadBtn" onclick="createAdminTestThread()" style="display: none;">
+                        <i class="fas fa-comments"></i>
+                        <span class="btn-text">관리자 쓰레드 열기</span>
+                    </button>
+
                     <button class="btn-payment btn-toss" id="payBtn" onclick="processPayment()" disabled>
                         <div class="btn-logo-area">
                             <img src="Toss_Logo_Button_Type.png" alt="Toss">
@@ -1769,6 +1798,16 @@
                 selectedService = { ...servicePricing[serviceId] };
                 document.getElementById('loading').style.display = 'none';
                 showContent(serviceId);
+
+                // 관리자 모드: 쓰레드 열기 버튼 표시, 결제 버튼/동의/보안배지 숨김
+                document.getElementById('adminThreadBtn').style.display = 'flex';
+                document.getElementById('payBtn').style.display = 'none';
+                document.getElementById('wiseBtn').style.display = 'none';
+                const consentArea = document.querySelector('.service-consent-area');
+                if (consentArea) consentArea.style.display = 'none';
+                const badges = document.querySelector('.security-badges');
+                if (badges) badges.style.display = 'none';
+
                 return;
             }
 
@@ -2039,38 +2078,23 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
 
             try {
                 let profile = null;
-                let session = null;
 
-                // 관리자 모드 확인: sessionStorage 체크 + 서버 측 검증
-                let isAdminMode = window.isAdminLoggedIn && window.isAdminLoggedIn();
-
-                // sessionStorage에 adminLoggedIn만 있고 adminRole이 없는 경우도 서버 검증으로 보완
-                if (!isAdminMode && sessionStorage.getItem('adminLoggedIn') === 'true') {
-                    isAdminMode = await verifyAdminRole();
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    alert(getUIMessage('loginRequired'));
+                    window.location.href = 'index.html';
+                    return;
                 }
 
-                if (isAdminMode) {
-                    // 관리자 모드: 결제 건너뛰고 바로 쓰레드 생성
-                    await createAdminTestThread();
-                    return;
+                const profileResult = await getUserProfile(session.user.id);
+                if (profileResult.success && profileResult.data) {
+                    profile = profileResult.data;
                 } else {
-                    session = await checkSession();
-                    if (!session || !session.user) {
-                        alert(getUIMessage('loginRequired'));
-                        window.location.href = 'index.html';
-                        return;
-                    }
-
-                    const profileResult = await getUserProfile(session.user.id);
-                    if (profileResult.success && profileResult.data) {
-                        profile = profileResult.data;
-                    } else {
-                        profile = {
-                            name: session.user.email.split('@')[0],
-                            email: session.user.email,
-                            phone: ''
-                        };
-                    }
+                    profile = {
+                        name: session.user.email.split('@')[0],
+                        email: session.user.email,
+                        phone: ''
+                    };
                 }
 
                 // Get D-10-1 form data if applicable
