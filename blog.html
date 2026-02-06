@@ -296,29 +296,29 @@
 <body>
     <header class="header">
         <div class="header-content">
-            <h1><a href="index.html">법무법인 로연</a></h1>
+            <h1><a href="index.html" data-i18n="common.lawFirm">법무법인 로연</a></h1>
             <nav class="header-nav">
-                <a href="index.html">서비스</a>
-                <a href="blog.html" style="color: white; font-weight: 600;">뉴스 & 인사이트</a>
+                <a href="index.html" data-i18n="blog.nav.services">서비스</a>
+                <a href="blog.html" style="color: white; font-weight: 600;" data-i18n="blog.nav.newsInsights">뉴스 & 인사이트</a>
             </nav>
         </div>
     </header>
 
     <section class="hero">
-        <h2>뉴스 & 인사이트</h2>
-        <p>출입국·비자에 관한 유용한 정보를 제공합니다</p>
+        <h2 data-i18n="blog.title">뉴스 & 인사이트</h2>
+        <p data-i18n="blog.subtitle">출입국·비자에 관한 유용한 정보를 제공합니다</p>
     </section>
 
     <main class="container">
         <div class="category-tabs" id="categoryTabs">
-            <button class="category-tab active" data-category="all">전체</button>
-            <button class="category-tab" data-category="citizenship">국적·귀화·난민</button>
-            <button class="category-tab" data-category="admin">공통 행정 신고</button>
-            <button class="category-tab" data-category="work">취업·워크</button>
-            <button class="category-tab" data-category="education">교육·구직</button>
-            <button class="category-tab" data-category="business">사업·투자</button>
-            <button class="category-tab" data-category="family">동포·가족·결혼</button>
-            <button class="category-tab" data-category="residence">거주·영주</button>
+            <button class="category-tab active" data-category="all" data-i18n="blog.category.all">전체</button>
+            <button class="category-tab" data-category="citizenship" data-i18n="blog.category.citizenship">국적·귀화·난민</button>
+            <button class="category-tab" data-category="admin" data-i18n="blog.category.admin">공통 행정 신고</button>
+            <button class="category-tab" data-category="work" data-i18n="blog.category.work">취업·워크</button>
+            <button class="category-tab" data-category="education" data-i18n="blog.category.education">교육·구직</button>
+            <button class="category-tab" data-category="business" data-i18n="blog.category.business">사업·투자</button>
+            <button class="category-tab" data-category="family" data-i18n="blog.category.family">동포·가족·결혼</button>
+            <button class="category-tab" data-category="residence" data-i18n="blog.category.residence">거주·영주</button>
         </div>
 
         <div id="blogList" class="blog-grid">
@@ -330,14 +330,17 @@
     </main>
 
     <footer class="footer">
-        <p>© 2025 법무법인 로연. All rights reserved.</p>
+        <p data-i18n="blog.footer.copyright">© 2025 법무법인 로연. All rights reserved.</p>
         <p style="margin-top: 8px;">
-            <a href="privacy-policy.html">개인정보처리방침</a> ·
-            <a href="terms-of-service.html">이용약관</a>
+            <a href="privacy-policy.html" data-i18n="blog.footer.privacy">개인정보처리방침</a> ·
+            <a href="terms-of-service.html" data-i18n="blog.footer.terms">이용약관</a>
         </p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- 다국어 시스템 -->
+    <script src="js/translations.js?v=20260206"></script>
+    <script src="js/i18n.js?v=20260206"></script>
     <script>
         // Supabase 초기화
         const SUPABASE_URL = 'https://gqistzsergddnpcvuzba.supabase.co';
@@ -346,7 +349,30 @@
 
         let currentCategory = 'all';
 
-        // 카테고리 매핑
+        // i18n 헬퍼 함수
+        function t(key, fallback) {
+            if (typeof i18n !== 'undefined' && i18n.translate) {
+                const result = i18n.translate(key);
+                return result !== key ? result : (fallback || key);
+            }
+            return fallback || key;
+        }
+
+        // 카테고리 매핑 (동적 번역)
+        function getCategoryName(cat) {
+            const map = {
+                'all': t('blog.category.all', '전체'),
+                'citizenship': t('blog.category.citizenship', '국적·귀화·난민'),
+                'admin': t('blog.category.admin', '공통 행정 신고'),
+                'work': t('blog.category.work', '취업·워크'),
+                'education': t('blog.category.education', '교육·구직'),
+                'business': t('blog.category.business', '사업·투자'),
+                'family': t('blog.category.family', '동포·가족·결혼'),
+                'residence': t('blog.category.residence', '거주·영주')
+            };
+            return map[cat] || cat;
+        }
+        // 하위 호환성을 위한 카테고리 매핑 객체
         const categoryNames = {
             'all': '전체',
             'citizenship': '국적·귀화·난민',
@@ -361,7 +387,7 @@
         // 블로그 글 로드
         async function loadPosts(category = 'all') {
             const blogList = document.getElementById('blogList');
-            blogList.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>글을 불러오는 중...</p></div>';
+            blogList.innerHTML = `<div class="loading"><div class="loading-spinner"></div><p>${t('blog.loading', '글을 불러오는 중...')}</p></div>`;
 
             try {
                 // console.log('Loading posts, category:', category);
@@ -387,7 +413,7 @@
                         blogList.innerHTML = `
                             <div class="empty-state" style="grid-column: 1 / -1;">
                                 <div class="empty-state-icon">📝</div>
-                                <p>아직 작성된 글이 없습니다.</p>
+                                <p>${t('blog.empty', '아직 작성된 글이 없습니다.')}</p>
                             </div>
                         `;
                         return;
@@ -399,7 +425,7 @@
                     blogList.innerHTML = `
                         <div class="empty-state" style="grid-column: 1 / -1;">
                             <div class="empty-state-icon">📝</div>
-                            <p>아직 작성된 글이 없습니다.</p>
+                            <p>${t('blog.empty', '아직 작성된 글이 없습니다.')}</p>
                         </div>
                     `;
                     return;
@@ -414,7 +440,7 @@
                             }
                         </div>
                         <div class="blog-card-content">
-                            <span class="blog-card-category">${categoryNames[post.category] || post.category}</span>
+                            <span class="blog-card-category">${getCategoryName(post.category)}</span>
                             <h3 class="blog-card-title">${post.title}</h3>
                             <p class="blog-card-excerpt">${post.excerpt || ''}</p>
                             <div class="blog-card-meta">
@@ -429,7 +455,7 @@
                 blogList.innerHTML = `
                     <div class="empty-state" style="grid-column: 1 / -1;">
                         <div class="empty-state-icon">⚠️</div>
-                        <p>글을 불러오는 중 오류가 발생했습니다.</p>
+                        <p>${t('blog.error', '글을 불러오는 중 오류가 발생했습니다.')}</p>
                     </div>
                 `;
             }
