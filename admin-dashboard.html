@@ -1081,20 +1081,54 @@
             loadDashboardData();
         });
 
-        // 관리자 권한 확인 (Supabase 세션 기반 + sessionStorage 폴백)
+        // 관리자 권한 확인 (Supabase 세션 기반 + DB role 검증)
         async function checkAdminAccess() {
+            const ADMIN_ROLES = ['super_admin', 'admin', 'staff'];
+
+            // 1. Supabase 세션 확인
             const session = await checkSession();
 
             if (session && session.user) {
-                // Supabase 세션 있음 - 정상 접근
-                console.log('관리자 접근 허용 (Supabase 세션):', session.user.email);
-                return true;
+                // 2. DB에서 실제 role 확인 (세션만으로는 부족)
+                try {
+                    const { data: profile, error } = await supabaseClient
+                        .from('profiles')
+                        .select('role')
+                        .eq('id', session.user.id)
+                        .single();
+
+                    if (!error && profile && ADMIN_ROLES.includes(profile.role)) {
+                        return true;
+                    }
+
+                    // admins 테이블에서도 확인
+                    const { data: admin, error: adminError } = await supabaseClient
+                        .from('admins')
+                        .select('role')
+                        .eq('email', session.user.email)
+                        .single();
+
+                    if (!adminError && admin && ADMIN_ROLES.includes(admin.role)) {
+                        return true;
+                    }
+                } catch (e) {
+                    console.error('Role verification error:', e);
+                }
+
+                // 세션은 있지만 admin role이 아닌 경우
+                alert('관리자 권한이 없습니다. 접근이 거부되었습니다.');
+                location.href = 'index.html';
+                return false;
             }
 
-            // Supabase 세션 없음 - sessionStorage 관리자 로그인 확인
+            // 3. sessionStorage 폴백 - role도 함께 검증
             if (sessionStorage.getItem('adminLoggedIn') === 'true') {
-                console.log('관리자 접근 허용 (sessionStorage):', sessionStorage.getItem('adminId'));
-                return true;
+                const storedRole = sessionStorage.getItem('adminRole');
+                if (ADMIN_ROLES.includes(storedRole)) {
+                    // sessionStorage 기반 접근은 제한적으로 허용하되 경고
+                    console.warn('Admin access via sessionStorage - Supabase session recommended');
+                    return true;
+                }
             }
 
             // 둘 다 없으면 로그인 페이지로 이동
