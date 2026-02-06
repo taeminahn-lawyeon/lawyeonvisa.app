@@ -85,12 +85,11 @@ async function requestTossPayment(applicationData) {
 }
 
 // ========================================
-// PayPal 연동
+// PayPal 연동 (현재 미사용 - 비활성화)
 // ========================================
+// PayPal 결제를 사용할 경우 아래 주석을 해제하고 설정하세요
 
-// PayPal 클라이언트 ID
-// ⚠️ 보안 경고: 프로덕션에서는 환경변수 또는 서버 측 설정에서 로드해야 합니다
-const PAYPAL_CLIENT_ID = window.__PAYMENT_CONFIG__?.paypalClientId || 'sb';  // 'sb' = PayPal sandbox
+const PAYPAL_CLIENT_ID = null; // PayPal 미사용
 
 let paypalLoaded = false;
 
@@ -128,9 +127,13 @@ function loadPayPalSDK() {
     });
 }
 
-// PayPal 결제 처리
+// PayPal 결제 처리 (현재 미사용)
 async function requestPayPalPayment(applicationData) {
     try {
+        if (!PAYPAL_CLIENT_ID) {
+            alert('PayPal 결제는 현재 지원되지 않습니다. Toss Payments를 이용해주세요.');
+            return false;
+        }
         // PayPal SDK 로드
         await loadPayPalSDK();
 
