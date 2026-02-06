@@ -213,6 +213,86 @@
             background: #e5e8eb;
         }
 
+        .header-cta-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: #eef4ff;
+            border: 1px solid #3182f6;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #3182f6;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .header-cta-btn:hover {
+            background: #3182f6;
+            color: white;
+        }
+
+        .header-cta-btn .arrow {
+            transition: transform 0.2s;
+            font-size: 12px;
+        }
+
+        .header-cta-btn:hover .arrow {
+            transform: translateX(3px);
+        }
+
+        /* 중간 인라인 CTA */
+        .mid-cta-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin: 40px 0;
+            padding: 20px 24px;
+            background: #f8faff;
+            border: 1px solid #d4e3fc;
+            border-left: 4px solid #3182f6;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .mid-cta-text {
+            font-size: 15px;
+            color: #4e5968;
+            line-height: 1.5;
+        }
+
+        .mid-cta-text strong {
+            color: #191f28;
+        }
+
+        .mid-cta-link {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            background: #3182f6;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .mid-cta-link:hover {
+            background: #1b64da;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .mid-cta-banner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
         /* 아티클 본문 */
         .article-content {
             font-size: 17px;
@@ -738,6 +818,11 @@
                         <span>🔗</span>
                         <span>링크 복사</span>
                     </button>
+                    
+                    <a href="/service-apply-general.html?service=d10-1-change" class="header-cta-btn">
+                        <span>D-10-1 Job Seeker Visa Application 신청하기</span>
+                        <span class="arrow">→</span>
+                    </a>
                 </div>
             </header>
 
@@ -885,6 +970,12 @@
 <p><strong>For New Graduates (Points Exempt for First Application):</strong></p>
 <p>When you apply for extension, you will need to meet the points system requirements:</p>
 <ul><li><strong>60+ points required</strong> for extension</li><li>If you have <strong>60-79 points:</strong> Each extension is for 6 months - maximum 1 year total stay</li><li>If you have <strong>80+ points:</strong> Each extension is for 1 year - maximum 3 years total stay</li></ul>
+                <div class="mid-cta-banner">
+                    <div class="mid-cta-text"><strong>D-10-1 Job Seeker Visa Application</strong> 대행 서비스가 필요하신가요?</div>
+                    <a href="/service-apply-general.html?service=d10-1-change" class="mid-cta-link">
+                        신청하기 →
+                    </a>
+                </div>
 <p>What you need for extension:</p>
 <ul><li>Korean language certificate (TOPIK or KIIP)</li><li>Bank statements (proof of financial ability)</li><li>Proof of active job hunting (internship records, interview records, job applications)</li><li>Any certificates or training you completed</li></ul>
 
@@ -1010,7 +1101,7 @@
 
             <!-- 서비스 CTA -->
             <div class="service-cta-section">
-                <div class="service-cta-title">관련 서비스 신청</div>
+                <div class="service-cta-title">D-10-1 Job Seeker Visa Application 신청</div>
                 <div class="service-cta-desc">전문가의 도움이 필요하신가요? 지금 바로 서비스를 신청하세요.</div>
                 <div class="service-cta-buttons">
                     
