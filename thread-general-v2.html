@@ -70,6 +70,70 @@
         .header-actions {
             display: flex;
             gap: 8px;
+            align-items: center;
+        }
+
+        /* Language Selector */
+        .language-selector {
+            position: relative;
+        }
+
+        #language-selector-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+
+        #language-selector-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        #language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 4px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            min-width: 140px;
+            z-index: 200;
+            overflow: hidden;
+        }
+
+        #language-dropdown.hidden {
+            display: none;
+        }
+
+        .language-option {
+            display: block;
+            width: 100%;
+            padding: 10px 16px;
+            border: none;
+            background: none;
+            text-align: left;
+            cursor: pointer;
+            font-size: 14px;
+            color: #333;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .language-option:hover {
+            background: #F3F4F6;
+        }
+
+        .language-option .checkmark {
+            float: right;
+            color: #3182F6;
+            font-weight: 700;
         }
 
         /* Container - 2단 레이아웃 */
@@ -1274,7 +1338,17 @@
                 ← <span data-i18n="thread.backToList">목록</span>
             </button>
             <div class="header-title" data-i18n="thread.header">쓰레드</div>
-            <div class="header-actions"></div>
+            <div class="header-actions">
+                <div class="language-selector">
+                    <button id="language-selector-btn" title="Select Language" type="button">
+                        <span class="language-btn-content">
+                            <span class="language-name">English</span>
+                        </span>
+                        <span style="margin-left: 4px; font-size: 12px;">▼</span>
+                    </button>
+                    <div id="language-dropdown" class="hidden"></div>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -1827,8 +1901,37 @@
             consultation: { ko: '상담', en: 'Consultation', zh: '咨询', vi: 'Tư vấn', ja: '相談', mn: 'Зөвлөгөө', th: 'ปรึกษา' },
             client: { ko: '고객', en: 'Client', zh: '客户', vi: 'Khách hàng', ja: '顧客', mn: 'Үйлчлүүлэгч', th: 'ลูกค้า' },
             submit: { ko: '작성', en: 'Submit', zh: '提交', vi: 'Gửi', ja: '送信', mn: 'Илгээх', th: 'ส่ง' },
+            sending: { ko: '전송 중...', en: 'Sending...', zh: '发送中...', vi: 'Đang gửi...', ja: '送信中...', mn: 'Илгээж байна...', th: 'กำลังส่ง...' },
             sendError: { ko: '메시지 전송 중 오류가 발생했습니다.', en: 'An error occurred while sending the message.', zh: '发送消息时出错。', vi: 'Lỗi khi gửi tin nhắn.', ja: 'メッセージ送信中にエラーが発生しました。', mn: 'Мессеж илгээхэд алдаа гарлаа.', th: 'เกิดข้อผิดพลาดในการส่งข้อความ' },
-            saveError: { ko: '메시지 저장 중 오류가 발생했습니다.', en: 'An error occurred while saving the message.', zh: '保存消息时出错。', vi: 'Lỗi khi lưu tin nhắn.', ja: 'メッセージ保存中にエラーが発生しました。', mn: 'Мессеж хадгалахад алдаа гарлаа.', th: 'เกิดข้อผิดพลาดในการบันทึกข้อความ' }
+            saveError: { ko: '메시지 저장 중 오류가 발생했습니다.', en: 'An error occurred while saving the message.', zh: '保存消息时出错。', vi: 'Lỗi khi lưu tin nhắn.', ja: 'メッセージ保存中にエラーが発生しました。', mn: 'Мессеж хадгалахад алдаа гарлаа.', th: 'เกิดข้อผิดพลาดในการบันทึกข้อความ' },
+            threadNotFound: { ko: '쓰레드를 찾을 수 없습니다.', en: 'Thread not found.', zh: '未找到会话。', vi: 'Không tìm thấy chuỗi hội thoại.', ja: 'スレッドが見つかりません。', mn: 'Хэлэлцүүлэг олдсонгүй.', th: 'ไม่พบกระทู้' },
+            loginRequired: { ko: '로그인이 필요합니다.', en: 'Login is required.', zh: '需要登录。', vi: 'Cần đăng nhập.', ja: 'ログインが必要です。', mn: 'Нэвтрэх шаардлагатай.', th: 'ต้องเข้าสู่ระบบ' },
+            fileSizeLimit: { ko: '파일 크기는 10MB를 초과할 수 없습니다.', en: 'File size cannot exceed 10MB.', zh: '文件大小不能超过10MB。', vi: 'Kích thước tệp không được vượt quá 10MB.', ja: 'ファイルサイズは10MBを超えることはできません。', mn: 'Файлын хэмжээ 10MB-аас хэтрэх боломжгүй.', th: 'ขนาดไฟล์ไม่สามารถเกิน 10MB' },
+            adminRedirect: { ko: '관리자는 관리자 대시보드를 통해 쓰레드에 접근해주세요.', en: 'Admins should access threads through the admin dashboard.', zh: '管理员请通过管理面板访问会话。', vi: 'Quản trị viên vui lòng truy cập qua bảng điều khiển.', ja: '管理者はダッシュボードからアクセスしてください。', mn: 'Админ хяналтын самбараар хандана уу.', th: 'ผู้ดูแลระบบกรุณาเข้าถึงผ่านแดชบอร์ด' },
+            accessDenied: { ko: '접근 권한이 없습니다.', en: 'Access denied.', zh: '没有访问权限。', vi: 'Từ chối truy cập.', ja: 'アクセス権限がありません。', mn: 'Хандах эрхгүй.', th: 'ปฏิเสธการเข้าถึง' },
+            threadLoadError: { ko: '쓰레드를 불러오는 중 오류가 발생했습니다.', en: 'An error occurred while loading the thread.', zh: '加载会话时出错。', vi: 'Lỗi khi tải chuỗi hội thoại.', ja: 'スレッドの読み込み中にエラーが発生しました。', mn: 'Хэлэлцүүлэг ачаалахад алдаа гарлаа.', th: 'เกิดข้อผิดพลาดในการโหลดกระทู้' },
+            noMessages: { ko: '아직 메시지가 없습니다.', en: 'No messages yet.', zh: '暂无消息。', vi: 'Chưa có tin nhắn nào.', ja: 'まだメッセージがありません。', mn: 'Одоогоор мессеж алга.', th: 'ยังไม่มีข้อความ' },
+            emptyInput: { ko: '내용을 입력하거나 파일을 첨부해주세요.', en: 'Please enter a message or attach a file.', zh: '请输入内容或附加文件。', vi: 'Vui lòng nhập nội dung hoặc đính kèm tệp.', ja: '内容を入力するかファイルを添付してください。', mn: 'Агуулга оруулах эсвэл файл хавсаргана уу.', th: 'กรุณากรอกข้อความหรือแนบไฟล์' },
+            selectService: { ko: '서비스를 선택해주세요.', en: 'Please select a service.', zh: '请选择服务。', vi: 'Vui lòng chọn dịch vụ.', ja: 'サービスを選択してください。', mn: 'Үйлчилгээ сонгоно уу.', th: 'กรุณาเลือกบริการ' },
+            enterAmount: { ko: '금액을 입력해주세요.', en: 'Please enter the amount.', zh: '请输入金额。', vi: 'Vui lòng nhập số tiền.', ja: '金額を入力してください。', mn: 'Дүнг оруулна уу.', th: 'กรุณากรอกจำนวนเงิน' },
+            stageChanged: { ko: '단계가 변경되었습니다.', en: 'Stage has been changed.', zh: '阶段已变更。', vi: 'Giai đoạn đã được thay đổi.', ja: '段階が変更されました。', mn: 'Алхам өөрчлөгдлөө.', th: 'ขั้นตอนถูกเปลี่ยนแล้ว' },
+            stageChangeError: { ko: '단계 변경 중 오류가 발생했습니다.', en: 'An error occurred while changing the stage.', zh: '变更阶段时出错。', vi: 'Lỗi khi thay đổi giai đoạn.', ja: '段階変更中にエラーが発生しました。', mn: 'Алхам өөрчлөхөд алдаа гарлаа.', th: 'เกิดข้อผิดพลาดในการเปลี่ยนขั้นตอน' },
+            msgLoadError: { ko: '메시지를 불러올 수 없습니다.', en: 'Unable to load messages.', zh: '无法加载消息。', vi: 'Không thể tải tin nhắn.', ja: 'メッセージを読み込めません。', mn: 'Мессежийг ачаалах боломжгүй.', th: 'ไม่สามารถโหลดข้อความ' },
+            msgNotFound: { ko: '메시지를 찾을 수 없습니다.', en: 'Message not found.', zh: '未找到消息。', vi: 'Không tìm thấy tin nhắn.', ja: 'メッセージが見つかりません。', mn: 'Мессеж олдсонгүй.', th: 'ไม่พบข้อความ' },
+            msgIdMissing: { ko: '메시지 ID가 없습니다.', en: 'Message ID is missing.', zh: '缺少消息ID。', vi: 'Thiếu ID tin nhắn.', ja: 'メッセージIDがありません。', mn: 'Мессежийн ID алга.', th: 'ไม่มี ID ข้อความ' },
+            msgEdited: { ko: '메시지가 수정되었습니다.', en: 'Message has been edited.', zh: '消息已编辑。', vi: 'Tin nhắn đã được chỉnh sửa.', ja: 'メッセージが編集されました。', mn: 'Мессеж засагдлаа.', th: 'ข้อความถูกแก้ไขแล้ว' },
+            edit: { ko: '편집', en: 'Edit', zh: '编辑', vi: 'Chỉnh sửa', ja: '編集', mn: 'Засах', th: 'แก้ไข' },
+            d10SubmitBtn: { ko: 'D-10-1 정보 제출하기', en: 'Submit D-10-1 Info', zh: '提交D-10-1信息', vi: 'Nộp thông tin D-10-1', ja: 'D-10-1情報を提出', mn: 'D-10-1 мэдээлэл илгээх', th: 'ส่งข้อมูล D-10-1' },
+            d10Submitted: { ko: '정보 제출 완료', en: 'Info Submitted', zh: '信息已提交', vi: 'Đã nộp thông tin', ja: '情報提出完了', mn: 'Мэдээлэл илгээсэн', th: 'ส่งข้อมูลแล้ว' },
+            visaLegalBtn: { ko: '비자 진단 설문 작성하기', en: 'Complete Visa Survey', zh: '填写签证诊断问卷', vi: 'Hoàn thành khảo sát visa', ja: 'ビザ診断アンケート', mn: 'Визийн судалгаа бөглөх', th: 'กรอกแบบสำรวจวีซ่า' },
+            visaLegalSubmitted: { ko: '설문 제출 완료', en: 'Survey Submitted', zh: '问卷已提交', vi: 'Đã nộp khảo sát', ja: 'アンケート提出完了', mn: 'Судалгаа илгээсэн', th: 'ส่งแบบสำรวจแล้ว' },
+            allRequired: { ko: '모든 필수 항목을 선택해 주세요.', en: 'Please select all required items.', zh: '请选择所有必填项。', vi: 'Vui lòng chọn tất cả mục bắt buộc.', ja: 'すべての必須項目を選択してください。', mn: 'Бүх шаардлагатай зүйлийг сонгоно уу.', th: 'กรุณาเลือกรายการที่จำเป็นทั้งหมด' },
+            selectQ4: { ko: '질문 4번을 선택해 주세요.', en: 'Please select question 4.', zh: '请选择第4题。', vi: 'Vui lòng chọn câu 4.', ja: '質問4を選択してください。', mn: '4-р асуултыг сонгоно уу.', th: 'กรุณาเลือกคำถามข้อ 4' },
+            selectQ5: { ko: '질문 5번에서 하나 이상 선택해 주세요.', en: 'Please select at least one for question 5.', zh: '请在第5题中至少选择一项。', vi: 'Vui lòng chọn ít nhất một cho câu 5.', ja: '質問5で1つ以上選択してください。', mn: '5-р асуултаас нэгээс дээш сонгоно уу.', th: 'กรุณาเลือกอย่างน้อยหนึ่งรายการในคำถามข้อ 5' },
+            visaSurveyDone: { ko: '비자 진단 설문이 제출되었습니다.', en: 'Visa diagnosis survey has been submitted.', zh: '签证诊断问卷已提交。', vi: 'Khảo sát chẩn đoán visa đã được nộp.', ja: 'ビザ診断アンケートが提出されました。', mn: 'Визийн оношлогооны судалгаа илгээгдлээ.', th: 'แบบสำรวจวินิจฉัยวีซ่าถูกส่งแล้ว' },
+            surveySubmitFail: { ko: '설문 제출에 실패했습니다. 다시 시도해 주세요.', en: 'Failed to submit survey. Please try again.', zh: '提交问卷失败，请重试。', vi: 'Nộp khảo sát thất bại. Vui lòng thử lại.', ja: 'アンケートの提出に失敗しました。再試行してください。', mn: 'Судалгаа илгээхэд алдаа гарлаа. Дахин оролдоно уу.', th: 'ส่งแบบสำรวจล้มเหลว กรุณาลองอีกครั้ง' },
+            d10FormSuccess: { ko: 'D-10-1 신청 정보가 제출되었습니다!', en: 'D-10-1 Application Information submitted successfully!', zh: 'D-10-1 申请信息已成功提交！', vi: 'Thông tin đăng ký D-10-1 đã được nộp!', ja: 'D-10-1申請情報が提出されました！', mn: 'D-10-1 мэдүүлгийн мэдээлэл илгээгдлээ!', th: 'ข้อมูลใบสมัคร D-10-1 ถูกส่งเรียบร้อย!' },
+            d10FormFail: { ko: '양식 제출에 실패했습니다. 다시 시도해 주세요.', en: 'Failed to submit form. Please try again.', zh: '提交表单失败，请重试。', vi: 'Nộp biểu mẫu thất bại. Vui lòng thử lại.', ja: 'フォームの提出に失敗しました。再試行してください。', mn: 'Маягт илгээхэд алдаа гарлаа. Дахин оролдоно уу.', th: 'ส่งฟอร์มล้มเหลว กรุณาลองอีกครั้ง' }
         };
 
         function getThreadMsg(key) {
@@ -2087,7 +2190,7 @@
             threadId = urlParams.get('id');
 
             if (!threadId) {
-                alert('쓰레드를 찾을 수 없습니다.');
+                alert(getThreadMsg('threadNotFound'));
                 window.location.href = 'index.html';
                 return;
             }
@@ -2095,7 +2198,7 @@
             // Check session
             const session = await checkSession();
             if (!session || !session.user) {
-                alert('로그인이 필요합니다.');
+                alert(getThreadMsg('loginRequired'));
                 window.location.href = 'index.html';
                 return;
             }
@@ -2176,7 +2279,7 @@
         function handleFiles(files) {
             for (let file of files) {
                 if (file.size > 10 * 1024 * 1024) { // 10MB limit
-                    alert('파일 크기는 10MB를 초과할 수 없습니다.');
+                    alert(getThreadMsg('fileSizeLimit'));
                     continue;
                 }
                 pendingFiles.push(file);
@@ -2209,7 +2312,7 @@
                     .single();
 
                 if (error || !thread) {
-                    throw new Error('쓰레드를 찾을 수 없습니다.');
+                    throw new Error(getThreadMsg('threadNotFound'));
                 }
 
                 threadData = thread;
@@ -2224,12 +2327,12 @@
                     // 쓰레드 소유자가 아닌 경우
                     if (isAdmin) {
                         // 관리자/직원인 경우 - 관리자 페이지로 리다이렉트
-                        alert('관리자는 관리자 대시보드를 통해 쓰레드에 접근해주세요.');
+                        alert(getThreadMsg('adminRedirect'));
                         window.location.href = 'admin-thread.html?id=' + threadId;
                         return;
                     } else {
                         // 일반 사용자가 다른 사람의 쓰레드에 접근하려는 경우
-                        alert('접근 권한이 없습니다.');
+                        alert(getThreadMsg('accessDenied'));
                         window.location.href = 'index.html';
                         return;
                     }
@@ -2258,7 +2361,7 @@
 
             } catch (error) {
                 console.error('Error loading thread:', error);
-                alert('쓰레드를 불러오는 중 오류가 발생했습니다.');
+                alert(getThreadMsg('threadLoadError'));
             }
         }
 
@@ -2484,13 +2587,13 @@
                 const result = await getMessages(threadId);
 
                 if (!result.success) {
-                    throw new Error('메시지를 불러올 수 없습니다.');
+                    throw new Error(getThreadMsg('msgLoadError'));
                 }
 
                 const container = document.getElementById('messagesSection');
 
                 if (!result.data || result.data.length === 0) {
-                    container.innerHTML = '<p style="text-align: center; color: #9CA3AF; padding: 40px;">아직 메시지가 없습니다.</p>';
+                    container.innerHTML = `<p style="text-align: center; color: #9CA3AF; padding: 40px;">${getThreadMsg('noMessages')}</p>`;
                     return;
                 }
 
@@ -2561,12 +2664,12 @@
                     if (isLatest && !submittedSurveys.has('d10-1')) {
                         content = content.replace(
                             /<span class="survey-action-marker" data-action="d10-1"[^>]*>[^<]*<\/span>/,
-                            '<button class="survey-cta-btn" onclick="openD10FormModal()">D-10-1 정보 제출하기</button>'
+                            `<button class="survey-cta-btn" onclick="openD10FormModal()">${getThreadMsg('d10SubmitBtn')}</button>`
                         );
                     } else {
                         content = content.replace(
                             /<span class="survey-action-marker" data-action="d10-1"[^>]*>[^<]*<\/span>/,
-                            '<span class="survey-completed-badge">&#10003; 정보 제출 완료</span>'
+                            `<span class="survey-completed-badge">&#10003; ${getThreadMsg('d10Submitted')}</span>`
                         );
                     }
                 }
@@ -2576,12 +2679,12 @@
                     if (isLatest && !submittedSurveys.has('visa-legal')) {
                         content = content.replace(
                             /<span class="survey-action-marker" data-action="visa-legal"[^>]*>[^<]*<\/span>/,
-                            '<button class="survey-cta-btn" onclick="openVisaLegalSurveyModal()">비자 진단 설문 작성하기</button>'
+                            `<button class="survey-cta-btn" onclick="openVisaLegalSurveyModal()">${getThreadMsg('visaLegalBtn')}</button>`
                         );
                     } else {
                         content = content.replace(
                             /<span class="survey-action-marker" data-action="visa-legal"[^>]*>[^<]*<\/span>/,
-                            '<span class="survey-completed-badge">&#10003; 설문 제출 완료</span>'
+                            `<span class="survey-completed-badge">&#10003; ${getThreadMsg('visaLegalSubmitted')}</span>`
                         );
                     }
                 }
@@ -2622,7 +2725,7 @@
 
             // 관리자만 편집 버튼 표시
             const editBtnHtml = isAdmin ? `
-                <button class="message-edit-btn" onclick="openEditMessageModal('${msg.id}')">편집</button>
+                <button class="message-edit-btn" onclick="openEditMessageModal('${msg.id}')">${getThreadMsg('edit')}</button>
             ` : '';
 
             return `
@@ -2759,13 +2862,13 @@
             const plainText = quillEditor.getText().trim();
 
             if (!plainText && pendingFiles.length === 0) {
-                alert('내용을 입력하거나 파일을 첨부해주세요.');
+                alert(getThreadMsg('emptyInput'));
                 return;
             }
 
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '전송 중...';
+            submitBtn.innerHTML = getThreadMsg('sending');
 
             try {
                 // Upload files first
@@ -2884,6 +2987,24 @@
             }
         });
 
+        // Language change handler - re-render dynamic content
+        window.addEventListener('languageChanged', () => {
+            if (threadData) {
+                // Re-render progress with new language
+                renderProgress(threadData);
+                // Re-render messages with new language
+                loadMessages();
+                // Re-render submitted files
+                if (threadData.user_id) {
+                    loadSubmittedFiles(threadData.user_id);
+                }
+                // Update thread title and meta
+                document.getElementById('threadTitle').textContent = threadData.service_name || getThreadMsg('consultation');
+                document.getElementById('threadUser').textContent = threadData.profiles?.name || threadData.profiles?.email?.split('@')[0] || getThreadMsg('client');
+                document.getElementById('threadDate').textContent = formatDate(threadData.created_at);
+            }
+        });
+
         // Admin functions
         function openPaymentLinkModal() {
             document.getElementById('paymentLinkModal').classList.add('active');
@@ -2909,7 +3030,7 @@
         async function sendPaymentLink() {
             const serviceId = document.getElementById('paymentServiceSelect').value;
             if (!serviceId) {
-                alert('서비스를 선택해주세요.');
+                alert(getThreadMsg('selectService'));
                 return;
             }
 
@@ -2920,7 +3041,7 @@
             if (serviceId === 'custom') {
                 amount = document.getElementById('customAmount').value;
                 if (!amount) {
-                    alert('금액을 입력해주세요.');
+                    alert(getThreadMsg('enterAmount'));
                     return;
                 }
                 paymentUrl = `${window.location.origin}/service-apply-general.html?service=custom&amount=${amount}&thread=${threadId}`;
@@ -3001,11 +3122,11 @@
                 renderProgress(threadData);
 
                 closeModal('stageChangeModal');
-                alert('단계가 변경되었습니다.');
+                alert(getThreadMsg('stageChanged'));
 
             } catch (error) {
                 console.error('Error changing stage:', error);
-                alert('단계 변경 중 오류가 발생했습니다.');
+                alert(getThreadMsg('stageChangeError'));
             }
         }
 
@@ -3040,7 +3161,7 @@
             // 메시지 데이터 찾기
             const result = await getMessages(threadId);
             if (!result.success) {
-                alert('메시지를 불러올 수 없습니다.');
+                alert(getThreadMsg('msgLoadError'));
                 return;
             }
 
@@ -3048,7 +3169,7 @@
             const message = messagesCache.find(m => m.id === messageId);
 
             if (!message) {
-                alert('메시지를 찾을 수 없습니다.');
+                alert(getThreadMsg('msgNotFound'));
                 return;
             }
 
@@ -3067,7 +3188,7 @@
             const content = editQuillEditor.root.innerHTML;
 
             if (!messageId) {
-                alert('메시지 ID가 없습니다.');
+                alert(getThreadMsg('msgIdMissing'));
                 return;
             }
 
@@ -3084,7 +3205,7 @@
 
                 closeModal('editMessageModal');
                 await loadMessages();
-                alert('메시지가 수정되었습니다.');
+                alert(getThreadMsg('msgEdited'));
 
             } catch (error) {
                 console.error('Error saving message:', error);
@@ -3310,11 +3431,11 @@
                 closeModal('d10FormModal');
                 await loadMessages();
 
-                alert('D-10-1 Application Information submitted successfully!');
+                alert(getThreadMsg('d10FormSuccess'));
 
             } catch (error) {
                 console.error('Error submitting D-10-1 form:', error);
-                alert('Failed to submit form. Please try again.');
+                alert(getThreadMsg('d10FormFail'));
             }
         }
 
@@ -3400,7 +3521,7 @@ ${data.additionalNotes ? `<div style="margin-top: 14px;"><div style="font-weight
             const q8 = document.querySelector('input[name="vl-q8"]:checked');
 
             if (!q1 || !q2 || !q3 || !q6 || !q7 || !q8) {
-                alert('모든 필수 항목을 선택해 주세요.');
+                alert(getThreadMsg('allRequired'));
                 return;
             }
 
@@ -3409,11 +3530,11 @@ ${data.additionalNotes ? `<div style="margin-top: 14px;"><div style="font-weight
                 const q4 = document.querySelector('input[name="vl-q4"]:checked');
                 const q5Checked = document.querySelectorAll('input[name="vl-q5"]:checked');
                 if (!q4) {
-                    alert('질문 4번을 선택해 주세요.');
+                    alert(getThreadMsg('selectQ4'));
                     return;
                 }
                 if (q5Checked.length === 0) {
-                    alert('질문 5번에서 하나 이상 선택해 주세요.');
+                    alert(getThreadMsg('selectQ5'));
                     return;
                 }
             }
@@ -3451,11 +3572,11 @@ ${data.additionalNotes ? `<div style="margin-top: 14px;"><div style="font-weight
                 closeModal('visaLegalSurveyModal');
                 await loadMessages();
 
-                alert('비자 진단 설문이 제출되었습니다.');
+                alert(getThreadMsg('visaSurveyDone'));
 
             } catch (error) {
-                console.error('비자 법률자문 설문 제출 오류:', error);
-                alert('설문 제출에 실패했습니다. 다시 시도해 주세요.');
+                console.error('Visa legal survey submit error:', error);
+                alert(getThreadMsg('surveySubmitFail'));
             }
         }
 

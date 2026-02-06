@@ -899,30 +899,160 @@ async function getMessages(threadId) {
 async function createWelcomeMessage(threadId, serviceName) {
     try {
         const formUrl = `${window.location.origin}/profile-submit.html?thread=${threadId}`;
+        const lang = (typeof localStorage !== 'undefined' && localStorage.getItem('i18n_language')) || 'en';
+
+        const welcomeTexts = {
+            ko: {
+                title: '상담 요청 확인',
+                greeting: `안녕하세요! <strong>${serviceName}</strong> 상담 요청이 접수되었습니다.`,
+                procedureTitle: '진행 절차 안내',
+                procedureDesc: '원활한 상담 진행을 위해 아래 순서대로 진행해 주세요.',
+                step1Title: '1. 기본 정보 입력',
+                step1Desc: '상담에 필요한 기본 정보를 입력해 주세요.',
+                step1Link: '기본사항 입력하기',
+                step2Title: '2. 담당자 배정',
+                step2Desc: '기본 정보 확인 후, 담당자가',
+                step2Time: '30분 내',
+                step2Suffix: '연락드립니다.',
+                step3Title: '3. 상담 진행',
+                step3Desc: '케이스 검토 후 정확한 비용과 필요 서류를 안내드립니다.',
+                footer: '추가 문의사항은 이 쓰레드에 답글로 남겨주세요.',
+                senderName: '법무법인 로연'
+            },
+            en: {
+                title: 'Consultation Request Confirmed',
+                greeting: `Hello! Your consultation request for <strong>${serviceName}</strong> has been received.`,
+                procedureTitle: 'How It Works',
+                procedureDesc: 'Please follow the steps below for a smooth consultation process.',
+                step1Title: '1. Enter Basic Information',
+                step1Desc: 'Please fill in the basic information needed for your consultation.',
+                step1Link: 'Enter Basic Info',
+                step2Title: '2. Staff Assignment',
+                step2Desc: 'After reviewing your information, a staff member will contact you',
+                step2Time: 'within 30 minutes',
+                step2Suffix: '.',
+                step3Title: '3. Consultation',
+                step3Desc: 'After case review, we will provide exact costs and required documents.',
+                footer: 'For additional questions, please leave a reply in this thread.',
+                senderName: 'Lawyeon Law Firm'
+            },
+            zh: {
+                title: '咨询请求确认',
+                greeting: `您好！<strong>${serviceName}</strong> 咨询请求已受理。`,
+                procedureTitle: '办理流程',
+                procedureDesc: '为顺利进行咨询，请按以下顺序操作。',
+                step1Title: '1. 填写基本信息',
+                step1Desc: '请填写咨询所需的基本信息。',
+                step1Link: '填写基本信息',
+                step2Title: '2. 分配负责人',
+                step2Desc: '确认基本信息后，负责人将在',
+                step2Time: '30分钟内',
+                step2Suffix: '联系您。',
+                step3Title: '3. 进行咨询',
+                step3Desc: '案件审核后，将为您提供准确的费用和所需文件。',
+                footer: '如有其他问题，请在此会话中留言。',
+                senderName: '律渊律师事务所'
+            },
+            vi: {
+                title: 'Xac nhan yeu cau tu van',
+                greeting: `Xin chao! Yeu cau tu van <strong>${serviceName}</strong> da duoc tiep nhan.`,
+                procedureTitle: 'Quy trinh thuc hien',
+                procedureDesc: 'Vui long thuc hien theo cac buoc sau de qua trinh tu van dien ra suon se.',
+                step1Title: '1. Nhap thong tin co ban',
+                step1Desc: 'Vui long nhap thong tin co ban can thiet cho tu van.',
+                step1Link: 'Nhap thong tin co ban',
+                step2Title: '2. Phan cong nhan vien',
+                step2Desc: 'Sau khi xac nhan thong tin, nhan vien se lien he voi ban',
+                step2Time: 'trong 30 phut',
+                step2Suffix: '.',
+                step3Title: '3. Tien hanh tu van',
+                step3Desc: 'Sau khi xem xet, chung toi se cung cap chi phi chinh xac va tai lieu can thiet.',
+                footer: 'Neu co cau hoi them, vui long de lai phan hoi trong chuoi hoi thoai nay.',
+                senderName: 'Lawyeon'
+            },
+            ja: {
+                title: '相談リクエスト確認',
+                greeting: `こんにちは！<strong>${serviceName}</strong> の相談リクエストを受け付けました。`,
+                procedureTitle: '手続きのご案内',
+                procedureDesc: 'スムーズな相談のため、以下の手順に従ってください。',
+                step1Title: '1. 基本情報の入力',
+                step1Desc: '相談に必要な基本情報をご入力ください。',
+                step1Link: '基本情報を入力する',
+                step2Title: '2. 担当者配定',
+                step2Desc: '基本情報確認後、担当者が',
+                step2Time: '30分以内',
+                step2Suffix: 'にご連絡いたします。',
+                step3Title: '3. 相談進行',
+                step3Desc: 'ケース検討後、正確な費用と必要書類をご案内いたします。',
+                footer: '追加のご質問はこのスレッドに返信してください。',
+                senderName: 'ロヨン法律事務所'
+            },
+            mn: {
+                title: 'Зөвлөгөөний хүсэлт баталгаажсан',
+                greeting: `Сайн байна уу! <strong>${serviceName}</strong> зөвлөгөөний хүсэлт хүлээн авлаа.`,
+                procedureTitle: 'Явц',
+                procedureDesc: 'Зөвлөгөөг жигд явуулахын тулд дараах алхмуудыг дагана уу.',
+                step1Title: '1. Үндсэн мэдээлэл оруулах',
+                step1Desc: 'Зөвлөгөөнд шаардлагатай үндсэн мэдээллийг оруулна уу.',
+                step1Link: 'Мэдээлэл оруулах',
+                step2Title: '2. Хариуцагч томилох',
+                step2Desc: 'Мэдээлэл шалгасны дараа ажилтан танд',
+                step2Time: '30 минутын дотор',
+                step2Suffix: ' холбогдоно.',
+                step3Title: '3. Зөвлөгөө',
+                step3Desc: 'Хэрэг шалгасны дараа зардал болон шаардлагатай бичиг баримтыг мэдэгдэнэ.',
+                footer: 'Нэмэлт асуулт байвал энэ хэлэлцүүлэгт хариу бичнэ үү.',
+                senderName: 'Lawyeon'
+            },
+            th: {
+                title: 'ยืนยันคำขอปรึกษา',
+                greeting: `สวัสดีครับ/ค่ะ! คำขอปรึกษา <strong>${serviceName}</strong> ได้รับแล้ว`,
+                procedureTitle: 'ขั้นตอนการดำเนินการ',
+                procedureDesc: 'กรุณาทำตามขั้นตอนด้านล่างเพื่อการปรึกษาที่ราบรื่น',
+                step1Title: '1. กรอกข้อมูลพื้นฐาน',
+                step1Desc: 'กรุณากรอกข้อมูลพื้นฐานที่จำเป็นสำหรับการปรึกษา',
+                step1Link: 'กรอกข้อมูลพื้นฐาน',
+                step2Title: '2. มอบหมายเจ้าหน้าที่',
+                step2Desc: 'หลังจากตรวจสอบข้อมูลแล้ว เจ้าหน้าที่จะติดต่อคุณ',
+                step2Time: 'ภายใน 30 นาที',
+                step2Suffix: '',
+                step3Title: '3. ดำเนินการปรึกษา',
+                step3Desc: 'หลังจากตรวจสอบเคส จะแจ้งค่าใช้จ่ายและเอกสารที่ต้องการ',
+                footer: 'หากมีคำถามเพิ่มเติม กรุณาตอบกลับในกระทู้นี้',
+                senderName: 'Lawyeon'
+            }
+        };
+
+        const t = welcomeTexts[lang] || welcomeTexts.en;
+        const boxStyle = 'background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;';
+        const titleStyle = 'font-weight: 700; color: #191F28; margin-bottom: 8px;';
+        const descStyle = 'color: #374151; line-height: 1.6;';
+        const linkStyle = 'color: #3182F6; font-weight: 600;';
+        const highlightStyle = 'background: #FEF3C7; color: #191F28; padding: 2px 8px; border-radius: 4px; font-weight: 700;';
 
         const welcomeContent = `
-            <h4>상담 요청 확인</h4>
-            <p>안녕하세요! <strong>${serviceName}</strong> 상담 요청이 접수되었습니다.</p>
+            <h4>${t.title}</h4>
+            <p>${t.greeting}</p>
 
-            <h4>진행 절차 안내</h4>
-            <p>원활한 상담 진행을 위해 아래 순서대로 진행해 주세요.</p>
+            <h4>${t.procedureTitle}</h4>
+            <p>${t.procedureDesc}</p>
 
-            <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
-                <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">1. 기본 정보 입력</div>
-                <div style="color: #374151; line-height: 1.6;">상담에 필요한 기본 정보를 입력해 주세요. <a href="${formUrl}" target="_blank" style="color: #3182F6; font-weight: 600;">기본사항 입력하기</a></div>
+            <div class="info-box" style="${boxStyle}">
+                <div style="${titleStyle}">${t.step1Title}</div>
+                <div style="${descStyle}">${t.step1Desc} <a href="${formUrl}" target="_blank" style="${linkStyle}">${t.step1Link}</a></div>
             </div>
 
-            <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
-                <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">2. 담당자 배정</div>
-                <div style="color: #374151; line-height: 1.6;">기본 정보 확인 후, 담당자가 <span class="highlight" style="background: #FEF3C7; color: #191F28; padding: 2px 8px; border-radius: 4px; font-weight: 700;">30분 내</span> 연락드립니다.</div>
+            <div class="info-box" style="${boxStyle}">
+                <div style="${titleStyle}">${t.step2Title}</div>
+                <div style="${descStyle}">${t.step2Desc} <span class="highlight" style="${highlightStyle}">${t.step2Time}</span> ${t.step2Suffix}</div>
             </div>
 
-            <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
-                <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">3. 상담 진행</div>
-                <div style="color: #374151; line-height: 1.6;">케이스 검토 후 정확한 비용과 필요 서류를 안내드립니다.</div>
+            <div class="info-box" style="${boxStyle}">
+                <div style="${titleStyle}">${t.step3Title}</div>
+                <div style="${descStyle}">${t.step3Desc}</div>
             </div>
 
-            <p>추가 문의사항은 이 쓰레드에 답글로 남겨주세요.</p>
+            <p>${t.footer}</p>
         `;
 
         // 시스템 메시지로 생성 (관리자 타입)
@@ -930,23 +1060,23 @@ async function createWelcomeMessage(threadId, serviceName) {
             .from('messages')
             .insert({
                 thread_id: threadId,
-                sender_id: null, // 시스템 메시지는 sender_id가 없음
+                sender_id: null,
                 sender_type: 'admin',
-                sender_name: '법무법인 로연',
+                sender_name: t.senderName,
                 content: welcomeContent
             })
             .select()
             .single();
 
         if (error) {
-            console.error('❌ 환영 메시지 생성 오류:', error);
+            console.error('❌ Welcome message creation error:', error);
             throw error;
         }
 
-        debugLog('✅ 환영 메시지 생성 성공:', data);
+        debugLog('✅ Welcome message created:', data);
         return { success: true, data };
     } catch (error) {
-        console.error('환영 메시지 생성 오류:', error);
+        console.error('Welcome message creation error:', error);
         return { success: false, error: error.message };
     }
 }
