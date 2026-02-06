@@ -162,7 +162,7 @@
 
                 if (fetchError) throw fetchError;
 
-                console.log('Found posts:', existingPosts);
+                // console.log('Found posts:', existingPosts);
                 result.textContent = `찾은 D-10 글: ${existingPosts?.length || 0}개\n${existingPosts?.map(p => `- ${p.title} (ID: ${p.id})`).join('\n') || '없음'}`;
 
                 if (existingPosts && existingPosts.length > 0) {

@@ -1387,7 +1387,7 @@
                 }
             } else if (sessionStorage.getItem('adminLoggedIn') === 'true') {
                 // sessionStorage 관리자 로그인 폴백
-                console.log('관리자 접근 허용 (sessionStorage):', sessionStorage.getItem('adminId'));
+                // console.log('관리자 접근 허용 (sessionStorage):', sessionStorage.getItem('adminId'));
                 currentUser = { id: 'admin-session', email: sessionStorage.getItem('adminId') || 'admin' };
             } else {
                 alert('로그인이 필요합니다.');
@@ -2212,13 +2212,23 @@
                     table: 'messages',
                     filter: `thread_id=eq.${threadId}`
                 }, (payload) => {
-                    // 고객 메시지만 리로드 (관리자가 보낸 건 이미 표시됨)
                     if (payload.new.sender_type !== 'admin') {
                         loadMessages();
                     }
                 })
-                .subscribe();
+                .subscribe((status, err) => {
+                    if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+                        console.error('Realtime subscription error:', status, err);
+                    }
+                });
         }
+
+        // Realtime 구독 정리 (메모리 누수 방지)
+        window.addEventListener('beforeunload', () => {
+            if (messageChannel) {
+                supabaseClient.removeChannel(messageChannel);
+            }
+        });
 
         // Status updates
         async function updateThreadStatus() {

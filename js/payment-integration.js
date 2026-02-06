@@ -5,10 +5,8 @@
 // Toss Payments Global 연동
 // ========================================
 
-// 결제위젯 연동 클라이언트 키
-// ⚠️ 보안 경고: 프로덕션에서는 환경변수 또는 서버 측 설정에서 로드해야 합니다
-// 현재는 테스트 키를 사용합니다. 라이브 키는 서버 측에서만 관리하세요.
-const TOSS_CLIENT_KEY = window.__PAYMENT_CONFIG__?.tossClientKey || 'test_gck_docs_Ovk5rk1EwkEbP0W23n07xlzm';
+// 결제위젯 연동 클라이언트 키 (HTML에서 window.__PAYMENT_CONFIG__으로 주입)
+const TOSS_CLIENT_KEY = window.__PAYMENT_CONFIG__?.tossClientKey;
 
 // Toss Payments 초기화
 let tossPayments = null;

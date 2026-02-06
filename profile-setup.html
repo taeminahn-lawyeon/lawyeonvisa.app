@@ -837,7 +837,7 @@
                     maxWidth: 3
                 });
 
-                console.log('✓ SignaturePad initialized successfully');
+                // console.log('✓ SignaturePad initialized successfully');
                 
             } catch (error) {
                 console.error('Error initializing SignaturePad:', error);
@@ -847,7 +847,7 @@
         function clearSignature() {
             if (signaturePad) {
                 signaturePad.clear();
-                console.log('Signature cleared');
+                // console.log('Signature cleared');
             } else {
                 console.error('signaturePad not initialized');
             }
@@ -1005,13 +1005,13 @@
          */
         async function uploadFilesToActiveThreads(userId, arcFrontFile, arcBackFile, passportFile, signatureData, arcFrontUrl, arcBackUrl, passportUrl, signatureUrl) {
             try {
-                console.log('📤 [uploadFilesToActiveThreads] 활성 쓰레드에 파일 업로드 시작');
+                // console.log('📤 [uploadFilesToActiveThreads] 활성 쓰레드에 파일 업로드 시작');
                 
                 // 사용자의 활성 쓰레드 목록 가져오기
                 const threadsResult = await getUserThreads(userId);
                 
                 if (!threadsResult.success || !threadsResult.data || threadsResult.data.length === 0) {
-                    console.log('📤 [uploadFilesToActiveThreads] 활성 쓰레드가 없음 - 스킵');
+                    // console.log('📤 [uploadFilesToActiveThreads] 활성 쓰레드가 없음 - 스킵');
                     return;
                 }
                 
@@ -1021,15 +1021,15 @@
                 );
                 
                 if (activeThreads.length === 0) {
-                    console.log('📤 [uploadFilesToActiveThreads] 서류 제출 대기 중인 쓰레드가 없음 - 스킵');
+                    // console.log('📤 [uploadFilesToActiveThreads] 서류 제출 대기 중인 쓰레드가 없음 - 스킵');
                     return;
                 }
                 
-                console.log(`📤 [uploadFilesToActiveThreads] ${activeThreads.length}개 쓰레드에 파일 업로드`);
+                // console.log(`📤 [uploadFilesToActiveThreads] ${activeThreads.length}개 쓰레드에 파일 업로드`);
                 
                 // 각 활성 쓰레드에 파일 업로드
                 for (const thread of activeThreads) {
-                    console.log(`📤 [uploadFilesToActiveThreads] 쓰레드 ${thread.id}에 파일 업로드 시작`);
+                    // console.log(`📤 [uploadFilesToActiveThreads] 쓰레드 ${thread.id}에 파일 업로드 시작`);
                     
                     const timestamp = Date.now();
                     
@@ -1122,17 +1122,17 @@
                                     file_name: file.name,
                                     file_type: file.type
                                 });
-                                console.log(`✅ 메시지 생성 완료: ${file.name}`);
+                                // console.log(`✅ 메시지 생성 완료: ${file.name}`);
                             } catch (err) {
                                 console.error(`메시지 생성 실패 (${file.name}):`, err);
                             }
                         }
                         
-                        console.log(`✅ 쓰레드 ${thread.id}에 ${uploadedFiles.length}개 파일 업로드 완료`);
+                        // console.log(`✅ 쓰레드 ${thread.id}에 ${uploadedFiles.length}개 파일 업로드 완료`);
                     }
                 }
                 
-                console.log('📤 [uploadFilesToActiveThreads] 모든 쓰레드 파일 업로드 완료');
+                // console.log('📤 [uploadFilesToActiveThreads] 모든 쓰레드 파일 업로드 완료');
             } catch (error) {
                 console.error('📤 [uploadFilesToActiveThreads] 오류:', error);
                 // 오류가 발생해도 프로필 저장은 성공한 것으로 처리 (쓰레드 업로드는 부가 기능)
@@ -1189,7 +1189,7 @@
                     const arcFrontResult = await uploadProfileDocument(arcFrontPath, arcFrontFile);
                     if (arcFrontResult.success) {
                         arcFrontUrl = arcFrontResult.data.path;
-                        console.log('✅ 외국인등록증 앞면 업로드:', arcFrontUrl);
+                        // console.log('✅ 외국인등록증 앞면 업로드:', arcFrontUrl);
                     }
                 }
                 
@@ -1200,7 +1200,7 @@
                     const arcBackResult = await uploadProfileDocument(arcBackPath, arcBackFile);
                     if (arcBackResult.success) {
                         arcBackUrl = arcBackResult.data.path;
-                        console.log('✅ 외국인등록증 뒷면 업로드:', arcBackUrl);
+                        // console.log('✅ 외국인등록증 뒷면 업로드:', arcBackUrl);
                     }
                 }
                 
@@ -1211,7 +1211,7 @@
                     const passportResult = await uploadProfileDocument(passportPath, passportFile);
                     if (passportResult.success) {
                         passportUrl = passportResult.data.path;
-                        console.log('✅ 여권 업로드:', passportUrl);
+                        // console.log('✅ 여권 업로드:', passportUrl);
                     }
                 }
                 
@@ -1222,7 +1222,7 @@
                     const signatureResult = await uploadProfileDocument(signaturePath, signatureBlob);
                     if (signatureResult.success) {
                         signatureUrl = signatureResult.data.path;
-                        console.log('✅ 전자서명 업로드:', signatureUrl);
+                        // console.log('✅ 전자서명 업로드:', signatureUrl);
                     }
                 }
                 
@@ -1253,7 +1253,7 @@
                 const result = await createUserProfile(session.user.id, profileData);
                 
                 if (result.success) {
-                    console.log('✅ 프로필 생성 성공:', result.data);
+                    // console.log('✅ 프로필 생성 성공:', result.data);
                     
                     // ✅ 프로필 생성 완료 플래그 저장 (무한 루프 방지)
                     sessionStorage.setItem('profileCreated', 'true');
