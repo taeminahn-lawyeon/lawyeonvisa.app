@@ -137,10 +137,27 @@ function renderBlock(block, index) {
 }
 
 // 콘텐츠 렌더링
-function renderContent(content) {
+function renderContent(content, services) {
     try {
         const blocks = JSON.parse(content);
-        return blocks.map((block, index) => renderBlock(block, index)).join('\n');
+        const hasLinkButton = blocks.some(b => b.type === 'link-button');
+        const midIndex = Math.floor(blocks.length / 2);
+        const service = (services && services.length > 0) ? services[0] : null;
+        const insertMidCTA = service && !hasLinkButton && blocks.length >= 6;
+
+        return blocks.map((block, index) => {
+            let html = renderBlock(block, index);
+            if (insertMidCTA && index === midIndex) {
+                html += `
+                <div class="mid-cta-banner">
+                    <div class="mid-cta-text"><strong>${escapeHtml(service.name)}</strong> 대행 서비스가 필요하신가요?</div>
+                    <a href="/service-apply-general.html?service=${escapeHtml(service.id)}" class="mid-cta-link">
+                        신청하기 →
+                    </a>
+                </div>`;
+            }
+            return html;
+        }).join('\n');
     } catch {
         // HTML 형식인 경우 그대로 반환
         return content;
@@ -441,6 +458,86 @@ function generatePostHTML(post, relatedPosts) {
 
         .share-btn:hover {
             background: #e5e8eb;
+        }
+
+        .header-cta-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: #eef4ff;
+            border: 1px solid #3182f6;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #3182f6;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .header-cta-btn:hover {
+            background: #3182f6;
+            color: white;
+        }
+
+        .header-cta-btn .arrow {
+            transition: transform 0.2s;
+            font-size: 12px;
+        }
+
+        .header-cta-btn:hover .arrow {
+            transform: translateX(3px);
+        }
+
+        /* 중간 인라인 CTA */
+        .mid-cta-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin: 40px 0;
+            padding: 20px 24px;
+            background: #f8faff;
+            border: 1px solid #d4e3fc;
+            border-left: 4px solid #3182f6;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .mid-cta-text {
+            font-size: 15px;
+            color: #4e5968;
+            line-height: 1.5;
+        }
+
+        .mid-cta-text strong {
+            color: #191f28;
+        }
+
+        .mid-cta-link {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            background: #3182f6;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .mid-cta-link:hover {
+            background: #1b64da;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .mid-cta-banner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
 
         /* 아티클 본문 */
@@ -923,16 +1020,21 @@ function generatePostHTML(post, relatedPosts) {
                         <span>🔗</span>
                         <span>링크 복사</span>
                     </button>
+                    ${relatedServices.length > 0 ? `
+                    <a href="/service-apply-general.html?service=${escapeHtml(relatedServices[0].id)}" class="header-cta-btn">
+                        <span>${escapeHtml(relatedServices[0].name)} 신청하기</span>
+                        <span class="arrow">→</span>
+                    </a>` : ''}
                 </div>
             </header>
 
             <div class="article-content">
-                ${renderContent(post.content)}
+                ${renderContent(post.content, relatedServices)}
             </div>
 
             <!-- 서비스 CTA -->
             <div class="service-cta-section">
-                <div class="service-cta-title">관련 서비스 신청</div>
+                <div class="service-cta-title">${relatedServices.length > 0 ? escapeHtml(relatedServices[0].name) + ' 신청' : '관련 서비스 신청'}</div>
                 <div class="service-cta-desc">전문가의 도움이 필요하신가요? 지금 바로 서비스를 신청하세요.</div>
                 <div class="service-cta-buttons">
                     ${renderServiceButtons(relatedServices)}
