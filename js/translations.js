@@ -2173,7 +2173,12 @@ const translations = {
         'footer.adLawyers': '广告责任律师',
         'footer.contact': '联系电话',
         'footer.fax': '传真',
-        
+        'footer.legalNotice': '本网站提供的所有法律服务均由律渊律师事务所提供。',
+        'footer.privacy': '隐私政策',
+        'footer.terms': '服务条款',
+        'footer.lawFirm': '律渊律师事务所',
+        'footer.copyright': 'Copyright © 律渊律师事务所 出入境移民支援中心',
+
         // Services
         'service.visa_issue': '签证发行',
         'service.visa_issue.desc': '签证发行认定书发行申请',
@@ -2923,7 +2928,12 @@ const translations = {
         'footer.adLawyers': 'Luật sư quảng cáo',
         'footer.contact': 'Liên hệ',
         'footer.fax': 'Fax',
-        
+        'footer.legalNotice': 'Tất cả dịch vụ pháp lý trên trang web này được cung cấp bởi Công Ty Luật Lawyeon.',
+        'footer.privacy': 'Chính Sách Bảo Mật',
+        'footer.terms': 'Điều Khoản Dịch Vụ',
+        'footer.lawFirm': 'Công Ty Luật Lawyeon',
+        'footer.copyright': 'Copyright © Trung tâm Hỗ trợ Visa & Nhập cư Công Ty Luật Lawyeon',
+
         // Services
         'service.visa_issue': 'Cấp Visa',
         'service.visa_issue.desc': 'Đơn xin Giấy Chứng Nhận Cấp Visa',
@@ -3671,7 +3681,12 @@ const translations = {
         'footer.adLawyers': '広告責任弁護士',
         'footer.contact': '連絡先',
         'footer.fax': 'ファックス',
-        
+        'footer.legalNotice': '本サイトで提供されるすべての法律サービスはロヨン法律事務所が提供しています。',
+        'footer.privacy': 'プライバシーポリシー',
+        'footer.terms': '利用規約',
+        'footer.lawFirm': 'ロヨン法律事務所',
+        'footer.copyright': 'Copyright © ロヨン法律事務所 出入国移民支援センター',
+
         // Services
         'service.visa_issue': 'ビザ発給',
         'service.visa_issue.desc': 'ビザ発給認定書発給申請',
@@ -4419,7 +4434,12 @@ const translations = {
         'footer.adLawyers': 'Сурталчилгааны хуульч',
         'footer.contact': 'Холбоо барих',
         'footer.fax': 'Факс',
-        
+        'footer.legalNotice': 'Энэ сайтаар үзүүлж буй бүх хууль зүйн үйлчилгээг Lawyeon Хуулийн Фирм үзүүлдэг.',
+        'footer.privacy': 'Нууцлалын Бодлого',
+        'footer.terms': 'Үйлчилгээний Нөхцөл',
+        'footer.lawFirm': 'Lawyeon Хуулийн Фирм',
+        'footer.copyright': 'Copyright © Lawyeon Хуулийн Фирм Виз & Цагаачлалын Төв',
+
         // Services
         'service.visa_issue': 'Виз олгох',
         'service.visa_issue.desc': 'Визийн баталгаа олгох өргөдөл',
@@ -5167,7 +5187,12 @@ const translations = {
         'footer.adLawyers': 'ทนายความโฆษณา',
         'footer.contact': 'ติดต่อ',
         'footer.fax': 'แฟ็กซ์',
-        
+        'footer.legalNotice': 'บริการทางกฎหมายทั้งหมดบนเว็บไซต์นี้ให้บริการโดยสำนักงานกฎหมาย Lawyeon',
+        'footer.privacy': 'นโยบายความเป็นส่วนตัว',
+        'footer.terms': 'เงื่อนไขการใช้บริการ',
+        'footer.lawFirm': 'สำนักงานกฎหมาย Lawyeon',
+        'footer.copyright': 'Copyright © ศูนย์วีซ่าและตรวจคนเข้าเมือง สำนักงานกฎหมาย Lawyeon',
+
         // Services
         'service.visa_issue': 'ออกวีซ่า',
         'service.visa_issue.desc': 'ยื่นขอใบรับรองการออกวีซ่า',
