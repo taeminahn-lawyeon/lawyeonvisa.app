@@ -430,6 +430,7 @@
             font-size: 17px;
             font-weight: 800;
             gap: 10px;
+            margin-top: 12px;
         }
 
         .btn-admin-thread i {
@@ -1473,12 +1474,6 @@
 
                 <!-- CTA Buttons -->
                 <div class="cta-section">
-                    <!-- 관리자 전용: 쓰레드 열기 버튼 (관리자 모드일 때만 표시) -->
-                    <button class="btn-payment btn-admin-thread" id="adminThreadBtn" onclick="createAdminTestThread()" style="display: none;">
-                        <i class="fas fa-comments"></i>
-                        <span class="btn-text">관리자 쓰레드 열기</span>
-                    </button>
-
                     <button class="btn-payment btn-toss" id="payBtn" onclick="processPayment()" disabled>
                         <div class="btn-logo-area">
                             <img src="Toss_Logo_Button_Type.png" alt="Toss">
@@ -1491,6 +1486,12 @@
                             <img src="wise_logo.png" alt="Wise" style="height: 52px; width: 52px;">
                         </div>
                         <span class="btn-text" data-i18n="payment.bankTransfer">Bank Transfer</span>
+                    </button>
+
+                    <!-- 관리자 전용: 테스트 쓰레드 열기 버튼 (Wise 아래, 관리자 모드일 때만 표시) -->
+                    <button class="btn-payment btn-admin-thread" id="adminThreadBtn" onclick="createAdminTestThread()" style="display: none;">
+                        <i class="fas fa-comments"></i>
+                        <span class="btn-text">테스트 쓰레드 열기</span>
                     </button>
 
                     <div class="security-badges">
@@ -1799,14 +1800,8 @@
                 document.getElementById('loading').style.display = 'none';
                 showContent(serviceId);
 
-                // 관리자 모드: 쓰레드 열기 버튼 표시, 결제 버튼/동의/보안배지 숨김
+                // 관리자 모드: 테스트 쓰레드 열기 버튼만 추가 표시 (나머지 결제 UI는 그대로)
                 document.getElementById('adminThreadBtn').style.display = 'flex';
-                document.getElementById('payBtn').style.display = 'none';
-                document.getElementById('wiseBtn').style.display = 'none';
-                const consentArea = document.querySelector('.service-consent-area');
-                if (consentArea) consentArea.style.display = 'none';
-                const badges = document.querySelector('.security-badges');
-                if (badges) badges.style.display = 'none';
 
                 return;
             }
