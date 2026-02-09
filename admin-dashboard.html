@@ -1098,6 +1098,10 @@
                         .single();
 
                     if (!error && profile && ADMIN_ROLES.includes(profile.role)) {
+                        // sessionStorage 동기화 (탭 닫았다 열 때 sessionStorage 복원)
+                        sessionStorage.setItem('adminLoggedIn', 'true');
+                        sessionStorage.setItem('adminId', session.user.email);
+                        sessionStorage.setItem('adminRole', profile.role);
                         return true;
                     }
 
@@ -1109,6 +1113,10 @@
                         .single();
 
                     if (!adminError && admin && ADMIN_ROLES.includes(admin.role)) {
+                        // sessionStorage 동기화
+                        sessionStorage.setItem('adminLoggedIn', 'true');
+                        sessionStorage.setItem('adminId', session.user.email);
+                        sessionStorage.setItem('adminRole', admin.role);
                         return true;
                     }
                 } catch (e) {
