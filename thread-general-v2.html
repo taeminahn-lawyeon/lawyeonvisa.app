@@ -1486,154 +1486,154 @@
         </div>
     </div>
 
-    <!-- D-10-1 Application Form Modal (구직활동계획서) -->
+    <!-- D-10-1 Application Form Modal (D-10-1 사전정보) -->
     <div class="modal-overlay" id="d10FormModal">
         <div class="modal edit-modal" style="max-width: 720px;">
             <div class="modal-header">
-                <h2 class="modal-title" data-i18n="thread.d10form.title">구직활동계획서</h2>
+                <h2 class="modal-title" data-i18n="thread.d10form.title">D-10-1 사전정보</h2>
                 <button class="modal-close" onclick="closeModal('d10FormModal')">&times;</button>
             </div>
             <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
-                <p style="color: #64748B; margin-bottom: 20px; font-size: 14px;" data-i18n="thread.d10form.desc">D-10-1 비자 신청에 필요한 구직활동계획서 내용을 입력해 주세요. 담당자가 검토 후 안내드립니다.</p>
+                <p style="color: #64748B; margin-bottom: 20px; font-size: 14px;" data-i18n="thread.d10form.desc">D-10-1 비자 신청에 필요한 사전정보를 입력해 주세요. 담당자가 검토 후 안내드립니다.</p>
 
-                <!-- 1. 개인사항 / Personal Information -->
-                <div style="font-weight: 700; color: #191F28; margin: 16px 0 12px; font-size: 15px; padding-bottom: 6px; border-bottom: 2px solid #191F28;" data-i18n="thread.d10form.section1">1. 개인사항 / Personal Information</div>
+                <!-- 1. 개인사항 -->
+                <div style="font-weight: 700; color: #191F28; margin: 16px 0 12px; font-size: 15px; padding-bottom: 6px; border-bottom: 2px solid #191F28;" data-i18n="thread.d10form.section1">1. 개인사항</div>
 
                 <div class="form-group" style="margin-bottom: 16px;">
-                    <label class="form-label">성명 (Full Name) <span style="color: #EF4444;">*</span></label>
+                    <label class="form-label"><span data-i18n="thread.d10form.label.fullName">성명</span> <span style="color: #EF4444;">*</span></label>
                     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
-                        <input type="text" class="form-select" id="modal-d10-surname" placeholder="영문 성 (Surname)" required>
-                        <input type="text" class="form-select" id="modal-d10-givenname" placeholder="영문 이름 (Given names)" required>
-                        <input type="text" class="form-select" id="modal-d10-localname" placeholder="한자/모국어 성명">
+                        <input type="text" class="form-select" id="modal-d10-surname" data-i18n-placeholder="thread.d10form.ph.surname" placeholder="영문 성" required>
+                        <input type="text" class="form-select" id="modal-d10-givenname" data-i18n-placeholder="thread.d10form.ph.givenName" placeholder="영문 이름" required>
+                        <input type="text" class="form-select" id="modal-d10-localname" data-i18n-placeholder="thread.d10form.ph.localName" placeholder="한자/모국어 성명">
                     </div>
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="form-group">
-                        <label class="form-label">성별 (Gender) <span style="color: #EF4444;">*</span></label>
+                        <label class="form-label"><span data-i18n="thread.d10form.label.gender">성별</span> <span style="color: #EF4444;">*</span></label>
                         <select class="form-select" id="modal-d10-gender" required>
-                            <option value="">선택 / Select</option>
-                            <option value="남 / Male">남 / Male</option>
-                            <option value="여 / Female">여 / Female</option>
+                            <option value="" data-i18n="thread.d10form.opt.select">선택</option>
+                            <option value="Male" data-i18n="thread.d10form.opt.male">남</option>
+                            <option value="Female" data-i18n="thread.d10form.opt.female">여</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">국적 (Nationality) <span style="color: #EF4444;">*</span></label>
-                        <input type="text" class="form-select" id="modal-d10-nationality" placeholder="예: 중국, 베트남 등" required>
+                        <label class="form-label"><span data-i18n="thread.d10form.label.nationality">국적</span> <span style="color: #EF4444;">*</span></label>
+                        <input type="text" class="form-select" id="modal-d10-nationality" data-i18n-placeholder="thread.d10form.ph.nationality" placeholder="예: 중국, 베트남 등" required>
                     </div>
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="form-group">
-                        <label class="form-label">생년월일 (Date of Birth) <span style="color: #EF4444;">*</span></label>
+                        <label class="form-label"><span data-i18n="thread.d10form.label.dob">생년월일</span> <span style="color: #EF4444;">*</span></label>
                         <input type="date" class="form-select" id="modal-d10-birth-date" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">외국인등록번호 (Alien Registration No.)</label>
-                        <input type="text" class="form-select" id="modal-d10-alien-reg" placeholder="예: 123456-1234567">
+                        <label class="form-label"><span data-i18n="thread.d10form.label.alienReg">외국인등록번호</span></label>
+                        <input type="text" class="form-select" id="modal-d10-alien-reg" data-i18n-placeholder="thread.d10form.ph.alienReg" placeholder="예: 123456-1234567">
                     </div>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 16px;">
-                    <label class="form-label">졸업학교 (University / College) <span style="color: #EF4444;">*</span></label>
-                    <input type="text" class="form-select" id="modal-d10-university" placeholder="예: 서울대학교" required>
+                    <label class="form-label"><span data-i18n="thread.d10form.label.university">졸업학교</span> <span style="color: #EF4444;">*</span></label>
+                    <input type="text" class="form-select" id="modal-d10-university" data-i18n-placeholder="thread.d10form.ph.university" placeholder="예: 서울대학교" required>
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="form-group">
-                        <label class="form-label">전공 & 학위 (Major & Degree) <span style="color: #EF4444;">*</span></label>
-                        <input type="text" class="form-select" id="modal-d10-major-degree" placeholder="예: 경영학 학사 (졸업예정)" required>
+                        <label class="form-label"><span data-i18n="thread.d10form.label.majorDegree">전공 & 학위</span> <span style="color: #EF4444;">*</span></label>
+                        <input type="text" class="form-select" id="modal-d10-major-degree" data-i18n-placeholder="thread.d10form.ph.majorDegree" placeholder="예: 경영학 학사 (졸업예정)" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">경력사항 (Work Experience)</label>
-                        <input type="text" class="form-select" id="modal-d10-work-experience" placeholder="예: 인턴 6개월, 없음 등">
+                        <label class="form-label"><span data-i18n="thread.d10form.label.workExp">경력사항</span></label>
+                        <input type="text" class="form-select" id="modal-d10-work-experience" data-i18n-placeholder="thread.d10form.ph.workExp" placeholder="예: 인턴 6개월, 없음 등">
                     </div>
                 </div>
 
-                <!-- 2. 구직사항 / Desired Employment Detail -->
-                <div style="font-weight: 700; color: #191F28; margin: 24px 0 12px; font-size: 15px; padding-bottom: 6px; border-bottom: 2px solid #191F28;" data-i18n="thread.d10form.section2">2. 구직사항 / Desired Employment Detail</div>
+                <!-- 2. 구직사항 -->
+                <div style="font-weight: 700; color: #191F28; margin: 24px 0 12px; font-size: 15px; padding-bottom: 6px; border-bottom: 2px solid #191F28;" data-i18n="thread.d10form.section2">2. 구직사항</div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="form-group">
-                        <label class="form-label">업종 (Occupational Category) <span style="color: #EF4444;">*</span></label>
-                        <input type="text" class="form-select" id="modal-d10-occupation" placeholder="예: IT, 무역, 제조업 등" required>
+                        <label class="form-label"><span data-i18n="thread.d10form.label.occupation">업종</span> <span style="color: #EF4444;">*</span></label>
+                        <input type="text" class="form-select" id="modal-d10-occupation" data-i18n-placeholder="thread.d10form.ph.occupation" placeholder="예: IT, 무역, 제조업 등" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">희망 회사명 (Company Name)</label>
-                        <input type="text" class="form-select" id="modal-d10-company" placeholder="예: 삼성전자, 미정 등">
+                        <label class="form-label"><span data-i18n="thread.d10form.label.company">희망 회사명</span></label>
+                        <input type="text" class="form-select" id="modal-d10-company" data-i18n-placeholder="thread.d10form.ph.company" placeholder="예: 삼성전자, 미정 등">
                     </div>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 16px;">
-                    <label class="form-label">희망 급여 (Expected Salary)</label>
-                    <input type="text" class="form-select" id="modal-d10-salary" placeholder="예: 월 250만원, 연봉 3,000만원 등">
+                    <label class="form-label"><span data-i18n="thread.d10form.label.salary">희망 급여</span></label>
+                    <input type="text" class="form-select" id="modal-d10-salary" data-i18n-placeholder="thread.d10form.ph.salary" placeholder="예: 월 250만원, 연봉 3,000만원 등">
                 </div>
 
-                <!-- 3. 구직계획 / Plans for Employment-seeking Activities -->
-                <div style="font-weight: 700; color: #191F28; margin: 24px 0 12px; font-size: 15px; padding-bottom: 6px; border-bottom: 2px solid #191F28;" data-i18n="thread.d10form.section3">3. 구직계획 / Plans for Employment-seeking Activities</div>
+                <!-- 3. 구직계획 -->
+                <div style="font-weight: 700; color: #191F28; margin: 24px 0 12px; font-size: 15px; padding-bottom: 6px; border-bottom: 2px solid #191F28;" data-i18n="thread.d10form.section3">3. 구직계획</div>
                 <p style="color: #64748B; margin-bottom: 12px; font-size: 13px;" data-i18n="thread.d10form.section3Desc">6개월간의 구직활동 계획을 월별로 작성해 주세요.</p>
 
                 <div class="form-group" style="margin-bottom: 12px;">
-                    <label class="form-label">제1월 (1st Month) <span style="color: #EF4444;">*</span></label>
-                    <input type="text" class="form-select" id="modal-d10-plan-m1" placeholder="예: 이력서 작성, 채용사이트 등록, 희망업종 조사" required>
+                    <label class="form-label"><span data-i18n="thread.d10form.label.month1">제1월</span> <span style="color: #EF4444;">*</span></label>
+                    <input type="text" class="form-select" id="modal-d10-plan-m1" data-i18n-placeholder="thread.d10form.ph.month1" placeholder="예: 이력서 작성, 채용사이트 등록, 희망업종 조사" required>
                 </div>
                 <div class="form-group" style="margin-bottom: 12px;">
-                    <label class="form-label">제2월 (2nd Month) <span style="color: #EF4444;">*</span></label>
-                    <input type="text" class="form-select" id="modal-d10-plan-m2" placeholder="예: 채용공고 지원, 취업박람회 참가" required>
+                    <label class="form-label"><span data-i18n="thread.d10form.label.month2">제2월</span> <span style="color: #EF4444;">*</span></label>
+                    <input type="text" class="form-select" id="modal-d10-plan-m2" data-i18n-placeholder="thread.d10form.ph.month2" placeholder="예: 채용공고 지원, 취업박람회 참가" required>
                 </div>
                 <div class="form-group" style="margin-bottom: 12px;">
-                    <label class="form-label">제3월 (3rd Month) <span style="color: #EF4444;">*</span></label>
-                    <input type="text" class="form-select" id="modal-d10-plan-m3" placeholder="예: 면접 준비, 기업 면접 참가" required>
+                    <label class="form-label"><span data-i18n="thread.d10form.label.month3">제3월</span> <span style="color: #EF4444;">*</span></label>
+                    <input type="text" class="form-select" id="modal-d10-plan-m3" data-i18n-placeholder="thread.d10form.ph.month3" placeholder="예: 면접 준비, 기업 면접 참가" required>
                 </div>
                 <div class="form-group" style="margin-bottom: 12px;">
-                    <label class="form-label">제4월 (4th Month) <span style="color: #EF4444;">*</span></label>
-                    <input type="text" class="form-select" id="modal-d10-plan-m4" placeholder="예: 추가 채용공고 지원, 면접" required>
+                    <label class="form-label"><span data-i18n="thread.d10form.label.month4">제4월</span> <span style="color: #EF4444;">*</span></label>
+                    <input type="text" class="form-select" id="modal-d10-plan-m4" data-i18n-placeholder="thread.d10form.ph.month4" placeholder="예: 추가 채용공고 지원, 면접" required>
                 </div>
                 <div class="form-group" style="margin-bottom: 12px;">
-                    <label class="form-label">제5월 (5th Month) <span style="color: #EF4444;">*</span></label>
-                    <input type="text" class="form-select" id="modal-d10-plan-m5" placeholder="예: 최종 면접, 근로계약 협의" required>
+                    <label class="form-label"><span data-i18n="thread.d10form.label.month5">제5월</span> <span style="color: #EF4444;">*</span></label>
+                    <input type="text" class="form-select" id="modal-d10-plan-m5" data-i18n-placeholder="thread.d10form.ph.month5" placeholder="예: 최종 면접, 근로계약 협의" required>
                 </div>
                 <div class="form-group" style="margin-bottom: 16px;">
-                    <label class="form-label">제6월 (6th Month) <span style="color: #EF4444;">*</span></label>
-                    <input type="text" class="form-select" id="modal-d10-plan-m6" placeholder="예: 취업 확정, 체류자격 변경 준비" required>
+                    <label class="form-label"><span data-i18n="thread.d10form.label.month6">제6월</span> <span style="color: #EF4444;">*</span></label>
+                    <input type="text" class="form-select" id="modal-d10-plan-m6" data-i18n-placeholder="thread.d10form.ph.month6" placeholder="예: 취업 확정, 체류자격 변경 준비" required>
                 </div>
 
-                <!-- 4. 체류비용 및 지불방식 / Financing Plan for Living Costs -->
-                <div style="font-weight: 700; color: #191F28; margin: 24px 0 12px; font-size: 15px; padding-bottom: 6px; border-bottom: 2px solid #191F28;" data-i18n="thread.d10form.section4">4. 체류비용 및 지불방식 / Financing Plan for Living Costs</div>
+                <!-- 4. 체류비용 및 지불방식 -->
+                <div style="font-weight: 700; color: #191F28; margin: 24px 0 12px; font-size: 15px; padding-bottom: 6px; border-bottom: 2px solid #191F28;" data-i18n="thread.d10form.section4">4. 체류비용 및 지불방식</div>
                 <p style="color: #64748B; margin-bottom: 12px; font-size: 13px;" data-i18n="thread.d10form.section4Desc">체류 기간 동안의 생활비 충당 방법을 입력해 주세요. (해당하는 항목만 입력)</p>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="form-group">
-                        <label class="form-label">현금 (Cash)</label>
-                        <input type="text" class="form-select" id="modal-d10-finance-cash" placeholder="예: 500만원">
+                        <label class="form-label"><span data-i18n="thread.d10form.label.cash">현금</span></label>
+                        <input type="text" class="form-select" id="modal-d10-finance-cash" data-i18n-placeholder="thread.d10form.ph.cash" placeholder="예: 500만원">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">예금 (Deposit)</label>
-                        <input type="text" class="form-select" id="modal-d10-finance-deposit" placeholder="예: 1,000만원">
+                        <label class="form-label"><span data-i18n="thread.d10form.label.deposit">예금</span></label>
+                        <input type="text" class="form-select" id="modal-d10-finance-deposit" data-i18n-placeholder="thread.d10form.ph.deposit" placeholder="예: 1,000만원">
                     </div>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="form-group">
-                        <label class="form-label">신용카드 (Credit Card)</label>
-                        <input type="text" class="form-select" id="modal-d10-finance-card" placeholder="예: 보유 / 미보유">
+                        <label class="form-label"><span data-i18n="thread.d10form.label.creditCard">신용카드</span></label>
+                        <input type="text" class="form-select" id="modal-d10-finance-card" data-i18n-placeholder="thread.d10form.ph.creditCard" placeholder="예: 보유 / 미보유">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">송금 (Remittance)</label>
-                        <input type="text" class="form-select" id="modal-d10-finance-remittance" placeholder="예: 부모님 월 100만원 송금">
+                        <label class="form-label"><span data-i18n="thread.d10form.label.remittance">송금</span></label>
+                        <input type="text" class="form-select" id="modal-d10-finance-remittance" data-i18n-placeholder="thread.d10form.ph.remittance" placeholder="예: 부모님 월 100만원 송금">
                     </div>
                 </div>
 
                 <!-- 5. 추가사항 -->
-                <div style="font-weight: 700; color: #191F28; margin: 24px 0 12px; font-size: 15px; padding-bottom: 6px; border-bottom: 2px solid #191F28;" data-i18n="thread.d10form.section5">5. 추가사항 / Additional Information</div>
+                <div style="font-weight: 700; color: #191F28; margin: 24px 0 12px; font-size: 15px; padding-bottom: 6px; border-bottom: 2px solid #191F28;" data-i18n="thread.d10form.section5">5. 추가사항</div>
 
                 <div class="form-group" style="margin-bottom: 16px;">
-                    <label class="form-label">기타 참고사항 (Additional Notes)</label>
-                    <textarea class="form-select" id="modal-d10-additional-notes" rows="2" placeholder="기타 참고할 사항이 있으면 입력해 주세요..." style="resize: vertical;"></textarea>
+                    <label class="form-label"><span data-i18n="thread.d10form.label.additionalNotes">기타 참고사항</span></label>
+                    <textarea class="form-select" id="modal-d10-additional-notes" rows="2" data-i18n-placeholder="thread.d10form.ph.additionalNotes" placeholder="기타 참고할 사항이 있으면 입력해 주세요..." style="resize: vertical;"></textarea>
                 </div>
 
-                <!-- 확인사항 / Notice -->
+                <!-- 확인사항 -->
                 <div style="background: #FFF7ED; border: 1px solid #FED7AA; border-radius: 8px; padding: 14px; margin-top: 8px; font-size: 13px; color: #9A3412; line-height: 1.7;">
-                    <div style="font-weight: 600; margin-bottom: 6px;" data-i18n="thread.d10form.noticeTitle">확인사항 / Notice</div>
+                    <div style="font-weight: 600; margin-bottom: 6px;" data-i18n="thread.d10form.noticeTitle">확인사항</div>
                     <ul style="margin: 0; padding-left: 18px;">
                         <li data-i18n="thread.d10form.notice1">실습(인턴) 시작 또는 변경 시 14일 이내 출입국관리사무소에 신고해야 합니다.</li>
                         <li data-i18n="thread.d10form.notice2">정식 근로계약 체결 시 체류자격 변경 허가 후 근무를 시작해야 합니다.</li>
@@ -1643,7 +1643,7 @@
             </div>
             <div class="modal-actions">
                 <button class="btn-secondary" onclick="closeModal('d10FormModal')" data-i18n="common.cancel">취소</button>
-                <button class="btn-primary" onclick="submitD10Form()" data-i18n="thread.d10form.submit">구직활동계획서 제출</button>
+                <button class="btn-primary" onclick="submitD10Form()" data-i18n="thread.d10form.submit">D-10-1 정보 제출</button>
             </div>
         </div>
     </div>
