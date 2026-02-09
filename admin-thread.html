@@ -2087,16 +2087,9 @@
         function processMessageContent(content) {
             if (!content) return '';
 
-            // 이미 HTML 구조가 있는 경우 (관리자가 생성한 리치 콘텐츠)
+            // HTML 태그가 포함된 콘텐츠인지 확인 (Quill 에디터 또는 관리자 리치 콘텐츠)
             // XSS 방어: sanitizeHtml로 위험한 태그/속성 제거
-            if (content.includes('class="info-box"') ||
-                content.includes('class="warning-box"') ||
-                content.includes('class="success-box"') ||
-                content.includes('class="numbered-steps"') ||
-                content.includes('class="action-link-btn"') ||
-                content.includes('data-survey-result') ||
-                content.includes('survey-request-card') ||
-                content.includes('class="ql-')) {
+            if (/<[a-z][\s\S]*>/i.test(content)) {
                 return typeof sanitizeHtml === 'function' ? sanitizeHtml(content) : content;
             }
 
