@@ -1342,7 +1342,38 @@
             }
 
             // Check if profile already exists (first thread only)
-            const isAdmin = sessionStorage.getItem('adminLoggedIn') === 'true';
+            let isAdmin = sessionStorage.getItem('adminLoggedIn') === 'true';
+
+            // DB에서도 관리자 role 확인 (sessionStorage가 탭 간 유실될 수 있음)
+            if (!isAdmin) {
+                try {
+                    const { data: adminProfile } = await supabaseClient
+                        .from('profiles')
+                        .select('role')
+                        .eq('id', session.user.id)
+                        .single();
+                    if (adminProfile && ['super_admin', 'admin', 'staff'].includes(adminProfile.role)) {
+                        isAdmin = true;
+                        sessionStorage.setItem('adminLoggedIn', 'true');
+                        sessionStorage.setItem('adminRole', adminProfile.role);
+                    }
+                } catch (e) {}
+            }
+            if (!isAdmin) {
+                try {
+                    const { data: adminRecord } = await supabaseClient
+                        .from('admins')
+                        .select('role')
+                        .eq('email', session.user.email)
+                        .single();
+                    if (adminRecord && ['super_admin', 'admin', 'staff'].includes(adminRecord.role)) {
+                        isAdmin = true;
+                        sessionStorage.setItem('adminLoggedIn', 'true');
+                        sessionStorage.setItem('adminRole', adminRecord.role);
+                    }
+                } catch (e) {}
+            }
+
             const profileResult = await getUserProfile(session.user.id);
             if (!isAdmin && profileResult.success && profileResult.data && profileResult.data.passport_number) {
                 alert(pt('profile.alert.alreadySubmitted'));

@@ -950,7 +950,31 @@ async function createWelcomeMessage(threadId, serviceName) {
             // ===== 일반 상담 안내문 =====
             // 프로필 존재 여부 확인 (첫 번째 쓰레드에서만 기본사항 제출)
             // 관리자 모드에서는 항상 기본사항 입력 링크 표시 (테스트용 덮어쓰기 허용)
-            const isAdmin = typeof sessionStorage !== 'undefined' && sessionStorage.getItem('adminLoggedIn') === 'true';
+            let isAdmin = typeof sessionStorage !== 'undefined' && sessionStorage.getItem('adminLoggedIn') === 'true';
+
+            // DB에서도 관리자 role 확인 (sessionStorage가 탭 간 유실될 수 있음)
+            if (!isAdmin) {
+                try {
+                    const sess = await supabaseClient.auth.getSession();
+                    if (sess?.data?.session?.user) {
+                        const uid = sess.data.session.user.id;
+                        const uemail = sess.data.session.user.email;
+                        const { data: ap } = await supabaseClient.from('profiles').select('role').eq('id', uid).single();
+                        if (ap && ['super_admin', 'admin', 'staff'].includes(ap.role)) {
+                            isAdmin = true;
+                        } else {
+                            const { data: ar } = await supabaseClient.from('admins').select('role').eq('email', uemail).single();
+                            if (ar && ['super_admin', 'admin', 'staff'].includes(ar.role)) {
+                                isAdmin = true;
+                            }
+                        }
+                        if (isAdmin && typeof sessionStorage !== 'undefined') {
+                            sessionStorage.setItem('adminLoggedIn', 'true');
+                        }
+                    }
+                } catch (e) {}
+            }
+
             let hasProfile = false;
             if (!isAdmin) {
                 try {
