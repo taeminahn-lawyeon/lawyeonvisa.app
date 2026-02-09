@@ -1603,6 +1603,7 @@
             'd4-to-d2-change': { name: 'D-4→D-2 Student Visa Change', price: 110000, govFee: 119000, desc: 'Language course to degree program', icon: '🎓' },
             'd10-1-change': { name: 'D-10-1 Job Seeker Visa Change', price: 220000, govFee: 100000, desc: 'General job seeking visa', icon: '🔍' },
             'd10-1-dhu': { name: 'D-10-1 General Job Seeker Visa (DHU)', price: 55000, govFee: 100000, desc: 'Daegu Haany University special rate', icon: '🎓', organization: 'dhu' },
+            'd10-1-chosun': { name: 'D-10-1 General Job Seeker Visa (Chosun)', price: 55000, govFee: 100000, desc: 'Chosun University special rate', icon: '🎓', organization: 'chosun' },
             'd10-2-change': { name: 'D-10-2 Tech Startup Job Seeker', price: 330000, govFee: 100000, desc: 'Startup preparation visa', icon: '💡' },
             'd10-3-change': { name: 'D-10-3 High-tech Intern Visa', price: 330000, govFee: 100000, desc: 'Advanced technology internship', icon: '🔬' },
             'd10-t-change': { name: 'D-10-T Top Talent Job Seeker', price: 330000, govFee: 100000, desc: 'Elite university graduate visa', icon: '🏆' },
@@ -2119,7 +2120,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                 // Get organization and lecture code from URL
                 const paymentUrlParams = new URLSearchParams(window.location.search);
                 const paymentOrg = paymentUrlParams.get('org') || selectedService.organization || 'general';
-                const paymentLectureCode = paymentUrlParams.get('lectureCode') || sessionStorage.getItem('dhu_lecture_code') || '';
+                const paymentLectureCode = paymentUrlParams.get('lectureCode') || sessionStorage.getItem('dhu_lecture_code') || sessionStorage.getItem('chosun_lecture_code') || '';
 
                 sessionStorage.setItem('pendingPayment', JSON.stringify({
                     orderId: orderInfo.orderId,
@@ -3139,21 +3140,22 @@ ${window.location.origin}/profile-submit.html?thread=${threadId}`;
 
                 // Only send welcome message if creating new thread (not for existing thread)
                 if (!existingThreadId) {
-                    // Get lecture code if DHU service
-                    const lectureCode = urlParams.get('lectureCode') || sessionStorage.getItem('dhu_lecture_code') || '';
+                    // Get lecture code if university service
+                    const lectureCode = urlParams.get('lectureCode') || sessionStorage.getItem('dhu_lecture_code') || sessionStorage.getItem('chosun_lecture_code') || '';
 
                     let welcomeMessage;
                     const profileUrl = `${window.location.origin}/profile-submit.html?thread=${threadId}`;
-                    if (organization === 'dhu' && lectureCode) {
+                    const universityOrgs = { 'dhu': 'Daegu Haany University', 'chosun': 'Chosun University' };
+                    if (universityOrgs[organization] && lectureCode) {
                         welcomeMessage = `📋 **${getUIMessage('d10Started', 'D-10-1 Visa Application Started')}**
 
-**University:** Daegu Haany University
+**University:** ${universityOrgs[organization]}
 **Lecture Code:** ${lectureCode}
 
 ${getUIMessage('d10SubmitInfo', 'Please submit your basic information to proceed:')}
 ${profileUrl}
 
-${getUIMessage('d10ContactTime', 'Our specialist will contact you within 30 minutes after you submit your information.')}`;
+${getUIMessage('d10ContactTime', 'Our specialist will review your information and guide you through the process.')}`;
                     } else {
                         welcomeMessage = `📋 ${getUIMessage('genericSubmitInfo', 'Please submit your basic information.')}\n\n${profileUrl}`;
                     }
