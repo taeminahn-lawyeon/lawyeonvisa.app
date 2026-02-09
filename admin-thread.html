@@ -1513,6 +1513,9 @@
             }
         }
 
+        // 리치 HTML 블록 저장소 (회색 박스, 기본사항 요청 등 Quill이 지원하지 않는 구조)
+        let pendingRichBlocks = [];
+
         function insertGrayBox() {
             // 모달 열기
             openGrayBoxModal();
@@ -1720,10 +1723,40 @@
                 }
                 html += `</div>`;
             }
-            html += `</div><p><br></p>`;
+            html += `</div>`;
 
-            insertHtmlToEditor(html);
+            // Quill에 삽입하지 않고 별도 저장 (Quill이 class/구조를 제거하므로)
+            pendingRichBlocks.push(html);
+            renderPendingRichBlocks();
             closeGrayBoxModal();
+        }
+
+        function renderPendingRichBlocks() {
+            let container = document.getElementById('pendingRichBlocks');
+            if (!container) {
+                const editorSection = document.querySelector('.reply-section');
+                const fileUploadArea = document.getElementById('fileUploadArea');
+                container = document.createElement('div');
+                container.id = 'pendingRichBlocks';
+                editorSection.insertBefore(container, fileUploadArea);
+            }
+            container.innerHTML = pendingRichBlocks.map((block, index) => `
+                <div style="position: relative; margin: 8px 0;">
+                    ${block}
+                    <button onclick="removePendingRichBlock(${index})" style="
+                        position: absolute; top: 8px; right: 8px;
+                        background: #EF4444; color: white; border: none;
+                        border-radius: 50%; width: 22px; height: 22px;
+                        cursor: pointer; font-size: 12px; line-height: 22px;
+                        text-align: center; padding: 0;
+                    ">✕</button>
+                </div>
+            `).join('');
+        }
+
+        function removePendingRichBlock(index) {
+            pendingRichBlocks.splice(index, 1);
+            renderPendingRichBlocks();
         }
 
         function insertHtmlToEditor(html) {
@@ -2117,12 +2150,23 @@
         }
 
         async function submitReply() {
-            const content = quillEditor.root.innerHTML;
+            const editorHtml = quillEditor.root.innerHTML;
             const plainText = quillEditor.getText().trim();
 
-            if (!plainText && pendingFiles.length === 0) {
+            if (!plainText && pendingFiles.length === 0 && pendingRichBlocks.length === 0) {
                 alert('내용을 입력하거나 파일을 첨부해주세요.');
                 return;
+            }
+
+            // Quill 내용 + 리치 블록(회색 박스 등) 결합
+            let content = '';
+            if (pendingRichBlocks.length > 0) {
+                content = pendingRichBlocks.join('');
+                if (plainText) {
+                    content = editorHtml + content;
+                }
+            } else {
+                content = editorHtml;
             }
 
             const submitBtn = document.getElementById('submitBtn');
@@ -2158,7 +2202,9 @@
                 // Clear editor
                 quillEditor.setText('');
                 pendingFiles = [];
+                pendingRichBlocks = [];
                 renderPendingFiles();
+                renderPendingRichBlocks();
 
                 // Reload messages
                 await loadMessages();
