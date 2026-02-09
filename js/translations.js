@@ -846,9 +846,9 @@ const translations = {
         'thread.survey.resultQ7': '개인 간 송금 서비스/비공식 환전 앱 이용 여부',
         'thread.survey.resultQ8': '최근 1년 내 출입국관리사무소 범칙금/경찰 벌금 납부 여부',
         // === Thread Survey CTA Buttons ===
-        'thread.survey.ctaD10': 'D-10-1 정보 제출하기',
+        'thread.survey.ctaD10': '구직활동계획서 작성하기',
         'thread.survey.ctaVisaLegal': '비자 진단 설문 작성하기',
-        'thread.survey.completedD10': '✓ 정보 제출 완료',
+        'thread.survey.completedD10': '✓ 구직활동계획서 제출 완료',
         'thread.survey.completedVisaLegal': '✓ 설문 제출 완료',
         // === Thread Welcome Message (supabase-client.js) ===
         'thread.welcome.title': '상담 요청 확인',
@@ -1964,9 +1964,9 @@ const translations = {
         'thread.survey.resultQ7': 'Use of personal transfer services/unofficial exchange apps',
         'thread.survey.resultQ8': 'Fines from Immigration Office/police within past year',
         // === Thread Survey CTA Buttons ===
-        'thread.survey.ctaD10': 'Submit D-10-1 Information',
+        'thread.survey.ctaD10': 'Fill Employment Plan',
         'thread.survey.ctaVisaLegal': 'Complete Visa Survey',
-        'thread.survey.completedD10': '✓ Information Submitted',
+        'thread.survey.completedD10': '✓ Employment Plan Submitted',
         'thread.survey.completedVisaLegal': '✓ Survey Submitted',
         // === Thread Welcome Message (supabase-client.js) ===
         'thread.welcome.title': 'Consultation Request Confirmed',
@@ -2981,9 +2981,9 @@ const translations = {
         'thread.survey.resultQ7': '使用个人转账/非官方换汇应用',
         'thread.survey.resultQ8': '近一年内出入境/警察罚款',
         // === Thread Survey CTA Buttons ===
-        'thread.survey.ctaD10': '提交D-10-1信息',
+        'thread.survey.ctaD10': '填写求职活动计划书',
         'thread.survey.ctaVisaLegal': '填写签证诊断问卷',
-        'thread.survey.completedD10': '✓ 信息已提交',
+        'thread.survey.completedD10': '✓ 求职计划书已提交',
         'thread.survey.completedVisaLegal': '✓ 问卷已提交',
         // === Thread Welcome Message ===
         'thread.welcome.title': '咨询请求确认',
@@ -3998,9 +3998,9 @@ const translations = {
         'thread.survey.resultQ7': 'Sử dụng dịch vụ chuyển tiền/đổi tiền không chính thức',
         'thread.survey.resultQ8': 'Phạt từ Sở Xuất Nhập cảnh/cảnh sát trong năm qua',
         // === Thread Survey CTA Buttons ===
-        'thread.survey.ctaD10': 'Gửi thông tin D-10-1',
+        'thread.survey.ctaD10': 'Điền kế hoạch tìm việc',
         'thread.survey.ctaVisaLegal': 'Hoàn thành khảo sát thị thực',
-        'thread.survey.completedD10': '✓ Đã gửi thông tin',
+        'thread.survey.completedD10': '✓ Đã gửi kế hoạch tìm việc',
         'thread.survey.completedVisaLegal': '✓ Đã gửi khảo sát',
         // === Thread Welcome Message ===
         'thread.welcome.title': 'Xác nhận yêu cầu tư vấn',
@@ -5013,9 +5013,9 @@ const translations = {
         'thread.survey.resultQ7': '個人間送金/非公式両替アプリの利用',
         'thread.survey.resultQ8': '直近1年以内の出入国/警察罰金',
         // === Thread Survey CTA Buttons ===
-        'thread.survey.ctaD10': 'D-10-1情報を提出',
+        'thread.survey.ctaD10': '求職活動計画書を記入',
         'thread.survey.ctaVisaLegal': 'ビザ診断アンケートに回答',
-        'thread.survey.completedD10': '✓ 情報提出完了',
+        'thread.survey.completedD10': '✓ 求職計画書提出完了',
         'thread.survey.completedVisaLegal': '✓ アンケート提出完了',
         // === Thread Welcome Message ===
         'thread.welcome.title': '相談リクエスト確認',
@@ -6028,9 +6028,9 @@ const translations = {
         'thread.survey.resultQ7': 'Хувийн шилжүүлэг/албан бус валют арилжааны апп ашиглалт',
         'thread.survey.resultQ8': 'Сүүлийн 1 жилд Гааль/цагдаагийн торгууль',
         // === Thread Survey CTA Buttons ===
-        'thread.survey.ctaD10': 'D-10-1 мэдээлэл илгээх',
+        'thread.survey.ctaD10': 'Ажил хайх төлөвлөгөө бөглөх',
         'thread.survey.ctaVisaLegal': 'Визийн судалгааг бөглөх',
-        'thread.survey.completedD10': '✓ Мэдээлэл илгээгдсэн',
+        'thread.survey.completedD10': '✓ Төлөвлөгөө илгээгдсэн',
         'thread.survey.completedVisaLegal': '✓ Судалгаа илгээгдсэн',
         // === Thread Welcome Message ===
         'thread.welcome.title': 'Зөвлөгөөний хүсэлт баталгаажлаа',
@@ -7043,9 +7043,9 @@ const translations = {
         'thread.survey.resultQ7': 'การใช้บริการโอนเงิน/แอปแลกเปลี่ยนไม่เป็นทางการ',
         'thread.survey.resultQ8': 'ค่าปรับตรวจคนเข้าเมือง/ตำรวจภายในปีที่ผ่านมา',
         // === Thread Survey CTA Buttons ===
-        'thread.survey.ctaD10': 'ส่งข้อมูล D-10-1',
+        'thread.survey.ctaD10': 'กรอกแผนหางาน',
         'thread.survey.ctaVisaLegal': 'ทำแบบสำรวจวีซ่า',
-        'thread.survey.completedD10': '✓ ส่งข้อมูลแล้ว',
+        'thread.survey.completedD10': '✓ ส่งแผนหางานแล้ว',
         'thread.survey.completedVisaLegal': '✓ ส่งแบบสำรวจแล้ว',
         // === Thread Welcome Message ===
         'thread.welcome.title': 'ยืนยันคำขอปรึกษา',

@@ -1486,210 +1486,164 @@
         </div>
     </div>
 
-    <!-- D-10-1 Application Form Modal (구직계획서) -->
+    <!-- D-10-1 Application Form Modal (구직활동계획서) -->
     <div class="modal-overlay" id="d10FormModal">
         <div class="modal edit-modal" style="max-width: 720px;">
             <div class="modal-header">
-                <h2 class="modal-title">구직계획서 / Plan for Seeking Employment</h2>
+                <h2 class="modal-title">구직활동계획서 / Plan for Seeking Employment</h2>
                 <button class="modal-close" onclick="closeModal('d10FormModal')">&times;</button>
             </div>
             <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
-                <p style="color: #64748B; margin-bottom: 20px; font-size: 14px;">D-10 비자 변경 신청에 필요한 구직계획서 정보를 입력해주세요. / Please provide the information required for the Plan for Seeking Employment document.</p>
+                <p style="color: #64748B; margin-bottom: 20px; font-size: 14px;">D-10-1 비자 신청에 필요한 구직활동계획서 내용을 입력해 주세요. 담당자가 검토 후 안내드립니다.</p>
 
                 <!-- 1. 개인사항 / Personal Information -->
-                <div style="font-weight: 700; color: #191F28; margin: 16px 0 12px; font-size: 15px; padding-bottom: 8px; border-bottom: 2px solid #E2E8F0;">1. 개인사항 / Personal Information</div>
+                <div style="font-weight: 700; color: #191F28; margin: 16px 0 12px; font-size: 15px; padding-bottom: 6px; border-bottom: 2px solid #191F28;">1. 개인사항 / Personal Information</div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label class="form-label">성명 (Full Name) <span style="color: #EF4444;">*</span></label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+                        <input type="text" class="form-select" id="modal-d10-surname" placeholder="영문 성 (Surname)" required>
+                        <input type="text" class="form-select" id="modal-d10-givenname" placeholder="영문 이름 (Given names)" required>
+                        <input type="text" class="form-select" id="modal-d10-localname" placeholder="한자/모국어 성명">
+                    </div>
+                </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="form-group">
-                        <label class="form-label">Gender / 성별 <span style="color: #EF4444;">*</span></label>
+                        <label class="form-label">성별 (Gender) <span style="color: #EF4444;">*</span></label>
                         <select class="form-select" id="modal-d10-gender" required>
-                            <option value="">Select</option>
-                            <option value="Male">Male / 남</option>
-                            <option value="Female">Female / 여</option>
+                            <option value="">선택 / Select</option>
+                            <option value="남 / Male">남 / Male</option>
+                            <option value="여 / Female">여 / Female</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Chinese Name / 中文姓名</label>
-                        <input type="text" class="form-select" id="modal-d10-chinese-name" placeholder="中文姓名 (if applicable)">
+                        <label class="form-label">국적 (Nationality) <span style="color: #EF4444;">*</span></label>
+                        <input type="text" class="form-select" id="modal-d10-nationality" placeholder="예: 중국, 베트남 등" required>
                     </div>
-                </div>
-
-                <div class="form-group" style="margin-bottom: 16px;">
-                    <label class="form-label">University / College / 졸업학교 <span style="color: #EF4444;">*</span></label>
-                    <input type="text" class="form-select" id="modal-d10-university" placeholder="e.g., Chosun University" required>
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="form-group">
-                        <label class="form-label">Major / 전공 <span style="color: #EF4444;">*</span></label>
-                        <input type="text" class="form-select" id="modal-d10-major" placeholder="e.g., Computer Science" required>
+                        <label class="form-label">생년월일 (Date of Birth) <span style="color: #EF4444;">*</span></label>
+                        <input type="date" class="form-select" id="modal-d10-birth-date" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Degree / 학위 <span style="color: #EF4444;">*</span></label>
-                        <select class="form-select" id="modal-d10-degree-type" required>
-                            <option value="">Select degree</option>
-                            <option value="Associate">Associate (전문학사)</option>
-                            <option value="Bachelor">Bachelor's (학사)</option>
-                            <option value="Master">Master's (석사)</option>
-                            <option value="Doctoral">Doctoral (박사)</option>
-                        </select>
+                        <label class="form-label">외국인등록번호 (Alien Registration No.)</label>
+                        <input type="text" class="form-select" id="modal-d10-alien-reg" placeholder="예: 123456-1234567">
                     </div>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 16px;">
-                    <label class="form-label">Work Experience / 경력사항</label>
-                    <textarea class="form-select" id="modal-d10-work-experience" rows="2" placeholder="이전 근무 경력이 있으면 기재 (회사명, 직종, 기간 등)" style="resize: vertical;"></textarea>
+                    <label class="form-label">졸업학교 (University / College) <span style="color: #EF4444;">*</span></label>
+                    <input type="text" class="form-select" id="modal-d10-university" placeholder="예: 서울대학교" required>
                 </div>
 
-                <!-- Visa Information -->
-                <div style="font-weight: 600; color: #374151; margin: 16px 0 10px; font-size: 13px;">Visa Information</div>
-
-                <div class="form-group" style="margin-bottom: 16px;">
-                    <label class="form-label">Current Visa Status / 현재 체류자격 <span style="color: #EF4444;">*</span></label>
-                    <select class="form-select" id="modal-d10-current-visa" required>
-                        <option value="">Select your current visa</option>
-                        <option value="D-2-1">D-2-1 (전문학사)</option>
-                        <option value="D-2-2">D-2-2 (학사)</option>
-                        <option value="D-2-3">D-2-3 (석사)</option>
-                        <option value="D-2-4">D-2-4 (박사)</option>
-                        <option value="D-2-5">D-2-5 (연구)</option>
-                        <option value="D-2-6">D-2-6 (교환학생)</option>
-                        <option value="D-2-7">D-2-7 (어학연수+학위)</option>
-                        <option value="D-2-8">D-2-8 (단기유학)</option>
-                        <option value="D-4">D-4 (어학연수)</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="form-group">
-                        <label class="form-label">Visa Expiry / 체류만료일 <span style="color: #EF4444;">*</span></label>
-                        <input type="date" class="form-select" id="modal-d10-visa-expiry" required>
+                        <label class="form-label">전공 & 학위 (Major & Degree) <span style="color: #EF4444;">*</span></label>
+                        <input type="text" class="form-select" id="modal-d10-major-degree" placeholder="예: 경영학 학사 (졸업예정)" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Graduation Date / 졸업일 <span style="color: #EF4444;">*</span></label>
-                        <input type="date" class="form-select" id="modal-d10-graduation-date" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">TOPIK Level</label>
-                        <select class="form-select" id="modal-d10-korean-level">
-                            <option value="">N/A</option>
-                            <option value="TOPIK-1">TOPIK 1</option>
-                            <option value="TOPIK-2">TOPIK 2</option>
-                            <option value="TOPIK-3">TOPIK 3</option>
-                            <option value="TOPIK-4">TOPIK 4</option>
-                            <option value="TOPIK-5">TOPIK 5</option>
-                            <option value="TOPIK-6">TOPIK 6</option>
-                            <option value="KIIP-5">KIIP 5</option>
-                        </select>
+                        <label class="form-label">경력사항 (Work Experience)</label>
+                        <input type="text" class="form-select" id="modal-d10-work-experience" placeholder="예: 인턴 6개월, 없음 등">
                     </div>
                 </div>
 
                 <!-- 2. 구직사항 / Desired Employment Detail -->
-                <div style="font-weight: 700; color: #191F28; margin: 24px 0 12px; font-size: 15px; padding-bottom: 8px; border-bottom: 2px solid #E2E8F0;">2. 구직사항 / Desired Employment Detail</div>
+                <div style="font-weight: 700; color: #191F28; margin: 24px 0 12px; font-size: 15px; padding-bottom: 6px; border-bottom: 2px solid #191F28;">2. 구직사항 / Desired Employment Detail</div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="form-group">
-                        <label class="form-label">Occupational Category / 업종 <span style="color: #EF4444;">*</span></label>
-                        <input type="text" class="form-select" id="modal-d10-occupation" placeholder="e.g., IT, 제조업, 무역" required>
+                        <label class="form-label">업종 (Occupational Category) <span style="color: #EF4444;">*</span></label>
+                        <input type="text" class="form-select" id="modal-d10-occupation" placeholder="예: IT, 무역, 제조업 등" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Company Name / 희망 회사명</label>
-                        <input type="text" class="form-select" id="modal-d10-company" placeholder="미정이면 빈칸">
+                        <label class="form-label">희망 회사명 (Company Name)</label>
+                        <input type="text" class="form-select" id="modal-d10-company" placeholder="예: 삼성전자, 미정 등">
                     </div>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 16px;">
-                    <label class="form-label">Expected Salary / 희망 급여 <span style="color: #EF4444;">*</span></label>
-                    <input type="text" class="form-select" id="modal-d10-salary" placeholder="e.g., 2,500,000원/월" required>
+                    <label class="form-label">희망 급여 (Expected Salary)</label>
+                    <input type="text" class="form-select" id="modal-d10-salary" placeholder="예: 월 250만원, 연봉 3,000만원 등">
                 </div>
 
                 <!-- 3. 구직계획 / Plans for Employment-seeking Activities -->
-                <div style="font-weight: 700; color: #191F28; margin: 24px 0 12px; font-size: 15px; padding-bottom: 8px; border-bottom: 2px solid #E2E8F0;">3. 구직계획 / Plans for Employment-seeking Activities</div>
-                <p style="color: #64748B; font-size: 13px; margin-bottom: 12px;">6개월 구직 활동 계획을 월별로 기재해주세요.</p>
+                <div style="font-weight: 700; color: #191F28; margin: 24px 0 12px; font-size: 15px; padding-bottom: 6px; border-bottom: 2px solid #191F28;">3. 구직계획 / Plans for Employment-seeking Activities</div>
+                <p style="color: #64748B; margin-bottom: 12px; font-size: 13px;">6개월간의 구직활동 계획을 월별로 작성해 주세요.</p>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                    <div class="form-group">
-                        <label class="form-label">1st Month / 제1월 <span style="color: #EF4444;">*</span></label>
-                        <input type="text" class="form-select" id="modal-d10-plan-m1" placeholder="구직 활동 계획" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">2nd Month / 제2월 <span style="color: #EF4444;">*</span></label>
-                        <input type="text" class="form-select" id="modal-d10-plan-m2" placeholder="구직 활동 계획" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">3rd Month / 제3월 <span style="color: #EF4444;">*</span></label>
-                        <input type="text" class="form-select" id="modal-d10-plan-m3" placeholder="구직 활동 계획" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">4th Month / 제4월 <span style="color: #EF4444;">*</span></label>
-                        <input type="text" class="form-select" id="modal-d10-plan-m4" placeholder="구직 활동 계획" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">5th Month / 제5월 <span style="color: #EF4444;">*</span></label>
-                        <input type="text" class="form-select" id="modal-d10-plan-m5" placeholder="구직 활동 계획" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">6th Month / 제6월 <span style="color: #EF4444;">*</span></label>
-                        <input type="text" class="form-select" id="modal-d10-plan-m6" placeholder="구직 활동 계획" required>
-                    </div>
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label class="form-label">제1월 (1st Month) <span style="color: #EF4444;">*</span></label>
+                    <input type="text" class="form-select" id="modal-d10-plan-m1" placeholder="예: 이력서 작성, 채용사이트 등록, 희망업종 조사" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label class="form-label">제2월 (2nd Month) <span style="color: #EF4444;">*</span></label>
+                    <input type="text" class="form-select" id="modal-d10-plan-m2" placeholder="예: 채용공고 지원, 취업박람회 참가" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label class="form-label">제3월 (3rd Month) <span style="color: #EF4444;">*</span></label>
+                    <input type="text" class="form-select" id="modal-d10-plan-m3" placeholder="예: 면접 준비, 기업 면접 참가" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label class="form-label">제4월 (4th Month) <span style="color: #EF4444;">*</span></label>
+                    <input type="text" class="form-select" id="modal-d10-plan-m4" placeholder="예: 추가 채용공고 지원, 면접" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label class="form-label">제5월 (5th Month) <span style="color: #EF4444;">*</span></label>
+                    <input type="text" class="form-select" id="modal-d10-plan-m5" placeholder="예: 최종 면접, 근로계약 협의" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label class="form-label">제6월 (6th Month) <span style="color: #EF4444;">*</span></label>
+                    <input type="text" class="form-select" id="modal-d10-plan-m6" placeholder="예: 취업 확정, 체류자격 변경 준비" required>
                 </div>
 
-                <!-- 4. 체류비용 / Financing Plan for Living Costs -->
-                <div style="font-weight: 700; color: #191F28; margin: 24px 0 12px; font-size: 15px; padding-bottom: 8px; border-bottom: 2px solid #E2E8F0;">4. 체류비용 / Financing Plan for Living Costs</div>
-                <p style="color: #64748B; font-size: 13px; margin-bottom: 12px;">체류 기간 동안 생활비 지불 방식을 기재해주세요. (금액 또는 해당없음)</p>
+                <!-- 4. 체류비용 및 지불방식 / Financing Plan for Living Costs -->
+                <div style="font-weight: 700; color: #191F28; margin: 24px 0 12px; font-size: 15px; padding-bottom: 6px; border-bottom: 2px solid #191F28;">4. 체류비용 및 지불방식 / Financing Plan for Living Costs</div>
+                <p style="color: #64748B; margin-bottom: 12px; font-size: 13px;">체류 기간 동안의 생활비 충당 방법을 입력해 주세요. (해당하는 항목만 입력)</p>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="form-group">
-                        <label class="form-label">Cash / 현금</label>
-                        <input type="text" class="form-select" id="modal-d10-finance-cash" placeholder="e.g., 5,000,000원">
+                        <label class="form-label">현금 (Cash)</label>
+                        <input type="text" class="form-select" id="modal-d10-finance-cash" placeholder="예: 500만원">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Deposit / 예금</label>
-                        <input type="text" class="form-select" id="modal-d10-finance-deposit" placeholder="e.g., 10,000,000원">
+                        <label class="form-label">예금 (Deposit)</label>
+                        <input type="text" class="form-select" id="modal-d10-finance-deposit" placeholder="예: 1,000만원">
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label class="form-label">신용카드 (Credit Card)</label>
+                        <input type="text" class="form-select" id="modal-d10-finance-card" placeholder="예: 보유 / 미보유">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Credit Card / 신용카드</label>
-                        <input type="text" class="form-select" id="modal-d10-finance-credit" placeholder="e.g., 있음/없음">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Remittance / 송금</label>
-                        <input type="text" class="form-select" id="modal-d10-finance-remittance" placeholder="e.g., 월 1,000,000원">
+                        <label class="form-label">송금 (Remittance)</label>
+                        <input type="text" class="form-select" id="modal-d10-finance-remittance" placeholder="예: 부모님 월 100만원 송금">
                     </div>
                 </div>
 
-                <!-- 5. 거주 정보 / Residence Information -->
-                <div style="font-weight: 700; color: #191F28; margin: 24px 0 12px; font-size: 15px; padding-bottom: 8px; border-bottom: 2px solid #E2E8F0;">5. 거주 정보 / Residence Information</div>
+                <!-- 5. 추가사항 -->
+                <div style="font-weight: 700; color: #191F28; margin: 24px 0 12px; font-size: 15px; padding-bottom: 6px; border-bottom: 2px solid #191F28;">5. 추가사항 / Additional Information</div>
 
                 <div class="form-group" style="margin-bottom: 16px;">
-                    <label class="form-label">Current Address / 현재 주소 <span style="color: #EF4444;">*</span></label>
-                    <input type="text" class="form-select" id="modal-d10-address" placeholder="e.g., 광주광역시 동구 조선대길 146" required>
+                    <label class="form-label">기타 참고사항 (Additional Notes)</label>
+                    <textarea class="form-select" id="modal-d10-additional-notes" rows="2" placeholder="기타 참고할 사항이 있으면 입력해 주세요..." style="resize: vertical;"></textarea>
                 </div>
 
-                <div class="form-group" style="margin-bottom: 16px;">
-                    <label class="form-label">Proof of Residence / 거주 증빙 <span style="color: #EF4444;">*</span></label>
-                    <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 8px;">
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                            <input type="radio" name="modal-d10-residence-proof" value="lease"> 임대차계약서 (본인 명의)
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                            <input type="radio" name="modal-d10-residence-proof" value="dormitory"> 대학 기숙사
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                            <input type="radio" name="modal-d10-residence-proof" value="residence-cert"> 거주지제공사실확인서
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Additional Notes -->
-                <div class="form-group" style="margin-bottom: 16px;">
-                    <label class="form-label">Additional Notes / 기타 참고사항</label>
-                    <textarea class="form-select" id="modal-d10-additional-notes" rows="2" placeholder="추가로 알려줄 사항이 있으면 기재해주세요." style="resize: vertical;"></textarea>
+                <!-- 확인사항 / Notice -->
+                <div style="background: #FFF7ED; border: 1px solid #FED7AA; border-radius: 8px; padding: 14px; margin-top: 8px; font-size: 13px; color: #9A3412; line-height: 1.7;">
+                    <div style="font-weight: 600; margin-bottom: 6px;">확인사항 / Notice</div>
+                    <ul style="margin: 0; padding-left: 18px;">
+                        <li>실습(인턴) 시작 또는 변경 시 14일 이내 출입국관리사무소에 신고해야 합니다.</li>
+                        <li>정식 근로계약 체결 시 체류자격 변경 허가 후 근무를 시작해야 합니다.</li>
+                        <li>구직 기간 중 불법취업 등 법률 위반 시 처벌을 받을 수 있습니다.</li>
+                    </ul>
                 </div>
             </div>
             <div class="modal-actions">
-                <button class="btn-secondary" onclick="closeModal('d10FormModal')">Cancel</button>
-                <button class="btn-primary" onclick="submitD10Form()">Submit / 제출하기</button>
+                <button class="btn-secondary" onclick="closeModal('d10FormModal')">취소</button>
+                <button class="btn-primary" onclick="submitD10Form()">구직활동계획서 제출</button>
             </div>
         </div>
     </div>
@@ -2648,12 +2602,12 @@
                     if (isLatest && !submittedSurveys.has('d10-1')) {
                         content = content.replace(
                             /<span class="survey-action-marker" data-action="d10-1"[^>]*>[^<]*<\/span>/,
-                            `<button class="survey-cta-btn" onclick="openD10FormModal()">${tt('thread.survey.ctaD10', 'Submit D-10-1 Information')}</button>`
+                            `<button class="survey-cta-btn" onclick="openD10FormModal()">${tt('thread.survey.ctaD10', '구직활동계획서 작성하기')}</button>`
                         );
                     } else {
                         content = content.replace(
                             /<span class="survey-action-marker" data-action="d10-1"[^>]*>[^<]*<\/span>/,
-                            `<span class="survey-completed-badge">${tt('thread.survey.completedD10', '✓ Information Submitted')}</span>`
+                            `<span class="survey-completed-badge">${tt('thread.survey.completedD10', '✓ 구직활동계획서 제출 완료')}</span>`
                         );
                     }
                 }
@@ -3335,52 +3289,44 @@
         async function submitD10Form() {
             // Validate required fields
             const requiredFields = [
-                { id: 'modal-d10-gender', name: 'Gender / 성별' },
-                { id: 'modal-d10-university', name: 'University / 졸업학교' },
-                { id: 'modal-d10-major', name: 'Major / 전공' },
-                { id: 'modal-d10-degree-type', name: 'Degree / 학위' },
-                { id: 'modal-d10-current-visa', name: 'Current Visa / 현재 체류자격' },
-                { id: 'modal-d10-visa-expiry', name: 'Visa Expiry / 체류만료일' },
-                { id: 'modal-d10-graduation-date', name: 'Graduation Date / 졸업일' },
-                { id: 'modal-d10-occupation', name: 'Occupational Category / 업종' },
-                { id: 'modal-d10-salary', name: 'Expected Salary / 희망 급여' },
-                { id: 'modal-d10-plan-m1', name: '1st Month Plan' },
-                { id: 'modal-d10-plan-m2', name: '2nd Month Plan' },
-                { id: 'modal-d10-plan-m3', name: '3rd Month Plan' },
-                { id: 'modal-d10-plan-m4', name: '4th Month Plan' },
-                { id: 'modal-d10-plan-m5', name: '5th Month Plan' },
-                { id: 'modal-d10-plan-m6', name: '6th Month Plan' },
-                { id: 'modal-d10-address', name: 'Current Address / 현재 주소' }
+                { id: 'modal-d10-surname', name: '영문 성 (Surname)' },
+                { id: 'modal-d10-givenname', name: '영문 이름 (Given names)' },
+                { id: 'modal-d10-gender', name: '성별 (Gender)' },
+                { id: 'modal-d10-nationality', name: '국적 (Nationality)' },
+                { id: 'modal-d10-birth-date', name: '생년월일 (Date of Birth)' },
+                { id: 'modal-d10-university', name: '졸업학교 (University)' },
+                { id: 'modal-d10-major-degree', name: '전공 & 학위 (Major & Degree)' },
+                { id: 'modal-d10-occupation', name: '업종 (Occupational Category)' },
+                { id: 'modal-d10-plan-m1', name: '제1월 구직계획' },
+                { id: 'modal-d10-plan-m2', name: '제2월 구직계획' },
+                { id: 'modal-d10-plan-m3', name: '제3월 구직계획' },
+                { id: 'modal-d10-plan-m4', name: '제4월 구직계획' },
+                { id: 'modal-d10-plan-m5', name: '제5월 구직계획' },
+                { id: 'modal-d10-plan-m6', name: '제6월 구직계획' }
             ];
 
             for (const field of requiredFields) {
                 const element = document.getElementById(field.id);
                 if (!element || !element.value.trim()) {
-                    alert(`Please fill in: ${field.name}`);
+                    alert(`입력해 주세요: ${field.name}`);
                     element?.focus();
                     return;
                 }
             }
 
-            // Check residence proof radio
-            const residenceProof = document.querySelector('input[name="modal-d10-residence-proof"]:checked');
-            if (!residenceProof) {
-                alert('거주 증빙 유형을 선택해주세요. / Please select proof of residence type.');
-                return;
-            }
-
             try {
+                // Collect form data
                 const formData = {
+                    surname: document.getElementById('modal-d10-surname').value,
+                    givenName: document.getElementById('modal-d10-givenname').value,
+                    localName: document.getElementById('modal-d10-localname').value,
                     gender: document.getElementById('modal-d10-gender').value,
-                    chineseName: document.getElementById('modal-d10-chinese-name').value,
+                    nationality: document.getElementById('modal-d10-nationality').value,
+                    birthDate: document.getElementById('modal-d10-birth-date').value,
+                    alienReg: document.getElementById('modal-d10-alien-reg').value,
                     university: document.getElementById('modal-d10-university').value,
-                    major: document.getElementById('modal-d10-major').value,
-                    degreeType: document.getElementById('modal-d10-degree-type').value,
+                    majorDegree: document.getElementById('modal-d10-major-degree').value,
                     workExperience: document.getElementById('modal-d10-work-experience').value,
-                    currentVisa: document.getElementById('modal-d10-current-visa').value,
-                    visaExpiry: document.getElementById('modal-d10-visa-expiry').value,
-                    graduationDate: document.getElementById('modal-d10-graduation-date').value,
-                    koreanLevel: document.getElementById('modal-d10-korean-level').value,
                     occupation: document.getElementById('modal-d10-occupation').value,
                     company: document.getElementById('modal-d10-company').value,
                     salary: document.getElementById('modal-d10-salary').value,
@@ -3392,10 +3338,8 @@
                     planM6: document.getElementById('modal-d10-plan-m6').value,
                     financeCash: document.getElementById('modal-d10-finance-cash').value,
                     financeDeposit: document.getElementById('modal-d10-finance-deposit').value,
-                    financeCredit: document.getElementById('modal-d10-finance-credit').value,
+                    financeCard: document.getElementById('modal-d10-finance-card').value,
                     financeRemittance: document.getElementById('modal-d10-finance-remittance').value,
-                    address: document.getElementById('modal-d10-address').value,
-                    residenceProof: residenceProof.value,
                     additionalNotes: document.getElementById('modal-d10-additional-notes').value
                 };
 
@@ -3423,81 +3367,63 @@
                 closeModal('d10FormModal');
                 await loadMessages();
 
-                alert('구직계획서 정보가 제출되었습니다! / Employment plan submitted successfully!');
+                alert('구직활동계획서가 제출되었습니다.');
 
             } catch (error) {
                 console.error('Error submitting D-10-1 form:', error);
-                alert('제출 실패. 다시 시도해주세요. / Failed to submit. Please try again.');
+                alert('제출에 실패했습니다. 다시 시도해 주세요.');
             }
         }
 
         function formatD10FormMessage(data) {
-            const residenceProofLabels = {
-                'lease': '임대차계약서 (본인 명의)',
-                'dormitory': '대학 기숙사',
-                'residence-cert': '거주지제공사실확인서'
-            };
-
-            const escHtml = (s) => s ? s.replace(/</g, '&lt;').replace(/>/g, '&gt;') : '';
+            const tdLabel = 'padding: 6px 10px; color: #6B7280; width: 40%; border-bottom: 1px solid #F1F5F9;';
+            const tdValue = 'padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;';
 
             let html = `<div data-survey-result="d10-1" style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 20px; margin: 4px 0;">
-<div style="font-weight: 700; font-size: 15px; color: #191F28; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #E2E8F0;">구직계획서 / Plan for Seeking Employment</div>
-
+<div style="font-weight: 700; font-size: 15px; color: #191F28; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #191F28;">구직활동계획서 / Plan for Seeking Employment</div>
 <div style="margin-bottom: 14px;">
 <div style="font-weight: 600; color: #374151; margin-bottom: 8px;">1. 개인사항 / Personal Information</div>
 <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-<tr><td style="padding: 6px 10px; color: #6B7280; width: 40%; border-bottom: 1px solid #F1F5F9;">Gender / 성별</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.gender)}</td></tr>
-${data.chineseName ? `<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">中文姓名</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.chineseName)}</td></tr>` : ''}
-<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">University / 졸업학교</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.university)}</td></tr>
-<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">Major & Degree / 전공·학위</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.major)} (${escHtml(data.degreeType)})</td></tr>
-${data.workExperience ? `<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">Work Experience / 경력</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.workExperience)}</td></tr>` : ''}
-<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">Current Visa / 체류자격</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.currentVisa)}</td></tr>
-<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">Visa Expiry / 체류만료일</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.visaExpiry)}</td></tr>
-<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">Graduation / 졸업일</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.graduationDate)}</td></tr>
-${data.koreanLevel ? `<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">TOPIK Level</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.koreanLevel)}</td></tr>` : ''}
+<tr><td style="${tdLabel}">성명 (Full Name)</td><td style="${tdValue}">${data.surname} ${data.givenName}${data.localName ? ' / ' + data.localName : ''}</td></tr>
+<tr><td style="${tdLabel}">성별 (Gender)</td><td style="${tdValue}">${data.gender}</td></tr>
+<tr><td style="${tdLabel}">생년월일 (Date of Birth)</td><td style="${tdValue}">${data.birthDate}</td></tr>
+${data.alienReg ? `<tr><td style="${tdLabel}">외국인등록번호</td><td style="${tdValue}">${data.alienReg}</td></tr>` : ''}
+<tr><td style="${tdLabel}">국적 (Nationality)</td><td style="${tdValue}">${data.nationality}</td></tr>
+<tr><td style="${tdLabel}">졸업학교 (University)</td><td style="${tdValue}">${data.university}</td></tr>
+<tr><td style="${tdLabel}">전공 & 학위 (Major & Degree)</td><td style="${tdValue}">${data.majorDegree}</td></tr>
+${data.workExperience ? `<tr><td style="${tdLabel}">경력사항 (Work Experience)</td><td style="${tdValue}">${data.workExperience}</td></tr>` : ''}
 </table>
 </div>
-
 <div style="margin-bottom: 14px;">
-<div style="font-weight: 600; color: #374151; margin-bottom: 8px;">2. 구직사항 / Desired Employment</div>
+<div style="font-weight: 600; color: #374151; margin-bottom: 8px;">2. 구직사항 / Desired Employment Detail</div>
 <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-<tr><td style="padding: 6px 10px; color: #6B7280; width: 40%; border-bottom: 1px solid #F1F5F9;">Occupation / 업종</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.occupation)}</td></tr>
-${data.company ? `<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">Company / 회사명</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.company)}</td></tr>` : ''}
-<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">Salary / 희망급여</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.salary)}</td></tr>
+<tr><td style="${tdLabel}">업종 (Category)</td><td style="${tdValue}">${data.occupation}</td></tr>
+${data.company ? `<tr><td style="${tdLabel}">희망 회사명 (Company)</td><td style="${tdValue}">${data.company}</td></tr>` : ''}
+${data.salary ? `<tr><td style="${tdLabel}">희망 급여 (Salary)</td><td style="${tdValue}">${data.salary}</td></tr>` : ''}
 </table>
 </div>
-
 <div style="margin-bottom: 14px;">
-<div style="font-weight: 600; color: #374151; margin-bottom: 8px;">3. 구직계획 / Employment-seeking Plan (6 months)</div>
+<div style="font-weight: 600; color: #374151; margin-bottom: 8px;">3. 구직계획 / Employment-seeking Plan</div>
 <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-<tr><td style="padding: 6px 10px; color: #6B7280; width: 25%; border-bottom: 1px solid #F1F5F9;">제1월 / 1st</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.planM1)}</td></tr>
-<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">제2월 / 2nd</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.planM2)}</td></tr>
-<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">제3월 / 3rd</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.planM3)}</td></tr>
-<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">제4월 / 4th</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.planM4)}</td></tr>
-<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">제5월 / 5th</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.planM5)}</td></tr>
-<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">제6월 / 6th</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.planM6)}</td></tr>
+<tr><td style="${tdLabel}">제1월</td><td style="${tdValue}">${data.planM1}</td></tr>
+<tr><td style="${tdLabel}">제2월</td><td style="${tdValue}">${data.planM2}</td></tr>
+<tr><td style="${tdLabel}">제3월</td><td style="${tdValue}">${data.planM3}</td></tr>
+<tr><td style="${tdLabel}">제4월</td><td style="${tdValue}">${data.planM4}</td></tr>
+<tr><td style="${tdLabel}">제5월</td><td style="${tdValue}">${data.planM5}</td></tr>
+<tr><td style="${tdLabel}">제6월</td><td style="${tdValue}">${data.planM6}</td></tr>
 </table>
 </div>
-
-<div style="margin-bottom: 14px;">
-<div style="font-weight: 600; color: #374151; margin-bottom: 8px;">4. 체류비용 / Financing Plan</div>
-<table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-<tr><td style="padding: 6px 10px; color: #6B7280; width: 25%; border-bottom: 1px solid #F1F5F9;">현금 / Cash</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.financeCash) || '-'}</td></tr>
-<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">예금 / Deposit</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.financeDeposit) || '-'}</td></tr>
-<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">신용카드 / Credit</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.financeCredit) || '-'}</td></tr>
-<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">송금 / Remittance</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.financeRemittance) || '-'}</td></tr>
-</table>
-</div>
-
 <div>
-<div style="font-weight: 600; color: #374151; margin-bottom: 8px;">5. 거주 정보 / Residence</div>
+<div style="font-weight: 600; color: #374151; margin-bottom: 8px;">4. 체류비용 및 지불방식 / Financing Plan</div>
 <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-<tr><td style="padding: 6px 10px; color: #6B7280; width: 40%; border-bottom: 1px solid #F1F5F9;">주소 / Address</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${escHtml(data.address)}</td></tr>
-<tr><td style="padding: 6px 10px; color: #6B7280; border-bottom: 1px solid #F1F5F9;">거주 증빙 / Proof</td><td style="padding: 6px 10px; color: #191F28; border-bottom: 1px solid #F1F5F9;">${residenceProofLabels[data.residenceProof] || escHtml(data.residenceProof)}</td></tr>
+${data.financeCash ? `<tr><td style="${tdLabel}">현금 (Cash)</td><td style="${tdValue}">${data.financeCash}</td></tr>` : ''}
+${data.financeDeposit ? `<tr><td style="${tdLabel}">예금 (Deposit)</td><td style="${tdValue}">${data.financeDeposit}</td></tr>` : ''}
+${data.financeCard ? `<tr><td style="${tdLabel}">신용카드 (Credit Card)</td><td style="${tdValue}">${data.financeCard}</td></tr>` : ''}
+${data.financeRemittance ? `<tr><td style="${tdLabel}">송금 (Remittance)</td><td style="${tdValue}">${data.financeRemittance}</td></tr>` : ''}
+${!data.financeCash && !data.financeDeposit && !data.financeCard && !data.financeRemittance ? `<tr><td style="${tdLabel}" colspan="2">미입력</td></tr>` : ''}
 </table>
 </div>
-
-${data.additionalNotes ? `<div style="margin-top: 14px;"><div style="font-weight: 600; color: #374151; margin-bottom: 8px;">기타 참고사항 / Notes</div><div style="color: #374151; font-size: 14px; line-height: 1.6; background: white; padding: 10px 12px; border-radius: 8px; border: 1px solid #E2E8F0;">${escHtml(data.additionalNotes)}</div></div>` : ''}
+${data.additionalNotes ? `<div style="margin-top: 14px;"><div style="font-weight: 600; color: #374151; margin-bottom: 8px;">5. 추가사항</div><div style="color: #374151; font-size: 14px; line-height: 1.6; background: white; padding: 10px 12px; border-radius: 8px; border: 1px solid #E2E8F0;">${data.additionalNotes}</div></div>` : ''}
 </div>`;
             return html;
         }
