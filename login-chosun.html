@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="favicon.png?v=3">
-    <title>D-10-1 Visa Service - Chosun University</title>
+    <title>Immigration & Visa Service - Chosun University</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
 
@@ -382,13 +382,13 @@
                     <img src="조선대로고.jpg" alt="Chosun University Logo">
                 </div>
                 <div class="university-name">Chosun University</div>
-                <div class="service-title">D-10-1 Visa Change Service</div>
+                <div class="service-title">Immigration & Visa Service</div>
             </div>
 
             <div class="card-body">
                 <div class="welcome-text">
                     <h2>Welcome</h2>
-                    <p>Please enter your information to apply for the D-10-1 visa change service.</p>
+                    <p>Visa changes, legal advice, work permits, and more — apply for immigration services here.</p>
                 </div>
 
                 <div class="error-message" id="errorMessage"></div>
@@ -549,7 +549,7 @@
             const btn = document.getElementById('submitBtn');
             btn.disabled = true;
             btn.classList.add('loading');
-            btn.innerHTML = '<i class="fas fa-spinner"></i> Redirecting to payment...';
+            btn.innerHTML = '<i class="fas fa-spinner"></i> Loading...';
 
             try {
                 // Ensure profile exists before redirecting to payment
@@ -565,8 +565,8 @@
                 // Store lecture code for later use
                 sessionStorage.setItem('chosun_lecture_code', lectureCode);
 
-                // Redirect to payment page with Chosun University service
-                window.location.href = `service-apply-general.html?service=d10-1-chosun&org=chosun&lectureCode=${encodeURIComponent(lectureCode)}`;
+                // Redirect to service selection page with Chosun University org
+                window.location.href = `service-apply-general.html?org=chosun&lectureCode=${encodeURIComponent(lectureCode)}`;
             } catch (error) {
                 console.error('Submit error:', error);
                 showError('Failed to proceed. Please try again.');
