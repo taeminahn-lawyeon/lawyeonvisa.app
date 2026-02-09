@@ -45,6 +45,9 @@ async function signInWithGoogle() {
         } else if (currentPage === 'consultation-request.html') {
             localStorage.removeItem('universityCode');
             redirectUrl = window.location.href;
+        } else if (currentPage.startsWith('login-')) {
+            // 대학교 전용 로그인 페이지는 자기 자신으로 복귀
+            redirectUrl = window.location.href;
         } else {
             localStorage.removeItem('universityCode');
             redirectUrl = window.location.origin + '/index.html';
