@@ -1342,35 +1342,20 @@
             }
 
             // Check if profile already exists (first thread only)
-            let isAdmin = sessionStorage.getItem('adminLoggedIn') === 'true';
+            // 관리자 판별: URL 파라미터 (새 탭에서도 유지), sessionStorage, DB 순으로 확인
+            let isAdmin = urlParams.get('mode') === 'admin'
+                || sessionStorage.getItem('adminLoggedIn') === 'true';
 
-            // DB에서도 관리자 role 확인 (sessionStorage가 탭 간 유실될 수 있음)
             if (!isAdmin) {
                 try {
-                    const { data: adminProfile } = await supabaseClient
-                        .from('profiles')
-                        .select('role')
-                        .eq('id', session.user.id)
-                        .single();
-                    if (adminProfile && ['super_admin', 'admin', 'staff'].includes(adminProfile.role)) {
-                        isAdmin = true;
-                        sessionStorage.setItem('adminLoggedIn', 'true');
-                        sessionStorage.setItem('adminRole', adminProfile.role);
-                    }
+                    const { data: ap } = await supabaseClient.from('profiles').select('role').eq('id', session.user.id).single();
+                    if (ap && ['super_admin', 'admin', 'staff'].includes(ap.role)) isAdmin = true;
                 } catch (e) {}
             }
             if (!isAdmin) {
                 try {
-                    const { data: adminRecord } = await supabaseClient
-                        .from('admins')
-                        .select('role')
-                        .eq('email', session.user.email)
-                        .single();
-                    if (adminRecord && ['super_admin', 'admin', 'staff'].includes(adminRecord.role)) {
-                        isAdmin = true;
-                        sessionStorage.setItem('adminLoggedIn', 'true');
-                        sessionStorage.setItem('adminRole', adminRecord.role);
-                    }
+                    const { data: ar } = await supabaseClient.from('admins').select('role').eq('email', session.user.email).single();
+                    if (ar && ['super_admin', 'admin', 'staff'].includes(ar.role)) isAdmin = true;
                 } catch (e) {}
             }
 
