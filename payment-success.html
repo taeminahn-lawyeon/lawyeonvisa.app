@@ -665,42 +665,10 @@
             }
         }
 
-        // 환영 메시지 발송 (기본사항 제출 링크 포함)
+        // 환영 메시지 발송 - createWelcomeMessage() 사용
         async function sendWelcomeMessage(threadId, serviceName, organization, lectureCode) {
             try {
-                const profileSubmitUrl = `${window.location.origin}/profile-submit.html?thread=${threadId}`;
-
-                let welcomeMessage;
-                if (organization === 'dhu' && lectureCode) {
-                    welcomeMessage = `📋 **${t('thread.payment.d10.title', 'D-10-1 Visa Application - Payment Completed')}**
-
-**University:** Daegu Haany University
-**Lecture Code:** ${lectureCode}
-
-${t('thread.payment.d10.submitInfo', 'Please submit your basic information to proceed:')}
-${profileSubmitUrl}
-
-${t('thread.payment.d10.contactTime', 'Our specialist will contact you within 30 minutes after you submit your information.')}`;
-                } else {
-                    welcomeMessage = `📋 ${t('thread.payment.generic.submitInfo', 'Please submit your basic information.')}\n\n${profileSubmitUrl}`;
-                }
-
-                // 시스템 메시지로 발송 (sender_type: 'admin' for RLS compatibility)
-                const { data, error } = await supabaseClient
-                    .from('messages')
-                    .insert({
-                        thread_id: threadId,
-                        sender_id: null,
-                        sender_type: 'admin',
-                        sender_name: 'Lawyeon Visa Center',
-                        content: welcomeMessage
-                    });
-
-                if (error) {
-                    console.error('❌ 환영 메시지 발송 실패:', error);
-                } else {
-                    // console.log('✅ 환영 메시지 발송 완료');
-                }
+                await createWelcomeMessage(threadId, serviceName);
             } catch (error) {
                 console.error('❌ 환영 메시지 발송 오류:', error);
             }
