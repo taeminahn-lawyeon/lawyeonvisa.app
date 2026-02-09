@@ -672,17 +672,17 @@
 
                 let welcomeMessage;
                 if (organization === 'dhu' && lectureCode) {
-                    welcomeMessage = `📋 **D-10-1 Visa Application - Payment Completed**
+                    welcomeMessage = `📋 **${t('thread.payment.d10.title', 'D-10-1 Visa Application - Payment Completed')}**
 
 **University:** Daegu Haany University
 **Lecture Code:** ${lectureCode}
 
-Please submit your basic information to proceed:
+${t('thread.payment.d10.submitInfo', 'Please submit your basic information to proceed:')}
 ${profileSubmitUrl}
 
-Our specialist will contact you within 30 minutes after you submit your information.`;
+${t('thread.payment.d10.contactTime', 'Our specialist will contact you within 30 minutes after you submit your information.')}`;
                 } else {
-                    welcomeMessage = `📋 ${t('thread.welcomeSubmitInfo', '기본 정보를 제출해 주세요. Please submit your basic information.')}\n\n${profileSubmitUrl}`;
+                    welcomeMessage = `📋 ${t('thread.payment.generic.submitInfo', 'Please submit your basic information.')}\n\n${profileSubmitUrl}`;
                 }
 
                 // 시스템 메시지로 발송 (sender_type: 'admin' for RLS compatibility)

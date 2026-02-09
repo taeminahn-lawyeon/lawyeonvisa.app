@@ -2702,6 +2702,42 @@ Cam on.`,
                     mn: 'Таны хүсэлт илгээгдлээ!\n\nМэргэжилтэнтэй зөвлөлдсөний дараа төлбөрийг мэдэгдэнэ.',
                     th: 'สร้างเธรดแล้ว!\n\nรายละเอียดการชำระเงินจะแจ้งหลังจากปรึกษากับผู้เชี่ยวชาญ'
                 },
+                d10Started: {
+                    ko: 'D-10-1 비자 신청 시작',
+                    en: 'D-10-1 Visa Application Started',
+                    zh: 'D-10-1签证申请已开始',
+                    vi: 'Đơn xin thị thực D-10-1 đã bắt đầu',
+                    ja: 'D-10-1ビザ申請開始',
+                    mn: 'D-10-1 визийн өргөдөл эхэлсэн',
+                    th: 'เริ่มสมัครวีซ่า D-10-1'
+                },
+                d10SubmitInfo: {
+                    ko: '기본 정보를 제출하여 진행해 주세요:',
+                    en: 'Please submit your basic information to proceed:',
+                    zh: '请提交基本信息以继续：',
+                    vi: 'Vui lòng gửi thông tin cơ bản để tiếp tục:',
+                    ja: '基本情報を提出して手続きを進めてください：',
+                    mn: 'Үргэлжлүүлэхийн тулд үндсэн мэдээллээ илгээнэ үү:',
+                    th: 'กรุณาส่งข้อมูลพื้นฐานเพื่อดำเนินการต่อ:'
+                },
+                d10ContactTime: {
+                    ko: '정보 제출 후 30분 이내에 담당자가 연락드립니다.',
+                    en: 'Our specialist will contact you within 30 minutes after you submit your information.',
+                    zh: '提交信息后30分钟内专员将与您联系。',
+                    vi: 'Chuyên viên sẽ liên hệ trong 30 phút sau khi bạn gửi thông tin.',
+                    ja: '情報提出後30分以内に担当者がご連絡いたします。',
+                    mn: 'Мэдээлэл илгээсний дараа 30 минутын дотор мэргэжилтэн холбогдоно.',
+                    th: 'ผู้เชี่ยวชาญจะติดต่อภายใน 30 นาทีหลังส่งข้อมูล'
+                },
+                genericSubmitInfo: {
+                    ko: '기본 정보를 제출해 주세요.',
+                    en: 'Please submit your basic information.',
+                    zh: '请提交您的基本信息。',
+                    vi: 'Vui lòng gửi thông tin cơ bản.',
+                    ja: '基本情報をご提出ください。',
+                    mn: 'Үндсэн мэдээллээ илгээнэ үү.',
+                    th: 'กรุณาส่งข้อมูลพื้นฐาน'
+                },
                 quoteSubmitted: {
                     ko: '견적 요청이 제출되었습니다!\n\n담당자가 곧 전용 쓰레드를 통해 연락드리겠습니다.',
                     en: 'Quote request submitted!\n\nOur specialist will contact you shortly through your dedicated thread.',
@@ -3107,18 +3143,19 @@ ${window.location.origin}/profile-submit.html?thread=${threadId}`;
                     const lectureCode = urlParams.get('lectureCode') || sessionStorage.getItem('dhu_lecture_code') || '';
 
                     let welcomeMessage;
+                    const profileUrl = `${window.location.origin}/profile-submit.html?thread=${threadId}`;
                     if (organization === 'dhu' && lectureCode) {
-                        welcomeMessage = `📋 **D-10-1 Visa Application Started**
+                        welcomeMessage = `📋 **${getUIMessage('d10Started', 'D-10-1 Visa Application Started')}**
 
 **University:** Daegu Haany University
 **Lecture Code:** ${lectureCode}
 
-Please submit your basic information to proceed:
-${window.location.origin}/profile-submit.html?thread=${threadId}
+${getUIMessage('d10SubmitInfo', 'Please submit your basic information to proceed:')}
+${profileUrl}
 
-Our specialist will contact you within 30 minutes after you submit your information.`;
+${getUIMessage('d10ContactTime', 'Our specialist will contact you within 30 minutes after you submit your information.')}`;
                     } else {
-                        welcomeMessage = `📋 Please submit your basic information.\n\n${window.location.origin}/profile-submit.html?thread=${threadId}`;
+                        welcomeMessage = `📋 ${getUIMessage('genericSubmitInfo', 'Please submit your basic information.')}\n\n${profileUrl}`;
                     }
 
                     const senderName = getSenderName();
