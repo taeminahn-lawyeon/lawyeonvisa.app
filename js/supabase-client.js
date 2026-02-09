@@ -895,34 +895,47 @@ async function getMessages(threadId) {
 // 환영 메시지 템플릿 함수
 // ============================================
 
-// 상담 쓰레드 환영 메시지 생성
+// 상담 쓰레드 환영 메시지 생성 (다국어 지원)
 async function createWelcomeMessage(threadId, serviceName) {
     try {
         const formUrl = `${window.location.origin}/profile-submit.html?thread=${threadId}`;
+        const lang = (typeof localStorage !== 'undefined' && localStorage.getItem('i18n_language')) || 'en';
+
+        // 다국어 번역 헬퍼 - translations.js가 로드된 경우 사용, 아니면 폴백
+        function tw(key, fallback) {
+            if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) {
+                return translations[lang][key];
+            }
+            // 영어 폴백
+            if (typeof translations !== 'undefined' && translations.en && translations.en[key]) {
+                return translations.en[key];
+            }
+            return fallback || key;
+        }
 
         const welcomeContent = `
-            <h4>상담 요청 확인</h4>
-            <p>안녕하세요! <strong>${serviceName}</strong> 상담 요청이 접수되었습니다.</p>
+            <h4>${tw('thread.welcome.title', 'Consultation Request Confirmed')}</h4>
+            <p>${tw('thread.welcome.greeting', 'Hello! Your consultation request for <strong>{serviceName}</strong> has been received.').replace('{serviceName}', serviceName)}</p>
 
-            <h4>진행 절차 안내</h4>
-            <p>원활한 상담 진행을 위해 아래 순서대로 진행해 주세요.</p>
+            <h4>${tw('thread.welcome.procedureTitle', 'Procedure Guide')}</h4>
+            <p>${tw('thread.welcome.procedureDesc', 'Please follow the steps below for a smooth consultation process.')}</p>
 
             <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
-                <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">1. 기본 정보 입력</div>
-                <div style="color: #374151; line-height: 1.6;">상담에 필요한 기본 정보를 입력해 주세요. <a href="${formUrl}" target="_blank" style="color: #3182F6; font-weight: 600;">기본사항 입력하기</a></div>
+                <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">${tw('thread.welcome.step1Title', '1. Submit Basic Information')}</div>
+                <div style="color: #374151; line-height: 1.6;">${tw('thread.welcome.step1Desc', 'Please enter the basic information required for consultation.')} <a href="${formUrl}" target="_blank" style="color: #3182F6; font-weight: 600;">${tw('thread.welcome.step1Link', 'Enter Basic Info')}</a></div>
             </div>
 
             <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
-                <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">2. 담당자 배정</div>
-                <div style="color: #374151; line-height: 1.6;">기본 정보 확인 후, 담당자가 <span class="highlight" style="background: #FEF3C7; color: #191F28; padding: 2px 8px; border-radius: 4px; font-weight: 700;">30분 내</span> 연락드립니다.</div>
+                <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">${tw('thread.welcome.step2Title', '2. Specialist Assignment')}</div>
+                <div style="color: #374151; line-height: 1.6;">${tw('thread.welcome.step2Desc', 'After reviewing your information, a specialist will contact you within <span class="highlight" style="background: #FEF3C7; color: #191F28; padding: 2px 8px; border-radius: 4px; font-weight: 700;">30 minutes</span>.')}</div>
             </div>
 
             <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
-                <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">3. 상담 진행</div>
-                <div style="color: #374151; line-height: 1.6;">케이스 검토 후 정확한 비용과 필요 서류를 안내드립니다.</div>
+                <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">${tw('thread.welcome.step3Title', '3. Consultation')}</div>
+                <div style="color: #374151; line-height: 1.6;">${tw('thread.welcome.step3Desc', 'After reviewing your case, we will provide exact costs and required documents.')}</div>
             </div>
 
-            <p>추가 문의사항은 이 쓰레드에 답글로 남겨주세요.</p>
+            <p>${tw('thread.welcome.footer', 'If you have additional questions, please leave a reply in this thread.')}</p>
         `;
 
         // 시스템 메시지로 생성 (관리자 타입)
@@ -932,7 +945,7 @@ async function createWelcomeMessage(threadId, serviceName) {
                 thread_id: threadId,
                 sender_id: null, // 시스템 메시지는 sender_id가 없음
                 sender_type: 'admin',
-                sender_name: '법무법인 로연',
+                sender_name: tw('thread.welcome.senderName', 'Lawyeon Law Firm'),
                 content: welcomeContent
             })
             .select()

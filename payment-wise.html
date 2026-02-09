@@ -539,20 +539,37 @@
 
                 const threadId = threadResult.data.id;
 
+                // 다국어 메시지 헬퍼
+                const wiseLang = localStorage.getItem('i18n_language') || 'en';
+                const wiseI18n = {
+                    title: { ko: '결제 대기 - Wise 송금', en: 'Payment Pending - Wise Transfer', zh: '等待付款 - Wise转账', vi: 'Chờ thanh toán - Chuyển khoản Wise', ja: '決済保留中 - Wise送金', mn: 'Төлбөр хүлээгдэж байна - Wise шилжүүлэг', th: 'รอการชำระเงิน - โอน Wise' },
+                    received: { ko: '주문이 접수되었습니다. Wise 송금 확인을 기다리고 있습니다.', en: 'Your order has been received. We\'re waiting for your Wise transfer to be confirmed.', zh: '您的订单已收到。正在等待Wise转账确认。', vi: 'Đơn hàng đã được nhận. Chúng tôi đang chờ xác nhận chuyển khoản Wise.', ja: 'ご注文を受け付けました。Wise送金の確認をお待ちしています。', mn: 'Таны захиалга хүлээн авлаа. Wise шилжүүлгийн баталгаажуулалтыг хүлээж байна.', th: 'ได้รับคำสั่งซื้อแล้ว กำลังรอการยืนยันการโอน Wise' },
+                    orderId: { ko: '주문 번호', en: 'Order ID', zh: '订单号', vi: 'Mã đơn hàng', ja: '注文番号', mn: 'Захиалгын дугаар', th: 'รหัสคำสั่งซื้อ' },
+                    amountLabel: { ko: '금액', en: 'Amount', zh: '金额', vi: 'Số tiền', ja: '金額', mn: 'Дүн', th: 'จำนวนเงิน' },
+                    method: { ko: '결제 방법', en: 'Payment Method', zh: '付款方式', vi: 'Phương thức thanh toán', ja: '決済方法', mn: 'Төлбөрийн арга', th: 'วิธีชำระเงิน' },
+                    methodName: { ko: 'Wise 해외 송금', en: 'Wise International Transfer', zh: 'Wise国际转账', vi: 'Chuyển khoản quốc tế Wise', ja: 'Wise海外送金', mn: 'Wise олон улсын шилжүүлэг', th: 'โอนระหว่างประเทศ Wise' },
+                    processing: { ko: '결제 확인은 보통 1-2 영업일이 소요됩니다.', en: 'Payment confirmation typically takes 1-2 business days.', zh: '付款确认通常需要1-2个工作日。', vi: 'Xác nhận thanh toán thường mất 1-2 ngày làm việc.', ja: '決済確認には通常1〜2営業日かかります。', mn: 'Төлбөр баталгаажуулалт ихэвчлэн 1-2 ажлын өдөр шаарддаг.', th: 'การยืนยันการชำระเงินใช้เวลาประมาณ 1-2 วันทำการ' },
+                    next: { ko: '확인 후 담당자가 연락하여 신청을 진행합니다.', en: 'Once confirmed, our specialist will contact you to proceed with your application.', zh: '确认后，我们的专员将联系您继续办理申请。', vi: 'Sau khi xác nhận, chuyên viên sẽ liên hệ để tiếp tục xử lý đơn.', ja: '確認後、担当者がお申し込みの手続きについてご連絡いたします。', mn: 'Баталгаажуулсны дараа мэргэжилтэн тантай холбогдож өргөдлийг үргэлжлүүлнэ.', th: 'หลังยืนยันแล้ว ผู้เชี่ยวชาญจะติดต่อเพื่อดำเนินการต่อ' },
+                    submitInfo: { ko: '기본 정보를 제출해 주세요:', en: 'Please submit your basic information:', zh: '请提交您的基本信息：', vi: 'Vui lòng gửi thông tin cơ bản:', ja: '基本情報をご提出ください：', mn: 'Үндсэн мэдээллээ илгээнэ үү:', th: 'กรุณาส่งข้อมูลพื้นฐาน:' },
+                    thankYou: { ko: '감사합니다! 1-2 영업일 내에 결제를 확인하겠습니다.', en: 'Thank you! We\'ll confirm your payment within 1-2 business days.', zh: '谢谢！我们将在1-2个工作日内确认您的付款。', vi: 'Cảm ơn! Chúng tôi sẽ xác nhận thanh toán trong 1-2 ngày làm việc.', ja: 'ありがとうございます！1〜2営業日以内にお支払いを確認いたします。', mn: 'Баярлалаа! 1-2 ажлын өдрийн дотор төлбөрийг баталгаажуулна.', th: 'ขอบคุณค่ะ! จะยืนยันการชำระเงินภายใน 1-2 วันทำการ' },
+                    senderName: { ko: '법무법인 로연', en: 'Lawyeon Visa Center', zh: '律渊律师事务所', vi: 'Công ty Luật Lawyeon', ja: 'ロヨン法律事務所', mn: 'Lawyeon Хуулийн Фирм', th: 'สำนักงานกฎหมาย Lawyeon' }
+                };
+                const wt = (key) => wiseI18n[key]?.[wiseLang] || wiseI18n[key]?.en || key;
+
                 // Send welcome message with Wise payment info
-                const welcomeMessage = `📋 **Payment Pending - Wise Transfer**
+                const welcomeMessage = `📋 **${wt('title')}**
 
-Your order has been received. We're waiting for your Wise transfer to be confirmed.
+${wt('received')}
 
-**Order ID:** ${orderId}
-**Amount:** ₩${amount.toLocaleString()}
-**Payment Method:** Wise International Transfer
+**${wt('orderId')}:** ${orderId}
+**${wt('amountLabel')}:** ₩${amount.toLocaleString()}
+**${wt('method')}:** ${wt('methodName')}
 
-⏳ Payment confirmation typically takes 1-2 business days.
+⏳ ${wt('processing')}
 
-Once confirmed, our specialist will contact you to proceed with your application.
+${wt('next')}
 
-Please submit your basic information:
+${wt('submitInfo')}
 ${window.location.origin}/profile-submit.html?thread=${threadId}`;
 
                 await supabaseClient
@@ -561,7 +578,7 @@ ${window.location.origin}/profile-submit.html?thread=${threadId}`;
                         thread_id: threadId,
                         sender_id: null,
                         sender_type: 'admin',
-                        sender_name: 'Lawyeon Visa Center',
+                        sender_name: wt('senderName'),
                         content: welcomeMessage
                     });
 
@@ -569,7 +586,7 @@ ${window.location.origin}/profile-submit.html?thread=${threadId}`;
                 sessionStorage.removeItem('pendingPayment');
 
                 // Redirect to thread
-                alert('Thank you! We\'ll confirm your payment within 1-2 business days.');
+                alert(wt('thankYou'));
                 window.location.href = `thread-general-v2.html?id=${threadId}`;
 
             } catch (error) {

@@ -1620,188 +1620,188 @@
     <div class="modal-overlay" id="visaLegalSurveyModal">
         <div class="modal edit-modal" style="max-width: 700px;">
             <div class="modal-header">
-                <h2 class="modal-title">외국인유학생 비자 진단 설문</h2>
+                <h2 class="modal-title" data-i18n="thread.survey.title">외국인유학생 비자 진단 설문</h2>
                 <button class="modal-close" onclick="closeModal('visaLegalSurveyModal')">&times;</button>
             </div>
             <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
-                <p style="color: #64748B; margin-bottom: 20px; font-size: 14px; line-height: 1.6;">
+                <p style="color: #64748B; margin-bottom: 20px; font-size: 14px; line-height: 1.6;" data-i18n="thread.survey.disclaimer">
                     이 설문은 법무법인 로연 출입국이민지원센터의 비자 진단을 위한 것입니다. 변호사법에 의해 비밀이 보장되며, 오직 법률 자문 목적으로만 이용됩니다.
                 </p>
 
                 <!-- Q1 -->
                 <div class="survey-question">
                     <div class="survey-question-title">
-                        1. 현재 거주 중인 주소가 외국인등록증(ARC) 뒷면에 적힌 주소와 일치합니까? <span class="required">*</span>
+                        <span data-i18n="thread.survey.q1">1. 현재 거주 중인 주소가 외국인등록증(ARC) 뒷면에 적힌 주소와 일치합니까?</span> <span class="required">*</span>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">A</span>
                         <input type="radio" name="vl-q1" value="A" id="vl-q1-a">
-                        <label for="vl-q1-a">네, 그렇습니다.</label>
+                        <label for="vl-q1-a" data-i18n="thread.survey.q1a">네, 그렇습니다.</label>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">B</span>
                         <input type="radio" name="vl-q1" value="B" id="vl-q1-b">
-                        <label for="vl-q1-b">아니오, 일치하지 않습니다.</label>
+                        <label for="vl-q1-b" data-i18n="thread.survey.q1b">아니오, 일치하지 않습니다.</label>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">C</span>
                         <input type="radio" name="vl-q1" value="C" id="vl-q1-c">
-                        <label for="vl-q1-c">거주지 변경 신고를 했습니다.</label>
+                        <label for="vl-q1-c" data-i18n="thread.survey.q1c">거주지 변경 신고를 했습니다.</label>
                     </div>
                 </div>
 
                 <!-- Q2 -->
                 <div class="survey-question">
                     <div class="survey-question-title">
-                        2. 마지막 비자 신청 이후 여권을 새로 발급받으셨나요? <span class="required">*</span>
+                        <span data-i18n="thread.survey.q2">2. 마지막 비자 신청 이후 여권을 새로 발급받으셨나요?</span> <span class="required">*</span>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">A</span>
                         <input type="radio" name="vl-q2" value="A" id="vl-q2-a">
-                        <label for="vl-q2-a">네, 그렇습니다.</label>
+                        <label for="vl-q2-a" data-i18n="thread.survey.q2a">네, 그렇습니다.</label>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">B</span>
                         <input type="radio" name="vl-q2" value="B" id="vl-q2-b">
-                        <label for="vl-q2-b">여권 변경 신고를 했습니다.</label>
+                        <label for="vl-q2-b" data-i18n="thread.survey.q2b">여권 변경 신고를 했습니다.</label>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">C</span>
                         <input type="radio" name="vl-q2" value="C" id="vl-q2-c">
-                        <label for="vl-q2-c">아니오, 그렇지 않습니다.</label>
+                        <label for="vl-q2-c" data-i18n="thread.survey.q2c">아니오, 그렇지 않습니다.</label>
                     </div>
                 </div>
 
                 <!-- Q3 -->
                 <div class="survey-question">
                     <div class="survey-question-title">
-                        3. 한국 내 은행 계좌로 장학금 외 수당을 받는 취업활동을 한 적이 있나요? <span class="required">*</span>
+                        <span data-i18n="thread.survey.q3">3. 한국 내 은행 계좌로 장학금 외 수당을 받는 취업활동을 한 적이 있나요?</span> <span class="required">*</span>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">A</span>
                         <input type="radio" name="vl-q3" value="A" id="vl-q3-a" onchange="toggleConditionalQuestions()">
-                        <label for="vl-q3-a">네, 있습니다.</label>
+                        <label for="vl-q3-a" data-i18n="thread.survey.q3a">네, 있습니다.</label>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">B</span>
                         <input type="radio" name="vl-q3" value="B" id="vl-q3-b" onchange="toggleConditionalQuestions()">
-                        <label for="vl-q3-b">아니오, 없습니다.</label>
+                        <label for="vl-q3-b" data-i18n="thread.survey.q3b">아니오, 없습니다.</label>
                     </div>
                 </div>
 
                 <!-- Q4 (conditional - shown when Q3 = A) -->
                 <div class="survey-question survey-conditional hidden" id="vl-q4-container">
                     <div class="survey-question-title">
-                        4. 취업활동 시에 급여를 어떤 방식으로 받으셨나요? <span class="required">*</span>
+                        <span data-i18n="thread.survey.q4">4. 취업활동 시에 급여를 어떤 방식으로 받으셨나요?</span> <span class="required">*</span>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">A</span>
                         <input type="radio" name="vl-q4" value="A" id="vl-q4-a">
-                        <label for="vl-q4-a">전부 본인 명의 계좌로 입금 받았습니다.</label>
+                        <label for="vl-q4-a" data-i18n="thread.survey.q4a">전부 본인 명의 계좌로 입금 받았습니다.</label>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">B</span>
                         <input type="radio" name="vl-q4" value="B" id="vl-q4-b">
-                        <label for="vl-q4-b">일부는 계좌 입금, 일부는 현금으로 직접 받았습니다.</label>
+                        <label for="vl-q4-b" data-i18n="thread.survey.q4b">일부는 계좌 입금, 일부는 현금으로 직접 받았습니다.</label>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">C</span>
                         <input type="radio" name="vl-q4" value="C" id="vl-q4-c">
-                        <label for="vl-q4-c">지인이나 가족 계좌로 대신 받았습니다.</label>
+                        <label for="vl-q4-c" data-i18n="thread.survey.q4c">지인이나 가족 계좌로 대신 받았습니다.</label>
                     </div>
                 </div>
 
                 <!-- Q5 (conditional - shown when Q3 = A) -->
                 <div class="survey-question survey-conditional hidden" id="vl-q5-container">
                     <div class="survey-question-title">
-                        5. 취업활동 중 아래에 해당하는 업무를 한 적이 있나요? <span class="required">*</span>
+                        <span data-i18n="thread.survey.q5">5. 취업활동 중 아래에 해당하는 업무를 한 적이 있나요?</span> <span class="required">*</span>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">A</span>
                         <input type="checkbox" name="vl-q5" value="A" id="vl-q5-a">
-                        <label for="vl-q5-a">식음료 배달</label>
+                        <label for="vl-q5-a" data-i18n="thread.survey.q5a">식음료 배달</label>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">B</span>
                         <input type="checkbox" name="vl-q5" value="B" id="vl-q5-b">
-                        <label for="vl-q5-b">물류창고 상하차 업무</label>
+                        <label for="vl-q5-b" data-i18n="thread.survey.q5b">물류창고 상하차 업무</label>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">C</span>
                         <input type="checkbox" name="vl-q5" value="C" id="vl-q5-c">
-                        <label for="vl-q5-c">건설 현장 보조 업무</label>
+                        <label for="vl-q5-c" data-i18n="thread.survey.q5c">건설 현장 보조 업무</label>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">D</span>
                         <input type="checkbox" name="vl-q5" value="D" id="vl-q5-d">
-                        <label for="vl-q5-d">제조공장 생산/포장 업무</label>
+                        <label for="vl-q5-d" data-i18n="thread.survey.q5d">제조공장 생산/포장 업무</label>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">E</span>
                         <input type="checkbox" name="vl-q5" value="E" id="vl-q5-e">
-                        <label for="vl-q5-e">개인 과외 또는 학원 강의 보조</label>
+                        <label for="vl-q5-e" data-i18n="thread.survey.q5e">개인 과외 또는 학원 강의 보조</label>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">F</span>
                         <input type="checkbox" name="vl-q5" value="F" id="vl-q5-f">
-                        <label for="vl-q5-f">해당사항 없음</label>
+                        <label for="vl-q5-f" data-i18n="thread.survey.q5f">해당사항 없음</label>
                     </div>
                 </div>
 
                 <!-- Q6 -->
                 <div class="survey-question">
                     <div class="survey-question-title">
-                        6. 비자 연장용 잔고증명서 발급 전후로, 예금 잔액이 급격히 변동된 적이 있나요? <span class="required">*</span>
+                        <span data-i18n="thread.survey.q6">6. 비자 연장용 잔고증명서 발급 전후로, 예금 잔액이 급격히 변동된 적이 있나요?</span> <span class="required">*</span>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">A</span>
                         <input type="radio" name="vl-q6" value="A" id="vl-q6-a">
-                        <label for="vl-q6-a">예, 있습니다.</label>
+                        <label for="vl-q6-a" data-i18n="thread.survey.yesHave">예, 있습니다.</label>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">B</span>
                         <input type="radio" name="vl-q6" value="B" id="vl-q6-b">
-                        <label for="vl-q6-b">아니오, 없습니다.</label>
+                        <label for="vl-q6-b" data-i18n="thread.survey.noHave">아니오, 없습니다.</label>
                     </div>
                 </div>
 
                 <!-- Q7 -->
                 <div class="survey-question">
                     <div class="survey-question-title">
-                        7. 은행을 통하지 않고 개인 간 송금 서비스나 비공식 환전 앱을 이용해 보신 적이 있나요? <span class="required">*</span>
+                        <span data-i18n="thread.survey.q7">7. 은행을 통하지 않고 개인 간 송금 서비스나 비공식 환전 앱을 이용해 보신 적이 있나요?</span> <span class="required">*</span>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">A</span>
                         <input type="radio" name="vl-q7" value="A" id="vl-q7-a">
-                        <label for="vl-q7-a">예, 있습니다.</label>
+                        <label for="vl-q7-a" data-i18n="thread.survey.yesHave">예, 있습니다.</label>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">B</span>
                         <input type="radio" name="vl-q7" value="B" id="vl-q7-b">
-                        <label for="vl-q7-b">아니오, 없습니다.</label>
+                        <label for="vl-q7-b" data-i18n="thread.survey.noHave">아니오, 없습니다.</label>
                     </div>
                 </div>
 
                 <!-- Q8 -->
                 <div class="survey-question">
                     <div class="survey-question-title">
-                        8. 최근 1년 이내에 출입국관리사무소 범칙금 또는 경찰 벌금을 낸 적이 있나요? <span class="required">*</span>
+                        <span data-i18n="thread.survey.q8">8. 최근 1년 이내에 출입국관리사무소 범칙금 또는 경찰 벌금을 낸 적이 있나요?</span> <span class="required">*</span>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">A</span>
                         <input type="radio" name="vl-q8" value="A" id="vl-q8-a">
-                        <label for="vl-q8-a">예, 있습니다.</label>
+                        <label for="vl-q8-a" data-i18n="thread.survey.yesHave">예, 있습니다.</label>
                     </div>
                     <div class="survey-option">
                         <span class="survey-option-badge">B</span>
                         <input type="radio" name="vl-q8" value="B" id="vl-q8-b">
-                        <label for="vl-q8-b">아니오, 없습니다.</label>
+                        <label for="vl-q8-b" data-i18n="thread.survey.noHave">아니오, 없습니다.</label>
                     </div>
                 </div>
             </div>
             <div class="modal-actions">
-                <button class="btn-secondary" onclick="closeModal('visaLegalSurveyModal')">취소</button>
-                <button class="btn-primary" onclick="submitVisaLegalSurvey()">설문 제출</button>
+                <button class="btn-secondary" onclick="closeModal('visaLegalSurveyModal')" data-i18n="thread.survey.cancel">취소</button>
+                <button class="btn-primary" onclick="submitVisaLegalSurvey()" data-i18n="thread.survey.submit">설문 제출</button>
             </div>
         </div>
     </div>
@@ -1836,6 +1836,15 @@
             const msg = THREAD_UI[key];
             if (!msg) return key;
             return msg[lang] || msg.en || key;
+        }
+
+        // i18n 번역 헬퍼 (translations.js 로드 후 사용 가능)
+        function tt(key, fallback) {
+            if (typeof i18n !== 'undefined' && i18n.translate) {
+                const result = i18n.translate(key);
+                return result !== key ? result : (fallback || key);
+            }
+            return fallback || key;
         }
 
         // Multilingual stages configuration
@@ -2087,7 +2096,7 @@
             threadId = urlParams.get('id');
 
             if (!threadId) {
-                alert('쓰레드를 찾을 수 없습니다.');
+                alert(tt('thread.alert.threadNotFound', 'Thread not found.'));
                 window.location.href = 'index.html';
                 return;
             }
@@ -2095,7 +2104,7 @@
             // Check session
             const session = await checkSession();
             if (!session || !session.user) {
-                alert('로그인이 필요합니다.');
+                alert(tt('thread.alert.loginRequired', 'Login is required.'));
                 window.location.href = 'index.html';
                 return;
             }
@@ -2176,7 +2185,7 @@
         function handleFiles(files) {
             for (let file of files) {
                 if (file.size > 10 * 1024 * 1024) { // 10MB limit
-                    alert('파일 크기는 10MB를 초과할 수 없습니다.');
+                    alert(tt('thread.alert.fileSizeLimit', 'File size cannot exceed 10MB.'));
                     continue;
                 }
                 pendingFiles.push(file);
@@ -2224,12 +2233,12 @@
                     // 쓰레드 소유자가 아닌 경우
                     if (isAdmin) {
                         // 관리자/직원인 경우 - 관리자 페이지로 리다이렉트
-                        alert('관리자는 관리자 대시보드를 통해 쓰레드에 접근해주세요.');
+                        alert(tt('thread.alert.adminRedirect', 'Admins should access threads through the admin dashboard.'));
                         window.location.href = 'admin-thread.html?id=' + threadId;
                         return;
                     } else {
                         // 일반 사용자가 다른 사람의 쓰레드에 접근하려는 경우
-                        alert('접근 권한이 없습니다.');
+                        alert(tt('thread.alert.noAccess', 'You do not have access.'));
                         window.location.href = 'index.html';
                         return;
                     }
@@ -2258,7 +2267,7 @@
 
             } catch (error) {
                 console.error('Error loading thread:', error);
-                alert('쓰레드를 불러오는 중 오류가 발생했습니다.');
+                alert(tt('thread.alert.loadError', 'An error occurred while loading the thread.'));
             }
         }
 
@@ -2484,13 +2493,13 @@
                 const result = await getMessages(threadId);
 
                 if (!result.success) {
-                    throw new Error('메시지를 불러올 수 없습니다.');
+                    throw new Error(tt('thread.alert.loadMessageError', 'Unable to load messages.'));
                 }
 
                 const container = document.getElementById('messagesSection');
 
                 if (!result.data || result.data.length === 0) {
-                    container.innerHTML = '<p style="text-align: center; color: #9CA3AF; padding: 40px;">아직 메시지가 없습니다.</p>';
+                    container.innerHTML = `<p style="text-align: center; color: #9CA3AF; padding: 40px;">${tt('thread.alert.noMessages', 'No messages yet.')}</p>`;
                     return;
                 }
 
@@ -2561,12 +2570,12 @@
                     if (isLatest && !submittedSurveys.has('d10-1')) {
                         content = content.replace(
                             /<span class="survey-action-marker" data-action="d10-1"[^>]*>[^<]*<\/span>/,
-                            '<button class="survey-cta-btn" onclick="openD10FormModal()">D-10-1 정보 제출하기</button>'
+                            `<button class="survey-cta-btn" onclick="openD10FormModal()">${tt('thread.survey.ctaD10', 'Submit D-10-1 Information')}</button>`
                         );
                     } else {
                         content = content.replace(
                             /<span class="survey-action-marker" data-action="d10-1"[^>]*>[^<]*<\/span>/,
-                            '<span class="survey-completed-badge">&#10003; 정보 제출 완료</span>'
+                            `<span class="survey-completed-badge">${tt('thread.survey.completedD10', '✓ Information Submitted')}</span>`
                         );
                     }
                 }
@@ -2576,12 +2585,12 @@
                     if (isLatest && !submittedSurveys.has('visa-legal')) {
                         content = content.replace(
                             /<span class="survey-action-marker" data-action="visa-legal"[^>]*>[^<]*<\/span>/,
-                            '<button class="survey-cta-btn" onclick="openVisaLegalSurveyModal()">비자 진단 설문 작성하기</button>'
+                            `<button class="survey-cta-btn" onclick="openVisaLegalSurveyModal()">${tt('thread.survey.ctaVisaLegal', 'Complete Visa Survey')}</button>`
                         );
                     } else {
                         content = content.replace(
                             /<span class="survey-action-marker" data-action="visa-legal"[^>]*>[^<]*<\/span>/,
-                            '<span class="survey-completed-badge">&#10003; 설문 제출 완료</span>'
+                            `<span class="survey-completed-badge">${tt('thread.survey.completedVisaLegal', '✓ Survey Submitted')}</span>`
                         );
                     }
                 }
@@ -2759,13 +2768,13 @@
             const plainText = quillEditor.getText().trim();
 
             if (!plainText && pendingFiles.length === 0) {
-                alert('내용을 입력하거나 파일을 첨부해주세요.');
+                alert(tt('thread.alert.emptyInput', 'Please enter content or attach a file.'));
                 return;
             }
 
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '전송 중...';
+            submitBtn.innerHTML = tt('thread.alert.sending', 'Sending...');
 
             try {
                 // Upload files first
@@ -2810,7 +2819,7 @@
                     const result = await createMessage(messageData);
 
                     if (!result.success) {
-                        throw new Error('메시지 전송 실패');
+                        throw new Error(tt('thread.alert.sendFailed', 'Message sending failed'));
                     }
                 }
 
@@ -2909,7 +2918,7 @@
         async function sendPaymentLink() {
             const serviceId = document.getElementById('paymentServiceSelect').value;
             if (!serviceId) {
-                alert('서비스를 선택해주세요.');
+                alert(tt('thread.alert.selectService', 'Please select a service.'));
                 return;
             }
 
@@ -2920,7 +2929,7 @@
             if (serviceId === 'custom') {
                 amount = document.getElementById('customAmount').value;
                 if (!amount) {
-                    alert('금액을 입력해주세요.');
+                    alert(tt('thread.alert.enterAmount', 'Please enter the amount.'));
                     return;
                 }
                 paymentUrl = `${window.location.origin}/service-apply-general.html?service=custom&amount=${amount}&thread=${threadId}`;
@@ -3001,11 +3010,11 @@
                 renderProgress(threadData);
 
                 closeModal('stageChangeModal');
-                alert('단계가 변경되었습니다.');
+                alert(tt('thread.alert.stageChanged', 'Stage has been changed.'));
 
             } catch (error) {
                 console.error('Error changing stage:', error);
-                alert('단계 변경 중 오류가 발생했습니다.');
+                alert(tt('thread.alert.stageChangeError', 'An error occurred while changing the stage.'));
             }
         }
 
@@ -3040,7 +3049,7 @@
             // 메시지 데이터 찾기
             const result = await getMessages(threadId);
             if (!result.success) {
-                alert('메시지를 불러올 수 없습니다.');
+                alert(tt('thread.alert.messageLoadError', 'Unable to load the message.'));
                 return;
             }
 
@@ -3048,7 +3057,7 @@
             const message = messagesCache.find(m => m.id === messageId);
 
             if (!message) {
-                alert('메시지를 찾을 수 없습니다.');
+                alert(tt('thread.alert.messageNotFound', 'Message not found.'));
                 return;
             }
 
@@ -3067,7 +3076,7 @@
             const content = editQuillEditor.root.innerHTML;
 
             if (!messageId) {
-                alert('메시지 ID가 없습니다.');
+                alert(tt('thread.alert.noMessageId', 'No message ID.'));
                 return;
             }
 
@@ -3084,7 +3093,7 @@
 
                 closeModal('editMessageModal');
                 await loadMessages();
-                alert('메시지가 수정되었습니다.');
+                alert(tt('thread.alert.messageEdited', 'Message has been edited.'));
 
             } catch (error) {
                 console.error('Error saving message:', error);
@@ -3400,7 +3409,7 @@ ${data.additionalNotes ? `<div style="margin-top: 14px;"><div style="font-weight
             const q8 = document.querySelector('input[name="vl-q8"]:checked');
 
             if (!q1 || !q2 || !q3 || !q6 || !q7 || !q8) {
-                alert('모든 필수 항목을 선택해 주세요.');
+                alert(tt('thread.alert.selectAllRequired', 'Please select all required items.'));
                 return;
             }
 
@@ -3409,11 +3418,11 @@ ${data.additionalNotes ? `<div style="margin-top: 14px;"><div style="font-weight
                 const q4 = document.querySelector('input[name="vl-q4"]:checked');
                 const q5Checked = document.querySelectorAll('input[name="vl-q5"]:checked');
                 if (!q4) {
-                    alert('질문 4번을 선택해 주세요.');
+                    alert(tt('thread.alert.selectQ4', 'Please select an answer for question 4.'));
                     return;
                 }
                 if (q5Checked.length === 0) {
-                    alert('질문 5번에서 하나 이상 선택해 주세요.');
+                    alert(tt('thread.alert.selectQ5', 'Please select at least one option for question 5.'));
                     return;
                 }
             }
@@ -3451,21 +3460,21 @@ ${data.additionalNotes ? `<div style="margin-top: 14px;"><div style="font-weight
                 closeModal('visaLegalSurveyModal');
                 await loadMessages();
 
-                alert('비자 진단 설문이 제출되었습니다.');
+                alert(tt('thread.alert.surveySubmitted', 'Visa survey has been submitted.'));
 
             } catch (error) {
                 console.error('비자 법률자문 설문 제출 오류:', error);
-                alert('설문 제출에 실패했습니다. 다시 시도해 주세요.');
+                alert(tt('thread.alert.surveyFailed', 'Survey submission failed. Please try again.'));
             }
         }
 
         function formatVisaLegalSurveyMessage(data) {
-            const q1Labels = { A: '네, 그렇습니다.', B: '아니오, 일치하지 않습니다.', C: '거주지 변경 신고를 했습니다.' };
-            const q2Labels = { A: '네, 그렇습니다.', B: '여권 변경 신고를 했습니다.', C: '아니오, 그렇지 않습니다.' };
-            const q3Labels = { A: '네, 있습니다.', B: '아니오, 없습니다.' };
-            const q4Labels = { A: '전부 본인 명의 계좌로 입금 받았습니다.', B: '일부는 계좌 입금, 일부는 현금으로 직접 받았습니다.', C: '지인이나 가족 계좌로 대신 받았습니다.' };
-            const q5Labels = { A: '식음료 배달', B: '물류창고 상하차 업무', C: '건설 현장 보조 업무', D: '제조공장 생산/포장 업무', E: '개인 과외 또는 학원 강의 보조', F: '해당사항 없음' };
-            const yesNoLabels = { A: '예, 있습니다.', B: '아니오, 없습니다.' };
+            const q1Labels = { A: tt('thread.survey.q1a', 'Yes, it does.'), B: tt('thread.survey.q1b', 'No, it does not match.'), C: tt('thread.survey.q1c', 'I have reported the change of address.') };
+            const q2Labels = { A: tt('thread.survey.q2a', 'Yes, I have.'), B: tt('thread.survey.q2b', 'I have reported the passport change.'), C: tt('thread.survey.q2c', 'No, I have not.') };
+            const q3Labels = { A: tt('thread.survey.q3a', 'Yes, I have.'), B: tt('thread.survey.q3b', 'No, I have not.') };
+            const q4Labels = { A: tt('thread.survey.q4a', 'All wages were deposited into my own bank account.'), B: tt('thread.survey.q4b', 'Some through bank transfer, some in cash.'), C: tt('thread.survey.q4c', 'Through an acquaintance\'s or family member\'s account.') };
+            const q5Labels = { A: tt('thread.survey.q5a', 'Food/beverage delivery'), B: tt('thread.survey.q5b', 'Warehouse loading/unloading'), C: tt('thread.survey.q5c', 'Construction site assistance'), D: tt('thread.survey.q5d', 'Factory production/packaging'), E: tt('thread.survey.q5e', 'Private tutoring or academy assistance'), F: tt('thread.survey.q5f', 'None of the above') };
+            const yesNoLabels = { A: tt('thread.survey.yesHave', 'Yes, I have.'), B: tt('thread.survey.noHave', 'No, I have not.') };
 
             function row(num, question, answer) {
                 return `<tr>
@@ -3476,21 +3485,21 @@ ${data.additionalNotes ? `<div style="margin-top: 14px;"><div style="font-weight
 
             let qNum = 1;
             let rows = '';
-            rows += row(qNum++, '현재 거주 주소가 ARC 뒷면 주소와 일치합니까?', q1Labels[data.q1]);
-            rows += row(qNum++, '마지막 비자 신청 이후 여권을 새로 발급받으셨나요?', q2Labels[data.q2]);
-            rows += row(qNum++, '은행 계좌로 장학금 외 수당을 받는 취업활동을 한 적이 있나요?', q3Labels[data.q3]);
+            rows += row(qNum++, tt('thread.survey.resultQ1', 'Does your current address match the ARC back address?'), q1Labels[data.q1]);
+            rows += row(qNum++, tt('thread.survey.resultQ2', 'Have you received a new passport since last visa application?'), q2Labels[data.q2]);
+            rows += row(qNum++, tt('thread.survey.resultQ3', 'Employment activities receiving wages through bank account?'), q3Labels[data.q3]);
 
             if (data.q3 === 'A') {
-                rows += row(qNum++, '취업활동 시 급여를 어떤 방식으로 받으셨나요?', q4Labels[data.q4]);
-                rows += row(qNum++, '취업활동 중 해당하는 업무', data.q5.map(v => q5Labels[v]).join(', '));
+                rows += row(qNum++, tt('thread.survey.resultQ4', 'How did you receive wages from employment?'), q4Labels[data.q4]);
+                rows += row(qNum++, tt('thread.survey.resultQ5', 'Types of employment activities'), data.q5.map(v => q5Labels[v]).join(', '));
             }
 
-            rows += row(qNum++, '잔고증명서 발급 전후 예금 잔액 급격 변동 여부', yesNoLabels[data.q6]);
-            rows += row(qNum++, '개인 간 송금 서비스/비공식 환전 앱 이용 여부', yesNoLabels[data.q7]);
-            rows += row(qNum++, '최근 1년 내 출입국관리사무소 범칙금/경찰 벌금 납부 여부', yesNoLabels[data.q8]);
+            rows += row(qNum++, tt('thread.survey.resultQ6', 'Significant balance fluctuation around balance certificate issuance'), yesNoLabels[data.q6]);
+            rows += row(qNum++, tt('thread.survey.resultQ7', 'Use of personal transfer services/unofficial exchange apps'), yesNoLabels[data.q7]);
+            rows += row(qNum++, tt('thread.survey.resultQ8', 'Fines from Immigration Office/police within past year'), yesNoLabels[data.q8]);
 
             return `<div data-survey-result="visa-legal" style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 20px; margin: 4px 0;">
-<div style="font-weight: 700; font-size: 15px; color: #191F28; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #E2E8F0;">외국인유학생 비자 진단 설문 결과</div>
+<div style="font-weight: 700; font-size: 15px; color: #191F28; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #E2E8F0;">${tt('thread.survey.resultTitle', 'International Student Visa Survey Results')}</div>
 <table style="width: 100%; border-collapse: collapse;">${rows}</table>
 </div>`;
         }
