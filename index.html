@@ -1757,6 +1757,13 @@
     <script src="js/i18n.js?v=20260205"></script>
     
     <script>
+        // 관리자 로그인 상태 확인 함수 (최상단에 정의 - 다른 곳에서 참조)
+        window.isAdminLoggedIn = function() {
+            const roles = ['super_admin', 'admin', 'staff'];
+            return sessionStorage.getItem('adminLoggedIn') === 'true' &&
+                   roles.includes(sessionStorage.getItem('adminRole'));
+        };
+
         // 🚨 OAuth 콜백 즉시 리디렉션 (최우선 실행)
         (async function() {
             // URL에 OAuth 파라미터가 있는지 확인
@@ -2497,11 +2504,9 @@
 
         // Main page - no logout function needed
 
-        // 관리자 로그인 상태 UI 업데이트
+        // 관리자 로그인 상태 UI 업데이트 (즉시 실행 - DOMContentLoaded 대기 안 함)
         (function() {
-            const adminRoles = ['super_admin', 'admin', 'staff'];
-            if (sessionStorage.getItem('adminLoggedIn') === 'true' &&
-                adminRoles.includes(sessionStorage.getItem('adminRole'))) {
+            if (window.isAdminLoggedIn && window.isAdminLoggedIn()) {
                 var adminLink = document.getElementById('adminLoginLink');
                 if (adminLink) adminLink.style.display = 'none';
                 var googleBtn = document.getElementById('newGoogleLoginBtn');
@@ -2512,6 +2517,22 @@
                 if (userGreetingName) userGreetingName.textContent = '관리자님 환영합니다!';
                 var loginPrompt = document.getElementById('loginPrompt');
                 if (loginPrompt) loginPrompt.style.display = 'none';
+
+                // 관리자 배지 표시 (DOMContentLoaded에서도 하지만 여기서도 즉시 표시)
+                var adminStatus = document.getElementById('adminLoggedInStatus');
+                if (adminStatus) adminStatus.style.display = 'inline-flex';
+
+                // 관리자 로그아웃 버튼 이벤트
+                var adminLogoutBtn = document.getElementById('adminLogoutBtn');
+                if (adminLogoutBtn) {
+                    adminLogoutBtn.addEventListener('click', async function() {
+                        sessionStorage.removeItem('adminLoggedIn');
+                        sessionStorage.removeItem('adminId');
+                        sessionStorage.removeItem('adminRole');
+                        if (typeof signOut === 'function') await signOut();
+                        window.location.reload();
+                    });
+                }
             }
 
             var logoutBtn = document.getElementById('logoutBtn');
@@ -2593,12 +2614,6 @@
             }
         }
 
-        // 관리자 로그인 상태 확인 함수 (다른 페이지에서도 사용)
-        window.isAdminLoggedIn = function() {
-            const roles = ['super_admin', 'admin', 'staff'];
-            return sessionStorage.getItem('adminLoggedIn') === 'true' &&
-                   roles.includes(sessionStorage.getItem('adminRole'));
-        };
     </script>
 </body>
 </html>
