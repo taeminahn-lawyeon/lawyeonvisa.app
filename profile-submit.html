@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic Information Submission - Lawyeon Visa Center</title>
+    <title data-i18n="profile.title">Basic Information Submission - Lawyeon Visa Center</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
@@ -27,7 +27,7 @@
             margin: 0 auto;
         }
 
-        /* 헤더 */
+        /* Header */
         .header {
             background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
             border-radius: 24px;
@@ -64,7 +64,7 @@
             margin-top: 16px;
         }
 
-        /* 진행 단계 표시 */
+        /* Progress Bar */
         .progress-bar {
             background: white;
             border-radius: 20px;
@@ -128,7 +128,7 @@
         .step.active .step-circle {
             background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
             color: white;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
         }
 
         .step.completed .step-circle {
@@ -151,7 +151,162 @@
             color: #3182F6;
         }
 
-        /* 동의 영역 */
+        /* Form Card */
+        .form-card {
+            background: white;
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+            margin-bottom: 24px;
+        }
+
+        .form-section {
+            margin-bottom: 40px;
+        }
+
+        .form-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 900;
+            color: #191F28;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-title .icon {
+            font-size: 26px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 15px;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 10px;
+        }
+
+        .required {
+            color: #EF4444;
+            margin-left: 4px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: 'Noto Sans KR', sans-serif;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #3182F6;
+            background: #EFF6FF;
+        }
+
+        .form-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23374151' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 48px;
+        }
+
+        .help-text {
+            font-size: 13px;
+            color: #6B7280;
+            margin-top: 6px;
+        }
+
+        /* Preparation Checklist */
+        .prepare-section {
+            margin-bottom: 32px;
+        }
+
+        .prepare-items {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .prepare-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px;
+            background: #F9FAFB;
+            border-radius: 16px;
+            border: 1px solid #E5E7EB;
+        }
+
+        .prepare-item .prepare-icon {
+            width: 52px;
+            height: 52px;
+            min-width: 52px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .prepare-item .prepare-info h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #191F28;
+            margin-bottom: 4px;
+        }
+
+        .prepare-item .prepare-info p {
+            font-size: 13px;
+            color: #6B7280;
+            line-height: 1.5;
+        }
+
+        .prepare-time {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            padding: 14px 20px;
+            background: #EFF6FF;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #3182F6;
+        }
+
+        .prepare-time i {
+            font-size: 18px;
+        }
+
+        /* Consent Area */
         .consent-all-box {
             background: #EFF6FF;
             border: 2px solid #3182F6;
@@ -179,12 +334,19 @@
             border-color: #3182F6;
         }
 
+        .consent-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
         .consent-checkbox-label {
             display: flex;
             align-items: flex-start;
             gap: 12px;
             cursor: pointer;
             user-select: none;
+            flex: 1;
         }
 
         .consent-checkbox-label input[type="checkbox"] {
@@ -238,9 +400,9 @@
             cursor: pointer;
             font-size: 14px;
             padding: 4px 8px;
-            margin-top: 8px;
-            margin-left: 34px;
             transition: transform 0.2s;
+            flex-shrink: 0;
+            margin-top: 2px;
         }
 
         .consent-toggle-btn.open {
@@ -334,96 +496,7 @@
             font-size: 13px;
         }
 
-        .submit-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* 폼 카드 */
-        .form-card {
-            background: white;
-            border-radius: 24px;
-            padding: 48px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.04);
-            margin-bottom: 24px;
-        }
-
-        .form-section {
-            margin-bottom: 40px;
-        }
-
-        .form-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .section-title {
-            font-size: 22px;
-            font-weight: 900;
-            color: #191F28;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            letter-spacing: -0.5px;
-        }
-
-        .section-title .icon {
-            font-size: 26px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 24px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 15px;
-            font-weight: 700;
-            color: #374151;
-            margin-bottom: 10px;
-        }
-
-        .required {
-            color: #EF4444;
-            margin-left: 4px;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 16px;
-            border: 2px solid #E5E7EB;
-            border-radius: 12px;
-            font-size: 15px;
-            font-family: 'Noto Sans KR', sans-serif;
-            transition: all 0.2s;
-            font-weight: 500;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #3182F6;
-            background: #F0FDF4;
-        }
-
-        .form-group select {
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23374151' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-            padding-right: 48px;
-        }
-
-        /* 주소 검색 */
+        /* Address Search */
         .address-search {
             display: flex;
             gap: 12px;
@@ -449,10 +522,10 @@
 
         .address-search button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
         }
 
-        /* 파일 업로드 */
+        /* File Upload */
         .file-upload-area {
             border: 3px dashed #E5E7EB;
             border-radius: 16px;
@@ -465,12 +538,12 @@
 
         .file-upload-area:hover {
             border-color: #3182F6;
-            background: #F0FDF4;
+            background: #EFF6FF;
         }
 
         .file-upload-area.dragover {
             border-color: #3182F6;
-            background: #DCFCE7;
+            background: #DBEAFE;
         }
 
         .file-upload-area .icon {
@@ -529,7 +602,7 @@
             font-weight: 700;
         }
 
-        /* 서명 패드 */
+        /* Signature Pad */
         .signature-pad {
             border: 3px solid #E5E7EB;
             border-radius: 16px;
@@ -565,7 +638,7 @@
             color: #3182F6;
         }
 
-        /* 제출 버튼 */
+        /* Buttons */
         .submit-section {
             margin-top: 40px;
             text-align: center;
@@ -583,26 +656,47 @@
             font-weight: 800;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 8px 24px rgba(49, 130, 246, 0.3);
         }
 
         .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 12px 32px rgba(49, 130, 246, 0.4);
         }
 
         .submit-btn:disabled {
             background: #9CA3AF;
             cursor: not-allowed;
             transform: none;
+            box-shadow: none;
+            opacity: 0.7;
         }
 
         .prev-btn {
-            background: #9CA3AF !important;
+            background: #6B7280 !important;
+            box-shadow: none !important;
             margin-bottom: 12px;
         }
 
-        /* 모바일 반응형 */
+        .prev-btn:hover {
+            background: #4B5563 !important;
+        }
+
+        .nav-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        /* Section Divider */
+        .section-divider {
+            height: 1px;
+            background: #E5E7EB;
+            margin: 32px 0;
+        }
+
+        /* Mobile Responsive */
         @media (max-width: 768px) {
             * {
                 word-break: keep-all;
@@ -642,11 +736,11 @@
             }
 
             .progress-steps {
-                flex-wrap: wrap;
+                flex-wrap: nowrap;
             }
 
             .step {
-                margin-bottom: 16px;
+                margin-bottom: 0;
             }
 
             .step-circle {
@@ -656,7 +750,7 @@
             }
 
             .step-label {
-                font-size: 12px;
+                font-size: 11px;
             }
 
             .address-search {
@@ -670,81 +764,290 @@
             input, select, textarea {
                 font-size: 16px;
             }
+
+            .prepare-item {
+                padding: 16px;
+            }
+
+            .prepare-item .prepare-icon {
+                width: 44px;
+                height: 44px;
+                min-width: 44px;
+                font-size: 20px;
+            }
+
+            .file-upload-area {
+                padding: 24px;
+            }
+
+            .consent-detail {
+                margin-left: 0;
+            }
+
+            .consent-table th {
+                width: 90px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- 헤더 -->
+        <!-- Header -->
         <div class="header">
-            <h1>Basic Information Submission</h1>
-            <p>Please submit your basic information and required documents.<br>
-            기본 정보와 필요 서류를 제출해 주세요.</p>
+            <h1 data-i18n="profile.title">Basic Information Submission</h1>
+            <p data-i18n="profile.subtitle">Please submit your basic information and required documents.</p>
             <div class="thread-badge" id="serviceBadge">
                 <i class="fas fa-file-alt"></i> Loading...
             </div>
         </div>
 
-        <!-- 진행 단계 -->
+        <!-- Progress Steps -->
         <div class="progress-bar">
             <div class="progress-steps">
                 <div class="progress-line" id="progressLine" style="width: 0%;"></div>
                 <div class="step active" data-step="1">
                     <div class="step-circle">1</div>
-                    <div class="step-label">Basic Info</div>
+                    <div class="step-label" data-i18n="profile.step.prepare">Prepare/Consent</div>
                 </div>
                 <div class="step" data-step="2">
                     <div class="step-circle">2</div>
-                    <div class="step-label">Residence</div>
+                    <div class="step-label" data-i18n="profile.step.info">Basic Info</div>
                 </div>
                 <div class="step" data-step="3">
                     <div class="step-circle">3</div>
-                    <div class="step-label">Documents</div>
-                </div>
-                <div class="step" data-step="4">
-                    <div class="step-circle">4</div>
-                    <div class="step-label">Consent</div>
+                    <div class="step-label" data-i18n="profile.step.documents">Documents</div>
                 </div>
             </div>
         </div>
 
-        <!-- 폼 -->
+        <!-- Form -->
         <form id="profileForm">
-            <!-- Step 1: 기본정보 -->
+
+            <!-- ============================================ -->
+            <!-- Step 1: Preparation Guide + Consent          -->
+            <!-- ============================================ -->
             <div class="form-card" id="step1">
+                <!-- Preparation Guide -->
+                <div class="form-section prepare-section">
+                    <div class="section-title">
+                        <span class="icon"><i class="fas fa-clipboard-check"></i></span>
+                        <span data-i18n="profile.prepare.title">Preparation Guide</span>
+                    </div>
+                    <p style="font-size: 14px; color: #6B7280; margin-bottom: 16px;" data-i18n="profile.prepare.desc">Please have the following documents ready before you begin.</p>
+
+                    <div class="prepare-items">
+                        <div class="prepare-item">
+                            <div class="prepare-icon">
+                                <i class="fas fa-id-card"></i>
+                            </div>
+                            <div class="prepare-info">
+                                <h4 data-i18n="profile.prepare.arc">Alien Registration Card (Front & Back)</h4>
+                                <p data-i18n="profile.prepare.arcDesc">Take a clear photo of both sides of your ARC. Ensure all text is readable.</p>
+                            </div>
+                        </div>
+                        <div class="prepare-item">
+                            <div class="prepare-icon">
+                                <i class="fas fa-passport"></i>
+                            </div>
+                            <div class="prepare-info">
+                                <h4 data-i18n="profile.prepare.passport">Passport (Photo Page)</h4>
+                                <p data-i18n="profile.prepare.passportDesc">Take a clear photo of your passport's photo/info page. Ensure all text is readable.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="prepare-time">
+                        <i class="fas fa-clock"></i>
+                        <span data-i18n="profile.prepare.time">Estimated time: approximately 5 minutes</span>
+                    </div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- Consent Section -->
                 <div class="form-section">
                     <div class="section-title">
-                        <span class="icon">👤</span>
-                        <span>Basic Information</span>
+                        <span class="icon"><i class="fas fa-file-signature"></i></span>
+                        <span data-i18n="profile.consent.title">Consent & Agreement</span>
+                    </div>
+
+                    <!-- Agree to All -->
+                    <div class="consent-all-box">
+                        <label class="consent-checkbox-label consent-all-label">
+                            <input type="checkbox" id="consentAll" onchange="toggleAllConsent(this.checked)">
+                            <span class="checkmark"></span>
+                            <span class="consent-text-main" data-i18n="profile.consent.agreeAll">Agree to All</span>
+                        </label>
+                    </div>
+
+                    <!-- 1. Personal Information Collection Consent -->
+                    <div class="consent-item">
+                        <div class="consent-header">
+                            <label class="consent-checkbox-label">
+                                <input type="checkbox" class="consent-check" id="consentPrivacy" onchange="updateConsentAll()">
+                                <span class="checkmark"></span>
+                                <span class="consent-text" data-i18n="profile.consent.privacy">[Required] Consent to Collection and Use of Personal Information</span>
+                            </label>
+                            <button type="button" class="consent-toggle-btn" onclick="toggleConsentDetail('privacyDetail')">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="consent-detail" id="privacyDetail">
+                            <table class="consent-table">
+                                <tr>
+                                    <th data-i18n="profile.consent.table.items">Items Collected</th>
+                                    <td data-i18n="profile.consent.privacy.items">Name, date of birth, nationality, phone number, messenger info, visa type, visa expiry date, alien registration number, address, passport photo, alien registration card photo, electronic signature</td>
+                                </tr>
+                                <tr>
+                                    <th data-i18n="profile.consent.table.purpose">Purpose</th>
+                                    <td data-i18n="profile.consent.privacy.purpose">Immigration civil affairs proxy application (visa extension, status change, alien registration, etc.), legal consultation, identity verification, service communication</td>
+                                </tr>
+                                <tr>
+                                    <th data-i18n="profile.consent.table.retention">Retention Period</th>
+                                    <td data-i18n="profile.consent.privacy.retention">5 years after service completion (Attorney Act Article 26, case record preservation obligation)</td>
+                                </tr>
+                            </table>
+                            <p class="consent-note" data-i18n="profile.consent.privacy.note">You may refuse to consent, but the service cannot be provided without consent.</p>
+                        </div>
+                    </div>
+
+                    <!-- 2. Third Party Provision Consent -->
+                    <div class="consent-item">
+                        <div class="consent-header">
+                            <label class="consent-checkbox-label">
+                                <input type="checkbox" class="consent-check" id="consentThirdParty" onchange="updateConsentAll()">
+                                <span class="checkmark"></span>
+                                <span class="consent-text" data-i18n="profile.consent.thirdParty">[Required] Consent to Provision of Personal Information to Third Parties</span>
+                            </label>
+                            <button type="button" class="consent-toggle-btn" onclick="toggleConsentDetail('thirdPartyDetail')">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="consent-detail" id="thirdPartyDetail">
+                            <table class="consent-table">
+                                <tr>
+                                    <th data-i18n="profile.consent.table.recipient">Recipient</th>
+                                    <td data-i18n="profile.consent.thirdParty.recipient">Ministry of Justice, Immigration & Foreign Policy Headquarters</td>
+                                </tr>
+                                <tr>
+                                    <th data-i18n="profile.consent.table.items">Items Provided</th>
+                                    <td data-i18n="profile.consent.thirdParty.items">Name, nationality, alien registration number/passport number, visa type, civil affair application details</td>
+                                </tr>
+                                <tr>
+                                    <th data-i18n="profile.consent.table.purpose">Purpose</th>
+                                    <td data-i18n="profile.consent.thirdParty.purpose">Visa extension/change, alien registration, and other immigration civil affairs processing</td>
+                                </tr>
+                                <tr>
+                                    <th data-i18n="profile.consent.table.retention">Retention Period</th>
+                                    <td data-i18n="profile.consent.thirdParty.retention">Per Ministry of Justice internal regulations</td>
+                                </tr>
+                            </table>
+                            <p class="consent-note" data-i18n="profile.consent.thirdParty.note">Information is provided only when you request civil affairs proxy application. It is not provided for simple legal consultation.</p>
+                        </div>
+                    </div>
+
+                    <!-- 3. Immigration Delegation Consent -->
+                    <div class="consent-item">
+                        <div class="consent-header">
+                            <label class="consent-checkbox-label">
+                                <input type="checkbox" class="consent-check" id="consentDelegation" onchange="updateConsentAll()">
+                                <span class="checkmark"></span>
+                                <span class="consent-text" data-i18n="profile.consent.delegation">[Required] Consent to Delegation of Immigration Civil Affairs</span>
+                            </label>
+                            <button type="button" class="consent-toggle-btn" onclick="toggleConsentDetail('delegationDetail')">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="consent-detail" id="delegationDetail">
+                            <div class="delegation-content">
+                                <p><strong data-i18n="profile.consent.delegation.intro">Delegation Agreement</strong></p>
+                                <p data-i18n="profile.consent.delegation.scope">By agreeing to this, I (the "Delegator") delegate to Law Firm Lawyeon (the "Delegate") the following immigration civil affairs proxy services: Visa extension, status change, alien registration, and all related immigration civil affairs for the applied service.</p>
+
+                                <p><strong data-i18n="profile.consent.delegation.delegatorTitle">Delegator's Obligations:</strong></p>
+                                <ul>
+                                    <li data-i18n="profile.consent.delegation.delegatorDuty1">Provide accurate and truthful information. If false information is provided, the Delegator bears full responsibility.</li>
+                                    <li data-i18n="profile.consent.delegation.delegatorDuty2">Cooperate with document submission requests in a timely manner.</li>
+                                </ul>
+
+                                <p><strong data-i18n="profile.consent.delegation.delegateTitle">Delegate's Obligations:</strong></p>
+                                <ul>
+                                    <li data-i18n="profile.consent.delegation.delegateDuty1">Handle delegated matters with due care of a good manager.</li>
+                                    <li data-i18n="profile.consent.delegation.delegateDuty2">Process delegated matters only within the scope of the delegation purpose.</li>
+                                    <li data-i18n="profile.consent.delegation.delegateDuty3">Report progress to the Delegator and notify of important matters promptly.</li>
+                                </ul>
+
+                                <p><strong data-i18n="profile.consent.delegation.noticeTitle">Important Notice:</strong></p>
+                                <ul>
+                                    <li data-i18n="profile.consent.delegation.notice1">Final decisions on visa applications are at the discretion of the immigration authorities. The Delegate is not responsible for rejection decisions.</li>
+                                    <li data-i18n="profile.consent.delegation.notice2">This delegation is governed by the laws of the Republic of Korea.</li>
+                                </ul>
+
+                                <p class="consent-note" data-i18n="profile.consent.delegation.footer">Delegate: Law Firm Lawyeon LLC. (Representative Attorney Min Jun-woo) / Immigration Agency Registration: #25-SM-RG-063</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Terms of Service & Privacy Policy -->
+                    <div class="consent-item">
+                        <div class="consent-header">
+                            <label class="consent-checkbox-label">
+                                <input type="checkbox" class="consent-check" id="consentTerms" onchange="updateConsentAll()">
+                                <span class="checkmark"></span>
+                                <span class="consent-text" data-i18n="profile.consent.terms">[Required] Agree to Terms of Service and Privacy Policy</span>
+                            </label>
+                        </div>
+                        <div class="consent-links">
+                            <a href="terms-of-service.html" target="_blank"><i class="fas fa-external-link-alt"></i> <span data-i18n="profile.consent.termsLink">Terms of Service</span></a>
+                            <a href="privacy-policy.html" target="_blank"><i class="fas fa-external-link-alt"></i> <span data-i18n="profile.consent.privacyLink">Privacy Policy</span></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="submit-section">
+                    <button type="button" class="submit-btn" id="agreeStartBtn" disabled onclick="goToStep(2)">
+                        <i class="fas fa-check-circle"></i> <span data-i18n="profile.consent.agreeAndStart">Agree and Start</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- Step 2: Basic Info + Residence Info           -->
+            <!-- ============================================ -->
+            <div class="form-card" id="step2" style="display: none;">
+                <!-- Basic Information -->
+                <div class="form-section">
+                    <div class="section-title">
+                        <span class="icon"><i class="fas fa-user"></i></span>
+                        <span data-i18n="profile.info.title">Basic Information</span>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Last Name (English) <span class="required">*</span></label>
-                            <input type="text" name="lastName" required placeholder="">
+                            <label data-i18n="profile.info.lastName">Last Name (English) <span class="required">*</span></label>
+                            <input type="text" name="lastName" required data-i18n-placeholder="profile.info.lastName" placeholder="Last Name (English)">
                         </div>
                         <div class="form-group">
-                            <label>First Name (English) <span class="required">*</span></label>
-                            <input type="text" name="firstName" required placeholder="">
+                            <label data-i18n="profile.info.firstName">First Name (English) <span class="required">*</span></label>
+                            <input type="text" name="firstName" required data-i18n-placeholder="profile.info.firstName" placeholder="First Name (English)">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Date of Birth <span class="required">*</span></label>
+                            <label data-i18n="profile.info.birthDate">Date of Birth <span class="required">*</span></label>
                             <input type="date" name="birthDate" value="2000-01-01" required>
                         </div>
                         <div class="form-group">
-                            <label>Phone Number <span class="required">*</span></label>
-                            <input type="tel" name="phone" required placeholder="010-0000-0000">
+                            <label data-i18n="profile.info.phone">Phone Number <span class="required">*</span></label>
+                            <input type="tel" name="phone" required data-i18n-placeholder="profile.info.phone" placeholder="010-0000-0000">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Preferred Messenger <span class="required">*</span></label>
+                            <label data-i18n="profile.info.messenger">Preferred Messenger <span class="required">*</span></label>
                             <select name="preferredMessenger" required>
-                                <option value="">Select messenger</option>
+                                <option value="" data-i18n="profile.info.messengerSelect">Select messenger</option>
                                 <option value="whatsapp">WhatsApp</option>
                                 <option value="wechat">WeChat</option>
                                 <option value="telegram">Telegram</option>
@@ -753,15 +1056,15 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Messenger ID/Phone <span class="required">*</span></label>
-                            <input type="text" name="messengerId" required placeholder="Your messenger ID or phone">
+                            <label data-i18n="profile.info.messengerId">Messenger ID/Phone <span class="required">*</span></label>
+                            <input type="text" name="messengerId" required data-i18n-placeholder="profile.info.messengerId" placeholder="Your messenger ID or phone">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Nationality <span class="required">*</span></label>
+                        <label data-i18n="profile.info.nationality">Nationality <span class="required">*</span></label>
                         <select name="nationality" required>
-                            <option value="">Select your nationality</option>
+                            <option value="" data-i18n="profile.info.nationalitySelect">Select your nationality</option>
                             <optgroup label="Asia">
                                 <option value="CN">China</option>
                                 <option value="VN">Vietnam</option>
@@ -802,25 +1105,19 @@
                     </div>
                 </div>
 
-                <div class="submit-section">
-                    <button type="button" class="submit-btn" onclick="goToStep(2)">
-                        Next <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
+                <div class="section-divider"></div>
 
-            <!-- Step 2: 체류정보 -->
-            <div class="form-card" id="step2" style="display: none;">
+                <!-- Residence Information -->
                 <div class="form-section">
                     <div class="section-title">
-                        <span class="icon">📋</span>
-                        <span>Residence Information</span>
+                        <span class="icon"><i class="fas fa-file-alt"></i></span>
+                        <span data-i18n="profile.residence.title">Residence Information</span>
                     </div>
 
                     <div class="form-group">
-                        <label>Current Visa Status <span class="required">*</span></label>
+                        <label data-i18n="profile.residence.visaType">Current Visa Status <span class="required">*</span></label>
                         <select name="visaType" required>
-                            <option value="">Select your visa type</option>
+                            <option value="" data-i18n="profile.residence.visaSelect">Select your visa type</option>
                             <optgroup label="Short-term (C)">
                                 <option value="C-3">C-3 Short-term Visit</option>
                                 <option value="C-4">C-4 Short-term Employment</option>
@@ -837,11 +1134,11 @@
                                 <option value="E-7">E-7 Specially Designated Activities</option>
                                 <option value="E-9">E-9 Non-professional Employment</option>
                             </optgroup>
-                            <optgroup label="Visit/Employment (H)">
+                            <optgroup label="Working Visit (H)">
                                 <option value="H-1">H-1 Working Holiday</option>
                                 <option value="H-2">H-2 Working Visit</option>
                             </optgroup>
-                            <optgroup label="Residence (F)">
+                            <optgroup label="Overseas Korean/Residence (F)">
                                 <option value="F-1">F-1 Visiting/Joining Family</option>
                                 <option value="F-2">F-2 Resident</option>
                                 <option value="F-4">F-4 Overseas Korean</option>
@@ -857,355 +1154,227 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Visa Expiry Date <span class="required">*</span></label>
+                            <label data-i18n="profile.residence.visaExpiry">Visa Expiry Date <span class="required">*</span></label>
                             <input type="date" name="stayExpiry" required>
                         </div>
                         <div class="form-group">
-                            <label>Alien Registration Number <span class="required">*</span></label>
-                            <input type="text" name="foreignerNumber" required placeholder="000000-0000000">
+                            <label data-i18n="profile.residence.arcNumber">Alien Registration Number <span class="required">*</span></label>
+                            <input type="text" name="foreignerNumber" required data-i18n-placeholder="profile.residence.arcNumber" placeholder="000000-0000000">
+                            <p class="help-text" data-i18n="profile.residence.arcHelp">Enter the 13-digit number on your ARC (e.g., 000000-0000000)</p>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Address in Korea <span class="required">*</span></label>
+                        <label data-i18n="profile.residence.address">Address in Korea <span class="required">*</span></label>
                         <div class="address-search">
-                            <input type="text" id="postcode" name="postcode" placeholder="Postal Code" readonly required>
+                            <input type="text" id="postcode" name="postcode" data-i18n-placeholder="profile.residence.postcode" placeholder="Postal Code" readonly required>
                             <button type="button" onclick="execDaumPostcode()">
-                                <i class="fas fa-search"></i> Search
+                                <i class="fas fa-search"></i> <span data-i18n="profile.residence.searchAddress">Search</span>
                             </button>
                         </div>
-                        <input type="text" id="address" name="address" placeholder="Address" readonly required style="margin-bottom: 12px;">
-                        <input type="text" name="detailAddress" placeholder="Detail Address (Apt/Room)" required>
+                        <input type="text" id="address" name="address" data-i18n-placeholder="profile.residence.addressField" placeholder="Address" readonly required style="margin-bottom: 12px; width: 100%; padding: 16px; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 15px; font-family: 'Noto Sans KR', sans-serif; font-weight: 500;">
+                        <input type="text" name="detailAddress" data-i18n-placeholder="profile.residence.detailAddress" placeholder="Detail Address (Apt/Room)" required style="width: 100%; padding: 16px; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 15px; font-family: 'Noto Sans KR', sans-serif; font-weight: 500;">
                     </div>
                 </div>
 
                 <div class="submit-section">
-                    <button type="button" class="submit-btn prev-btn" onclick="goToStep(1)">
-                        <i class="fas fa-arrow-left"></i> Previous
-                    </button>
-                    <button type="button" class="submit-btn" onclick="goToStep(3)">
-                        Next <i class="fas fa-arrow-right"></i>
-                    </button>
+                    <div class="nav-buttons">
+                        <button type="button" class="submit-btn prev-btn" onclick="goToStep(1)">
+                            <i class="fas fa-arrow-left"></i> <span data-i18n="profile.btn.previous">Previous</span>
+                        </button>
+                        <button type="button" class="submit-btn" onclick="goToStep(3)">
+                            <span data-i18n="profile.btn.next">Next</span> <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Step 3: 서류등록 -->
+            <!-- ============================================ -->
+            <!-- Step 3: Documents Upload + Submit             -->
+            <!-- ============================================ -->
             <div class="form-card" id="step3" style="display: none;">
                 <div class="form-section">
                     <div class="section-title">
-                        <span class="icon">📄</span>
-                        <span>Required Documents</span>
+                        <span class="icon"><i class="fas fa-file-upload"></i></span>
+                        <span data-i18n="profile.documents.title">Required Documents</span>
                     </div>
 
+                    <!-- ARC Front -->
                     <div class="form-group">
-                        <label>Alien Registration Card (Front) <span class="required">*</span></label>
+                        <label data-i18n="profile.documents.arcFront">Alien Registration Card (Front) <span class="required">*</span></label>
                         <div class="file-upload-area" onclick="document.getElementById('arcFront').click()"
                              ondrop="handleDrop(event, 'arcFront')"
                              ondragover="handleDragOver(event)"
                              ondragleave="handleDragLeave(event)">
-                            <div class="icon">📸</div>
-                            <p>Click to select or drag & drop</p>
-                            <small>JPG, PNG (max 10MB)</small>
+                            <div class="icon"><i class="fas fa-camera"></i></div>
+                            <p data-i18n="profile.documents.fileInstruction">Click to select or drag & drop</p>
+                            <small data-i18n="profile.documents.fileSize">JPG, PNG (max 10MB)</small>
                         </div>
                         <input type="file" id="arcFront" name="arcFront" accept="image/*" style="display: none;" onchange="previewFile(this, 'arcFrontPreview')" required>
                         <div class="file-preview" id="arcFrontPreview"></div>
                     </div>
 
+                    <!-- ARC Back -->
                     <div class="form-group">
-                        <label>Alien Registration Card (Back) <span class="required">*</span></label>
+                        <label data-i18n="profile.documents.arcBack">Alien Registration Card (Back) <span class="required">*</span></label>
                         <div class="file-upload-area" onclick="document.getElementById('arcBack').click()"
                              ondrop="handleDrop(event, 'arcBack')"
                              ondragover="handleDragOver(event)"
                              ondragleave="handleDragLeave(event)">
-                            <div class="icon">📸</div>
-                            <p>Click to select or drag & drop</p>
-                            <small>JPG, PNG (max 10MB)</small>
+                            <div class="icon"><i class="fas fa-camera"></i></div>
+                            <p data-i18n="profile.documents.fileInstruction">Click to select or drag & drop</p>
+                            <small data-i18n="profile.documents.fileSize">JPG, PNG (max 10MB)</small>
                         </div>
                         <input type="file" id="arcBack" name="arcBack" accept="image/*" style="display: none;" onchange="previewFile(this, 'arcBackPreview')" required>
                         <div class="file-preview" id="arcBackPreview"></div>
                     </div>
 
+                    <!-- Passport -->
                     <div class="form-group">
-                        <label>Passport (Photo Page) <span class="required">*</span></label>
+                        <label data-i18n="profile.documents.passport">Passport (Photo Page) <span class="required">*</span></label>
                         <div class="file-upload-area" onclick="document.getElementById('passport').click()"
                              ondrop="handleDrop(event, 'passport')"
                              ondragover="handleDragOver(event)"
                              ondragleave="handleDragLeave(event)">
-                            <div class="icon">📸</div>
-                            <p>Click to select or drag & drop</p>
-                            <small>JPG, PNG (max 10MB)</small>
+                            <div class="icon"><i class="fas fa-camera"></i></div>
+                            <p data-i18n="profile.documents.fileInstruction">Click to select or drag & drop</p>
+                            <small data-i18n="profile.documents.fileSize">JPG, PNG (max 10MB)</small>
                         </div>
                         <input type="file" id="passport" name="passport" accept="image/*" style="display: none;" onchange="previewFile(this, 'passportPreview')" required>
                         <div class="file-preview" id="passportPreview"></div>
                     </div>
 
+                    <!-- Electronic Signature -->
                     <div class="form-group">
-                        <label>Electronic Signature <span class="required">*</span></label>
-                        <p style="font-size: 14px; color: #6B7280; margin-bottom: 12px;">
-                            Please sign below. Your signature will be used for the immigration application form.
-                        </p>
+                        <label data-i18n="profile.documents.signature">Electronic Signature <span class="required">*</span></label>
+                        <p style="font-size: 14px; color: #6B7280; margin-bottom: 12px;" data-i18n="profile.documents.signatureDesc">Please sign below. Your signature will be used for the immigration application form.</p>
                         <canvas id="signaturePad" class="signature-pad"></canvas>
                         <div class="signature-controls">
                             <button type="button" onclick="clearSignature()">
-                                <i class="fas fa-redo"></i> Clear
+                                <i class="fas fa-redo"></i> <span data-i18n="profile.documents.clear">Clear</span>
                             </button>
                         </div>
                     </div>
                 </div>
 
                 <div class="submit-section">
-                    <button type="button" class="submit-btn prev-btn" onclick="goToStep(2)">
-                        <i class="fas fa-arrow-left"></i> Previous
-                    </button>
-                    <button type="button" class="submit-btn" onclick="goToStep(4)">
-                        Next <i class="fas fa-arrow-right"></i>
-                    </button>
+                    <div class="nav-buttons">
+                        <button type="button" class="submit-btn prev-btn" onclick="goToStep(2)">
+                            <i class="fas fa-arrow-left"></i> <span data-i18n="profile.btn.previous">Previous</span>
+                        </button>
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            <i class="fas fa-check-circle"></i> <span data-i18n="profile.btn.submit">Submit</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Step 4: 동의 -->
-            <div class="form-card" id="step4" style="display: none;">
-                <div class="form-section">
-                    <div class="section-title">
-                        <span class="icon">📋</span>
-                        <span>Consent & Agreement</span>
-                    </div>
-                    <p style="font-size: 14px; color: #6B7280; margin-bottom: 20px;">
-                        Please review and agree to the following before submitting your information.<br>
-                        정보 제출 전 아래 내용을 확인하고 동의해 주세요.
-                    </p>
-
-                    <!-- 전체 동의 -->
-                    <div class="consent-all-box">
-                        <label class="consent-checkbox-label consent-all-label">
-                            <input type="checkbox" id="consentAll" onchange="toggleAllConsent(this.checked)">
-                            <span class="checkmark"></span>
-                            <span class="consent-text-main">Agree to All / 전체 동의합니다</span>
-                        </label>
-                    </div>
-
-                    <!-- 개인정보 수집·이용 동의 -->
-                    <div class="consent-item">
-                        <label class="consent-checkbox-label">
-                            <input type="checkbox" class="consent-check" id="consentPrivacy" onchange="updateConsentAll()">
-                            <span class="checkmark"></span>
-                            <span class="consent-text">[Required] Consent to Collection and Use of Personal Information<br>[필수] 개인정보 수집·이용 동의</span>
-                        </label>
-                        <button type="button" class="consent-toggle-btn" onclick="toggleConsentDetail('privacyDetail')">
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="consent-detail" id="privacyDetail">
-                            <table class="consent-table">
-                                <tr>
-                                    <th>Items Collected<br>수집항목</th>
-                                    <td>Name, date of birth, nationality, phone number, messenger info, visa type, visa expiry date, alien registration number, address, passport photo, alien registration card photo, electronic signature<br>
-                                    성명, 생년월일, 국적, 전화번호, 메신저 정보, 체류자격, 체류만료일, 외국인등록번호, 주소, 여권사진, 외국인등록증 사진, 전자서명</td>
-                                </tr>
-                                <tr>
-                                    <th>Purpose<br>이용목적</th>
-                                    <td>Immigration civil affairs proxy application (visa extension, status change, alien registration, etc.), legal consultation, identity verification, service communication<br>
-                                    출입국 민원 대리 신청(비자 연장, 체류자격 변경, 외국인등록 등), 법률 상담, 본인확인, 서비스 연락</td>
-                                </tr>
-                                <tr>
-                                    <th>Retention Period<br>보유기간</th>
-                                    <td>5 years after service completion (Attorney Act Article 26, case record preservation obligation)<br>
-                                    서비스 완료 후 5년 (변호사법 제26조, 사건기록 보존의무)</td>
-                                </tr>
-                            </table>
-                            <p class="consent-note">You may refuse to consent, but the service cannot be provided without consent.<br>
-                            동의를 거부할 수 있으나, 동의 없이는 서비스 제공이 불가합니다.</p>
-                        </div>
-                    </div>
-
-                    <!-- 개인정보 제3자 제공 동의 -->
-                    <div class="consent-item">
-                        <label class="consent-checkbox-label">
-                            <input type="checkbox" class="consent-check" id="consentThirdParty" onchange="updateConsentAll()">
-                            <span class="checkmark"></span>
-                            <span class="consent-text">[Required] Consent to Provision of Personal Information to Third Parties<br>[필수] 개인정보 제3자 제공 동의</span>
-                        </label>
-                        <button type="button" class="consent-toggle-btn" onclick="toggleConsentDetail('thirdPartyDetail')">
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="consent-detail" id="thirdPartyDetail">
-                            <table class="consent-table">
-                                <tr>
-                                    <th>Recipient<br>제공받는 자</th>
-                                    <td>Ministry of Justice, Immigration & Foreign Policy Headquarters<br>법무부 출입국·외국인정책본부</td>
-                                </tr>
-                                <tr>
-                                    <th>Items Provided<br>제공항목</th>
-                                    <td>Name, nationality, alien registration number/passport number, visa type, civil affair application details<br>
-                                    성명, 국적, 외국인등록번호/여권번호, 체류자격, 신청 민원 내용</td>
-                                </tr>
-                                <tr>
-                                    <th>Purpose<br>제공목적</th>
-                                    <td>Visa extension/change, alien registration, and other immigration civil affairs processing<br>
-                                    비자 연장·변경, 외국인등록 등 출입국 민원 처리</td>
-                                </tr>
-                                <tr>
-                                    <th>Retention Period<br>보유기간</th>
-                                    <td>Per Ministry of Justice internal regulations<br>법무부 자체 규정에 따름</td>
-                                </tr>
-                            </table>
-                            <p class="consent-note">Information is provided only when you request civil affairs proxy application. It is not provided for simple legal consultation.<br>
-                            민원 대리 신청을 요청한 경우에만 제공되며, 단순 법률 상담 시에는 제공되지 않습니다.</p>
-                        </div>
-                    </div>
-
-                    <!-- 출입국 민원 대행 위임 동의 -->
-                    <div class="consent-item">
-                        <label class="consent-checkbox-label">
-                            <input type="checkbox" class="consent-check" id="consentDelegation" onchange="updateConsentAll()">
-                            <span class="checkmark"></span>
-                            <span class="consent-text">[Required] Consent to Delegation of Immigration Civil Affairs<br>[필수] 출입국 민원 신청 대행 위임 동의</span>
-                        </label>
-                        <button type="button" class="consent-toggle-btn" onclick="toggleConsentDetail('delegationDetail')">
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="consent-detail" id="delegationDetail">
-                            <div class="delegation-content">
-                                <p><strong>Delegation Agreement / 위임 동의서</strong></p>
-                                <p>By agreeing to this, I (the "Delegator") delegate to Law Firm Lawyeon (the "Delegate") the following immigration civil affairs proxy services:<br>
-                                본인(위임인)은 법무법인 로연(수임인)에게 다음의 출입국 민원 대행 업무를 위임합니다:</p>
-                                <ul>
-                                    <li>Visa extension, status change, alien registration, and all related immigration civil affairs for the applied service<br>
-                                    신청한 서비스와 관련된 비자 연장, 체류자격 변경, 외국인등록 등 출입국 민원 일체</li>
-                                </ul>
-
-                                <p><strong>Delegator's Obligations / 위임인의 의무:</strong></p>
-                                <ul>
-                                    <li>Provide accurate and truthful information. If false information is provided, the Delegator bears full responsibility.<br>
-                                    정확하고 진실한 정보를 제공할 의무가 있으며, 허위 정보 제공 시 위임인이 전적으로 책임을 집니다.</li>
-                                    <li>Cooperate with document submission requests in a timely manner.<br>
-                                    서류 제출 요청에 적시에 협조할 의무가 있습니다.</li>
-                                </ul>
-
-                                <p><strong>Delegate's Obligations / 수임인의 의무:</strong></p>
-                                <ul>
-                                    <li>Handle delegated matters with due care of a good manager (선관주의의무).<br>
-                                    선량한 관리자의 주의의무로 위임 업무를 처리합니다.</li>
-                                    <li>Process delegated matters only within the scope of the delegation purpose.<br>
-                                    위임 목적 범위 내에서만 업무를 처리합니다.</li>
-                                    <li>Report progress to the Delegator and notify of important matters promptly.<br>
-                                    위임인에게 진행 상황을 보고하고 중요한 사항은 지체 없이 알립니다.</li>
-                                </ul>
-
-                                <p><strong>Important Notice / 유의사항:</strong></p>
-                                <ul>
-                                    <li>Final decisions on visa applications are at the discretion of the immigration authorities. The Delegate is not responsible for rejection decisions.<br>
-                                    비자 신청에 대한 최종 결정은 출입국관리당국의 재량이며, 수임인은 거부 결정에 대해 책임을 지지 않습니다.</li>
-                                    <li>This delegation is governed by the laws of the Republic of Korea.<br>
-                                    본 위임은 대한민국 법률에 따라 규율됩니다.</li>
-                                </ul>
-
-                                <p class="consent-note">
-                                    Delegate: Law Firm Lawyeon LLC. (Representative Attorney Min Jun-woo)<br>
-                                    수임인: 법무법인 로연 (대표변호사 민준우)<br>
-                                    Immigration Agency Registration: #25-SM-RG-063<br>
-                                    출입국이민지원센터 등록번호: 제25-SM-RG-063호
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 서비스 이용약관 동의 -->
-                    <div class="consent-item">
-                        <label class="consent-checkbox-label">
-                            <input type="checkbox" class="consent-check" id="consentTerms" onchange="updateConsentAll()">
-                            <span class="checkmark"></span>
-                            <span class="consent-text">[Required] Agree to Terms of Service and Privacy Policy<br>[필수] 서비스 이용약관 및 개인정보 처리방침 동의</span>
-                        </label>
-                        <div class="consent-links">
-                            <a href="terms-of-service.html" target="_blank"><i class="fas fa-external-link-alt"></i> Terms of Service / 이용약관</a>
-                            <a href="privacy-policy.html" target="_blank"><i class="fas fa-external-link-alt"></i> Privacy Policy / 개인정보 처리방침</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="submit-section">
-                    <button type="button" class="submit-btn prev-btn" onclick="goToStep(3)">
-                        <i class="fas fa-arrow-left"></i> Previous
-                    </button>
-                    <button type="submit" class="submit-btn" id="submitBtn" disabled>
-                        <i class="fas fa-check-circle"></i> Agree & Submit
-                    </button>
-                </div>
-            </div>
         </form>
     </div>
 
-    <!-- Supabase -->
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-client.js?v=20250119"></script>
-    <script src="js/notification-service.js?v=20250119"></script>
+    <script src="js/translations.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/supabase-client.js"></script>
 
     <script>
+        // ============================================
+        // Translation helper for JS-generated content
+        // ============================================
+        function pt(key) {
+            try {
+                if (typeof i18n !== 'undefined' && typeof i18n.translate === 'function') {
+                    return i18n.translate(key);
+                }
+            } catch (e) {
+                // fallback
+            }
+            return key;
+        }
+
+        // ============================================
+        // Global state
+        // ============================================
         let signaturePad = null;
         let threadId = null;
         let threadData = null;
+        let currentStep = 1;
 
-        // 페이지 로드 시 쓰레드 정보 확인
+        // ============================================
+        // Page initialization
+        // ============================================
         window.addEventListener('DOMContentLoaded', async function() {
-            // URL에서 thread ID 가져오기
+            // Get thread ID from URL
             const urlParams = new URLSearchParams(window.location.search);
             threadId = urlParams.get('thread');
 
             if (!threadId) {
-                alert('Invalid access. Please use the link from your thread.\n잘못된 접근입니다. 쓰레드의 링크를 사용해주세요.');
+                alert(pt('profile.alert.invalidAccess'));
                 window.location.href = 'index.html';
                 return;
             }
 
-            // 로그인 확인
+            // Check login
             const session = await checkSession();
             if (!session || !session.user) {
-                // 로그인 필요 - 로그인 후 돌아오기
                 localStorage.setItem('redirectAfterLogin', window.location.href);
-                alert('Please login first.\n먼저 로그인해 주세요.');
+                alert(pt('profile.alert.loginRequired'));
                 window.location.href = 'index.html';
                 return;
             }
 
-            // 쓰레드 정보 가져오기
+            // Get thread data
             const threadResult = await getThread(threadId);
             if (!threadResult.success || !threadResult.data) {
-                alert('Thread not found.\n쓰레드를 찾을 수 없습니다.');
+                alert(pt('profile.alert.threadNotFound'));
                 window.location.href = 'index.html';
                 return;
             }
 
             threadData = threadResult.data;
 
-            // 쓰레드 소유자 확인
+            // Verify thread ownership
             if (threadData.user_id !== session.user.id) {
-                alert('Access denied. This is not your thread.\n접근 권한이 없습니다.');
+                alert(pt('profile.alert.accessDenied'));
                 window.location.href = 'index.html';
                 return;
             }
 
-            // 서비스 배지 업데이트
+            // Check if profile already exists (first thread only)
+            const profileResult = await getUserProfile(session.user.id);
+            if (profileResult.success && profileResult.data && profileResult.data.passport_number) {
+                alert(pt('profile.alert.alreadySubmitted'));
+                window.location.href = `thread-general-v2.html?id=${threadId}`;
+                return;
+            }
+
+            // Update service badge
             document.getElementById('serviceBadge').innerHTML = `
-                <i class="fas fa-file-alt"></i> ${threadData.service_name}
+                <i class="fas fa-file-alt"></i> ${threadData.service_name || ''}
             `;
 
-            // 기존 프로필 데이터가 있으면 자동 채우기
-            const profileResult = await getUserProfile(session.user.id);
+            // Pre-fill form if partial profile data exists
             if (profileResult.success && profileResult.data) {
                 prefillForm(profileResult.data);
             }
+
+            // Initialize i18n if available
+            if (typeof i18n !== 'undefined' && typeof i18n.translatePage === 'function') {
+                i18n.translatePage();
+            }
         });
 
-        // 기존 프로필 데이터로 폼 자동 채우기
+        // ============================================
+        // Pre-fill form from existing profile
+        // ============================================
         function prefillForm(profile) {
-            // 이름이 있고, 이메일 형식이 아닌 경우에만 자동 입력
             if (profile.name && profile.name.trim() && !profile.name.includes('@')) {
                 const nameParts = profile.name.split(' ');
                 if (nameParts.length >= 2) {
                     document.querySelector('input[name="lastName"]').value = nameParts[0];
                     document.querySelector('input[name="firstName"]').value = nameParts.slice(1).join(' ');
                 } else if (profile.name.length > 1) {
-                    // 이름만 있는 경우 firstName에 입력
                     document.querySelector('input[name="firstName"]').value = profile.name;
                 }
             }
@@ -1219,7 +1388,9 @@
             if (profile.passport_number) document.querySelector('input[name="foreignerNumber"]').value = profile.passport_number;
         }
 
-        // Signature Pad 초기화
+        // ============================================
+        // Signature Pad
+        // ============================================
         function initSignaturePad() {
             try {
                 const canvas = document.getElementById('signaturePad');
@@ -1236,8 +1407,6 @@
                     minWidth: 1,
                     maxWidth: 3
                 });
-
-                // console.log('✓ SignaturePad initialized');
             } catch (error) {
                 console.error('SignaturePad init error:', error);
             }
@@ -1247,41 +1416,38 @@
             if (signaturePad) signaturePad.clear();
         }
 
-        // 동의 기능
+        // ============================================
+        // Consent functions
+        // ============================================
         function toggleConsentDetail(id) {
             const detail = document.getElementById(id);
-            const btn = detail.previousElementSibling;
             detail.classList.toggle('open');
-            if (btn && btn.classList.contains('consent-toggle-btn')) {
-                btn.classList.toggle('open');
-            } else {
-                // Find the toggle button within the same consent-item
-                const consentItem = detail.closest('.consent-item');
-                const toggleBtn = consentItem ? consentItem.querySelector('.consent-toggle-btn') : null;
-                if (toggleBtn) toggleBtn.classList.toggle('open');
-            }
+            // Find the toggle button within the same consent-item
+            const consentItem = detail.closest('.consent-item');
+            const toggleBtn = consentItem ? consentItem.querySelector('.consent-toggle-btn') : null;
+            if (toggleBtn) toggleBtn.classList.toggle('open');
         }
 
         function toggleAllConsent(checked) {
             document.querySelectorAll('.consent-check').forEach(cb => {
                 cb.checked = checked;
             });
-            updateSubmitButton();
+            updateAgreeStartButton();
         }
 
         function updateConsentAll() {
             const allChecks = document.querySelectorAll('.consent-check');
             const allChecked = Array.from(allChecks).every(cb => cb.checked);
             document.getElementById('consentAll').checked = allChecked;
-            updateSubmitButton();
+            updateAgreeStartButton();
         }
 
-        function updateSubmitButton() {
+        function updateAgreeStartButton() {
             const allChecks = document.querySelectorAll('.consent-check');
             const allChecked = Array.from(allChecks).every(cb => cb.checked);
-            const submitBtn = document.getElementById('submitBtn');
-            if (submitBtn) {
-                submitBtn.disabled = !allChecked;
+            const agreeBtn = document.getElementById('agreeStartBtn');
+            if (agreeBtn) {
+                agreeBtn.disabled = !allChecked;
             }
         }
 
@@ -1289,7 +1455,6 @@
             const checks = ['consentPrivacy', 'consentThirdParty', 'consentDelegation', 'consentTerms'];
             for (const id of checks) {
                 if (!document.getElementById(id).checked) {
-                    alert('Please agree to all required consent items.\n모든 필수 동의 항목에 동의해 주세요.');
                     return false;
                 }
             }
@@ -1307,43 +1472,50 @@
             };
         }
 
-        // 단계 이동
+        // ============================================
+        // Step navigation
+        // ============================================
         function goToStep(step) {
-            if (step > 1) {
-                const currentStep = step - 1;
-                const currentForm = document.getElementById('step' + currentStep);
-                const inputs = currentForm.querySelectorAll('input[required], select[required]');
-
-                let isValid = true;
-                inputs.forEach(input => {
-                    if (!input.value) {
-                        isValid = false;
-                        input.style.borderColor = '#EF4444';
-                    } else {
-                        input.style.borderColor = '#E5E7EB';
+            // Validate before moving forward
+            if (step > currentStep) {
+                // Validate Step 1: consent must be agreed
+                if (currentStep === 1 && step > 1) {
+                    if (!validateConsent()) {
+                        alert(pt('profile.alert.fillRequired'));
+                        return;
                     }
-                });
+                }
 
-                if (!isValid) {
-                    alert('Please fill in all required fields.\n필수 항목을 모두 입력해주세요.');
-                    return;
+                // Validate Step 2: required form fields
+                if (currentStep === 2 && step > 2) {
+                    const step2Form = document.getElementById('step2');
+                    const inputs = step2Form.querySelectorAll('input[required], select[required]');
+                    let isValid = true;
+                    inputs.forEach(input => {
+                        if (!input.value) {
+                            isValid = false;
+                            input.style.borderColor = '#EF4444';
+                        } else {
+                            input.style.borderColor = '#E5E7EB';
+                        }
+                    });
+                    if (!isValid) {
+                        alert(pt('profile.alert.fillRequired'));
+                        return;
+                    }
                 }
             }
 
-            // Step 3 → 4: validate signature
-            if (step === 4) {
-                if (!signaturePad || signaturePad.isEmpty()) {
-                    alert('Please provide your signature before proceeding.\n전자서명을 작성해주세요.');
-                    return;
-                }
-            }
-
+            // Hide all steps
             document.querySelectorAll('.form-card').forEach(card => {
                 card.style.display = 'none';
             });
 
+            // Show target step
             document.getElementById('step' + step).style.display = 'block';
+            currentStep = step;
 
+            // Initialize signature pad when step 3 becomes visible
             if (step === 3 && !signaturePad) {
                 setTimeout(() => initSignaturePad(), 100);
             }
@@ -1352,28 +1524,30 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function updateProgress(currentStep) {
+        function updateProgress(step) {
             const steps = document.querySelectorAll('.step');
             const progressLine = document.getElementById('progressLine');
 
-            steps.forEach((step, index) => {
+            steps.forEach((stepEl, index) => {
                 const stepNum = index + 1;
-                if (stepNum < currentStep) {
-                    step.classList.add('completed');
-                    step.classList.remove('active');
-                } else if (stepNum === currentStep) {
-                    step.classList.add('active');
-                    step.classList.remove('completed');
+                if (stepNum < step) {
+                    stepEl.classList.add('completed');
+                    stepEl.classList.remove('active');
+                } else if (stepNum === step) {
+                    stepEl.classList.add('active');
+                    stepEl.classList.remove('completed');
                 } else {
-                    step.classList.remove('active', 'completed');
+                    stepEl.classList.remove('active', 'completed');
                 }
             });
 
-            const progress = ((currentStep - 1) / (steps.length - 1)) * 100;
+            const progress = ((step - 1) / (steps.length - 1)) * 100;
             progressLine.style.width = progress + '%';
         }
 
-        // 주소 검색
+        // ============================================
+        // Address search (Daum Postcode API)
+        // ============================================
         function execDaumPostcode() {
             new daum.Postcode({
                 oncomplete: function(data) {
@@ -1385,7 +1559,9 @@
             }).open();
         }
 
-        // 파일 드래그 & 드롭
+        // ============================================
+        // File drag & drop / preview
+        // ============================================
         function handleDragOver(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -1435,21 +1611,29 @@
             document.getElementById(previewId).innerHTML = '';
         }
 
-        // 폼 제출
+        // ============================================
+        // Form submission
+        // ============================================
         document.getElementById('profileForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
+            // Validate signature
             if (!signaturePad || signaturePad.isEmpty()) {
-                alert('Please provide your signature.\n전자서명을 작성해주세요.');
+                alert(pt('profile.alert.signatureRequired'));
                 return;
             }
 
-            // Validate consent
-            if (!validateConsent()) {
+            // Validate all files
+            const arcFrontFile = document.getElementById('arcFront').files[0];
+            const arcBackFile = document.getElementById('arcBack').files[0];
+            const passportFile = document.getElementById('passport').files[0];
+
+            if (!arcFrontFile || !arcBackFile || !passportFile) {
+                alert(pt('profile.alert.fillRequired'));
                 return;
             }
 
-            const submitBtn = this.querySelector('button[type="submit"]');
+            const submitBtn = document.getElementById('submitBtn');
             const originalText = submitBtn.innerHTML;
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
@@ -1457,7 +1641,7 @@
             try {
                 const session = await checkSession();
                 if (!session || !session.user) {
-                    alert('Session expired. Please login again.\n세션이 만료되었습니다. 다시 로그인해주세요.');
+                    alert(pt('profile.alert.sessionExpired'));
                     window.location.href = 'index.html';
                     return;
                 }
@@ -1467,52 +1651,43 @@
                 const userId = session.user.id;
                 const timestamp = Date.now();
 
-                // 파일 업로드 및 쓰레드에 메시지 전송
+                // Upload files
                 const uploadedFiles = [];
 
-                // 외국인등록증 앞면
-                const arcFrontFile = document.getElementById('arcFront').files[0];
-                if (arcFrontFile) {
-                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading ARC (Front)...';
-                    const result = await uploadThreadDocument(threadId, arcFrontFile);
-                    if (result.success) {
-                        uploadedFiles.push({
-                            name: 'Alien Registration Card (Front)',
-                            url: result.data.signedUrl,
-                            type: arcFrontFile.type
-                        });
-                    }
+                // ARC Front
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading ARC (Front)...';
+                const arcFrontResult = await uploadThreadDocument(threadId, arcFrontFile);
+                if (arcFrontResult.success) {
+                    uploadedFiles.push({
+                        name: 'Alien Registration Card (Front)',
+                        url: arcFrontResult.data.signedUrl,
+                        type: arcFrontFile.type
+                    });
                 }
 
-                // 외국인등록증 뒷면
-                const arcBackFile = document.getElementById('arcBack').files[0];
-                if (arcBackFile) {
-                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading ARC (Back)...';
-                    const result = await uploadThreadDocument(threadId, arcBackFile);
-                    if (result.success) {
-                        uploadedFiles.push({
-                            name: 'Alien Registration Card (Back)',
-                            url: result.data.signedUrl,
-                            type: arcBackFile.type
-                        });
-                    }
+                // ARC Back
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading ARC (Back)...';
+                const arcBackResult = await uploadThreadDocument(threadId, arcBackFile);
+                if (arcBackResult.success) {
+                    uploadedFiles.push({
+                        name: 'Alien Registration Card (Back)',
+                        url: arcBackResult.data.signedUrl,
+                        type: arcBackFile.type
+                    });
                 }
 
-                // 여권
-                const passportFile = document.getElementById('passport').files[0];
-                if (passportFile) {
-                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading Passport...';
-                    const result = await uploadThreadDocument(threadId, passportFile);
-                    if (result.success) {
-                        uploadedFiles.push({
-                            name: 'Passport (Photo Page)',
-                            url: result.data.signedUrl,
-                            type: passportFile.type
-                        });
-                    }
+                // Passport
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading Passport...';
+                const passportResult = await uploadThreadDocument(threadId, passportFile);
+                if (passportResult.success) {
+                    uploadedFiles.push({
+                        name: 'Passport (Photo Page)',
+                        url: passportResult.data.signedUrl,
+                        type: passportFile.type
+                    });
                 }
 
-                // 전자서명
+                // Signature
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading Signature...';
                 const signatureBlob = await fetch(signatureData).then(r => r.blob());
                 const signatureFile = new File([signatureBlob], `signature_${timestamp}.png`, { type: 'image/png' });
@@ -1525,51 +1700,50 @@
                     });
                 }
 
-                // 쓰레드에 기본정보 요약 메시지 전송
+                // Build summary message
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving profile...';
 
-                // Get consent data
                 const consentData = getConsentData();
 
                 const profileSummary = `
-📋 **Basic Information Submitted**
+**Basic Information Submitted**
 
 **Personal Info:**
-• Name: ${formData.get('lastName')} ${formData.get('firstName')}
-• Date of Birth: ${formData.get('birthDate')}
-• Phone: ${formData.get('phone')}
-• Nationality: ${formData.get('nationality')}
-• Messenger: ${formData.get('preferredMessenger')} - ${formData.get('messengerId')}
+- Name: ${formData.get('lastName')} ${formData.get('firstName')}
+- Date of Birth: ${formData.get('birthDate')}
+- Phone: ${formData.get('phone')}
+- Nationality: ${formData.get('nationality')}
+- Messenger: ${formData.get('preferredMessenger')} - ${formData.get('messengerId')}
 
 **Residence Info:**
-• Visa Type: ${formData.get('visaType')}
-• Visa Expiry: ${formData.get('stayExpiry')}
-• ARC Number: ${formData.get('foreignerNumber')}
-• Address: ${formData.get('address')} ${formData.get('detailAddress')}
+- Visa Type: ${formData.get('visaType')}
+- Visa Expiry: ${formData.get('stayExpiry')}
+- ARC Number: ${formData.get('foreignerNumber')}
+- Address: ${formData.get('address')} ${formData.get('detailAddress')}
 
 **Uploaded Documents:**
-${uploadedFiles.map(f => `• ${f.name}`).join('\n')}
+${uploadedFiles.map(f => `- ${f.name}`).join('\n')}
 
 **Consent (v${consentData.consent_version}):**
-• Personal Info Collection: ${consentData.privacy_collection ? 'Agreed' : 'Not agreed'}
-• Third Party Provision: ${consentData.third_party_provision ? 'Agreed' : 'Not agreed'}
-• Immigration Delegation: ${consentData.delegation ? 'Agreed' : 'Not agreed'}
-• Terms & Privacy Policy: ${consentData.terms_and_privacy_policy ? 'Agreed' : 'Not agreed'}
-• Consented at: ${consentData.consented_at}
+- Personal Info Collection: ${consentData.privacy_collection ? 'Agreed' : 'Not agreed'}
+- Third Party Provision: ${consentData.third_party_provision ? 'Agreed' : 'Not agreed'}
+- Immigration Delegation: ${consentData.delegation ? 'Agreed' : 'Not agreed'}
+- Terms & Privacy Policy: ${consentData.terms_and_privacy_policy ? 'Agreed' : 'Not agreed'}
+- Consented at: ${consentData.consented_at}
                 `.trim();
 
-                // 메시지 생성
+                // 1. Create summary message
                 await createMessage({
                     thread_id: threadId,
                     content: profileSummary,
                     sender_type: 'user'
                 });
 
-                // 각 파일을 개별 메시지로 전송 (파일 미리보기 지원)
+                // 2. Send each file as individual message
                 for (const file of uploadedFiles) {
                     await createMessage({
                         thread_id: threadId,
-                        content: `📎 ${file.name}`,
+                        content: file.name,
                         sender_type: 'user',
                         file_url: file.url,
                         file_name: file.name,
@@ -1577,7 +1751,7 @@ ${uploadedFiles.map(f => `• ${f.name}`).join('\n')}
                     });
                 }
 
-                // 프로필 데이터 저장
+                // 3. Save profile data
                 const profileData = {
                     name: formData.get('lastName') + ' ' + formData.get('firstName'),
                     email: session.user.email,
@@ -1592,14 +1766,14 @@ ${uploadedFiles.map(f => `• ${f.name}`).join('\n')}
                     messenger_id: formData.get('messengerId')
                 };
 
-                await createUserProfile(session.user.id, profileData);
+                await createUserProfile(userId, profileData);
 
-                // Save consent record to Supabase
+                // 4. Save consent record
                 try {
                     await supabaseClient
                         .from('consent_records')
                         .insert({
-                            user_id: session.user.id,
+                            user_id: userId,
                             thread_id: threadId,
                             consent_type: 'service_application',
                             privacy_collection: consentData.privacy_collection,
@@ -1609,23 +1783,20 @@ ${uploadedFiles.map(f => `• ${f.name}`).join('\n')}
                             consent_version: consentData.consent_version,
                             consented_at: consentData.consented_at
                         });
-                    // console.log('✅ Consent record saved');
                 } catch (consentErr) {
-                    // Consent record save failure should not block the submission
                     console.error('Consent record save error (non-blocking):', consentErr);
                 }
 
-                // 쓰레드 상태 업데이트 (document로 변경)
+                // 5. Update thread status
                 await updateThreadStatus(threadId, 'document');
 
-                alert('✅ Your information has been submitted successfully!\n\n기본 정보가 성공적으로 제출되었습니다!\n\nOur team will review and contact you soon.\n담당자가 곧 연락드리겠습니다.');
-
-                // 쓰레드로 이동
+                // 6. Success
+                alert(pt('profile.alert.submitSuccess'));
                 window.location.href = `thread-general-v2.html?id=${threadId}`;
 
             } catch (error) {
                 console.error('Submission error:', error);
-                alert('Error occurred: ' + error.message);
+                alert(pt('profile.alert.submitError') + ': ' + error.message);
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalText;
             }
