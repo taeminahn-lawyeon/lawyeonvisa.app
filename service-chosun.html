@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="favicon.png?v=3">
-    <title>Immigration & Visa Service - Chosun University</title>
+    <title data-i18n="chosun.page.title">Immigration & Visa Service - Chosun University</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/ui-components.css">
 
     <style>
         * {
@@ -43,6 +44,32 @@
             background: linear-gradient(135deg, #0078D4 0%, #003A70 100%);
             padding: 32px 24px;
             text-align: center;
+            position: relative;
+        }
+
+        /* Language selector in header */
+        .lang-wrap {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+        }
+
+        .lang-wrap .language-selector {
+            display: inline-block;
+        }
+
+        .lang-wrap #language-selector-btn {
+            padding: 6px 12px;
+            font-size: 12px;
+            height: 32px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            border-radius: 8px;
+        }
+
+        .lang-wrap #language-selector-btn:hover {
+            background: rgba(255,255,255,0.25);
         }
 
         .header-logos {
@@ -120,24 +147,93 @@
             flex-shrink: 0;
         }
 
-        .user-bar-info {
-            flex: 1;
-            min-width: 0;
+        .user-bar-info { flex: 1; min-width: 0; }
+        .user-bar-email { font-size: 12px; color: #1E40AF; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .user-bar-code { font-size: 11px; color: #3B82F6; }
+
+        /* Premium service banner - same as index */
+        .premium-service-banner {
+            background: linear-gradient(135deg, #374151 0%, #1F2937 100%);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
         }
 
-        .user-bar-email {
+        .premium-service-banner h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #FFFFFF;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .premium-service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .premium-service-card {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 14px;
+            padding: 20px;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .premium-service-card:hover {
+            border-color: #CBD5E1;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .premium-service-card .title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1E293B;
+            line-height: 1.4;
+            letter-spacing: -0.3px;
+            margin-bottom: 10px;
+        }
+
+        .premium-service-card .desc {
+            font-size: 13px;
+            color: #64748B;
+            line-height: 1.7;
+            margin-bottom: 14px;
+        }
+
+        .premium-service-card .desc-item {
+            display: block;
+            margin-bottom: 4px;
+            color: #64748B;
+        }
+
+        .premium-service-card .desc-item:last-child { margin-bottom: 0; }
+
+        .premium-service-card .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: #3182F6;
+            color: white;
+            border: none;
+            border-radius: 8px;
             font-size: 12px;
-            color: #1E40AF;
             font-weight: 600;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: fit-content;
+            margin-top: auto;
         }
 
-        .user-bar-code {
-            font-size: 11px;
-            color: #3B82F6;
-        }
+        .premium-service-card .cta-btn:hover { background: #1B64DA; }
+        .premium-service-card .cta-btn .arrow { transition: transform 0.2s ease; }
+        .premium-service-card:hover .cta-btn .arrow { transform: translateX(3px); }
 
         /* Service grid - same as index */
         .service-grid {
@@ -194,57 +290,28 @@
             font-size: 12px;
         }
 
-        .footer a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-        }
+        .footer a { color: white; text-decoration: none; font-weight: 600; }
 
         /* Mobile */
         @media (max-width: 600px) {
-            body {
-                padding: 12px;
-                padding-top: 20px;
-            }
+            body { padding: 12px; padding-top: 20px; }
+            .card-header { padding: 24px 20px; }
+            .card-body { padding: 20px; }
+            .logo-box { width: 52px; height: 52px; }
+            .logo-box img { height: 36px; }
+            .header-title { font-size: 15px; }
+            .lang-wrap { top: 12px; right: 12px; }
 
-            .card-header {
-                padding: 24px 20px;
-            }
+            .premium-service-banner { padding: 24px 18px; }
+            .premium-service-banner h3 { font-size: 18px; margin-bottom: 16px; }
+            .premium-service-grid { grid-template-columns: 1fr; gap: 12px; }
+            .premium-service-card { padding: 18px; }
+            .premium-service-card .title { font-size: 14px; }
 
-            .card-body {
-                padding: 20px;
-            }
-
-            .logo-box {
-                width: 52px;
-                height: 52px;
-            }
-
-            .logo-box img {
-                height: 36px;
-            }
-
-            .header-title {
-                font-size: 15px;
-            }
-
-            .service-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-
-            .service-item {
-                padding: 16px;
-                min-height: 90px;
-            }
-
-            .service-item .title {
-                font-size: 14px;
-            }
-
-            .service-item .desc {
-                font-size: 12px;
-            }
+            .service-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .service-item { padding: 16px; min-height: 90px; }
+            .service-item .title { font-size: 14px; }
+            .service-item .desc { font-size: 12px; }
         }
     </style>
 </head>
@@ -252,6 +319,19 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
+                <!-- Language Selector -->
+                <div class="lang-wrap">
+                    <div class="language-selector">
+                        <button id="language-selector-btn" type="button">
+                            <span class="language-btn-content">
+                                <span class="language-name">한국어</span>
+                            </span>
+                            <span style="margin-left: 4px; font-size: 10px;">▼</span>
+                        </button>
+                        <div id="language-dropdown" class="hidden"></div>
+                    </div>
+                </div>
+
                 <div class="header-logos">
                     <div class="logo-box">
                         <img src="favicon.png" alt="Lawyeon">
@@ -262,7 +342,7 @@
                     </div>
                 </div>
                 <div class="header-title">Law Firm Lawyeon × Chosun University</div>
-                <div class="header-subtitle">Immigration & Visa Service</div>
+                <div class="header-subtitle" data-i18n="chosun.header.subtitle">Immigration & Visa Service</div>
             </div>
 
             <div class="card-body">
@@ -274,70 +354,104 @@
                     </div>
                 </div>
 
+                <!-- Quick Service Cards -->
+                <div class="premium-service-banner">
+                    <h3 data-i18n="emergency.title">Immigration Legal Services</h3>
+                    <div class="premium-service-grid">
+                        <div class="premium-service-card" onclick="location.href='consultation-request.html?type=emergency'">
+                            <div class="title" data-i18n="emergency.legal.title">Deportation · Visa Denial · Criminal Emergency</div>
+                            <div class="desc">
+                                <div class="desc-item" data-i18n="emergency.legal.item1">Immigration violation rescue & hearing support</div>
+                                <div class="desc-item" data-i18n="emergency.legal.item2">Administrative appeals & litigation</div>
+                                <div class="desc-item" data-i18n="emergency.legal.item3">Criminal defense for foreigners</div>
+                            </div>
+                            <button class="cta-btn" onclick="event.stopPropagation(); location.href='consultation-request.html?type=emergency'"><span data-i18n="emergency.legal.cta">Emergency Consultation</span> <span class="arrow">→</span></button>
+                        </div>
+                        <div class="premium-service-card" onclick="location.href='service-navigator.html'">
+                            <div class="title" data-i18n="emergency.navigator.title">Service Navigator</div>
+                            <div class="desc">
+                                <div class="desc-item" data-i18n="emergency.navigator.item1">Find the right service for your case</div>
+                                <div class="desc-item" data-i18n="emergency.navigator.item2">Guided service consultation</div>
+                            </div>
+                            <button class="cta-btn" onclick="event.stopPropagation(); location.href='service-navigator.html'"><span data-i18n="emergency.navigator.cta">Start Navigator</span> <span class="arrow">→</span></button>
+                        </div>
+                        <div class="premium-service-card" onclick="goToService('visa-prediagnosis')">
+                            <div class="title" data-i18n="emergency.diagnosis.title">Visa Diagnosis & Consultation</div>
+                            <div class="desc">
+                                <div class="desc-item" data-i18n="emergency.diagnosis.item1">Visa change planning advice</div>
+                                <div class="desc-item" data-i18n="emergency.diagnosis.item2">Immigration law violation consultation</div>
+                                <div class="desc-item" data-i18n="emergency.diagnosis.item3">Overstay risk assessment</div>
+                            </div>
+                            <button class="cta-btn" onclick="event.stopPropagation(); goToService('visa-prediagnosis')"><span data-i18n="emergency.diagnosis.cta">Request Diagnosis</span> <span class="arrow">→</span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Grid -->
                 <div class="service-grid">
                     <a class="service-item" data-service="d10-1-chosun">
-                        <div class="title">D-10-1 비자 변경</div>
-                        <div class="desc">구직 비자 변경</div>
+                        <div class="title" data-i18n="chosun.svc.d101.title">D-10-1 비자 변경</div>
+                        <div class="desc" data-i18n="chosun.svc.d101.desc">구직 비자 변경</div>
                     </a>
                     <a class="service-item" data-service="d10-2-chosun">
-                        <div class="title">D-10-2 비자 변경</div>
-                        <div class="desc">기술창업 구직 비자</div>
+                        <div class="title" data-i18n="chosun.svc.d102.title">D-10-2 비자 변경</div>
+                        <div class="desc" data-i18n="chosun.svc.d102.desc">기술창업 구직 비자</div>
                     </a>
                     <a class="service-item" data-service="d10-3-chosun">
-                        <div class="title">D-10-3 비자 변경</div>
-                        <div class="desc">첨단기술 인턴 비자</div>
+                        <div class="title" data-i18n="chosun.svc.d103.title">D-10-3 비자 변경</div>
+                        <div class="desc" data-i18n="chosun.svc.d103.desc">첨단기술 인턴 비자</div>
                     </a>
                     <a class="service-item" data-service="d10-t-chosun">
-                        <div class="title">D-10-T 비자 변경</div>
-                        <div class="desc">우수인재 구직 비자</div>
+                        <div class="title" data-i18n="chosun.svc.d10t.title">D-10-T 비자 변경</div>
+                        <div class="desc" data-i18n="chosun.svc.d10t.desc">우수인재 구직 비자</div>
                     </a>
                     <a class="service-item" data-service="d8-4-change">
-                        <div class="title">D-8-4 비자 변경</div>
-                        <div class="desc">기술창업 비자</div>
+                        <div class="title" data-i18n="chosun.svc.d84.title">D-8-4 비자 변경</div>
+                        <div class="desc" data-i18n="chosun.svc.d84.desc">기술창업 비자</div>
                     </a>
                     <a class="service-item" data-service="d9-5-change">
-                        <div class="title">D-9-5 비자 변경</div>
-                        <div class="desc">졸업생 창업 비자</div>
+                        <div class="title" data-i18n="chosun.svc.d95.title">D-9-5 비자 변경</div>
+                        <div class="desc" data-i18n="chosun.svc.d95.desc">졸업생 창업 비자</div>
                     </a>
                     <a class="service-item" data-service="d2-d4-extension">
-                        <div class="title">D-2 비자 연장</div>
-                        <div class="desc">대학원 진학</div>
+                        <div class="title" data-i18n="chosun.svc.d2ext.title">D-2 비자 연장</div>
+                        <div class="desc" data-i18n="chosun.svc.d2ext.desc">대학원 진학</div>
                     </a>
                     <a class="service-item" data-service="d10-extension">
-                        <div class="title">D-10 비자 연장</div>
-                        <div class="desc">구직 비자 갱신</div>
+                        <div class="title" data-i18n="chosun.svc.d10ext.title">D-10 비자 연장</div>
+                        <div class="desc" data-i18n="chosun.svc.d10ext.desc">구직 비자 갱신</div>
                     </a>
                     <a class="service-item" data-service="parttime-permit">
-                        <div class="title">시간제취업허가</div>
-                        <div class="desc">D-2, D-4 시간제취업</div>
+                        <div class="title" data-i18n="chosun.svc.parttime.title">시간제취업허가</div>
+                        <div class="desc" data-i18n="chosun.svc.parttime.desc">D-2, D-4 시간제취업</div>
                     </a>
                     <a class="service-item" data-service="parttime-change">
-                        <div class="title">시간제취업변경 신고</div>
-                        <div class="desc">취업처 변경 신고</div>
+                        <div class="title" data-i18n="chosun.svc.parttimeChg.title">시간제취업변경 신고</div>
+                        <div class="desc" data-i18n="chosun.svc.parttimeChg.desc">취업처 변경 신고</div>
                     </a>
                     <a class="service-item" data-service="d10-parttime-permit">
-                        <div class="title">D-10 시간제취업허가</div>
-                        <div class="desc">D-10 시간제취업</div>
+                        <div class="title" data-i18n="chosun.svc.d10parttime.title">D-10 시간제취업허가</div>
+                        <div class="desc" data-i18n="chosun.svc.d10parttime.desc">D-10 시간제취업</div>
                     </a>
                     <a class="service-item" data-service="intern-report">
-                        <div class="title">D-10 인턴십 신고</div>
-                        <div class="desc">인턴십 시작·변경</div>
+                        <div class="title" data-i18n="chosun.svc.intern.title">D-10 인턴십 신고</div>
+                        <div class="desc" data-i18n="chosun.svc.intern.desc">인턴십 시작·변경</div>
                     </a>
                     <a class="service-item" data-service="arc-reissue">
-                        <div class="title">외국인등록증 재발급</div>
-                        <div class="desc">분실·훼손 재발급</div>
+                        <div class="title" data-i18n="chosun.svc.arc.title">외국인등록증 재발급</div>
+                        <div class="desc" data-i18n="chosun.svc.arc.desc">분실·훼손 재발급</div>
                     </a>
                     <a class="service-item" data-service="address-change">
-                        <div class="title">주소 변경 신고</div>
-                        <div class="desc">거소 이전 신고</div>
+                        <div class="title" data-i18n="chosun.svc.address.title">주소 변경 신고</div>
+                        <div class="desc" data-i18n="chosun.svc.address.desc">거소 이전 신고</div>
                     </a>
                     <a class="service-item" data-service="passport-change">
-                        <div class="title">여권 변경 신고</div>
-                        <div class="desc">여권·인적사항 변경</div>
+                        <div class="title" data-i18n="chosun.svc.passport.title">여권 변경 신고</div>
+                        <div class="desc" data-i18n="chosun.svc.passport.desc">여권·인적사항 변경</div>
                     </a>
                     <a class="service-item" data-service="parent-invite">
-                        <div class="title">유학생 가족 초청</div>
-                        <div class="desc">우수 유학생 부모 초청</div>
+                        <div class="title" data-i18n="chosun.svc.parent.title">유학생 가족 초청</div>
+                        <div class="desc" data-i18n="chosun.svc.parent.desc">우수 유학생 부모 초청</div>
                     </a>
                 </div>
             </div>
@@ -352,12 +466,27 @@
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=20250119"></script>
+    <!-- i18n -->
+    <script src="js/translations.js?v=20260209"></script>
+    <script src="js/i18n.js?v=20260209"></script>
 
     <script>
         const lectureCode = sessionStorage.getItem('chosun_lecture_code') || new URLSearchParams(window.location.search).get('lectureCode') || '';
 
+        function goToService(serviceId) {
+            const params = new URLSearchParams({ service: serviceId, org: 'chosun' });
+            if (lectureCode) params.set('lectureCode', lectureCode);
+            window.location.href = 'service-apply-general.html?' + params.toString();
+        }
+
         window.addEventListener('DOMContentLoaded', async function() {
-            // Check session - redirect to login if not authenticated
+            // Initialize i18n
+            if (typeof i18n !== 'undefined') {
+                i18n.init();
+                i18n.translatePage();
+            }
+
+            // Check session
             const session = await checkSession();
             if (!session || !session.user) {
                 window.location.href = 'login-chosun.html';
@@ -376,14 +505,7 @@
             document.querySelectorAll('.service-item').forEach(function(item) {
                 item.addEventListener('click', function() {
                     const serviceId = this.getAttribute('data-service');
-                    if (serviceId) {
-                        const params = new URLSearchParams({
-                            service: serviceId,
-                            org: 'chosun'
-                        });
-                        if (lectureCode) params.set('lectureCode', lectureCode);
-                        window.location.href = 'service-apply-general.html?' + params.toString();
-                    }
+                    if (serviceId) goToService(serviceId);
                 });
             });
         });
