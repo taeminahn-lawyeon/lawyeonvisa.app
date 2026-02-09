@@ -937,8 +937,8 @@ async function createWelcomeMessage(threadId, serviceName) {
                 </div>
 
                 <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
-                    <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">2. ${tw('thread.welcome.d10.step2Title', 'Submit D-10-1 Pre-Information')}</div>
-                    <div style="color: #374151; line-height: 1.6;">${tw('thread.welcome.d10.step2Desc', 'A specialist will send the D-10-1 pre-information form in this thread. Please fill it out accordingly.')}</div>
+                    <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">2. ${tw('thread.welcome.d10.step2Title', 'Fill Out Job Search Plan')}</div>
+                    <div style="color: #374151; line-height: 1.6;">${tw('thread.welcome.d10.step2Desc', 'A specialist will send the Job Search Plan form in this thread. Please fill it out to proceed with your D-10-1 visa application.')}</div>
                 </div>
 
                 <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
