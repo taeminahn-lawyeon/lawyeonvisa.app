@@ -901,7 +901,9 @@ async function getMessages(threadId) {
 // 상담 쓰레드 환영 메시지 생성 (다국어 지원)
 async function createWelcomeMessage(threadId, serviceName) {
     try {
-        const formUrl = `${window.location.origin}/profile-submit.html?thread=${threadId}`;
+        // 관리자 모드일 때 URL에 mode=admin 추가 (새 탭에서도 인식 가능)
+        const isAdminMode = typeof sessionStorage !== 'undefined' && sessionStorage.getItem('adminLoggedIn') === 'true';
+        const formUrl = `${window.location.origin}/profile-submit.html?thread=${threadId}${isAdminMode ? '&mode=admin' : ''}`;
         const lang = (typeof localStorage !== 'undefined' && localStorage.getItem('i18n_language')) || 'en';
 
         // 다국어 번역 헬퍼 - translations.js가 로드된 경우 사용, 아니면 폴백
@@ -950,7 +952,7 @@ async function createWelcomeMessage(threadId, serviceName) {
             // ===== 일반 상담 안내문 =====
             // 프로필 존재 여부 확인 (첫 번째 쓰레드에서만 기본사항 제출)
             // 관리자 모드에서는 항상 기본사항 입력 링크 표시 (테스트용 덮어쓰기 허용)
-            const isAdmin = typeof sessionStorage !== 'undefined' && sessionStorage.getItem('adminLoggedIn') === 'true';
+            const isAdmin = isAdminMode;
             let hasProfile = false;
             if (!isAdmin) {
                 try {
