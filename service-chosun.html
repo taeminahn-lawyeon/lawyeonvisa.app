@@ -29,7 +29,7 @@
 
         .container {
             width: 100%;
-            max-width: 480px;
+            max-width: 720px;
         }
 
         .card {
@@ -41,44 +41,57 @@
 
         .card-header {
             background: linear-gradient(135deg, #0078D4 0%, #003A70 100%);
-            padding: 28px 24px;
+            padding: 32px 24px;
             text-align: center;
         }
 
-        .logo-container {
-            width: 80px;
-            height: 80px;
-            background: white;
-            border-radius: 16px;
-            margin: 0 auto 12px;
+        .header-logos {
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            gap: 16px;
+            margin-bottom: 16px;
         }
 
-        .logo-container img {
+        .logo-box {
             width: 64px;
-            height: auto;
-            border-radius: 6px;
+            height: 64px;
+            background: white;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
-        .university-name {
+        .logo-box img {
+            height: 44px;
+            width: auto;
+            border-radius: 4px;
+        }
+
+        .header-x {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 20px;
+            font-weight: 300;
+        }
+
+        .header-title {
             color: white;
             font-size: 17px;
             font-weight: 700;
-            margin-bottom: 4px;
             letter-spacing: -0.3px;
+            margin-bottom: 4px;
         }
 
-        .service-title {
-            color: rgba(255, 255, 255, 0.9);
+        .header-subtitle {
+            color: rgba(255, 255, 255, 0.85);
             font-size: 13px;
             font-weight: 500;
         }
 
         .card-body {
-            padding: 24px;
+            padding: 28px;
         }
 
         /* User info bar */
@@ -90,7 +103,7 @@
             border: 1px solid #BFDBFE;
             border-radius: 12px;
             padding: 12px 14px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .user-bar-avatar {
@@ -126,87 +139,51 @@
             color: #3B82F6;
         }
 
-        /* Section header */
-        .section-header {
-            font-size: 12px;
-            font-weight: 700;
-            color: #6B7280;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 12px 0 8px;
-            border-bottom: 1px solid #F3F4F6;
-            margin-bottom: 4px;
+        /* Service grid - same as index */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
         }
 
-        .section-header:first-of-type {
-            padding-top: 0;
-        }
-
-        /* Service item */
         .service-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 12px;
-            border-radius: 12px;
+            background: #F9FAFB;
+            border: 2px solid transparent;
+            border-radius: 16px;
+            padding: 20px;
             cursor: pointer;
-            transition: all 0.15s;
+            transition: all 0.2s ease;
             text-decoration: none;
             color: inherit;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 8px;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(0, 120, 212, 0.2);
         }
 
         .service-item:hover {
-            background: #F0F7FF;
+            border-color: #0078D4;
+            background: #EFF6FF;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 120, 212, 0.12);
         }
 
-        .service-item:active {
-            background: #DBEAFE;
-            transform: scale(0.99);
-        }
-
-        .service-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            background: #F3F4F6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-
-        .service-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .service-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: #191F28;
-            line-height: 1.3;
-        }
-
-        .service-price {
-            font-size: 12px;
-            color: #6B7280;
-            margin-top: 2px;
-        }
-
-        .service-price strong {
-            color: #0078D4;
+        .service-item .title {
+            font-size: 15px;
             font-weight: 700;
+            color: #191F28;
+            word-break: keep-all;
+            line-height: 1.4;
         }
 
-        .service-arrow {
-            color: #D1D5DB;
-            font-size: 12px;
-            flex-shrink: 0;
-        }
-
-        .service-item:hover .service-arrow {
-            color: #0078D4;
+        .service-item .desc {
+            font-size: 13px;
+            color: #6B7684;
+            line-height: 1.5;
+            word-break: keep-all;
         }
 
         /* Footer */
@@ -224,10 +201,10 @@
         }
 
         /* Mobile */
-        @media (max-width: 480px) {
+        @media (max-width: 600px) {
             body {
-                padding: 16px;
-                padding-top: 24px;
+                padding: 12px;
+                padding-top: 20px;
             }
 
             .card-header {
@@ -238,17 +215,35 @@
                 padding: 20px;
             }
 
-            .logo-container {
-                width: 64px;
-                height: 64px;
+            .logo-box {
+                width: 52px;
+                height: 52px;
             }
 
-            .logo-container img {
-                width: 52px;
+            .logo-box img {
+                height: 36px;
+            }
+
+            .header-title {
+                font-size: 15px;
+            }
+
+            .service-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
 
             .service-item {
-                padding: 12px 8px;
+                padding: 16px;
+                min-height: 90px;
+            }
+
+            .service-item .title {
+                font-size: 14px;
+            }
+
+            .service-item .desc {
+                font-size: 12px;
             }
         }
     </style>
@@ -257,11 +252,17 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <div class="logo-container">
-                    <img src="조선대로고.jpg" alt="Chosun University Logo">
+                <div class="header-logos">
+                    <div class="logo-box">
+                        <img src="favicon.png" alt="Lawyeon">
+                    </div>
+                    <div class="header-x">×</div>
+                    <div class="logo-box">
+                        <img src="조선대로고.jpg" alt="Chosun University">
+                    </div>
                 </div>
-                <div class="university-name">Chosun University</div>
-                <div class="service-title">Immigration & Visa Service</div>
+                <div class="header-title">Law Firm Lawyeon × Chosun University</div>
+                <div class="header-subtitle">Immigration & Visa Service</div>
             </div>
 
             <div class="card-body">
@@ -273,164 +274,72 @@
                     </div>
                 </div>
 
-                <!-- 비자 변경 -->
-                <div class="section-header">비자 변경 Visa Change</div>
-
-                <a class="service-item" data-service="d10-1-chosun">
-                    <div class="service-icon">🔍</div>
-                    <div class="service-info">
-                        <div class="service-name">D-10-1 비자 변경</div>
-                        <div class="service-price">대행 <strong>55,000원</strong> + 수수료 100,000원</div>
-                    </div>
-                    <i class="fas fa-chevron-right service-arrow"></i>
-                </a>
-
-                <a class="service-item" data-service="d10-2-change">
-                    <div class="service-icon">💡</div>
-                    <div class="service-info">
-                        <div class="service-name">D-10-2 비자 변경</div>
-                        <div class="service-price">대행 <strong>330,000원</strong> + 수수료 100,000원</div>
-                    </div>
-                    <i class="fas fa-chevron-right service-arrow"></i>
-                </a>
-
-                <a class="service-item" data-service="d10-3-change">
-                    <div class="service-icon">🔬</div>
-                    <div class="service-info">
-                        <div class="service-name">D-10-3 비자 변경</div>
-                        <div class="service-price">대행 <strong>330,000원</strong> + 수수료 100,000원</div>
-                    </div>
-                    <i class="fas fa-chevron-right service-arrow"></i>
-                </a>
-
-                <a class="service-item" data-service="d10-t-change">
-                    <div class="service-icon">🏆</div>
-                    <div class="service-info">
-                        <div class="service-name">D-10-T 비자 변경</div>
-                        <div class="service-price">대행 <strong>330,000원</strong> + 수수료 100,000원</div>
-                    </div>
-                    <i class="fas fa-chevron-right service-arrow"></i>
-                </a>
-
-                <a class="service-item" data-service="d8-4-change">
-                    <div class="service-icon">💡</div>
-                    <div class="service-info">
-                        <div class="service-name">D-8-4 비자 변경</div>
-                        <div class="service-price">대행 <strong>1,100,000원</strong> + 수수료 100,000원</div>
-                    </div>
-                    <i class="fas fa-chevron-right service-arrow"></i>
-                </a>
-
-                <a class="service-item" data-service="d9-5-change">
-                    <div class="service-icon">🎓</div>
-                    <div class="service-info">
-                        <div class="service-name">D-9-5 비자 변경</div>
-                        <div class="service-price">대행 <strong>1,100,000원</strong> + 수수료 100,000원</div>
-                    </div>
-                    <i class="fas fa-chevron-right service-arrow"></i>
-                </a>
-
-                <!-- 비자 연장 -->
-                <div class="section-header">비자 연장 Visa Extension</div>
-
-                <a class="service-item" data-service="d2-d4-extension">
-                    <div class="service-icon">📖</div>
-                    <div class="service-info">
-                        <div class="service-name">D-2 비자 연장 (대학원 진학)</div>
-                        <div class="service-price">대행 <strong>110,000원</strong> + 수수료 50,000원</div>
-                    </div>
-                    <i class="fas fa-chevron-right service-arrow"></i>
-                </a>
-
-                <a class="service-item" data-service="d10-extension">
-                    <div class="service-icon">⏳</div>
-                    <div class="service-info">
-                        <div class="service-name">D-10 비자 연장</div>
-                        <div class="service-price">대행 <strong>220,000원</strong> + 수수료 50,000원</div>
-                    </div>
-                    <i class="fas fa-chevron-right service-arrow"></i>
-                </a>
-
-                <!-- 취업 관련 -->
-                <div class="section-header">취업 관련 Employment</div>
-
-                <a class="service-item" data-service="parttime-permit">
-                    <div class="service-icon">⏰</div>
-                    <div class="service-info">
-                        <div class="service-name">시간제취업허가 신청</div>
-                        <div class="service-price">대행 <strong>33,000원</strong></div>
-                    </div>
-                    <i class="fas fa-chevron-right service-arrow"></i>
-                </a>
-
-                <a class="service-item" data-service="parttime-change">
-                    <div class="service-icon">🔄</div>
-                    <div class="service-info">
-                        <div class="service-name">시간제취업변경 신고</div>
-                        <div class="service-price">대행 <strong>33,000원</strong></div>
-                    </div>
-                    <i class="fas fa-chevron-right service-arrow"></i>
-                </a>
-
-                <a class="service-item" data-service="d10-parttime-permit">
-                    <div class="service-icon">⏰</div>
-                    <div class="service-info">
-                        <div class="service-name">D-10 시간제취업허가 신청</div>
-                        <div class="service-price">대행 <strong>33,000원</strong></div>
-                    </div>
-                    <i class="fas fa-chevron-right service-arrow"></i>
-                </a>
-
-                <a class="service-item" data-service="intern-report">
-                    <div class="service-icon">📝</div>
-                    <div class="service-info">
-                        <div class="service-name">D-10 인턴십 신고</div>
-                        <div class="service-price">대행 <strong>110,000원</strong></div>
-                    </div>
-                    <i class="fas fa-chevron-right service-arrow"></i>
-                </a>
-
-                <!-- 등록/신고 -->
-                <div class="section-header">등록/신고 Registration</div>
-
-                <a class="service-item" data-service="arc-reissue">
-                    <div class="service-icon">🔄</div>
-                    <div class="service-info">
-                        <div class="service-name">외국인등록증 재발급</div>
-                        <div class="service-price">대행 <strong>110,000원</strong> + 수수료 35,000원</div>
-                    </div>
-                    <i class="fas fa-chevron-right service-arrow"></i>
-                </a>
-
-                <a class="service-item" data-service="address-change">
-                    <div class="service-icon">🏠</div>
-                    <div class="service-info">
-                        <div class="service-name">주소 변경 신고</div>
-                        <div class="service-price">대행 <strong>33,000원</strong></div>
-                    </div>
-                    <i class="fas fa-chevron-right service-arrow"></i>
-                </a>
-
-                <a class="service-item" data-service="passport-change">
-                    <div class="service-icon">📝</div>
-                    <div class="service-info">
-                        <div class="service-name">여권 변경 신고</div>
-                        <div class="service-price">대행 <strong>33,000원</strong></div>
-                    </div>
-                    <i class="fas fa-chevron-right service-arrow"></i>
-                </a>
-
-                <!-- 기타 -->
-                <div class="section-header">기타 Others</div>
-
-                <a class="service-item" data-service="parent-invite">
-                    <div class="service-icon">👨‍👩‍👧</div>
-                    <div class="service-info">
-                        <div class="service-name">유학생 가족 초청</div>
-                        <div class="service-price">대행 <strong>550,000원</strong> + 수수료 60,000원</div>
-                    </div>
-                    <i class="fas fa-chevron-right service-arrow"></i>
-                </a>
+                <div class="service-grid">
+                    <a class="service-item" data-service="d10-1-chosun">
+                        <div class="title">D-10-1 비자 변경</div>
+                        <div class="desc">구직 비자 변경</div>
+                    </a>
+                    <a class="service-item" data-service="d10-2-chosun">
+                        <div class="title">D-10-2 비자 변경</div>
+                        <div class="desc">기술창업 구직 비자</div>
+                    </a>
+                    <a class="service-item" data-service="d10-3-chosun">
+                        <div class="title">D-10-3 비자 변경</div>
+                        <div class="desc">첨단기술 인턴 비자</div>
+                    </a>
+                    <a class="service-item" data-service="d10-t-chosun">
+                        <div class="title">D-10-T 비자 변경</div>
+                        <div class="desc">우수인재 구직 비자</div>
+                    </a>
+                    <a class="service-item" data-service="d8-4-change">
+                        <div class="title">D-8-4 비자 변경</div>
+                        <div class="desc">기술창업 비자</div>
+                    </a>
+                    <a class="service-item" data-service="d9-5-change">
+                        <div class="title">D-9-5 비자 변경</div>
+                        <div class="desc">졸업생 창업 비자</div>
+                    </a>
+                    <a class="service-item" data-service="d2-d4-extension">
+                        <div class="title">D-2 비자 연장</div>
+                        <div class="desc">대학원 진학</div>
+                    </a>
+                    <a class="service-item" data-service="d10-extension">
+                        <div class="title">D-10 비자 연장</div>
+                        <div class="desc">구직 비자 갱신</div>
+                    </a>
+                    <a class="service-item" data-service="parttime-permit">
+                        <div class="title">시간제취업허가</div>
+                        <div class="desc">D-2, D-4 시간제취업</div>
+                    </a>
+                    <a class="service-item" data-service="parttime-change">
+                        <div class="title">시간제취업변경 신고</div>
+                        <div class="desc">취업처 변경 신고</div>
+                    </a>
+                    <a class="service-item" data-service="d10-parttime-permit">
+                        <div class="title">D-10 시간제취업허가</div>
+                        <div class="desc">D-10 시간제취업</div>
+                    </a>
+                    <a class="service-item" data-service="intern-report">
+                        <div class="title">D-10 인턴십 신고</div>
+                        <div class="desc">인턴십 시작·변경</div>
+                    </a>
+                    <a class="service-item" data-service="arc-reissue">
+                        <div class="title">외국인등록증 재발급</div>
+                        <div class="desc">분실·훼손 재발급</div>
+                    </a>
+                    <a class="service-item" data-service="address-change">
+                        <div class="title">주소 변경 신고</div>
+                        <div class="desc">거소 이전 신고</div>
+                    </a>
+                    <a class="service-item" data-service="passport-change">
+                        <div class="title">여권 변경 신고</div>
+                        <div class="desc">여권·인적사항 변경</div>
+                    </a>
+                    <a class="service-item" data-service="parent-invite">
+                        <div class="title">유학생 가족 초청</div>
+                        <div class="desc">우수 유학생 부모 초청</div>
+                    </a>
+                </div>
             </div>
         </div>
 
