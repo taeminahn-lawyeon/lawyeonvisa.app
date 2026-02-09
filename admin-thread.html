@@ -2087,7 +2087,7 @@
                             const safeUrl = typeof sanitizeUrl === 'function' ? sanitizeUrl(att.url) : encodeURI(att.url);
                             const safeName = typeof escapeHtml === 'function' ? escapeHtml(att.name) : att.name;
                             return `
-                            <div class="attachment-item" onclick="window.open('${safeUrl}', '_blank')">
+                            <div class="attachment-item" onclick="downloadFile('${safeUrl}', '${safeName}')">
                                 <div class="attachment-info">
                                     <div class="attachment-name">${safeName}</div>
                                     <div class="attachment-size">${formatFileSize(att.size)}</div>
@@ -2437,6 +2437,21 @@
             if (bytes < 1024) return bytes + ' B';
             if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
             return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+
+        async function downloadFile(url, filename) {
+            try {
+                const response = await fetch(url);
+                const blob = await response.blob();
+                const blobUrl = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = blobUrl;
+                a.download = filename;
+                a.click();
+                URL.revokeObjectURL(blobUrl);
+            } catch (e) {
+                window.open(url, '_blank');
+            }
         }
 
         // Cleanup on page unload
