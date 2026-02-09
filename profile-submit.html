@@ -1342,8 +1342,9 @@
             }
 
             // Check if profile already exists (first thread only)
+            const isAdmin = sessionStorage.getItem('adminLoggedIn') === 'true';
             const profileResult = await getUserProfile(session.user.id);
-            if (profileResult.success && profileResult.data && profileResult.data.passport_number) {
+            if (!isAdmin && profileResult.success && profileResult.data && profileResult.data.passport_number) {
                 alert(pt('profile.alert.alreadySubmitted'));
                 window.location.href = `thread-general-v2.html?id=${threadId}`;
                 return;

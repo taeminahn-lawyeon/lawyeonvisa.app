@@ -946,17 +946,21 @@ async function createWelcomeMessage(threadId, serviceName) {
         } else {
             // ===== 일반 상담 안내문 =====
             // 프로필 존재 여부 확인 (첫 번째 쓰레드에서만 기본사항 제출)
+            // 관리자 모드에서는 항상 기본사항 입력 링크 표시 (테스트용 덮어쓰기 허용)
+            const isAdmin = typeof sessionStorage !== 'undefined' && sessionStorage.getItem('adminLoggedIn') === 'true';
             let hasProfile = false;
-            try {
-                const session = await supabaseClient.auth.getSession();
-                if (session?.data?.session?.user?.id) {
-                    const profileResult = await getUserProfile(session.data.session.user.id);
-                    if (profileResult.success && profileResult.data && profileResult.data.passport_number) {
-                        hasProfile = true;
+            if (!isAdmin) {
+                try {
+                    const session = await supabaseClient.auth.getSession();
+                    if (session?.data?.session?.user?.id) {
+                        const profileResult = await getUserProfile(session.data.session.user.id);
+                        if (profileResult.success && profileResult.data && profileResult.data.passport_number) {
+                            hasProfile = true;
+                        }
                     }
+                } catch (e) {
+                    // 프로필 확인 실패 시 기본사항 제출 링크 포함
                 }
-            } catch (e) {
-                // 프로필 확인 실패 시 기본사항 제출 링크 포함
             }
 
             // 기본사항 제출 단계 (프로필 없을 때만 표시)
