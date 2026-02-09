@@ -913,53 +913,86 @@ async function createWelcomeMessage(threadId, serviceName) {
             return fallback || key;
         }
 
-        // 프로필 존재 여부 확인 (첫 번째 쓰레드에서만 기본사항 제출)
-        let hasProfile = false;
-        try {
-            const session = await supabaseClient.auth.getSession();
-            if (session?.data?.session?.user?.id) {
-                const profileResult = await getUserProfile(session.data.session.user.id);
-                if (profileResult.success && profileResult.data && profileResult.data.passport_number) {
-                    hasProfile = true;
+        // D-10-1 서비스 여부 감지
+        const isD10 = serviceName && (serviceName.toLowerCase().includes('d-10-1') || serviceName.toLowerCase().includes('d10-1'));
+
+        let welcomeContent;
+
+        if (isD10) {
+            // ===== D-10-1 결제 완료 안내문 (3단계) =====
+            welcomeContent = `
+                <h4>${tw('thread.welcome.d10.title', 'D-10-1 Visa Change - Payment Completed')}</h4>
+                <p>${tw('thread.welcome.d10.greeting', 'Payment for <strong>{serviceName}</strong> has been completed. Please follow the steps below.').replace('{serviceName}', serviceName)}</p>
+
+                <h4>${tw('thread.welcome.d10.procedureTitle', 'Procedure Guide')}</h4>
+
+                <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
+                    <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">1. ${tw('thread.welcome.d10.step1Title', 'Submit Basic Information')}</div>
+                    <div style="color: #374151; line-height: 1.6;">${tw('thread.welcome.d10.step1Desc', 'Please enter the basic information required for visa change.')} <a href="${formUrl}" target="_blank" style="color: #3182F6; font-weight: 600;">${tw('thread.welcome.d10.step1Link', 'Enter Basic Info')}</a></div>
+                </div>
+
+                <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
+                    <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">2. ${tw('thread.welcome.d10.step2Title', 'Submit D-10-1 Pre-Information')}</div>
+                    <div style="color: #374151; line-height: 1.6;">${tw('thread.welcome.d10.step2Desc', 'A specialist will send the D-10-1 pre-information form in this thread. Please fill it out accordingly.')}</div>
+                </div>
+
+                <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
+                    <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">3. ${tw('thread.welcome.d10.step3Title', 'Document Review & Guidance')}</div>
+                    <div style="color: #374151; line-height: 1.6;">${tw('thread.welcome.d10.step3Desc', 'After reviewing your submitted documents, a specialist will provide detailed guidance in this thread.')}</div>
+                </div>
+
+                <p>${tw('thread.welcome.d10.footer', 'If you have additional questions, please leave a reply in this thread.')}</p>
+            `;
+        } else {
+            // ===== 일반 상담 안내문 =====
+            // 프로필 존재 여부 확인 (첫 번째 쓰레드에서만 기본사항 제출)
+            let hasProfile = false;
+            try {
+                const session = await supabaseClient.auth.getSession();
+                if (session?.data?.session?.user?.id) {
+                    const profileResult = await getUserProfile(session.data.session.user.id);
+                    if (profileResult.success && profileResult.data && profileResult.data.passport_number) {
+                        hasProfile = true;
+                    }
                 }
+            } catch (e) {
+                // 프로필 확인 실패 시 기본사항 제출 링크 포함
             }
-        } catch (e) {
-            // 프로필 확인 실패 시 기본사항 제출 링크 포함
+
+            // 기본사항 제출 단계 (프로필 없을 때만 표시)
+            const step1Html = hasProfile ? '' : `
+                <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
+                    <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">1. ${tw('thread.welcome.step1Title', '1. Submit Basic Information').replace(/^\d+\.\s*/, '')}</div>
+                    <div style="color: #374151; line-height: 1.6;">${tw('thread.welcome.step1Desc', 'Please enter the basic information required for consultation.')} <a href="${formUrl}" target="_blank" style="color: #3182F6; font-weight: 600;">${tw('thread.welcome.step1Link', 'Enter Basic Info')}</a></div>
+                </div>
+            `;
+
+            // 프로필 있으면 단계 번호 조정
+            const step2Num = hasProfile ? '1' : '2';
+            const step3Num = hasProfile ? '2' : '3';
+
+            welcomeContent = `
+                <h4>${tw('thread.welcome.title', 'Consultation Request Confirmed')}</h4>
+                <p>${tw('thread.welcome.greeting', 'Hello! Your consultation request for <strong>{serviceName}</strong> has been received.').replace('{serviceName}', serviceName)}</p>
+
+                <h4>${tw('thread.welcome.procedureTitle', 'Procedure Guide')}</h4>
+                <p>${tw('thread.welcome.procedureDesc', 'Please follow the steps below for a smooth consultation process.')}</p>
+
+                ${step1Html}
+
+                <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
+                    <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">${step2Num}. ${tw('thread.welcome.step2Title', '2. Staff Review').replace(/^\d+\.\s*/, '')}</div>
+                    <div style="color: #374151; line-height: 1.6;">${tw('thread.welcome.step2Desc', 'A specialist will review your request and contact you through this thread.')}</div>
+                </div>
+
+                <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
+                    <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">${step3Num}. ${tw('thread.welcome.step3Title', '3. Consultation').replace(/^\d+\.\s*/, '')}</div>
+                    <div style="color: #374151; line-height: 1.6;">${tw('thread.welcome.step3Desc', 'After reviewing your case, we will provide exact costs and required documents.')}</div>
+                </div>
+
+                <p>${tw('thread.welcome.footer', 'If you have additional questions, please leave a reply in this thread.')}</p>
+            `;
         }
-
-        // 기본사항 제출 단계 (프로필 없을 때만 표시)
-        const step1Html = hasProfile ? '' : `
-            <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
-                <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">${tw('thread.welcome.step1Title', '1. Submit Basic Information')}</div>
-                <div style="color: #374151; line-height: 1.6;">${tw('thread.welcome.step1Desc', 'Please enter the basic information required for consultation.')} <a href="${formUrl}" target="_blank" style="color: #3182F6; font-weight: 600;">${tw('thread.welcome.step1Link', 'Enter Basic Info')}</a></div>
-            </div>
-        `;
-
-        // 프로필 있으면 단계 번호 조정
-        const step2Num = hasProfile ? '1' : '2';
-        const step3Num = hasProfile ? '2' : '3';
-
-        const welcomeContent = `
-            <h4>${tw('thread.welcome.title', 'Consultation Request Confirmed')}</h4>
-            <p>${tw('thread.welcome.greeting', 'Hello! Your consultation request for <strong>{serviceName}</strong> has been received.').replace('{serviceName}', serviceName)}</p>
-
-            <h4>${tw('thread.welcome.procedureTitle', 'Procedure Guide')}</h4>
-            <p>${tw('thread.welcome.procedureDesc', 'Please follow the steps below for a smooth consultation process.')}</p>
-
-            ${step1Html}
-
-            <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
-                <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">${step2Num}. ${tw('thread.welcome.step2Title', '2. Specialist Assignment').replace(/^\d+\.\s*/, '')}</div>
-                <div style="color: #374151; line-height: 1.6;">${tw('thread.welcome.step2Desc', 'After reviewing your information, a specialist will contact you within <span class="highlight" style="background: #FEF3C7; color: #191F28; padding: 2px 8px; border-radius: 4px; font-weight: 700;">30 minutes</span>.')}</div>
-            </div>
-
-            <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
-                <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">${step3Num}. ${tw('thread.welcome.step3Title', '3. Consultation').replace(/^\d+\.\s*/, '')}</div>
-                <div style="color: #374151; line-height: 1.6;">${tw('thread.welcome.step3Desc', 'After reviewing your case, we will provide exact costs and required documents.')}</div>
-            </div>
-
-            <p>${tw('thread.welcome.footer', 'If you have additional questions, please leave a reply in this thread.')}</p>
-        `;
 
         // 시스템 메시지로 생성 (관리자 타입)
         const { data, error } = await supabaseClient
