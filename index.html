@@ -2091,6 +2091,14 @@
                         return;
                     }
 
+                    // 🔄 OAuth 콜백으로 돌아온 경우 (신규 로그인) → 서비스 페이지로 이동
+                    const loginUrlParams = new URLSearchParams(window.location.search);
+                    const isOAuthCallback = loginUrlParams.has('code') || window.location.hash.includes('access_token');
+                    if (isOAuthCallback) {
+                        window.location.href = 'service-navigator.html';
+                        return;
+                    }
+
                     // 헤더에 사용자 이름 표시
                     const userName = profileData.name || session.user.email.split('@')[0];
                     document.getElementById('userGreetingName').textContent = `${userName}님`;
