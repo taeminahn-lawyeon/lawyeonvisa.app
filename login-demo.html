@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png?v=3">
+    <title data-i18n="demo.page.title">Immigration & Visa Service - Korea University</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/ui-components.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #065F46 0%, #064E3B 50%, #1A1A3E 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #059669 0%, #065F46 100%);
+            padding: 32px 24px;
+            text-align: center;
+        }
+
+        .logo-container {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 20px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo-container .logo-text {
+            font-size: 28px;
+            font-weight: 800;
+            color: #065F46;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            text-align: center;
+        }
+
+        .university-name {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+
+        .service-title {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .card-body {
+            padding: 32px 24px;
+        }
+
+        .welcome-text {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .welcome-text h2 {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .welcome-text p {
+            font-size: 14px;
+            color: #6B7280;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-label span.required {
+            color: #EF4444;
+            margin-left: 2px;
+        }
+
+        .form-input {
+            width: 100%;
+            height: 52px;
+            padding: 0 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #1a1a2e;
+            transition: all 0.2s;
+            background: #F9FAFB;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #059669;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #9CA3AF;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 24px 0;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: #E5E7EB;
+        }
+
+        .divider-text {
+            padding: 0 16px;
+            font-size: 13px;
+            color: #9CA3AF;
+            font-weight: 500;
+        }
+
+        .btn-google {
+            width: 100%;
+            height: 56px;
+            background: white;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.2s;
+        }
+
+        .btn-google:hover {
+            background: #F9FAFB;
+            border-color: #D1D5DB;
+        }
+
+        .btn-google:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-google img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            height: 56px;
+            background: linear-gradient(135deg, #059669 0%, #065F46 100%);
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 14px rgba(6, 95, 70, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(6, 95, 70, 0.4);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-submit.loading {
+            pointer-events: none;
+        }
+
+        .btn-submit.loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+            border: 1px solid #6EE7B7;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 24px;
+        }
+
+        .info-box-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #065F46;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box-content {
+            font-size: 13px;
+            color: #047857;
+            line-height: 1.6;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Login state */
+        .user-info {
+            display: none;
+            background: #ECFDF5;
+            border: 1px solid #A7F3D0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .user-info.show {
+            display: block;
+        }
+
+        .user-info-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #059669;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .user-details {
+            flex: 1;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #065F46;
+        }
+
+        .user-email {
+            font-size: 12px;
+            color: #059669;
+        }
+
+        .check-icon {
+            color: #059669;
+            font-size: 20px;
+        }
+
+        /* Hide form when logged in */
+        .login-form.hidden {
+            display: none;
+        }
+
+        /* Error message */
+        .error-message {
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+            color: #DC2626;
+            font-size: 13px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Mobile optimization */
+        @media (max-width: 480px) {
+            body {
+                padding: 16px;
+                align-items: flex-start;
+                padding-top: 40px;
+            }
+
+            .card-header {
+                padding: 24px 20px;
+            }
+
+            .logo-container {
+                width: 80px;
+                height: 80px;
+            }
+
+            .logo-container .logo-text {
+                font-size: 22px;
+            }
+
+            .card-body {
+                padding: 24px 20px;
+            }
+
+            .welcome-text h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <div class="logo-container">
+                    <div class="logo-text">한국<br>대학교</div>
+                </div>
+                <div class="university-name">한국대학교</div>
+                <div class="service-title" data-i18n="demo.header.subtitle">출입국·비자 서비스</div>
+            </div>
+
+            <div class="card-body">
+                <div class="welcome-text">
+                    <h2 data-i18n="demo.login.welcome">환영합니다</h2>
+                    <p data-i18n="demo.login.desc">비자 변경, 법률 자문, 취업 허가 등 출입국 관련 서비스를 신청하세요.</p>
+                </div>
+
+                <div class="error-message" id="errorMessage"></div>
+
+                <div class="user-info" id="userInfo">
+                    <div class="user-info-header">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <div class="user-details">
+                            <div class="user-name" id="userName">User</div>
+                            <div class="user-email" id="userEmail">user@email.com</div>
+                        </div>
+                        <i class="fas fa-check-circle check-icon"></i>
+                    </div>
+                </div>
+
+                <form id="applicationForm">
+                    <div class="form-group">
+                        <label class="form-label">
+                            <span data-i18n="demo.login.lectureCode">특강 코드</span> <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-input" id="lectureCode" required>
+                    </div>
+
+                    <!-- Language Selector -->
+                    <div class="form-group" style="position: relative;">
+                        <div class="language-selector" style="width: 100%;">
+                            <button id="language-selector-btn" type="button" style="width: 100%; height: 48px; padding: 0 16px; font-size: 14px; font-weight: 500; background: #F9FAFB; border: 2px solid #E5E7EB; border-radius: 12px; color: #374151; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s;">
+                                <span class="language-btn-content"><span class="language-name">한국어</span></span>
+                                <span style="font-size: 12px; color: #9CA3AF;">▼</span>
+                            </button>
+                            <div id="language-dropdown" class="hidden" style="width: 100%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="login-form" id="loginForm">
+                        <div class="divider">
+                            <div class="divider-line"></div>
+                            <div class="divider-text" data-i18n="demo.login.signin">간편 로그인</div>
+                            <div class="divider-line"></div>
+                        </div>
+
+                        <button type="button" class="btn-google" id="googleLoginBtn">
+                            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+                            <span data-i18n="demo.login.google">Google로 계속하기</span>
+                        </button>
+                    </div>
+
+                    <div id="submitSection" style="display: none;">
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            <i class="fas fa-paper-plane"></i>
+                            <span data-i18n="demo.login.submit">서비스 시작</span>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="info-box">
+                    <div class="info-box-title">
+                        <i class="fas fa-info-circle"></i>
+                        <span data-i18n="demo.login.info.title">서비스 안내</span>
+                    </div>
+                    <div class="info-box-content" data-i18n="demo.login.info.content">
+                        로그인 후 전용 쓰레드에서 전담 전문가와 연결되어 서비스를 진행합니다.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <img src="favicon.png" alt="Lawyeon" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 6px; border-radius: 4px;">
+            Powered by <a href="https://lawyeonvisa.app">Law Firm Lawyeon Visa & Immigration Center</a>
+        </div>
+    </div>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js?v=20250119"></script>
+    <!-- i18n -->
+    <script src="js/translations.js?v=20260311"></script>
+    <script src="js/i18n.js?v=20260311"></script>
+
+    <script>
+        let currentUser = null;
+
+        // Valid lecture codes for demo
+        const validLectureCodes = ['DEMO2026'];
+
+        window.addEventListener('DOMContentLoaded', async function() {
+            // Initialize i18n
+            if (typeof i18n !== 'undefined') {
+                i18n.init();
+                i18n.translatePage();
+            }
+
+            // Check existing session
+            const session = await checkSession();
+            if (session && session.user) {
+                currentUser = session.user;
+                showLoggedInState(session.user);
+            }
+
+            // Google login button
+            document.getElementById('googleLoginBtn').addEventListener('click', handleGoogleLogin);
+
+            // Form submit
+            document.getElementById('applicationForm').addEventListener('submit', handleSubmit);
+        });
+
+        async function handleGoogleLogin() {
+            const lectureCode = document.getElementById('lectureCode').value.trim();
+
+            // Validate inputs
+            if (!lectureCode) {
+                showError(typeof i18n !== 'undefined' ? i18n.translate('demo.login.error.lectureCode') : '특강 코드를 입력해 주세요.');
+                return;
+            }
+
+            // Validate lecture code
+            if (!validLectureCodes.includes(lectureCode.toUpperCase())) {
+                showError(typeof i18n !== 'undefined' ? i18n.translate('demo.login.error.invalidCode') : '유효하지 않은 특강 코드입니다. 확인 후 다시 시도해 주세요.');
+                return;
+            }
+
+            hideError();
+
+            const btn = document.getElementById('googleLoginBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 로그인 중...';
+
+            try {
+                await signInWithGoogle();
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('로그인에 실패했습니다. 다시 시도해 주세요.');
+                btn.disabled = false;
+                btn.innerHTML = '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google"> Google로 계속하기';
+            }
+        }
+
+        function showLoggedInState(user) {
+            currentUser = user;
+
+            // Show user info
+            const userInfo = document.getElementById('userInfo');
+            userInfo.classList.add('show');
+
+            document.getElementById('userName').textContent = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('userAvatar').textContent = (user.user_metadata?.full_name || user.email || 'U')[0].toUpperCase();
+
+            // Hide login form, show submit button
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('submitSection').style.display = 'block';
+        }
+
+        async function handleSubmit(e) {
+            e.preventDefault();
+
+            if (!currentUser) {
+                showError('먼저 Google로 로그인해 주세요.');
+                return;
+            }
+
+            const lectureCode = document.getElementById('lectureCode').value.trim();
+
+            if (!lectureCode) {
+                showError(typeof i18n !== 'undefined' ? i18n.translate('demo.login.error.lectureCode') : '특강 코드를 입력해 주세요.');
+                return;
+            }
+
+            // Validate lecture code again
+            if (!validLectureCodes.includes(lectureCode.toUpperCase())) {
+                showError(typeof i18n !== 'undefined' ? i18n.translate('demo.login.error.invalidCode') : '유효하지 않은 특강 코드입니다.');
+                return;
+            }
+
+            hideError();
+
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.classList.add('loading');
+            btn.innerHTML = '<i class="fas fa-spinner"></i> 로딩 중...';
+
+            try {
+                // Ensure profile exists before redirecting
+                const profileResult = await getUserProfile(currentUser.id);
+                if (!profileResult.success || !profileResult.data) {
+                    await createOrUpdateProfile(currentUser.id, {
+                        name: currentUser.user_metadata?.full_name || '',
+                        email: currentUser.email || '',
+                        phone: ''
+                    });
+                }
+
+                // Store lecture code for later use
+                sessionStorage.setItem('demo_lecture_code', lectureCode);
+
+                // Redirect to demo service selection page
+                window.location.href = `service-demo.html?lectureCode=${encodeURIComponent(lectureCode)}`;
+            } catch (error) {
+                console.error('Submit error:', error);
+                showError('진행에 실패했습니다. 다시 시도해 주세요.');
+                btn.disabled = false;
+                btn.classList.remove('loading');
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> 서비스 시작';
+            }
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('errorMessage');
+            errorEl.textContent = message;
+            errorEl.classList.add('show');
+        }
+
+        function hideError() {
+            document.getElementById('errorMessage').classList.remove('show');
+        }
+    </script>
+</body>
+</html>
