@@ -91,6 +91,11 @@ const translations = {
         'emergency.navigator.item1': '내게 맞는 서비스 찾기',
         'emergency.navigator.item2': '맞춤형 서비스 상담',
         'emergency.navigator.cta': '네비게이터 시작',
+        'emergency.freeConsult.title': '무료 사전 상담',
+        'emergency.freeConsult.item1': '출입국 전문가의 무료 사례 검토',
+        'emergency.freeConsult.item2': '결제 전 비용 견적 안내',
+        'emergency.freeConsult.item3': '결제 없이 바로 시작',
+        'emergency.freeConsult.cta': '무료 상담 시작',
 
         // === 서비스 섹션 (Services Section) ===
         'services.title': '출입국 민원 대행',
@@ -1169,6 +1174,11 @@ const translations = {
         'emergency.navigator.item1': 'Find the right service for your case',
         'emergency.navigator.item2': 'Guided service consultation',
         'emergency.navigator.cta': 'Start Navigator',
+        'emergency.freeConsult.title': 'Free Pre-Consultation',
+        'emergency.freeConsult.item1': 'Free case review by immigration specialist',
+        'emergency.freeConsult.item2': 'Get a cost estimate before you pay',
+        'emergency.freeConsult.item3': 'No payment required to start',
+        'emergency.freeConsult.cta': 'Start Free Consultation',
 
         // === Services Section ===
         'services.title': 'Immigration Services',
@@ -2361,6 +2371,11 @@ const translations = {
         'emergency.navigator.item1': '找到适合您情况的服务',
         'emergency.navigator.item2': '定制服务咨询',
         'emergency.navigator.cta': '开始导航',
+        'emergency.freeConsult.title': '免费预咨询',
+        'emergency.freeConsult.item1': '出入境专家免费案例评估',
+        'emergency.freeConsult.item2': '付款前获取费用估算',
+        'emergency.freeConsult.item3': '无需付款即可开始',
+        'emergency.freeConsult.cta': '开始免费咨询',
 
         // === Services Section ===
         'services.title': '出入境事务代理',
@@ -3480,6 +3495,11 @@ const translations = {
         'emergency.navigator.item1': 'Tìm dịch vụ phù hợp với trường hợp của bạn',
         'emergency.navigator.item2': 'Tư vấn dịch vụ có hướng dẫn',
         'emergency.navigator.cta': 'Bắt Đầu',
+        'emergency.freeConsult.title': 'Tư Vấn Miễn Phí',
+        'emergency.freeConsult.item1': 'Đánh giá miễn phí bởi chuyên gia nhập cư',
+        'emergency.freeConsult.item2': 'Nhận báo giá trước khi thanh toán',
+        'emergency.freeConsult.item3': 'Không cần thanh toán để bắt đầu',
+        'emergency.freeConsult.cta': 'Bắt Đầu Tư Vấn Miễn Phí',
 
         // === Services Section ===
         'services.title': 'Dịch Vụ Xuất Nhập Cảnh',
@@ -4599,6 +4619,11 @@ const translations = {
         'emergency.navigator.item1': 'お客様のケースに適したサービスを探す',
         'emergency.navigator.item2': 'ガイド付きサービス相談',
         'emergency.navigator.cta': 'ナビ開始',
+        'emergency.freeConsult.title': '無料事前相談',
+        'emergency.freeConsult.item1': '出入国専門家による無料ケースレビュー',
+        'emergency.freeConsult.item2': 'お支払い前に費用見積もりを取得',
+        'emergency.freeConsult.item3': 'お支払い不要で開始',
+        'emergency.freeConsult.cta': '無料相談を開始',
 
         // === Services Section ===
         'services.title': '出入国民願代行',
@@ -5716,6 +5741,11 @@ const translations = {
         'emergency.navigator.item1': 'Танд тохирох үйлчилгээг олоорой',
         'emergency.navigator.item2': 'Удирдамжтай үйлчилгээний зөвлөгөө',
         'emergency.navigator.cta': 'Навигатор эхлүүлэх',
+        'emergency.freeConsult.title': 'Үнэгүй урьдчилсан зөвлөгөө',
+        'emergency.freeConsult.item1': 'Цагаачлалын мэргэжилтний үнэгүй хэрэг шалгалт',
+        'emergency.freeConsult.item2': 'Төлбөр төлөхөөс өмнө зардлын тооцоо авах',
+        'emergency.freeConsult.item3': 'Төлбөргүйгээр эхлэх',
+        'emergency.freeConsult.cta': 'Үнэгүй зөвлөгөө эхлүүлэх',
 
         // === Services Section ===
         'services.title': 'Цагаачлалын үйлчилгээ',
@@ -6833,6 +6863,11 @@ const translations = {
         'emergency.navigator.item1': 'ค้นหาบริการที่เหมาะสมกับกรณีของคุณ',
         'emergency.navigator.item2': 'ปรึกษาบริการแบบมีแนะนำ',
         'emergency.navigator.cta': 'เริ่มต้น',
+        'emergency.freeConsult.title': 'ปรึกษาฟรี',
+        'emergency.freeConsult.item1': 'ตรวจสอบกรณีฟรีโดยผู้เชี่ยวชาญ',
+        'emergency.freeConsult.item2': 'รับใบเสนอราคาก่อนชำระเงิน',
+        'emergency.freeConsult.item3': 'ไม่ต้องชำระเงินเพื่อเริ่มต้น',
+        'emergency.freeConsult.cta': 'เริ่มปรึกษาฟรี',
 
         // === Services Section ===
         'services.title': 'บริการตรวจคนเข้าเมือง',
