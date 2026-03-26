@@ -192,6 +192,7 @@ const translations = {
         'consultation.step4Desc': '수수료 및 비용의 상세 내역을 받아보세요',
         'consultation.requestBtn': '상담 신청',
         'consultation.feeNotice': '사례 검토 후 서비스 비용이 안내됩니다',
+        'consultation.freeBadge': '100% 무료 — 결제가 필요 없습니다. 상담 후 비용이 안내됩니다.',
 
         // === 서비스 네비게이터 (Service Navigator) ===
         'navigator.header': '서비스 네비게이터',
@@ -1275,6 +1276,7 @@ const translations = {
         'consultation.step4Desc': 'Get a detailed breakdown of fees and costs',
         'consultation.requestBtn': 'Request Consultation',
         'consultation.feeNotice': 'Service fees will be quoted after case review',
+        'consultation.freeBadge': '100% Free — No payment required. Fees quoted after consultation.',
 
         // === Service Navigator ===
         'navigator.header': 'Service Navigator',
@@ -2627,6 +2629,7 @@ const translations = {
         'consultation.step4Desc': '获取费用和成本的详细明细',
         'consultation.requestBtn': '申请咨询',
         'consultation.feeNotice': '案件审核后将报价服务费用',
+        'consultation.freeBadge': '100%免费 — 无需付款。咨询后报价费用。',
 
         // === 服务导航 ===
         'navigator.header': '服务导航',
@@ -3751,6 +3754,7 @@ const translations = {
         'consultation.step4Desc': 'Nhận bảng phân tích chi tiết về phí và chi phí',
         'consultation.requestBtn': 'Yêu Cầu Tư Vấn',
         'consultation.feeNotice': 'Phí dịch vụ sẽ được báo giá sau khi xem xét trường hợp',
+        'consultation.freeBadge': '100% Miễn phí — Không cần thanh toán. Phí sẽ được báo giá sau tư vấn.',
 
         // === Trình Dẫn Dịch Vụ ===
         'navigator.header': 'Trình Dẫn Dịch Vụ',
@@ -4873,6 +4877,7 @@ const translations = {
         'consultation.step4Desc': '手数料と費用の詳細内訳をお知らせします',
         'consultation.requestBtn': '相談を申請',
         'consultation.feeNotice': 'ケース審査後にサービス料金をご案内します',
+        'consultation.freeBadge': '100%無料 — お支払い不要。相談後に料金をご案内します。',
 
         // === サービスナビゲーター ===
         'navigator.header': 'サービスナビゲーター',
@@ -5995,6 +6000,7 @@ const translations = {
         'consultation.step4Desc': 'Хураамж, зардлын дэлгэрэнгүй тайланг авна',
         'consultation.requestBtn': 'Зөвлөгөө хүсэх',
         'consultation.feeNotice': 'Хэрэг шалгасны дараа үйлчилгээний хөлс зарлагдана',
+        'consultation.freeBadge': '100% үнэгүй — Төлбөр шаардлагагүй. Зөвлөгөөний дараа төлбөр мэдэгдэнэ.',
 
         // === Үйлчилгээний Навигатор ===
         'navigator.header': 'Үйлчилгээний Навигатор',
@@ -7117,6 +7123,7 @@ const translations = {
         'consultation.step4Desc': 'รับรายละเอียดค่าธรรมเนียมและค่าใช้จ่าย',
         'consultation.requestBtn': 'ขอคำปรึกษา',
         'consultation.feeNotice': 'ค่าบริการจะแจ้งหลังจากตรวจสอบกรณี',
+        'consultation.freeBadge': '100% ฟรี — ไม่ต้องชำระเงิน ค่าบริการจะแจ้งหลังปรึกษา',
 
         // === ตัวนำทางบริการ ===
         'navigator.header': 'ตัวนำทางบริการ',
