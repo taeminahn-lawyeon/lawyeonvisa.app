@@ -749,15 +749,22 @@
             try {
                 // Ensure profile exists before creating thread (foreign key requirement)
                 const session = await checkSession();
-                if (session && session.user) {
-                    const profileResult = await getUserProfile(session.user.id);
-                    if (!profileResult.success || !profileResult.data) {
-                        // Create minimal profile so thread FK constraint passes
-                        await createOrUpdateProfile(session.user.id, {
-                            name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || '',
-                            email: session.user.email || ''
-                        });
+                if (!session || !session.user) {
+                    throw new Error('Login required');
+                }
+
+                const profileResult = await getUserProfile(session.user.id);
+                if (!profileResult.success || !profileResult.data) {
+                    console.log('Profile not found, creating minimal profile...');
+                    const profileCreateResult = await createOrUpdateProfile(session.user.id, {
+                        name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || '',
+                        email: session.user.email || ''
+                    });
+                    if (!profileCreateResult.success) {
+                        console.error('Profile creation failed:', profileCreateResult.error);
+                        throw new Error('Profile creation failed: ' + profileCreateResult.error);
                     }
+                    console.log('Profile created successfully');
                 }
 
                 // Create consultation thread in Supabase
@@ -771,7 +778,8 @@
                 });
 
                 if (!threadResult.success) {
-                    throw new Error('Thread creation failed');
+                    console.error('Thread creation failed:', threadResult.error);
+                    throw new Error('Thread creation failed: ' + threadResult.error);
                 }
 
                 // Create welcome message

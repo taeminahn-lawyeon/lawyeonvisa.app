@@ -306,6 +306,9 @@ async function createThread(threadData) {
         if (threadData.payment_id) {
             threadRecord.payment_id = threadData.payment_id;
         }
+        if (threadData.is_consulting !== undefined) {
+            threadRecord.is_consulting = threadData.is_consulting;
+        }
 
         debugLog('쓰레드 생성 시도:', threadRecord);
 
