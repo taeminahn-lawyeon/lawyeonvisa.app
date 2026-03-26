@@ -1382,15 +1382,32 @@
                     <label class="form-label">서비스 선택</label>
                     <select class="form-select" id="paymentServiceSelect">
                         <option value="">서비스를 선택하세요</option>
-                        <option value="d10-1-change">D-10-1 일반구직 비자 변경 (220,000원)</option>
-                        <option value="d10-2-change">D-10-2 기술창업구직 비자 변경 (330,000원)</option>
-                        <option value="e7-change">특정활동 E-7 비자 변경 (550,000원)</option>
+                        <optgroup label="체류자격·기간">
+                            <option value="stay-status-change" data-amount="1050000">체류자격 변경 허가 (1,050,000원)</option>
+                            <option value="stay-extension" data-amount="510000">체류기간 연장 허가 (510,000원)</option>
+                            <option value="stay-extension-poor" data-amount="720000">체류기간 연장 (학업불량) (720,000원)</option>
+                            <option value="status-change-d2" data-amount="780000">체류자격 변경 → D-2 (780,000원)</option>
+                            <option value="status-change-d10" data-amount="820000">체류자격 변경 → D-10 (820,000원)</option>
+                            <option value="status-change-e7" data-amount="2050000">체류자격 변경 → E-7 (2,050,000원)</option>
+                            <option value="activity-outside-qualification" data-amount="300000">체류자격외 활동허가 (300,000원)</option>
+                        </optgroup>
+                        <optgroup label="D-10 구직비자">
+                            <option value="d10-1-change" data-amount="220000">D-10-1 일반구직 비자 변경 (220,000원)</option>
+                            <option value="d10-2-change" data-amount="330000">D-10-2 기술창업구직 비자 변경 (330,000원)</option>
+                        </optgroup>
+                        <optgroup label="외국인등록">
+                            <option value="foreigner-registration" data-amount="140000">외국인등록 신청 (140,000원)</option>
+                            <option value="foreigner-registration-reissue" data-amount="96300">외국인등록증 재발급 (96,300원)</option>
+                        </optgroup>
                         <option value="custom">직접 입력</option>
                     </select>
                 </div>
                 <div class="form-group" id="customAmountGroup" style="display: none;">
                     <label class="form-label">금액 (원)</label>
                     <input type="number" class="form-input" id="customAmount" placeholder="금액을 입력하세요">
+                </div>
+                <div class="form-group" id="paymentMethodInfo" style="display: none; background: #F3F4F6; border-radius: 8px; padding: 12px;">
+                    <p style="font-size: 13px; color: #6B7280; margin: 0;">고객에게 토스(카드결제) 링크와 WISE(해외송금) 링크가 함께 전송됩니다.</p>
                 </div>
             </div>
             <div class="modal-actions">
@@ -2965,48 +2982,114 @@
             document.getElementById(modalId).classList.remove('active');
         }
 
+        // WISE 결제 링크 (금액별)
+        const wisePaymentLinks = {
+            24000: 'https://wise.com/pay/r/1IF6cGVkIsF9Phs',
+            33000: 'https://wise.com/pay/r/ThTuo2OBnRXSNzA',
+            55000: 'https://wise.com/pay/r/i7KO0SXvaD2VKx0',
+            83300: 'https://wise.com/pay/r/3cpuwd5jgDJvRWI',
+            96300: 'https://wise.com/pay/r/xm5CL2eyBlhEUPo',
+            110000: 'https://wise.com/pay/r/ck3gsRVGWcZpoeE',
+            130000: 'https://wise.com/pay/r/hXGMfv9e6L2dg78',
+            140000: 'https://wise.com/pay/r/PkdBQb9xgn4SOLM',
+            145000: 'https://wise.com/pay/r/Y1MSgycmIZMV4MU',
+            155000: 'https://wise.com/pay/r/b8AvUz6dY-91T4c',
+            160000: 'https://wise.com/pay/r/qHAyX6cHMWRdVls',
+            170000: 'https://wise.com/pay/r/ev-p0-QK7Uymogo',
+            220000: 'https://wise.com/pay/r/TfzM0z6uzy90szg',
+            229000: 'https://wise.com/pay/r/EbYeYimivPXNvIs',
+            260000: 'https://wise.com/pay/r/I09u0zn6y1dlMkw',
+            280000: 'https://wise.com/pay/r/fpxp4Ko0ttWuS5g',
+            300000: 'https://wise.com/pay/r/TdxN_6ncwsAW460',
+            319000: 'https://wise.com/pay/r/gOlOHagrUvwG6zs',
+            320000: 'https://wise.com/pay/r/-CjjhEWULXbz0rk',
+            330000: 'https://wise.com/pay/r/84ApB3e-b9aCpPk',
+            339000: 'https://wise.com/pay/r/4qzd0KQCWf3o-Ls',
+            340000: 'https://wise.com/pay/r/tdJ55UOW4bOEQlU',
+            390000: 'https://wise.com/pay/r/I5OTBday1hGlEMs',
+            430000: 'https://wise.com/pay/r/MST3-o_g9BBc1d8',
+            510000: 'https://wise.com/pay/r/cjgZCYNgy0agO24',
+            610000: 'https://wise.com/pay/r/cjgZCYNgy0agO24',
+            650000: 'https://wise.com/pay/r/LtBfptW0Uo6loss',
+            669000: 'https://wise.com/pay/r/7nzDH3XWRbw-ty8',
+            720000: 'https://wise.com/pay/r/NyVuEVRRg0Dcnzw',
+            750000: 'https://wise.com/pay/r/NyVuEVRRg0Dcnzw',
+            780000: 'https://wise.com/pay/r/NyVuEVRRg0Dcnzw',
+            820000: 'https://wise.com/pay/r/NyVuEVRRg0Dcnzw',
+            1050000: 'https://wise.com/pay/r/xaC-lXmieWY_O50',
+            1200000: 'https://wise.com/pay/r/xaC-lXmieWY_O50',
+            1300000: 'https://wise.com/pay/r/tEFm5TAgSAzHHF0',
+            1400000: 'https://wise.com/pay/r/3Z1Ac7naWvLabmw',
+            2050000: 'https://wise.com/pay/r/3Z1Ac7naWvLabmw'
+        };
+
+        // 가장 가까운 WISE 링크 찾기
+        function findClosestWiseLink(amount) {
+            const amounts = Object.keys(wisePaymentLinks).map(Number).sort((a, b) => a - b);
+            let closest = amounts[0];
+            for (const a of amounts) {
+                if (Math.abs(a - amount) < Math.abs(closest - amount)) {
+                    closest = a;
+                }
+            }
+            return wisePaymentLinks[closest];
+        }
+
         document.getElementById('paymentServiceSelect').addEventListener('change', function() {
             const customGroup = document.getElementById('customAmountGroup');
+            const methodInfo = document.getElementById('paymentMethodInfo');
             customGroup.style.display = this.value === 'custom' ? 'block' : 'none';
+            methodInfo.style.display = this.value ? 'block' : 'none';
         });
 
         async function sendPaymentLink() {
-            const serviceId = document.getElementById('paymentServiceSelect').value;
+            const select = document.getElementById('paymentServiceSelect');
+            const serviceId = select.value;
             if (!serviceId) {
                 alert(tt('thread.alert.selectService', 'Please select a service.'));
                 return;
             }
 
-            let paymentUrl = '';
+            let tossPaymentUrl = '';
+            let wiseLink = '';
             let serviceName = '';
-            let amount = '';
+            let amount = 0;
 
             if (serviceId === 'custom') {
-                amount = document.getElementById('customAmount').value;
+                amount = parseInt(document.getElementById('customAmount').value);
                 if (!amount) {
                     alert(tt('thread.alert.enterAmount', 'Please enter the amount.'));
                     return;
                 }
-                paymentUrl = `${window.location.origin}/service-apply-general.html?service=custom&amount=${amount}&thread=${threadId}`;
+                tossPaymentUrl = `${window.location.origin}/service-apply-general.html?service=custom&amount=${amount}&thread=${threadId}`;
+                wiseLink = findClosestWiseLink(amount);
                 serviceName = '맞춤 서비스';
             } else {
-                paymentUrl = `${window.location.origin}/service-apply-general.html?service=${serviceId}&thread=${threadId}`;
-                const serviceNames = {
-                    'd10-1-change': 'D-10-1 일반구직 비자 변경',
-                    'd10-2-change': 'D-10-2 기술창업구직 비자 변경',
-                    'e7-change': '특정활동 E-7 비자 변경'
-                };
-                serviceName = serviceNames[serviceId] || serviceId;
+                const selectedOption = select.options[select.selectedIndex];
+                amount = parseInt(selectedOption.getAttribute('data-amount')) || 0;
+                tossPaymentUrl = `${window.location.origin}/service-apply-general.html?service=${serviceId}&thread=${threadId}`;
+                wiseLink = amount ? (wisePaymentLinks[amount] || findClosestWiseLink(amount)) : '';
+                serviceName = selectedOption.textContent.split('(')[0].trim();
             }
 
-            const content = `
-                <h4>결제 안내</h4>
-                <p>상담 결과에 따라 아래 서비스로 진행됩니다.</p>
-                <div class="info-box">
-                    <div class="info-box-title">서비스: ${serviceName}</div>
-                    <p>아래 링크에서 결제를 진행해 주세요. <a href="${paymentUrl}" target="_blank">결제 페이지로 이동</a></p>
+            const formattedAmount = amount ? amount.toLocaleString() + '원' : '';
+
+            let content = `
+                <h4>💳 결제 안내 / Payment Guide</h4>
+                <p>상담 결과에 따라 아래 서비스로 진행됩니다.<br>Based on our consultation, please proceed with the payment below.</p>
+                <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 12px 0;">
+                    <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">서비스: ${serviceName}</div>
+                    ${formattedAmount ? `<div style="font-size: 18px; font-weight: 700; color: #3182F6; margin-bottom: 12px;">${formattedAmount}</div>` : ''}
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <a href="${tossPaymentUrl}" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; background: #3182F6; color: white; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px;">
+                            💳 카드 결제 (Toss Payments)
+                        </a>
+                        ${wiseLink ? `<a href="${wiseLink}" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; background: #00B9FF; color: white; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px;">
+                            🌐 해외 송금 (WISE Transfer)
+                        </a>` : ''}
+                    </div>
                 </div>
-                <p>결제 완료 후 자동으로 다음 단계로 진행됩니다.</p>
+                <p style="color: #6B7280; font-size: 13px;">결제 완료 후 자동으로 다음 단계로 진행됩니다.<br>Your case will proceed automatically after payment.</p>
             `;
 
             await createMessage({
