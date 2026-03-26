@@ -1460,14 +1460,15 @@
                     </div>
                     <button class="cta-btn" onclick="event.stopPropagation(); location.href='consultation-request.html?type=emergency'"><span data-i18n="emergency.legal.cta">Emergency Consultation</span> <span class="arrow">→</span></button>
                 </div>
-                <!-- Card 2: 서비스 네비게이터 (중앙) -->
-                <div class="premium-service-card" id="serviceNavigatorCard">
-                    <div class="title" data-i18n="emergency.navigator.title">Service Navigator</div>
+                <!-- Card 2: 무료 사전 상담 (중앙) -->
+                <div class="premium-service-card" id="freeConsultationCard">
+                    <div class="title" data-i18n="emergency.freeConsult.title">Free Pre-Consultation</div>
                     <div class="desc">
-                        <div class="desc-item" data-i18n="emergency.navigator.item1">Find the right service for your case</div>
-                        <div class="desc-item" data-i18n="emergency.navigator.item2">Guided service consultation</div>
+                        <div class="desc-item" data-i18n="emergency.freeConsult.item1">Free case review by immigration specialist</div>
+                        <div class="desc-item" data-i18n="emergency.freeConsult.item2">Get a cost estimate before you pay</div>
+                        <div class="desc-item" data-i18n="emergency.freeConsult.item3">No payment required to start</div>
                     </div>
-                    <button class="cta-btn" onclick="event.stopPropagation(); location.href='service-navigator.html'"><span data-i18n="emergency.navigator.cta">Start Navigator</span> <span class="arrow">→</span></button>
+                    <button class="cta-btn" onclick="event.stopPropagation(); location.href='consultation-request.html'"><span data-i18n="emergency.freeConsult.cta">Start Free Consultation</span> <span class="arrow">→</span></button>
                 </div>
                 <!-- Card 3: 비자 진단 및 자문 (우측) -->
                 <div class="premium-service-card" id="visaDiagnosisCard">
@@ -2095,7 +2096,7 @@
                     const loginUrlParams = new URLSearchParams(window.location.search);
                     const isOAuthCallback = loginUrlParams.has('code') || window.location.hash.includes('access_token');
                     if (isOAuthCallback) {
-                        window.location.href = 'service-navigator.html';
+                        window.location.href = 'consultation-request.html';
                         return;
                     }
 

@@ -2318,18 +2318,93 @@
             }
         }
 
+        // WISE 결제 링크 (금액별)
+        const wisePaymentLinks = {
+            24000: 'https://wise.com/pay/r/1IF6cGVkIsF9Phs',
+            33000: 'https://wise.com/pay/r/ThTuo2OBnRXSNzA',
+            55000: 'https://wise.com/pay/r/i7KO0SXvaD2VKx0',
+            83300: 'https://wise.com/pay/r/3cpuwd5jgDJvRWI',
+            96300: 'https://wise.com/pay/r/xm5CL2eyBlhEUPo',
+            110000: 'https://wise.com/pay/r/ck3gsRVGWcZpoeE',
+            130000: 'https://wise.com/pay/r/hXGMfv9e6L2dg78',
+            140000: 'https://wise.com/pay/r/PkdBQb9xgn4SOLM',
+            145000: 'https://wise.com/pay/r/Y1MSgycmIZMV4MU',
+            155000: 'https://wise.com/pay/r/b8AvUz6dY-91T4c',
+            160000: 'https://wise.com/pay/r/qHAyX6cHMWRdVls',
+            170000: 'https://wise.com/pay/r/ev-p0-QK7Uymogo',
+            220000: 'https://wise.com/pay/r/TfzM0z6uzy90szg',
+            229000: 'https://wise.com/pay/r/EbYeYimivPXNvIs',
+            260000: 'https://wise.com/pay/r/I09u0zn6y1dlMkw',
+            280000: 'https://wise.com/pay/r/fpxp4Ko0ttWuS5g',
+            300000: 'https://wise.com/pay/r/TdxN_6ncwsAW460',
+            319000: 'https://wise.com/pay/r/gOlOHagrUvwG6zs',
+            320000: 'https://wise.com/pay/r/-CjjhEWULXbz0rk',
+            330000: 'https://wise.com/pay/r/84ApB3e-b9aCpPk',
+            339000: 'https://wise.com/pay/r/4qzd0KQCWf3o-Ls',
+            340000: 'https://wise.com/pay/r/tdJ55UOW4bOEQlU',
+            390000: 'https://wise.com/pay/r/I5OTBday1hGlEMs',
+            430000: 'https://wise.com/pay/r/MST3-o_g9BBc1d8',
+            510000: 'https://wise.com/pay/r/cjgZCYNgy0agO24',
+            610000: 'https://wise.com/pay/r/cjgZCYNgy0agO24',
+            650000: 'https://wise.com/pay/r/LtBfptW0Uo6loss',
+            669000: 'https://wise.com/pay/r/7nzDH3XWRbw-ty8',
+            720000: 'https://wise.com/pay/r/NyVuEVRRg0Dcnzw',
+            750000: 'https://wise.com/pay/r/NyVuEVRRg0Dcnzw',
+            780000: 'https://wise.com/pay/r/NyVuEVRRg0Dcnzw',
+            820000: 'https://wise.com/pay/r/NyVuEVRRg0Dcnzw',
+            1050000: 'https://wise.com/pay/r/xaC-lXmieWY_O50',
+            1200000: 'https://wise.com/pay/r/xaC-lXmieWY_O50',
+            1300000: 'https://wise.com/pay/r/tEFm5TAgSAzHHF0',
+            1400000: 'https://wise.com/pay/r/3Z1Ac7naWvLabmw',
+            2050000: 'https://wise.com/pay/r/3Z1Ac7naWvLabmw'
+        };
+
+        function findClosestWiseLink(amount) {
+            const amounts = Object.keys(wisePaymentLinks).map(Number).sort((a, b) => a - b);
+            let closest = amounts[0];
+            for (const a of amounts) {
+                if (Math.abs(a - amount) < Math.abs(closest - amount)) closest = a;
+            }
+            return wisePaymentLinks[closest];
+        }
+
         // Admin tools - modals
         function openPaymentLinkModal() {
             const serviceName = threadData.service_name || '서비스';
-            const paymentUrl = `${window.location.origin}/service-apply-general.html?service=visa-prediagnosis&thread=${threadId}`;
+
+            // 금액 입력 받기
+            const amountInput = prompt(`결제 링크를 전송합니다.\n서비스: ${serviceName}\n\n금액(원)을 입력하세요:`, '220000');
+            if (!amountInput) return;
+
+            const amount = parseInt(amountInput);
+            if (isNaN(amount) || amount <= 0) {
+                alert('올바른 금액을 입력해 주세요.');
+                return;
+            }
+
+            const tossPaymentUrl = `${window.location.origin}/service-apply-general.html?service=visa-prediagnosis&amount=${amount}&thread=${threadId}`;
+            const wiseLink = wisePaymentLinks[amount] || findClosestWiseLink(amount);
+            const formattedAmount = amount.toLocaleString() + '원';
 
             const content = `
-                <h4>결제 안내</h4>
-                <p>아래 링크에서 결제를 진행해 주세요.</p>
-                <p><a href="${paymentUrl}" target="_blank">결제 페이지로 이동</a></p>
+                <h4>💳 결제 안내 / Payment Guide</h4>
+                <p>상담 결과에 따라 아래 서비스로 진행됩니다.<br>Based on our consultation, please proceed with the payment below.</p>
+                <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 12px 0;">
+                    <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">서비스: ${serviceName}</div>
+                    <div style="font-size: 18px; font-weight: 700; color: #3182F6; margin-bottom: 12px;">${formattedAmount}</div>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <a href="${tossPaymentUrl}" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; background: #3182F6; color: white; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px;">
+                            💳 카드 결제 (Toss Payments)
+                        </a>
+                        <a href="${wiseLink}" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; background: #00B9FF; color: white; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px;">
+                            🌐 해외 송금 (WISE Transfer)
+                        </a>
+                    </div>
+                </div>
+                <p style="color: #6B7280; font-size: 13px;">결제 완료 후 자동으로 다음 단계로 진행됩니다.<br>Your case will proceed automatically after payment.</p>
             `;
 
-            if (confirm('결제 링크를 전송하시겠습니까?')) {
+            if (confirm(`${serviceName}\n금액: ${formattedAmount}\n\n결제 링크를 전송하시겠습니까?`)) {
                 createMessage({
                     thread_id: threadId,
                     sender_type: 'admin',
