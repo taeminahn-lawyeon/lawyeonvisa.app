@@ -614,7 +614,7 @@ async function getAllThreads() {
             .from('threads')
             .select(`
                 *,
-                profiles!threads_user_id_fkey (
+                profiles!left (
                     name,
                     email,
                     phone
