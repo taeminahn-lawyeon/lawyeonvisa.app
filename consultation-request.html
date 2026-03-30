@@ -671,6 +671,15 @@
 
         let selectedService = null;
 
+        // i18n helper
+        function t(key, fallback) {
+            if (typeof i18n !== 'undefined' && i18n.translate) {
+                const result = i18n.translate(key);
+                return result !== key ? result : (fallback || key);
+            }
+            return fallback || key;
+        }
+
         // Page load
         document.addEventListener('DOMContentLoaded', async function() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -702,13 +711,13 @@
             // Validate consent
             const consentCheck = document.getElementById('consultConsentCheck');
             if (!consentCheck || !consentCheck.checked) {
-                alert('Please agree to the Terms of Service and Privacy Policy.\n서비스 이용약관 및 개인정보 처리방침에 동의해 주세요.');
+                alert(t('consultation.consentRequired', 'Please agree to the Terms of Service and Privacy Policy.'));
                 return;
             }
 
             const btn = document.getElementById('consultBtn');
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner"></i> Processing...';
+            btn.innerHTML = '<i class="fas fa-spinner"></i> ' + t('common.processing', 'Processing...');
 
             try {
                 // Check current login status
@@ -734,9 +743,9 @@
                 await createConsultationThread();
             } catch (error) {
                 console.error('Consultation request error:', error);
-                alert('An error occurred. Please try again.');
+                alert(t('common.errorRetry', 'An error occurred. Please try again.'));
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Request Consultation';
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> ' + t('consultation.requestBtn', 'Request Consultation');
             }
         }
 
@@ -744,7 +753,7 @@
         async function createConsultationThread() {
             const btn = document.getElementById('consultBtn');
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner"></i> Creating thread...';
+            btn.innerHTML = '<i class="fas fa-spinner"></i> ' + t('consultation.creatingThread', 'Creating thread...');
 
             try {
                 // Ensure profile exists before creating thread (foreign key requirement)
@@ -788,13 +797,13 @@
                 // Clear pending info
                 localStorage.removeItem('pendingConsultation');
 
-                alert('Consultation request submitted!\n\nOur specialist will contact you shortly through your dedicated thread.');
+                alert(t('consultation.submitted', 'Consultation request submitted!\n\nOur specialist will contact you shortly through your dedicated thread.'));
                 window.location.href = `thread-general-v2.html?id=${threadResult.data.id}`;
             } catch (error) {
                 console.error('Thread creation error:', error);
-                alert('An error occurred. Please try again.');
+                alert(t('common.errorRetry', 'An error occurred. Please try again.'));
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Request Consultation';
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> ' + t('consultation.requestBtn', 'Request Consultation');
             }
         }
 

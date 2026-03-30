@@ -1,0 +1,32 @@
+name: Validate Syntax & Payment Flow
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/*.html'
+      - '**/*.js'
+      - 'supabase/**'
+      - 'data/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - '**/*.html'
+      - '**/*.js'
+      - 'supabase/**'
+      - 'data/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Run syntax & payment flow validation
+        run: node scripts/validate-syntax.js

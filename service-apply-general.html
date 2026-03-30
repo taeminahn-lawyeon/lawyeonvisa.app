@@ -2106,7 +2106,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                 const payServiceId = new URLSearchParams(window.location.search).get('service');
                 const verified = getVerifiedPrice(payServiceId);
                 if (!verified || verified.totalPrice !== selectedService.totalPrice) {
-                    alert('결제 금액 검증 실패. 페이지를 새로고침 해주세요.');
+                    alert(getUIMessage('priceVerificationFailed'));
                     return;
                 }
 
@@ -2192,7 +2192,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                 let session = await checkSession();
                 if (!session || !session.user) {
                     // 관리자 세션이 만료된 경우 재로그인 안내
-                    alert('관리자 세션이 만료되었습니다. 다시 로그인해주세요.');
+                    alert(getUIMessage('sessionExpired'));
                     window.location.href = 'admin-login.html';
                     return;
                 }
@@ -2258,7 +2258,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
 
             } catch (error) {
                 console.error('Admin test thread creation error:', error);
-                alert('쓰레드 생성 실패: ' + error.message);
+                alert(getUIMessage('threadCreationFailed') + ': ' + error.message);
                 btn.disabled = false;
                 btn.innerHTML = '<span id="btn-text">카드 결제하기</span>';
             }
@@ -2933,6 +2933,33 @@ Cam on.`,
                     ja: 'ありがとうございます！1-2営業日以内にお支払いを確認いたします。',
                     mn: 'Баярлалаа! 1-2 ажлын өдрийн дотор төлбөрийг баталгаажуулна.',
                     th: 'ขอบคุณ! เราจะยืนยันการชำระเงินภายใน 1-2 วันทำการ'
+                },
+                priceVerificationFailed: {
+                    ko: '결제 금액 검증 실패. 페이지를 새로고침 해주세요.',
+                    en: 'Price verification failed. Please refresh the page.',
+                    zh: '价格验证失败，请刷新页面。',
+                    vi: 'Xác minh giá thất bại. Vui lòng tải lại trang.',
+                    ja: '決済金額の検証に失敗しました。ページを更新してください。',
+                    mn: 'Үнийн баталгаажуулалт амжилтгүй. Хуудсыг дахин ачаална уу.',
+                    th: 'การตรวจสอบราคาล้มเหลว กรุณารีเฟรชหน้า'
+                },
+                sessionExpired: {
+                    ko: '세션이 만료되었습니다. 다시 로그인해주세요.',
+                    en: 'Session expired. Please log in again.',
+                    zh: '会话已过期，请重新登录。',
+                    vi: 'Phiên đã hết hạn. Vui lòng đăng nhập lại.',
+                    ja: 'セッションが期限切れです。再度ログインしてください。',
+                    mn: 'Хугацаа дууссан. Дахин нэвтэрнэ үү.',
+                    th: 'เซสชันหมดอายุ กรุณาเข้าสู่ระบบอีกครั้ง'
+                },
+                threadCreationFailed: {
+                    ko: '쓰레드 생성 실패',
+                    en: 'Thread creation failed',
+                    zh: '创建线程失败',
+                    vi: 'Tạo chuỗi thất bại',
+                    ja: 'スレッド作成に失敗しました',
+                    mn: 'Хүсэлт үүсгэхэд алдаа гарлаа',
+                    th: 'สร้างเธรดล้มเหลว'
                 }
             };
 
