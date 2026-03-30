@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>결제 완료 - 법무법인 로연</title>
+    <title>Payment Complete - Lawyeon</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     
@@ -610,7 +610,7 @@
                 // 🔥 프로필 확인 및 자동 생성
                 const user = await getCurrentUser();
                 if (!user) {
-                    throw new Error('로그인이 필요합니다');
+                    throw new Error(t('payment.success.error.loginRequired', 'Login required'));
                 }
 
                 const profileResult = await getUserProfile(user.id);
@@ -624,7 +624,7 @@
 
                     if (!newProfileResult.success) {
                         console.error('❌ 프로필 자동 생성 실패:', newProfileResult.error);
-                        throw new Error('프로필 생성 실패: ' + newProfileResult.error);
+                        throw new Error(t('payment.success.error.profileFailed', 'Profile creation failed') + ': ' + newProfileResult.error);
                     }
                     // console.log('✅ 프로필 자동 생성 완료');
                 }
@@ -643,7 +643,7 @@
 
                 if (!threadResult.success) {
                     console.error('❌ 쓰레드 생성 실패:', threadResult.error);
-                    throw new Error(threadResult.error || '쓰레드 생성 실패');
+                    throw new Error(threadResult.error || t('payment.success.error.threadFailed', 'Thread creation failed'));
                 }
 
                 createdThreadId = threadResult.data.id;

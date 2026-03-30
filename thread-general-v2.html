@@ -3418,7 +3418,7 @@
             for (const field of requiredFields) {
                 const element = document.getElementById(field.id);
                 if (!element || !element.value.trim()) {
-                    alert(`입력해 주세요: ${field.name}`);
+                    alert(tt('thread.d10form.fillRequired', 'Please fill in: ') + field.name);
                     element?.focus();
                     return;
                 }
