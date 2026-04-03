@@ -63,6 +63,16 @@ const servicePricing = {
         description: 'Daegu Haany University special rate',
         organization: 'dhu'
     },
+    'consultation-chosun-lecture': {
+        id: 'consultation-chosun-lecture',
+        name: 'Visa Consultation Document (Chosun Lecture)',
+        nameKo: '비자 자문서 신청 (조선대 특강)',
+        category: '프리미엄',
+        price: { general: 55000, partner: 55000 },
+        govFee: 0,
+        description: 'Chosun University April 10 lecture - personalized visa consultation document',
+        organization: 'chosun'
+    },
     'd10-1-chosun': {
         id: 'd10-1-chosun',
         name: 'D-10-1 General Job Seeker Visa (Chosun)',

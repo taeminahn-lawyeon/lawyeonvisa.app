@@ -151,6 +151,148 @@
         .user-bar-email { font-size: 12px; color: #1E40AF; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .user-bar-code { font-size: 11px; color: #3B82F6; }
 
+        /* Lecture Hero CTA */
+        .lecture-hero {
+            background: linear-gradient(135deg, #FF6B35 0%, #D62828 100%);
+            border-radius: 20px;
+            padding: 32px 28px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lecture-hero::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 160px;
+            height: 160px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+        }
+
+        .lecture-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            left: -20px;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+        }
+
+        .lecture-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            backdrop-filter: blur(4px);
+        }
+
+        .lecture-hero-badge i {
+            font-size: 11px;
+        }
+
+        .lecture-hero h2 {
+            color: white;
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -0.5px;
+        }
+
+        .lecture-hero .lecture-desc {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .lecture-hero .lecture-meta {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .lecture-hero .lecture-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .lecture-hero .lecture-meta-item i {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .lecture-hero-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 18px 24px;
+            background: white;
+            color: #D62828;
+            border: none;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            letter-spacing: -0.3px;
+        }
+
+        .lecture-hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .lecture-hero-cta .arrow {
+            transition: transform 0.2s;
+            font-size: 20px;
+        }
+
+        .lecture-hero-cta:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        .lecture-hero-sub {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 12px;
+            margin-top: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 600px) {
+            .lecture-hero { padding: 24px 20px; }
+            .lecture-hero h2 { font-size: 20px; }
+            .lecture-hero-cta { font-size: 16px; padding: 16px 20px; }
+            .lecture-hero .lecture-meta { gap: 10px; }
+        }
+
         /* Premium service banner - same as index */
         .premium-service-banner {
             background: linear-gradient(135deg, #374151 0%, #1F2937 100%);
@@ -352,6 +494,32 @@
                         <div class="user-bar-email" id="userEmail">Loading...</div>
                         <div class="user-bar-code" id="userCode"></div>
                     </div>
+                </div>
+
+                <!-- April 10 Lecture Hero CTA -->
+                <div class="lecture-hero" id="lectureHero">
+                    <div class="lecture-hero-badge">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span data-i18n="chosun.lecture.badge">조선대학교 특강 참가자 전용</span>
+                    </div>
+                    <h2 data-i18n="chosun.lecture.title">4월 10일 특강 자문서 신청</h2>
+                    <div class="lecture-desc" data-i18n="chosun.lecture.desc">특강에서 안내된 비자 자문서를 신청하세요. 전문 행정사가 개별 맞춤 자문서를 작성해 드립니다.</div>
+                    <div class="lecture-meta">
+                        <div class="lecture-meta-item">
+                            <i class="fas fa-calendar-check"></i>
+                            <span data-i18n="chosun.lecture.date">특강일: 4월 10일 (목)</span>
+                        </div>
+                        <div class="lecture-meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span data-i18n="chosun.lecture.deadline">신청 마감: 4월 15일</span>
+                        </div>
+                    </div>
+                    <button class="lecture-hero-cta" onclick="goToService('consultation-chosun-lecture')">
+                        <i class="fas fa-file-signature"></i>
+                        <span data-i18n="chosun.lecture.cta">자문서 신청하기</span>
+                        <span class="arrow">→</span>
+                    </button>
+                    <div class="lecture-hero-sub" data-i18n="chosun.lecture.sub">조선대 특별 할인가 적용 · 평균 3영업일 내 발급</div>
                 </div>
 
                 <!-- Quick Service Cards -->
