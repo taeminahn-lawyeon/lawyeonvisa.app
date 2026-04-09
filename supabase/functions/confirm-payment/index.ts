@@ -79,7 +79,8 @@ serve(async (req) => {
     console.log('✅ 인증 성공:', user.id)
 
     // 2. 요청 본문 파싱
-    const { paymentKey, orderId, amount } = await req.json()
+    const requestBody = await req.json()
+    const { paymentKey, orderId, amount, threadData } = requestBody
 
     // 3. 필수 파라미터 검증
     if (!paymentKey || !orderId || !amount) {
@@ -186,11 +187,15 @@ serve(async (req) => {
     // 메모리 정리 (오래된 항목 제거 - 24시간 후)
     setTimeout(() => processedPayments.delete(idempotencyKey), 24 * 60 * 60 * 1000)
 
-    // 9. 결제 정보 DB 저장 (선택적)
-    try {
-      const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
-      if (serviceRoleKey) {
-        const adminSupabase = createClient(supabaseUrl, serviceRoleKey)
+    // 9. 결제 정보 DB 저장 + 쓰레드 생성 (서버사이드)
+    let createdThread = null
+    const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+
+    if (serviceRoleKey) {
+      const adminSupabase = createClient(supabaseUrl, serviceRoleKey)
+
+      // 결제 로그 저장
+      try {
         await adminSupabase.from('payment_logs').insert({
           user_id: user.id,
           order_id: orderId,
@@ -199,10 +204,74 @@ serve(async (req) => {
           status: 'confirmed',
           toss_response: result,
           created_at: new Date().toISOString()
-        }).catch(err => console.log('결제 로그 저장 실패 (무시):', err.message))
+        })
+      } catch (logError) {
+        console.log('결제 로그 저장 실패 (무시):', logError)
       }
-    } catch (logError) {
-      console.log('결제 로그 저장 실패 (무시):', logError)
+
+      // 10. 쓰레드 생성 (threadData가 전달된 경우)
+      if (threadData && threadData.service_name) {
+        try {
+          console.log('🔄 쓰레드 생성 시작 (서버사이드):', {
+            userId: user.id,
+            serviceName: threadData.service_name,
+            orderId: orderId
+          })
+
+          // 프로필 확인 및 자동 생성
+          const { data: existingProfile } = await adminSupabase
+            .from('profiles')
+            .select('id')
+            .eq('id', user.id)
+            .maybeSingle()
+
+          if (!existingProfile) {
+            console.log('📋 프로필 자동 생성')
+            await adminSupabase.from('profiles').upsert({
+              id: user.id,
+              name: threadData.customer_name || '',
+              email: threadData.customer_email || user.email || '',
+              phone: '',
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString()
+            }, { onConflict: 'id' })
+          }
+
+          // 쓰레드 생성
+          const threadRecord: Record<string, unknown> = {
+            user_id: user.id,
+            service_name: threadData.service_name,
+            status: 'payment',
+            amount: numericAmount,
+            order_id: orderId,
+            organization: threadData.organization || null,
+          }
+
+          if (threadData.government_fee) {
+            threadRecord.government_fee = threadData.government_fee
+          }
+          if (threadData.payment_id) {
+            threadRecord.payment_id = threadData.payment_id
+          }
+
+          const { data: thread, error: threadError } = await adminSupabase
+            .from('threads')
+            .insert(threadRecord)
+            .select()
+            .single()
+
+          if (threadError) {
+            console.error('❌ 쓰레드 생성 실패:', threadError)
+          } else {
+            createdThread = thread
+            console.log('✅ 쓰레드 생성 성공:', thread.id)
+          }
+        } catch (threadErr) {
+          console.error('❌ 쓰레드 생성 오류 (결제는 성공):', threadErr)
+        }
+      }
+    } else {
+      console.log('⚠️ SUPABASE_SERVICE_ROLE_KEY 미설정 - 결제 로그/쓰레드 생성 건너뜀')
     }
 
     console.log('✅ 결제 승인 성공:', { orderId, amount: numericAmount })
@@ -217,8 +286,11 @@ serve(async (req) => {
           method: result.method,
           status: result.status,
           approvedAt: result.approvedAt,
-          orderName: result.orderName
-        }
+          orderName: result.orderName,
+          customerName: result.customerName || null,
+          customerEmail: result.customerEmail || null
+        },
+        thread: createdThread
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )

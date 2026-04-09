@@ -1148,19 +1148,38 @@
         // 대시보드 데이터 로드
         async function loadDashboardData() {
             try {
-                // Supabase에서 모든 쓰레드 + 결제 정보 가져오기 (관리자는 전체 조회 가능)
-                const { data: threads, error } = await supabaseClient
+                // Supabase에서 모든 쓰레드 + 프로필 정보 가져오기
+                let threads = null;
+                let error = null;
+
+                // 1차 시도: 쓰레드 + 프로필 조인
+                const joinResult = await supabaseClient
                     .from('threads')
                     .select(`
                         *,
-                        profiles!left (
+                        profiles (
                             name,
                             email,
                             phone
                         )
                     `)
                     .order('created_at', { ascending: false });
-                
+
+                if (joinResult.error) {
+                    console.warn('⚠️ 프로필 조인 실패, 쓰레드만 로드:', joinResult.error.message);
+                    // 2차 시도: 조인 없이 쓰레드만 로드 (FK 관계 문제 대비)
+                    const fallbackResult = await supabaseClient
+                        .from('threads')
+                        .select('*')
+                        .order('created_at', { ascending: false });
+
+                    threads = fallbackResult.data;
+                    error = fallbackResult.error;
+                } else {
+                    threads = joinResult.data;
+                    error = null;
+                }
+
                 if (error) {
                     console.error('❌ 쓰레드 로드 오류:', error);
                     allThreads = [];

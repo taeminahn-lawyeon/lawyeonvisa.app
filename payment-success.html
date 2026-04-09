@@ -526,11 +526,13 @@
                     // console.log('📦 저장된 결제 정보:', paymentInfo);
                 }
 
-                // 🔒 토스페이먼츠 결제 승인 API 호출 (Supabase Edge Function)
-                // console.log('🔄 토스페이먼츠 결제 승인 요청 중...');
-                
+                // 🔒 토스페이먼츠 결제 승인 + 쓰레드 생성 (서버사이드)
+
                 // Supabase Edge Function URL
                 const supabaseUrl = 'https://gqistzsergddnpcvuzba.supabase.co';
+                const serviceName = paymentInfo?.serviceName || '서비스 신청';
+
+                // Edge Function에 쓰레드 데이터도 함께 전달하여 서버사이드에서 생성
                 const confirmResponse = await fetch(`${supabaseUrl}/functions/v1/confirm-payment`, {
                     method: 'POST',
                     headers: {
@@ -540,12 +542,19 @@
                     body: JSON.stringify({
                         paymentKey,
                         orderId,
-                        amount: Number(amount)
+                        amount: Number(amount),
+                        threadData: {
+                            service_name: serviceName,
+                            organization: paymentInfo?.organization || 'general',
+                            government_fee: paymentInfo?.govtFee || 0,
+                            payment_id: 'payment-' + Date.now(),
+                            customer_name: paymentInfo?.customerName || '',
+                            customer_email: paymentInfo?.customerEmail || ''
+                        }
                     })
                 });
 
                 const confirmResult = await confirmResponse.json();
-                // console.log('💳 결제 승인 결과:', confirmResult);
 
                 if (!confirmResult.success) {
                     // 결제 승인 실패
@@ -556,7 +565,6 @@
 
                 // 결제 승인 성공 - 토스페이먼츠 응답 데이터
                 const tossPaymentData = confirmResult.data;
-                // console.log('✅ 토스페이먼츠 결제 승인 성공:', tossPaymentData);
 
                 // paymentData 구성
                 const paymentData = {
@@ -571,20 +579,42 @@
                     customer_name: paymentInfo?.customerName || tossPaymentData.customerName,
                     customer_email: paymentInfo?.customerEmail || tossPaymentData.customerEmail,
                     organization: paymentInfo?.organization || 'general',
-                    lectureCode: paymentInfo?.lectureCode || '',  // DHU lecture code
+                    lectureCode: paymentInfo?.lectureCode || '',
                     status: 'completed',
-                    toss_response: tossPaymentData,  // 토스 응답 전체 저장
-                    d10FormattedMessage: paymentInfo?.d10FormattedMessage || null  // D-10-1 폼 데이터
+                    toss_response: tossPaymentData,
+                    d10FormattedMessage: paymentInfo?.d10FormattedMessage || null
                 };
 
                 // sessionStorage 정리
                 sessionStorage.removeItem('pendingPayment');
 
-                // 쓰레드 생성
-                const thread = await createThreadFromPayment(paymentData);
+                // 서버사이드에서 생성된 쓰레드 확인
+                let thread = confirmResult.thread || null;
+
+                // 서버사이드 쓰레드 생성 실패 시 클라이언트 폴백
+                if (!thread) {
+                    console.warn('⚠️ 서버사이드 쓰레드 생성 실패 - 클라이언트에서 재시도');
+                    thread = await createThreadFromPayment(paymentData);
+                }
 
                 if (thread) {
-                    // console.log('✅ 결제 완료 + 쓰레드 생성 성공');
+                    createdThreadId = thread.id;
+
+                    // 환영 메시지 발송
+                    try {
+                        await sendWelcomeMessage(thread.id, paymentData.service_name, paymentData.organization, paymentData.lectureCode);
+                    } catch (msgErr) {
+                        console.error('환영 메시지 발송 실패 (무시):', msgErr);
+                    }
+
+                    // D-10-1 폼 데이터가 있으면 추가 메시지 발송
+                    if (paymentData.d10FormattedMessage) {
+                        try {
+                            await sendD10FormMessage(thread.id, paymentData.d10FormattedMessage);
+                        } catch (d10Err) {
+                            console.error('D-10 폼 메시지 발송 실패 (무시):', d10Err);
+                        }
+                    }
                 } else {
                     console.warn('⚠️ 결제는 완료되었지만 쓰레드 생성 실패');
                 }
@@ -647,16 +677,8 @@
                 }
 
                 createdThreadId = threadResult.data.id;
-                // console.log('✅ 쓰레드 생성 완료. ID:', createdThreadId);
 
-                // 📨 기본사항 제출 링크가 포함된 환영 메시지 발송
-                await sendWelcomeMessage(createdThreadId, paymentData.service_name, paymentData.organization, paymentData.lectureCode);
-
-                // 📋 D-10-1 폼 데이터가 있으면 추가 메시지 발송
-                if (paymentData.d10FormattedMessage) {
-                    await sendD10FormMessage(createdThreadId, paymentData.d10FormattedMessage);
-                }
-
+                // 환영 메시지/D-10 폼 메시지는 호출자(main flow)에서 발송
                 return threadResult.data;
             } catch (error) {
                 console.error('❌ 쓰레드 생성 오류:', error);
