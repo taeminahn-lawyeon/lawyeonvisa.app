@@ -442,6 +442,7 @@
                             <i class="fas fa-paper-plane"></i>
                             <span data-i18n="chosun.login.submit">Start Application</span>
                         </button>
+                        <button type="button" onclick="handleSwitchAccount()" style="width: 100%; margin-top: 10px; padding: 12px; background: transparent; border: 1px solid #E5E7EB; border-radius: 12px; font-size: 13px; font-weight: 600; color: #6B7280; cursor: pointer;" data-i18n="chosun.login.switchAccount">Sign in with a different account</button>
                     </div>
                 </form>
 
@@ -597,6 +598,12 @@
                 btn.classList.remove('loading');
                 btn.innerHTML = '<i class="fas fa-paper-plane"></i> Start Application';
             }
+        }
+
+        async function handleSwitchAccount() {
+            await signOut();
+            sessionStorage.removeItem('chosun_lecture_code');
+            window.location.reload();
         }
 
         function showError(message) {

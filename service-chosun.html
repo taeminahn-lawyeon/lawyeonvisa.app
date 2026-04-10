@@ -427,6 +427,7 @@
                         <div class="user-bar-email" id="userEmail">Loading...</div>
                         <div class="user-bar-code" id="userCode"></div>
                     </div>
+                    <button onclick="handleLogout()" style="padding: 6px 14px; background: #F3F4F6; border: 1px solid #E5E7EB; border-radius: 8px; font-size: 12px; font-weight: 600; color: #6B7280; cursor: pointer; white-space: nowrap;" data-i18n="chosun.logout">Logout</button>
                 </div>
 
                 <!-- My Applications (dynamically shown if threads exist) -->
@@ -537,9 +538,11 @@
                     </a>
                     <a class="service-item" data-service="parent-invite">
                         <div class="title" data-i18n="chosun.svc.parent.title">유학생 가족 초청</div>
-                        <div class="desc" data-i18n="chosun.svc.parent.desc">우수 유학생 부모 초청</div>
+                        <div class="desc" data-i18n="chosun.svc.parent.desc">유학생 가족 초청 비자</div>
                     </a>
                 </div>
+
+                <a href="https://pf.kakao.com/_jACnn" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; margin-top: 20px; padding: 14px; background: #FEE500; color: #191919; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none;" data-i18n="chosun.login.kakao">KakaoTalk으로 문의하기</a>
             </div>
         </div>
 
@@ -558,6 +561,12 @@
 
     <script>
         const lectureCode = sessionStorage.getItem('chosun_lecture_code') || new URLSearchParams(window.location.search).get('lectureCode') || '';
+
+        async function handleLogout() {
+            await signOut();
+            sessionStorage.removeItem('chosun_lecture_code');
+            window.location.href = 'login-chosun.html';
+        }
 
         function goToService(serviceId) {
             const params = new URLSearchParams({ service: serviceId, org: 'chosun' });
