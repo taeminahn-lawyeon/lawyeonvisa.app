@@ -4,6 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="favicon.png?v=3">
+
+    <!-- 🔁 If returning from Google OAuth with pending login, skip directly to service page -->
+    <script>
+        (function() {
+            try {
+                var pending = sessionStorage.getItem('chosun_pending_login');
+                var code = sessionStorage.getItem('chosun_lecture_code');
+                // Only redirect if we have the pending flag AND auth fragment (just returned from OAuth)
+                if (pending === 'true' && code && (window.location.hash.indexOf('access_token') !== -1 || window.location.hash.indexOf('error') === -1)) {
+                    // Hide page to prevent flash while async session check runs
+                    document.documentElement.style.visibility = 'hidden';
+                    document.documentElement.style.background = '#0078D4';
+                }
+            } catch (e) {}
+        })();
+    </script>
+
     <title data-i18n="chosun.page.title">Immigration & Visa Service - Chosun University</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
@@ -508,7 +525,7 @@
                             });
                         }
                     } catch (e) { console.error('Profile check error:', e); }
-                    window.location.href = `service-chosun.html?lectureCode=${encodeURIComponent(savedLectureCode)}`;
+                    window.location.replace(`service-chosun.html?lectureCode=${encodeURIComponent(savedLectureCode)}`);
                     return;
                 }
 
