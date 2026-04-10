@@ -5,17 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="favicon.png?v=3">
 
-    <!-- 🔁 If returning from Google OAuth with pending login, skip directly to service page -->
+    <!-- 🔁 If returning from Google OAuth, hide page briefly while session initializes -->
     <script>
         (function() {
             try {
-                var pending = sessionStorage.getItem('chosun_pending_login');
+                var hash = window.location.hash || '';
+                var isOAuthCallback = hash.indexOf('access_token') !== -1;
+                var pending = sessionStorage.getItem('chosun_pending_login') === 'true';
                 var code = sessionStorage.getItem('chosun_lecture_code');
-                // Only redirect if we have the pending flag AND auth fragment (just returned from OAuth)
-                if (pending === 'true' && code && (window.location.hash.indexOf('access_token') !== -1 || window.location.hash.indexOf('error') === -1)) {
-                    // Hide page to prevent flash while async session check runs
+
+                // Only hide if we just returned from OAuth AND have pending login + code
+                if (isOAuthCallback && pending && code) {
                     document.documentElement.style.visibility = 'hidden';
                     document.documentElement.style.background = '#0078D4';
+                    // Safety: auto-unhide after 5 seconds if redirect fails
+                    setTimeout(function() {
+                        document.documentElement.style.visibility = '';
+                        document.documentElement.style.background = '';
+                    }, 5000);
                 }
             } catch (e) {}
         })();
@@ -496,6 +503,33 @@
         // Valid lecture codes for Chosun University
         const validLectureCodes = ['CHOSUN0410'];
 
+        // Handles the post-login redirect logic (called from both
+        // initial session check AND onAuthStateChange)
+        let _redirectHandled = false;
+        async function handlePostLoginRedirect(user) {
+            if (_redirectHandled) return;
+            const pendingLogin = sessionStorage.getItem('chosun_pending_login');
+            const savedLectureCode = sessionStorage.getItem('chosun_lecture_code');
+
+            if (pendingLogin === 'true' && savedLectureCode) {
+                _redirectHandled = true;
+                sessionStorage.removeItem('chosun_pending_login');
+                try {
+                    const profileResult = await getUserProfile(user.id);
+                    if (!profileResult.success || !profileResult.data) {
+                        await createOrUpdateProfile(user.id, {
+                            name: user.user_metadata?.full_name || '',
+                            email: user.email || '',
+                            phone: ''
+                        });
+                    }
+                } catch (e) { console.error('Profile check error:', e); }
+                window.location.replace(`service-chosun.html?lectureCode=${encodeURIComponent(savedLectureCode)}`);
+                return true;
+            }
+            return false;
+        }
+
         window.addEventListener('DOMContentLoaded', async function() {
             // Initialize i18n
             if (typeof i18n !== 'undefined') {
@@ -503,33 +537,34 @@
                 i18n.translatePage();
             }
 
-            // Check existing session
+            // Listen for auth state changes (handles OAuth callback timing)
+            supabaseClient.auth.onAuthStateChange(async (event, session) => {
+                if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION' || event === 'TOKEN_REFRESHED') && session && session.user) {
+                    currentUser = session.user;
+                    const redirected = await handlePostLoginRedirect(session.user);
+                    if (!redirected) {
+                        // Unhide page if we hid it earlier
+                        document.documentElement.style.visibility = '';
+                        document.documentElement.style.background = '';
+                        showLoggedInState(session.user);
+                    }
+                }
+            });
+
+            // Also check existing session immediately
             const session = await checkSession();
             if (session && session.user) {
                 currentUser = session.user;
-
-                // If user came back from Google OAuth with pending login flag,
-                // auto-proceed to service-chosun.html
-                const pendingLogin = sessionStorage.getItem('chosun_pending_login');
-                const savedLectureCode = sessionStorage.getItem('chosun_lecture_code');
-                if (pendingLogin === 'true' && savedLectureCode) {
-                    sessionStorage.removeItem('chosun_pending_login');
-                    // Ensure profile exists
-                    try {
-                        const profileResult = await getUserProfile(session.user.id);
-                        if (!profileResult.success || !profileResult.data) {
-                            await createOrUpdateProfile(session.user.id, {
-                                name: session.user.user_metadata?.full_name || '',
-                                email: session.user.email || '',
-                                phone: ''
-                            });
-                        }
-                    } catch (e) { console.error('Profile check error:', e); }
-                    window.location.replace(`service-chosun.html?lectureCode=${encodeURIComponent(savedLectureCode)}`);
-                    return;
+                const redirected = await handlePostLoginRedirect(session.user);
+                if (!redirected) {
+                    document.documentElement.style.visibility = '';
+                    document.documentElement.style.background = '';
+                    showLoggedInState(session.user);
                 }
-
-                showLoggedInState(session.user);
+            } else {
+                // No session - ensure page is visible
+                document.documentElement.style.visibility = '';
+                document.documentElement.style.background = '';
             }
 
             // Google login button

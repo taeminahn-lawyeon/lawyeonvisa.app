@@ -581,8 +581,27 @@
                 i18n.translatePage();
             }
 
-            // Check session
-            const session = await checkSession();
+            // Check session (with OAuth callback support)
+            let session = await checkSession();
+
+            // If no session but we have an OAuth hash, wait for Supabase to process it
+            if ((!session || !session.user) && window.location.hash.indexOf('access_token') !== -1) {
+                session = await new Promise(function(resolve) {
+                    const timeout = setTimeout(function() { resolve(null); }, 5000);
+                    const { data } = supabaseClient.auth.onAuthStateChange(function(event, s) {
+                        if (s && s.user) {
+                            clearTimeout(timeout);
+                            data.subscription.unsubscribe();
+                            resolve(s);
+                        }
+                    });
+                });
+                // Clean up the hash from URL
+                if (session) {
+                    history.replaceState(null, '', window.location.pathname + window.location.search);
+                }
+            }
+
             if (!session || !session.user) {
                 window.location.href = 'login-chosun.html';
                 return;
