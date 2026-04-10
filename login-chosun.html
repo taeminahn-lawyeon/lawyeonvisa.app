@@ -490,6 +490,28 @@
             const session = await checkSession();
             if (session && session.user) {
                 currentUser = session.user;
+
+                // If user came back from Google OAuth with pending login flag,
+                // auto-proceed to service-chosun.html
+                const pendingLogin = sessionStorage.getItem('chosun_pending_login');
+                const savedLectureCode = sessionStorage.getItem('chosun_lecture_code');
+                if (pendingLogin === 'true' && savedLectureCode) {
+                    sessionStorage.removeItem('chosun_pending_login');
+                    // Ensure profile exists
+                    try {
+                        const profileResult = await getUserProfile(session.user.id);
+                        if (!profileResult.success || !profileResult.data) {
+                            await createOrUpdateProfile(session.user.id, {
+                                name: session.user.user_metadata?.full_name || '',
+                                email: session.user.email || '',
+                                phone: ''
+                            });
+                        }
+                    } catch (e) { console.error('Profile check error:', e); }
+                    window.location.href = `service-chosun.html?lectureCode=${encodeURIComponent(savedLectureCode)}`;
+                    return;
+                }
+
                 showLoggedInState(session.user);
             }
 
@@ -516,6 +538,11 @@
             }
 
             hideError();
+
+            // Save lecture code + pending flag BEFORE OAuth redirect
+            // (sessionStorage survives the Google OAuth redirect within the same tab)
+            sessionStorage.setItem('chosun_lecture_code', lectureCode);
+            sessionStorage.setItem('chosun_pending_login', 'true');
 
             const btn = document.getElementById('googleLoginBtn');
             btn.disabled = true;

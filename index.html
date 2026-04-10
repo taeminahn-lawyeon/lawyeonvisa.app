@@ -1792,6 +1792,37 @@
                 window.i18n.init();
             }
 
+            // 🔁 조선대/DHU 전용 페이지에서 Google OAuth 후 index로 리다이렉트된 경우
+            // 자동으로 대학 전용 서비스 페이지로 이동
+            (async function handleUniversityRedirect() {
+                const chosunPending = sessionStorage.getItem('chosun_pending_login');
+                const chosunCode = sessionStorage.getItem('chosun_lecture_code');
+                const dhuPending = sessionStorage.getItem('dhu_pending_login');
+                const dhuCode = sessionStorage.getItem('dhu_lecture_code');
+
+                if (chosunPending === 'true' && chosunCode) {
+                    try {
+                        const session = await checkSession();
+                        if (session && session.user) {
+                            sessionStorage.removeItem('chosun_pending_login');
+                            window.location.href = `service-chosun.html?lectureCode=${encodeURIComponent(chosunCode)}`;
+                            return;
+                        }
+                    } catch (e) { console.error('Chosun redirect check error:', e); }
+                }
+
+                if (dhuPending === 'true' && dhuCode) {
+                    try {
+                        const session = await checkSession();
+                        if (session && session.user) {
+                            sessionStorage.removeItem('dhu_pending_login');
+                            window.location.href = `login-dhu.html`;
+                            return;
+                        }
+                    } catch (e) { console.error('DHU redirect check error:', e); }
+                }
+            })();
+
             // 관리자 로그인 상태 확인 및 UI 업데이트
             if (window.isAdminLoggedIn && window.isAdminLoggedIn()) {
                 // 구글 로그인 버튼 숨기기
