@@ -10,23 +10,39 @@
     <script>
         (function() {
             try {
-                var chosunPending = sessionStorage.getItem('chosun_pending_login');
+                var chosunPending = sessionStorage.getItem('chosun_pending_login') === 'true';
                 var chosunCode = sessionStorage.getItem('chosun_lecture_code');
-                var dhuPending = sessionStorage.getItem('dhu_pending_login');
+                var dhuPending = sessionStorage.getItem('dhu_pending_login') === 'true';
                 var dhuCode = sessionStorage.getItem('dhu_lecture_code');
+                var hash = window.location.hash || '';
+                var isOAuthCallback = hash.indexOf('access_token') !== -1;
 
-                if ((chosunPending === 'true' && chosunCode) || (dhuPending === 'true' && dhuCode)) {
-                    // Hide page immediately to prevent index.html flash
+                // Scenario A: Just returned from Google OAuth with pending flag
+                // → Supabase will process the hash, but we can redirect immediately using the flag
+                if (chosunPending && chosunCode) {
                     document.documentElement.style.visibility = 'hidden';
                     document.documentElement.style.background = '#0078D4';
+                    sessionStorage.removeItem('chosun_pending_login');
+                    // Preserve hash so Supabase can process the session on the destination page
+                    window.location.replace('service-chosun.html?lectureCode=' + encodeURIComponent(chosunCode) + (hash || ''));
+                    // Safety fallback: unhide if redirect fails
+                    setTimeout(function() {
+                        document.documentElement.style.visibility = '';
+                        document.documentElement.style.background = '';
+                    }, 5000);
+                    return;
+                }
 
-                    if (chosunPending === 'true' && chosunCode) {
-                        sessionStorage.removeItem('chosun_pending_login');
-                        window.location.replace('service-chosun.html?lectureCode=' + encodeURIComponent(chosunCode));
-                    } else if (dhuPending === 'true' && dhuCode) {
-                        sessionStorage.removeItem('dhu_pending_login');
-                        window.location.replace('login-dhu.html');
-                    }
+                if (dhuPending && dhuCode) {
+                    document.documentElement.style.visibility = 'hidden';
+                    document.documentElement.style.background = '#0078D4';
+                    sessionStorage.removeItem('dhu_pending_login');
+                    window.location.replace('login-dhu.html' + (hash || ''));
+                    setTimeout(function() {
+                        document.documentElement.style.visibility = '';
+                        document.documentElement.style.background = '';
+                    }, 5000);
+                    return;
                 }
             } catch (e) { console.error('University redirect error:', e); }
         })();
