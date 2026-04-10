@@ -5,6 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="format-detection" content="telephone=no">
+
+    <!-- 🔁 University dedicated login redirect (runs BEFORE any rendering) -->
+    <script>
+        (function() {
+            try {
+                var chosunPending = sessionStorage.getItem('chosun_pending_login');
+                var chosunCode = sessionStorage.getItem('chosun_lecture_code');
+                var dhuPending = sessionStorage.getItem('dhu_pending_login');
+                var dhuCode = sessionStorage.getItem('dhu_lecture_code');
+
+                if ((chosunPending === 'true' && chosunCode) || (dhuPending === 'true' && dhuCode)) {
+                    // Hide page immediately to prevent index.html flash
+                    document.documentElement.style.visibility = 'hidden';
+                    document.documentElement.style.background = '#0078D4';
+
+                    if (chosunPending === 'true' && chosunCode) {
+                        sessionStorage.removeItem('chosun_pending_login');
+                        window.location.replace('service-chosun.html?lectureCode=' + encodeURIComponent(chosunCode));
+                    } else if (dhuPending === 'true' && dhuCode) {
+                        sessionStorage.removeItem('dhu_pending_login');
+                        window.location.replace('login-dhu.html');
+                    }
+                }
+            } catch (e) { console.error('University redirect error:', e); }
+        })();
+    </script>
+
     <title data-i18n="site.title">법무법인 로연 출입국이민지원센터</title>
 
     <!-- SEO 메타 태그 -->
