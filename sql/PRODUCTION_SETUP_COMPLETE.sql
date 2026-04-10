@@ -86,14 +86,14 @@ CREATE POLICY "users_insert_own_profile" ON public.profiles
     FOR INSERT
     WITH CHECK (auth.uid() = id OR auth.uid() = user_id);
 
--- super_admin은 모든 프로필 접근
+-- 관리자(super_admin, admin, staff)는 모든 프로필 접근
 CREATE POLICY "admins_full_access_profiles" ON public.profiles
     FOR ALL
     USING (
         EXISTS (
             SELECT 1 FROM public.admins
             WHERE email = (SELECT email FROM auth.users WHERE id = auth.uid())
-            AND role = 'super_admin'
+            AND role IN ('super_admin', 'admin', 'staff')
         )
     );
 
@@ -121,14 +121,14 @@ CREATE POLICY "users_update_own_threads" ON public.threads
     FOR UPDATE
     USING (auth.uid() = user_id);
 
--- super_admin은 모든 쓰레드 접근
+-- 관리자(super_admin, admin, staff)는 모든 쓰레드 접근
 CREATE POLICY "admins_full_access_threads" ON public.threads
     FOR ALL
     USING (
         EXISTS (
             SELECT 1 FROM public.admins
             WHERE email = (SELECT email FROM auth.users WHERE id = auth.uid())
-            AND role IN ('super_admin', 'admin')
+            AND role IN ('super_admin', 'admin', 'staff')
         )
     );
 
@@ -150,14 +150,14 @@ CREATE POLICY "users_insert_own_payments" ON public.payments
     FOR INSERT
     WITH CHECK (auth.uid() = user_id);
 
--- super_admin은 모든 결제 접근
+-- 관리자(super_admin, admin, staff)는 모든 결제 접근
 CREATE POLICY "admins_full_access_payments" ON public.payments
     FOR ALL
     USING (
         EXISTS (
             SELECT 1 FROM public.admins
             WHERE email = (SELECT email FROM auth.users WHERE id = auth.uid())
-            AND role = 'super_admin'
+            AND role IN ('super_admin', 'admin', 'staff')
         )
     );
 
@@ -187,14 +187,14 @@ CREATE POLICY "users_insert_own_messages" ON public.messages
         )
     );
 
--- super_admin은 모든 메시지 접근
+-- 관리자(super_admin, admin, staff)는 모든 메시지 접근
 CREATE POLICY "admins_full_access_messages" ON public.messages
     FOR ALL
     USING (
         EXISTS (
             SELECT 1 FROM public.admins
             WHERE email = (SELECT email FROM auth.users WHERE id = auth.uid())
-            AND role IN ('super_admin', 'admin')
+            AND role IN ('super_admin', 'admin', 'staff')
         )
     );
 
@@ -222,14 +222,14 @@ CREATE POLICY "users_update_own_applications" ON public.applications
     FOR UPDATE
     USING (auth.uid() = user_id);
 
--- super_admin은 모든 신청 접근
+-- 관리자(super_admin, admin, staff)는 모든 신청 접근
 CREATE POLICY "admins_full_access_applications" ON public.applications
     FOR ALL
     USING (
         EXISTS (
             SELECT 1 FROM public.admins
             WHERE email = (SELECT email FROM auth.users WHERE id = auth.uid())
-            AND role = 'super_admin'
+            AND role IN ('super_admin', 'admin', 'staff')
         )
     );
 
