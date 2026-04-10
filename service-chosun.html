@@ -151,6 +151,81 @@
         .user-bar-email { font-size: 12px; color: #1E40AF; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .user-bar-code { font-size: 11px; color: #3B82F6; }
 
+        /* My Applications Section */
+        .my-threads {
+            background: white;
+            border: 2px solid #3B82F6;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .my-threads-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: #1E40AF;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .my-threads-title i { color: #3B82F6; }
+
+        .thread-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            background: #EFF6FF;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 8px;
+        }
+
+        .thread-card:last-child { margin-bottom: 0; }
+
+        .thread-card:hover {
+            background: #DBEAFE;
+            transform: translateX(4px);
+        }
+
+        .thread-info { flex: 1; min-width: 0; }
+
+        .thread-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1E3A5F;
+            margin-bottom: 4px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .thread-meta {
+            font-size: 12px;
+            color: #6B7280;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .thread-status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .thread-arrow {
+            color: #3B82F6;
+            font-size: 16px;
+            flex-shrink: 0;
+            margin-left: 12px;
+        }
+
         /* Premium service banner - same as index */
         .premium-service-banner {
             background: linear-gradient(135deg, #374151 0%, #1F2937 100%);
@@ -354,6 +429,9 @@
                     </div>
                 </div>
 
+                <!-- My Applications (dynamically shown if threads exist) -->
+                <div id="myThreadsSection" style="display: none;"></div>
+
                 <!-- Quick Service Cards -->
                 <div class="premium-service-banner">
                     <h3 data-i18n="emergency.title">Immigration Legal Services</h3>
@@ -509,6 +587,9 @@
                 document.getElementById('userCode').textContent = 'Lecture Code: ' + lectureCode;
             }
 
+            // Load existing threads
+            await loadMyThreads(user.id);
+
             // Bind service item clicks
             document.querySelectorAll('.service-item').forEach(function(item) {
                 item.addEventListener('click', function() {
@@ -517,6 +598,56 @@
                 });
             });
         });
+
+        async function loadMyThreads(userId) {
+            try {
+                const result = await getUserThreads(userId);
+                if (!result.success || !result.data || result.data.length === 0) return;
+
+                const threads = result.data.filter(t => t.status !== 'archived');
+                if (threads.length === 0) return;
+
+                const statusMap = {
+                    payment: { label: 'Received', bg: '#DBEAFE', color: '#1E40AF' },
+                    document: { label: 'In Progress', bg: '#FEF3C7', color: '#92400E' },
+                    processing: { label: 'Processing', bg: '#E0E7FF', color: '#4338CA' },
+                    completed: { label: 'Completed', bg: '#D1FAE5', color: '#065F46' },
+                    received: { label: 'Received', bg: '#DBEAFE', color: '#1E40AF' },
+                    pending: { label: 'Pending', bg: '#FEF3C7', color: '#92400E' }
+                };
+
+                let html = `
+                    <div class="my-threads">
+                        <div class="my-threads-title">
+                            <i class="fas fa-clipboard-list"></i>
+                            My Applications (${threads.length})
+                        </div>`;
+
+                threads.forEach(t => {
+                    const s = statusMap[t.status] || statusMap.received;
+                    const date = new Date(t.created_at).toLocaleDateString();
+                    html += `
+                        <div class="thread-card" onclick="location.href='thread-general-v2.html?id=${t.id}'">
+                            <div class="thread-info">
+                                <div class="thread-name">${t.service_name || 'Service'}</div>
+                                <div class="thread-meta">
+                                    <span class="thread-status" style="background:${s.bg};color:${s.color};">${s.label}</span>
+                                    <span>${date}</span>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right thread-arrow"></i>
+                        </div>`;
+                });
+
+                html += '</div>';
+
+                const section = document.getElementById('myThreadsSection');
+                section.innerHTML = html;
+                section.style.display = 'block';
+            } catch (err) {
+                console.error('Thread load error:', err);
+            }
+        }
     </script>
 </body>
 </html>
