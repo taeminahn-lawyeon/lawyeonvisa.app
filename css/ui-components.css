@@ -277,6 +277,8 @@ button, .btn, input[type="button"], input[type="submit"] {
         transform: translateX(-50%);
         min-width: 200px;
         max-width: calc(100vw - 32px);
+        max-height: 50vh;
+        overflow-y: auto;
         margin-top: 8px;
     }
 
@@ -292,7 +294,7 @@ button, .btn, input[type="button"], input[type="submit"] {
         right: 16px;
         transform: none;
         min-width: auto;
-        width: calc(100vw - 32px);
+        width: calc(100vw - 32px) !important;
     }
 
     #language-dropdown.hidden {

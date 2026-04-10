@@ -1157,7 +1157,7 @@
                     .from('threads')
                     .select(`
                         *,
-                        profiles (
+                        profiles!left (
                             name,
                             email,
                             phone
