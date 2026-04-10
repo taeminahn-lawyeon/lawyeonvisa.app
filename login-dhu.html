@@ -492,6 +492,10 @@
 
             hideError();
 
+            // Save lecture code + pending flag BEFORE OAuth redirect
+            sessionStorage.setItem('dhu_lecture_code', lectureCode);
+            sessionStorage.setItem('dhu_pending_login', 'true');
+
             const btn = document.getElementById('googleLoginBtn');
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
