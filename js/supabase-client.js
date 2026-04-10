@@ -56,7 +56,10 @@ async function signInWithGoogle() {
         const { data, error } = await supabaseClient.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: redirectUrl
+                redirectTo: redirectUrl,
+                queryParams: {
+                    prompt: 'select_account'
+                }
             }
         });
 
