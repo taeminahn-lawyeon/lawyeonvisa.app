@@ -90,23 +90,65 @@ async function sendSnsNotification(params) {
             templateType = 'new_reply',
             serviceName,
             messagePreview = '',
-            language = 'en'
+            language = 'en',
+            fallbackEmail = ''
         } = params;
 
         // 사용자 프로필에서 메신저 정보 가져오기
         const profileResult = await getUserProfile(userId);
         if (!profileResult.success || !profileResult.data) {
-            console.log('📱 [sendSnsNotification] 프로필 없음 - 알림 스킵');
+            // 프로필이 없어도 fallbackEmail이 있으면 이메일로 발송
+            if (fallbackEmail) {
+                console.log('📱 [sendSnsNotification] 프로필 없음 - fallbackEmail 사용:', fallbackEmail);
+                const template = NOTIFICATION_TEMPLATES[templateType];
+                if (!template) return { success: false, error: 'Invalid template type' };
+                const localizedTemplate = template[language] || template['en'];
+                const threadUrl = `${window.location.origin}/my-threads.html?thread=${threadId}`;
+                const notificationPayload = {
+                    messenger: 'email',
+                    recipient: fallbackEmail,
+                    template: {
+                        title: localizedTemplate.title,
+                        header: localizedTemplate.header,
+                        serviceName: serviceName,
+                        messagePreview: messagePreview,
+                        footer: localizedTemplate.footer,
+                        buttonText: localizedTemplate.button,
+                        buttonUrl: threadUrl
+                    }
+                };
+                const session = await checkSession();
+                if (!session) return { success: false, error: 'Not authenticated' };
+                const response = await fetch(NOTIFICATION_FUNCTION_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${session.access_token}`
+                    },
+                    body: JSON.stringify(notificationPayload)
+                });
+                if (!response.ok) return { success: false, error: await response.text() };
+                return { success: true, data: await response.json() };
+            }
+            console.log('📱 [sendSnsNotification] 프로필 없음, 이메일도 없음 - 알림 스킵');
             return { success: false, error: 'Profile not found' };
         }
 
         const profile = profileResult.data;
-        const messenger = profile.preferred_messenger;
-        const messengerId = profile.messenger_id;
+        let messenger = profile.preferred_messenger;
+        let messengerId = profile.messenger_id;
 
+        // 메신저 정보가 없으면 이메일로 폴백
         if (!messenger || !messengerId) {
-            console.log('📱 [sendSnsNotification] 메신저 정보 없음 - 알림 스킵');
-            return { success: false, error: 'Messenger info not configured' };
+            const email = profile.email;
+            if (email) {
+                console.log('📱 [sendSnsNotification] 메신저 정보 없음 - 이메일 폴백:', email);
+                messenger = 'email';
+                messengerId = email;
+            } else {
+                console.log('📱 [sendSnsNotification] 메신저/이메일 정보 없음 - 알림 스킵');
+                return { success: false, error: 'No notification channel available' };
+            }
         }
 
         // 템플릿 가져오기

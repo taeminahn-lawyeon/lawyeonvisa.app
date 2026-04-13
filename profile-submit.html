@@ -1001,6 +1001,37 @@
                             <a href="privacy-policy.html" target="_blank"><i class="fas fa-external-link-alt"></i> <span data-i18n="profile.consent.privacyLink">Privacy Policy</span></a>
                         </div>
                     </div>
+
+                    <!-- 5. Notification Consent -->
+                    <div class="consent-item">
+                        <div class="consent-header">
+                            <label class="consent-checkbox-label">
+                                <input type="checkbox" class="consent-check" id="consentNotification" onchange="updateConsentAll()">
+                                <span class="checkmark"></span>
+                                <span class="consent-text" data-i18n="profile.consent.notification">[Required] Consent to Receive Service Notifications</span>
+                            </label>
+                            <button type="button" class="consent-toggle-btn" onclick="toggleConsentDetail('notificationDetail')">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="consent-detail" id="notificationDetail">
+                            <table class="consent-table">
+                                <tr>
+                                    <th data-i18n="profile.consent.table.purpose">Purpose</th>
+                                    <td data-i18n="profile.consent.notification.purpose">Notification of service progress updates, new replies from your lawyer, document submission requests, and status changes</td>
+                                </tr>
+                                <tr>
+                                    <th data-i18n="profile.consent.notification.method">Method</th>
+                                    <td data-i18n="profile.consent.notification.methodDesc">Email (Google account) as default. If you provide messenger info below, notifications will be sent via your preferred messenger.</td>
+                                </tr>
+                                <tr>
+                                    <th data-i18n="profile.consent.table.retention">Retention Period</th>
+                                    <td data-i18n="profile.consent.notification.retention">Until service completion or withdrawal of consent</td>
+                                </tr>
+                            </table>
+                            <p class="consent-note" data-i18n="profile.consent.notification.note">You may refuse to consent, but you will not receive important updates about your case via email or messenger.</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="submit-section">
@@ -1045,19 +1076,17 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label data-i18n="profile.info.messenger">Preferred Messenger <span class="required">*</span></label>
-                            <select name="preferredMessenger" required>
-                                <option value="" data-i18n="profile.info.messengerSelect">Select messenger</option>
+                            <label data-i18n="profile.info.messenger">Preferred Messenger (Optional)</label>
+                            <select name="preferredMessenger" id="preferredMessenger" onchange="updateMessengerPlaceholder()">
+                                <option value="" data-i18n="profile.info.messengerSelect">Email only (default)</option>
                                 <option value="whatsapp">WhatsApp</option>
-                                <option value="wechat">WeChat</option>
-                                <option value="telegram">Telegram</option>
-                                <option value="line">LINE</option>
-                                <option value="zalo">Zalo</option>
                             </select>
+                            <small style="color:#6b7280;font-size:12px;margin-top:4px;display:block;" data-i18n="profile.info.messengerHint">If not selected, notifications will be sent to your Google email.</small>
                         </div>
-                        <div class="form-group">
-                            <label data-i18n="profile.info.messengerId">Messenger ID/Phone <span class="required">*</span></label>
-                            <input type="text" name="messengerId" required data-i18n-placeholder="profile.info.messengerId" placeholder="Your messenger ID or phone">
+                        <div class="form-group" id="messengerIdGroup" style="display:none;">
+                            <label id="messengerIdLabel">WhatsApp Phone Number</label>
+                            <input type="text" name="messengerId" id="messengerIdInput" placeholder="+82-10-1234-5678">
+                            <small id="messengerIdHint" style="color:#6b7280;font-size:12px;margin-top:4px;display:block;">Enter your WhatsApp phone number with country code.</small>
                         </div>
                     </div>
 
@@ -1469,7 +1498,7 @@
         }
 
         function validateConsent() {
-            const checks = ['consentPrivacy', 'consentThirdParty', 'consentDelegation', 'consentTerms'];
+            const checks = ['consentPrivacy', 'consentThirdParty', 'consentDelegation', 'consentTerms', 'consentNotification'];
             for (const id of checks) {
                 if (!document.getElementById(id).checked) {
                     return false;
@@ -1484,9 +1513,31 @@
                 third_party_provision: document.getElementById('consentThirdParty').checked,
                 delegation: document.getElementById('consentDelegation').checked,
                 terms_and_privacy_policy: document.getElementById('consentTerms').checked,
+                notification_consent: document.getElementById('consentNotification').checked,
                 consented_at: new Date().toISOString(),
                 consent_version: '2025-02-02'
             };
+        }
+
+        // 메신저 선택 시 placeholder 및 안내 문구 동적 변경
+        function updateMessengerPlaceholder() {
+            const select = document.getElementById('preferredMessenger');
+            const idGroup = document.getElementById('messengerIdGroup');
+            const idInput = document.getElementById('messengerIdInput');
+            const idLabel = document.getElementById('messengerIdLabel');
+            const idHint = document.getElementById('messengerIdHint');
+
+            if (select.value === 'whatsapp') {
+                idGroup.style.display = 'block';
+                idInput.placeholder = '+82-10-1234-5678';
+                idLabel.textContent = 'WhatsApp Phone Number';
+                idHint.textContent = 'Enter your WhatsApp phone number with country code.';
+                idInput.required = true;
+            } else {
+                idGroup.style.display = 'none';
+                idInput.value = '';
+                idInput.required = false;
+            }
         }
 
         // ============================================
@@ -1779,8 +1830,10 @@ ${uploadedFiles.map(f => `- ${f.name}`).join('\n')}
                     visa_type: formData.get('visaType'),
                     visa_expiry_date: formData.get('stayExpiry'),
                     address: formData.get('address') + ' ' + formData.get('detailAddress') + ' (' + formData.get('postcode') + ')',
-                    preferred_messenger: formData.get('preferredMessenger'),
-                    messenger_id: formData.get('messengerId')
+                    preferred_messenger: formData.get('preferredMessenger') || null,
+                    messenger_id: formData.get('messengerId') || null,
+                    notification_consent: document.getElementById('consentNotification').checked,
+                    notification_consent_at: document.getElementById('consentNotification').checked ? new Date().toISOString() : null
                 };
 
                 await createUserProfile(userId, profileData);
@@ -1797,6 +1850,7 @@ ${uploadedFiles.map(f => `- ${f.name}`).join('\n')}
                             third_party_provision: consentData.third_party_provision,
                             delegation: consentData.delegation,
                             terms_and_privacy_policy: consentData.terms_and_privacy_policy,
+                            notification_consent: consentData.notification_consent,
                             consent_version: consentData.consent_version,
                             consented_at: consentData.consented_at
                         });

@@ -1,5 +1,5 @@
 // Supabase Edge Function: SNS 알림 발송
-// 지원 플랫폼: WhatsApp, Telegram, LINE, Zalo, WeChat
+// 지원 플랫폼: Email (Resend), WhatsApp, Telegram, LINE, Zalo, WeChat
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
@@ -23,6 +23,10 @@ function getCorsHeaders(origin: string | null) {
 
 // 메신저별 API 설정 (환경 변수에서 로드)
 const MESSENGER_CONFIGS = {
+  email: {
+    apiUrl: 'https://api.resend.com/emails',
+    // RESEND_API_KEY 필요
+  },
   whatsapp: {
     apiUrl: 'https://graph.facebook.com/v18.0',
     // WHATSAPP_PHONE_NUMBER_ID, WHATSAPP_ACCESS_TOKEN 필요
@@ -57,6 +61,64 @@ interface NotificationPayload {
     buttonText: string
     buttonUrl: string
   }
+}
+
+// 이메일 발송 (Resend API)
+async function sendEmail(recipient: string, template: NotificationPayload['template']) {
+  const apiKey = Deno.env.get('RESEND_API_KEY')
+
+  if (!apiKey) {
+    throw new Error('Resend API key not configured')
+  }
+
+  const fromEmail = Deno.env.get('NOTIFICATION_FROM_EMAIL') || 'notice@lawyeonvisa.app'
+
+  const htmlBody = `
+    <div style="max-width:520px;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+      <div style="background:#1DB446;padding:20px 24px;border-radius:12px 12px 0 0;">
+        <h2 style="color:#fff;margin:0;font-size:18px;">${template.title}</h2>
+      </div>
+      <div style="background:#fff;padding:24px;border:1px solid #e5e7eb;border-top:none;">
+        <p style="font-size:16px;font-weight:600;margin:0 0 16px;">${template.header}</p>
+        <table style="width:100%;border-collapse:collapse;margin-bottom:16px;">
+          <tr>
+            <td style="padding:8px 0;color:#6b7280;font-size:14px;">Service</td>
+            <td style="padding:8px 0;font-size:14px;">${template.serviceName}</td>
+          </tr>
+          ${template.messagePreview ? `
+          <tr>
+            <td style="padding:8px 0;color:#6b7280;font-size:14px;">Message</td>
+            <td style="padding:8px 0;font-size:14px;">${template.messagePreview}</td>
+          </tr>` : ''}
+        </table>
+        <a href="${template.buttonUrl}" style="display:inline-block;background:#1DB446;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;">${template.buttonText}</a>
+      </div>
+      <div style="padding:16px 24px;text-align:center;">
+        <p style="color:#9ca3af;font-size:12px;margin:0;">${template.footer}</p>
+      </div>
+    </div>
+  `
+
+  const response = await fetch(MESSENGER_CONFIGS.email.apiUrl, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      from: `Lawyeon Visa <${fromEmail}>`,
+      to: [recipient],
+      subject: `[Lawyeon] ${template.header}`,
+      html: htmlBody
+    })
+  })
+
+  if (!response.ok) {
+    const error = await response.text()
+    throw new Error(`Resend API error: ${error}`)
+  }
+
+  return await response.json()
 }
 
 // WhatsApp 메시지 발송 (Meta Business API)
@@ -388,6 +450,9 @@ serve(async (req) => {
     let result
 
     switch (messenger.toLowerCase()) {
+      case 'email':
+        result = await sendEmail(recipient, template)
+        break
       case 'whatsapp':
         result = await sendWhatsApp(recipient, template)
         break
