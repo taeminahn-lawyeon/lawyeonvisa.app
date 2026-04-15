@@ -509,15 +509,17 @@ async function createPayment(paymentData) {
         
         const { data, error } = await supabaseClient
             .from('payments')
-            .insert(paymentRecord);
-        
+            .insert(paymentRecord)
+            .select()
+            .single();
+
         if (error) {
             console.error('❌ Supabase 오류:', error);
             throw error;
         }
-        
-        debugLog('✅ 결제 정보 저장 성공');
-        return { success: true, data: paymentRecord };
+
+        debugLog('✅ 결제 정보 저장 성공:', data);
+        return { success: true, data };
     } catch (error) {
         console.error('❌ 결제 기록 저장 실패:', error);
         return { success: false, error: error.message };

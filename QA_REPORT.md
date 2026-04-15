@@ -62,8 +62,6 @@
 | messages | **불확실** | 동일 |
 | applications | **불확실** | 동일 |
 | admins | 활성화 | 정책 4개 |
-| jnu_students | 활성화 | 정책 4개 |
-| korea_students | 활성화 | 정책 4개 |
 
 **조치**: Supabase Dashboard에서 5개 핵심 테이블 RLS 상태 즉시 확인
 

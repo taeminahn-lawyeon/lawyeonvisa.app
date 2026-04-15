@@ -882,7 +882,9 @@
                     <select id="customerFilterOrg">
                         <option value="">전체</option>
                         <option value="lawyeon">법무법인 로연</option>
-                        <option value="dhu">대구한의대학교</option>
+                        <option value="chosun">조선대학교</option>
+                        <option value="kdu">극동대학교</option>
+                        <option value="general">일반</option>
                     </select>
                 </div>
                 <div class="filter-item">
@@ -1387,8 +1389,13 @@
                     : '-';
 
                 // 협약단체 표시
-                const organizationBadge = thread.organization === 'dhu'
-                    ? `<span class="org-badge" style="background: linear-gradient(135deg, #3CB3A0 0%, #3B4D7D 100%); color: white; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block;">대구한의대</span>`
+                const orgLabels = {
+                    'chosun': { name: '조선대', bg: '#1B3A7B' },
+                    'kdu': { name: '극동대', bg: '#003366' }
+                };
+                const orgInfo = orgLabels[thread.organization];
+                const organizationBadge = orgInfo
+                    ? `<span class="org-badge" style="background:${orgInfo.bg}; color:white; padding:4px 10px; border-radius:6px; font-size:12px; font-weight:600; display:inline-block;">${orgInfo.name}</span>`
                     : `<span style="color: #9CA3AF; font-size: 12px;">일반</span>`;
 
                 // 진행 단계 표시 (자문: 4단계, 민원: 6단계, 소송: 5단계)

@@ -5,19 +5,16 @@
 
 ---
 
-## 🔵 GitHub 업로드 항목 (총 10개 파일)
+## 🔵 GitHub 업로드 항목 (총 7개 파일)
 
-### 📁 HTML 파일 (8개) - 수정됨
+### 📁 HTML 파일 (5개) - 수정됨
 
 | 파일명 | 수정 내용 | 우선순위 |
 |--------|----------|---------|
 | `partner-dashboard-korea.html` | JS 오류 수정 (id='content' 요소 추가), favicon 추가 | 🔴 긴급 |
-| `partner-dashboard-jnu.html` | JS 오류 수정 (id='content' 요소 추가), favicon 추가 | 🔴 긴급 |
 | `login-korea.html` | autocomplete 속성 추가, favicon 추가 | 🟡 중요 |
-| `login-jnu.html` | autocomplete 속성 추가, favicon 추가 | 🟡 중요 |
 | `admin-login.html` | favicon 추가 | 🟢 개선 |
 | `dashboard-korea.html` | favicon 추가 | 🟢 개선 |
-| `dashboard-jnu.html` | favicon 추가 | 🟢 개선 |
 | `index.html` | favicon 추가 | 🟢 개선 |
 
 ### 📁 신규 파일 (2개)
@@ -55,12 +52,12 @@
 
 ## ✅ 수정 내용 상세
 
-### 1. partner-dashboard-korea.html / partner-dashboard-jnu.html
+### 1. partner-dashboard-korea.html
 - **문제**: `document.getElementById('content').innerHTML` 호출 시 null 참조 오류
 - **해결**: `<div id="content">` 요소 추가로 DOM 요소 보장
 - **추가**: favicon 링크 태그 삽입
 
-### 2. login-korea.html / login-jnu.html
+### 2. login-korea.html
 - **문제**: 비밀번호 입력 필드에 autocomplete 속성 누락
 - **해결**: `autocomplete="current-password"` 속성 추가
 - **추가**: favicon 링크 태그 삽입
@@ -87,7 +84,7 @@ git add .
 # 2. 커밋
 git commit -m "fix: QA 점검 후 권장 조치 적용
 
-- partner-dashboard-korea/jnu.html JS 오류 수정
+- partner-dashboard-korea.html JS 오류 수정
 - 로그인 폼 autocomplete 속성 추가  
 - favicon 추가 (404 에러 해결)
 - RLS 활성화 SQL 스크립트 추가"
@@ -115,9 +112,9 @@ git push origin main
 
 | 항목 | 상태 | 비고 |
 |------|------|------|
-| JS 오류 수정 | ✅ 완료 | partner-dashboard 2개 파일 |
+| JS 오류 수정 | ✅ 완료 | partner-dashboard-korea.html |
 | RLS 보안 | ✅ SQL 준비됨 | 실행 필요 |
-| autocomplete | ✅ 완료 | 로그인 폼 2개 |
+| autocomplete | ✅ 완료 | 로그인 폼 1개 |
 | favicon 404 | ✅ 완료 | 전체 적용 |
 | i18n 중복 | ✅ 확인됨 | 이미 보호 로직 존재 |
 

@@ -242,7 +242,7 @@ SELECT
     rowsecurity as rls_enabled
 FROM pg_tables 
 WHERE schemaname = 'public' 
-AND tablename IN ('profiles', 'threads', 'payments', 'messages', 'applications', 'admins', 'jnu_students', 'korea_students')
+AND tablename IN ('profiles', 'threads', 'payments', 'messages', 'applications', 'admins')
 ORDER BY tablename;
 
 -- ============================================
