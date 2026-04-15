@@ -17,6 +17,7 @@ ALTER TABLE IF EXISTS public.threads ENABLE ROW LEVEL SECURITY;
 ALTER TABLE IF EXISTS public.payments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE IF EXISTS public.messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE IF EXISTS public.applications ENABLE ROW LEVEL SECURITY;
+ALTER TABLE IF EXISTS public.admins ENABLE ROW LEVEL SECURITY;
 
 -- ============================================
 -- STEP 2: Function search_path 보안 설정
