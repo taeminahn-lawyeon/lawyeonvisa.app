@@ -1611,6 +1611,11 @@
             'd10-t-change': { name: 'D-10-T Top Talent Job Seeker', price: 330000, govFee: 100000, desc: 'Elite university graduate visa', icon: '🏆' },
             'd10-t-chosun': { name: 'D-10-T Top Talent Job Seeker (Chosun)', price: 55000, govFee: 100000, desc: 'Chosun University special rate', icon: '🏆', organization: 'chosun' },
             'd2-qualification-change-chosun': { name: 'D-2 Qualification Change (Chosun)', price: 55000, govFee: 100000, desc: 'D-4, D-2 sub-status change', icon: '🔄', organization: 'chosun' },
+            'd10-1-kdu': { name: 'D-10-1 General Job Seeker Visa (KDU)', price: 55000, govFee: 100000, desc: 'Far East University special rate', icon: '🎓', organization: 'kdu' },
+            'd10-2-kdu': { name: 'D-10-2 Tech Startup Job Seeker (KDU)', price: 55000, govFee: 100000, desc: 'Far East University special rate', icon: '💡', organization: 'kdu' },
+            'd10-3-kdu': { name: 'D-10-3 High-tech Intern Visa (KDU)', price: 55000, govFee: 100000, desc: 'Far East University special rate', icon: '🔬', organization: 'kdu' },
+            'd10-t-kdu': { name: 'D-10-T Top Talent Job Seeker (KDU)', price: 55000, govFee: 100000, desc: 'Far East University special rate', icon: '🏆', organization: 'kdu' },
+            'd2-qualification-change-kdu': { name: 'D-2 Qualification Change (KDU)', price: 55000, govFee: 100000, desc: 'D-4, D-2 sub-status change', icon: '🔄', organization: 'kdu' },
             'd2-d4-extension': { name: 'D-2, D-4 Visa Extension', price: 110000, govFee: 50000, desc: 'Student visa renewal', icon: '📖' },
             'd10-extension': { name: 'D-10 Visa Extension', price: 220000, govFee: 50000, desc: 'Job seeker visa renewal', icon: '⏳' },
             'parttime-permit': { name: 'Part-time Work Permit', price: 33000, govFee: 0, desc: 'D-2, D-4 part-time employment', icon: '⏰' },
@@ -2126,7 +2131,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                 // Get organization and lecture code from URL
                 const paymentUrlParams = new URLSearchParams(window.location.search);
                 const paymentOrg = paymentUrlParams.get('org') || selectedService.organization || 'general';
-                const paymentLectureCode = paymentUrlParams.get('lectureCode') || sessionStorage.getItem('dhu_lecture_code') || sessionStorage.getItem('chosun_lecture_code') || '';
+                const paymentLectureCode = paymentUrlParams.get('lectureCode') || sessionStorage.getItem('dhu_lecture_code') || sessionStorage.getItem('chosun_lecture_code') || sessionStorage.getItem('kdu_lecture_code') || '';
 
                 sessionStorage.setItem('pendingPayment', JSON.stringify({
                     orderId: orderInfo.orderId,
@@ -3174,11 +3179,11 @@ ${window.location.origin}/profile-submit.html?thread=${threadId}`;
                 // Only send welcome message if creating new thread (not for existing thread)
                 if (!existingThreadId) {
                     // Get lecture code if university service
-                    const lectureCode = urlParams.get('lectureCode') || sessionStorage.getItem('dhu_lecture_code') || sessionStorage.getItem('chosun_lecture_code') || '';
+                    const lectureCode = urlParams.get('lectureCode') || sessionStorage.getItem('dhu_lecture_code') || sessionStorage.getItem('chosun_lecture_code') || sessionStorage.getItem('kdu_lecture_code') || '';
 
                     let welcomeMessage;
                     const profileUrl = `${window.location.origin}/profile-submit.html?thread=${threadId}`;
-                    const universityOrgs = { 'dhu': 'Daegu Haany University', 'chosun': 'Chosun University' };
+                    const universityOrgs = { 'dhu': 'Daegu Haany University', 'chosun': 'Chosun University', 'kdu': 'Far East University' };
                     if (universityOrgs[organization] && lectureCode) {
                         welcomeMessage = `📋 **${getUIMessage('d10Started', 'D-10-1 Visa Application Started')}**
 

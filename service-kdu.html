@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png?v=3">
+    <title data-i18n="kdu.page.title">Immigration & Visa Service - Far East University</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/ui-components.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0078D4 0%, #003A70 50%, #1A1A3E 100%);
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 20px;
+            padding-top: 40px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 720px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #0078D4 0%, #003A70 100%);
+            padding: 32px 24px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Language selector in header */
+        .lang-wrap {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+        }
+
+        .lang-wrap .language-selector {
+            display: inline-block;
+        }
+
+        .lang-wrap #language-selector-btn {
+            padding: 6px 12px;
+            font-size: 12px;
+            height: 32px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            border-radius: 8px;
+        }
+
+        .lang-wrap #language-selector-btn:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        .header-logos {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .logo-box {
+            width: 64px;
+            height: 64px;
+            background: white;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo-box img {
+            height: 44px;
+            width: auto;
+            border-radius: 4px;
+        }
+
+        .header-x {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 20px;
+            font-weight: 300;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            margin-bottom: 4px;
+        }
+
+        .header-subtitle {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .card-body {
+            padding: 28px;
+        }
+
+        /* User info bar */
+        .user-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-bottom: 24px;
+        }
+
+        .user-bar-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #0078D4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .user-bar-info { flex: 1; min-width: 0; }
+        .user-bar-email { font-size: 12px; color: #1E40AF; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .user-bar-code { font-size: 11px; color: #3B82F6; }
+
+        /* My Applications Section */
+        .my-threads {
+            background: white;
+            border: 2px solid #3B82F6;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .my-threads-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: #1E40AF;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .my-threads-title i { color: #3B82F6; }
+
+        .thread-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            background: #EFF6FF;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 8px;
+        }
+
+        .thread-card:last-child { margin-bottom: 0; }
+
+        .thread-card:hover {
+            background: #DBEAFE;
+            transform: translateX(4px);
+        }
+
+        .thread-info { flex: 1; min-width: 0; }
+
+        .thread-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1E3A5F;
+            margin-bottom: 4px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .thread-meta {
+            font-size: 12px;
+            color: #6B7280;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .thread-status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .thread-arrow {
+            color: #3B82F6;
+            font-size: 16px;
+            flex-shrink: 0;
+            margin-left: 12px;
+        }
+
+        /* Premium service banner - same as index */
+        .premium-service-banner {
+            background: linear-gradient(135deg, #374151 0%, #1F2937 100%);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+        }
+
+        .premium-service-banner h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #FFFFFF;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .premium-service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .premium-service-card {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 14px;
+            padding: 20px;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .premium-service-card:hover {
+            border-color: #CBD5E1;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .premium-service-card .title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1E293B;
+            line-height: 1.4;
+            letter-spacing: -0.3px;
+            margin-bottom: 10px;
+        }
+
+        .premium-service-card .desc {
+            font-size: 13px;
+            color: #64748B;
+            line-height: 1.7;
+            margin-bottom: 14px;
+        }
+
+        .premium-service-card .desc-item {
+            display: block;
+            margin-bottom: 4px;
+            color: #64748B;
+        }
+
+        .premium-service-card .desc-item:last-child { margin-bottom: 0; }
+
+        .premium-service-card .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: #3182F6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: fit-content;
+            margin-top: auto;
+        }
+
+        .premium-service-card .cta-btn:hover { background: #1B64DA; }
+        .premium-service-card .cta-btn .arrow { transition: transform 0.2s ease; }
+        .premium-service-card:hover .cta-btn .arrow { transform: translateX(3px); }
+
+        /* Service grid - same as index */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .service-item {
+            background: #F9FAFB;
+            border: 2px solid transparent;
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 8px;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(0, 120, 212, 0.2);
+        }
+
+        .service-item:hover {
+            border-color: #0078D4;
+            background: #EFF6FF;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 120, 212, 0.12);
+        }
+
+        .service-item .title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #191F28;
+            word-break: keep-all;
+            line-height: 1.4;
+        }
+
+        .service-item .desc {
+            font-size: 13px;
+            color: #6B7684;
+            line-height: 1.5;
+            word-break: keep-all;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+        }
+
+        .footer a { color: white; text-decoration: none; font-weight: 600; }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+            body { padding: 12px; padding-top: 20px; }
+            .card-header { padding: 24px 20px; }
+            .card-body { padding: 20px; }
+            .logo-box { width: 52px; height: 52px; }
+            .logo-box img { height: 36px; }
+            .header-title { font-size: 15px; }
+            .lang-wrap { top: 12px; right: 12px; }
+
+            .premium-service-banner { padding: 24px 18px; }
+            .premium-service-banner h3 { font-size: 18px; margin-bottom: 16px; }
+            .premium-service-grid { grid-template-columns: 1fr; gap: 12px; }
+            .premium-service-card { padding: 18px; }
+            .premium-service-card .title { font-size: 14px; }
+
+            .service-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .service-item { padding: 16px; min-height: 90px; }
+            .service-item .title { font-size: 14px; }
+            .service-item .desc { font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <!-- Language Selector -->
+                <div class="lang-wrap">
+                    <div class="language-selector">
+                        <button id="language-selector-btn" type="button">
+                            <span class="language-btn-content">
+                                <span class="language-name">한국어</span>
+                            </span>
+                            <span style="margin-left: 4px; font-size: 10px;">▼</span>
+                        </button>
+                        <div id="language-dropdown" class="hidden"></div>
+                    </div>
+                </div>
+
+                <div class="header-logos">
+                    <div class="logo-box">
+                        <img src="favicon.png" alt="Lawyeon">
+                    </div>
+                    <div class="header-x">×</div>
+                    <div class="logo-box">
+                        <img src="극동대로고.png" alt="Far East University">
+                    </div>
+                </div>
+                <div class="header-title">Law Firm Lawyeon × Far East University</div>
+                <div class="header-subtitle" data-i18n="kdu.header.subtitle">Immigration & Visa Service</div>
+            </div>
+
+            <div class="card-body">
+                <div class="user-bar" id="userBar">
+                    <div class="user-bar-avatar" id="userAvatar">U</div>
+                    <div class="user-bar-info">
+                        <div class="user-bar-email" id="userEmail">Loading...</div>
+                        <div class="user-bar-code" id="userCode"></div>
+                    </div>
+                    <button onclick="handleLogout()" style="padding: 6px 14px; background: #F3F4F6; border: 1px solid #E5E7EB; border-radius: 8px; font-size: 12px; font-weight: 600; color: #6B7280; cursor: pointer; white-space: nowrap;" data-i18n="kdu.logout">Logout</button>
+                </div>
+
+                <!-- My Applications (dynamically shown if threads exist) -->
+                <div id="myThreadsSection" style="display: none;"></div>
+
+                <!-- Quick Service Cards -->
+                <div class="premium-service-banner">
+                    <h3 data-i18n="emergency.title">Immigration Legal Services</h3>
+                    <div class="premium-service-grid">
+                        <div class="premium-service-card" onclick="location.href='consultation-request.html?type=emergency'">
+                            <div class="title" data-i18n="emergency.legal.title">Deportation · Visa Denial · Criminal Emergency</div>
+                            <div class="desc">
+                                <div class="desc-item" data-i18n="emergency.legal.item1">Immigration violation rescue & hearing support</div>
+                                <div class="desc-item" data-i18n="emergency.legal.item2">Administrative appeals & litigation</div>
+                                <div class="desc-item" data-i18n="emergency.legal.item3">Criminal defense for foreigners</div>
+                            </div>
+                            <button class="cta-btn" onclick="event.stopPropagation(); location.href='consultation-request.html?type=emergency'"><span data-i18n="emergency.legal.cta">Emergency Consultation</span> <span class="arrow">→</span></button>
+                        </div>
+                        <div class="premium-service-card" onclick="location.href='service-navigator.html'">
+                            <div class="title" data-i18n="kdu.preconsult.title">사전 상담 신청</div>
+                            <div class="desc">
+                                <div class="desc-item" data-i18n="kdu.preconsult.item1">나에게 맞는 서비스 찾기</div>
+                                <div class="desc-item" data-i18n="kdu.preconsult.item2">전문가 상담 안내</div>
+                            </div>
+                            <button class="cta-btn" onclick="event.stopPropagation(); location.href='service-navigator.html'"><span data-i18n="kdu.preconsult.cta">사전 상담 신청</span> <span class="arrow">→</span></button>
+                        </div>
+                        <div class="premium-service-card" onclick="goToService('visa-prediagnosis')">
+                            <div class="title" data-i18n="emergency.diagnosis.title">Visa Diagnosis & Consultation</div>
+                            <div class="desc">
+                                <div class="desc-item" data-i18n="emergency.diagnosis.item1">Visa change planning advice</div>
+                                <div class="desc-item" data-i18n="emergency.diagnosis.item2">Immigration law violation consultation</div>
+                                <div class="desc-item" data-i18n="emergency.diagnosis.item3">Overstay risk assessment</div>
+                            </div>
+                            <button class="cta-btn" onclick="event.stopPropagation(); goToService('visa-prediagnosis')"><span data-i18n="emergency.diagnosis.cta">Request Diagnosis</span> <span class="arrow">→</span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Grid -->
+                <div class="service-grid">
+                    <a class="service-item" data-service="d10-1-kdu">
+                        <div class="title" data-i18n="kdu.svc.d101.title">D-10-1 비자 변경</div>
+                        <div class="desc" data-i18n="kdu.svc.d101.desc">구직 비자 변경</div>
+                    </a>
+                    <a class="service-item" data-service="d10-2-kdu">
+                        <div class="title" data-i18n="kdu.svc.d102.title">D-10-2 비자 변경</div>
+                        <div class="desc" data-i18n="kdu.svc.d102.desc">기술창업 구직 비자</div>
+                    </a>
+                    <a class="service-item" data-service="d10-3-kdu">
+                        <div class="title" data-i18n="kdu.svc.d103.title">D-10-3 비자 변경</div>
+                        <div class="desc" data-i18n="kdu.svc.d103.desc">첨단기술 인턴 비자</div>
+                    </a>
+                    <a class="service-item" data-service="d10-t-kdu">
+                        <div class="title" data-i18n="kdu.svc.d10t.title">D-10-T 비자 변경</div>
+                        <div class="desc" data-i18n="kdu.svc.d10t.desc">우수인재 구직 비자</div>
+                    </a>
+                    <a class="service-item" data-service="d8-4-change">
+                        <div class="title" data-i18n="kdu.svc.d84.title">D-8-4 비자 변경</div>
+                        <div class="desc" data-i18n="kdu.svc.d84.desc">기술창업 비자</div>
+                    </a>
+                    <a class="service-item" data-service="d9-5-change">
+                        <div class="title" data-i18n="kdu.svc.d95.title">D-9-5 비자 변경</div>
+                        <div class="desc" data-i18n="kdu.svc.d95.desc">졸업생 창업 비자</div>
+                    </a>
+                    <a class="service-item" data-service="f2-7-change">
+                        <div class="title" data-i18n="kdu.svc.f27.title">F-2-7 비자 변경</div>
+                        <div class="desc" data-i18n="kdu.svc.f27.desc">점수제 우수인재 거주비자</div>
+                    </a>
+                    <a class="service-item" data-service="d2-qualification-change-kdu">
+                        <div class="title" data-i18n="kdu.svc.d2chg.title">D-2 자격 변경</div>
+                        <div class="desc" data-i18n="kdu.svc.d2chg.desc">D-4, D-2 세부자격 변경</div>
+                    </a>
+                    <a class="service-item" data-service="d2-d4-extension">
+                        <div class="title" data-i18n="kdu.svc.d2ext.title">D-2 비자 연장</div>
+                        <div class="desc" data-i18n="kdu.svc.d2ext.desc">유학 비자 연장</div>
+                    </a>
+                    <a class="service-item" data-service="d10-extension">
+                        <div class="title" data-i18n="kdu.svc.d10ext.title">D-10 비자 연장</div>
+                        <div class="desc" data-i18n="kdu.svc.d10ext.desc">구직 비자 갱신</div>
+                    </a>
+                    <a class="service-item" data-service="parttime-permit">
+                        <div class="title" data-i18n="kdu.svc.parttime.title">시간제취업허가</div>
+                        <div class="desc" data-i18n="kdu.svc.parttime.desc">D-2, D-4 시간제취업</div>
+                    </a>
+                    <a class="service-item" data-service="parttime-change">
+                        <div class="title" data-i18n="kdu.svc.parttimeChg.title">시간제취업변경 신고</div>
+                        <div class="desc" data-i18n="kdu.svc.parttimeChg.desc">취업처 변경 신고</div>
+                    </a>
+                    <a class="service-item" data-service="d10-parttime-permit">
+                        <div class="title" data-i18n="kdu.svc.d10parttime.title">D-10 시간제취업허가</div>
+                        <div class="desc" data-i18n="kdu.svc.d10parttime.desc">D-10 시간제취업</div>
+                    </a>
+                    <a class="service-item" data-service="intern-report">
+                        <div class="title" data-i18n="kdu.svc.intern.title">D-10 인턴십 신고</div>
+                        <div class="desc" data-i18n="kdu.svc.intern.desc">인턴십 시작·변경</div>
+                    </a>
+                    <a class="service-item" data-service="arc-reissue">
+                        <div class="title" data-i18n="kdu.svc.arc.title">외국인등록증 재발급</div>
+                        <div class="desc" data-i18n="kdu.svc.arc.desc">분실·훼손 재발급</div>
+                    </a>
+                    <a class="service-item" data-service="address-change">
+                        <div class="title" data-i18n="kdu.svc.address.title">주소 변경 신고</div>
+                        <div class="desc" data-i18n="kdu.svc.address.desc">거소 이전 신고</div>
+                    </a>
+                    <a class="service-item" data-service="passport-change">
+                        <div class="title" data-i18n="kdu.svc.passport.title">여권 변경 신고</div>
+                        <div class="desc" data-i18n="kdu.svc.passport.desc">여권·인적사항 변경</div>
+                    </a>
+                    <a class="service-item" data-service="parent-invite">
+                        <div class="title" data-i18n="kdu.svc.parent.title">유학생 가족 초청</div>
+                        <div class="desc" data-i18n="kdu.svc.parent.desc">유학생 가족 초청 비자</div>
+                    </a>
+                </div>
+
+                <a href="https://pf.kakao.com/_jACnn" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; margin-top: 20px; padding: 14px; background: #FEE500; color: #191919; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none;" data-i18n="kdu.login.kakao">KakaoTalk으로 문의하기</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <img src="favicon.png" alt="Lawyeon" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 6px; border-radius: 4px;">
+            Powered by <a href="https://lawyeonvisa.app">Law Firm Lawyeon Visa & Immigration Center</a>
+        </div>
+    </div>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js?v=20250119"></script>
+    <!-- i18n -->
+    <script src="js/translations.js?v=20260210"></script>
+    <script src="js/i18n.js?v=20260210"></script>
+
+    <script>
+        const lectureCode = sessionStorage.getItem('kdu_lecture_code') || new URLSearchParams(window.location.search).get('lectureCode') || '';
+
+        async function handleLogout() {
+            await signOut();
+            sessionStorage.removeItem('kdu_lecture_code');
+            window.location.href = 'login-kdu.html';
+        }
+
+        function goToService(serviceId) {
+            const params = new URLSearchParams({ service: serviceId, org: 'kdu' });
+            if (lectureCode) params.set('lectureCode', lectureCode);
+            window.location.href = 'service-apply-general.html?' + params.toString();
+        }
+
+        window.addEventListener('DOMContentLoaded', async function() {
+            // Initialize i18n
+            if (typeof i18n !== 'undefined') {
+                i18n.init();
+                i18n.translatePage();
+            }
+
+            // Check session (with OAuth callback support)
+            let session = await checkSession();
+
+            // If no session but we have an OAuth hash, wait for Supabase to process it
+            if ((!session || !session.user) && window.location.hash.indexOf('access_token') !== -1) {
+                session = await new Promise(function(resolve) {
+                    const timeout = setTimeout(function() { resolve(null); }, 5000);
+                    const { data } = supabaseClient.auth.onAuthStateChange(function(event, s) {
+                        if (s && s.user) {
+                            clearTimeout(timeout);
+                            data.subscription.unsubscribe();
+                            resolve(s);
+                        }
+                    });
+                });
+                // Clean up the hash from URL
+                if (session) {
+                    history.replaceState(null, '', window.location.pathname + window.location.search);
+                }
+            }
+
+            if (!session || !session.user) {
+                window.location.href = 'login-kdu.html';
+                return;
+            }
+
+            // Show user info
+            const user = session.user;
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('userAvatar').textContent = (user.user_metadata?.full_name || user.email || 'U')[0].toUpperCase();
+            if (lectureCode) {
+                document.getElementById('userCode').textContent = 'Lecture Code: ' + lectureCode;
+            }
+
+            // Load existing threads
+            await loadMyThreads(user.id);
+
+            // Bind service item clicks
+            document.querySelectorAll('.service-item').forEach(function(item) {
+                item.addEventListener('click', function() {
+                    const serviceId = this.getAttribute('data-service');
+                    if (serviceId) goToService(serviceId);
+                });
+            });
+        });
+
+        async function loadMyThreads(userId) {
+            try {
+                const result = await getUserThreads(userId);
+                if (!result.success || !result.data || result.data.length === 0) return;
+
+                const threads = result.data.filter(t => t.status !== 'archived');
+                if (threads.length === 0) return;
+
+                const statusMap = {
+                    payment: { label: 'Received', bg: '#DBEAFE', color: '#1E40AF' },
+                    document: { label: 'In Progress', bg: '#FEF3C7', color: '#92400E' },
+                    processing: { label: 'Processing', bg: '#E0E7FF', color: '#4338CA' },
+                    completed: { label: 'Completed', bg: '#D1FAE5', color: '#065F46' },
+                    received: { label: 'Received', bg: '#DBEAFE', color: '#1E40AF' },
+                    pending: { label: 'Pending', bg: '#FEF3C7', color: '#92400E' }
+                };
+
+                let html = `
+                    <div class="my-threads">
+                        <div class="my-threads-title">
+                            <i class="fas fa-clipboard-list"></i>
+                            My Applications (${threads.length})
+                        </div>`;
+
+                threads.forEach(t => {
+                    const s = statusMap[t.status] || statusMap.received;
+                    const date = new Date(t.created_at).toLocaleDateString();
+                    html += `
+                        <div class="thread-card" onclick="location.href='thread-general-v2.html?id=${t.id}'">
+                            <div class="thread-info">
+                                <div class="thread-name">${t.service_name || 'Service'}</div>
+                                <div class="thread-meta">
+                                    <span class="thread-status" style="background:${s.bg};color:${s.color};">${s.label}</span>
+                                    <span>${date}</span>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right thread-arrow"></i>
+                        </div>`;
+                });
+
+                html += '</div>';
+
+                const section = document.getElementById('myThreadsSection');
+                section.innerHTML = html;
+                section.style.display = 'block';
+            } catch (err) {
+                console.error('Thread load error:', err);
+            }
+        }
+    </script>
+</body>
+</html>
