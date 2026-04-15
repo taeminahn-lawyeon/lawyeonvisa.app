@@ -338,7 +338,8 @@
             if (currentProfile.affiliation) {
                 document.getElementById('affiliationSection').style.display = 'block';
                 const orgNames = {
-                    'dhu': '대구한의대학교'
+                    'chosun': '조선대학교',
+                    'kdu': '극동대학교'
                 };
                 document.getElementById('school').value = orgNames[currentProfile.affiliation] || '';
                 document.getElementById('studentId').value = currentProfile.studentId || '';

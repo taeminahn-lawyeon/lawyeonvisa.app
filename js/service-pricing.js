@@ -53,16 +53,6 @@ const servicePricing = {
         govFee: 100000,
         description: 'General job seeking visa'
     },
-    'd10-1-dhu': {
-        id: 'd10-1-dhu',
-        name: 'D-10-1 General Job Seeker Visa (DHU)',
-        nameKo: 'D-10-1 일반구직 비자 변경 (대구한의대)',
-        category: '교육·구직',
-        price: { general: 55000, partner: 55000 },
-        govFee: 100000,
-        description: 'Daegu Haany University special rate',
-        organization: 'dhu'
-    },
     'd10-1-chosun': {
         id: 'd10-1-chosun',
         name: 'D-10-1 General Job Seeker Visa (Chosun)',
@@ -883,6 +873,6 @@ function getUserType() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const email = user.email || '';
 
-    // 협약 대학 이메일 체크 (현재 해당 없음 - DHU는 특강코드 인증 방식)
+    // 협약 대학 이메일 체크 (현재 해당 없음 - 대학은 특강코드 인증 방식)
     return 'general';
 }

@@ -50,7 +50,7 @@ phone VARCHAR
 nationality VARCHAR
 visa_type VARCHAR
 visa_expiry DATE
-organization VARCHAR  -- 'jnu', 'korea', 'general' 등
+organization VARCHAR  -- 'chosun', 'kdu', 'general' 등
 role VARCHAR  -- 'customer', 'partner_admin', 'super_admin'
 created_at TIMESTAMP
 updated_at TIMESTAMP
@@ -111,32 +111,11 @@ updated_at TIMESTAMP
 -- 관리자/담당자 계정
 id UUID PRIMARY KEY
 email VARCHAR UNIQUE
-role VARCHAR  -- 'super_admin', 'admin', 'partner_jnu', 'partner_korea'
+role VARCHAR  -- 'super_admin', 'admin'
 name VARCHAR
 phone VARCHAR
 department VARCHAR
 status VARCHAR  -- 'active', 'inactive'
-created_at TIMESTAMP
-updated_at TIMESTAMP
-```
-
-### 6. jnu_students / korea_students
-```sql
--- 협약 기관 학생 정보
-id UUID PRIMARY KEY
-student_number VARCHAR UNIQUE
-name VARCHAR
-department VARCHAR
-nationality VARCHAR
-phone VARCHAR
-email VARCHAR
-visa_type VARCHAR
-visa_expiry_date DATE
-stay_expiry DATE
-diagnosis_completed BOOLEAN
-diagnosis_date DATE
-user_id UUID REFERENCES auth.users
-status VARCHAR
 created_at TIMESTAMP
 updated_at TIMESTAMP
 ```
@@ -273,7 +252,6 @@ js/supabase-client.js  -- 모든 Supabase 함수 정의
 ### 결제 관련
 ```
 service-apply-general.html  -- Toss 결제 (데모 모드)
-service-apply-jnu.html      -- JNU 30% 할인 적용
 service-apply-korea.html    -- Korea 30% 할인 적용
 payment-success.html        -- 결제 완료 처리
 payment-fail.html           -- 결제 실패 처리

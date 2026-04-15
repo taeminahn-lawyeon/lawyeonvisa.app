@@ -588,6 +588,22 @@
                 // sessionStorage 정리
                 sessionStorage.removeItem('pendingPayment');
 
+                // 💳 결제 정보를 payments 테이블에 저장
+                try {
+                    await createPayment({
+                        order_id: orderId,
+                        service_name: paymentData.service_name,
+                        amount: paymentData.amount,
+                        agency_fee: paymentData.agency_fee,
+                        govt_fee: paymentData.govt_fee,
+                        payment_method: paymentData.payment_method,
+                        status: 'completed',
+                        organization: paymentData.organization
+                    });
+                } catch (payErr) {
+                    console.error('결제 정보 저장 실패 (무시):', payErr);
+                }
+
                 // 서버사이드에서 생성된 쓰레드 확인
                 let thread = confirmResult.thread || null;
 

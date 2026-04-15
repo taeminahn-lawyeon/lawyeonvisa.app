@@ -4,7 +4,7 @@
 
 법무법인 로연의 출입국 이민 지원을 위한 통합 웹 서비스입니다.
 - **일반 회원 시스템**: 개인 외국인을 위한 출입국 민원 대행 서비스
-- **협약 기관 시스템**: 전남대학교, 서울대학교 등 협약 대학 학생 전용 서비스 (**일반 페이지와 완전 통일됨**)
+- **협약 기관 시스템**: 협약 대학 학생 전용 서비스 (**일반 페이지와 완전 통일됨**)
 - **관리자 시스템**: 법무법인 직원용 쓰레드·고객 관리 대시보드
 - **담당자 시스템**: 제휴기관 담당자용 외국인 체류 현황 모니터링
 
@@ -90,35 +90,12 @@ Step 1: 서비스 확인 → Step 2: 결제
 
 ### 2. **협약 기관 시스템** (대학 전용)
 
-#### 📁 전남대학교 (JNU) 파일
-```
-visa-login-jnu.html           # 로그인 (대문 페이지, Google 로그인)
-visa-dashboard-jnu.html       # 대학 대시보드 (index.html과 동일 구조)
-visa-profile-setup-jnu.html   # 프로필 설정 (전용 컬러 적용)
-visa-service-apply-jnu.html   # 서비스 신청 (결제 페이지, Toss 스타일)
-visa-thread-jnu.html          # 쓰레드 (1:1 상담)
-payment-success-jnu.html      # 결제 완료 (전용 컬러 적용)
-payment-fail-jnu.html         # 결제 실패 (전용 컬러 적용)
-```
-
 #### 🎯 **핵심 특징**
 - ✅ **전용 로그인 페이지** (대문 페이지)
 - ✅ **Google 로그인** 사용 (학교 이메일 불필요)
 - ✅ **학번/사번/회원번호로 소속 인증** (기본정보 제출 시)
 - ✅ **30% 할인가** 자동 적용 (천원 단위 반올림)
 - ✅ **index.html과 완전 동일한 구조** (브랜드 컬러만 차별화)
-
-#### 🎨 브랜드 컬러
-
-**전남대학교 (JNU) 전용**:
-- 로그인 페이지: **전체 배경 Green 그라디언트 `#007A33 → #005A25`**
-- 헤더: **3단계 Green 그라디언트 `#00A651 → #007A33 → #005A25`** + Gold Border `#FFD700`
-- 긴급 구제 배너: **Orange `#f59e0b → #f97316`**
-- 모든 버튼/강조 요소: **Green 그라디언트 `#00A651 → #007A33`**
-- 결제 성공/실패 페이지: **Green 헤더 + 아이콘**
-
-**서울대학교 (SNU) 전용** (구현 예정):
-- 헤더: Blue `#0E4A84 → #0C3D6E`
 
 #### 💰 가격 정책 (협약 기관 30% 할인)
 
@@ -169,7 +146,7 @@ admin-dashboard.html          # 법무법인 직원용 관리자 대시보드
 
 #### 📄 담당자 페이지
 ```
-partner-dashboard.html        # 제휴기관 담당자용 대시보드 (?org=jnu 등으로 구분)
+partner-dashboard.html        # 제휴기관 담당자용 대시보드
 ```
 
 **주요 기능**:
@@ -187,7 +164,7 @@ partner-dashboard.html        # 제휴기관 담당자용 대시보드 (?org=jnu
   - 이름, 국적, 비자 종류, 체류 상태
 
 **접근 권한**:
-- @jnu.ac.kr, @snu.ac.kr 이메일로 접근 (개발 모드)
+- 제휴기관 이메일로 접근 (개발 모드)
 - 실제 환경: Supabase RLS로 `partner_admin` 역할, 자기 조직 멤버만 조회
 
 ---
@@ -311,15 +288,6 @@ js/secure-file-handler.js   # 클라이언트 측 파일 암호화/복호화 모
 │   ├── admin-dashboard.html         # 법무법인 직원용 관리자 대시보드
 │   └── partner-dashboard.html       # 제휴기관 담당자용 대시보드
 │
-├── 📁 전남대학교 (JNU)
-│   ├── visa-login-jnu.html
-│   ├── visa-profile-setup-jnu.html
-│   ├── visa-dashboard-jnu.html
-│   ├── visa-service-apply-jnu.html
-│   ├── visa-thread-jnu.html
-│   ├── payment-success-jnu.html
-│   └── payment-fail-jnu.html
-│
 ├── 📁 보안 가이드 (NEW)
 │   ├── SETUP_GUIDE.md               # Supabase/Netlify 설정 가이드
 │   ├── supabase-setup.sql           # DB 스키마 및 RLS 정책
@@ -365,11 +333,8 @@ js/secure-file-handler.js   # 클라이언트 측 파일 암호화/복호화 모
 - ✅ Toss 스타일 결제 페이지 완전 재설계
 - ✅ 용어 개선 ("무료 상담" → "견적 상담", 친근한 문구)
 - ✅ 모바일 UX 대폭 개선 (Toss 스타일)
-- ✅ **전용 페이지 완전 통일** (JNU 페이지를 index.html 기반으로 재작성)
 - ✅ **협약 기관 30% 할인 시스템 구축** (천원 단위 반올림)
 - ✅ **Google 로그인 통합** (학번 로그인 → Google 로그인)
-- ✅ **전남대 전용 사이트 오렌지 테마** (긴급 구제 배너만 Orange)
-- ✅ **전남대 전체 그린 그라디언트 통일** (모든 Toss 블루 → Green)
 
 ---
 
@@ -395,9 +360,6 @@ js/secure-file-handler.js   # 클라이언트 측 파일 암호화/복호화 모
   - 문서 다운로드 (복호화)
 
 ### 🟡 Medium Priority
-- [ ] **서울대학교 (SNU) 전용 페이지 완성**
-  - JNU 페이지 복사 후 브랜드 색상 변경 (Blue)
-  - 7개 페이지: login, dashboard, profile-setup, service-apply, thread, payment-success, payment-fail
 - [ ] **이메일 알림 시스템**
   - 결제 완료 알림
   - 서류 요청 알림
@@ -413,7 +375,6 @@ js/secure-file-handler.js   # 클라이언트 측 파일 암호화/복호화 모
 ### 🟢 Low Priority
 - [ ] **비자 사전진단 상세 페이지**
   - `visa-diagnosis.html` (일반 회원용)
-  - `visa-diagnosis-jnu.html` (JNU 전용)
   - 체크리스트 기반 위험도 분석
   - 진단 결과를 쓰레드에 기록
 - [ ] **UI/UX 개선**
@@ -438,23 +399,6 @@ index.html
   → thread-archive.html (완료된 서비스 조회)
 ```
 
-### 협약 기관 (JNU)
-```
-index.html (메인 페이지)
-  → "협약 단체 전용" → "대학교·어학원" → "전남대학교" 클릭
-  → visa-login-jnu.html (대문 페이지, Google 로그인)
-      - 전체 배경: Green 그라디언트
-      - Google 로그인 → 프로필 확인
-  → visa-profile-setup-jnu.html (최초 로그인 시, JNU Green 컬러)
-      → visa-dashboard-jnu.html 완료 후 자동 이동
-  → visa-dashboard-jnu.html (일반 index.html과 동일 구조, JNU 브랜딩)
-      - 헤더: Green + Gold Border
-      - 긴급 구제 배너: Orange (Toss 스타일)
-  → visa-service-apply-jnu.html (30% 할인 자동 적용, Toss 스타일)
-  → payment-success-jnu.html (결제 완료, 쓰레드 자동 생성, JNU Green 컬러)
-  → visa-thread-jnu.html (쓰레드, JNU Green 컬러)
-```
-
 ### 관리자 (법무법인 직원)
 ```
 index.html
@@ -469,8 +413,8 @@ index.html
 ### 담당자 (제휴기관 담당자)
 ```
 index.html
-  → (@jnu.ac.kr 또는 @snu.ac.kr 이메일로 로그인)
-  → partner-dashboard.html?org=jnu
+  → (제휴기관 이메일로 로그인)
+  → partner-dashboard.html
       - 소속 외국인 체류 현황 조회
       - 사전진단 현황 확인
       - 미완료자 일괄 알림 발송
