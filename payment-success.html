@@ -585,6 +585,11 @@
                     d10FormattedMessage: paymentInfo?.d10FormattedMessage || null
                 };
 
+                // Save organization for post-payment navigation (chosun/dhu)
+                if (paymentData.organization) {
+                    sessionStorage.setItem('last_org', paymentData.organization);
+                }
+
                 // sessionStorage 정리
                 sessionStorage.removeItem('pendingPayment');
 
@@ -881,6 +886,24 @@
         }
 
         function goToHome() {
+            // Organization-aware redirect: chosun/dhu students return to their dedicated page
+            try {
+                const pending = sessionStorage.getItem('pendingPayment');
+                const info = pending ? JSON.parse(pending) : null;
+                const org = (info && info.organization) || sessionStorage.getItem('last_org') || '';
+
+                const chosunCode = sessionStorage.getItem('chosun_lecture_code');
+                const dhuCode = sessionStorage.getItem('dhu_lecture_code');
+
+                if (org === 'chosun' || chosunCode) {
+                    window.location.href = 'service-chosun.html' + (chosunCode ? ('?lectureCode=' + encodeURIComponent(chosunCode)) : '');
+                    return;
+                }
+                if (org === 'dhu' || dhuCode) {
+                    window.location.href = 'login-dhu.html';
+                    return;
+                }
+            } catch (e) { console.error('goToHome redirect error:', e); }
             window.location.href = 'index.html';
         }
     </script>
