@@ -140,6 +140,56 @@ const servicePricing = {
         description: 'D-4, D-2 sub-status change',
         organization: 'chosun'
     },
+    'd10-1-kdu': {
+        id: 'd10-1-kdu',
+        name: 'D-10-1 General Job Seeker Visa (KDU)',
+        nameKo: 'D-10-1 일반구직 비자 변경 (극동대)',
+        category: '교육·구직',
+        price: { general: 55000, partner: 55000 },
+        govFee: 100000,
+        description: 'Far East University special rate',
+        organization: 'kdu'
+    },
+    'd10-2-kdu': {
+        id: 'd10-2-kdu',
+        name: 'D-10-2 Tech Startup Job Seeker (KDU)',
+        nameKo: 'D-10-2 기술창업구직 비자 변경 (극동대)',
+        category: '교육·구직',
+        price: { general: 55000, partner: 55000 },
+        govFee: 100000,
+        description: 'Far East University special rate',
+        organization: 'kdu'
+    },
+    'd10-3-kdu': {
+        id: 'd10-3-kdu',
+        name: 'D-10-3 High-tech Intern Visa (KDU)',
+        nameKo: 'D-10-3 첨단기술인턴 비자 변경 (극동대)',
+        category: '교육·구직',
+        price: { general: 55000, partner: 55000 },
+        govFee: 100000,
+        description: 'Far East University special rate',
+        organization: 'kdu'
+    },
+    'd10-t-kdu': {
+        id: 'd10-t-kdu',
+        name: 'D-10-T Top Talent Job Seeker (KDU)',
+        nameKo: 'D-10-T 최우수인재구직 비자 변경 (극동대)',
+        category: '교육·구직',
+        price: { general: 55000, partner: 55000 },
+        govFee: 100000,
+        description: 'Far East University special rate',
+        organization: 'kdu'
+    },
+    'd2-qualification-change-kdu': {
+        id: 'd2-qualification-change-kdu',
+        name: 'D-2 Qualification Change (KDU)',
+        nameKo: 'D-2 자격변경 (극동대)',
+        category: '교육·구직',
+        price: { general: 55000, partner: 55000 },
+        govFee: 100000,
+        description: 'D-4, D-2 sub-status change',
+        organization: 'kdu'
+    },
     'd2-d4-extension': {
         id: 'd2-d4-extension',
         name: 'D-2, D-4 Visa Extension',

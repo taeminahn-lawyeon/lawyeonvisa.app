@@ -14,6 +14,8 @@
                 var chosunCode = sessionStorage.getItem('chosun_lecture_code');
                 var dhuPending = sessionStorage.getItem('dhu_pending_login') === 'true';
                 var dhuCode = sessionStorage.getItem('dhu_lecture_code');
+                var kduPending = sessionStorage.getItem('kdu_pending_login') === 'true';
+                var kduCode = sessionStorage.getItem('kdu_lecture_code');
                 var hash = window.location.hash || '';
                 var isOAuthCallback = hash.indexOf('access_token') !== -1;
 
@@ -38,6 +40,18 @@
                     document.documentElement.style.background = '#0078D4';
                     sessionStorage.removeItem('dhu_pending_login');
                     window.location.replace('login-dhu.html' + (hash || ''));
+                    setTimeout(function() {
+                        document.documentElement.style.visibility = '';
+                        document.documentElement.style.background = '';
+                    }, 5000);
+                    return;
+                }
+
+                if (kduPending && kduCode) {
+                    document.documentElement.style.visibility = 'hidden';
+                    document.documentElement.style.background = '#0078D4';
+                    sessionStorage.removeItem('kdu_pending_login');
+                    window.location.replace('service-kdu.html?lectureCode=' + encodeURIComponent(kduCode) + (hash || ''));
                     setTimeout(function() {
                         document.documentElement.style.visibility = '';
                         document.documentElement.style.background = '';
@@ -1842,6 +1856,8 @@
                 const chosunCode = sessionStorage.getItem('chosun_lecture_code');
                 const dhuPending = sessionStorage.getItem('dhu_pending_login');
                 const dhuCode = sessionStorage.getItem('dhu_lecture_code');
+                const kduPending = sessionStorage.getItem('kdu_pending_login');
+                const kduCode = sessionStorage.getItem('kdu_lecture_code');
 
                 if (chosunPending === 'true' && chosunCode) {
                     try {
@@ -1863,6 +1879,17 @@
                             return;
                         }
                     } catch (e) { console.error('DHU redirect check error:', e); }
+                }
+
+                if (kduPending === 'true' && kduCode) {
+                    try {
+                        const session = await checkSession();
+                        if (session && session.user) {
+                            sessionStorage.removeItem('kdu_pending_login');
+                            window.location.href = `service-kdu.html?lectureCode=${encodeURIComponent(kduCode)}`;
+                            return;
+                        }
+                    } catch (e) { console.error('KDU redirect check error:', e); }
                 }
             })();
 

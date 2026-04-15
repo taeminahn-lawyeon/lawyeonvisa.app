@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png?v=3">
+
+    <!-- 🔁 If returning from Google OAuth, hide page briefly while session initializes -->
+    <script>
+        (function() {
+            try {
+                var hash = window.location.hash || '';
+                var isOAuthCallback = hash.indexOf('access_token') !== -1;
+                var pending = sessionStorage.getItem('kdu_pending_login') === 'true';
+                var code = sessionStorage.getItem('kdu_lecture_code');
+
+                // Only hide if we just returned from OAuth AND have pending login + code
+                if (isOAuthCallback && pending && code) {
+                    document.documentElement.style.visibility = 'hidden';
+                    document.documentElement.style.background = '#0078D4';
+                    // Safety: auto-unhide after 5 seconds if redirect fails
+                    setTimeout(function() {
+                        document.documentElement.style.visibility = '';
+                        document.documentElement.style.background = '';
+                    }, 5000);
+                }
+            } catch (e) {}
+        })();
+    </script>
+
+    <title data-i18n="kdu.page.title">Immigration & Visa Service - Far East University</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/ui-components.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0078D4 0%, #003A70 50%, #1A1A3E 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #0078D4 0%, #003A70 100%);
+            padding: 32px 24px;
+            text-align: center;
+        }
+
+        .logo-container {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 20px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo-container img {
+            width: 80px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .university-name {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+
+        .service-title {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .card-body {
+            padding: 32px 24px;
+        }
+
+        .welcome-text {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .welcome-text h2 {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .welcome-text p {
+            font-size: 14px;
+            color: #6B7280;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-label span.required {
+            color: #EF4444;
+            margin-left: 2px;
+        }
+
+        .form-input {
+            width: 100%;
+            height: 52px;
+            padding: 0 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #1a1a2e;
+            transition: all 0.2s;
+            background: #F9FAFB;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #0078D4;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(0, 120, 212, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #9CA3AF;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 24px 0;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: #E5E7EB;
+        }
+
+        .divider-text {
+            padding: 0 16px;
+            font-size: 13px;
+            color: #9CA3AF;
+            font-weight: 500;
+        }
+
+        .btn-google {
+            width: 100%;
+            height: 56px;
+            background: white;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.2s;
+        }
+
+        .btn-google:hover {
+            background: #F9FAFB;
+            border-color: #D1D5DB;
+        }
+
+        .btn-google:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-google img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            height: 56px;
+            background: linear-gradient(135deg, #0078D4 0%, #003A70 100%);
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 14px rgba(0, 58, 112, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 58, 112, 0.4);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-submit.loading {
+            pointer-events: none;
+        }
+
+        .btn-submit.loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+            border: 1px solid #93C5FD;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 24px;
+        }
+
+        .info-box-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1D4ED8;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box-content {
+            font-size: 13px;
+            color: #2563EB;
+            line-height: 1.6;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Login state */
+        .user-info {
+            display: none;
+            background: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .user-info.show {
+            display: block;
+        }
+
+        .user-info-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #0078D4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .user-details {
+            flex: 1;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1E40AF;
+        }
+
+        .user-email {
+            font-size: 12px;
+            color: #2563EB;
+        }
+
+        .check-icon {
+            color: #2563EB;
+            font-size: 20px;
+        }
+
+        /* Hide form when logged in */
+        .login-form.hidden {
+            display: none;
+        }
+
+        /* Error message */
+        .error-message {
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+            color: #DC2626;
+            font-size: 13px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Mobile optimization */
+        @media (max-width: 480px) {
+            body {
+                padding: 16px;
+                align-items: flex-start;
+                padding-top: 40px;
+            }
+
+            .card-header {
+                padding: 24px 20px;
+            }
+
+            .logo-container {
+                width: 80px;
+                height: 80px;
+            }
+
+            .logo-container img {
+                width: 64px;
+            }
+
+            .card-body {
+                padding: 24px 20px;
+            }
+
+            .welcome-text h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <div class="logo-container">
+                    <img src="극동대로고.png" alt="Far East University Logo">
+                </div>
+                <div class="university-name">Far East University</div>
+                <div class="service-title" data-i18n="kdu.header.subtitle">Immigration & Visa Service</div>
+            </div>
+
+            <div class="card-body">
+                <div class="welcome-text">
+                    <h2 data-i18n="kdu.login.welcome">Welcome</h2>
+                    <p data-i18n="kdu.login.desc">Visa changes, legal advice, work permits, and more — apply for immigration services here.</p>
+                </div>
+
+                <div class="error-message" id="errorMessage"></div>
+
+                <div class="user-info" id="userInfo">
+                    <div class="user-info-header">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <div class="user-details">
+                            <div class="user-name" id="userName">User</div>
+                            <div class="user-email" id="userEmail">user@email.com</div>
+                        </div>
+                        <i class="fas fa-check-circle check-icon"></i>
+                    </div>
+                </div>
+
+                <form id="applicationForm">
+                    <div class="form-group">
+                        <label class="form-label">
+                            <span data-i18n="kdu.login.lectureCode">Lecture Code</span> <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-input" id="lectureCode" required>
+                    </div>
+
+                    <!-- Language Selector -->
+                    <div class="form-group" style="position: relative;">
+                        <div class="language-selector" style="width: 100%;">
+                            <button id="language-selector-btn" type="button" style="width: 100%; height: 48px; padding: 0 16px; font-size: 14px; font-weight: 500; background: #F9FAFB; border: 2px solid #E5E7EB; border-radius: 12px; color: #374151; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s;">
+                                <span class="language-btn-content"><span class="language-name">한국어</span></span>
+                                <span style="font-size: 12px; color: #9CA3AF;">▼</span>
+                            </button>
+                            <div id="language-dropdown" class="hidden"></div>
+                        </div>
+                    </div>
+
+                    <div class="login-form" id="loginForm">
+                        <div class="divider">
+                            <div class="divider-line"></div>
+                            <div class="divider-text" data-i18n="kdu.login.signin">Sign in with</div>
+                            <div class="divider-line"></div>
+                        </div>
+
+                        <button type="button" class="btn-google" id="googleLoginBtn">
+                            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+                            <span data-i18n="kdu.login.google">Continue with Google</span>
+                        </button>
+                    </div>
+
+                    <div id="submitSection" style="display: none;">
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            <i class="fas fa-paper-plane"></i>
+                            <span data-i18n="kdu.login.submit">Start Application</span>
+                        </button>
+                        <button type="button" onclick="handleSwitchAccount()" style="width: 100%; margin-top: 10px; padding: 12px; background: transparent; border: 1px solid #E5E7EB; border-radius: 12px; font-size: 13px; font-weight: 600; color: #6B7280; cursor: pointer;" data-i18n="kdu.login.switchAccount">Sign in with a different account</button>
+                    </div>
+                </form>
+
+                <div class="info-box">
+                    <div class="info-box-title">
+                        <i class="fas fa-info-circle"></i>
+                        <span data-i18n="kdu.login.info.title">Service Information</span>
+                    </div>
+                    <div class="info-box-content" data-i18n="kdu.login.info.content">
+                        After signing in, you will be connected with a dedicated specialist through your personal thread.
+                    </div>
+                </div>
+
+                <a href="https://pf.kakao.com/_jACnn" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; margin-top: 16px; padding: 14px; background: #FEE500; color: #191919; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none; transition: all 0.2s;" data-i18n="kdu.login.kakao">KakaoTalk으로 문의하기</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <img src="favicon.png" alt="Lawyeon" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 6px; border-radius: 4px;">
+            Powered by <a href="https://lawyeonvisa.app">Law Firm Lawyeon Visa & Immigration Center</a>
+        </div>
+    </div>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js?v=20250119"></script>
+    <!-- i18n -->
+    <script src="js/translations.js?v=20260209"></script>
+    <script src="js/i18n.js?v=20260209"></script>
+
+    <script>
+        let currentUser = null;
+
+        // Valid lecture codes for Far East University
+        const validLectureCodes = ['KDU0523'];
+
+        // Handles the post-login redirect logic (called from both
+        // initial session check AND onAuthStateChange)
+        let _redirectHandled = false;
+        async function handlePostLoginRedirect(user) {
+            if (_redirectHandled) return;
+            const pendingLogin = sessionStorage.getItem('kdu_pending_login');
+            const savedLectureCode = sessionStorage.getItem('kdu_lecture_code');
+
+            if (pendingLogin === 'true' && savedLectureCode) {
+                _redirectHandled = true;
+                sessionStorage.removeItem('kdu_pending_login');
+                try {
+                    const profileResult = await getUserProfile(user.id);
+                    if (!profileResult.success || !profileResult.data) {
+                        await createOrUpdateProfile(user.id, {
+                            name: user.user_metadata?.full_name || '',
+                            email: user.email || '',
+                            phone: ''
+                        });
+                    }
+                } catch (e) { console.error('Profile check error:', e); }
+                window.location.replace(`service-kdu.html?lectureCode=${encodeURIComponent(savedLectureCode)}`);
+                return true;
+            }
+            return false;
+        }
+
+        window.addEventListener('DOMContentLoaded', async function() {
+            // Initialize i18n
+            if (typeof i18n !== 'undefined') {
+                i18n.init();
+                i18n.translatePage();
+            }
+
+            // Listen for auth state changes (handles OAuth callback timing)
+            supabaseClient.auth.onAuthStateChange(async (event, session) => {
+                if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION' || event === 'TOKEN_REFRESHED') && session && session.user) {
+                    currentUser = session.user;
+                    const redirected = await handlePostLoginRedirect(session.user);
+                    if (!redirected) {
+                        // Unhide page if we hid it earlier
+                        document.documentElement.style.visibility = '';
+                        document.documentElement.style.background = '';
+                        showLoggedInState(session.user);
+                    }
+                }
+            });
+
+            // Also check existing session immediately
+            const session = await checkSession();
+            if (session && session.user) {
+                currentUser = session.user;
+                const redirected = await handlePostLoginRedirect(session.user);
+                if (!redirected) {
+                    document.documentElement.style.visibility = '';
+                    document.documentElement.style.background = '';
+                    showLoggedInState(session.user);
+                }
+            } else {
+                // No session - ensure page is visible
+                document.documentElement.style.visibility = '';
+                document.documentElement.style.background = '';
+            }
+
+            // Google login button
+            document.getElementById('googleLoginBtn').addEventListener('click', handleGoogleLogin);
+
+            // Form submit
+            document.getElementById('applicationForm').addEventListener('submit', handleSubmit);
+        });
+
+        async function handleGoogleLogin() {
+            const lectureCode = document.getElementById('lectureCode').value.trim();
+
+            // Validate inputs
+            if (!lectureCode) {
+                showError(typeof i18n !== 'undefined' ? i18n.translate('kdu.login.error.lectureCode') : 'Please enter the lecture code.');
+                return;
+            }
+
+            // Validate lecture code
+            if (!validLectureCodes.includes(lectureCode.toUpperCase())) {
+                showError(typeof i18n !== 'undefined' ? i18n.translate('kdu.login.error.invalidCode') : 'Invalid lecture code. Please check and try again.');
+                return;
+            }
+
+            hideError();
+
+            // Save lecture code + pending flag BEFORE OAuth redirect
+            // (sessionStorage survives the Google OAuth redirect within the same tab)
+            sessionStorage.setItem('kdu_lecture_code', lectureCode);
+            sessionStorage.setItem('kdu_pending_login', 'true');
+
+            const btn = document.getElementById('googleLoginBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+
+            try {
+                await signInWithGoogle();
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('Login failed. Please try again.');
+                btn.disabled = false;
+                btn.innerHTML = '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google"> Continue with Google';
+            }
+        }
+
+        function showLoggedInState(user) {
+            currentUser = user;
+
+            // Show user info
+            const userInfo = document.getElementById('userInfo');
+            userInfo.classList.add('show');
+
+            document.getElementById('userName').textContent = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('userAvatar').textContent = (user.user_metadata?.full_name || user.email || 'U')[0].toUpperCase();
+
+            // Hide login form, show submit button
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('submitSection').style.display = 'block';
+        }
+
+        async function handleSubmit(e) {
+            e.preventDefault();
+
+            if (!currentUser) {
+                showError('Please sign in with Google first.');
+                return;
+            }
+
+            const lectureCode = document.getElementById('lectureCode').value.trim();
+
+            if (!lectureCode) {
+                showError(typeof i18n !== 'undefined' ? i18n.translate('kdu.login.error.lectureCode') : 'Please enter the lecture code.');
+                return;
+            }
+
+            // Validate lecture code again
+            if (!validLectureCodes.includes(lectureCode.toUpperCase())) {
+                showError(typeof i18n !== 'undefined' ? i18n.translate('kdu.login.error.invalidCode') : 'Invalid lecture code.');
+                return;
+            }
+
+            hideError();
+
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.classList.add('loading');
+            btn.innerHTML = '<i class="fas fa-spinner"></i> Loading...';
+
+            try {
+                // Ensure profile exists before redirecting to payment
+                const profileResult = await getUserProfile(currentUser.id);
+                if (!profileResult.success || !profileResult.data) {
+                    await createOrUpdateProfile(currentUser.id, {
+                        name: currentUser.user_metadata?.full_name || '',
+                        email: currentUser.email || '',
+                        phone: ''
+                    });
+                }
+
+                // Store lecture code for later use
+                sessionStorage.setItem('kdu_lecture_code', lectureCode);
+
+                // Redirect to KDU service selection page
+                window.location.href = `service-kdu.html?lectureCode=${encodeURIComponent(lectureCode)}`;
+            } catch (error) {
+                console.error('Submit error:', error);
+                showError('Failed to proceed. Please try again.');
+                btn.disabled = false;
+                btn.classList.remove('loading');
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Start Application';
+            }
+        }
+
+        async function handleSwitchAccount() {
+            await signOut();
+            sessionStorage.removeItem('kdu_lecture_code');
+            window.location.reload();
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('errorMessage');
+            errorEl.textContent = message;
+            errorEl.classList.add('show');
+        }
+
+        function hideError() {
+            document.getElementById('errorMessage').classList.remove('show');
+        }
+    </script>
+</body>
+</html>
