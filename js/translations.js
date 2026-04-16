@@ -788,6 +788,7 @@ const translations = {
         // === Thread Alert/UI Messages ===
         'thread.alert.threadNotFound': '쓰레드를 찾을 수 없습니다.',
         'thread.alert.loginRequired': '로그인이 필요합니다.',
+        'thread.login.description': '상담 쓰레드를 보려면 Google 계정으로 로그인해 주세요.',
         'thread.alert.fileSizeLimit': '파일 크기는 10MB를 초과할 수 없습니다.',
         'thread.alert.adminRedirect': '관리자는 관리자 대시보드를 통해 쓰레드에 접근해주세요.',
         'thread.alert.noAccess': '접근 권한이 없습니다.',
@@ -2076,6 +2077,7 @@ const translations = {
         // === Thread Alert/UI Messages ===
         'thread.alert.threadNotFound': 'Thread not found.',
         'thread.alert.loginRequired': 'Login is required.',
+        'thread.login.description': 'Please sign in with Google to view your consultation thread.',
         'thread.alert.fileSizeLimit': 'File size cannot exceed 10MB.',
         'thread.alert.adminRedirect': 'Admins should access threads through the admin dashboard.',
         'thread.alert.noAccess': 'You do not have access.',
@@ -3263,6 +3265,7 @@ const translations = {
         // === Thread Alert/UI Messages ===
         'thread.alert.threadNotFound': '找不到该线程。',
         'thread.alert.loginRequired': '需要登录。',
+        'thread.login.description': '请使用Google账号登录以查看您的咨询线程。',
         'thread.alert.fileSizeLimit': '文件大小不能超过10MB。',
         'thread.alert.adminRedirect': '管理员请通过管理面板访问线程。',
         'thread.alert.noAccess': '您没有访问权限。',
@@ -4447,6 +4450,7 @@ const translations = {
         // === Thread Alert/UI Messages ===
         'thread.alert.threadNotFound': 'Không tìm thấy chủ đề.',
         'thread.alert.loginRequired': 'Yêu cầu đăng nhập.',
+        'thread.login.description': 'Vui lòng đăng nhập bằng Google để xem chủ đề tư vấn của bạn.',
         'thread.alert.fileSizeLimit': 'Kích thước tệp không được vượt quá 10MB.',
         'thread.alert.adminRedirect': 'Quản trị viên vui lòng truy cập qua bảng quản trị.',
         'thread.alert.noAccess': 'Bạn không có quyền truy cập.',
@@ -5629,6 +5633,7 @@ const translations = {
         // === Thread Alert/UI Messages ===
         'thread.alert.threadNotFound': 'スレッドが見つかりません。',
         'thread.alert.loginRequired': 'ログインが必要です。',
+        'thread.login.description': '相談スレッドを閲覧するには、Googleアカウントでログインしてください。',
         'thread.alert.fileSizeLimit': 'ファイルサイズは10MBを超えることはできません。',
         'thread.alert.adminRedirect': '管理者は管理ダッシュボードからスレッドにアクセスしてください。',
         'thread.alert.noAccess': 'アクセス権限がありません。',
@@ -6811,6 +6816,7 @@ const translations = {
         // === Thread Alert/UI Messages ===
         'thread.alert.threadNotFound': 'Хэлэлцүүлэг олдсонгүй.',
         'thread.alert.loginRequired': 'Нэвтрэх шаардлагатай.',
+        'thread.login.description': 'Зөвлөгөөний хэлэлцүүлгийг харахын тулд Google-ээр нэвтэрнэ үү.',
         'thread.alert.fileSizeLimit': 'Файлын хэмжээ 10MB-аас хэтрэх боломжгүй.',
         'thread.alert.adminRedirect': 'Админ удирдлагын самбараар дамжуулан хандана уу.',
         'thread.alert.noAccess': 'Хандах эрхгүй байна.',
@@ -7993,6 +7999,7 @@ const translations = {
         // === Thread Alert/UI Messages ===
         'thread.alert.threadNotFound': 'ไม่พบเธรด',
         'thread.alert.loginRequired': 'ต้องเข้าสู่ระบบ',
+        'thread.login.description': 'กรุณาเข้าสู่ระบบด้วย Google เพื่อดูเธรดการให้คำปรึกษาของคุณ',
         'thread.alert.fileSizeLimit': 'ขนาดไฟล์ต้องไม่เกิน 10MB',
         'thread.alert.adminRedirect': 'ผู้ดูแลระบบกรุณาเข้าถึงผ่านแดชบอร์ดผู้ดูแล',
         'thread.alert.noAccess': 'คุณไม่มีสิทธิ์เข้าถึง',
