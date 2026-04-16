@@ -2079,18 +2079,32 @@
             let content = processMessageContent(msg.content || '');
 
             // Attachments (XSS 방어: URL 및 파일명 이스케이프)
+            // 두 가지 저장 방식 지원: attachments(JSONB) + 개별 file_url 컬럼 (profile-submit.html 업로드용)
             let attachmentsHtml = '';
+            let fileAttachments = [];
+
             if (msg.attachments && msg.attachments.length > 0) {
+                fileAttachments = msg.attachments;
+            } else if (msg.file_url) {
+                fileAttachments = [{
+                    url: msg.file_url,
+                    name: msg.file_name || 'File',
+                    type: msg.file_type || '',
+                    size: 0
+                }];
+            }
+
+            if (fileAttachments.length > 0) {
                 attachmentsHtml = `
                     <div class="message-attachments">
-                        ${msg.attachments.map(att => {
+                        ${fileAttachments.map(att => {
                             const safeUrl = typeof sanitizeUrl === 'function' ? sanitizeUrl(att.url) : encodeURI(att.url);
                             const safeName = typeof escapeHtml === 'function' ? escapeHtml(att.name) : att.name;
                             return `
                             <div class="attachment-item" onclick="downloadFile('${safeUrl}', '${safeName}')">
                                 <div class="attachment-info">
                                     <div class="attachment-name">${safeName}</div>
-                                    <div class="attachment-size">${formatFileSize(att.size)}</div>
+                                    ${att.size ? `<div class="attachment-size">${formatFileSize(att.size)}</div>` : ''}
                                 </div>
                             </div>`;
                         }).join('')}
