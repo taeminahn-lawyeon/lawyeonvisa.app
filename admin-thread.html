@@ -1297,11 +1297,9 @@
 
                         <div class="status-controls">
                             <div class="control-group">
-                                <div class="control-label">상태</div>
-                                <select class="control-select" id="threadStatus" onchange="updateThreadStatus()">
-                                    <option value="received">신청 접수</option>
-                                    <option value="completed">완료</option>
-                                    <option value="archived">보관</option>
+                                <div class="control-label">진행 단계</div>
+                                <select class="control-select" id="threadStage" onchange="updateThreadStage()">
+                                    <!-- 서비스 타입(consulting/civil/litigation)에 따라 동적으로 채워짐 -->
                                 </select>
                             </div>
                             <div class="control-group">
@@ -1355,7 +1353,6 @@
                             <button type="button" class="template-btn" onclick="insertPaymentRequest()">결제 요청</button>
                             <button type="button" class="template-btn" onclick="insertLinkButton()">링크 첨부</button>
                             <button type="button" class="template-btn" onclick="insertGrayBox()">회색 박스</button>
-                            <button type="button" class="template-btn" onclick="openStageChangeModal()">단계 변경</button>
                             <button type="button" class="template-btn survey-btn" id="d10InfoRequestBtn" onclick="sendD10InfoRequest()" style="display: none;">D-10-1 정보 요청</button>
                             <button type="button" class="template-btn survey-btn" id="visaLegalSurveyBtn" onclick="sendVisaLegalSurveyRequest()" style="display: none;">비자 법률자문 설문 요청</button>
                         </div>
@@ -2024,12 +2021,9 @@
             document.getElementById('customerNationality').textContent = customerData?.nationality || '-';
             document.getElementById('customerVisa').textContent = customerData?.visa_type || '-';
 
-            // Status controls - 기존 상태를 새 상태로 정규화
-            let normalizedStatus = threadData.status || 'received';
-            if (['payment', 'document', 'processing'].includes(normalizedStatus)) {
-                normalizedStatus = 'received';
-            }
-            document.getElementById('threadStatus').value = normalizedStatus;
+            // 진행 단계 드롭다운을 서비스 타입에 맞게 동적으로 채우기
+            // (민원=6단계, 자문=4단계, 소송=5단계)
+            populateStageDropdown();
             document.getElementById('threadPriority').value = threadData.priority || 'normal';
 
             // Fee info
@@ -2505,20 +2499,55 @@
             }
         });
 
-        // Status updates
-        async function updateThreadStatus() {
-            const status = document.getElementById('threadStatus').value;
+        // 진행 단계 드롭다운 채우기 (서비스 타입별로 4/5/6단계)
+        function populateStageDropdown() {
+            const select = document.getElementById('threadStage');
+            if (!select) return;
+
+            const serviceType = getServiceType();
+            const stages = STAGES[serviceType] || STAGES.civil;
+            const currentStage = Math.min(threadData.current_stage || 1, stages.length);
+
+            select.innerHTML = stages.map((s, i) => {
+                const num = i + 1;
+                return `<option value="${num}">${num}. ${s.name}</option>`;
+            }).join('');
+
+            select.value = currentStage;
+        }
+
+        // 진행 단계 변경 - current_stage 컬럼 업데이트 + status 자동 동기화 + 진행 상황 패널 갱신
+        async function updateThreadStage() {
+            const newStage = parseInt(document.getElementById('threadStage').value, 10);
+            if (!newStage || isNaN(newStage)) return;
+
+            const serviceType = getServiceType();
+            const stages = STAGES[serviceType] || STAGES.civil;
+            // 마지막 단계 도달 시 status='completed', 그 외는 'received'로 자동 동기화
+            // (대시보드 필터링 등 기존 status 기반 로직 호환 유지)
+            const derivedStatus = newStage >= stages.length ? 'completed' : 'received';
+
             try {
                 const { error } = await supabaseClient
                     .from('threads')
-                    .update({ status: status })
+                    .update({
+                        current_stage: newStage,
+                        status: derivedStatus
+                    })
                     .eq('id', threadId);
 
                 if (error) throw error;
-                threadData.status = status;
+
+                threadData.current_stage = newStage;
+                threadData.status = derivedStatus;
+
+                // 우측 진행 상황 패널 즉시 갱신
+                renderProgress();
             } catch (error) {
-                console.error('Status update error:', error);
-                alert('상태 업데이트 실패');
+                console.error('Stage update error:', error);
+                alert('진행 단계 변경 실패');
+                // 실패 시 드롭다운 원복
+                document.getElementById('threadStage').value = threadData.current_stage || 1;
             }
         }
 
@@ -2672,35 +2701,6 @@
                     sender_type: 'admin',
                     content: content
                 }).then(() => loadMessages());
-            }
-        }
-
-        function openStageChangeModal() {
-            const serviceType = getServiceType();
-            const stages = STAGES[serviceType] || STAGES.civil;
-            const currentStage = threadData.current_stage || 1;
-            const serviceTypeLabel = SERVICE_TYPE_LABELS[serviceType] || '민원';
-
-            const options = stages.map((s, i) => `${i + 1}. ${s.name}`).join('\n');
-            const newStage = prompt(`[${serviceTypeLabel}] 변경할 단계를 입력하세요 (1-${stages.length}):\n\n${options}`, currentStage);
-
-            if (newStage && !isNaN(newStage)) {
-                const stage = parseInt(newStage);
-                if (stage >= 1 && stage <= stages.length) {
-                    supabaseClient
-                        .from('threads')
-                        .update({ current_stage: stage })
-                        .eq('id', threadId)
-                        .then(({ error }) => {
-                            if (error) {
-                                alert('단계 변경 실패');
-                            } else {
-                                threadData.current_stage = stage;
-                                renderProgress();
-                                alert('단계가 변경되었습니다.');
-                            }
-                        });
-                }
             }
         }
 
