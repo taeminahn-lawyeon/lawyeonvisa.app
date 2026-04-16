@@ -977,6 +977,131 @@
             color: #191F28;
         }
 
+        /* Attachments Sidebar (쓰레드 내 모든 첨부파일을 한눈에 표시) */
+        .attachments-section {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .attachments-header {
+            padding: 16px 20px;
+            background: #F9FAFB;
+            border-bottom: 1px solid #E5E7EB;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .attachments-header h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #191F28;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .attachments-count {
+            background: #3182F6;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .attachments-list {
+            padding: 8px 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .attachments-empty {
+            padding: 20px;
+            text-align: center;
+            color: #9CA3AF;
+            font-size: 13px;
+        }
+
+        .sidebar-attachment-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.15s;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-attachment-item:hover {
+            background: #F3F4F6;
+        }
+
+        .sidebar-attachment-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: #EFF6FF;
+            color: #3182F6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 14px;
+        }
+
+        .sidebar-attachment-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .sidebar-attachment-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: #191F28;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sidebar-attachment-meta {
+            font-size: 11px;
+            color: #6B7684;
+            margin-top: 2px;
+        }
+
+        .sidebar-attachment-actions {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-attachment-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            border: none;
+            background: #F3F4F6;
+            color: #6B7684;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            transition: all 0.15s;
+        }
+
+        .sidebar-attachment-btn:hover {
+            background: #3182F6;
+            color: white;
+        }
+
         /* Admin Notes */
         .notes-section {
             background: #FEF3C7;
@@ -1280,6 +1405,17 @@
                             <span class="fee-label">관납료</span>
                             <span class="fee-value" id="governmentFee">₩0</span>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Attachments (쓰레드 내 모든 첨부파일을 한눈에) -->
+                <div class="attachments-section">
+                    <div class="attachments-header">
+                        <h3><i class="fas fa-paperclip"></i> 첨부파일</h3>
+                        <span class="attachments-count" id="attachmentsCount">0</span>
+                    </div>
+                    <div class="attachments-list" id="attachmentsList">
+                        <div class="attachments-empty">첨부파일이 없습니다.</div>
                     </div>
                 </div>
 
@@ -2063,12 +2199,90 @@
 
                 container.innerHTML = messagesHtml;
 
+                // 사이드바 첨부파일 목록 갱신
+                renderAttachmentsSidebar(messages);
+
                 // Scroll to bottom
                 window.scrollTo(0, document.body.scrollHeight);
 
             } catch (error) {
                 console.error('Error loading messages:', error);
             }
+        }
+
+        // 사이드바 첨부파일 패널 렌더링 - 쓰레드 내 모든 메시지에서 파일 추출
+        function renderAttachmentsSidebar(messages) {
+            const listEl = document.getElementById('attachmentsList');
+            const countEl = document.getElementById('attachmentsCount');
+            if (!listEl || !countEl) return;
+
+            // 모든 메시지에서 첨부파일 수집 (attachments JSONB + 개별 file_url 컬럼 모두 지원)
+            const allFiles = [];
+            (messages || []).forEach(msg => {
+                if (msg.attachments && msg.attachments.length > 0) {
+                    msg.attachments.forEach(att => {
+                        allFiles.push({
+                            url: att.url,
+                            name: att.name || 'File',
+                            type: att.type || '',
+                            size: att.size || 0,
+                            createdAt: msg.created_at
+                        });
+                    });
+                } else if (msg.file_url) {
+                    allFiles.push({
+                        url: msg.file_url,
+                        name: msg.file_name || 'File',
+                        type: msg.file_type || '',
+                        size: 0,
+                        createdAt: msg.created_at
+                    });
+                }
+            });
+
+            countEl.textContent = allFiles.length;
+
+            if (allFiles.length === 0) {
+                listEl.innerHTML = '<div class="attachments-empty">첨부파일이 없습니다.</div>';
+                return;
+            }
+
+            listEl.innerHTML = allFiles.map(file => {
+                const safeUrl = typeof sanitizeUrl === 'function' ? sanitizeUrl(file.url) : encodeURI(file.url);
+                const safeName = typeof escapeHtml === 'function' ? escapeHtml(file.name) : file.name;
+                const icon = getFileIcon(file.type, file.name);
+                const dateStr = file.createdAt ? new Date(file.createdAt).toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' }) : '';
+                return `
+                    <div class="sidebar-attachment-item" onclick="downloadFile('${safeUrl}', '${safeName}')" title="${safeName}">
+                        <div class="sidebar-attachment-icon">
+                            <i class="fas ${icon}"></i>
+                        </div>
+                        <div class="sidebar-attachment-info">
+                            <div class="sidebar-attachment-name">${safeName}</div>
+                            <div class="sidebar-attachment-meta">${dateStr}${file.size ? ' · ' + formatFileSize(file.size) : ''}</div>
+                        </div>
+                        <div class="sidebar-attachment-actions">
+                            <button class="sidebar-attachment-btn" onclick="event.stopPropagation(); window.open('${safeUrl}', '_blank')" title="새 탭에서 보기">
+                                <i class="fas fa-external-link-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 파일 타입에 따른 아이콘 결정
+        function getFileIcon(mimeType, fileName) {
+            const type = (mimeType || '').toLowerCase();
+            const name = (fileName || '').toLowerCase();
+            if (type.startsWith('image/') || /\.(png|jpg|jpeg|gif|webp|svg)$/.test(name)) return 'fa-image';
+            if (type === 'application/pdf' || name.endsWith('.pdf')) return 'fa-file-pdf';
+            if (type.includes('word') || /\.(doc|docx)$/.test(name)) return 'fa-file-word';
+            if (type.includes('excel') || type.includes('spreadsheet') || /\.(xls|xlsx)$/.test(name)) return 'fa-file-excel';
+            if (type.startsWith('video/')) return 'fa-file-video';
+            if (type.startsWith('audio/')) return 'fa-file-audio';
+            if (type.includes('zip') || /\.(zip|rar|7z)$/.test(name)) return 'fa-file-archive';
+            return 'fa-file';
         }
 
         function renderMessageCard(msg) {
