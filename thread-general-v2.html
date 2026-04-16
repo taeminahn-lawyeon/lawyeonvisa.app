@@ -1213,6 +1213,119 @@
             to { transform: rotate(360deg); }
         }
 
+        /* Login Overlay (이메일 링크 클릭 시 비로그인 사용자에게 표시) */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 50%, #0f172a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            max-width: 420px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .login-card-header {
+            background: linear-gradient(135deg, #1E40AF 0%, #3182F6 100%);
+            padding: 32px 24px;
+            text-align: center;
+        }
+
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 20px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .login-logo img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+
+        .login-firm-name {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .login-firm-subtitle {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .login-card-body {
+            padding: 32px 24px;
+            text-align: center;
+        }
+
+        .login-card-body h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #191F28;
+            margin-bottom: 8px;
+        }
+
+        .login-card-body p {
+            font-size: 14px;
+            color: #6B7280;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .btn-google-login {
+            width: 100%;
+            height: 56px;
+            background: white;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-family: 'Noto Sans KR', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .btn-google-login:hover {
+            background: #F9FAFB;
+            border-color: #D1D5DB;
+        }
+
+        .btn-google-login:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-google-login img {
+            width: 20px;
+            height: 20px;
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .thread-layout {
@@ -1267,6 +1380,27 @@
     </style>
 </head>
 <body>
+    <!-- Login Overlay (이메일 링크 클릭 시 비로그인 사용자에게 표시) -->
+    <div id="loginOverlay" class="login-overlay" style="display: none;">
+        <div class="login-card">
+            <div class="login-card-header">
+                <div class="login-logo">
+                    <img src="favicon.png" alt="Lawyeon">
+                </div>
+                <div class="login-firm-name">법무법인 로연</div>
+                <div class="login-firm-subtitle">&amp; Immigration Center</div>
+            </div>
+            <div class="login-card-body">
+                <h2 data-i18n="thread.alert.loginRequired">Login is required.</h2>
+                <p data-i18n="thread.login.description">Please sign in with Google to view your consultation thread.</p>
+                <button class="btn-google-login" id="threadLoginBtn" onclick="handleThreadLogin()">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+                    <span data-i18n="login.google">Google Login</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Header -->
     <header class="thread-header">
         <div class="header-inner">
@@ -1896,6 +2030,23 @@
             return fallback || key;
         }
 
+        // 로그인 오버레이의 Google 로그인 버튼 핸들러
+        // signInWithGoogle()은 supabase-client.js에 정의되어 있으며,
+        // thread-general-v2.html에서 호출 시 현재 URL(?id= 포함)을 OAuth redirectTo로 보존함
+        async function handleThreadLogin() {
+            const btn = document.getElementById('threadLoginBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + tt('common.loading', 'Loading...');
+            try {
+                await signInWithGoogle();
+                // OAuth 리다이렉트가 발생하므로 이후 코드는 실행되지 않음
+            } catch (error) {
+                console.error('Login error:', error);
+                btn.disabled = false;
+                btn.innerHTML = '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google"> <span>' + tt('login.google', 'Google Login') + '</span>';
+            }
+        }
+
         // Multilingual stages configuration
         const STAGES_I18N = {
             consulting: {
@@ -2153,8 +2304,13 @@
             // Check session
             const session = await checkSession();
             if (!session || !session.user) {
-                alert(tt('thread.alert.loginRequired', 'Login is required.'));
-                window.location.href = 'index.html';
+                // 비로그인 사용자에게 로그인 오버레이 표시 (alert + index.html 리다이렉트 대신)
+                // 로그인 후 같은 URL(?id= 포함)로 돌아오도록 signInWithGoogle()이 redirectTo를 보존함
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('loginOverlay').style.display = 'flex';
+                if (typeof i18n !== 'undefined' && i18n.translatePage) {
+                    i18n.translatePage();
+                }
                 return;
             }
             currentUser = session.user;

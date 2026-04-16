@@ -2478,8 +2478,11 @@
                 return;
             }
 
+            // 쓰레드 직접 링크 - 고객이 클릭 시 로그인 안 되어 있으면 Google 로그인 후 같은 URL로 복귀
+            const threadLink = `${window.location.origin}/thread-general-v2.html?id=${threadId}`;
+
             const subject = `[법무법인 로연] ${threadData.service_name} 진행 안내`;
-            const body = `안녕하세요, ${customerData.name}님.\n\n법무법인 로연 출입국이민지원센터입니다.\n\n신청하신 ${threadData.service_name} 서비스가 진행 중입니다.\n\n감사합니다.`;
+            const body = `안녕하세요, ${customerData.name}님.\n\n법무법인 로연 출입국이민지원센터입니다.\n\n신청하신 ${threadData.service_name} 서비스가 진행 중입니다.\n\n아래 링크에서 진행 상황을 확인하실 수 있습니다:\n${threadLink}\n\n감사합니다.`;
 
             window.location.href = `mailto:${customerData.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         }

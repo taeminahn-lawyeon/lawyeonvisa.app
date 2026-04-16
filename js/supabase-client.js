@@ -48,6 +48,9 @@ async function signInWithGoogle() {
         } else if (currentPage.startsWith('login-')) {
             // 대학교 전용 로그인 페이지는 자기 자신으로 복귀
             redirectUrl = window.location.href;
+        } else if (currentPage === 'thread-general-v2.html') {
+            // 쓰레드 페이지: 이메일 링크 자동 로그인 흐름을 위해 현재 URL(?id= 포함) 보존
+            redirectUrl = window.location.href;
         } else {
             localStorage.removeItem('universityCode');
             redirectUrl = window.location.origin + '/index.html';
