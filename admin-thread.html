@@ -2182,12 +2182,14 @@
 
                 const container = document.getElementById('messagesSection');
 
-                // 사이드바에는 모든 파일을 그대로 표시하되,
-                // 메시지 영역에서는 파일만 담긴 메시지(profile-submit.html 자동 생성)는 숨김
-                // → content가 file_name과 동일 = 파일명 외 본문 텍스트 없음
+                // 메시지 영역에서 profile-submit.html이 자동 생성한 중복 메시지 숨김:
+                // 1) 파일만 담긴 메시지 - content가 file_name과 동일 (사이드바에 파일 표시)
+                // 2) "Basic Information Submitted" 요약 메시지 - 고객 정보는 좌측 사이드바에 표시
                 const visibleMessages = messages.filter(msg => {
-                    const isFileOnlyMessage = msg.file_url && msg.content && msg.content.trim() === (msg.file_name || '').trim();
-                    return !isFileOnlyMessage;
+                    const content = (msg.content || '').trim();
+                    const isFileOnlyMessage = msg.file_url && content === (msg.file_name || '').trim();
+                    const isBasicInfoSummary = content.startsWith('**Basic Information Submitted**');
+                    return !isFileOnlyMessage && !isBasicInfoSummary;
                 });
 
                 // 메시지가 있으면 렌더링 (환영 메시지는 쓰레드 생성 시 DB에 저장됨)
