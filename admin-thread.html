@@ -2188,18 +2188,26 @@
 
                 const container = document.getElementById('messagesSection');
 
+                // 사이드바에는 모든 파일을 그대로 표시하되,
+                // 메시지 영역에서는 파일만 담긴 메시지(profile-submit.html 자동 생성)는 숨김
+                // → content가 file_name과 동일 = 파일명 외 본문 텍스트 없음
+                const visibleMessages = messages.filter(msg => {
+                    const isFileOnlyMessage = msg.file_url && msg.content && msg.content.trim() === (msg.file_name || '').trim();
+                    return !isFileOnlyMessage;
+                });
+
                 // 메시지가 있으면 렌더링 (환영 메시지는 쓰레드 생성 시 DB에 저장됨)
                 let messagesHtml = '';
 
-                if (messages && messages.length > 0) {
-                    messagesHtml = messages.map(msg => renderMessageCard(msg)).join('');
+                if (visibleMessages && visibleMessages.length > 0) {
+                    messagesHtml = visibleMessages.map(msg => renderMessageCard(msg)).join('');
                 } else {
                     messagesHtml = '<p style="text-align: center; color: #6B7684; padding: 40px;">아직 메시지가 없습니다.</p>';
                 }
 
                 container.innerHTML = messagesHtml;
 
-                // 사이드바 첨부파일 목록 갱신
+                // 사이드바 첨부파일 목록 갱신 (필터링 전 전체 messages 사용)
                 renderAttachmentsSidebar(messages);
 
                 // Scroll to bottom
