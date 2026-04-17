@@ -453,13 +453,13 @@
                             </div>
                             <button class="cta-btn" onclick="event.stopPropagation(); location.href='consultation-request.html?type=emergency'"><span data-i18n="emergency.legal.cta">Emergency Consultation</span> <span class="arrow">→</span></button>
                         </div>
-                        <div class="premium-service-card" onclick="location.href='service-navigator.html'">
+                        <div class="premium-service-card" onclick="goToService('pre-consultation')">
                             <div class="title" data-i18n="kdu.preconsult.title">사전 상담 신청</div>
                             <div class="desc">
                                 <div class="desc-item" data-i18n="kdu.preconsult.item1">나에게 맞는 서비스 찾기</div>
                                 <div class="desc-item" data-i18n="kdu.preconsult.item2">전문가 상담 안내</div>
                             </div>
-                            <button class="cta-btn" onclick="event.stopPropagation(); location.href='service-navigator.html'"><span data-i18n="kdu.preconsult.cta">사전 상담 신청</span> <span class="arrow">→</span></button>
+                            <button class="cta-btn" onclick="event.stopPropagation(); goToService('pre-consultation')"><span data-i18n="kdu.preconsult.cta">사전 상담 신청</span> <span class="arrow">→</span></button>
                         </div>
                         <div class="premium-service-card" onclick="goToService('visa-prediagnosis')">
                             <div class="title" data-i18n="emergency.diagnosis.title">Visa Diagnosis & Consultation</div>
