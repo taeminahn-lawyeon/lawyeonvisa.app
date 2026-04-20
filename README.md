@@ -1,490 +1,313 @@
 # 법무법인 로연 출입국이민지원센터
 
-## 📌 프로젝트 개요
-
-법무법인 로연의 출입국 이민 지원을 위한 통합 웹 서비스입니다.
-- **일반 회원 시스템**: 개인 외국인을 위한 출입국 민원 대행 서비스
-- **협약 기관 시스템**: 협약 대학 학생 전용 서비스 (**일반 페이지와 완전 통일됨**)
-- **관리자 시스템**: 법무법인 직원용 쓰레드·고객 관리 대시보드
-- **담당자 시스템**: 제휴기관 담당자용 외국인 체류 현황 모니터링
+> Supabase 기반 정적 웹앱. 외국인 대상 **75개 출입국 민원 대행** + **협약 대학 30% 할인** + **법무법인 관리자 대시보드**.
+>
+> 본 문서는 **기획자(PM)용 웹 구조·기술 스택 개요**입니다. 개발·배포 상세는 섹션 16의 연관 문서를 참고하세요.
 
 ---
 
-## 🏢 사업자 정보
+## 1. 사업자 정보
 
 **법무법인 로연 (Law Firm Lawyeon)**
-- **대표자**: 민준우
-- **사업자등록번호**: 391-85-03007
-- **주소**: 서울특별시 강서구 공항대로 164, 503호(마곡동, 류마타Tower)
-- **대표 전화**: 02-2039-0544
-- **이메일**: taemin.ahn@lawyeon.com
-- **개인정보보호책임자**: 안태민 (taemin.ahn@lawyeon.com)
-- **관리자 계정**: taemin.ahn@lawyeon.com (super_admin)
+
+| 항목 | 내용 |
+|---|---|
+| 대표자 | 민준우 |
+| 사업자등록번호 | 391-85-03007 |
+| 주소 | 서울특별시 강서구 공항대로 164, 503호(마곡동, 류마타Tower) |
+| 대표 전화 | 02-2039-0544 |
+| 대표 이메일 | taemin.ahn@lawyeon.com |
+| 개인정보보호책임자 | 안태민 (taemin.ahn@lawyeon.com) |
+| 운영 도메인 | www.lawyeonvisa.app |
 
 ---
 
-## 🎯 핵심 기능
+## 2. 핵심 수치 한눈에
 
-### 1. **일반 회원 시스템**
+| HTML 페이지 | 출입국 서비스 | 서비스 카테고리 | 지원 언어 | 협약 대학 | Edge Functions |
+|---|---|---|---|---|---|
+| **31** | **75** | **6** | **7** | **2** (조선대·극동대) | **2** |
 
-#### 📄 주요 페이지
-```
-index.html                   # 메인 페이지 (로그인 전/후 통합)
-profile-setup.html           # 프로필 설정 (기본정보)
-profile-edit.html            # 프로필 수정
-service-apply-general.html   # 서비스 신청/결제 (2단계)
-payment-success.html         # 결제 완료
-payment-fail.html            # 결제 실패
-partnership-apply.html       # 제휴 신청
-partnership-apply-success.html # 제휴 신청 완료
-thread-archive.html          # 쓰레드 아카이브 (완료된 서비스)
-faq.html                     # 자주 묻는 질문
-terms.html                   # 이용약관
-privacy.html                 # 개인정보처리방침
-```
-
-#### 🆕 **서비스 신청 시스템** (2단계 프로세스)
-```
-Step 1: 서비스 확인 → Step 2: 결제
-```
-
-**서류 제출 방식**:
-- ✅ 결제 완료 후 → **쓰레드에서 센터 담당자가 서류 요청**
-- ✅ 결제 전 서류 업로드 불필요
-- ✅ 간소화된 신청 프로세스
-
-**주요 기능**:
-- ✅ **33개 출입국 민원 서비스** (정부 수수료 포함)
-  - 비자 (4개): 발급, 연장, 변경, 부여
-  - 체류 신고 (8개): 시간제취업, 근무처변경 등
-  - 이민·국적·난민 (9개): 귀화, 국적회복, 난민 등
-  - 외국인 등록 (3개): 신청, 재발급, 변경
-  - 자문 (3개): 비자, 교육, 단체 (견적 협의)
-  - 증명서 (6개): 출입국사실, 외국인등록사실 등
-- ✅ **정부 수수료 통합 징수** (센터가 대납)
-- ✅ **해외 결제 연동** (Toss Payments Global, PayPal)
-
-#### 🧵 **쓰레드 시스템** (NEW - 개선됨)
-
-**신청 건마다 개별 쓰레드 생성**:
-- ✅ 결제 완료 시 자동으로 쓰레드 생성
-- ✅ 사전진단 실시 시 진단 결과를 해당 쓰레드에 기록 (추가 쓰레드 생성 없음)
-- ✅ 견적 상담 신청 시 쓰레드 생성
-- ✅ 센터 담당자와 1:1 커뮤니케이션
-- ✅ 쓰레드에서 서류 요청 및 진행 상황 확인
-- ✅ 대행 완료 시 쓰레드 아카이빙 처리
-
-**쓰레드 상태 관리**:
-1. `payment` - 결제 완료
-2. `document` - 서류 수집 중
-3. `processing` - 신청 진행 중
-4. `completed` - 처리 완료
-5. `archived` - 완료 (보관)
-
-**쓰레드 확인 위치**:
-- `index.html` → "나의 신청 내역" 섹션
-- 활성 쓰레드 / 아카이브된 쓰레드 모두 표시
-- `thread-archive.html`에서 완료된 서비스 및 문서 다운로드
+> 가격대: ₩22,000 ~ ₩1,400,000 (KRW 고정).
+> 상태 아이콘 표기법: ✅ 작동 · ⚠️ 데모 · 🟡 부분 구현 · 🔄 예정.
 
 ---
 
-### 2. **협약 기관 시스템** (대학 전용)
+## 3. 기술 스택 요약표
 
-#### 🎯 **핵심 특징**
-- ✅ **전용 로그인 페이지** (대문 페이지)
-- ✅ **Google 로그인** 사용 (학교 이메일 불필요)
-- ✅ **학번/사번/회원번호로 소속 인증** (기본정보 제출 시)
-- ✅ **30% 할인가** 자동 적용 (천원 단위 반올림)
-- ✅ **index.html과 완전 동일한 구조** (브랜드 컬러만 차별화)
-
-#### 💰 가격 정책 (협약 기관 30% 할인)
-
-**비자 서비스**:
-- 비자 발급/변경/부여: ₩880,000 → **₩616,000** (30% 할인) + 정부 수수료
-- 비자 연장: ₩550,000 → **₩385,000** + ₩50,000 (정부) = **₩435,000**
-
-**체류 신고 (8개)**: ₩110,000 → **₩77,000** + 정부 수수료
-
-**이민·국적·난민**:
-- 귀화 신청: ₩1,100,000 → **₩770,000** + ₩300,000 = **₩1,070,000**
-- 국적회복: ₩330,000 → **₩231,000** + ₩200,000 = **₩431,000**
+| 구분 | 스택 |
+|---|---|
+| 프론트엔드 | HTML5 + Vanilla JavaScript (프레임워크 미사용) |
+| 스타일 | 자체 CSS (Toss 스타일), Font Awesome 6.4, Google Fonts(Noto Sans KR) |
+| 백엔드/DB | **Supabase** (PostgreSQL · Auth · Storage · Realtime · Edge Functions) |
+| 인증 | Google OAuth (Supabase Auth) |
+| 결제 | Toss Payments Global ⚠️ · PayPal 🔄 · WISE 송금 🟡 |
+| 이메일 | Resend 🔄 |
+| 다국어 | 자체 i18n 엔진 (7개 언어) |
+| 상태 관리 | 클라이언트 `localStorage` + 서버 Supabase DB |
+| 호스팅 | GitHub Pages (main 브랜치 자동 배포) |
+| CI | GitHub Actions — `validate.yml`, `build-blog.yml` |
+| npm 의존성 | `@supabase/supabase-js` **단 1개** (그 외는 모두 CDN 로드) |
 
 ---
 
-### 3. **관리자 시스템** (NEW)
-
-#### 📄 관리자 페이지
-```
-admin-dashboard.html          # 법무법인 직원용 관리자 대시보드
-```
-
-**주요 기능**:
-- ✅ **전체 고객 및 쓰레드 관리**
-  - 진행 중 쓰레드 실시간 모니터링
-  - 쓰레드 상태 변경 (payment → document → processing → completed → archived)
-  - 우선순위 지정 (보통, 높음, 긴급)
-- ✅ **통계 대시보드**
-  - 전체 고객 수
-  - 진행 중 쓰레드 수
-  - 긴급 케이스 수
-  - 이번 달 매출
-- ✅ **필터 및 검색**
-  - 고객명, 서비스명, 상태, 우선순위 필터
-- ✅ **문서 요청 기능**
-  - 쓰레드 내 문서 요청 메시지 전송
-- ✅ **결제 관리**
-  - 전체 결제 내역 조회
-  - 환불 처리
-
-**접근 권한**:
-- 이메일에 "admin" 포함 시 접근 가능 (개발 모드)
-- 실제 환경: Supabase RLS로 `super_admin` 역할만 접근
-
----
-
-### 4. **담당자 시스템** (NEW)
-
-#### 📄 담당자 페이지
-```
-partner-dashboard.html        # 제휴기관 담당자용 대시보드
-```
-
-**주요 기능**:
-- ✅ **소속 외국인 체류 현황 모니터링**
-  - 전체 외국인 수, 정상/주의/위험 상태 통계
-  - 비자 만료일 임박자 알림 (30일/15일 이내)
-- ✅ **불법체류 사전진단 현황** (연 2회 의무)
-  - 진단 완료/미완료 현황
-  - 미완료자 일괄 알림 발송
-- ✅ **외국인 상세 정보**
-  - 이름, 국적, 비자 종류, 만료일
-  - 사전진단 이력
-  - **제한**: 쓰레드, 결제 내역, 민감 개인정보 미공개
-- ✅ **필터 및 검색**
-  - 이름, 국적, 비자 종류, 체류 상태
-
-**접근 권한**:
-- 제휴기관 이메일로 접근 (개발 모드)
-- 실제 환경: Supabase RLS로 `partner_admin` 역할, 자기 조직 멤버만 조회
-
----
-
-### 5. **법적 문서** (NEW)
-
-#### 📄 법적 필수 페이지
-```
-terms.html                    # 이용약관 (법무법인 로연 사업자 정보 반영)
-privacy.html                  # 개인정보처리방침 (개인정보보호책임자: 안태민)
-```
-
-**이용약관 주요 내용**:
-- 서비스 이용 계약
-- 결제 및 환불 정책 (착수 전 100%, 진행 중 50%, 완료 후 불가)
-- 개인정보 수집 동의
-- 책임의 제한 (비자 승인 거부는 법무법인 책임 아님)
-- 분쟁 해결 (서울중앙지방법원)
-
-**개인정보처리방침 주요 내용**:
-- 개인정보 수집 항목 및 목적 (비자 신청, 법률 자문)
-- 제3자 제공 (법무부 출입국관리사무소, 결제대행사)
-- 보유 및 이용 기간 (서비스 완료 후 5년)
-- 안전성 확보 조치 (AES-256 암호화, HTTPS, RLS)
-- 정보주체의 권리 (열람, 정정, 삭제, 처리 정지)
-
----
-
-### 6. **편의 기능** (NEW)
-
-#### 📄 추가 페이지
-```
-faq.html                      # 자주 묻는 질문 (4개 카테고리)
-```
-
-**FAQ 카테고리**:
-1. **서비스 이용**: 비자 신청 기간, 절차, 서류 준비
-2. **결제 및 환불**: 결제 방식, 환불 정책, 세금계산서
-3. **문서 제출**: 필요 서류, 제출 방법, 제출 기한
-4. **제휴 혜택**: 할인율, 적용 방법, 사전진단, 제휴 신청
-
----
-
-## 🔧 기술 스택
-
-### Frontend
-- **HTML5, CSS3, JavaScript (Vanilla)**
-- **Font**: Noto Sans KR (Google Fonts)
-- **Icons**: Font Awesome 6.4.0
-
-### Data Storage (현재)
-- **LocalStorage**: 클라이언트 측 데이터 저장 (개발용)
-  - `user`: Google 로그인 사용자 정보
-  - `userProfile`: 회원 프로필 정보
-  - `userThreads`: 사용자별 쓰레드 목록
-  - `currentThreadId`: 현재 활성 쓰레드 ID
-  - `pendingOrder`: 결제 대기 주문 정보
-
-### Backend (실제 배포 시 구현 필요)
-- **Supabase**: PostgreSQL 데이터베이스, 인증, 파일 저장소
-  - `users` 테이블: 사용자 정보, 역할 (customer, partner_admin, super_admin)
-  - `threads` 테이블: 쓰레드 정보, 상태, 메시지
-  - `diagnosis_records` 테이블: 불법체류 사전진단 이력
-  - `payments` 테이블: 결제 내역
-  - **Row Level Security (RLS)**: 역할별 접근 제어
-- **Netlify Functions**: 서버리스 백엔드 (결제 검증, 이메일 발송)
-- **Resend**: 이메일 발송 서비스
-- **Toss Payments / PayPal**: 결제 대행
-
-### 보안
-- **AES-256-GCM**: 클라이언트 측 문서 암호화 (여권, 외국인등록증)
-- **HTTPS (TLS 1.3)**: 모든 데이터 전송 암호화
-- **Row Level Security**: Supabase 데이터베이스 접근 제어
-- **접근 로그**: 모든 문서 접근 기록 3년 보관
-
----
-
-## 🔐 보안 가이드
-
-프로젝트에는 다음 보안 문서가 포함되어 있습니다:
+## 4. 시스템 구성도
 
 ```
-SETUP_GUIDE.md              # Supabase, Netlify, Email/Payment 설정 가이드
-supabase-setup.sql          # Supabase 데이터베이스 스키마 및 RLS 정책
-supabase-security-tables.sql # 보안 감사 테이블 (접근 로그, 문서 이력)
-SECURITY_GUIDE.md           # 전자문서 보안 구현 가이드
-js/secure-file-handler.js   # 클라이언트 측 파일 암호화/복호화 모듈
-```
-
-**주요 보안 조치**:
-1. **클라이언트 측 암호화 (E2EE)**: 여권, 외국인등록증 등 민감 문서는 클라이언트에서 암호화 후 업로드
-2. **Supabase Storage RLS**: 파일 업로드/다운로드 권한 제어
-3. **접근 로그 기록**: 누가, 언제, 어떤 파일에 접근했는지 3년간 보관
-4. **문서 이력 추적**: 문서 업로드, 다운로드, 삭제 이벤트 기록
-
-**법적 준수**:
-- 개인정보 보호법 제24조, 제29조 (암호화, 접근 통제)
-- 전자문서법 제9조 (위·변조 방지)
-- 정보통신망법 제28조 (암호화, 보안 프로그램)
-
----
-
-## 📂 파일 구조
-
-```
-📦 프로젝트 루트
-├── 📄 index.html                    # 메인 페이지
-├── 📄 profile-setup.html            # 프로필 설정
-├── 📄 profile-edit.html             # 프로필 수정 (NEW)
-├── 📄 service-apply-general.html    # 서비스 신청/결제 (2단계)
-├── 📄 payment-success.html          # 결제 완료
-├── 📄 payment-fail.html             # 결제 실패
-├── 📄 partnership-apply.html        # 제휴 신청
-├── 📄 partnership-apply-success.html # 제휴 신청 완료 (NEW)
-├── 📄 thread-archive.html           # 쓰레드 아카이브 (NEW)
-├── 📄 faq.html                      # 자주 묻는 질문 (NEW)
-├── 📄 terms.html                    # 이용약관 (NEW)
-├── 📄 privacy.html                  # 개인정보처리방침 (NEW)
-│
-├── 📁 관리자/담당자 시스템 (NEW)
-│   ├── admin-dashboard.html         # 법무법인 직원용 관리자 대시보드
-│   └── partner-dashboard.html       # 제휴기관 담당자용 대시보드
-│
-├── 📁 보안 가이드 (NEW)
-│   ├── SETUP_GUIDE.md               # Supabase/Netlify 설정 가이드
-│   ├── supabase-setup.sql           # DB 스키마 및 RLS 정책
-│   ├── supabase-security-tables.sql # 보안 감사 테이블
-│   └── SECURITY_GUIDE.md            # 전자문서 보안 구현 가이드
-│
-└── 📁 js/
-    ├── secure-file-handler.js       # 파일 암호화/복호화 모듈 (NEW)
-    ├── chat-widget.js               # 채팅 위젯
-    └── payment-integration.js       # 결제 연동 (Toss, PayPal)
+┌──────────────┐
+│   Browser    │  (데스크톱/모바일, 7개 언어)
+└──────┬───────┘
+       │ HTTPS
+       ├───────▶ ┌─────────────────────────────┐
+       │         │  GitHub Pages               │
+       │         │  www.lawyeonvisa.app        │  정적 HTML/CSS/JS
+       │         └─────────────────────────────┘
+       │
+       └──API──▶ ┌─────────────────────────────┐
+                 │  Supabase                   │
+                 │  ├─ Auth (Google OAuth)     │
+                 │  ├─ PostgreSQL + RLS        │
+                 │  ├─ Storage (암호화 파일)   │
+                 │  ├─ Realtime (쓰레드 메시지)│
+                 │  └─ Edge Functions          │
+                 │     ├─ confirm-payment ───▶ Toss Payments Global / PayPal
+                 │     └─ send-notification ─▶ Resend (이메일, 예정)
+                 └─────────────────────────────┘
 ```
 
 ---
 
-## ✅ 완료된 작업
+## 5. 전체 페이지 지도 (31개)
 
-### 2025-12-07 업데이트 (최신) ✨
-- ✅ **법적 문서 작성**
-  - `terms.html`: 이용약관 (사업자 정보 반영)
-  - `privacy.html`: 개인정보처리방침 (개인정보보호책임자: 안태민)
-- ✅ **관리자 시스템 구축**
-  - `admin-dashboard.html`: 전체 쓰레드 관리, 통계, 필터, 상태 변경
-- ✅ **담당자 시스템 구축**
-  - `partner-dashboard.html`: 소속 외국인 체류 현황 모니터링, 사전진단 현황
-- ✅ **사용자 편의 기능**
-  - `profile-edit.html`: 프로필 수정 페이지
-  - `partnership-apply-success.html`: 제휴 신청 완료 페이지
-  - `faq.html`: 자주 묻는 질문 (4개 카테고리, 아코디언 방식)
-  - `thread-archive.html`: 완료된 서비스 내역 조회 및 문서 다운로드
-- ✅ **보안 문서 작성**
-  - `SETUP_GUIDE.md`: Supabase/Netlify/Email/Payment 설정 가이드
-  - `supabase-setup.sql`: DB 스키마 및 RLS 정책
-  - `supabase-security-tables.sql`: 보안 감사 테이블
-  - `SECURITY_GUIDE.md`: 전자문서 보안 구현 가이드
-  - `js/secure-file-handler.js`: 클라이언트 암호화 모듈
+### 5-1. 공개 페이지 (9) — 로그인 불필요
+| 경로 | 역할 |
+|---|---|
+| `index.html` | 메인 랜딩 (로그인 전/후 통합) |
+| `price-list.html` | 75개 서비스 가격표 |
+| `blog.html` / `blog-post.html` | 비자 정보 블로그 목록/상세 |
+| `consultation-request.html` | 견적·무료 상담 신청 |
+| `terms-of-service.html` | 이용약관 |
+| `privacy-policy.html` | 개인정보처리방침 |
+| `refund-policy.html` | 환불 규정 |
+| `404.html` | 오류 페이지 |
 
-### 2025-12-05 업데이트
-- ✅ 서비스 신청 프로세스 4단계 → 2단계 간소화
-- ✅ 쓰레드 시스템 구현 (신청 건마다 개별 쓰레드 생성)
-- ✅ 사전진단은 쓰레드 내에서 진행 (추가 쓰레드 생성 없음)
-- ✅ index.html "나의 신청 내역" 실제 동작 구현
-- ✅ 정부 수수료 통합 징수 시스템
-- ✅ Toss 스타일 결제 페이지 완전 재설계
-- ✅ 용어 개선 ("무료 상담" → "견적 상담", 친근한 문구)
-- ✅ 모바일 UX 대폭 개선 (Toss 스타일)
-- ✅ **협약 기관 30% 할인 시스템 구축** (천원 단위 반올림)
-- ✅ **Google 로그인 통합** (학번 로그인 → Google 로그인)
+### 5-2. 사용자 페이지 (10) — 로그인 후
+| 경로 | 역할 |
+|---|---|
+| `profile-submit.html` | 최초 프로필 입력 |
+| `profile-edit.html` | 프로필 수정 |
+| `service-apply-general.html` | 서비스 신청 (2단계: 서비스 선택 → 결제) |
+| `thread-general-v2.html` | 신청 건별 쓰레드 (1:1 커뮤니케이션) |
+| `visa-thread-general.html` | 비자 전용 쓰레드 |
+| `partnership-apply.html` / `partnership-apply-success.html` | 기관 제휴 신청(+완료) |
+| `payment-success.html` / `payment-fail.html` | 결제 결과 |
+| `payment-wise.html` | WISE 국제송금 대체 결제 |
 
----
+### 5-3. 협약 대학 전용 (6) — 대문 페이지 + 30% 할인
+| 경로 | 역할 |
+|---|---|
+| `login-chosun.html` / `service-chosun.html` | 조선대 학생 로그인·신청 |
+| `login-kdu.html` / `service-kdu.html` | 극동대 학생 로그인·신청 |
+| `login-demo.html` / `service-demo.html` | 내부 테스트용 데모 |
 
-## 🚀 다음 작업 (TODO)
+### 5-4. 관리자 페이지 (6) — 법무법인 직원
+| 경로 | 역할 |
+|---|---|
+| `admin-login.html` | 관리자 로그인 |
+| `admin-dashboard.html` | 전체 쓰레드·고객·통계·결제 대시보드 |
+| `admin-thread.html` | 개별 쓰레드 상세 관리 |
+| `admin-blog.html` / `admin-insert-blog.html` / `admin-blog-edit.html` | 블로그 관리 |
 
-### 🔴 High Priority (백엔드 구현 필요)
-- [ ] **Supabase 데이터베이스 설정**
-  - `supabase-setup.sql` 실행하여 테이블 및 RLS 정책 생성
-  - `supabase-security-tables.sql` 실행하여 보안 감사 테이블 생성
-- [ ] **Netlify Functions 구현**
-  - 결제 검증 API
-  - 이메일 발송 API
-  - 파일 업로드/다운로드 API
-- [ ] **Google OAuth 2.0 실제 연동**
-  - 소셜 로그인 실제 구현
-  - 사용자 정보 Supabase 저장
-- [ ] **Toss Payments / PayPal 실제 연동**
-  - 실제 결제 처리
-  - 결제 검증 서버 구현
-- [ ] **쓰레드 메시지 시스템 구현**
-  - 실시간 메시지 전송 (Supabase Realtime)
-  - 파일 업로드 (암호화 후 Supabase Storage)
-  - 문서 다운로드 (복호화)
-
-### 🟡 Medium Priority
-- [ ] **이메일 알림 시스템**
-  - 결제 완료 알림
-  - 서류 요청 알림
-  - 사전진단 알림 (담당자 → 외국인)
-- [ ] **관리자 기능 강화**
-  - 쓰레드 메시지 전송 (문서 요청)
-  - 환불 처리 로직
-  - 통계 리포팅
-- [ ] **담당자 기능 강화**
-  - 일괄 알림 발송 (Resend)
-  - CSV 내보내기 (외국인 목록)
-
-### 🟢 Low Priority
-- [ ] **비자 사전진단 상세 페이지**
-  - `visa-diagnosis.html` (일반 회원용)
-  - 체크리스트 기반 위험도 분석
-  - 진단 결과를 쓰레드에 기록
-- [ ] **UI/UX 개선**
-  - 로딩 스피너
-  - 토스트 알림
-  - 애니메이션 효과
-- [ ] **다국어 지원**
-  - 영어, 중국어, 베트남어 등
+### 5-5. 담당자 페이지 🔄
+- `partner-dashboard.html` — 제휴기관 담당자용 외국인 체류 현황 모니터링 (구현 예정)
 
 ---
 
-## 🔗 주요 경로 (User Flow)
+## 6. 주요 사용자 플로우
 
-### 일반 회원
+**① 일반 사용자**
 ```
-index.html 
-  → (로그인) 
-  → profile-setup.html 
-  → index.html (메인)
-  → service-apply-general.html (결제)
-  → payment-success.html (완료)
-  → thread-archive.html (완료된 서비스 조회)
+index → Google 로그인 → profile-submit → index
+     → service-apply-general (서비스 선택 → 결제)
+     → payment-success → thread-general-v2 (진행 확인)
 ```
 
-### 관리자 (법무법인 직원)
+**② 협약 대학 학생 (조선대·극동대)**
 ```
-index.html
-  → (admin@ 이메일로 로그인)
-  → admin-dashboard.html
-      - 전체 쓰레드 조회
-      - 상태 변경 (payment → document → processing → completed → archived)
-      - 우선순위 지정
-      - 필터 및 검색
+login-chosun / login-kdu → Google 로그인
+     → service-chosun / service-kdu (30% 할인 자동 적용)
+     → payment-success → thread-general-v2
 ```
 
-### 담당자 (제휴기관 담당자)
+**③ 관리자 (법무법인 직원)**
 ```
-index.html
-  → (제휴기관 이메일로 로그인)
-  → partner-dashboard.html
-      - 소속 외국인 체류 현황 조회
-      - 사전진단 현황 확인
-      - 미완료자 일괄 알림 발송
+admin-login → admin-dashboard (전체 쓰레드)
+     → admin-thread (개별 처리: 상태 변경/문서 요청/결제 관리)
 ```
 
 ---
 
-## 📞 연락처
+## 7. 데이터 & 서비스 카테고리
 
-**법무법인 로연 출입국이민지원센터**
-- **대표변호사**: 민준우
-- **사업자등록번호**: 391-85-03007
-- **주소**: 서울특별시 강서구 공항대로 164, 503호(마곡동, 류마타워)
-- **대표 전화**: 02-2039-0544
-- **이메일**: taemin.ahn@lawyeon.com
-- **개인정보보호책임자**: 안태민 (taemin.ahn@lawyeon.com)
+`data/services.json` 기준.
 
----
-
-## 📝 변경 이력
-
-### 2025-12-07 (최신)
-- ✅ **법적 문서 작성** (이용약관, 개인정보처리방침)
-- ✅ **관리자 시스템 구축** (쓰레드 관리, 통계, 상태 변경)
-- ✅ **담당자 시스템 구축** (외국인 체류 현황, 사전진단 모니터링)
-- ✅ **사용자 편의 기능** (프로필 수정, 제휴 신청 완료, FAQ, 쓰레드 아카이브)
-- ✅ **보안 가이드 작성** (Supabase, Netlify, 파일 암호화)
-
-### 2025-12-05
-- ✅ **쓰레드 시스템 개선** (신청 건마다 개별 쓰레드 생성)
-- ✅ **사전진단 로직 변경** (쓰레드 내 진행, 추가 쓰레드 생성 없음)
-- ✅ **서비스 신청 간소화** (4단계 → 2단계)
-- ✅ **정부 수수료 시스템** (통합 징수, 명확한 금액 표시)
-- ✅ **Toss 스타일 결제 페이지** (완전 재설계)
-- ✅ **용어 및 UX 개선** (친근한 문구, 모바일 최적화)
-
-### 2024-12-04
-- ✅ 메인 사이트 전면 개편
-- ✅ 프로필 설정 간소화
-- ✅ 모바일 UI/UX 개선
+| # | 카테고리 | 서비스 수 | 대표 서비스 |
+|---|---|---|---|
+| 1 | 교육·구직 | 10 | D-4→D-2 변경, D-10 연장, 시간제취업 허가 |
+| 2 | 취업·워크 | 17 | E-7 변경/연장, E-9 근무처 변경, 파견 신고 |
+| 3 | 사업·투자 | 12 | D-8 투자비자, D-9 무역경영, 외투기업 등록 |
+| 4 | 동포·가족·결혼 | 13 | F-4 거소신고, F-6 결혼이민, 가족 초청 |
+| 5 | 거주·영주·국적 | 11 | F-5 영주권, 귀화, 국적회복 |
+| 6 | 일반 신고·증명 | 12 | 외국인등록, 체류지 변경, 출입국사실 증명서 |
+|   | **합계** | **75** | 가격대 ₩22,000 ~ ₩1,400,000 |
 
 ---
 
-## 📌 중요 사항
+## 8. 쓰레드 상태머신
 
-1. **서류 수집 시점**
-   - ❌ 가입 시: 서류 제출 없음
-   - ❌ 결제 전: 서류 제출 없음
-   - ✅ 결제 후: 쓰레드에서 센터 담당자가 서류 요청
+신청 건별로 **쓰레드** 1개가 생성되고, 센터 담당자와 1:1로 문서·진행을 주고받습니다.
 
-2. **쓰레드 운영**
-   - 신청 건마다 개별 쓰레드 생성
-   - 대행 완료 시 아카이빙
-   - 사전진단은 쓰레드 내에서 진행 (추가 쓰레드 생성 없음)
+```
+  payment  ─▶  document  ─▶  processing  ─▶  completed  ─▶  archived
+  (결제완료)   (서류수집)     (신청진행)      (처리완료)     (보관)
+```
 
-3. **결제 시스템**
-   - 센터 수수료 + 정부 수수료 통합
-   - Toss Payments Global / PayPal
-   - 견적 협의 서비스는 상담 후 결제
-
-4. **용어 통일**
-   - ✅ "센터 담당자" (일관 사용)
-   - ✅ "견적 상담" (자문 서비스)
-   - ✅ "쓰레드" (1:1 커뮤니케이션)
-
-5. **보안 준수**
-   - 개인정보보호법, 전자문서법, 정보통신망법 준수
-   - AES-256 암호화, HTTPS, Row Level Security
-   - 접근 로그 3년 보관
+- 결제 완료 시 **자동 생성** (서류 사전 업로드 불필요)
+- 처리 완료 시 **아카이빙** 처리 후 문서 다운로드 가능
+- 확인 위치: `index.html` → "나의 신청 내역"
 
 ---
 
-**Last Updated**: 2025-12-07
+## 9. 협약 기관 할인 정책
+
+- **30% 할인** 자동 적용, 천원 단위 반올림
+- Google 로그인만 사용 (학교 이메일 불필요), 학번·사번으로 소속 인증
+- 할인 예시:
+
+| 서비스 | 정상가 | 할인가 | + 정부 수수료 |
+|---|---|---|---|
+| 비자 발급/변경/부여 | ₩880,000 | ₩616,000 | 별도 |
+| 비자 연장 | ₩550,000 | ₩385,000 | + ₩50,000 |
+| 귀화 신청 | ₩1,100,000 | ₩770,000 | + ₩300,000 |
+
+---
+
+## 10. 다국어 지원 (7개 언어)
+
+| 언어 | 코드 | 비고 |
+|---|---|---|
+| English | `en` | **기본값** (사용자 선택 전까지) |
+| 한국어 | `ko` | 폴백 언어 |
+| 中文 (간체) | `zh` | |
+| Tiếng Việt | `vi` | |
+| 日本語 | `ja` | |
+| Монгол | `mn` | |
+| ไทย | `th` | |
+
+- 구현: `js/i18n.js` + `js/translations.js` (638KB, 모든 UI 텍스트 포함)
+- HTML 요소에 `data-i18n="key"` 속성 부여 → 런타임 치환
+- 사용자 선택은 `localStorage`에 저장
+
+---
+
+## 11. 외부 연동 현황
+
+| 서비스 | 용도 | 상태 | 비고 |
+|---|---|---|---|
+| Supabase Auth | Google OAuth 로그인 | ✅ | - |
+| Supabase DB | 프로필·쓰레드·결제 저장 | ✅ | RLS 활성 |
+| Supabase Storage | 문서 업·다운로드 | ✅ | 클라이언트 암호화 후 업로드 |
+| Supabase Realtime | 쓰레드 실시간 메시지 | ✅ | - |
+| Toss Payments Global | 국제 결제 | ⚠️ 데모 | 실결제 연동 진행 예정 |
+| PayPal | 결제 대체 | 🔄 예정 | - |
+| WISE | 송금 결제 | 🟡 부분 | `payment-wise.html` 옵션 제공 |
+| Resend | 트랜잭션 이메일 | 🔄 예정 | `send-notification` Edge Function에서 호출 예정 |
+
+---
+
+## 12. 디렉터리 구조 (핵심)
+
+```
+lawyeonvisa.app/
+├── *.html                  # 31개 페이지 (루트 배치, GitHub Pages 라우팅)
+├── css/                    # 스타일시트 5개
+├── js/                     # 11개 JS 모듈 (supabase-client, i18n, payment 등)
+├── data/services.json      # 75개 서비스 마스터 데이터 (단일 진실 공급원)
+├── blog/                   # 정적 블로그 HTML (자동 생성)
+├── sql/                    # Supabase 스키마·RLS·보안 정책 SQL
+├── supabase/functions/     # Edge Functions (confirm-payment, send-notification)
+├── scripts/                # 블로그 빌드·HTML 검증 Node 스크립트
+├── migrations/             # DB 마이그레이션 SQL
+├── images/                 # 이미지 자산
+├── .github/workflows/      # GitHub Actions (validate, build-blog)
+├── CNAME                   # → www.lawyeonvisa.app
+├── package.json            # 의존성 1개 (@supabase/supabase-js)
+└── README.md               # 본 문서
+```
+
+---
+
+## 13. 배포 & CI
+
+| 항목 | 내용 |
+|---|---|
+| 호스팅 | GitHub Pages |
+| 도메인 | `www.lawyeonvisa.app` (CNAME) |
+| 배포 트리거 | `main` 브랜치 푸시 시 자동 |
+| CI 워크플로우 | `validate.yml` (HTML/JS 문법 검증) · `build-blog.yml` (블로그 자동 빌드) |
+| 주요 npm 스크립트 | `npm test`, `npm run validate`, `npm run build:blog` |
+
+---
+
+## 14. 보안 & 법적 문서
+
+### 14-1. 보안 조치
+- **Google OAuth 2.0** (Supabase Auth)
+- **Row Level Security (RLS)** — DB 수준 접근 제어 (`customer` / `partner_admin` / `super_admin` 역할)
+- **AES-256-GCM 클라이언트 측 암호화** — 여권·외국인등록증 등 민감 문서
+- **TLS 1.3 / HTTPS** — 모든 통신
+- **접근 로그 3년 보관** — 문서 업로드·다운로드·삭제 이력 추적
+- 관련 파일: `js/secure-file-handler.js`, `sql/PRODUCTION_SETUP_COMPLETE.sql`, `sql/SECURITY_ENHANCEMENT.sql`
+
+### 14-2. 규정 준수
+- 개인정보보호법 제24조(고유식별정보)·제29조(안전조치)
+- 전자문서 및 전자거래 기본법 제9조
+- 정보통신망법 제28조
+
+### 14-3. 법적 필수 페이지
+| 페이지 | 내용 |
+|---|---|
+| `terms-of-service.html` | 이용 계약, 착수 전 100% / 진행 중 50% / 완료 후 불가 환불 규정, 분쟁 관할 |
+| `privacy-policy.html` | 수집 항목·목적, 제3자 제공, 5년 보관, 정보주체 권리 |
+| `refund-policy.html` | 환불 규정 상세 |
+
+---
+
+## 15. 기획자용 미니 용어집
+
+| 용어 | 한 줄 설명 |
+|---|---|
+| **Supabase** | 오픈소스 백엔드 플랫폼. DB + 인증 + 파일저장 + 서버리스 함수를 한 번에 제공. |
+| **RLS (Row Level Security)** | DB가 사용자 역할별로 "어떤 행을 볼 수 있는지" 제어하는 기능. 관리자/사용자/담당자 권한 분리에 사용. |
+| **OAuth** | 비밀번호 대신 Google 등 외부 계정으로 로그인하는 표준 방식. |
+| **Edge Function** | Supabase가 제공하는 서버리스 함수. 결제 승인·이메일 발송처럼 서버 검증이 필요한 로직을 담당. |
+| **i18n** | 다국어 지원(Internationalization)의 줄임. 여기서는 자체 구현한 번역 엔진. |
+| **CDN** | 전 세계 서버에서 파일을 빠르게 배포하는 네트워크. Font Awesome·Supabase SDK 로드에 사용. |
+| **CNAME** | 도메인(`www.lawyeonvisa.app`)을 GitHub Pages에 연결하는 설정 파일. |
+| **쓰레드** | 신청 1건당 생성되는 대화방. 결제부터 서류 수집·처리·완료까지 한 쓰레드에서 진행. |
+| **사전진단** | 협약 기관 소속 외국인을 대상으로 연 2회 실시하는 불법체류 예방 점검. |
+
+---
+
+## 16. 연관 문서
+
+| 문서 | 독자 | 내용 |
+|---|---|---|
+| `BACKEND_HANDOFF.md` | 개발자 | 백엔드 연동·API·환경 변수 상세 |
+| `PO_SERVICE_REVIEW.md` | 기획/PO | 사업 요구사항 리뷰·의사결정 기록 |
+| `QA_REPORT.md` | QA | 품질 보증 리포트 |
+| `UPLOAD_CHECKLIST.md` | 배포 담당 | 배포 전 체크리스트 |
+
+---
+
+_마지막 업데이트: 2026-04-20 · 관리: 안태민 (taemin.ahn@lawyeon.com)_
