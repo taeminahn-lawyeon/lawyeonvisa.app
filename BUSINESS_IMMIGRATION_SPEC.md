@@ -1,36 +1,484 @@
 <!--
-  BUSINESS_IMMIGRATION_SPEC.md — 섹션 14 초안
-  생성자: Claude Code (개발자 세션)
-  생성일: 2026-04-20
-  상태: 초안 · 커밋되지 않음
-
-  주의:
-  - 본 파일은 기획자(PM) 로컬본의 섹션 0~13 이후에 병합될 "섹션 14" 단독 초안입니다.
-  - 섹션 0~13은 PM 로컬본을 그대로 사용하며, 본 파일의 섹션 0~13 영역은 병합 지시 주석만 남겨둡니다.
-  - 본 파일은 센터장님·PM 확인 후 확정본 커밋 단계에서 하나의 파일로 합치시면 됩니다.
-  - 섹션 14 내부에 "[콘솔 확인 후 확정]" 표식이 있는 항목은 후속 콘솔 쿼리 결과로 확정이 필요합니다.
+  BUSINESS_IMMIGRATION_SPEC.md
+  사업이민 섹션 개발 명세 — 법무법인 로연 출입국이민지원센터
+  작성: 안태민 · 섹션 14 병합 및 확정본: 2026-04-20
 -->
 
-<!-- ============================================================ -->
-<!-- 섹션 0 ~ 13                                                    -->
-<!-- ============================================================ -->
-<!--
-  [PM 로컬본과 병합 예정]
-  섹션 0 전제 및 원칙
-  섹션 1 신규 파일 목록
-  섹션 2 URL 라우팅
-  섹션 3 랜딩 페이지 구조
-  섹션 4 상담 신청 페이지
-  섹션 5 블로그 처리
-  섹션 6 쓰레드 상태머신
-  섹션 7 대시보드 UI 조정
-  섹션 8 i18n 번역 키 추가
-  섹션 9 데이터 모델 변경
-  섹션 10 변경되지 않는 것
-  섹션 11 테스트·검증 체크리스트
-  섹션 12 전달 방식
-  섹션 13 확정되지 않은 항목
--->
+> 법무법인 로연 출입국이민지원센터(`lawyeonvisa.app`)에 **사업이민 전용 섹션**을 신규 추가하는 작업 명세.
+>
+> 본 문서는 Claude Code(개발자)용입니다. 기존 저장소 전제에서 작업하며, 컴포넌트·스타일·i18n·쓰레드·대시보드 시스템은 최대한 재활용합니다.
+
+---
+
+## 0. 전제 및 원칙
+
+### 전제
+- Claude Code는 기존 `lawyeonvisa.app` 저장소에 접근 가능.
+- 기존 README(섹션 1~16)에 명시된 기술 스택·디렉터리 구조·컨벤션을 그대로 이어받음.
+- 기존 HTML 31개 페이지 중 `index.html`·`consultation-request.html`·`thread-general-v2.html`·`admin-dashboard.html`을 참고·패턴 복제 원본으로 사용.
+
+### 원칙
+- 기존 Vanilla JS + 정적 HTML + Supabase 구조 유지. 신규 프레임워크 도입 금지.
+- CSS·컴포넌트는 기존 파일을 import/reuse. 신규 스타일 파일 생성 최소화.
+- i18n은 기존 `js/i18n.js` + `js/translations.js` 방식 그대로. 번역 키만 추가.
+- 카피는 본 문서에 한국어 마스터 확정 버전이 직접 삽입되어 있음. 영어·베트남어·중국어 번역은 별도 작업으로 분리.
+- 가격·비용에 관한 일체의 언급·링크 완전 제거 (사업이민 섹션 전체 원칙).
+- 변호사광고규칙 준수(제3조 자신의 이름, 제4조 과장·결과 예측 금지, 제6조 공직 재직 표시).
+
+### 작업 범위
+- 사업이민 전용 랜딩 페이지 1개 + 상담 신청 페이지 1개 신설.
+- 기존 블로그 "사업·투자" 카테고리 재활용 (새 카테고리 생성 없음).
+- 기존 쓰레드 시스템에 사업이민 전용 상태 추가.
+- 기존 대시보드 UI에 사업이민 프로젝트 진행 현황 뷰 추가.
+- 4개 언어(ko·en·vi·zh) 동시 런칭.
+
+---
+
+## 1. 신규 파일 목록
+
+루트 배치 (기존 컨벤션 유지).
+
+```
+lawyeonvisa.app/
+├── business-immigration.html            [신설] 사업이민 랜딩
+├── business-immigration-request.html    [신설] 사업이민 전용 상담 신청 폼
+```
+
+### 신규 CSS/JS 파일
+- 신규 스타일시트 생성 금지. 기존 `css/` 재사용.
+- 신규 JS 필요 시 `js/business-immigration.js` 1개만 생성 (폼 로직·진행 단계 라벨 맵핑).
+
+---
+
+## 2. URL 라우팅
+
+GitHub Pages 정적 라우팅 기준.
+
+| 경로 | 파일 |
+|---|---|
+| `/business-immigration.html` | 사업이민 랜딩 (언어는 쿼리/로컬스토리지로 제어) |
+| `/business-immigration-request.html` | 사업이민 상담 신청 폼 |
+
+### 언어 전환
+- 기존 i18n 방식 그대로. URL 변경 없이 `localStorage.language` 키 기반.
+- 랜딩 진입 시 기본값 `en` (기존 원칙 유지).
+
+---
+
+## 3. 랜딩 페이지 구조 (`business-immigration.html`)
+
+### 3-1. 베이스 원본
+기존 `index.html`을 복제 후 수정하는 방식으로 구현. 기존 `index.html`의 다음 블록을 그대로 재활용.
+
+- 상단 헤더 (로고·언어 드롭다운·Google 로그인·관리자)
+- 법무법인 신뢰 배지 + 변호사 6인 캐러셀 블록 (그대로 유지, 통역사·전문가 추가 없음)
+- 뉴스 & 인사이트 블록
+- 나의 신청 내역 블록 (라벨만 "나의 프로젝트 진행 현황"으로 교체)
+- 푸터
+
+### 3-2. 섹션 구성 (위→아래)
+
+**섹션 1 — 상단 헤더**
+기존 `index.html`과 동일. 변경 없음.
+
+**섹션 2 — 히어로 + 단일 CTA**
+기존 `index.html`의 3개 카드(Immigration Legal Services / Free Pre-Consultation / Visa Diagnosis)를 단일 CTA 블록으로 교체.
+
+레이아웃:
+- 좌측: 헤드라인 + 서브헤드 + CTA 버튼
+- 우측: 대표 이미지 영역 (이미지 자산은 추후 전달, 임시로 기존 이미지 중 하나 placeholder)
+
+콘텐츠 (번역 키 기준):
+```
+data-i18n="biz.hero.headline"    → "한국에서 사업을 시작하고 이주하기 위한 통합 법률서비스"
+data-i18n="biz.hero.subhead"     → "해외에서 한국 이주를 검토하는 외국인을 대상으로, 프로젝트 탐색·규제 자문·비자 취득을 순차 수행합니다."
+data-i18n="biz.hero.cta"         → "사업이민 사전 상담 신청"
+```
+
+CTA 버튼 동작:
+- 클릭 시 `/business-immigration-request.html` 이동.
+- Google 로그인 상태가 아니면 로그인 모달 선표시 후 이동.
+
+**섹션 3 — 법무법인 신뢰 배지 + 변호사 캐러셀**
+기존 `index.html` 블록 그대로 복제. 통역사·전문가 추가 없음.
+- 법무부 등록 출입국민원대행기관 배지 (#25-SM-RG-063)
+- 변호사 6인 캐러셀 (S.H. Bong, J.W. Min, D.H. Nam, S.C. Kim, Y.H. Hwang, D.G. Shin)
+
+상단 한 문장 설명은 사업이민용 번역 키로 교체:
+```
+data-i18n="biz.badge.description" → "법무법인 로연 출입국이민지원센터는 외국인의 한국 사업이민 법률서비스를 제공합니다."
+```
+
+**섹션 4 — 서비스 명세 5단계 카드**
+기존 `index.html`의 "출입국 민원 대행 6카테고리" 블록 자리에 배치. 5그리드 레이아웃. 각 카드는 헤드 + 본문 1~2문장 구조.
+
+```
+[카드 1] 사전 상담
+  biz.step1.title   → "사전 상담"
+  biz.step1.body    → "쓰레드를 통해 귀하의 국적, 자금 조달 방식, 이주 시점, 가족 구성을 확인하고 한국 사업이민 경로 개요를 안내합니다."
+
+[카드 2] 본 상담
+  biz.step2.title   → "본 상담"
+  biz.step2.body    → "이민 경로 상세 자문, 사업 개시 절차 및 예산 배정 구조화, 주요 리스크 안내, 비자 발급 등 출입국 행정 안내를 제공합니다."
+
+[카드 3] 착수
+  biz.step3.title   → "착수"
+  biz.step3.body    → "프로젝트 설계, 오퍼레이션 설계, 실사 방문 코디네이션, 최종 점검 회의를 수행합니다."
+
+[카드 4] 잔금
+  biz.step4.title   → "잔금"
+  biz.step4.body    → "계약 체결 지원, 외국인 투자 절차, 행정 등록 감독, 비자 취득, 동반가족 비자를 수행합니다."
+
+[카드 5] 사후관리
+  biz.step5.title   → "사후관리"
+  biz.step5.body    → "주거 임대차 검토, 가맹본부-점주 분쟁 조정, 근로계약 자문, 체류기간 연장, 영주권 전환 자문을 별도 계약으로 제공합니다."
+```
+
+카드 클릭 동작: 각 카드는 CTA로 작동하지 않음(정보 제공용). 페이지 하단 CTA로 유도.
+주의: 어느 카드에도 가격·비용·기간 언급 금지.
+
+**섹션 5 — 뉴스 & 인사이트**
+기존 `index.html`의 뉴스 블록 구조 재활용. 단, 다음 차이점 적용:
+- 기본 카테고리 필터를 "사업·투자"로 설정.
+- "더 많은 글 보기" 버튼 링크를 `/blog.html?category=사업·투자`로 지정 (기존 카테고리 필터 URL 컨벤션 따름).
+- 카드 3~4개 노출.
+
+**섹션 6 — 나의 프로젝트 진행 현황**
+기존 `index.html`의 "나의 신청 내역" 블록 재활용. 다음만 수정.
+
+라벨 교체:
+- 블록 제목: "나의 신청 내역" → "나의 프로젝트 진행 현황"
+- 비로그인 안내 문구: `biz.dashboard.guest` → "로그인하시면 나의 프로젝트 진행 현황, 상담 내역, 쓰레드를 확인하실 수 있습니다."
+
+**진행 단계 바 라벨 맵핑**:
+사업이민 쓰레드는 `status='active'` 고정이며, 진행 단계는 신규 컬럼 `business_immigration_status`가 추적합니다. 8단계 값은 섹션 14-2-2·섹션 6-2 참조.
+
+실제 UI에서는 압축된 **5단계 바**(사전 상담 / 본 상담 / 착수 / 잔금 / 사후관리)로 시각화하고, 각 단계 내부 세부 스텝은 쓰레드 상세 페이지에서 노출.
+
+**분기 로직**:
+- 로그인 사용자의 쓰레드가 `request_type='business_immigration'`인 경우 사업이민용 5단계 바 표시.
+- `request_type='general'` 쓰레드는 기존 5단계 바(`payment`→`document`→`processing`→`completed`→`archived`) 유지.
+
+**섹션 7 — 푸터**
+기존 `index.html` 푸터 재활용. 다음 수정:
+- "서비스 가격표" 링크 제거 (사업이민 랜딩 전용 푸터).
+- 나머지(개인정보처리방침·이용약관·환불규정·법무법인 로연 링크·광고책임변호사 남도현·민준우 표기)는 그대로 유지.
+
+### 3-3. 변호사광고규칙 체크포인트
+구현 시 다음 요건 자동 충족되도록 배치.
+- 푸터에 "법무법인 로연" 표기 + 광고책임변호사 남도현·민준우 표기 (기존 유지)
+- 가격·수임료 표기 전면 제거
+- "비자가 반드시 나옵니다" 류 결과 보장·예측 표현 금지 → 카피 확정 시 검수 필요
+- 변호사 프로필의 공직 재직 사실 표기 시 부당 영향력 암시 없는 형태만 허용 (기존 캐러셀 그대로이므로 추가 조치 불필요)
+
+---
+
+## 4. 상담 신청 페이지 (`business-immigration-request.html`)
+
+### 4-1. 베이스 원본
+기존 `consultation-request.html` 복제 후 필드·카피 수정.
+
+### 4-2. 폼 필드
+
+| 필드명 | 타입 | 필수 | 번역 키 |
+|---|---|---|---|
+| 국적 | select (국가 리스트) | 필수 | `biz.form.nationality` |
+| 현재 거주국 | select (국가 리스트) | 필수 | `biz.form.residence_country` |
+| 관심 비자 유형 | radio (D-9-4 / D-9-5 / 잘 모름) | 필수 | `biz.form.visa_type` |
+| 가족 구성 — 본인 외 | checkbox (배우자 / 자녀 / 부모) | 선택 | `biz.form.family` |
+| 자녀 수 | number (0~10) | 조건부 (자녀 체크 시) | `biz.form.children_count` |
+| 예상 이주 시점 | select (3개월 내 / 6개월 내 / 1년 내 / 1년 이상 / 미정) | 필수 | `biz.form.timeline` |
+| 자유 메시지 | textarea (모국어 입력 가능) | 선택 | `biz.form.message` |
+| 이메일 | email (Google 로그인 시 자동 채움) | 필수 | 기존 재활용 |
+| 연락 가능 수단 | radio (이메일 / 쓰레드 / 전화) | 필수 | `biz.form.contact_method` |
+
+자금 관련 필드 없음 (가격 언급 금지 원칙에 따라 폼 단계에서도 자금 규모 질문 없음. 본 상담에서 확인).
+
+### 4-3. 제출 동작
+- Google 로그인 상태 강제 (로그인하지 않은 경우 로그인 유도).
+- 단일 RPC 호출 `create_business_immigration_request`로 **트랜잭션 처리** (상세는 섹션 14-8-4):
+  - `consultation_requests` 레코드 생성 (`request_type='business_immigration'`)
+  - `threads` 레코드 생성 (`request_type='business_immigration'`, `status='active'`, `business_immigration_status='pre_consultation'`)
+  - 양방향 연결 자동 수행
+- 제출 직후 환영 메시지 INSERT (사업이민 전용 템플릿).
+- 자동 회신 메시지 표시:
+  ```
+  biz.form.auto_reply → "상담 신청이 접수되었습니다. 담당자가 쓰레드로 회신드립니다."
+  ```
+- 제출 완료 후 `/thread-general-v2.html?id={thread_id}`로 직행.
+- RPC 실패 시 토스트 + 재시도 버튼(섹션 14-8-5 참조). 재시도 시 중복 없음(전체 롤백).
+
+### 4-4. 결제 관련
+- 이 페이지에서는 결제 없음. 사전 상담은 무상.
+- 기존 `consultation-request.html`에 결제 관련 로직이 있다면 사업이민 버전에서 완전 제거.
+
+---
+
+## 5. 블로그 처리
+
+### 5-1. 카테고리
+새 카테고리 생성 금지. 기존 "사업·투자" 카테고리를 그대로 사용.
+블로그 관리자 페이지(`admin-blog.html`)에서 사업이민 글 작성 시 카테고리를 "사업·투자"로 선택하면 자동 연결.
+
+### 5-2. 초기 글 수
+런칭 시점에 언어별 최소 3편 = 총 12편(ko·en·vi·zh × 3).
+블로그 콘텐츠 자체는 본 명세 범위 밖(카피·콘텐츠는 별도 전달 예정).
+Claude Code는 빈 글 템플릿 12개만 생성하거나, 카테고리 필터가 정상 작동하도록 확인만 수행.
+
+### 5-3. 필터 URL 컨벤션
+`/blog.html?category=사업·투자` 형식 유지.
+사업이민 랜딩의 뉴스 블록 "더 많은 글 보기" 버튼이 이 URL로 연결되는지 확인.
+
+---
+
+## 6. 쓰레드 상태머신 (옵션 B — 사업이민 전용 상태 추가)
+
+### 6-1. 기존 상태 (변경 없음)
+
+```
+payment → document → processing → completed → archived
+```
+
+일반 출입국 민원 대행 쓰레드에 계속 적용. 본 섹션 14에서 기존 `threads.status` 컬럼을 건드리지 않음.
+
+### 6-2. 신규 사업이민 상태 (8단계)
+
+```
+pre_consultation       (사전 상담)
+  ↓
+detailed_consultation  (본 상담)
+  ↓
+stage1_engaged         (착수 — 프로젝트 설계·오퍼레이션 설계·실사 방문)
+  ↓
+stage1_completed       (최종 점검 회의 종료, Stage 2 진행 결정 대기)
+  ↓
+stage2_engaged         (잔금 — 계약 체결·투자 신고·행정 등록·비자 취득)
+  ↓
+visa_issued            (D 비자 발급 완료)
+  ↓
+aftercare              (사후관리 — 별도 계약 시에만 진입)
+  ↓
+archived               (종료)
+```
+
+### 6-3. 구현
+Supabase DB의 `threads` 테이블에 **신규 컬럼 `business_immigration_status` (text)** 추가. 사업이민 쓰레드의 `status`는 `'active'` 고정이며, 실제 진행 단계는 `business_immigration_status`에서 추적. DDL 및 CHECK 제약은 **섹션 14-2 참조**.
+
+쓰레드 생성 시 `request_type`이 `business_immigration`이면 위 8개 상태 중 하나, 그렇지 않으면 기존 5개 상태 유지. 관리자 대시보드(`admin-thread.html`)에서는 `request_type`에 따라 다른 상태 선택지 UI 표시(섹션 7-1 참조).
+
+### 6-4. 상태 전이 권한
+- 고객: 자기 쓰레드 상태 조회만 가능.
+- 관리자: 모든 상태 수동 전환 가능.
+- 자동 전이 없음(전 상태 관리자 수동 관리).
+
+### 6-5. 결제와의 연계
+Stage 1 착수 결제(25%)가 완료되면 상태를 `pre_consultation` → `detailed_consultation` 또는 `stage1_engaged`로 수동 전환.
+
+결제 시스템은 기존 Toss Payments Global 연동 재활용. 다만 사업이민 결제는 액수가 건별 상이하므로 가격표 기반 결제가 아닌 수동 견적·인보이스 발행 방식 필요.
+
+**결제 시스템 연동은 본 섹션 14 구현 범위 밖이며 후속 작업으로 분리**. 본 명세에서 Claude Code는 상태머신·쓰레드·RPC만 구현하고, 결제 연동은 별도 지시서로 진행.
+
+---
+
+## 7. 대시보드 UI 조정
+
+### 7-1. 관리자 대시보드 (`admin-dashboard.html`)
+- 사업이민 쓰레드를 필터링할 수 있는 유형 필터 추가 (일반 / 협약 대학 / 사업이민).
+- 사업이민 쓰레드의 경우 신규 상태값(`business_immigration_status`) 표시.
+- 목록 뷰에 `request_type` 뱃지 추가.
+- 기존 `status` 필터 쿼리는 `request_type='general'` 조건을 **추가**하여 동작 보존(섹션 14-2-4 참조).
+
+### 7-2. 사용자 대시보드 (`index.html` + `business-immigration.html` 내 블록)
+- 로그인 사용자의 쓰레드 중 `request_type === 'business_immigration'`인 것이 있으면 별도 섹션으로 묶어 표시.
+- 진행 단계 바는 5단계 압축 뷰 (사전 상담 / 본 상담 / 착수 / 잔금 / 사후관리).
+- 상세는 쓰레드 페이지 진입 시 풀 8단계 흐름(`business_immigration_status` 기반) 표시.
+
+---
+
+## 8. i18n 번역 키 추가
+
+### 8-1. 추가할 네임스페이스
+`js/translations.js`에 `biz.*` 네임스페이스 신규 추가.
+
+### 8-2. 주요 키 목록 (부분 발췌 — 전체 목록은 섹션 14-9-5)
+
+```
+biz.hero.headline
+biz.hero.subhead
+biz.hero.cta
+biz.badge.description
+biz.step1.title, biz.step1.body
+biz.step2.title, biz.step2.body
+biz.step3.title, biz.step3.body
+biz.step4.title, biz.step4.body
+biz.step5.title, biz.step5.body
+biz.news.heading
+biz.dashboard.heading
+biz.dashboard.guest
+biz.dashboard.progress.stage1
+biz.dashboard.progress.stage2
+biz.dashboard.progress.stage3
+biz.dashboard.progress.stage4
+biz.dashboard.progress.stage5
+biz.form.title
+biz.form.nationality
+biz.form.residence_country
+biz.form.visa_type
+biz.form.family
+biz.form.children_count
+biz.form.timeline
+biz.form.message
+biz.form.contact_method
+biz.form.submit
+biz.form.auto_reply
+```
+
+섹션 14-9-5에서 본 섹션의 키 + 14-4 프로필 필드 라벨 + 14-7 배너·welcome + 14-8 에러 키를 합쳐 **전체 manifest 키 목록**을 고정.
+
+### 8-3. 초기 값
+- 한국어(ko): 본 명세 섹션 3·4에 명시된 확정 카피를 그대로 삽입.
+- 영어·베트남어·중국어·일본어·몽골어·태국어(en·vi·zh·ja·mn·th): **섹션 14-9 스텁 운용 규칙**에 따라 en 번역을 우선 삽입하고, 그 외는 en 값을 복제해 `TRANSLATION_PENDING` 주석 표기. 실번역 도착 시 일괄 치환.
+
+---
+
+## 9. 데이터 모델 변경
+
+본 섹션은 개괄이며, 실제 DDL·RLS는 **섹션 14**에서 전문(全文) 기술됩니다.
+
+### 9-1. Supabase 테이블 수정
+
+**`consultation_requests`** — 신규 CREATE. 콘솔 확인 결과 테이블 미실존 확정. 기존 `consultation-request.html` 일반 경로는 `threads` 직접 INSERT로 동작 중이며(14-0-2 추가 발견 E), 이번 작업에서 건드리지 않음. 사업이민 경로 전용 신규 테이블로 생성하며 DDL은 **섹션 14-1-2** 참조.
+
+| 컬럼 | 타입 | 비고 |
+|---|---|---|
+| `id` | uuid | PK |
+| `user_id` | uuid | `auth.users(id)` FK |
+| `request_type` | text | 기본값 `'general'`, `'general'`\|`'business_immigration'` CHECK |
+| `thread_id` | uuid | 순환 FK 회피로 인덱스만, `threads.id` 참조 |
+| `nationality` | text | 사업이민 스냅샷 |
+| `residence_country` | text | 사업이민 스냅샷 |
+| `visa_type_interest` | text | `D-9-4`\|`D-9-5`\|`undecided` CHECK |
+| `family_composition` | jsonb | |
+| `children_count` | integer | |
+| `timeline` | text | 5개 값 CHECK |
+| `message` | text | 자유 서술 |
+| `contact_method` | text | `email`\|`thread`\|`phone` CHECK |
+| `email` | text | 제출 시점 스냅샷 |
+| `created_at` | timestamptz | |
+
+**`business_immigration_profiles`** — 신규 테이블. 29개 필드. 상세는 **섹션 14-1-1 · 14-4** 참조.
+
+**`threads`** — 신규 컬럼 2개 추가. 기존 `status` 컬럼은 유지(변경 없음).
+
+| 컬럼 | 타입 | 비고 |
+|---|---|---|
+| `request_type` | text | 기본값 `'general'`, `'general'`\|`'business_immigration'` CHECK |
+| `business_immigration_status` | text | NULL 허용 (일반 쓰레드는 NULL), 8개 값 CHECK — 섹션 14-2 참조 |
+
+기존 `status` 컬럼은 그대로 유지. 사업이민 쓰레드는 `status='active'` 고정(기존 status 허용값 집합에 `'active'` 추가가 이미 되어 있으므로 ENUM 변경 불필요 — text 컬럼 확정).
+
+**`system_errors`** — 신규 테이블. 쓰레드 생성 실패 등 시스템 에러 추적. 상세는 **섹션 14-8-3** 참조.
+
+### 9-2. RLS 정책
+기존 RLS 정책(`customer`·`partner_admin`·`super_admin`) 그대로 적용. 사업이민 전용 추가 정책 없음. 신규 테이블 3개·신규 Storage 버킷 1개의 정책은 섹션 14-1·14-3·14-8-3에서 전문 기술.
+
+### 9-3. 마이그레이션
+`migrations/` 디렉터리에 신규 SQL 파일 생성. 파일명 규칙은 기존 컨벤션 따름.
+
+본 명세 구현 시 생성할 마이그레이션 파일(섹션 14 부록 참조):
+```
+migrations/20260420_create_business_immigration_profiles.sql
+migrations/20260420_create_biz_profile_completed_trigger.sql
+migrations/20260420_create_consultation_requests.sql
+migrations/20260420_alter_threads_add_business_immigration.sql
+migrations/20260420_create_business_immigration_storage.sql
+migrations/20260420_create_system_errors.sql
+migrations/20260420_create_business_immigration_rpc.sql
+```
+
+---
+
+## 10. 변경되지 않는 것 (명시)
+
+다음은 건드리지 않음. Claude Code는 기존 그대로 유지.
+- 기존 `index.html` (사업이민 랜딩과 별도 페이지)
+- 기존 31개 페이지의 동작
+- 기존 서비스 카테고리(6개)·서비스 데이터(`data/services.json`)
+- 협약 대학 30% 할인 정책·관련 페이지(`login-chosun.html` 등)
+- 가격표(`price-list.html`)
+- 결제 시스템 연동 (Toss Payments Global 등) — 사업이민 결제는 후속 작업으로 분리
+- 보안·RLS·암호화 정책 (기존 정책은 섹션 14-0-4의 "해결하지 않는 범위" 참조)
+- CI 워크플로우 (`validate.yml`·`build-blog.yml`)의 기존 스텝 (신규 스텝 추가는 섹션 14-9-8)
+- 호스팅·도메인·CNAME
+- 기존 `consultation-request.html` 일반 상담 경로(`threads` 직접 INSERT 구조 유지)
+- 기존 welcome 메시지의 D-10-1·일반 경로 분기(섹션 14-7-5)
+
+---
+
+## 11. 테스트·검증 체크리스트 (개괄)
+
+전체 검증 항목은 **섹션 14-10**에서 11개 카테고리·60+ 포인트로 상세 기술. 본 섹션은 개괄만.
+
+### 기능 테스트
+- [ ] `/business-immigration.html` 접근 시 정상 렌더링 (4개 언어 전환 작동)
+- [ ] 히어로 CTA 클릭 시 상담 신청 페이지로 이동
+- [ ] 로그인하지 않은 상태에서 CTA 클릭 시 로그인 유도
+- [ ] 변호사 캐러셀·뉴스 블록·대시보드 블록 정상 동작
+- [ ] 서비스 5단계 카드 카피 정확히 노출
+- [ ] 푸터에서 "서비스 가격표" 링크 제거 확인
+- [ ] `/business-immigration-request.html` 폼 제출 정상 작동 (RPC 트랜잭션 호출)
+- [ ] 제출 후 Supabase에 `request_type: business_immigration` 레코드 생성 확인
+- [ ] 쓰레드 자동 생성 및 상태 `pre_consultation` 확인
+- [ ] 관리자 대시보드에서 사업이민 쓰레드 필터링·상태 전환 가능
+
+### 코드 품질
+- [ ] 기존 `npm run validate` 통과 (HTML·JS 문법 검증)
+- [ ] 신규 `npm run validate:biz-i18n` 통과
+- [ ] 기존 컨벤션(루트 HTML 배치·i18n 키·CSS 파일명) 준수
+- [ ] 신규 의존성 추가 없음 (`package.json` dependencies 변경 없음)
+
+### 변호사광고규칙
+- [ ] 사업이민 랜딩 어디에도 가격·수임료·비용 언급 없음
+- [ ] 결과 예측·보장 표현 없음 (카피 검수는 본 명세 범위 밖이나 템플릿·라벨에서 확인)
+- [ ] 광고책임변호사 표기 유지
+
+---
+
+## 12. 전달 방식
+
+Claude Code는 다음 순서로 작업 진행.
+
+1. 저장소 탐색하여 기존 `index.html`·`consultation-request.html` 구조 확인 (완료 — 진단 단계에서 수행)
+2. 본 명세 기반 작업 계획 수립 (수정·신규 파일 목록, 예상 단계) (완료)
+3. 선생님(안태민)에게 작업 계획 확인 요청 (완료)
+4. 승인 후 구현 진행
+5. 구현 완료 후 섹션 14-10 체크리스트 자체 검증
+6. 커밋 전 선생님에게 최종 diff 또는 PR 확인 요청
+
+### 커밋 단위
+- 파일 단위 또는 기능 단위로 작은 커밋 유지.
+- 큰 일괄 커밋 지양.
+- 마이그레이션 SQL 7건은 **개별 커밋 권장**(롤백 용이성).
+
+### 개발자 프리퍼런스 반영
+- 안태민(PM)은 개발자가 아님. 코드 설명은 기획자에게 설명하듯이.
+- 코드 작성·커밋 전 변경 사항을 간단히 정리해 확인 요청.
+- 작은 수정 반복 회피를 위해 QA를 상시 수행.
+
+---
+
+## 13. 확정되지 않은 항목 (후속 전달 예정)
+
+본 섹션 14 확정으로 데이터 스키마·Storage·RPC·배너·i18n 운용은 모두 확정. 아래 항목만 후속 전달·별도 작업으로 남아 있음.
+
+- 영어·베트남어·중국어 번역 카피 (한국어 마스터 카피 확정 완료, 번역 주입만 별도 작업)
+- 블로그 초기 글 12편 콘텐츠
+- 대표 이미지 자산 (히어로 우측)
+- 결제 시스템 연동 (Stage 1·Stage 2 분할 결제, 수동 견적·인보이스 방식) — 별도 작업으로 분리
+
+---
+
+이 문서는 사업이민 섹션 신규 추가 작업의 **단일 진실 공급원**입니다. 추가 결정이 필요한 항목은 선생님에게 확인 후 진행해 주십시오.
 
 ---
 
