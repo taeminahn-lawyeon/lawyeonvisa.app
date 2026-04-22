@@ -1296,10 +1296,25 @@
                         </div>
 
                         <div class="status-controls">
-                            <div class="control-group">
+                            <!-- 일반 쓰레드용: 기존 status 기반 진행 단계 -->
+                            <div class="control-group" id="generalStageGroup">
                                 <div class="control-label">진행 단계</div>
                                 <select class="control-select" id="threadStage" onchange="updateThreadStage()">
                                     <!-- 서비스 타입(consulting/civil/litigation)에 따라 동적으로 채워짐 -->
+                                </select>
+                            </div>
+                            <!-- 사업이민 쓰레드용: business_immigration_status 기반 단계 -->
+                            <div class="control-group" id="bizStageGroup" style="display:none;">
+                                <div class="control-label">사업이민 단계</div>
+                                <select class="control-select" id="bizStageSelect" onchange="updateBizImmigrationStatus()">
+                                    <option value="pre_consultation">1. 사전 상담</option>
+                                    <option value="detailed_consultation">2. 본 상담</option>
+                                    <option value="stage1_engaged">3. 착수</option>
+                                    <option value="stage1_completed">4. 착수 완료</option>
+                                    <option value="stage2_engaged">5. 잔금</option>
+                                    <option value="visa_issued">6. 비자 발급</option>
+                                    <option value="aftercare">7. 사후관리</option>
+                                    <option value="archived">8. 종료</option>
                                 </select>
                             </div>
                             <div class="control-group">
@@ -1972,6 +1987,9 @@
 
                 threadData = thread;
 
+                // 요청 유형에 따라 진행 단계 UI 토글 (섹션 14-2, 14-7)
+                toggleStageUIByRequestType(thread);
+
                 // Get customer profile
                 if (thread.user_id) {
                     const { data: profile } = await supabaseClient
@@ -2550,6 +2568,57 @@
                 alert('진행 단계 변경 실패');
                 // 실패 시 드롭다운 원복
                 document.getElementById('threadStage').value = threadData.current_stage || 1;
+            }
+        }
+
+        // ============================================
+        // 사업이민 전용 상태 관리 (섹션 14-2, 14-7)
+        // ============================================
+
+        /**
+         * thread.request_type에 따라 진행 단계 UI 전환.
+         * - 'business_immigration' → 사업이민 단계 select (bizStageGroup) 표시, 일반 단계 숨김
+         * - 'general' (또는 그 외) → 기존 그대로 (일반 단계만 표시)
+         */
+        function toggleStageUIByRequestType(thread) {
+            const requestType = thread.request_type || 'general';
+            const generalGroup = document.getElementById('generalStageGroup');
+            const bizGroup = document.getElementById('bizStageGroup');
+            const bizSelect = document.getElementById('bizStageSelect');
+
+            if (requestType === 'business_immigration') {
+                if (generalGroup) generalGroup.style.display = 'none';
+                if (bizGroup) bizGroup.style.display = '';
+                if (bizSelect && thread.business_immigration_status) {
+                    bizSelect.value = thread.business_immigration_status;
+                }
+            } else {
+                if (generalGroup) generalGroup.style.display = '';
+                if (bizGroup) bizGroup.style.display = 'none';
+            }
+        }
+
+        /**
+         * 사업이민 상태 변경 핸들러.
+         * threads.business_immigration_status 만 UPDATE.
+         * 기존 status 컬럼은 'active' 고정 유지(섹션 14-2).
+         */
+        async function updateBizImmigrationStatus() {
+            const select = document.getElementById('bizStageSelect');
+            if (!select) return;
+            const newStatus = select.value;
+            if (!newStatus) return;
+            try {
+                const { error } = await supabaseClient
+                    .from('threads')
+                    .update({ business_immigration_status: newStatus })
+                    .eq('id', threadId);
+                if (error) throw error;
+                threadData.business_immigration_status = newStatus;
+            } catch (error) {
+                console.error('[biz status update]', error);
+                alert('사업이민 단계 변경 실패');
+                select.value = threadData.business_immigration_status || 'pre_consultation';
             }
         }
 

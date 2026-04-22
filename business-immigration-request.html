@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" type="image/png" href="favicon.png?v=3">
+
+    <title>Business Immigration Pre-Consultation Request | 법무법인 로연</title>
+    <meta name="description" content="Request a pre-consultation for Korean business immigration. No fees discussed at this stage.">
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/toss-style.css">
+    <link rel="stylesheet" href="css/ui-components.css">
+
+    <style>
+        .biz-req-wrap {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+        .biz-req-wrap h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #191f28;
+            margin: 0 0 8px;
+        }
+        .biz-req-wrap .biz-req-intro {
+            color: #6b7684;
+            font-size: 15px;
+            margin: 0 0 32px;
+            line-height: 1.7;
+        }
+        .biz-req-form {
+            background: #fff;
+            border: 1px solid #e5e8eb;
+            border-radius: 12px;
+            padding: 32px;
+        }
+        .biz-field {
+            margin-bottom: 24px;
+        }
+        .biz-field label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #191f28;
+            margin-bottom: 8px;
+        }
+        .biz-field .biz-required {
+            color: #f03e3e;
+            margin-left: 4px;
+        }
+        .biz-field input[type="text"],
+        .biz-field input[type="email"],
+        .biz-field input[type="number"],
+        .biz-field select,
+        .biz-field textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #e5e8eb;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            background: #fff;
+            color: #191f28;
+            box-sizing: border-box;
+        }
+        .biz-field textarea { min-height: 120px; resize: vertical; }
+        .biz-field input:focus,
+        .biz-field select:focus,
+        .biz-field textarea:focus {
+            outline: none;
+            border-color: #3182f6;
+        }
+        .biz-radio-group,
+        .biz-check-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .biz-radio-group label,
+        .biz-check-group label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 400;
+            font-size: 14px;
+            color: #4e5968;
+            cursor: pointer;
+            margin: 0;
+        }
+        .biz-submit-btn {
+            width: 100%;
+            padding: 14px 24px;
+            background: #3182f6;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .biz-submit-btn:hover:not(:disabled) { background: #1b64da; }
+        .biz-submit-btn:disabled { background: #b0b8c1; cursor: not-allowed; }
+        .biz-login-gate {
+            background: #f8f9fa;
+            border: 1px dashed #e5e8eb;
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+        }
+        .biz-note {
+            font-size: 13px;
+            color: #8b95a1;
+            margin-top: 16px;
+            line-height: 1.6;
+        }
+        .biz-back {
+            display: inline-block;
+            color: #6b7684;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        .biz-back:hover { color: #3182f6; }
+    </style>
+</head>
+<body>
+
+<!-- ============ 헤더 ============ -->
+<header class="site-header">
+    <div class="header-inner">
+        <a class="brand" href="index.html">
+            <img src="로고.png" alt="법무법인 로연" class="brand-logo">
+        </a>
+        <nav class="nav">
+            <a href="business-immigration.html">Business Immigration</a>
+        </nav>
+        <div class="header-actions">
+            <select id="language-select" class="language-select" aria-label="Language">
+                <option value="en">English</option>
+                <option value="ko">한국어</option>
+                <option value="vi">Tiếng Việt</option>
+                <option value="zh">中文</option>
+                <option value="ja">日本語</option>
+                <option value="mn">Монгол</option>
+                <option value="th">ไทย</option>
+            </select>
+            <span id="user-info"></span>
+        </div>
+    </div>
+</header>
+
+<main class="biz-req-wrap">
+    <a href="business-immigration.html" class="biz-back">← Back to Landing</a>
+    <h1 data-i18n="biz.form.title">사업이민 사전 상담 신청</h1>
+    <p class="biz-req-intro" data-i18n="biz.form.auto_reply">상담 신청이 접수되었습니다. 담당자가 쓰레드로 회신드립니다.</p>
+
+    <!-- 비로그인 시 게이트 -->
+    <div id="biz-login-gate" class="biz-login-gate" style="display:none;">
+        <p>Google 로그인이 필요합니다.</p>
+        <button type="button" class="biz-submit-btn" onclick="handleLoginClick()" style="max-width:240px;margin-top:12px;">Sign in with Google</button>
+    </div>
+
+    <!-- 폼 -->
+    <form id="biz-request-form" class="biz-req-form" style="display:none;">
+        <!-- 국적 -->
+        <div class="biz-field">
+            <label for="biz-nationality">
+                <span data-i18n="biz.form.nationality">국적</span><span class="biz-required">*</span>
+            </label>
+            <input type="text" id="biz-nationality" name="nationality" required placeholder="e.g., United States / China / Vietnam">
+        </div>
+
+        <!-- 현재 거주국 -->
+        <div class="biz-field">
+            <label for="biz-residence">
+                <span data-i18n="biz.form.residence_country">현재 거주국</span><span class="biz-required">*</span>
+            </label>
+            <input type="text" id="biz-residence" name="residence_country" required placeholder="e.g., United States / Vietnam">
+        </div>
+
+        <!-- 관심 비자 유형 -->
+        <div class="biz-field">
+            <label>
+                <span data-i18n="biz.form.visa_type">관심 비자 유형</span><span class="biz-required">*</span>
+            </label>
+            <div class="biz-radio-group">
+                <label><input type="radio" name="visa_type_interest" value="D-9-4" required> D-9-4</label>
+                <label><input type="radio" name="visa_type_interest" value="D-9-5"> D-9-5</label>
+                <label><input type="radio" name="visa_type_interest" value="undecided"> 잘 모름</label>
+            </div>
+        </div>
+
+        <!-- 가족 구성 -->
+        <div class="biz-field">
+            <label data-i18n="biz.form.family">가족 구성 — 본인 외</label>
+            <div class="biz-check-group">
+                <label><input type="checkbox" name="family_spouse"> 배우자</label>
+                <label><input type="checkbox" name="family_children" id="family-children-check"> 자녀</label>
+                <label><input type="checkbox" name="family_parents"> 부모</label>
+            </div>
+        </div>
+
+        <!-- 자녀 수 (조건부) -->
+        <div class="biz-field" id="children-count-field" style="display:none;">
+            <label for="biz-children-count" data-i18n="biz.form.children_count">자녀 수</label>
+            <input type="number" id="biz-children-count" name="children_count" min="0" max="10">
+        </div>
+
+        <!-- 예상 이주 시점 -->
+        <div class="biz-field">
+            <label for="biz-timeline">
+                <span data-i18n="biz.form.timeline">예상 이주 시점</span><span class="biz-required">*</span>
+            </label>
+            <select id="biz-timeline" name="timeline" required>
+                <option value="">-- Select --</option>
+                <option value="3months">3개월 내</option>
+                <option value="6months">6개월 내</option>
+                <option value="1year">1년 내</option>
+                <option value="over1year">1년 이상</option>
+                <option value="undecided">미정</option>
+            </select>
+        </div>
+
+        <!-- 자유 메시지 -->
+        <div class="biz-field">
+            <label for="biz-message" data-i18n="biz.form.message">자유 메시지</label>
+            <textarea id="biz-message" name="message" placeholder="모국어로 입력하셔도 괜찮습니다."></textarea>
+        </div>
+
+        <!-- 이메일 -->
+        <div class="biz-field">
+            <label for="biz-email">
+                <span data-i18n="biz.form.email">이메일</span><span class="biz-required">*</span>
+            </label>
+            <input type="email" id="biz-email" name="email" required>
+        </div>
+
+        <!-- 연락 가능 수단 -->
+        <div class="biz-field">
+            <label>
+                <span data-i18n="biz.form.contact_method">연락 가능 수단</span><span class="biz-required">*</span>
+            </label>
+            <div class="biz-radio-group">
+                <label><input type="radio" name="contact_method" value="email" required> 이메일</label>
+                <label><input type="radio" name="contact_method" value="thread"> 쓰레드</label>
+                <label><input type="radio" name="contact_method" value="phone"> 전화</label>
+            </div>
+        </div>
+
+        <button type="submit" class="biz-submit-btn" data-i18n="biz.form.submit">상담 신청하기</button>
+
+        <p class="biz-note">
+            ※ 사전 상담은 무상이며, 본 단계에서는 자금 규모나 비용 관련 질문을 하지 않습니다.
+            상세한 자문은 본 상담 단계에서 진행됩니다.
+        </p>
+    </form>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/translations.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/ui-components.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/business-immigration.js"></script>
+
+<script>
+async function handleLoginClick() {
+    if (window.signInWithGoogle) {
+        await signInWithGoogle();
+    } else if (window.supabaseClient) {
+        await supabaseClient.auth.signInWithOAuth({ provider: 'google' });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', async function () {
+    // 로그인 여부에 따라 게이트 또는 폼 노출
+    if (window.supabaseClient) {
+        var session = await supabaseClient.auth.getSession();
+        var user = session?.data?.session?.user;
+        if (user) {
+            document.getElementById('biz-login-gate').style.display = 'none';
+            document.getElementById('biz-request-form').style.display = '';
+            // 이메일 자동 채우기
+            var emailInput = document.getElementById('biz-email');
+            if (emailInput && !emailInput.value) emailInput.value = user.email || '';
+            var userInfo = document.getElementById('user-info');
+            if (userInfo) userInfo.textContent = user.email;
+        } else {
+            document.getElementById('biz-login-gate').style.display = '';
+            document.getElementById('biz-request-form').style.display = 'none';
+        }
+    }
+
+    // 자녀 체크박스 토글 → 자녀 수 필드 표시
+    var childrenCheck = document.getElementById('family-children-check');
+    if (childrenCheck) {
+        childrenCheck.addEventListener('change', function () {
+            var field = document.getElementById('children-count-field');
+            field.style.display = childrenCheck.checked ? '' : 'none';
+        });
+    }
+});
+</script>
+
+</body>
+</html>

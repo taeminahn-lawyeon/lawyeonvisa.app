@@ -1,0 +1,342 @@
+/**
+ * js/business-immigration.js
+ *
+ * 사업이민 섹션 전용 클라이언트 로직.
+ * - 쓰레드 페이지 상단 배너(profile-completed 판정 기반)
+ * - 상담 신청 폼 제출 (RPC + 실패 시 토스트 재시도)
+ * - 관리자 대시보드 system_errors 뱃지 갱신
+ * - 사업이민 welcome 메시지 빌더
+ *
+ * 참조: BUSINESS_IMMIGRATION_SPEC.md 섹션 14-7, 14-8
+ *
+ * 의존성:
+ *   - js/supabase-client.js (supabaseClient, getUserProfile, isProfileCompleteForRequest,
+ *     createBusinessImmigrationRequest, logSystemError, createWelcomeMessage 등)
+ *   - js/i18n.js (window.i18n)
+ *   - js/ui-components.js (토스트 유틸)
+ *
+ * 각 함수는 필요한 DOM 요소가 없으면 조기 반환하므로 여러 페이지에서 로드해도 안전.
+ */
+
+'use strict';
+
+// ============================================
+// 1. 쓰레드 배너 (섹션 14-7)
+// ============================================
+
+/**
+ * 현재 쓰레드가 사업이민이고 프로필이 미완성이면 상단 배너 표시.
+ * 기존 D-10-1·일반 경로에는 영향 없음(request_type 체크로 조기 반환).
+ */
+async function evaluateThreadProfileBanner() {
+    const banner = document.getElementById('thread-profile-banner');
+    if (!banner || !window.supabaseClient) return;
+
+    const cta = document.getElementById('thread-profile-banner-cta');
+    const threadId = new URLSearchParams(location.search).get('id');
+    if (!threadId) return;
+
+    try {
+        // 1) 쓰레드 정보 조회
+        const { data: thread } = await supabaseClient
+            .from('threads')
+            .select('id, user_id, request_type, business_immigration_status')
+            .eq('id', threadId)
+            .maybeSingle();
+        if (!thread) return;
+
+        // 2) 사업이민 쓰레드가 아니면 배너 비활성 (기존 경로 보존)
+        if (thread.request_type !== 'business_immigration') {
+            banner.classList.add('thread-banner-hidden');
+            return;
+        }
+
+        // 3) 현재 사용자가 쓰레드 소유자인지 확인 (관리자 뷰는 숨김)
+        const session = await supabaseClient.auth.getSession();
+        const userId = session?.data?.session?.user?.id;
+        if (!userId || userId !== thread.user_id) {
+            banner.classList.add('thread-banner-hidden');
+            return;
+        }
+
+        // 4) 프로필 완성 여부 조회
+        const completed = await isProfileCompleteForRequest(userId, 'business_immigration');
+
+        // 5) 미완이면 배너 표시, CTA 링크 세팅
+        if (!completed) {
+            if (cta) {
+                cta.href = 'profile-submit.html?type=business&thread=' + encodeURIComponent(threadId);
+            }
+            banner.classList.remove('thread-banner-hidden');
+        } else {
+            banner.classList.add('thread-banner-hidden');
+        }
+    } catch (err) {
+        console.error('[biz banner] evaluation error:', err);
+        // 실패 시 배너 유지(기본 hidden)
+    }
+}
+
+// ============================================
+// 2. 재시도 가능 토스트 (섹션 14-8-5)
+// ============================================
+
+/**
+ * 에러 토스트 + 재시도 버튼.
+ * 기존 `ui-components.js`의 토스트 유틸이 번역 키를 직접 받지 않으므로,
+ * 호출 측에서 `i18n.translate()` 결과를 전달.
+ */
+function showToastWithRetry(message, onRetry) {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = 'toast toast-error toast-with-retry';
+
+    const retryLabel = (window.i18n && i18n.translate)
+        ? i18n.translate('common.retry')
+        : 'Retry';
+
+    toast.innerHTML =
+        '<span class="toast-message"></span>' +
+        '<button class="toast-retry" type="button"></button>' +
+        '<button class="toast-close" type="button" aria-label="close">×</button>';
+
+    // 안전하게 textContent로 삽입 (XSS 방지)
+    toast.querySelector('.toast-message').textContent = message;
+    toast.querySelector('.toast-retry').textContent = retryLabel;
+
+    toast.querySelector('.toast-retry').addEventListener('click', function () {
+        hideToast(toast);
+        if (typeof onRetry === 'function') onRetry();
+    });
+    toast.querySelector('.toast-close').addEventListener('click', function () {
+        hideToast(toast);
+    });
+
+    container.appendChild(toast);
+    setTimeout(function () { toast.classList.add('show'); }, 10);
+    // 자동 숨김 없음 — 사용자 조치 전까지 유지
+}
+
+function hideToast(toast) {
+    if (!toast) return;
+    toast.classList.remove('show');
+    setTimeout(function () {
+        if (toast.parentElement) toast.parentElement.removeChild(toast);
+    }, 300);
+}
+
+// ============================================
+// 3. 사업이민 상담 신청 폼 제출 (섹션 14-8-4)
+// ============================================
+
+/**
+ * 폼을 읽어 RPC 호출 → 성공 시 쓰레드로 이동, 실패 시 토스트 재시도.
+ * 사업이민 상담 신청 페이지(`business-immigration-request.html`)에서만 호출됨.
+ */
+async function submitBusinessImmigrationRequest() {
+    const form = document.getElementById('biz-request-form');
+    if (!form) return;
+
+    // 로그인 체크
+    const session = await supabaseClient.auth.getSession();
+    if (!session?.data?.session) {
+        alert((window.i18n && i18n.translate) ? i18n.translate('biz.form.auto_reply') : '로그인이 필요합니다.');
+        if (typeof window.signInWithGoogle === 'function') window.signInWithGoogle();
+        return;
+    }
+    const user = session.data.session.user;
+
+    const formData = collectBizRequestFormData(form, user);
+
+    // 필수 검증 (클라이언트 레벨)
+    if (!formData.nationality || !formData.residence_country ||
+        !formData.visa_type_interest || !formData.contact_method) {
+        alert('필수 항목을 확인해 주세요.');
+        return;
+    }
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+
+    try {
+        // 1) RPC 호출 — consultation_requests + threads 원자적 INSERT
+        const result = await createBusinessImmigrationRequest(formData);
+        if (!result.success) throw new Error(result.error || 'RPC failed');
+
+        const threadId = result.data.thread_id;
+
+        // 2) 환영 메시지 (RPC 외부, 실패해도 쓰레드 자체는 진행)
+        try {
+            const welcomeHtml = buildBusinessImmigrationWelcome();
+            await createWelcomeMessage(threadId, 'Business Immigration Consultation', {
+                requestType: 'business_immigration',
+                customHtml: welcomeHtml
+            });
+        } catch (welcomeErr) {
+            await logSystemError({
+                error_type: 'welcome_message',
+                request_id: String(threadId),
+                context: { message: welcomeErr?.message }
+            });
+            // welcome 실패는 무음 진행
+        }
+
+        // 3) 쓰레드로 리다이렉트
+        location.href = 'thread-general-v2.html?id=' + encodeURIComponent(threadId);
+
+    } catch (err) {
+        await logSystemError({
+            error_type: 'thread_creation',
+            error_code: err?.code,
+            context: {
+                message: err?.message,
+                form_summary: {
+                    nationality: formData.nationality,
+                    visa_type_interest: formData.visa_type_interest
+                }
+            }
+        });
+
+        const msg = (window.i18n && i18n.translate)
+            ? i18n.translate('biz.error.thread_creation')
+            : 'Failed to create the thread. Please try again.';
+
+        showToastWithRetry(msg, submitBusinessImmigrationRequest);
+    } finally {
+        if (submitBtn) submitBtn.disabled = false;
+    }
+}
+
+/**
+ * 폼 DOM에서 RPC 파라미터로 전달할 객체 수집.
+ */
+function collectBizRequestFormData(form, user) {
+    const fd = new FormData(form);
+
+    // family_composition 구성 (체크박스 + 자녀 수)
+    const spouse   = fd.get('family_spouse')  === 'on' || fd.get('family_spouse')  === '1';
+    const parents  = fd.get('family_parents') === 'on' || fd.get('family_parents') === '1';
+    const childrenRaw = fd.get('children_count');
+    const children = childrenRaw ? parseInt(childrenRaw, 10) : 0;
+
+    const familyComposition = (spouse || parents || children > 0)
+        ? { spouse: spouse, children: children, parents: parents }
+        : null;
+
+    return {
+        nationality:        fd.get('nationality') || null,
+        residence_country:  fd.get('residence_country') || null,
+        visa_type_interest: fd.get('visa_type_interest') || null,
+        family_composition: familyComposition,
+        children_count:     children > 0 ? children : null,
+        timeline:           fd.get('timeline') || null,
+        message:            fd.get('message') || null,
+        contact_method:     fd.get('contact_method') || null,
+        email:              fd.get('email') || user?.email || null
+    };
+}
+
+// ============================================
+// 4. 사업이민 welcome 메시지 빌더 (섹션 14-7-5)
+// ============================================
+
+/**
+ * 사업이민 쓰레드 환영 메시지 HTML 생성.
+ * "Enter Basic Info" 링크 없음 — 프로필 안내는 상단 배너가 담당.
+ */
+function buildBusinessImmigrationWelcome() {
+    const t = (key, fallback) => {
+        if (window.i18n && i18n.translate) {
+            const v = i18n.translate(key);
+            return v && v !== key ? v : fallback;
+        }
+        return fallback;
+    };
+
+    return (
+        '<p>' + escapeHtml(t('biz.welcome.greeting', '사업이민 사전 상담을 신청해 주셔서 감사합니다.')) + '</p>' +
+        '<ol>' +
+        '<li>' + escapeHtml(t('biz.welcome.step1', '먼저 프로필 정보를 입력해 주시면 담당자가 맞춤 경로를 안내해 드립니다.')) + '</li>' +
+        '<li>' + escapeHtml(t('biz.welcome.step2', '담당자가 본 상담 일정을 이 쓰레드에서 제안드립니다.')) + '</li>' +
+        '<li>' + escapeHtml(t('biz.welcome.step3', '추가 문서가 필요한 경우 업로드 요청을 드립니다.')) + '</li>' +
+        '</ol>' +
+        '<p>' + escapeHtml(t('biz.welcome.closing', '궁금한 점이 있으시면 이 쓰레드에 자유롭게 적어 주세요.')) + '</p>'
+    );
+}
+
+function escapeHtml(s) {
+    return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+// ============================================
+// 5. 관리자 대시보드 system_errors 뱃지 (섹션 14-8-6)
+// ============================================
+
+async function refreshSystemErrorsBadge() {
+    const badge = document.getElementById('system-errors-badge');
+    if (!badge || !window.supabaseClient) return;
+
+    try {
+        const { count, error } = await supabaseClient
+            .from('system_errors')
+            .select('id', { count: 'exact', head: true })
+            .is('resolved_at', null);
+
+        if (error) {
+            console.warn('[system-errors-badge] query error:', error);
+            badge.classList.add('nav-badge-hidden');
+            return;
+        }
+
+        if (count && count > 0) {
+            badge.textContent = String(count);
+            badge.classList.remove('nav-badge-hidden');
+        } else {
+            badge.classList.add('nav-badge-hidden');
+        }
+    } catch (e) {
+        console.warn('[system-errors-badge] exception:', e);
+    }
+}
+
+// ============================================
+// 자동 초기화
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function () {
+    // 쓰레드 페이지에서만 배너 평가(해당 DOM 없으면 조기 반환됨)
+    evaluateThreadProfileBanner();
+
+    // 관리자 대시보드에서만 뱃지 갱신(해당 DOM 없으면 조기 반환됨)
+    refreshSystemErrorsBadge();
+
+    // 상담 신청 페이지에서만 폼 이벤트 바인딩
+    const form = document.getElementById('biz-request-form');
+    if (form) {
+        form.addEventListener('submit', function (ev) {
+            ev.preventDefault();
+            submitBusinessImmigrationRequest();
+        });
+    }
+});
+
+// 외부 호출용으로 window에 노출 (필요 시)
+window.businessImmigration = {
+    evaluateThreadProfileBanner: evaluateThreadProfileBanner,
+    submitBusinessImmigrationRequest: submitBusinessImmigrationRequest,
+    refreshSystemErrorsBadge: refreshSystemErrorsBadge,
+    showToastWithRetry: showToastWithRetry,
+    buildBusinessImmigrationWelcome: buildBusinessImmigrationWelcome
+};

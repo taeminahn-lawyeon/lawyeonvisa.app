@@ -30,3 +30,6 @@ jobs:
 
       - name: Run syntax & payment flow validation
         run: node scripts/validate-syntax.js
+
+      - name: Validate business-immigration i18n keys
+        run: node scripts/validate-biz-i18n.js

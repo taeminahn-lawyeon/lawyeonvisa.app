@@ -9,6 +9,7 @@
     <!-- Supabase 라이브러리 (head에서 먼저 로드) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=20250119"></script>
+    <script src="js/business-immigration.js"></script>
     <style>
         * {
             margin: 0;
@@ -786,6 +787,13 @@
                     <h3 id="monthlyRevenue">₩0</h3>
                 </div>
             </div>
+
+            <div class="stat-card" id="systemErrorsCard" style="border-left:4px solid #f03e3e;">
+                <div class="stat-content">
+                    <p><i class="fa-solid fa-triangle-exclamation" style="color:#f03e3e;"></i> <span data-i18n="admin.nav.system_errors">시스템 오류</span> <span id="system-errors-badge" class="nav-badge nav-badge-hidden">0</span></p>
+                    <h3 id="systemErrorsCount" style="color:#f03e3e;">0</h3>
+                </div>
+            </div>
         </div>
 
         <!-- 필터 섹션 -->
@@ -825,6 +833,14 @@
                         <option value="consulting">자문</option>
                         <option value="civil">민원</option>
                         <option value="litigation">소송</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label>요청 유형</label>
+                    <select id="filterRequestType">
+                        <option value="">전체</option>
+                        <option value="general">일반</option>
+                        <option value="business_immigration">사업이민</option>
                     </select>
                 </div>
             </div>
@@ -1078,9 +1094,20 @@
             const hasAccess = await checkAdminAccess();
             
             if (!hasAccess) return;
-            
+
             // 데이터 로드
             loadDashboardData();
+
+            // 시스템 오류 카운트 (business-immigration.js의 refreshSystemErrorsBadge가
+            // 헤더 뱃지를 갱신하고, 여기서는 통계 카드의 숫자도 함께 갱신)
+            try {
+                const { count } = await supabaseClient
+                    .from('system_errors')
+                    .select('id', { count: 'exact', head: true })
+                    .is('resolved_at', null);
+                const el = document.getElementById('systemErrorsCount');
+                if (el) el.textContent = String(count || 0);
+            } catch (_) { /* 실패 시 0 유지 */ }
         });
 
         // 관리자 권한 확인 (Supabase 세션 기반 + DB role 검증)
@@ -1455,13 +1482,21 @@
             const statusFilter = document.getElementById('filterStatus').value;
             const priorityFilter = document.getElementById('filterPriority').value;
             const serviceTypeFilter = document.getElementById('filterServiceType').value;
+            const requestTypeFilter = document.getElementById('filterRequestType')?.value || '';
 
             filteredThreads = allThreads.filter(thread => {
                 if (nameFilter && !thread.customer_name.toLowerCase().includes(nameFilter)) return false;
                 if (serviceFilter && !thread.service_name.toLowerCase().includes(serviceFilter)) return false;
 
-                // 상태 필터 (기존 상태도 호환)
-                if (statusFilter) {
+                // 요청 유형 필터 (일반 / 사업이민) — 기존 status 필터 적용 시 request_type='general'로
+                // 제한해 기존 경로 결과 보존(섹션 14-2-4). 사업이민은 별도 상태 체계 사용.
+                const threadRequestType = thread.request_type || 'general';
+                if (requestTypeFilter) {
+                    if (threadRequestType !== requestTypeFilter) return false;
+                }
+
+                // 상태 필터 (기존 상태도 호환) — 사업이민 쓰레드에는 적용하지 않음
+                if (statusFilter && threadRequestType === 'general') {
                     const normalizedStatus = ['payment', 'document', 'processing'].includes(thread.status) ? 'received' : thread.status;
                     if (normalizedStatus !== statusFilter) return false;
                 }
@@ -1485,6 +1520,8 @@
             document.getElementById('filterStatus').value = '';
             document.getElementById('filterPriority').value = '';
             document.getElementById('filterServiceType').value = '';
+            const rt = document.getElementById('filterRequestType');
+            if (rt) rt.value = '';
 
             filteredThreads = [...allThreads];
             renderThreadsTable();

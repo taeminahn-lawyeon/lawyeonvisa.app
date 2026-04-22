@@ -1041,6 +1041,127 @@ async function createWelcomeMessage(threadId, serviceName) {
 }
 
 // ============================================
+// 사업이민 (Business Immigration) 전용 함수
+// 참조: BUSINESS_IMMIGRATION_SPEC.md 섹션 14
+// ============================================
+
+// 시스템 에러 로그 INSERT (섹션 14-8-4)
+// 쓰레드 생성 실패, RPC 실패 등 모든 오류 이벤트 수집용.
+// INSERT 자체가 실패해도 무음 처리(이중 실패 방지).
+async function logSystemError(payload) {
+    if (!supabaseClient) return;
+    try {
+        const session = await supabaseClient.auth.getSession();
+        const userId = session?.data?.session?.user?.id || null;
+        await supabaseClient.from('system_errors').insert({
+            user_id: userId,
+            error_type: payload.error_type,
+            error_code: payload.error_code || null,
+            request_id: payload.request_id || null,
+            context: payload.context || null
+        });
+    } catch (_) {
+        // 의도적 무음
+    }
+}
+
+// 사업이민 문서 업로드 (섹션 14-3-4)
+// 경로: {user_id}/{document_type}/{timestamp}_{sanitizedFileName}
+// document_type: passport | criminal_record | education | family | funding | contracts
+async function uploadBusinessImmigrationDocument(documentType, file) {
+    try {
+        const session = await supabaseClient.auth.getSession();
+        if (!session?.data?.session) {
+            throw new Error('Not authenticated');
+        }
+        const userId = session.data.session.user.id;
+
+        const allowedTypes = ['passport','criminal_record','education','family','funding','contracts'];
+        if (!allowedTypes.includes(documentType)) {
+            throw new Error('Invalid document_type: ' + documentType);
+        }
+
+        const timestamp = Date.now();
+        const sanitized = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+        const filePath = `${userId}/${documentType}/${timestamp}_${sanitized}`;
+
+        const { data, error } = await supabaseClient.storage
+            .from('business-immigration-documents')
+            .upload(filePath, file, { cacheControl: '3600', upsert: false });
+
+        if (error) throw error;
+        debugLog('✅ 사업이민 문서 업로드 성공:', filePath);
+        return { success: true, data, path: filePath };
+    } catch (error) {
+        console.error('사업이민 문서 업로드 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// 프로필 완성도 판정 (섹션 14-6-3)
+// request_type 분기:
+//   - 'business_immigration': business_immigration_profiles.profile_completed 조회
+//   - 'general' (또는 그 외): 기존 profiles.passport_number NULL 여부 판정
+async function isProfileCompleteForRequest(userId, requestType) {
+    if (!userId) return false;
+
+    if (requestType === 'business_immigration') {
+        try {
+            const { data, error } = await supabaseClient
+                .from('business_immigration_profiles')
+                .select('profile_completed')
+                .eq('user_id', userId)
+                .maybeSingle();
+            if (error || !data) return false;
+            return data.profile_completed === true;
+        } catch (e) {
+            console.error('사업이민 프로필 완성도 조회 오류:', e);
+            return false;
+        }
+    }
+
+    // 기존 일반 경로 — passport_number 단일 필드 기준 유지
+    try {
+        const { data } = await supabaseClient
+            .from('profiles')
+            .select('passport_number')
+            .eq('id', userId)
+            .maybeSingle();
+        return !!(data && data.passport_number);
+    } catch (_) {
+        return false;
+    }
+}
+
+// 사업이민 상담 신청 RPC 호출 (섹션 14-8-4)
+// consultation_requests + threads + 연결을 단일 트랜잭션으로 처리.
+// 실패 시 전체 롤백, 재시도 시 중복 없음.
+async function createBusinessImmigrationRequest(formData) {
+    try {
+        const { data, error } = await supabaseClient.rpc(
+            'create_business_immigration_request',
+            {
+                p_nationality:        formData.nationality,
+                p_residence_country:  formData.residence_country,
+                p_visa_type_interest: formData.visa_type_interest,
+                p_family_composition: formData.family_composition ?? null,
+                p_children_count:     formData.children_count ?? null,
+                p_timeline:           formData.timeline ?? null,
+                p_message:            formData.message ?? null,
+                p_contact_method:     formData.contact_method,
+                p_email:              formData.email
+            }
+        );
+        if (error) throw error;
+        debugLog('✅ 사업이민 상담 RPC 성공:', data);
+        return { success: true, data };
+    } catch (error) {
+        console.error('사업이민 상담 RPC 오류:', error);
+        return { success: false, error: error.message, code: error.code };
+    }
+}
+
+// ============================================
 // 인증 상태 변경 리스너
 // ============================================
 

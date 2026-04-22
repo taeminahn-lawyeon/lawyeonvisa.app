@@ -648,6 +648,24 @@
 </head>
 <body>
     <div class="thread-container">
+        <!-- 사업이민 프로필 미완 안내 배너 (조건부, js/business-immigration.js에서 제어) -->
+        <div id="thread-profile-banner"
+             class="thread-banner thread-banner-hidden"
+             role="region"
+             aria-live="polite">
+            <div class="thread-banner-body">
+                <i class="fa-solid fa-circle-info thread-banner-icon"></i>
+                <div class="thread-banner-text">
+                    <strong data-i18n="biz.banner.title">프로필 작성이 필요합니다</strong>
+                    <p data-i18n="biz.banner.description">원활한 상담을 위해 기본 정보를 입력해 주세요.</p>
+                </div>
+                <a id="thread-profile-banner-cta"
+                   class="thread-banner-cta"
+                   href="#"
+                   data-i18n="biz.banner.cta">프로필 작성하기</a>
+            </div>
+        </div>
+
         <div class="thread-main">
             <div class="thread-header">
                 <div class="header-top">
@@ -1346,6 +1364,7 @@
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=20250119"></script>
+    <script src="js/business-immigration.js"></script>
     
     <!-- 다국어 시스템 -->
     <script src="js/translations.js"></script>
