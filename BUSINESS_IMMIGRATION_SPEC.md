@@ -55,16 +55,22 @@ Edge Function `confirm-payment`은 결제 승인 성공 후 `threads` INSERT 실
 **발견 5 — i18n 7개 언어 수동 동기화 필요**
 `js/translations.js`는 7개 언어 각자 독립 객체(총 8,385줄). 새 네임스페이스 도입 시 7개 언어 × 키 개수 수동 편집 필요. 미추가 키는 `ko` 폴백 동작.
 
-### 14-0-2. 콘솔 확인 결과 업데이트 (2026-04-20)
+### 14-0-2. 콘솔 확인 결과 업데이트 (확인 완료)
 
 | # | 진단 결과 | 콘솔 확인 결과 | 상태 |
 |---|---|---|---|
-| 발견 1 | 저장소에 트리거 없음 → 콘솔 수동 설정 "가능성" | `on_auth_user_created` 트리거 **실존 확정**. `handle_new_user()` 함수가 `profiles`에 `id`/`email`/`name`/`role='customer'`/`created_at`/`updated_at` 삽입, `ON CONFLICT (id) DO NOTHING` | 형상관리 밖 지속 |
-| 발견 3 | SQL 저장소에 Storage RLS 없음 → "가능성" | `storage.objects` 테이블에 **12개 정책 실존 확정** (4개 버킷에 걸쳐) | 형상관리 밖 지속 |
-| 추가 발견 A | — | `documents`·`passports` 버킷 **존재하지만 파일 0개** (RLS 정책은 각 3개씩 잔존) | 정리 대상 후보 |
-| 추가 발견 B | — | 진단에서 "미사용"으로 지목된 6개 중 `avatars`·`blog`·`thread_files`·`user_avatars` 4개는 **애초에 존재하지 않음** | 문서 보정 완료 |
-| 추가 발견 C | — | `profile-documents` admin SELECT 정책의 `EXISTS` 서브쿼리가 `objects.id = auth.uid()` 조건을 사용. 일반적 admin 검증 패턴(`admins.id = auth.uid()`)과 구조가 다름 | 관찰 사실 기록 |
-| 추가 발견 D | — | `thread_documents`의 SELECT/INSERT 정책은 `bucket_id` 매칭만 검사하고 경로 소유권 검증 없음. 인증된 사용자는 어느 경로 파일에도 접근 가능 | 관찰 사실 기록 |
+| 발견 1 | 저장소에 트리거 없음 → 콘솔 수동 설정 "가능성" | **확인 완료**: `on_auth_user_created` 트리거 실존. `handle_new_user()` 함수가 `profiles`에 `id`/`email`/`name`/`role='customer'`/`created_at`/`updated_at` 삽입, `ON CONFLICT (id) DO NOTHING` | 형상관리 밖 지속 |
+| 발견 3 | SQL 저장소에 Storage RLS 없음 → "가능성" | **확인 완료**: `storage.objects`에 12개 정책 실존 (4개 버킷에 걸쳐) | 형상관리 밖 지속 |
+| 추가 발견 A | — | **확인 완료**: `documents`·`passports` 버킷 존재하지만 파일 0개 (RLS 정책은 각 3개씩 잔존) | 정리 대상 후보 |
+| 추가 발견 B | — | **확인 완료**: "미사용"으로 지목된 6개 중 `avatars`·`blog`·`thread_files`·`user_avatars` 4개는 애초에 존재하지 않음 | 문서 보정 완료 |
+| 추가 발견 C | — | **확인 완료**: `profile-documents` admin SELECT 정책의 `EXISTS` 서브쿼리가 `objects.id = auth.uid()` 조건 사용. 일반적 admin 검증 패턴과 구조 다름 | 관찰 사실 기록 |
+| 추가 발견 D | — | **확인 완료**: `thread_documents`의 SELECT/INSERT 정책은 `bucket_id` 매칭만 검사하고 경로 소유권 검증 없음 | 관찰 사실 기록 |
+| 추가 발견 E | — | **확인 완료**: 기존 `consultation-request.html`은 별도 상담 테이블 없이 `createThread()`를 통해 `threads` 테이블에 직접 INSERT 함 (`consultation-request.html:780-787`). 일반 상담은 `is_consulting:true`·`organization:'general'` 플래그로 구분. `consultation_requests`·`contact_requests`·`inquiries` 등 테이블은 코드베이스 전체에서 참조 없음 | 향후 일반 경로 리팩토링 시 활용 |
+
+**콘솔 쿼리 3건 결과 (확정)**:
+- `user_role` ENUM 허용값: `customer`, `partner_admin`, `super_admin`
+- `consultation_requests` 테이블 실존 여부: **false** → 본 섹션 14에서 신규 CREATE
+- `threads.status` 컬럼 타입: `text` → `ALTER TYPE` 불필요, text 컬럼 DDL 그대로 적용
 
 ### 14-0-3. 본 섹션 14가 해결하는 범위
 
@@ -204,30 +210,13 @@ CREATE POLICY biz_profiles_super_admin_all
   ));
 ```
 
-**[콘솔 확인 후 확정]** — `user_role` ENUM 타입의 실제 정의·허용값. 콘솔 확인 시 다음 쿼리 실행 권장:
-```sql
-SELECT e.enumlabel
-FROM pg_type t
-JOIN pg_enum e ON e.enumtypid = t.oid
-WHERE t.typname = 'user_role'
-ORDER BY e.enumsortorder;
-```
+**콘솔 확인 결과**: `user_role` ENUM 허용값은 `customer`, `partner_admin`, `super_admin` 3개로 확정. 위 DDL의 `'super_admin'::user_role` 캐스팅 그대로 사용.
 
-### 14-1-2. `consultation_requests` (확장 또는 신규)
+### 14-1-2. `consultation_requests` (신규 테이블)
 
 사업이민 상담 신청 시점의 **스냅샷**을 저장합니다. SOT 원칙(확정사항 2번)에 따라 `nationality`는 여기에 제출 시점 값이 고정되고, 이후 변경되지 않습니다.
 
-**[콘솔 확인 후 확정]** — `consultation_requests` 테이블 실존 여부. 저장소 코드·SQL에는 해당 테이블 생성·참조 없음. 콘솔에 존재하면 아래는 `ALTER TABLE`로 변환 후 적용. 존재하지 않으면 `CREATE TABLE` 그대로.
-
-**콘솔 확인 쿼리**:
-```sql
-SELECT EXISTS (
-  SELECT 1 FROM information_schema.tables
-  WHERE table_schema = 'public' AND table_name = 'consultation_requests'
-) AS exists_flag;
-```
-
-#### (A) 테이블이 없는 경우 — `CREATE TABLE`
+**콘솔 확인 결과**: `consultation_requests` 테이블은 DB에 **존재하지 않음**. 아래 `CREATE TABLE` 마이그레이션 그대로 적용. (기존 `consultation-request.html`은 별도 상담 테이블 없이 `threads`에 직접 INSERT 하는 구조 — 14-0-2 추가 발견 E 참조.)
 
 ```sql
 -- migrations/20260420_create_consultation_requests.sql
@@ -288,62 +277,17 @@ CREATE POLICY consult_requests_super_admin_all
   ));
 ```
 
-#### (B) 테이블이 이미 존재하는 경우 — `ALTER TABLE`
-
-```sql
--- migrations/20260420_alter_consultation_requests_for_business_immigration.sql
-
-ALTER TABLE public.consultation_requests
-  ADD COLUMN IF NOT EXISTS request_type       text NOT NULL DEFAULT 'general',
-  ADD COLUMN IF NOT EXISTS nationality        text,
-  ADD COLUMN IF NOT EXISTS residence_country  text,
-  ADD COLUMN IF NOT EXISTS visa_type_interest text,
-  ADD COLUMN IF NOT EXISTS family_composition jsonb,
-  ADD COLUMN IF NOT EXISTS children_count     integer,
-  ADD COLUMN IF NOT EXISTS timeline           text,
-  ADD COLUMN IF NOT EXISTS message            text,
-  ADD COLUMN IF NOT EXISTS contact_method     text;
-
-ALTER TABLE public.consultation_requests
-  ADD CONSTRAINT consult_requests_request_type_check
-    CHECK (request_type IN ('general','business_immigration')),
-  ADD CONSTRAINT consult_requests_visa_type_check
-    CHECK (visa_type_interest IS NULL
-           OR visa_type_interest IN ('D-9-4','D-9-5','undecided')),
-  ADD CONSTRAINT consult_requests_timeline_check
-    CHECK (timeline IS NULL
-           OR timeline IN ('3months','6months','1year','over1year','undecided')),
-  ADD CONSTRAINT consult_requests_contact_method_check
-    CHECK (contact_method IS NULL
-           OR contact_method IN ('email','thread','phone'));
-
--- 기존 RLS 정책에 사업이민 케이스 별도 추가 필요 여부는 콘솔 확인 후 결정.
--- request_type 구분 없이 `user_id = auth.uid()`로만 제어되면 신규 정책 불필요.
-```
-
 ## 14-2. 기존 `threads` 테이블 컬럼 추가 DDL
 
 확정사항 4번(별도 컬럼 `business_immigration_status` 신설)에 따라 `threads` 테이블에 **2개 컬럼**을 추가합니다. 기존 `status` 컬럼의 기존 값·의미는 보존되며, 사업이민 쓰레드는 `status='active'`로 고정되고 실제 진행 단계는 `business_immigration_status`에서 추적됩니다.
 
-**[콘솔 확인 후 확정]** — `threads.status` 컬럼이 `text`인지 ENUM 타입인지 확인 필요. ENUM이면 `ALTER TYPE ... ADD VALUE 'active'`가 선행되어야 함.
+**콘솔 확인 결과**: `threads.status` 컬럼 타입은 **`text`**로 확정 (ENUM 아님). 아래 DDL 그대로 적용. `ALTER TYPE` 불필요.
 
-**콘솔 확인 쿼리**:
-```sql
-SELECT column_name, data_type, udt_name
-FROM information_schema.columns
-WHERE table_schema = 'public'
-  AND table_name   = 'threads'
-  AND column_name  = 'status';
-```
-- `data_type = 'text'`이면 아래 DDL 그대로 실행.
-- `data_type = 'USER-DEFINED'`이고 `udt_name`이 ENUM(예: `thread_status`)이면 `ALTER TYPE` 선행 + `status` 신규 추가 값이 `'active'`인지 확정.
-
-### 14-2-1. DDL (text 컬럼 가정)
+### 14-2-1. DDL
 
 ```sql
 -- migrations/20260420_alter_threads_add_business_immigration.sql
 
--- (text 컬럼 케이스)
 ALTER TABLE public.threads
   ADD COLUMN IF NOT EXISTS request_type                text NOT NULL DEFAULT 'general',
   ADD COLUMN IF NOT EXISTS business_immigration_status text;
@@ -366,8 +310,7 @@ ALTER TABLE public.threads
          )
     );
 
--- 사업이민 쓰레드는 status='active' 고정 → 기존 status 값과 공존을 위해 별도 CHECK 불필요
--- (기존 status 허용값 집합에 'active' 추가가 이미 되어 있는지만 확인 필요)
+-- 사업이민 쓰레드는 status='active' 고정 → 기존 status 값과 공존 (text 컬럼이므로 별도 CHECK 불필요)
 
 -- 인덱스
 CREATE INDEX idx_threads_request_type
@@ -377,22 +320,7 @@ CREATE INDEX idx_threads_biz_status
   WHERE business_immigration_status IS NOT NULL;
 ```
 
-### 14-2-2. ENUM 컬럼인 경우 대안 DDL
-
-`threads.status`가 ENUM 타입으로 판명되면(예: `thread_status`), 위 DDL 대신 아래로 교체:
-
-```sql
--- ENUM 타입에 'active' 값 추가
-ALTER TYPE public.thread_status ADD VALUE IF NOT EXISTS 'active';
-
--- 그 외 DDL은 위와 동일
-ALTER TABLE public.threads
-  ADD COLUMN IF NOT EXISTS request_type                text NOT NULL DEFAULT 'general',
-  ADD COLUMN IF NOT EXISTS business_immigration_status text;
--- (CHECK·인덱스는 위와 동일)
-```
-
-### 14-2-3. 컬럼 의미 정의
+### 14-2-2. 컬럼 의미 정의
 
 | 컬럼 | 의미 | 허용값 | 기본값 | NULL 허용 |
 |---|---|---|---|---|
@@ -400,7 +328,7 @@ ALTER TABLE public.threads
 | `business_immigration_status` | 사업이민 프로젝트 단계 | (위 8개 값) | — | Yes (일반 쓰레드일 때 NULL) |
 | `status` (기존) | 처리 단계 | 기존 값들 + `active` | 기존 유지 | 기존 유지 |
 
-### 14-2-4. 데이터 정합성 규칙
+### 14-2-3. 데이터 정합성 규칙
 
 애플리케이션 레벨에서 보장해야 할 규칙(DB 제약으로는 표현 복잡, 코드·코드 리뷰로 강제):
 
@@ -409,7 +337,7 @@ ALTER TABLE public.threads
 
 필요 시 BEFORE INSERT/UPDATE 트리거로 보강 가능. 초기에는 코드 리뷰로 보장하고, 정합성 문제가 관찰되면 트리거 도입.
 
-### 14-2-5. 기존 관리자 쿼리 호환성
+### 14-2-4. 기존 관리자 쿼리 호환성
 
 `admin-dashboard.html`·`admin-thread.html` 등의 기존 SQL/필터 중 `status` 기준 조회는 모두 `request_type='general'` 조건을 **추가**하여 동작 보존. 본 스펙 구현 시 관리자 쿼리 수정 항목은 14-7·14-10에서 상세.
 
@@ -1084,75 +1012,162 @@ CREATE POLICY system_errors_insert
 
 **주의**: `context` jsonb에 주문 정보·개인정보 스냅샷이 담길 수 있음. RLS로 **일반 사용자 SELECT 차단**은 필수. 위 DDL에서 super_admin 외 SELECT 정책이 없어 자연 deny.
 
-### 14-8-4. 클라이언트 실패 처리 흐름
+### 14-8-4. 원자성 확보 — RPC 트랜잭션 방식
 
-`business-immigration-request.html` 제출 버튼 핸들러 의사코드:
+확정사항 — 재시도 시 `consultation_requests` + `threads` INSERT의 중복·반쪽 성공을 원천 차단하기 위해 **단일 PostgreSQL 함수(RPC)로 트랜잭션화**합니다. 클라이언트는 한 번의 RPC 호출만 수행하고, 함수 내부에서 두 INSERT 중 하나라도 실패하면 전체가 자동 롤백됩니다.
+
+#### RPC 함수 DDL
+
+```sql
+-- migrations/20260420_create_business_immigration_rpc.sql
+-- consultation_requests + threads 이원 INSERT를 원자적으로 수행
+-- 실패 시 전체 롤백으로 중복·반쪽 성공 방지
+-- 사전 조건: 14-1-2의 consultation_requests 테이블, 14-2-1의 threads 컬럼 추가가 먼저 적용되어 있어야 함
+
+CREATE OR REPLACE FUNCTION public.create_business_immigration_request(
+  p_nationality         text,
+  p_residence_country   text,
+  p_visa_type_interest  text,
+  p_family_composition  jsonb,
+  p_children_count      integer,
+  p_timeline            text,
+  p_message             text,
+  p_contact_method      text,
+  p_email               text
+)
+RETURNS jsonb
+LANGUAGE plpgsql
+SECURITY INVOKER
+SET search_path = public
+AS $$
+DECLARE
+  v_user_id    uuid := auth.uid();
+  v_request_id uuid;
+  v_thread_id  uuid;
+  v_order_id   text;
+BEGIN
+  IF v_user_id IS NULL THEN
+    RAISE EXCEPTION 'Not authenticated' USING ERRCODE = '28000';
+  END IF;
+
+  v_order_id := 'BIZ-' || (extract(epoch FROM now())::bigint)::text;
+
+  -- 1) consultation_requests 스냅샷 INSERT
+  INSERT INTO public.consultation_requests (
+    user_id, request_type,
+    nationality, residence_country, visa_type_interest,
+    family_composition, children_count, timeline,
+    message, contact_method, email
+  ) VALUES (
+    v_user_id, 'business_immigration',
+    p_nationality, p_residence_country, p_visa_type_interest,
+    p_family_composition, p_children_count, p_timeline,
+    p_message, p_contact_method, p_email
+  )
+  RETURNING id INTO v_request_id;
+
+  -- 2) threads INSERT (request_type 분기 + business_immigration_status 초기값)
+  INSERT INTO public.threads (
+    user_id, service_name, status, amount, order_id,
+    request_type, business_immigration_status,
+    is_consulting, organization
+  ) VALUES (
+    v_user_id,
+    'Business Immigration Consultation',
+    'active',
+    0,
+    v_order_id,
+    'business_immigration',
+    'pre_consultation',
+    true,
+    'business_immigration'
+  )
+  RETURNING id INTO v_thread_id;
+
+  -- 3) 양방향 연결 — consultation_requests.thread_id 업데이트
+  UPDATE public.consultation_requests
+     SET thread_id = v_thread_id
+   WHERE id = v_request_id;
+
+  RETURN jsonb_build_object(
+    'request_id', v_request_id,
+    'thread_id',  v_thread_id,
+    'order_id',   v_order_id
+  );
+END;
+$$;
+
+-- authenticated 역할에 실행 권한 부여 (RLS는 함수 내부 INSERT 각각에 개별 적용됨)
+REVOKE ALL ON FUNCTION public.create_business_immigration_request(
+  text, text, text, jsonb, integer, text, text, text, text
+) FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION public.create_business_immigration_request(
+  text, text, text, jsonb, integer, text, text, text, text
+) TO authenticated;
+```
+
+**설계 요점**
+- `SECURITY INVOKER` — 함수가 **호출자 권한**으로 실행됨. `auth.uid()`로 호출자를 확인하고, 각 INSERT는 14-1-2·14-2-1에서 정의한 RLS 정책의 보호를 받음. (`SECURITY DEFINER`를 사용하면 RLS를 우회하므로 피함.)
+- `BEGIN ... END` 블록은 단일 트랜잭션. 두 INSERT 중 어느 하나라도 실패하면 **PostgreSQL이 자동 롤백** → 중복·반쪽 성공 불가.
+- `v_order_id`는 epoch 초 기준으로 생성 (클라이언트 `Date.now()` 대체). 순간적 중복 방지가 더 필요해지면 `gen_random_uuid()` 기반으로 전환 가능.
+
+#### 클라이언트 측 호출 흐름 (재작성)
 
 ```javascript
 async function submitBusinessImmigrationRequest() {
-    // ... 폼 검증, 프로필 upsert 등 생략 ...
+    // ... 폼 검증, 프로필 upsert 등은 사전 단계에서 완료 ...
 
     try {
-        // 1) consultation_requests 레코드 INSERT
-        const { data: request, error: reqErr } = await supabaseClient
-            .from('consultation_requests')
-            .insert({
-                user_id: userId,
-                request_type: 'business_immigration',
-                nationality: form.nationality,
-                residence_country: form.residence_country,
-                // ... 9개 필드
-            })
-            .select()
-            .single();
-        if (reqErr) throw { step: 'consultation_request', error: reqErr };
+        // 1) 단일 RPC 호출 — 트랜잭션으로 consultation_requests + threads 처리
+        const { data, error } = await supabaseClient
+            .rpc('create_business_immigration_request', {
+                p_nationality:        form.nationality,
+                p_residence_country:  form.residence_country,
+                p_visa_type_interest: form.visa_type_interest,
+                p_family_composition: form.family_composition,
+                p_children_count:     form.children_count ?? null,
+                p_timeline:           form.timeline ?? null,
+                p_message:            form.message ?? null,
+                p_contact_method:     form.contact_method,
+                p_email:              form.email
+            });
+        if (error) throw error;
 
-        // 2) threads 레코드 INSERT
-        const { data: thread, error: threadErr } = await createThread({
-            service_name: 'Business Immigration Consultation',
-            status: 'active',
-            amount: 0,
-            request_type: 'business_immigration',
-            business_immigration_status: 'pre_consultation',
-            order_id: 'BIZ-' + Date.now(),
-            is_consulting: true,
-            organization: 'business_immigration'
-        });
-        if (threadErr) throw { step: 'thread_creation', error: threadErr };
+        const threadId = data.thread_id;
 
-        // 3) consultation_requests.thread_id 연결
-        await supabaseClient
-            .from('consultation_requests')
-            .update({ thread_id: thread.id })
-            .eq('id', request.id);
+        // 2) 환영 메시지 (RPC 외부 — 실패해도 쓰레드 자체는 성공 보존)
+        try {
+            await createWelcomeMessage(threadId, 'Business Immigration Consultation',
+                                       { requestType: 'business_immigration' });
+        } catch (welcomeErr) {
+            await logSystemError({
+                error_type: 'welcome_message',
+                request_id: String(threadId),
+                context: { message: welcomeErr?.message }
+            });
+            // welcome 실패는 무음 진행 — 쓰레드 진입은 성공으로 처리
+        }
 
-        // 4) 환영 메시지
-        await createWelcomeMessage(thread.id, 'Business Immigration Consultation',
-                                    { requestType: 'business_immigration' });
-
-        // 5) 쓰레드 페이지로 리다이렉트
-        location.href = `thread-general-v2.html?id=${thread.id}`;
+        // 3) 쓰레드 페이지로 리다이렉트
+        location.href = `thread-general-v2.html?id=${threadId}`;
 
     } catch (err) {
-        // 실패 경로
+        // RPC 자체 실패 — 모든 DB 상태가 롤백됨
         await logSystemError({
             error_type: 'thread_creation',
-            error_code: err.step,
-            request_id: null,
             context: {
-                step: err.step,
-                message: err.error?.message,
+                message: err?.message,
+                code:    err?.code,
                 form_summary: {
-                    nationality: form.nationality,
+                    nationality:        form.nationality,
                     visa_type_interest: form.visa_type_interest
                 }
             }
         });
 
-        // 토스트 + 재시도 버튼
         showToastWithRetry(
             i18n.translate('biz.error.thread_creation'),
-            () => submitBusinessImmigrationRequest()  // 재시도 시 처음부터
+            () => submitBusinessImmigrationRequest()  // 롤백된 상태에서 재시도, 중복 없음
         );
     }
 }
@@ -1165,6 +1180,20 @@ async function logSystemError(payload) {
     }
 }
 ```
+
+#### RPC 방식의 이점 요약
+
+| 비교 항목 | 단순 2-step (과거 설계) | RPC 트랜잭션 (현재 확정) |
+|---|---|---|
+| 반쪽 성공 가능성 | 있음 (consultation_requests만 성공 + threads 실패) | 없음 (전체 롤백) |
+| 재시도 시 중복 | 가능 | 불가능 |
+| 클라이언트 복잡도 | 2회 호출 + 상태 추적 | 1회 호출 |
+| 실패 시 정리 로직 | 클라이언트가 수행 | 자동 롤백 |
+| RLS 적용 | 각 INSERT별 | 각 INSERT별 (동일) — `SECURITY INVOKER` |
+
+#### 검증 방법 (섹션 14-10 참조)
+- RPC 실패 주입 테스트: 일부러 CHECK 제약 위반 값 전달 후 `consultation_requests` 테이블에 잔여 row 없는지 확인.
+- 재시도 100회 반복 후 `consultation_requests`·`threads` 레코드 수가 **1건씩**만 증가하는지 확인.
 
 ### 14-8-5. 토스트 + 재시도 버튼 UI
 
@@ -1602,11 +1631,12 @@ jobs:
 ### 14-10-1. DB 마이그레이션 적용 확인
 
 - [ ] `migrations/20260420_create_business_immigration_profiles.sql` 실행 성공, 테이블·인덱스·RLS·트리거 생성 확인
-- [ ] `migrations/20260420_create_consultation_requests.sql` 또는 `alter_*` 중 **콘솔 확인 결과에 맞는 버전** 실행 (14-1-2)
-- [ ] `migrations/20260420_alter_threads_add_business_immigration.sql` 실행. `threads.status`가 ENUM이면 `ALTER TYPE` 선행 (14-2-2)
+- [ ] `migrations/20260420_create_consultation_requests.sql` 실행. 테이블·RLS 3개 정책 생성 확인 (14-1-2)
+- [ ] `migrations/20260420_alter_threads_add_business_immigration.sql` 실행. `request_type`·`business_immigration_status` 컬럼 추가 확인 (14-2-1, text 컬럼 확정)
 - [ ] `migrations/20260420_create_business_immigration_storage.sql` 실행. 버킷 생성 + 5개 정책 생성 확인
 - [ ] `migrations/20260420_create_biz_profile_completed_trigger.sql` 실행. 트리거 동작 확인 (테스트 INSERT → `profile_completed` 자동 계산)
 - [ ] `migrations/20260420_create_system_errors.sql` 실행. RLS 3개 정책 확인
+- [ ] `migrations/20260420_create_business_immigration_rpc.sql` 실행. `create_business_immigration_request` 함수 생성 + authenticated 역할 EXECUTE 권한 확인
 
 검증 SQL:
 ```sql
@@ -1650,18 +1680,24 @@ WHERE tgname IN ('trg_biz_profiles_set_updated_at','trg_biz_profile_compute_comp
 - [ ] 일반 사용자로 타인 폴더 SELECT 시도 → 차단
 - [ ] `allowed_mime_types` 밖(예: `application/zip`) 업로드 시도 → 거부
 
-### 14-10-4. 쓰레드 생성 플로우
+### 14-10-4. 쓰레드 생성 플로우 (RPC 트랜잭션)
 
-- [ ] `business-immigration-request.html` 폼 정상 제출 시:
+- [ ] `business-immigration-request.html` 폼 정상 제출 시 단일 RPC 호출(`create_business_immigration_request`)로:
   - [ ] `consultation_requests` 레코드 INSERT (`request_type='business_immigration'`)
   - [ ] `threads` 레코드 INSERT (`request_type='business_immigration'`, `status='active'`, `business_immigration_status='pre_consultation'`)
-  - [ ] `consultation_requests.thread_id`가 신규 thread id로 UPDATE
-  - [ ] welcome 메시지 INSERT (사업이민 전용 템플릿 사용, "Enter Basic Info" 링크 없음)
+  - [ ] `consultation_requests.thread_id`가 신규 thread id로 UPDATE (RPC 내부 수행)
+  - [ ] RPC 반환값 `{ request_id, thread_id, order_id }` 확인
+  - [ ] welcome 메시지 INSERT (사업이민 전용 템플릿, "Enter Basic Info" 링크 없음)
   - [ ] `thread-general-v2.html`로 리다이렉트
-- [ ] `createThread()` 단계 실패 시:
+- [ ] **RPC 실패 원자성 테스트**:
+  - [ ] CHECK 제약 위반 값(예: `visa_type_interest='invalid'`) 주입 시 RPC 예외 발생
+  - [ ] 예외 발생 후 `consultation_requests`·`threads`에 **잔여 row 0건** 확인(전체 롤백)
+  - [ ] 재시도 100회 반복 시 각 테이블 레코드 수가 정확히 **1건씩** 증가(중복 없음)
+- [ ] RPC 호출 실패 시:
   - [ ] `system_errors` 레코드 INSERT (`error_type='thread_creation'`)
   - [ ] 토스트 + 재시도 버튼 노출, i18n 번역 정상
-  - [ ] 재시도 클릭 시 플로우 처음부터 재실행
+  - [ ] 재시도 클릭 시 플로우 처음부터 재실행(롤백된 상태에서 재개되므로 중복 없음)
+- [ ] welcome 메시지 실패 시: `system_errors` INSERT(`error_type='welcome_message'`)되고 쓰레드는 진입 성공으로 처리
 - [ ] 로그인하지 않은 상태에서 제출 → Google 로그인 유도
 
 ### 14-10-5. welcome 배너 표시/숨김
@@ -1710,15 +1746,13 @@ WHERE tgname IN ('trg_biz_profiles_set_updated_at','trg_biz_profile_compute_comp
 - [ ] `npm run validate` (HTML/JS 문법 검증) 통과
 - [ ] `npm run validate:biz-i18n` 통과
 
-### 14-10-10. 콘솔 확인 후 확정 항목 (본 섹션 14 내부 표식)
+### 14-10-10. 콘솔 확인 결과 (확정 완료)
 
-구현 전 다음 콘솔 확인을 수행하고, 결과에 따라 분기 적용:
+3건 모두 콘솔 쿼리 실행 완료 (2026-04-20):
 
-- [ ] `user_role` ENUM 실제 허용값 조회 (14-1-1 말미 쿼리)
-- [ ] `consultation_requests` 테이블 실존 여부 조회 (14-1-2 쿼리) → CREATE vs ALTER 분기
-- [ ] `threads.status` 컬럼 타입 조회 (14-2) → text vs ENUM 분기
-
-이 3건은 본 섹션 내부에 `[콘솔 확인 후 확정]` 표식으로 명시되어 있으며, 구현 착수 전에 최종 확정편집 필요.
+- ✅ `user_role` ENUM 허용값: `customer`, `partner_admin`, `super_admin` → 14-1-1 DDL의 `'super_admin'::user_role` 캐스팅 그대로 사용
+- ✅ `consultation_requests` 테이블 실존: **false** → 14-1-2 `CREATE TABLE` 적용
+- ✅ `threads.status` 컬럼 타입: `text` → 14-2-1 DDL 그대로 적용, `ALTER TYPE` 불필요
 
 ### 14-10-11. 범위 밖 작업(참고)
 
@@ -1740,10 +1774,11 @@ WHERE tgname IN ('trg_biz_profiles_set_updated_at','trg_biz_profile_compute_comp
 ### 신규 생성
 - `migrations/20260420_create_business_immigration_profiles.sql`
 - `migrations/20260420_create_biz_profile_completed_trigger.sql`
-- `migrations/20260420_create_consultation_requests.sql` **또는** `migrations/20260420_alter_consultation_requests_for_business_immigration.sql`
+- `migrations/20260420_create_consultation_requests.sql`
 - `migrations/20260420_alter_threads_add_business_immigration.sql`
 - `migrations/20260420_create_business_immigration_storage.sql`
 - `migrations/20260420_create_system_errors.sql`
+- `migrations/20260420_create_business_immigration_rpc.sql` (RPC `create_business_immigration_request`)
 - `scripts/validate-biz-i18n.js`
 - `scripts/biz-i18n-manifest.json`
 - `js/business-immigration.js`
