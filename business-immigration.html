@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" type="image/png" href="favicon.png?v=3">
+
+    <title>Business Immigration Legal Services | 법무법인 로연 출입국이민지원센터</title>
+    <meta name="description" content="Integrated legal services for launching a business and emigrating to Korea. Pre-consultation → Detailed consultation → Engagement → Aftercare.">
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/toss-style.css">
+    <link rel="stylesheet" href="css/ui-components.css">
+
+    <style>
+        /* 사업이민 랜딩 전용 추가 스타일 */
+        .biz-hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+            padding: 80px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .biz-hero-text h1 {
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #191f28;
+            margin: 0 0 16px;
+        }
+        .biz-hero-text p {
+            font-size: 17px;
+            line-height: 1.7;
+            color: #4e5968;
+            margin: 0 0 32px;
+        }
+        .biz-hero-cta {
+            display: inline-block;
+            background: #3182f6;
+            color: #fff;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .biz-hero-cta:hover { background: #1b64da; }
+        .biz-hero-visual {
+            background: linear-gradient(135deg, #e8f4fd 0%, #d1e8ff 100%);
+            border-radius: 16px;
+            aspect-ratio: 4 / 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3182f6;
+            font-size: 64px;
+        }
+        .biz-section {
+            padding: 64px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .biz-section-heading {
+            font-size: 28px;
+            font-weight: 700;
+            color: #191f28;
+            margin: 0 0 32px;
+            text-align: center;
+        }
+        .biz-badge {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+        }
+        .biz-badge-text {
+            font-size: 15px;
+            color: #4e5968;
+            max-width: 720px;
+            margin: 0 auto 20px;
+            line-height: 1.7;
+        }
+        .biz-badge-id {
+            display: inline-block;
+            background: #fff;
+            border: 1px solid #e5e8eb;
+            border-radius: 24px;
+            padding: 8px 16px;
+            font-size: 13px;
+            color: #6b7684;
+            font-weight: 500;
+        }
+        .biz-steps {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+        .biz-step-card {
+            background: #fff;
+            border: 1px solid #e5e8eb;
+            border-radius: 12px;
+            padding: 24px;
+            transition: box-shadow 0.2s;
+        }
+        .biz-step-card:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        }
+        .biz-step-number {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3182f6, #1b64da);
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+        .biz-step-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #191f28;
+            margin: 0 0 8px;
+        }
+        .biz-step-body {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #4e5968;
+            margin: 0;
+        }
+        .biz-cta-strip {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 16px;
+            padding: 40px 32px;
+            text-align: center;
+            color: #fff;
+            margin: 48px 0;
+        }
+        .biz-cta-strip h2 { font-size: 22px; margin: 0 0 12px; color: #fff; }
+        .biz-cta-strip p { color: #cfd6e0; margin: 0 0 24px; }
+        .biz-cta-strip-btn {
+            display: inline-block;
+            background: #3182f6;
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .biz-dashboard-guest {
+            background: #f8f9fa;
+            border: 1px dashed #e5e8eb;
+            border-radius: 12px;
+            padding: 40px 24px;
+            text-align: center;
+            color: #6b7684;
+        }
+        @media (max-width: 900px) {
+            .biz-hero { grid-template-columns: 1fr; text-align: center; padding: 48px 20px; }
+            .biz-hero-text h1 { font-size: 28px; }
+            .biz-steps { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .biz-steps { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============ 헤더 ============ -->
+<header class="site-header">
+    <div class="header-inner">
+        <a class="brand" href="index.html">
+            <img src="로고.png" alt="법무법인 로연" class="brand-logo">
+        </a>
+        <nav class="nav">
+            <a href="index.html" data-i18n="nav.home">홈</a>
+            <a href="price-list.html" data-i18n="nav.services">서비스</a>
+            <a href="blog.html?category=사업·투자" data-i18n="biz.news.heading">뉴스 &amp; 인사이트</a>
+        </nav>
+        <div class="header-actions">
+            <select id="language-select" class="language-select" aria-label="Language">
+                <option value="en">English</option>
+                <option value="ko">한국어</option>
+                <option value="vi">Tiếng Việt</option>
+                <option value="zh">中文</option>
+                <option value="ja">日本語</option>
+                <option value="mn">Монгол</option>
+                <option value="th">ไทย</option>
+            </select>
+            <button id="login-btn" class="btn-primary" data-i18n="auth.login">로그인</button>
+            <span id="user-info" style="display:none;"></span>
+        </div>
+    </div>
+</header>
+
+<!-- ============ 히어로 + CTA ============ -->
+<section class="biz-hero">
+    <div class="biz-hero-text">
+        <h1 data-i18n="biz.hero.headline">한국에서 사업을 시작하고 이주하기 위한 통합 법률서비스</h1>
+        <p data-i18n="biz.hero.subhead">해외에서 한국 이주를 검토하는 외국인을 대상으로, 프로젝트 탐색·규제 자문·비자 취득을 순차 수행합니다.</p>
+        <a href="business-immigration-request.html" class="biz-hero-cta" id="biz-hero-cta" data-i18n="biz.hero.cta">사업이민 사전 상담 신청</a>
+    </div>
+    <div class="biz-hero-visual" aria-hidden="true">
+        <i class="fa-solid fa-plane-departure"></i>
+    </div>
+</section>
+
+<!-- ============ 신뢰 배지 ============ -->
+<section class="biz-section">
+    <div class="biz-badge">
+        <p class="biz-badge-text" data-i18n="biz.badge.description">법무법인 로연 출입국이민지원센터는 외국인의 한국 사업이민 법률서비스를 제공합니다.</p>
+        <div class="biz-badge-id">법무부 등록 출입국민원대행기관 #25-SM-RG-063</div>
+    </div>
+</section>
+
+<!-- ============ 서비스 5단계 카드 ============ -->
+<section class="biz-section">
+    <h2 class="biz-section-heading">Service Process</h2>
+    <div class="biz-steps">
+        <div class="biz-step-card">
+            <div class="biz-step-number">1</div>
+            <h3 class="biz-step-title" data-i18n="biz.step1.title">사전 상담</h3>
+            <p class="biz-step-body" data-i18n="biz.step1.body">쓰레드를 통해 귀하의 국적, 자금 조달 방식, 이주 시점, 가족 구성을 확인하고 한국 사업이민 경로 개요를 안내합니다.</p>
+        </div>
+        <div class="biz-step-card">
+            <div class="biz-step-number">2</div>
+            <h3 class="biz-step-title" data-i18n="biz.step2.title">본 상담</h3>
+            <p class="biz-step-body" data-i18n="biz.step2.body">이민 경로 상세 자문, 사업 개시 절차 및 예산 배정 구조화, 주요 리스크 안내, 비자 발급 등 출입국 행정 안내를 제공합니다.</p>
+        </div>
+        <div class="biz-step-card">
+            <div class="biz-step-number">3</div>
+            <h3 class="biz-step-title" data-i18n="biz.step3.title">착수</h3>
+            <p class="biz-step-body" data-i18n="biz.step3.body">프로젝트 설계, 오퍼레이션 설계, 실사 방문 코디네이션, 최종 점검 회의를 수행합니다.</p>
+        </div>
+        <div class="biz-step-card">
+            <div class="biz-step-number">4</div>
+            <h3 class="biz-step-title" data-i18n="biz.step4.title">잔금</h3>
+            <p class="biz-step-body" data-i18n="biz.step4.body">계약 체결 지원, 외국인 투자 절차, 행정 등록 감독, 비자 취득, 동반가족 비자를 수행합니다.</p>
+        </div>
+        <div class="biz-step-card">
+            <div class="biz-step-number">5</div>
+            <h3 class="biz-step-title" data-i18n="biz.step5.title">사후관리</h3>
+            <p class="biz-step-body" data-i18n="biz.step5.body">주거 임대차 검토, 가맹본부-점주 분쟁 조정, 근로계약 자문, 체류기간 연장, 영주권 전환 자문을 별도 계약으로 제공합니다.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============ 중단 CTA ============ -->
+<section class="biz-section">
+    <div class="biz-cta-strip">
+        <h2 data-i18n="biz.hero.cta">사업이민 사전 상담 신청</h2>
+        <p data-i18n="biz.hero.subhead">해외에서 한국 이주를 검토하는 외국인을 대상으로, 프로젝트 탐색·규제 자문·비자 취득을 순차 수행합니다.</p>
+        <a href="business-immigration-request.html" class="biz-cta-strip-btn" data-i18n="biz.form.submit">상담 신청하기</a>
+    </div>
+</section>
+
+<!-- ============ 뉴스 & 인사이트 ============ -->
+<section class="biz-section">
+    <h2 class="biz-section-heading" data-i18n="biz.news.heading">뉴스 &amp; 인사이트</h2>
+    <div id="biz-news-list" style="text-align:center; color:#6b7684;">
+        <p>Loading...</p>
+    </div>
+    <div style="text-align:center; margin-top:24px;">
+        <a href="blog.html?category=사업·투자" class="biz-hero-cta">더 많은 글 보기</a>
+    </div>
+</section>
+
+<!-- ============ 나의 프로젝트 진행 현황 ============ -->
+<section class="biz-section">
+    <h2 class="biz-section-heading" data-i18n="biz.dashboard.heading">나의 프로젝트 진행 현황</h2>
+    <div id="biz-dashboard">
+        <div class="biz-dashboard-guest" id="biz-dashboard-guest">
+            <p data-i18n="biz.dashboard.guest">로그인하시면 나의 프로젝트 진행 현황, 상담 내역, 쓰레드를 확인하실 수 있습니다.</p>
+            <button class="biz-hero-cta" onclick="handleLoginClick()" data-i18n="auth.login" style="margin-top:16px;">로그인</button>
+        </div>
+        <div id="biz-dashboard-threads" style="display:none;"></div>
+    </div>
+</section>
+
+<!-- ============ 푸터 ============ -->
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-links">
+            <a href="terms-of-service.html">이용약관</a>
+            <a href="privacy-policy.html">개인정보처리방침</a>
+            <a href="refund-policy.html">환불규정</a>
+        </div>
+        <div class="footer-meta">
+            <p>법무법인 로연 · 대표 민준우 · 사업자등록번호 391-85-03007</p>
+            <p>광고책임변호사: 남도현, 민준우</p>
+            <p>© 2026 법무법인 로연. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- ============ Scripts ============ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/translations.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/ui-components.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/business-immigration.js"></script>
+
+<script>
+// 로그인·대시보드 토글
+async function handleLoginClick() {
+    if (window.signInWithGoogle) {
+        await signInWithGoogle();
+    } else if (window.supabaseClient) {
+        await supabaseClient.auth.signInWithOAuth({ provider: 'google' });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', async function () {
+    // 히어로 CTA: 로그인 필요 시 유도
+    var cta = document.getElementById('biz-hero-cta');
+    if (cta) {
+        cta.addEventListener('click', async function (ev) {
+            if (!window.supabaseClient) return;
+            var session = await supabaseClient.auth.getSession();
+            if (!session?.data?.session) {
+                ev.preventDefault();
+                if (confirm('Google 로그인이 필요합니다. 로그인 창을 여시겠습니까?')) {
+                    handleLoginClick();
+                }
+            }
+        });
+    }
+
+    // 로그인 상태 판정 및 대시보드 토글
+    if (window.supabaseClient) {
+        var session = await supabaseClient.auth.getSession();
+        var userId = session?.data?.session?.user?.id;
+        if (userId) {
+            document.getElementById('biz-dashboard-guest').style.display = 'none';
+            loadBizThreads(userId);
+            var loginBtn = document.getElementById('login-btn');
+            if (loginBtn) loginBtn.style.display = 'none';
+            var userInfo = document.getElementById('user-info');
+            if (userInfo) {
+                userInfo.style.display = '';
+                userInfo.textContent = session.data.session.user.email;
+            }
+        }
+    }
+
+    // 뉴스 로드 (사업·투자 카테고리)
+    loadBizNews();
+});
+
+async function loadBizThreads(userId) {
+    try {
+        var res = await supabaseClient
+            .from('threads')
+            .select('id, service_name, status, business_immigration_status, request_type, created_at')
+            .eq('user_id', userId)
+            .eq('request_type', 'business_immigration')
+            .order('created_at', { ascending: false });
+
+        var list = document.getElementById('biz-dashboard-threads');
+        list.style.display = '';
+        var data = res.data || [];
+        if (data.length === 0) {
+            list.innerHTML = '<p style="text-align:center; color:#6b7684;">아직 진행 중인 프로젝트가 없습니다.</p>';
+            return;
+        }
+        var html = data.map(function (t) {
+            return '<div style="background:#fff;border:1px solid #e5e8eb;border-radius:12px;padding:20px;margin-bottom:12px;">' +
+                   '<h4 style="margin:0 0 8px;">' + escapeHtml(t.service_name || 'Business Immigration') + '</h4>' +
+                   '<p style="color:#6b7684;margin:0;">단계: ' + escapeHtml(t.business_immigration_status || 'pre_consultation') + '</p>' +
+                   '<a href="thread-general-v2.html?id=' + encodeURIComponent(t.id) + '" style="color:#3182f6;">쓰레드 보기 →</a>' +
+                   '</div>';
+        }).join('');
+        list.innerHTML = html;
+    } catch (e) {
+        console.error('[biz threads]', e);
+    }
+}
+
+async function loadBizNews() {
+    if (!window.supabaseClient) return;
+    var holder = document.getElementById('biz-news-list');
+    try {
+        var res = await supabaseClient
+            .from('blog_posts')
+            .select('slug, title, excerpt, created_at')
+            .eq('category', '사업·투자')
+            .eq('is_published', true)
+            .order('created_at', { ascending: false })
+            .limit(3);
+        var data = res.data || [];
+        if (data.length === 0) {
+            holder.innerHTML = '<p style="color:#8b95a1;">표시할 글이 없습니다.</p>';
+            return;
+        }
+        holder.innerHTML = '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">' +
+            data.map(function (p) {
+                return '<a href="blog-post.html?slug=' + encodeURIComponent(p.slug) + '" style="display:block;background:#fff;border:1px solid #e5e8eb;border-radius:12px;padding:20px;text-decoration:none;color:#191f28;">' +
+                       '<h4 style="margin:0 0 8px;font-size:15px;">' + escapeHtml(p.title || '') + '</h4>' +
+                       '<p style="color:#6b7684;font-size:13px;margin:0;">' + escapeHtml(p.excerpt || '') + '</p>' +
+                       '</a>';
+            }).join('') + '</div>';
+    } catch (e) {
+        holder.innerHTML = '<p style="color:#8b95a1;">글을 불러오지 못했습니다.</p>';
+    }
+}
+
+function escapeHtml(s) {
+    return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+</script>
+
+</body>
+</html>
