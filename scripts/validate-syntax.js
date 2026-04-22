@@ -13,6 +13,13 @@ const vm = require('vm');
 const ROOT = path.resolve(__dirname, '..');
 const IGNORE_DIRS = ['node_modules', '.git', 'dist', 'build', '.temp'];
 
+// 상대 경로 기반 제외 규칙 (walkDir 진입 시 체크).
+// 블로그 디자인 시안 등 임시 결과물은 CI 검증에서 제외.
+// 참조: BUSINESS_IMMIGRATION_SPEC.md 섹션 14-10-11 항목 7
+const IGNORE_RELATIVE_PATHS = [
+    'blog/drafts',
+];
+
 let errors = 0;
 let warnings = 0;
 let filesChecked = 0;
@@ -171,6 +178,8 @@ function walkDir(dir) {
     for (const entry of entries) {
         if (IGNORE_DIRS.includes(entry.name)) continue;
         const fullPath = path.join(dir, entry.name);
+        const relFromRoot = path.relative(ROOT, fullPath).replace(/\\/g, '/');
+        if (IGNORE_RELATIVE_PATHS.includes(relFromRoot)) continue;
         if (entry.isDirectory()) {
             walkDir(fullPath);
         } else if (entry.name.endsWith('.js')) {

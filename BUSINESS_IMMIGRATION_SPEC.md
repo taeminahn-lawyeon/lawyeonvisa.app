@@ -2212,8 +2212,9 @@ WHERE tgname IN ('trg_biz_profiles_set_updated_at','trg_biz_profile_compute_comp
 4. **`thread_documents` 정책에 경로 제약 추가**.
 5. **`confirm-payment` Edge Function L263-271 무시 로직 교체**: 결제 후 쓰레드 생성 실패 시 `system_errors` INSERT.
 6. **`send-notification` Edge Function 본체 구현**: Resend 연동.
+7. **블로그 디자인 시안 파일 처리 원칙** (확립 완료 · 2026-04-20): 임시 시안은 `blog/drafts/` 하위에 배치하며 `scripts/validate-syntax.js`의 `IGNORE_RELATIVE_PATHS`로 CI 검증에서 제외. 공개 전환 시 `blog/` 루트로 이동. 본 컨벤션은 본 결정 1(2026-04-20)에서 확립됨.
 
-위 6개는 이번 섹션 14 구현이 충분히 안정된 후 **별도 명세 + 별도 브랜치**로 진행 권장.
+위 6개(1~6)는 이번 섹션 14 구현이 충분히 안정된 후 **별도 명세 + 별도 브랜치**로 진행 권장. 7번은 이미 저장소에 반영됨.
 
 ---
 
