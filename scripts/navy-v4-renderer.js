@@ -115,7 +115,8 @@ body{font-family:"Noto Sans KR",-apple-system,sans-serif;background:#ededea;colo
 .designC .C-rail-toc li,.designC .C-rail-series li{display:flex;gap:10px;padding:5px 0;color:var(--c-ink-2);font-size:11.5px;line-height:1.5;cursor:pointer;}
 .designC .C-rail-toc li.C-active,.designC .C-rail-series li.C-active{color:var(--c-accent);font-weight:700;}
 .designC .C-rail-toc .C-mono{color:var(--c-ink-3);flex-shrink:0;}
-.designC .C-rail-toc a{display:flex;gap:10px;color:inherit;width:100%;}
+.designC .C-rail-toc a,.designC .C-rail-series a{display:flex;gap:10px;color:inherit;width:100%;}
+.designC .C-rail-series a:hover{color:var(--c-accent);}
 .designC .C-rail-cta{display:block;background:var(--c-accent);color:#fff!important;padding:12px;text-align:center;font-weight:700;cursor:pointer;font-size:12px;letter-spacing:0.02em;}
 .designC .C-article{padding:32px 48px;min-width:0;background:var(--c-paper);}
 .designC .C-section{margin-bottom:56px;}
