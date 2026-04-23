@@ -3,310 +3,1072 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="format-detection" content="telephone=no">
     <link rel="icon" type="image/png" href="favicon.png?v=3">
-
     <title>Business Immigration Pre-Consultation Request | 법무법인 로연</title>
-    <meta name="description" content="Request a pre-consultation for Korean business immigration. No fees discussed at this stage.">
-
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Request a pre-consultation for Korean business immigration. The pre-consultation is free of charge; cost-related questions are not discussed at this stage.">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/toss-style.css">
-    <link rel="stylesheet" href="css/ui-components.css">
 
     <style>
-        .biz-req-wrap {
-            max-width: 720px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F8FAFC;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
+            padding: 20px 0;
+            border-bottom: 3px solid #3182F6;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .btn-back {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-back:hover {
+            opacity: 1;
+        }
+
+        /* Main Container - 2 Column Layout */
+        .main-container {
+            max-width: 1200px;
             margin: 0 auto;
             padding: 48px 24px;
         }
-        .biz-req-wrap h1 {
-            font-size: 28px;
-            font-weight: 700;
-            color: #191f28;
-            margin: 0 0 8px;
+
+        .two-column-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
         }
-        .biz-req-wrap .biz-req-intro {
-            color: #6b7684;
-            font-size: 15px;
-            margin: 0 0 32px;
-            line-height: 1.7;
-        }
-        .biz-req-form {
-            background: #fff;
-            border: 1px solid #e5e8eb;
-            border-radius: 12px;
-            padding: 32px;
-        }
-        .biz-field {
-            margin-bottom: 24px;
-        }
-        .biz-field label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: #191f28;
-            margin-bottom: 8px;
-        }
-        .biz-field .biz-required {
-            color: #f03e3e;
-            margin-left: 4px;
-        }
-        .biz-field input[type="text"],
-        .biz-field input[type="email"],
-        .biz-field input[type="number"],
-        .biz-field select,
-        .biz-field textarea {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid #e5e8eb;
-            border-radius: 8px;
-            font-size: 15px;
-            font-family: inherit;
-            background: #fff;
-            color: #191f28;
-            box-sizing: border-box;
-        }
-        .biz-field textarea { min-height: 120px; resize: vertical; }
-        .biz-field input:focus,
-        .biz-field select:focus,
-        .biz-field textarea:focus {
-            outline: none;
-            border-color: #3182f6;
-        }
-        .biz-radio-group,
-        .biz-check-group {
+
+        /* Left Column */
+        .left-column {
             display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
+            flex-direction: column;
+            gap: 24px;
         }
-        .biz-radio-group label,
-        .biz-check-group label {
+
+        /* Consultation Banner */
+        .consultation-banner {
+            background: linear-gradient(135deg, #DBEAFE 0%, #EFF6FF 100%);
+            border: 2px solid #3182F6;
+            border-radius: 20px;
+            padding: 28px 32px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .consultation-banner-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .consultation-banner-content h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #1E40AF;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .consultation-banner-content p {
+            font-size: 15px;
+            color: #3B82F6;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        /* Service Card */
+        .service-card {
+            background: white;
+            border-radius: 20px;
+            padding: 28px 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .service-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            font-weight: 400;
-            font-size: 14px;
-            color: #4e5968;
-            cursor: pointer;
-            margin: 0;
-        }
-        .biz-submit-btn {
-            width: 100%;
-            padding: 14px 24px;
-            background: #3182f6;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .biz-submit-btn:hover:not(:disabled) { background: #1b64da; }
-        .biz-submit-btn:disabled { background: #b0b8c1; cursor: not-allowed; }
-        .biz-login-gate {
-            background: #f8f9fa;
-            border: 1px dashed #e5e8eb;
-            border-radius: 12px;
-            padding: 32px;
-            text-align: center;
-        }
-        .biz-note {
+            background: #FEF3C7;
+            color: #D97706;
+            padding: 6px 12px;
+            border-radius: 20px;
             font-size: 13px;
-            color: #8b95a1;
-            margin-top: 16px;
-            line-height: 1.6;
-        }
-        .biz-back {
-            display: inline-block;
-            color: #6b7684;
-            text-decoration: none;
-            font-size: 14px;
+            font-weight: 600;
             margin-bottom: 16px;
         }
-        .biz-back:hover { color: #3182f6; }
+
+        .service-card h2 {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1E293B;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+
+        .service-card p {
+            font-size: 15px;
+            color: #64748B;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* Process Steps */
+        .process-steps {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .process-steps h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1E293B;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .process-steps h2 i {
+            color: #3182F6;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid #F1F5F9;
+        }
+
+        .step-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1E293B;
+            margin-bottom: 4px;
+        }
+
+        .step-content p {
+            font-size: 14px;
+            color: #64748B;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* CTA Button */
+        .cta-section {
+            margin-top: 8px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            height: 56px;
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 16px rgba(49, 130, 246, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(49, 130, 246, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #CBD5E1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-primary.loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Free Badge */
+        .free-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #F0FDF4;
+            border: 1px solid #86EFAC;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-top: 16px;
+        }
+
+        .free-badge i {
+            color: #22C55E;
+            font-size: 18px;
+        }
+
+        .free-badge-text {
+            font-size: 13px;
+            color: #166534;
+            font-weight: 600;
+        }
+
+        /* Right Column - Thread Preview */
+        .right-column {
+            position: sticky;
+            top: 100px;
+        }
+
+        .thread-preview {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            border: 1px solid #E2E8F0;
+        }
+
+        .thread-preview-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #F1F5F9;
+        }
+
+        .thread-preview-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .thread-preview-title {
+            flex: 1;
+        }
+
+        .thread-preview-title h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1E293B;
+            margin-bottom: 2px;
+        }
+
+        .thread-preview-title p {
+            font-size: 13px;
+            color: #64748B;
+            font-weight: 500;
+        }
+
+        .thread-preview-image {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+        }
+
+        .thread-preview-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .thread-preview-caption {
+            text-align: center;
+            padding: 16px;
+            color: #64748B;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .thread-preview-caption strong {
+            color: #3182F6;
+            font-weight: 700;
+        }
+
+        /* Loading State */
+        .loading-container {
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid #E5E7EB;
+            border-top-color: #3182F6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        .loading-text {
+            font-size: 15px;
+            color: #6B7280;
+            font-weight: 600;
+        }
+
+        /* Consent checkbox */
+        .consult-consent-area {
+            margin-bottom: 16px;
+            padding: 14px 16px;
+            background: #F9FAFB;
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+        }
+
+        .consult-consent-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .consult-consent-label input[type="checkbox"] {
+            display: none;
+        }
+
+        .consult-consent-label .cmark {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            border: 2px solid #D1D5DB;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            margin-top: 1px;
+        }
+
+        .consult-consent-label .cmark::after {
+            content: '';
+            display: none;
+            width: 5px;
+            height: 9px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            margin-top: -2px;
+        }
+
+        .consult-consent-label input[type="checkbox"]:checked + .cmark {
+            background: #3182F6;
+            border-color: #3182F6;
+        }
+
+        .consult-consent-label input[type="checkbox"]:checked + .cmark::after {
+            display: block;
+        }
+
+        .consult-consent-text {
+            font-size: 13px;
+            color: #374151;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .consult-consent-links {
+            margin-top: 6px;
+            margin-left: 30px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .consult-consent-links a {
+            font-size: 12px;
+            color: #3182F6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .consult-consent-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 968px) {
+            .two-column-layout {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .right-column {
+                position: static;
+                order: -1;
+            }
+
+            .thread-preview {
+                display: none;
+            }
+
+            .main-container {
+                padding: 24px 16px;
+            }
+
+            .consultation-banner,
+            .service-card,
+            .process-steps {
+                padding: 24px 20px;
+                border-radius: 16px;
+            }
+
+            .consultation-banner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .consultation-banner-content h1 {
+                font-size: 20px;
+            }
+
+            .service-card h2 {
+                font-size: 18px;
+            }
+
+            .step-item {
+                gap: 12px;
+            }
+
+            .step-number {
+                width: 28px;
+                height: 28px;
+                font-size: 13px;
+            }
+        }
+
+        /* === [1] 히어로 (장식 최소, CTA 없음) === */
+        .biz-request-hero {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 32px 28px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .biz-request-hero-headline {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0F172A;
+            line-height: 1.4;
+            margin: 0 0 10px;
+            letter-spacing: -0.3px;
+        }
+        .biz-request-hero-subhead {
+            font-size: 15px;
+            color: #4E5968;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* === [2] 서비스 개요 === */
+        .biz-request-overview {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .biz-request-overview p {
+            font-size: 15px;
+            color: #4E5968;
+            line-height: 1.7;
+            margin: 0 0 14px;
+        }
+        .biz-request-overview p:last-child { margin-bottom: 0; }
+
+        /* === [3] 5단계 구조 === */
+        .biz-request-steps {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .biz-request-steps-heading {
+            font-size: 18px;
+            font-weight: 800;
+            color: #0F172A;
+            margin: 0 0 16px;
+        }
+        .biz-request-steps .step-item { padding: 14px 0; border-bottom: 1px solid #F1F5F9; }
+        .biz-request-steps .step-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .biz-request-steps .step-content h3 { font-size: 15px; font-weight: 700; color: #1E293B; margin: 0 0 6px; }
+        .biz-request-steps .step-content p { font-size: 14px; color: #4E5968; line-height: 1.6; margin: 0; }
+
+        /* === [4] 고객 준비사항 === */
+        .biz-request-prepare {
+            background: #F8FAFC;
+            border: 1px solid #E5E8EB;
+            border-radius: 16px;
+            padding: 24px 28px;
+        }
+        .biz-request-prepare-heading {
+            font-size: 16px;
+            font-weight: 800;
+            color: #0F172A;
+            margin: 0 0 10px;
+        }
+        .biz-request-prepare-intro {
+            font-size: 14px;
+            color: #4E5968;
+            line-height: 1.6;
+            margin: 0 0 12px;
+        }
+        .biz-request-prepare-list {
+            margin: 0 0 12px;
+            padding-left: 20px;
+        }
+        .biz-request-prepare-list li {
+            font-size: 14px;
+            color: #1E293B;
+            line-height: 1.9;
+        }
+        .biz-request-prepare-disclaimer {
+            font-size: 13px;
+            color: #8B95A1;
+            font-style: italic;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
-
-<!-- ============ 헤더 ============ -->
-<header class="site-header">
-    <div class="header-inner">
-        <a class="brand" href="index.html">
-            <img src="로고.png" alt="법무법인 로연" class="brand-logo">
-        </a>
-        <nav class="nav">
-            <a href="business-immigration.html">Business Immigration</a>
-        </nav>
-        <div class="header-actions">
-            <select id="language-select" class="language-select" aria-label="Language">
-                <option value="en">English</option>
-                <option value="ko">한국어</option>
-                <option value="vi">Tiếng Việt</option>
-                <option value="zh">中文</option>
-                <option value="ja">日本語</option>
-                <option value="mn">Монгол</option>
-                <option value="th">ไทย</option>
-            </select>
-            <span id="user-info"></span>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-inner">
+            <div class="header-title" data-i18n="consultation.header">Consultation Request</div>
+            <a href="javascript:history.back()" class="btn-back">
+                <i class="fas fa-times"></i>
+            </a>
         </div>
     </div>
-</header>
 
-<main class="biz-req-wrap">
-    <a href="business-immigration.html" class="biz-back">← Back to Landing</a>
-    <h1 data-i18n="biz.form.title">사업이민 사전 상담 신청</h1>
-    <p class="biz-req-intro" data-i18n="biz.form.auto_reply">상담 신청이 접수되었습니다. 담당자가 쓰레드로 회신드립니다.</p>
+    <!-- Loading State -->
+    <div class="main-container">
+        <div id="loading" class="loading-container">
+            <div class="spinner"></div>
+            <div class="loading-text" data-i18n="common.loading">Loading...</div>
+        </div>
 
-    <!-- 비로그인 시 게이트 -->
-    <div id="biz-login-gate" class="biz-login-gate" style="display:none;">
-        <p>Google 로그인이 필요합니다.</p>
-        <button type="button" class="biz-submit-btn" onclick="handleLoginClick()" style="max-width:240px;margin-top:12px;">Sign in with Google</button>
+        <!-- Main Content -->
+        <div id="main-content" class="two-column-layout" style="display: none;">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- [1] 페이지 히어로 (CTA 없음, 장식 최소) -->
+                <div class="biz-request-hero">
+                    <h1 class="biz-request-hero-headline" data-i18n="biz.request.hero.headline">한국에서 사업을 시작하고 이주하기 위한 통합 법률서비스</h1>
+                    <p class="biz-request-hero-subhead" data-i18n="biz.request.hero.subhead">한국으로의 사업 이민을 검토하는 이민자 고객을 위한 전담 상담 경로입니다.</p>
+                </div>
+
+                <!-- [2] 사업이민 서비스 개요 -->
+                <div class="biz-request-overview">
+                    <p data-i18n="biz.request.overview.para1">저희 법무법인 로연 출입국이민지원센터는 해외에 거주하시는 외국인이 한국에서 사업을 시작하고 정착하시기까지 필요한 법률서비스를 통합 제공합니다.</p>
+                    <p data-i18n="biz.request.overview.para2">프로젝트 탐색부터 규제 자문, 비자 취득, 한국 정착, 동반가족 지원까지 모든 단계가 하나의 법률자문 계약 안에서 진행됩니다.</p>
+                    <p data-i18n="biz.request.overview.para3">사전 상담은 무상이며, 본 페이지에서 신청하실 수 있습니다.</p>
+                </div>
+
+                <!-- Process Steps -->
+                <!-- [3] 사업이민 프로젝트 5단계 구조 -->
+                <div class="biz-request-steps">
+                    <h2 class="biz-request-steps-heading" data-i18n="biz.request.steps.heading">프로젝트 5단계</h2>
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3 data-i18n="biz.step1.title">사전 상담</h3>
+                            <p data-i18n="biz.step1.body">쓰레드를 통해 귀하의 국적, 자금 조달 방식, 이주 시점, 가족 구성을 확인하고 한국 사업이민 경로 개요를 안내합니다.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3 data-i18n="biz.step2.title">본 상담</h3>
+                            <p data-i18n="biz.step2.body">이민 경로 상세 자문, 사업 개시 절차 및 예산 배정 구조화, 주요 리스크 안내, 비자 발급 등 출입국 행정 안내를 제공합니다.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3 data-i18n="biz.step3.title">착수</h3>
+                            <p data-i18n="biz.step3.body">프로젝트 설계, 오퍼레이션 설계, 실사 방문 코디네이션, 최종 점검 회의를 수행합니다.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3 data-i18n="biz.step4.title">정착</h3>
+                            <p data-i18n="biz.step4.body">계약 체결 지원, 외국인 투자 절차, 행정 등록 감독, 비자 취득, 동반 가족 비자 발급.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h3 data-i18n="biz.step5.title">사후관리</h3>
+                            <p data-i18n="biz.step5.body">주거 임대차 검토, 가맹본부-점주 분쟁 조정, 근로계약 자문, 체류기간 연장, 영주권 전환 자문을 별도 계약으로 제공합니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- [4] 고객이 준비해야 할 것 -->
+                <div class="biz-request-prepare">
+                    <h2 class="biz-request-prepare-heading" data-i18n="biz.request.prepare.heading">고객이 준비해야 할 것</h2>
+                    <p class="biz-request-prepare-intro" data-i18n="biz.request.prepare.intro">신청 전에 다음 사항을 정리해 두시면 사전 상담이 원활하게 진행됩니다.</p>
+                    <ul class="biz-request-prepare-list">
+                        <li data-i18n="biz.request.prepare.item1">한국 이주 검토 시점 (단기 / 중기 / 미정)</li>
+                        <li data-i18n="biz.request.prepare.item2">가족 동반 계획 (배우자·자녀·부모)</li>
+                        <li data-i18n="biz.request.prepare.item3">본국 사업 또는 근로 경력</li>
+                        <li data-i18n="biz.request.prepare.item4">한국 거주·방문 경험</li>
+                        <li data-i18n="biz.request.prepare.item5">한국어 사용 수준</li>
+                    </ul>
+                    <p class="biz-request-prepare-disclaimer" data-i18n="biz.request.prepare.disclaimer">자금 규모 및 투자 구조에 관한 상세는 본 상담 단계에서 확인합니다.</p>
+                </div>
+
+                <!-- 사업이민 사전 상담 폼 (섹션 4-2) -->
+                <form id="biz-request-form" class="biz-req-form" style="background:#fff;border-radius:20px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+
+                    <!-- 1. 국적 -->
+                    <div style="margin-bottom:20px;">
+                        <label for="biz-nationality" style="display:block;font-size:14px;font-weight:700;color:#1E293B;margin-bottom:8px;">
+                            <span data-i18n="biz.form.nationality">국적</span> <span style="color:#F03E3E;">*</span>
+                        </label>
+                        <input type="text" id="biz-nationality" name="nationality" required placeholder="e.g., United States / China / Vietnam" style="width:100%;padding:12px 14px;border:1px solid #E5E8EB;border-radius:8px;font-size:15px;font-family:inherit;box-sizing:border-box;">
+                    </div>
+
+                    <!-- 2. 현재 거주국 -->
+                    <div style="margin-bottom:20px;">
+                        <label for="biz-residence" style="display:block;font-size:14px;font-weight:700;color:#1E293B;margin-bottom:8px;">
+                            <span data-i18n="biz.form.residence_country">현재 거주국</span> <span style="color:#F03E3E;">*</span>
+                        </label>
+                        <input type="text" id="biz-residence" name="residence_country" required placeholder="e.g., United States / Vietnam" style="width:100%;padding:12px 14px;border:1px solid #E5E8EB;border-radius:8px;font-size:15px;font-family:inherit;box-sizing:border-box;">
+                    </div>
+
+                    <!-- 3. 관심 비자 유형 -->
+                    <div style="margin-bottom:20px;">
+                        <label style="display:block;font-size:14px;font-weight:700;color:#1E293B;margin-bottom:8px;">
+                            <span data-i18n="biz.form.visa_type">관심 비자 유형</span> <span style="color:#F03E3E;">*</span>
+                        </label>
+                        <div style="display:flex;flex-wrap:wrap;gap:14px;">
+                            <label style="display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:14px;color:#4E5968;cursor:pointer;"><input type="radio" name="visa_type_interest" value="D-9-4" required> D-9-4</label>
+                            <label style="display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:14px;color:#4E5968;cursor:pointer;"><input type="radio" name="visa_type_interest" value="D-9-5"> D-9-5</label>
+                            <label style="display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:14px;color:#4E5968;cursor:pointer;"><input type="radio" name="visa_type_interest" value="undecided"> 잘 모름</label>
+                        </div>
+                    </div>
+
+                    <!-- 4. 가족 구성 -->
+                    <div style="margin-bottom:20px;">
+                        <label style="display:block;font-size:14px;font-weight:700;color:#1E293B;margin-bottom:8px;" data-i18n="biz.form.family">가족 구성 — 본인 외</label>
+                        <div style="display:flex;flex-wrap:wrap;gap:14px;">
+                            <label style="display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:14px;color:#4E5968;cursor:pointer;"><input type="checkbox" name="family_spouse"> 배우자</label>
+                            <label style="display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:14px;color:#4E5968;cursor:pointer;"><input type="checkbox" name="family_children" id="family-children-check"> 자녀</label>
+                            <label style="display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:14px;color:#4E5968;cursor:pointer;"><input type="checkbox" name="family_parents"> 부모</label>
+                        </div>
+                    </div>
+
+                    <!-- 5. 자녀 수 (조건부 표시) -->
+                    <div id="children-count-field" style="margin-bottom:20px;display:none;">
+                        <label for="biz-children-count" style="display:block;font-size:14px;font-weight:700;color:#1E293B;margin-bottom:8px;" data-i18n="biz.form.children_count">자녀 수</label>
+                        <input type="number" id="biz-children-count" name="children_count" min="0" max="10" style="width:100%;padding:12px 14px;border:1px solid #E5E8EB;border-radius:8px;font-size:15px;font-family:inherit;box-sizing:border-box;">
+                    </div>
+
+                    <!-- 6. 예상 이주 시점 -->
+                    <div style="margin-bottom:20px;">
+                        <label for="biz-timeline" style="display:block;font-size:14px;font-weight:700;color:#1E293B;margin-bottom:8px;">
+                            <span data-i18n="biz.form.timeline">예상 이주 시점</span> <span style="color:#F03E3E;">*</span>
+                        </label>
+                        <select id="biz-timeline" name="timeline" required style="width:100%;padding:12px 14px;border:1px solid #E5E8EB;border-radius:8px;font-size:15px;font-family:inherit;background:#fff;box-sizing:border-box;">
+                            <option value="">-- Select --</option>
+                            <option value="3months">3개월 내</option>
+                            <option value="6months">6개월 내</option>
+                            <option value="1year">1년 내</option>
+                            <option value="over1year">1년 이상</option>
+                            <option value="undecided">미정</option>
+                        </select>
+                    </div>
+
+                    <!-- 7. 자유 메시지 -->
+                    <div style="margin-bottom:20px;">
+                        <label for="biz-message" style="display:block;font-size:14px;font-weight:700;color:#1E293B;margin-bottom:8px;" data-i18n="biz.form.message">자유 메시지</label>
+                        <textarea id="biz-message" name="message" placeholder="모국어로 입력하셔도 괜찮습니다." style="width:100%;padding:12px 14px;border:1px solid #E5E8EB;border-radius:8px;font-size:15px;font-family:inherit;min-height:100px;resize:vertical;box-sizing:border-box;"></textarea>
+                    </div>
+
+                    <!-- 8. 이메일 -->
+                    <div style="margin-bottom:20px;">
+                        <label for="biz-email" style="display:block;font-size:14px;font-weight:700;color:#1E293B;margin-bottom:8px;">
+                            <span data-i18n="biz.form.email">이메일</span> <span style="color:#F03E3E;">*</span>
+                        </label>
+                        <input type="email" id="biz-email" name="email" required style="width:100%;padding:12px 14px;border:1px solid #E5E8EB;border-radius:8px;font-size:15px;font-family:inherit;box-sizing:border-box;">
+                    </div>
+
+                    <!-- 9. 연락 가능 수단 -->
+                    <div style="margin-bottom:20px;">
+                        <label style="display:block;font-size:14px;font-weight:700;color:#1E293B;margin-bottom:8px;">
+                            <span data-i18n="biz.form.contact_method">연락 가능 수단</span> <span style="color:#F03E3E;">*</span>
+                        </label>
+                        <div style="display:flex;flex-wrap:wrap;gap:14px;">
+                            <label style="display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:14px;color:#4E5968;cursor:pointer;"><input type="radio" name="contact_method" value="email" required> 이메일</label>
+                            <label style="display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:14px;color:#4E5968;cursor:pointer;"><input type="radio" name="contact_method" value="thread"> 쓰레드</label>
+                            <label style="display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:14px;color:#4E5968;cursor:pointer;"><input type="radio" name="contact_method" value="phone"> 전화</label>
+                        </div>
+                    </div>
+
+                    <!-- Consent (법적 필수 — 약관 동의 유지) -->
+                    <div class="consult-consent-area">
+                        <label class="consult-consent-label">
+                            <input type="checkbox" id="consultConsentCheck" required>
+                            <span class="cmark"></span>
+                            <span class="consult-consent-text">I agree to the Terms of Service and Privacy Policy. I consent to the collection and use of personal information for consultation purposes.<br>
+                            서비스 이용약관 및 개인정보 처리방침에 동의합니다. 상담 목적의 개인정보 수집·이용에 동의합니다.</span>
+                        </label>
+                        <div class="consult-consent-links">
+                            <a href="terms-of-service.html" target="_blank"><i class="fas fa-external-link-alt"></i> Terms of Service / 이용약관</a>
+                            <a href="privacy-policy.html" target="_blank"><i class="fas fa-external-link-alt"></i> Privacy Policy / 개인정보 처리방침</a>
+                        </div>
+                    </div>
+
+                    <!-- CTA Button (form submit 방식으로 전환; business-immigration.js가 바인딩) -->
+                    <div class="cta-section">
+                        <button type="submit" class="btn-primary" id="consultBtn">
+                            <i class="fas fa-paper-plane"></i>
+                            <span data-i18n="biz.form.submit">상담 신청하기</span>
+                        </button>
+
+                        <div class="free-badge" style="background: #ECFDF5; border: 1px solid #6EE7B7; border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-check-circle" style="color: #059669;"></i>
+                            <span class="free-badge-text" style="color: #065F46;">사전 상담은 무상이며, 본 단계에서는 자금 규모·비용 관련 질문을 하지 않습니다.</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Right Column - Thread Preview -->
+            <div class="right-column">
+                <div class="thread-preview">
+                    <div class="thread-preview-header">
+                        <div class="thread-preview-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="thread-preview-title">
+                            <h3 data-i18n="serviceApply.dedicatedThread">Your Dedicated Thread</h3>
+                            <p data-i18n="serviceApply.realtimeComm">Real-time communication with our team</p>
+                        </div>
+                    </div>
+
+                    <div class="thread-preview-image">
+                        <img src="images/thread-preview.png" alt="Thread Preview" style="width: 100%; height: auto; display: block;">
+                    </div>
+
+                    <div class="thread-preview-caption" data-i18n="serviceApply.trackProgress">Track your progress in real-time through your dedicated thread</div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- 폼 -->
-    <form id="biz-request-form" class="biz-req-form" style="display:none;">
-        <!-- 국적 -->
-        <div class="biz-field">
-            <label for="biz-nationality">
-                <span data-i18n="biz.form.nationality">국적</span><span class="biz-required">*</span>
-            </label>
-            <input type="text" id="biz-nationality" name="nationality" required placeholder="e.g., United States / China / Vietnam">
-        </div>
+    <script>
+        // Service information (linked from blog posts)
+        const serviceInfo = {
+            'd10-change': { name: 'D-10 Job Seeker Visa Change', desc: 'Visa change for job seeking after graduation' },
+            'd10-1-change': { name: 'D-10-1 General Job Seeker Visa', desc: 'General job seeking visa change' },
+            'd10-2-change': { name: 'D-10-2 Tech Startup Job Seeker', desc: 'Startup preparation visa' },
+            'd10-3-change': { name: 'D-10-3 High-tech Intern Visa', desc: 'Advanced technology internship' },
+            'd10-t-change': { name: 'D-10-T Top Talent Job Seeker', desc: 'Elite university graduate visa' },
+            'd10-extension': { name: 'D-10 Visa Extension', desc: 'Job seeker visa renewal' },
+            'visa-prediagnosis': { name: 'Visa Pre-diagnosis', desc: 'Visa change, overstay risk, immigration law consultation' },
+            'e7-change': { name: 'E-7 Professional Visa Change', desc: 'Professional employment visa' },
+            'f2-7-change': { name: 'F-2-7 Points-based Residence', desc: 'Outstanding talent residence visa' },
+            'default': { name: 'Free Pre-Consultation', desc: 'Free case review - get procedure guidance and cost estimate before payment' }
+        };
 
-        <!-- 현재 거주국 -->
-        <div class="biz-field">
-            <label for="biz-residence">
-                <span data-i18n="biz.form.residence_country">현재 거주국</span><span class="biz-required">*</span>
-            </label>
-            <input type="text" id="biz-residence" name="residence_country" required placeholder="e.g., United States / Vietnam">
-        </div>
+        let selectedService = null;
 
-        <!-- 관심 비자 유형 -->
-        <div class="biz-field">
-            <label>
-                <span data-i18n="biz.form.visa_type">관심 비자 유형</span><span class="biz-required">*</span>
-            </label>
-            <div class="biz-radio-group">
-                <label><input type="radio" name="visa_type_interest" value="D-9-4" required> D-9-4</label>
-                <label><input type="radio" name="visa_type_interest" value="D-9-5"> D-9-5</label>
-                <label><input type="radio" name="visa_type_interest" value="undecided"> 잘 모름</label>
-            </div>
-        </div>
-
-        <!-- 가족 구성 -->
-        <div class="biz-field">
-            <label data-i18n="biz.form.family">가족 구성 — 본인 외</label>
-            <div class="biz-check-group">
-                <label><input type="checkbox" name="family_spouse"> 배우자</label>
-                <label><input type="checkbox" name="family_children" id="family-children-check"> 자녀</label>
-                <label><input type="checkbox" name="family_parents"> 부모</label>
-            </div>
-        </div>
-
-        <!-- 자녀 수 (조건부) -->
-        <div class="biz-field" id="children-count-field" style="display:none;">
-            <label for="biz-children-count" data-i18n="biz.form.children_count">자녀 수</label>
-            <input type="number" id="biz-children-count" name="children_count" min="0" max="10">
-        </div>
-
-        <!-- 예상 이주 시점 -->
-        <div class="biz-field">
-            <label for="biz-timeline">
-                <span data-i18n="biz.form.timeline">예상 이주 시점</span><span class="biz-required">*</span>
-            </label>
-            <select id="biz-timeline" name="timeline" required>
-                <option value="">-- Select --</option>
-                <option value="3months">3개월 내</option>
-                <option value="6months">6개월 내</option>
-                <option value="1year">1년 내</option>
-                <option value="over1year">1년 이상</option>
-                <option value="undecided">미정</option>
-            </select>
-        </div>
-
-        <!-- 자유 메시지 -->
-        <div class="biz-field">
-            <label for="biz-message" data-i18n="biz.form.message">자유 메시지</label>
-            <textarea id="biz-message" name="message" placeholder="모국어로 입력하셔도 괜찮습니다."></textarea>
-        </div>
-
-        <!-- 이메일 -->
-        <div class="biz-field">
-            <label for="biz-email">
-                <span data-i18n="biz.form.email">이메일</span><span class="biz-required">*</span>
-            </label>
-            <input type="email" id="biz-email" name="email" required>
-        </div>
-
-        <!-- 연락 가능 수단 -->
-        <div class="biz-field">
-            <label>
-                <span data-i18n="biz.form.contact_method">연락 가능 수단</span><span class="biz-required">*</span>
-            </label>
-            <div class="biz-radio-group">
-                <label><input type="radio" name="contact_method" value="email" required> 이메일</label>
-                <label><input type="radio" name="contact_method" value="thread"> 쓰레드</label>
-                <label><input type="radio" name="contact_method" value="phone"> 전화</label>
-            </div>
-        </div>
-
-        <button type="submit" class="biz-submit-btn" data-i18n="biz.form.submit">상담 신청하기</button>
-
-        <p class="biz-note">
-            ※ 사전 상담은 무상이며, 본 단계에서는 자금 규모나 비용 관련 질문을 하지 않습니다.
-            상세한 자문은 본 상담 단계에서 진행됩니다.
-        </p>
-    </form>
-</main>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/translations.js"></script>
-<script src="js/i18n.js"></script>
-<script src="js/ui-components.js"></script>
-<script src="js/supabase-client.js"></script>
-<script src="js/business-immigration.js"></script>
-
-<script>
-async function handleLoginClick() {
-    if (window.signInWithGoogle) {
-        await signInWithGoogle();
-    } else if (window.supabaseClient) {
-        await supabaseClient.auth.signInWithOAuth({ provider: 'google' });
-    }
-}
-
-document.addEventListener('DOMContentLoaded', async function () {
-    // 로그인 여부에 따라 게이트 또는 폼 노출
-    if (window.supabaseClient) {
-        var session = await supabaseClient.auth.getSession();
-        var user = session?.data?.session?.user;
-        if (user) {
-            document.getElementById('biz-login-gate').style.display = 'none';
-            document.getElementById('biz-request-form').style.display = '';
-            // 이메일 자동 채우기
-            var emailInput = document.getElementById('biz-email');
-            if (emailInput && !emailInput.value) emailInput.value = user.email || '';
-            var userInfo = document.getElementById('user-info');
-            if (userInfo) userInfo.textContent = user.email;
-        } else {
-            document.getElementById('biz-login-gate').style.display = '';
-            document.getElementById('biz-request-form').style.display = 'none';
+        // i18n helper
+        function t(key, fallback) {
+            if (typeof i18n !== 'undefined' && i18n.translate) {
+                const result = i18n.translate(key);
+                return result !== key ? result : (fallback || key);
+            }
+            return fallback || key;
         }
-    }
 
-    // 자녀 체크박스 토글 → 자녀 수 필드 표시
-    var childrenCheck = document.getElementById('family-children-check');
-    if (childrenCheck) {
-        childrenCheck.addEventListener('change', function () {
-            var field = document.getElementById('children-count-field');
-            field.style.display = childrenCheck.checked ? '' : 'none';
+        // Page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const serviceId = urlParams.get('service');
+
+            if (!serviceId) {
+                selectedService = serviceInfo['default'];
+            } else {
+                selectedService = serviceInfo[serviceId] || serviceInfo['default'];
+            }
+
+            selectedService.id = serviceId || 'general-consultation';
+
+            // Show UI (service-card 제거됨 — 해당 요소 업데이트 생략)
+            setTimeout(() => {
+                var loadingEl = document.getElementById('loading');
+                if (loadingEl) loadingEl.style.display = 'none';
+                var mainEl = document.getElementById('main-content');
+                if (mainEl) mainEl.style.display = 'grid';
+            }, 300);
+
+            // Check for pending consultation after login
+            setTimeout(async () => {
+                await checkPendingConsultation();
+            }, 500);
         });
-    }
-});
-</script>
 
+        async function applyForConsultation() {
+            // Validate consent
+            const consentCheck = document.getElementById('consultConsentCheck');
+            if (!consentCheck || !consentCheck.checked) {
+                alert(t('consultation.consentRequired', 'Please agree to the Terms of Service and Privacy Policy.'));
+                return;
+            }
+
+            const btn = document.getElementById('consultBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner"></i> ' + t('common.processing', 'Processing...');
+
+            try {
+                // Check current login status
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    // Save pending info and start Google login
+                    localStorage.setItem('pendingConsultation', JSON.stringify({
+                        serviceId: selectedService.id,
+                        serviceName: selectedService.name,
+                        timestamp: Date.now()
+                    }));
+
+                    // console.log('📋 Saved consultation info, starting Google login');
+
+                    const result = await signInWithGoogle();
+                    if (!result.success) {
+                        throw new Error('Login failed');
+                    }
+                    return;
+                }
+
+                // Already logged in, create thread directly
+                await createConsultationThread();
+            } catch (error) {
+                console.error('Consultation request error:', error);
+                alert(t('common.errorRetry', 'An error occurred. Please try again.'));
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> ' + t('consultation.requestBtn', 'Request Consultation');
+            }
+        }
+
+        // Thread creation function
+        async function createConsultationThread() {
+            const btn = document.getElementById('consultBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner"></i> ' + t('consultation.creatingThread', 'Creating thread...');
+
+            try {
+                // Ensure profile exists before creating thread (foreign key requirement)
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    throw new Error('Login required');
+                }
+
+                const profileResult = await getUserProfile(session.user.id);
+                if (!profileResult.success || !profileResult.data) {
+                    console.log('Profile not found, creating minimal profile...');
+                    const profileCreateResult = await createOrUpdateProfile(session.user.id, {
+                        name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || '',
+                        email: session.user.email || ''
+                    });
+                    if (!profileCreateResult.success) {
+                        console.error('Profile creation failed:', profileCreateResult.error);
+                        throw new Error('Profile creation failed: ' + profileCreateResult.error);
+                    }
+                    console.log('Profile created successfully');
+                }
+
+                // Create consultation thread in Supabase
+                const threadResult = await createThread({
+                    service_name: selectedService.name + ' (Consultation)',
+                    status: 'document',
+                    amount: 0,
+                    order_id: 'CONSULT-' + Date.now(),
+                    is_consulting: true,
+                    organization: 'general'
+                });
+
+                if (!threadResult.success) {
+                    console.error('Thread creation failed:', threadResult.error);
+                    throw new Error('Thread creation failed: ' + threadResult.error);
+                }
+
+                // Create welcome message
+                await createWelcomeMessage(threadResult.data.id, selectedService.name);
+
+                // Clear pending info
+                localStorage.removeItem('pendingConsultation');
+
+                alert(t('consultation.submitted', 'Consultation request submitted!\n\nOur specialist will contact you shortly through your dedicated thread.'));
+                window.location.href = `thread-general-v2.html?id=${threadResult.data.id}`;
+            } catch (error) {
+                console.error('Thread creation error:', error);
+                alert(t('common.errorRetry', 'An error occurred. Please try again.'));
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> ' + t('consultation.requestBtn', 'Request Consultation');
+            }
+        }
+
+        // Check for pending consultation after login
+        async function checkPendingConsultation() {
+            const pending = localStorage.getItem('pendingConsultation');
+            if (!pending) return;
+
+            try {
+                const pendingData = JSON.parse(pending);
+
+                // Only process requests within 10 minutes
+                if (Date.now() - pendingData.timestamp > 10 * 60 * 1000) {
+                    // console.log('⏰ Pending consultation expired');
+                    localStorage.removeItem('pendingConsultation');
+                    return;
+                }
+
+                // Check login status
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    return;
+                }
+
+                // console.log('✅ Login complete - processing pending consultation');
+
+                // Restore selectedService if not set
+                if (!selectedService || selectedService.id !== pendingData.serviceId) {
+                    selectedService = {
+                        id: pendingData.serviceId,
+                        name: pendingData.serviceName
+                    };
+                }
+
+                // Auto-create thread
+                await createConsultationThread();
+            } catch (error) {
+                console.error('Pending consultation error:', error);
+                localStorage.removeItem('pendingConsultation');
+            }
+        }
+    </script>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js?v=20250119"></script>
+
+    <!-- i18n 다국어 지원 -->
+    <script src="js/translations.js?v=20260326"></script>
+    <script src="js/i18n.js?v=20260326"></script>
+    <script src="js/business-immigration.js"></script>
+    <script>
+        // 자녀 체크박스 토글 → 자녀 수 필드 표시
+        document.addEventListener('DOMContentLoaded', function () {
+            var check = document.getElementById('family-children-check');
+            if (check) {
+                check.addEventListener('change', function () {
+                    var field = document.getElementById('children-count-field');
+                    if (field) field.style.display = check.checked ? '' : 'none';
+                });
+            }
+            // 이메일 자동 채우기 (로그인된 경우)
+            if (typeof supabaseClient !== 'undefined') {
+                supabaseClient.auth.getSession().then(function (session) {
+                    var user = session?.data?.session?.user;
+                    var emailInput = document.getElementById('biz-email');
+                    if (user && emailInput && !emailInput.value) {
+                        emailInput.value = user.email || '';
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

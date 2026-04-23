@@ -43,8 +43,8 @@ const MASTER_KO = {
     'biz.step2.body': '이민 경로 상세 자문, 사업 개시 절차 및 예산 배정 구조화, 주요 리스크 안내, 비자 발급 등 출입국 행정 안내를 제공합니다.',
     'biz.step3.title': '착수',
     'biz.step3.body': '프로젝트 설계, 오퍼레이션 설계, 실사 방문 코디네이션, 최종 점검 회의를 수행합니다.',
-    'biz.step4.title': '잔금',
-    'biz.step4.body': '계약 체결 지원, 외국인 투자 절차, 행정 등록 감독, 비자 취득, 동반가족 비자를 수행합니다.',
+    'biz.step4.title': '정착',
+    'biz.step4.body': '계약 체결 지원, 외국인 투자 절차, 행정 등록 감독, 비자 취득, 동반 가족 비자 발급.',
     'biz.step5.title': '사후관리',
     'biz.step5.body': '주거 임대차 검토, 가맹본부-점주 분쟁 조정, 근로계약 자문, 체류기간 연장, 영주권 전환 자문을 별도 계약으로 제공합니다.',
     'biz.news.heading': '뉴스 & 인사이트',
@@ -53,7 +53,7 @@ const MASTER_KO = {
     'biz.dashboard.progress.stage1': '사전 상담',
     'biz.dashboard.progress.stage2': '본 상담',
     'biz.dashboard.progress.stage3': '착수',
-    'biz.dashboard.progress.stage4': '잔금',
+    'biz.dashboard.progress.stage4': '정착',
     'biz.dashboard.progress.stage5': '사후관리',
     'biz.form.title': '사업이민 사전 상담 신청',
     'biz.form.nationality': '국적',
@@ -97,7 +97,26 @@ const MASTER_KO = {
     'biz.form.korean_language_proficiency': '한국어 수준',
     'biz.form.criminal_record': '범죄 경력 여부',
     'common.retry': '다시 시도',
-    'admin.nav.system_errors': '시스템 오류'
+    'admin.nav.system_errors': '시스템 오류',
+    // 사업이민 신청 페이지 (Q3 강화 기획)
+    'biz.request.hero.headline': '한국에서 사업을 시작하고 이주하기 위한 통합 법률서비스',
+    'biz.request.hero.subhead': '한국으로의 사업 이민을 검토하는 이민자 고객을 위한 전담 상담 경로입니다.',
+    'biz.request.overview.para1': '저희 법무법인 로연 출입국이민지원센터는 해외에 거주하시는 외국인이 한국에서 사업을 시작하고 정착하시기까지 필요한 법률서비스를 통합 제공합니다.',
+    'biz.request.overview.para2': '프로젝트 탐색부터 규제 자문, 비자 취득, 한국 정착, 동반가족 지원까지 모든 단계가 하나의 법률자문 계약 안에서 진행됩니다.',
+    'biz.request.overview.para3': '사전 상담은 무상이며, 본 페이지에서 신청하실 수 있습니다.',
+    'biz.request.steps.heading': '프로젝트 5단계',
+    'biz.request.prepare.heading': '고객이 준비해야 할 것',
+    'biz.request.prepare.intro': '신청 전에 다음 사항을 정리해 두시면 사전 상담이 원활하게 진행됩니다.',
+    'biz.request.prepare.item1': '한국 이주 검토 시점 (단기 / 중기 / 미정)',
+    'biz.request.prepare.item2': '가족 동반 계획 (배우자·자녀·부모)',
+    'biz.request.prepare.item3': '본국 사업 또는 근로 경력',
+    'biz.request.prepare.item4': '한국 거주·방문 경험',
+    'biz.request.prepare.item5': '한국어 사용 수준',
+    'biz.request.prepare.disclaimer': '자금 규모 및 투자 구조에 관한 상세는 본 상담 단계에서 확인합니다.',
+    // 풀폭 긴급 법률 구제 배너 (placeholder 카피, PM 교체 예정)
+    'home.urgent.headline': '긴급 법률 구제가 필요하십니까?',
+    'home.urgent.subhead': '출국 명령·체류 거부·형사 사건 등 시간 민감 사안을 전담합니다.',
+    'home.urgent.cta': '긴급 상담 요청'
 };
 
 // ----- 영어 번역 (en) -----
@@ -112,8 +131,8 @@ const MASTER_EN = {
     'biz.step2.body': 'We provide detailed advice on immigration paths, structure the business launch procedure and budget allocation, outline key risks, and guide immigration administration including visa issuance.',
     'biz.step3.title': 'Stage 1 Engagement',
     'biz.step3.body': 'We conduct project design, operations design, site visit coordination, and the final review meeting.',
-    'biz.step4.title': 'Stage 2 Engagement',
-    'biz.step4.body': 'We support contract execution, foreign investment procedures, administrative registration oversight, visa acquisition, and accompanying family visas.',
+    'biz.step4.title': 'Settlement',
+    'biz.step4.body': 'Contract execution support, foreign investment procedures, administrative registration oversight, visa acquisition, and accompanying family visa issuance.',
     'biz.step5.title': 'Aftercare',
     'biz.step5.body': 'Residential lease review, franchise dispute mediation, employment contract advice, stay extension, and permanent residency transition advice are provided under separate agreements.',
     'biz.news.heading': 'News & Insights',
@@ -122,7 +141,7 @@ const MASTER_EN = {
     'biz.dashboard.progress.stage1': 'Pre-Consultation',
     'biz.dashboard.progress.stage2': 'Detailed Consultation',
     'biz.dashboard.progress.stage3': 'Stage 1 Engagement',
-    'biz.dashboard.progress.stage4': 'Stage 2 Engagement',
+    'biz.dashboard.progress.stage4': 'Settlement',
     'biz.dashboard.progress.stage5': 'Aftercare',
     'biz.form.title': 'Business Immigration Pre-Consultation Request',
     'biz.form.nationality': 'Nationality',
@@ -166,7 +185,24 @@ const MASTER_EN = {
     'biz.form.korean_language_proficiency': 'Korean Language Proficiency',
     'biz.form.criminal_record': 'Criminal Record',
     'common.retry': 'Retry',
-    'admin.nav.system_errors': 'System Errors'
+    'admin.nav.system_errors': 'System Errors',
+    'biz.request.hero.headline': 'Integrated legal services for launching a business and emigrating to Korea',
+    'biz.request.hero.subhead': 'A dedicated consultation path for immigration clients considering business relocation to Korea.',
+    'biz.request.overview.para1': 'Law Firm Lawyeon Immigration Support Center provides integrated legal services for foreigners residing abroad who wish to start a business and settle in Korea.',
+    'biz.request.overview.para2': 'Project exploration, regulatory advice, visa acquisition, settlement in Korea, and accompanying family support are all handled within a single legal retainer.',
+    'biz.request.overview.para3': 'The pre-consultation is free of charge and can be requested on this page.',
+    'biz.request.steps.heading': 'Five-Stage Project Structure',
+    'biz.request.prepare.heading': 'What to Prepare',
+    'biz.request.prepare.intro': 'Organizing the following points before submitting will help the pre-consultation proceed smoothly.',
+    'biz.request.prepare.item1': 'Target relocation timeline (short-term / mid-term / undecided)',
+    'biz.request.prepare.item2': 'Accompanying family plan (spouse / children / parents)',
+    'biz.request.prepare.item3': 'Business or employment history in your home country',
+    'biz.request.prepare.item4': 'Previous residence or visit history in Korea',
+    'biz.request.prepare.item5': 'Korean language proficiency',
+    'biz.request.prepare.disclaimer': 'Details on funding scale and investment structure will be reviewed in the detailed consultation stage.',
+    'home.urgent.headline': 'Facing an urgent legal matter?',
+    'home.urgent.subhead': 'We handle time-sensitive immigration and criminal cases such as deportation orders, visa denials, and related proceedings.',
+    'home.urgent.cta': 'Request Urgent Consultation'
 };
 
 // 단일 문자열 이스케이프(작은따옴표·역슬래시)
