@@ -65,8 +65,9 @@ function validateHTMLFile(filePath) {
     const content = fs.readFileSync(filePath, 'utf-8');
     filesChecked++;
 
-    // 인라인 <script> 블록 추출 (src 속성 없는 것, application/ld+json 제외)
-    const scriptRegex = /<script(?![^>]*\bsrc\b)(?![^>]*application\/ld\+json)[^>]*>([\s\S]*?)<\/script>/gi;
+    // 인라인 <script> 블록 추출
+    // 제외 대상: src 속성 있음, application/ld+json (JSON-LD), text/babel (JSX — 런타임 트랜스파일)
+    const scriptRegex = /<script(?![^>]*\bsrc\b)(?![^>]*application\/ld\+json)(?![^>]*text\/babel)[^>]*>([\s\S]*?)<\/script>/gi;
     let match;
     let scriptIndex = 0;
 
