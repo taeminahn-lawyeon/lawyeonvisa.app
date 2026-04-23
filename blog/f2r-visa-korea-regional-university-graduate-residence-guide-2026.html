@@ -305,6 +305,28 @@
             color: #333d4b;
         }
 
+        /* 드래그/복사 억제 — 본문 영역 한정, CTA/폼은 제외 */
+        .article,
+        .article * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .article .header-cta-btn,
+        .article .share-btn,
+        .article .service-cta-btn,
+        .article .mid-cta-link,
+        .article .block-link-button,
+        .article .back-to-list,
+        .article input,
+        .article textarea {
+            -webkit-user-select: auto;
+            -moz-user-select: auto;
+            -ms-user-select: auto;
+            user-select: auto;
+        }
+
         /* 블록 스타일 */
         .article-content h2 {
             font-size: 24px;
@@ -1278,6 +1300,19 @@
 
             document.querySelectorAll('[id^="section-"]').forEach(section => {
                 observer.observe(section);
+            });
+        })();
+
+        // 본문 드래그·복사·우클릭 억제 (CTA/링크 예외)
+        (function() {
+            var root = document.querySelector('.article');
+            if (!root) return;
+            ['contextmenu', 'copy', 'cut', 'dragstart', 'selectstart'].forEach(function(ev) {
+                root.addEventListener(ev, function(e) {
+                    var t = e.target;
+                    if (t.closest && t.closest('button, a, input, textarea, .header-cta-btn, .share-btn')) return;
+                    e.preventDefault();
+                }, { passive: false });
             });
         })();
     </script>

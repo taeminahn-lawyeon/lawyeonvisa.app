@@ -85,6 +85,8 @@ function navyV4Css() {
 body{font-family:"Noto Sans KR",-apple-system,sans-serif;background:#ededea;color:#0a0a0a;}
 .designC{--c-bg:#ededea;--c-paper:#f5f5f2;--c-ink:#0a0a0a;--c-ink-2:#2b2b2b;--c-ink-3:#6b6b6b;--c-rule-2:#c9c9c5;--c-accent:#0f2552;--c-accent-soft:#e6eaf2;--c-yellow:#f5c518;font-family:"Noto Sans KR",-apple-system,sans-serif;background:var(--c-bg);color:var(--c-ink);font-size:15px;line-height:1.7;word-break:keep-all;overflow-wrap:break-word;}
 .designC *,.designC *::before,.designC *::after{word-break:keep-all;overflow-wrap:break-word;}
+.designC,.designC *{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
+.designC .C-topbar-cta,.designC .C-rail-cta,.designC .C-midcta-btn,.designC input,.designC textarea{-webkit-user-select:auto;-moz-user-select:auto;-ms-user-select:auto;user-select:auto;}
 .designC .C-mono{font-family:"IBM Plex Mono","Courier New",monospace;}
 .designC a{color:inherit;text-decoration:none;}
 .designC .C-topbar{display:flex;justify-content:space-between;align-items:center;padding:10px max(24px,calc(50vw - 660px));background:var(--c-ink);color:#fff;font-family:"IBM Plex Mono",monospace;font-size:12px;position:sticky;top:0;z-index:10;border-bottom:3px solid var(--c-accent);}

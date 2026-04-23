@@ -303,6 +303,28 @@
             color: #333d4b;
         }
 
+        /* 드래그/복사 억제 — 본문 영역 한정, CTA/폼은 제외 */
+        .article,
+        .article * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .article .header-cta-btn,
+        .article .share-btn,
+        .article .service-cta-btn,
+        .article .mid-cta-link,
+        .article .block-link-button,
+        .article .back-to-list,
+        .article input,
+        .article textarea {
+            -webkit-user-select: auto;
+            -moz-user-select: auto;
+            -ms-user-select: auto;
+            user-select: auto;
+        }
+
         /* 블록 스타일 */
         .article-content h2 {
             font-size: 24px;
@@ -1270,6 +1292,28 @@
 
         // 초기 로드
         loadPost();
+    </script>
+    <script>
+        // 본문 드래그·복사·우클릭 억제 (기존 article 요소에 DOM 붙자마자 리스너 연결)
+        (function() {
+            function bind() {
+                var root = document.querySelector('.article');
+                if (!root) return setTimeout(bind, 200);
+                ['contextmenu', 'copy', 'cut', 'dragstart', 'selectstart'].forEach(function(ev) {
+                    root.addEventListener(ev, function(e) {
+                        var t = e.target;
+                        // CTA/버튼/링크/입력은 예외 — 사용자 상호작용 보존
+                        if (t.closest && t.closest('button, a, input, textarea, .header-cta-btn, .share-btn')) return;
+                        e.preventDefault();
+                    }, { passive: false });
+                });
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', bind);
+            } else {
+                bind();
+            }
+        })();
     </script>
 </body>
 </html>
