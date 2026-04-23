@@ -1237,6 +1237,10 @@ const translations = {
     // === biz.* (사업이민 섹션 14) ===
     'biz.request.hero.headline': '한국에서 사업을 시작하고 이주하기 위한 통합 법률서비스',
     'biz.request.hero.subhead': '한국으로의 사업 이민을 검토하는 이민자 고객을 위한 전담 상담 경로입니다.',
+    'biz.request.loginGate.title': '로그인이 필요합니다',
+    'biz.request.loginGate.desc': '사업이민 상담은 고객님 전용 쓰레드로 진행되므로, Google 계정 로그인이 필요합니다. 로그인 후 상세 정보를 확인하고 상담을 신청하실 수 있습니다.',
+    'biz.request.loginGate.cta': 'Google로 계속하기',
+    'biz.request.loginGate.note': '계속 진행 시 이용약관 및 개인정보처리방침에 동의한 것으로 간주됩니다.',
     'biz.request.overview.para1': '저희 법무법인 로연 출입국이민지원센터는 해외에 거주하시는 외국인이 한국에서 사업을 시작하고 정착하시기까지 필요한 법률서비스를 통합 제공합니다.',
     'biz.request.overview.para2': '프로젝트 탐색부터 규제 자문, 비자 취득, 한국 정착, 동반가족 지원까지 모든 단계가 하나의 법률자문 계약 안에서 진행됩니다.',
     'biz.request.overview.para3': '사전 상담은 무상이며, 본 페이지에서 신청하실 수 있습니다.',
@@ -2621,6 +2625,10 @@ const translations = {
     // === biz.* (사업이민 섹션 14) ===
     'biz.request.hero.headline': 'Integrated legal services for launching a business and emigrating to Korea',
     'biz.request.hero.subhead': 'A dedicated consultation path for immigration clients considering business relocation to Korea.',
+    'biz.request.loginGate.title': 'Sign in required',
+    'biz.request.loginGate.desc': 'Business Immigration consultations are conducted through your dedicated thread, so a Google sign-in is required before you can view the details and submit your request.',
+    'biz.request.loginGate.cta': 'Continue with Google',
+    'biz.request.loginGate.note': 'By continuing you agree to our Terms of Service and Privacy Policy.',
     'biz.request.overview.para1': 'Law Firm Lawyeon Immigration Support Center provides integrated legal services for foreigners residing abroad who wish to start a business and settle in Korea.',
     'biz.request.overview.para2': 'Project exploration, regulatory advice, visa acquisition, settlement in Korea, and accompanying family support are all handled within a single legal retainer.',
     'biz.request.overview.para3': 'The pre-consultation is free of charge and can be requested on this page.',
@@ -3968,6 +3976,10 @@ const translations = {
     'biz.request.hero.headline': 'Integrated legal services for launching a business and emigrating to Korea',
     // [TRANSLATION_PENDING: biz.request.hero.subhead, zh, cloned from en at 2026-04-20]
     'biz.request.hero.subhead': 'A dedicated consultation path for immigration clients considering business relocation to Korea.',
+    'biz.request.loginGate.title': 'Sign in required',
+    'biz.request.loginGate.desc': 'Business Immigration consultations are conducted through your dedicated thread, so a Google sign-in is required before you can view the details and submit your request.',
+    'biz.request.loginGate.cta': 'Continue with Google',
+    'biz.request.loginGate.note': 'By continuing you agree to our Terms of Service and Privacy Policy.',
     // [TRANSLATION_PENDING: biz.request.overview.para1, zh, cloned from en at 2026-04-20]
     'biz.request.overview.para1': 'Law Firm Lawyeon Immigration Support Center provides integrated legal services for foreigners residing abroad who wish to start a business and settle in Korea.',
     // [TRANSLATION_PENDING: biz.request.overview.para2, zh, cloned from en at 2026-04-20]
@@ -5338,6 +5350,10 @@ const translations = {
     'biz.request.hero.headline': 'Integrated legal services for launching a business and emigrating to Korea',
     // [TRANSLATION_PENDING: biz.request.hero.subhead, vi, cloned from en at 2026-04-20]
     'biz.request.hero.subhead': 'A dedicated consultation path for immigration clients considering business relocation to Korea.',
+    'biz.request.loginGate.title': 'Sign in required',
+    'biz.request.loginGate.desc': 'Business Immigration consultations are conducted through your dedicated thread, so a Google sign-in is required before you can view the details and submit your request.',
+    'biz.request.loginGate.cta': 'Continue with Google',
+    'biz.request.loginGate.note': 'By continuing you agree to our Terms of Service and Privacy Policy.',
     // [TRANSLATION_PENDING: biz.request.overview.para1, vi, cloned from en at 2026-04-20]
     'biz.request.overview.para1': 'Law Firm Lawyeon Immigration Support Center provides integrated legal services for foreigners residing abroad who wish to start a business and settle in Korea.',
     // [TRANSLATION_PENDING: biz.request.overview.para2, vi, cloned from en at 2026-04-20]
@@ -6706,6 +6722,10 @@ const translations = {
     'biz.request.hero.headline': 'Integrated legal services for launching a business and emigrating to Korea',
     // [TRANSLATION_PENDING: biz.request.hero.subhead, ja, cloned from en at 2026-04-20]
     'biz.request.hero.subhead': 'A dedicated consultation path for immigration clients considering business relocation to Korea.',
+    'biz.request.loginGate.title': 'Sign in required',
+    'biz.request.loginGate.desc': 'Business Immigration consultations are conducted through your dedicated thread, so a Google sign-in is required before you can view the details and submit your request.',
+    'biz.request.loginGate.cta': 'Continue with Google',
+    'biz.request.loginGate.note': 'By continuing you agree to our Terms of Service and Privacy Policy.',
     // [TRANSLATION_PENDING: biz.request.overview.para1, ja, cloned from en at 2026-04-20]
     'biz.request.overview.para1': 'Law Firm Lawyeon Immigration Support Center provides integrated legal services for foreigners residing abroad who wish to start a business and settle in Korea.',
     // [TRANSLATION_PENDING: biz.request.overview.para2, ja, cloned from en at 2026-04-20]
@@ -8074,6 +8094,10 @@ const translations = {
     'biz.request.hero.headline': 'Integrated legal services for launching a business and emigrating to Korea',
     // [TRANSLATION_PENDING: biz.request.hero.subhead, mn, cloned from en at 2026-04-20]
     'biz.request.hero.subhead': 'A dedicated consultation path for immigration clients considering business relocation to Korea.',
+    'biz.request.loginGate.title': 'Sign in required',
+    'biz.request.loginGate.desc': 'Business Immigration consultations are conducted through your dedicated thread, so a Google sign-in is required before you can view the details and submit your request.',
+    'biz.request.loginGate.cta': 'Continue with Google',
+    'biz.request.loginGate.note': 'By continuing you agree to our Terms of Service and Privacy Policy.',
     // [TRANSLATION_PENDING: biz.request.overview.para1, mn, cloned from en at 2026-04-20]
     'biz.request.overview.para1': 'Law Firm Lawyeon Immigration Support Center provides integrated legal services for foreigners residing abroad who wish to start a business and settle in Korea.',
     // [TRANSLATION_PENDING: biz.request.overview.para2, mn, cloned from en at 2026-04-20]
@@ -9442,6 +9466,10 @@ const translations = {
     'biz.request.hero.headline': 'Integrated legal services for launching a business and emigrating to Korea',
     // [TRANSLATION_PENDING: biz.request.hero.subhead, th, cloned from en at 2026-04-20]
     'biz.request.hero.subhead': 'A dedicated consultation path for immigration clients considering business relocation to Korea.',
+    'biz.request.loginGate.title': 'Sign in required',
+    'biz.request.loginGate.desc': 'Business Immigration consultations are conducted through your dedicated thread, so a Google sign-in is required before you can view the details and submit your request.',
+    'biz.request.loginGate.cta': 'Continue with Google',
+    'biz.request.loginGate.note': 'By continuing you agree to our Terms of Service and Privacy Policy.',
     // [TRANSLATION_PENDING: biz.request.overview.para1, th, cloned from en at 2026-04-20]
     'biz.request.overview.para1': 'Law Firm Lawyeon Immigration Support Center provides integrated legal services for foreigners residing abroad who wish to start a business and settle in Korea.',
     // [TRANSLATION_PENDING: biz.request.overview.para2, th, cloned from en at 2026-04-20]
