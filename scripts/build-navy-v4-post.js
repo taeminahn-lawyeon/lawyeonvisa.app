@@ -119,14 +119,39 @@ function renderSection(sec, idx, total, lang) {
 </section>`;
 }
 
+// EP-no (e.g. "01", "EP 2", "편 3") → slug mapping for RELATED row links.
+const SLUG_BY_EP = {
+  en: {
+    '01': 'd9-visa-korea-business-immigration-franchise-overview-2026',
+    '02': 'd9-visa-korea-business-immigration-visa-system-structure-2026',
+    '03': 'd9-visa-korea-business-immigration-relocation-launch-flow-2026',
+    '04': 'd9-visa-korea-business-immigration-after-settlement-2026',
+  },
+  ko: {
+    '01': 'd9-visa-korea-business-immigration-franchise-overview-2026',
+    '02': 'd9-visa-korea-business-immigration-visa-system-structure-2026',
+    '03': 'business-immigration-korea-startup-process-2026',
+    '04': 'd9-visa-korea-business-immigration-after-settlement-2026',
+  },
+};
+
+function slugFromTag(tag, lang) {
+  const m = String(tag || '').match(/(\d{1,2})/);
+  if (!m) return null;
+  const key = m[1].padStart(2, '0');
+  return (SLUG_BY_EP[lang] || {})[key] || null;
+}
+
 function renderClosing(post) {
   const lang = post.__lang;
   const labels = lang === 'en'
-    ? { end: `END OF DOCUMENT · EP${post.episodeNo || '01'}`, next: 'NEXT ACTIONS', action1: 'Free Pre-Consultation', action2: 'Business Immigration Page', related: 'RELATED · Business Immigration Series', read: '[Read →]', foot: `LAWYEON · Law Firm Lawyeon Immigration Center · lawyeon.co.kr · © ${new Date().getFullYear()}` }
-    : { end: `END OF DOCUMENT · EP${post.episodeNo || '01'}`, next: 'NEXT ACTIONS', action1: '무상 사전 상담 신청', action2: '사업 이민 페이지', related: 'RELATED · 사업이민 시리즈', read: '[읽기 →]', foot: `LAWYEON · 법무법인 로연 출입국이민지원센터 · lawyeon.co.kr · © ${new Date().getFullYear()}` };
-  const relatedRows = (post.related || []).map(r =>
-    `<tr><td class="C-related-tag">${esc(r.tag)}</td><td>${esc(r.title)}</td><td>${labels.read}</td></tr>`
-  ).join('');
+    ? { end: `END OF DOCUMENT · EP${post.episodeNo || '01'}`, next: 'NEXT ACTIONS', action1: 'Free Pre-Consultation', action2: 'Business Immigration Page', related: 'RELATED · Business Immigration Series', read: '[Read →]' }
+    : { end: `END OF DOCUMENT · EP${post.episodeNo || '01'}`, next: 'NEXT ACTIONS', action1: '무상 사전 상담 신청', action2: '사업 이민 페이지', related: 'RELATED · 사업이민 시리즈', read: '[읽기 →]' };
+  const relatedRows = (post.related || []).map(r => {
+    const slug = slugFromTag(r.tag, lang);
+    const hrefAttr = slug ? ` onclick="location.href='/blog/${slug}.html'"` : '';
+    return `<tr${hrefAttr}><td class="C-related-tag">${esc(r.tag)}</td><td>${esc(r.title)}</td><td>${labels.read}</td></tr>`;
+  }).join('');
   const headBar = '━'.repeat(60);
   return `<footer class="C-closing">
   <div class="C-closing-head">${headBar}</div>
@@ -142,7 +167,6 @@ function renderClosing(post) {
     <div class="C-related-label">${labels.related}</div>
     <table class="C-related-table"><tbody>${relatedRows}</tbody></table>
   </div>` : ''}
-  <div class="C-closing-foot">${labels.foot}</div>
 </footer>`;
 }
 

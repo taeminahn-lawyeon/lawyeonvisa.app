@@ -135,7 +135,7 @@ const MASTER_KO = {
 const MASTER_EN = {
     'biz.hero.headline': 'Integrated legal services for launching a business and emigrating to Korea',
     'biz.hero.subhead': 'For foreigners considering relocation to Korea from abroad, we sequentially perform project exploration, regulatory advice, and visa acquisition.',
-    'biz.hero.cta': 'Request Business Immigration Pre-Consultation',
+    'biz.hero.cta': 'Request Business Immigration\nPre-Consultation',
     'biz.badge.description': 'Law Firm Lawyeon Immigration Support Center provides business immigration legal services for foreigners relocating to Korea.',
     'biz.step1.title': 'Pre-Consultation',
     'biz.step1.body': 'Through a thread we confirm your nationality, funding method, target relocation date, and family composition, then outline the Korean business immigration paths.',
