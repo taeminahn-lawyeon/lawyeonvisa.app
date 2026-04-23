@@ -525,6 +525,96 @@
                 font-size: 13px;
             }
         }
+
+        /* === [1] 히어로 (장식 최소, CTA 없음) === */
+        .biz-request-hero {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 32px 28px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .biz-request-hero-headline {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0F172A;
+            line-height: 1.4;
+            margin: 0 0 10px;
+            letter-spacing: -0.3px;
+        }
+        .biz-request-hero-subhead {
+            font-size: 15px;
+            color: #4E5968;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* === [2] 서비스 개요 === */
+        .biz-request-overview {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .biz-request-overview p {
+            font-size: 15px;
+            color: #4E5968;
+            line-height: 1.7;
+            margin: 0 0 14px;
+        }
+        .biz-request-overview p:last-child { margin-bottom: 0; }
+
+        /* === [3] 5단계 구조 === */
+        .biz-request-steps {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .biz-request-steps-heading {
+            font-size: 18px;
+            font-weight: 800;
+            color: #0F172A;
+            margin: 0 0 16px;
+        }
+        .biz-request-steps .step-item { padding: 14px 0; border-bottom: 1px solid #F1F5F9; }
+        .biz-request-steps .step-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .biz-request-steps .step-content h3 { font-size: 15px; font-weight: 700; color: #1E293B; margin: 0 0 6px; }
+        .biz-request-steps .step-content p { font-size: 14px; color: #4E5968; line-height: 1.6; margin: 0; }
+
+        /* === [4] 고객 준비사항 === */
+        .biz-request-prepare {
+            background: #F8FAFC;
+            border: 1px solid #E5E8EB;
+            border-radius: 16px;
+            padding: 24px 28px;
+        }
+        .biz-request-prepare-heading {
+            font-size: 16px;
+            font-weight: 800;
+            color: #0F172A;
+            margin: 0 0 10px;
+        }
+        .biz-request-prepare-intro {
+            font-size: 14px;
+            color: #4E5968;
+            line-height: 1.6;
+            margin: 0 0 12px;
+        }
+        .biz-request-prepare-list {
+            margin: 0 0 12px;
+            padding-left: 20px;
+        }
+        .biz-request-prepare-list li {
+            font-size: 14px;
+            color: #1E293B;
+            line-height: 1.9;
+        }
+        .biz-request-prepare-disclaimer {
+            font-size: 13px;
+            color: #8B95A1;
+            font-style: italic;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -549,49 +639,72 @@
         <div id="main-content" class="two-column-layout" style="display: none;">
             <!-- Left Column -->
             <div class="left-column">
-                <!-- Consultation Banner -->
-                <div class="consultation-banner">
-                    <div class="consultation-banner-icon">
-                        <i class="fas fa-comments"></i>
-                    </div>
-                    <div class="consultation-banner-content">
-                        <h1 data-i18n="biz.form.title">사업이민 사전 상담 신청</h1>
-                        <p data-i18n="biz.form.auto_reply">상담 신청이 접수되었습니다. 담당자가 쓰레드로 회신드립니다.</p>
-                    </div>
+                <!-- [1] 페이지 히어로 (CTA 없음, 장식 최소) -->
+                <div class="biz-request-hero">
+                    <h1 class="biz-request-hero-headline" data-i18n="biz.request.hero.headline">한국에서 사업을 시작하고 이주하기 위한 통합 법률서비스</h1>
+                    <p class="biz-request-hero-subhead" data-i18n="biz.request.hero.subhead">한국으로의 사업 이민을 검토하는 이민자 고객을 위한 전담 상담 경로입니다.</p>
+                </div>
+
+                <!-- [2] 사업이민 서비스 개요 -->
+                <div class="biz-request-overview">
+                    <p data-i18n="biz.request.overview.para1">저희 법무법인 로연 출입국이민지원센터는 해외에 거주하시는 외국인이 한국에서 사업을 시작하고 정착하시기까지 필요한 법률서비스를 통합 제공합니다.</p>
+                    <p data-i18n="biz.request.overview.para2">프로젝트 탐색부터 규제 자문, 비자 취득, 한국 정착, 동반가족 지원까지 모든 단계가 하나의 법률자문 계약 안에서 진행됩니다.</p>
+                    <p data-i18n="biz.request.overview.para3">사전 상담은 무상이며, 본 페이지에서 신청하실 수 있습니다.</p>
                 </div>
 
                 <!-- Process Steps -->
-                <div class="process-steps">
-                    <h2><i class="fas fa-list-check"></i> <span data-i18n="consultation.howItWorks">How It Works</span></h2>
-
+                <!-- [3] 사업이민 프로젝트 5단계 구조 -->
+                <div class="biz-request-steps">
+                    <h2 class="biz-request-steps-heading" data-i18n="biz.request.steps.heading">프로젝트 5단계</h2>
                     <div class="step-item">
                         <div class="step-number">1</div>
                         <div class="step-content">
-                            <h3 data-i18n="consultation.step1Title">Submit Request</h3>
-                            <p data-i18n="consultation.step1Desc">A dedicated thread will be created for your case</p>
+                            <h3 data-i18n="biz.step1.title">사전 상담</h3>
+                            <p data-i18n="biz.step1.body">쓰레드를 통해 귀하의 국적, 자금 조달 방식, 이주 시점, 가족 구성을 확인하고 한국 사업이민 경로 개요를 안내합니다.</p>
                         </div>
                     </div>
                     <div class="step-item">
                         <div class="step-number">2</div>
                         <div class="step-content">
-                            <h3 data-i18n="consultation.step2Title">Fact-Finding Review</h3>
-                            <p data-i18n="consultation.step2Desc">Our specialist will verify your situation and documents</p>
+                            <h3 data-i18n="biz.step2.title">본 상담</h3>
+                            <p data-i18n="biz.step2.body">이민 경로 상세 자문, 사업 개시 절차 및 예산 배정 구조화, 주요 리스크 안내, 비자 발급 등 출입국 행정 안내를 제공합니다.</p>
                         </div>
                     </div>
                     <div class="step-item">
                         <div class="step-number">3</div>
                         <div class="step-content">
-                            <h3 data-i18n="consultation.step3Title">Procedure Guidance</h3>
-                            <p data-i18n="consultation.step3Desc">Receive detailed steps for your immigration case</p>
+                            <h3 data-i18n="biz.step3.title">착수</h3>
+                            <p data-i18n="biz.step3.body">프로젝트 설계, 오퍼레이션 설계, 실사 방문 코디네이션, 최종 점검 회의를 수행합니다.</p>
                         </div>
                     </div>
                     <div class="step-item">
                         <div class="step-number">4</div>
                         <div class="step-content">
-                            <h3 data-i18n="consultation.step4Title">Cost Estimate</h3>
-                            <p data-i18n="consultation.step4Desc">Get a detailed breakdown of fees and costs</p>
+                            <h3 data-i18n="biz.step4.title">정착</h3>
+                            <p data-i18n="biz.step4.body">계약 체결 지원, 외국인 투자 절차, 행정 등록 감독, 비자 취득, 동반 가족 비자 발급.</p>
                         </div>
                     </div>
+                    <div class="step-item">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h3 data-i18n="biz.step5.title">사후관리</h3>
+                            <p data-i18n="biz.step5.body">주거 임대차 검토, 가맹본부-점주 분쟁 조정, 근로계약 자문, 체류기간 연장, 영주권 전환 자문을 별도 계약으로 제공합니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- [4] 고객이 준비해야 할 것 -->
+                <div class="biz-request-prepare">
+                    <h2 class="biz-request-prepare-heading" data-i18n="biz.request.prepare.heading">고객이 준비해야 할 것</h2>
+                    <p class="biz-request-prepare-intro" data-i18n="biz.request.prepare.intro">신청 전에 다음 사항을 정리해 두시면 사전 상담이 원활하게 진행됩니다.</p>
+                    <ul class="biz-request-prepare-list">
+                        <li data-i18n="biz.request.prepare.item1">한국 이주 검토 시점 (단기 / 중기 / 미정)</li>
+                        <li data-i18n="biz.request.prepare.item2">가족 동반 계획 (배우자·자녀·부모)</li>
+                        <li data-i18n="biz.request.prepare.item3">본국 사업 또는 근로 경력</li>
+                        <li data-i18n="biz.request.prepare.item4">한국 거주·방문 경험</li>
+                        <li data-i18n="biz.request.prepare.item5">한국어 사용 수준</li>
+                    </ul>
+                    <p class="biz-request-prepare-disclaimer" data-i18n="biz.request.prepare.disclaimer">자금 규모 및 투자 구조에 관한 상세는 본 상담 단계에서 확인합니다.</p>
                 </div>
 
                 <!-- 사업이민 사전 상담 폼 (섹션 4-2) -->
