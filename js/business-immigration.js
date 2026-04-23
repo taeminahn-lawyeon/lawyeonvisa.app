@@ -253,7 +253,7 @@ function mapBizStatusToStage(status) {
 
 async function renderBizImmigrationSidebar() {
     const sidebar = document.getElementById('bizImmigrationSidebar');
-    if (!sidebar || !window.supabaseClient) return;
+    if (!sidebar || typeof supabaseClient === 'undefined' || !supabaseClient) return;
 
     const threadId = new URLSearchParams(location.search).get('id');
     if (!threadId) return;
@@ -302,7 +302,7 @@ async function renderBizImmigrationSidebar() {
 
 async function refreshSystemErrorsBadge() {
     const badge = document.getElementById('system-errors-badge');
-    if (!badge || !window.supabaseClient) return;
+    if (!badge || typeof supabaseClient === 'undefined' || !supabaseClient) return;
 
     try {
         const { count, error } = await supabaseClient
