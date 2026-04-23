@@ -1961,6 +1961,7 @@
                             <th>이름</th>
                             <th>이메일</th>
                             <th>전화번호</th>
+                            <th>소속 단체</th>
                             <th>비자</th>
                             <th>국적</th>
                             <th>첨부파일</th>
@@ -1969,26 +1970,37 @@
                     </thead>
                     <tbody>
             `;
-            
+
+            const newMemberOrgLabels = {
+                'chosun': { name: '조선대', bg: '#1B3A7B' },
+                'kdu': { name: '극동대', bg: '#003366' }
+            };
+
             newMembers.forEach(member => {
                 const hasArc = member.arc_front_url || member.arc_back_url;
                 const hasPassport = member.passport_url;
                 const hasSignature = member.signature_url;
-                
+
                 const attachments = [];
                 if (hasArc) attachments.push('<span title="외국인등록증"><i class="fas fa-id-card" style="color: #3182F6;"></i></span>');
                 if (hasPassport) attachments.push('<span title="여권"><i class="fas fa-passport" style="color: #10B981;"></i></span>');
                 if (hasSignature) attachments.push('<span title="전자서명"><i class="fas fa-signature" style="color: #8B5CF6;"></i></span>');
-                
-                const attachmentHTML = attachments.length > 0 
-                    ? attachments.join(' ') 
+
+                const attachmentHTML = attachments.length > 0
+                    ? attachments.join(' ')
                     : '<span style="color: #9CA3AF;">없음</span>';
-                
+
+                const orgInfo = newMemberOrgLabels[member.organization];
+                const organizationBadge = orgInfo
+                    ? `<span class="org-badge" style="background:${orgInfo.bg}; color:white; padding:4px 10px; border-radius:6px; font-size:12px; font-weight:600; display:inline-block;">${orgInfo.name}</span>`
+                    : `<span style="color: #9CA3AF; font-size: 12px;">일반</span>`;
+
                 tableHTML += `
                     <tr>
                         <td><strong>${member.name || '-'}</strong></td>
                         <td>${member.email || '-'}</td>
                         <td>${member.phone || '-'}</td>
+                        <td>${organizationBadge}</td>
                         <td><span class="visa-badge">${member.visa_type || '-'}</span></td>
                         <td>${member.nationality || '-'}</td>
                         <td style="font-size: 16px;">${attachmentHTML}</td>

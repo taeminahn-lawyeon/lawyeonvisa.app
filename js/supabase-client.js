@@ -254,16 +254,22 @@ async function createOrUpdateProfile(userId, profileData) {
     try {
         debugLog('🔄 프로필 생성/업데이트 시도:', { userId, profileData });
 
+        const upsertPayload = {
+            id: userId,
+            name: profileData.name || '',
+            email: profileData.email || '',
+            phone: profileData.phone || '',
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+        };
+        // organization 은 명시적으로 전달된 경우에만 포함 (기존 값을 null 로 덮어쓰지 않도록)
+        if (profileData.organization) {
+            upsertPayload.organization = profileData.organization;
+        }
+
         const { data, error } = await supabaseClient
             .from('profiles')
-            .upsert({
-                id: userId,
-                name: profileData.name || '',
-                email: profileData.email || '',
-                phone: profileData.phone || '',
-                created_at: new Date().toISOString(),
-                updated_at: new Date().toISOString()
-            }, {
+            .upsert(upsertPayload, {
                 onConflict: 'id'
             })
             .select()
