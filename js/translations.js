@@ -1261,6 +1261,8 @@ const translations = {
     'biz.request.threadPreview.subtitle': '담당자와 실시간 커뮤니케이션',
     'biz.request.threadPreview.caption': '쓰레드에서 상담 진행, 서류 요청, 단계 전환이 이루어집니다.',
     'biz.sidebar.heading': '프로젝트 진행 단계',
+    // === biz.* (사업이민 섹션 14) ===
+    'biz.thread.title': '사업이민 사전 상담',
     },
 
     // ========================================
@@ -2643,6 +2645,8 @@ const translations = {
     'biz.request.threadPreview.subtitle': 'Real-time communication with our specialist',
     'biz.request.threadPreview.caption': 'Consultation progress, document requests, and stage transitions are handled within the thread.',
     'biz.sidebar.heading': 'Project Progress',
+    // === biz.* (사업이민 섹션 14) ===
+    'biz.thread.title': 'Business Immigration Consultation',
     },
 
     // ========================================
@@ -4010,6 +4014,9 @@ const translations = {
     'biz.request.threadPreview.caption': 'Consultation progress, document requests, and stage transitions are handled within the thread.',
     // [TRANSLATION_PENDING: biz.sidebar.heading, zh, cloned from en at 2026-04-20]
     'biz.sidebar.heading': 'Project Progress',
+    // === biz.* (사업이민 섹션 14) ===
+    // [TRANSLATION_PENDING: biz.thread.title, zh, cloned from en at 2026-04-20]
+    'biz.thread.title': 'Business Immigration Consultation',
     },
 
     // ========================================
@@ -5377,6 +5384,9 @@ const translations = {
     'biz.request.threadPreview.caption': 'Consultation progress, document requests, and stage transitions are handled within the thread.',
     // [TRANSLATION_PENDING: biz.sidebar.heading, vi, cloned from en at 2026-04-20]
     'biz.sidebar.heading': 'Project Progress',
+    // === biz.* (사업이민 섹션 14) ===
+    // [TRANSLATION_PENDING: biz.thread.title, vi, cloned from en at 2026-04-20]
+    'biz.thread.title': 'Business Immigration Consultation',
     },
 
     // ========================================
@@ -6742,6 +6752,9 @@ const translations = {
     'biz.request.threadPreview.caption': 'Consultation progress, document requests, and stage transitions are handled within the thread.',
     // [TRANSLATION_PENDING: biz.sidebar.heading, ja, cloned from en at 2026-04-20]
     'biz.sidebar.heading': 'Project Progress',
+    // === biz.* (사업이민 섹션 14) ===
+    // [TRANSLATION_PENDING: biz.thread.title, ja, cloned from en at 2026-04-20]
+    'biz.thread.title': 'Business Immigration Consultation',
     },
 
     // ========================================
@@ -8107,6 +8120,9 @@ const translations = {
     'biz.request.threadPreview.caption': 'Consultation progress, document requests, and stage transitions are handled within the thread.',
     // [TRANSLATION_PENDING: biz.sidebar.heading, mn, cloned from en at 2026-04-20]
     'biz.sidebar.heading': 'Project Progress',
+    // === biz.* (사업이민 섹션 14) ===
+    // [TRANSLATION_PENDING: biz.thread.title, mn, cloned from en at 2026-04-20]
+    'biz.thread.title': 'Business Immigration Consultation',
     },
 
     // ========================================
@@ -9472,6 +9488,9 @@ const translations = {
     'biz.request.threadPreview.caption': 'Consultation progress, document requests, and stage transitions are handled within the thread.',
     // [TRANSLATION_PENDING: biz.sidebar.heading, th, cloned from en at 2026-04-20]
     'biz.sidebar.heading': 'Project Progress',
+    // === biz.* (사업이민 섹션 14) ===
+    // [TRANSLATION_PENDING: biz.thread.title, th, cloned from en at 2026-04-20]
+    'biz.thread.title': 'Business Immigration Consultation',
     },
 };
 

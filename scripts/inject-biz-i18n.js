@@ -126,7 +126,9 @@ const MASTER_KO = {
     'biz.request.threadPreview.subtitle': '담당자와 실시간 커뮤니케이션',
     'biz.request.threadPreview.caption': '쓰레드에서 상담 진행, 서류 요청, 단계 전환이 이루어집니다.',
     // 쓰레드 페이지 우측 사이드바 제목
-    'biz.sidebar.heading': '프로젝트 진행 단계'
+    'biz.sidebar.heading': '프로젝트 진행 단계',
+    // 사업이민 쓰레드 상단 제목 (service_name 대신 표시)
+    'biz.thread.title': '사업이민 사전 상담'
 };
 
 // ----- 영어 번역 (en) -----
@@ -219,7 +221,8 @@ const MASTER_EN = {
     'biz.request.threadPreview.title': 'Business Immigration Thread',
     'biz.request.threadPreview.subtitle': 'Real-time communication with our specialist',
     'biz.request.threadPreview.caption': 'Consultation progress, document requests, and stage transitions are handled within the thread.',
-    'biz.sidebar.heading': 'Project Progress'
+    'biz.sidebar.heading': 'Project Progress',
+    'biz.thread.title': 'Business Immigration Consultation'
 };
 
 // 단일 문자열 이스케이프(작은따옴표·역슬래시)
