@@ -2038,7 +2038,7 @@
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=20250126"></script>
-    <script src="js/business-immigration.js"></script>
+    <script src="js/business-immigration.js?v=20260423"></script>
     <script src="js/ui-components.js?v=20260206"></script>
 
     <!-- i18n 다국어 지원 -->
@@ -2511,8 +2511,13 @@
                 document.getElementById('threadUser').textContent = thread.profiles?.name || thread.profiles?.email?.split('@')[0] || getThreadMsg('client');
                 document.getElementById('threadDate').textContent = formatDate(thread.created_at);
 
-                // Render progress
+                // Render progress (기존 일반 경로)
                 renderProgress(thread);
+
+                // 사업이민 쓰레드면 5단계 사이드바 렌더 + 기존 박스 숨김
+                if (window.businessImmigration && window.businessImmigration.renderBizImmigrationSidebar) {
+                    window.businessImmigration.renderBizImmigrationSidebar(thread);
+                }
 
                 // 고객 쓰레드에서는 관리자 도구 숨김 (관리자 도구는 admin-thread.html에서만 사용)
                 // isAdmin이어도 자신의 쓰레드를 고객으로 보고 있으므로 도구 표시하지 않음
@@ -3355,6 +3360,9 @@
                 // Reload thread to update progress
                 threadData.current_stage = newStage;
                 renderProgress(threadData);
+                if (window.businessImmigration && window.businessImmigration.renderBizImmigrationSidebar) {
+                    window.businessImmigration.renderBizImmigrationSidebar(threadData);
+                }
 
                 closeModal('stageChangeModal');
                 alert(tt('thread.alert.stageChanged', 'Stage has been changed.'));

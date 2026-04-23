@@ -1062,6 +1062,12 @@
                 } else {
                     document.getElementById('serviceTitle').textContent = thread.service_name || t('thread.noServiceName', '서비스명 없음');
                 }
+
+                // 사업이민 쓰레드면 5단계 사이드바 렌더 + 기존 박스 숨김
+                if (window.businessImmigration && window.businessImmigration.renderBizImmigrationSidebar) {
+                    window.businessImmigration.renderBizImmigrationSidebar(thread);
+                }
+
                 document.getElementById('threadDate').textContent = typeof i18n !== 'undefined' ? i18n.formatDate(thread.created_at) : new Date(thread.created_at).toLocaleDateString('ko-KR');
                 document.getElementById('applicationId').textContent = thread.order_id || thread.id;
                 document.getElementById('applicationDate').textContent = typeof i18n !== 'undefined' ? i18n.formatDate(thread.created_at) : new Date(thread.created_at).toLocaleDateString('ko-KR');
@@ -1397,7 +1403,7 @@
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=20250119"></script>
-    <script src="js/business-immigration.js"></script>
+    <script src="js/business-immigration.js?v=20260423"></script>
     
     <!-- 다국어 시스템 -->
     <script src="js/translations.js"></script>
