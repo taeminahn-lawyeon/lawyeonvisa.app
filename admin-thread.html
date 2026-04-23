@@ -1465,7 +1465,7 @@
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=20250127"></script>
-    <script src="js/business-immigration.js"></script>
+    <script src="js/business-immigration.js?v=20260423"></script>
     <script src="js/ui-components.js?v=20260206"></script>
 
     <script>
@@ -2003,6 +2003,11 @@
 
                 // 요청 유형에 따라 진행 단계 UI 토글 (섹션 14-2, 14-7)
                 toggleStageUIByRequestType(thread);
+
+                // 사업이민 쓰레드면 5단계 사이드바 렌더 + 기존 박스 숨김
+                if (window.businessImmigration && window.businessImmigration.renderBizImmigrationSidebar) {
+                    window.businessImmigration.renderBizImmigrationSidebar(thread);
+                }
 
                 // Get customer profile
                 if (thread.user_id) {

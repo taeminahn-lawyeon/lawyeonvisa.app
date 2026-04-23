@@ -251,53 +251,61 @@ function mapBizStatusToStage(status) {
     return map[status] || 0;
 }
 
-async function renderBizImmigrationSidebar() {
+// renderBizImmigrationSidebar
+// - 인자 없이 호출: threadId를 URL에서 얻어 직접 쿼리
+// - thread 객체(request_type·business_immigration_status 포함)를 인자로 받으면 쿼리 스킵
+async function renderBizImmigrationSidebar(threadOverride) {
     const sidebar = document.getElementById('bizImmigrationSidebar');
-    if (!sidebar || typeof supabaseClient === 'undefined' || !supabaseClient) return;
+    if (!sidebar) return;
 
-    const threadId = new URLSearchParams(location.search).get('id');
-    if (!threadId) return;
+    let thread = threadOverride || null;
 
-    try {
-        const { data: thread } = await supabaseClient
-            .from('threads')
-            .select('id, request_type, business_immigration_status')
-            .eq('id', threadId)
-            .maybeSingle();
-
-        // 일반 쓰레드: 사업이민 섹션 숨김 유지, 기존 섹션 그대로
-        if (!thread || thread.request_type !== 'business_immigration') {
-            sidebar.classList.add('biz-sidebar-hidden');
+    if (!thread) {
+        if (typeof supabaseClient === 'undefined' || !supabaseClient) return;
+        const threadId = new URLSearchParams(location.search).get('id');
+        if (!threadId) return;
+        try {
+            const { data } = await supabaseClient
+                .from('threads')
+                .select('id, request_type, business_immigration_status')
+                .eq('id', threadId)
+                .maybeSingle();
+            thread = data;
+        } catch (err) {
+            console.error('[biz sidebar] query error:', err);
             return;
         }
-
-        // 사업이민 쓰레드: 기존 사이드바 섹션 숨김 + 사업이민 5단계 표시
-        // (고객용 · 관리자 페이지 양쪽에서 동일 id/class 재사용)
-        document.querySelectorAll(
-            '#threadProgressSection, #threadSubmittedFilesSection, #threadFeeSection, .visa-thread-default-section'
-        ).forEach(function (el) { el.style.display = 'none'; });
-
-        const currentStage = mapBizStatusToStage(thread.business_immigration_status);
-        const isArchived = thread.business_immigration_status === 'archived';
-
-        sidebar.querySelectorAll('.biz-sidebar-step').forEach(function (el) {
-            const stage = parseInt(el.getAttribute('data-stage'), 10);
-            el.classList.remove('biz-sidebar-step-current', 'biz-sidebar-step-done', 'biz-sidebar-step-upcoming');
-            if (isArchived) {
-                el.classList.add('biz-sidebar-step-done');
-            } else if (stage < currentStage) {
-                el.classList.add('biz-sidebar-step-done');
-            } else if (stage === currentStage) {
-                el.classList.add('biz-sidebar-step-current');
-            } else {
-                el.classList.add('biz-sidebar-step-upcoming');
-            }
-        });
-
-        sidebar.classList.remove('biz-sidebar-hidden');
-    } catch (err) {
-        console.error('[biz sidebar]', err);
     }
+
+    // 일반 쓰레드: 사업이민 섹션 숨김 유지, 기존 섹션 그대로
+    if (!thread || thread.request_type !== 'business_immigration') {
+        sidebar.classList.add('biz-sidebar-hidden');
+        return;
+    }
+
+    // 사업이민 쓰레드: 기존 사이드바 섹션 숨김 + 사업이민 5단계 표시
+    document.querySelectorAll(
+        '#threadProgressSection, #threadSubmittedFilesSection, #threadFeeSection, .visa-thread-default-section'
+    ).forEach(function (el) { el.style.display = 'none'; });
+
+    const currentStage = mapBizStatusToStage(thread.business_immigration_status);
+    const isArchived = thread.business_immigration_status === 'archived';
+
+    sidebar.querySelectorAll('.biz-sidebar-step').forEach(function (el) {
+        const stage = parseInt(el.getAttribute('data-stage'), 10);
+        el.classList.remove('biz-sidebar-step-current', 'biz-sidebar-step-done', 'biz-sidebar-step-upcoming');
+        if (isArchived) {
+            el.classList.add('biz-sidebar-step-done');
+        } else if (stage < currentStage) {
+            el.classList.add('biz-sidebar-step-done');
+        } else if (stage === currentStage) {
+            el.classList.add('biz-sidebar-step-current');
+        } else {
+            el.classList.add('biz-sidebar-step-upcoming');
+        }
+    });
+
+    sidebar.classList.remove('biz-sidebar-hidden');
 }
 
 async function refreshSystemErrorsBadge() {
@@ -336,7 +344,12 @@ document.addEventListener('DOMContentLoaded', function () {
     evaluateThreadProfileBanner();
 
     // 쓰레드 페이지에서만 사업이민 사이드바 렌더(해당 DOM 없으면 조기 반환됨)
+    // 기존 페이지 로직이 async로 thread 데이터 로드 후 progress 박스를 그리므로,
+    // 타이밍 경합 방지를 위해 여러 번 재실행
     renderBizImmigrationSidebar();
+    setTimeout(renderBizImmigrationSidebar, 500);
+    setTimeout(renderBizImmigrationSidebar, 1500);
+    setTimeout(renderBizImmigrationSidebar, 3000);
 
     // 관리자 대시보드에서만 뱃지 갱신(해당 DOM 없으면 조기 반환됨)
     refreshSystemErrorsBadge();
