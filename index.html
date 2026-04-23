@@ -2193,6 +2193,15 @@
             if (session && session.user) {
                 // console.log('✅ 세션 존재:', session.user.email);
 
+                // 🔄 로그인 직후 redirectAfterLogin 체크 — 프로필 유무 무관하게 최우선 실행
+                // (신규 로그인 사용자는 프로필이 아직 없어 기존 if (profileData) 분기에 걸려 redirect 누락되던 문제 수정)
+                const redirectAfterLoginEarly = localStorage.getItem('redirectAfterLogin');
+                if (redirectAfterLoginEarly) {
+                    localStorage.removeItem('redirectAfterLogin');
+                    window.location.href = redirectAfterLoginEarly;
+                    return;
+                }
+
                 // 🚫 관리자 권한 체크 (admins 테이블 확인)
                 const { data: adminData } = await supabaseClient
                     .from('admins')
