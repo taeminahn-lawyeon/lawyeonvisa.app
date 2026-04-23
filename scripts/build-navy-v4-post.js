@@ -218,6 +218,13 @@ ${renderClosing(post)}
 </article>
 <script>
 (function(){
+  var root=document.querySelector('article.designC');
+  if(!root)return;
+  ['contextmenu','copy','cut','dragstart','selectstart'].forEach(function(ev){
+    root.addEventListener(ev,function(e){e.preventDefault();},{passive:false});
+  });
+})();
+(function(){
   var links=document.querySelectorAll('.C-rail-toc li[data-id]');
   if(!links.length||!('IntersectionObserver' in window))return;
   var obs=new IntersectionObserver(function(es){
