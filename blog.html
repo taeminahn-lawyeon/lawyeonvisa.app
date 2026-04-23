@@ -395,6 +395,7 @@
                 let query = supabaseClient
                     .from('blog_posts')
                     .select('*')
+                    .eq('is_published', true)
                     .order('created_at', { ascending: false });
 
                 if (category !== 'all') {
@@ -432,7 +433,7 @@
                 }
 
                 blogList.innerHTML = posts.map(post => `
-                    <article class="blog-card" onclick="location.href='blog-post.html?slug=${post.slug}'">
+                    <article class="blog-card" onclick="location.href='${post.template === 'navy_v4' ? `blog/${post.slug}.html` : `blog-post.html?slug=${post.slug}`}'">
                         <div class="blog-card-thumbnail">
                             ${post.thumbnail_url
                                 ? `<img src="${post.thumbnail_url}" alt="${post.title}">`
