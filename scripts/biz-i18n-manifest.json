@@ -83,7 +83,10 @@
     "biz.request.prepare.disclaimer",
     "home.urgent.headline",
     "home.urgent.subhead",
-    "home.urgent.cta"
+    "home.urgent.cta",
+    "biz.card.summary1",
+    "biz.card.summary2",
+    "biz.card.summary3"
   ],
   "nonBizKeys": [
     "common.retry",

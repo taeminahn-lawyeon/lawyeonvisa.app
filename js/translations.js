@@ -1252,6 +1252,10 @@ const translations = {
     'home.urgent.headline': '긴급 법률 구제가 필요하십니까?',
     'home.urgent.subhead': '출국 명령·체류 거부·형사 사건 등 시간 민감 사안을 전담합니다.',
     'home.urgent.cta': '긴급 상담 요청',
+    // === biz.* (사업이민 섹션 14) ===
+    'biz.card.summary1': '이민 프로젝트 설계',
+    'biz.card.summary2': '계약 및 규제 관리',
+    'biz.card.summary3': '정착 및 사후 지원',
     },
 
     // ========================================
@@ -2625,6 +2629,10 @@ const translations = {
     'home.urgent.headline': 'Facing an urgent legal matter?',
     'home.urgent.subhead': 'We handle time-sensitive immigration and criminal cases such as deportation orders, visa denials, and related proceedings.',
     'home.urgent.cta': 'Request Urgent Consultation',
+    // === biz.* (사업이민 섹션 14) ===
+    'biz.card.summary1': 'Immigration Project Design',
+    'biz.card.summary2': 'Contracts & Regulatory Management',
+    'biz.card.summary3': 'Settlement & Ongoing Support',
     },
 
     // ========================================
@@ -3976,6 +3984,13 @@ const translations = {
     'home.urgent.subhead': 'We handle time-sensitive immigration and criminal cases such as deportation orders, visa denials, and related proceedings.',
     // [TRANSLATION_PENDING: home.urgent.cta, zh, cloned from en at 2026-04-20]
     'home.urgent.cta': 'Request Urgent Consultation',
+    // === biz.* (사업이민 섹션 14) ===
+    // [TRANSLATION_PENDING: biz.card.summary1, zh, cloned from en at 2026-04-20]
+    'biz.card.summary1': 'Immigration Project Design',
+    // [TRANSLATION_PENDING: biz.card.summary2, zh, cloned from en at 2026-04-20]
+    'biz.card.summary2': 'Contracts & Regulatory Management',
+    // [TRANSLATION_PENDING: biz.card.summary3, zh, cloned from en at 2026-04-20]
+    'biz.card.summary3': 'Settlement & Ongoing Support',
     },
 
     // ========================================
@@ -5327,6 +5342,13 @@ const translations = {
     'home.urgent.subhead': 'We handle time-sensitive immigration and criminal cases such as deportation orders, visa denials, and related proceedings.',
     // [TRANSLATION_PENDING: home.urgent.cta, vi, cloned from en at 2026-04-20]
     'home.urgent.cta': 'Request Urgent Consultation',
+    // === biz.* (사업이민 섹션 14) ===
+    // [TRANSLATION_PENDING: biz.card.summary1, vi, cloned from en at 2026-04-20]
+    'biz.card.summary1': 'Immigration Project Design',
+    // [TRANSLATION_PENDING: biz.card.summary2, vi, cloned from en at 2026-04-20]
+    'biz.card.summary2': 'Contracts & Regulatory Management',
+    // [TRANSLATION_PENDING: biz.card.summary3, vi, cloned from en at 2026-04-20]
+    'biz.card.summary3': 'Settlement & Ongoing Support',
     },
 
     // ========================================
@@ -6676,6 +6698,13 @@ const translations = {
     'home.urgent.subhead': 'We handle time-sensitive immigration and criminal cases such as deportation orders, visa denials, and related proceedings.',
     // [TRANSLATION_PENDING: home.urgent.cta, ja, cloned from en at 2026-04-20]
     'home.urgent.cta': 'Request Urgent Consultation',
+    // === biz.* (사업이민 섹션 14) ===
+    // [TRANSLATION_PENDING: biz.card.summary1, ja, cloned from en at 2026-04-20]
+    'biz.card.summary1': 'Immigration Project Design',
+    // [TRANSLATION_PENDING: biz.card.summary2, ja, cloned from en at 2026-04-20]
+    'biz.card.summary2': 'Contracts & Regulatory Management',
+    // [TRANSLATION_PENDING: biz.card.summary3, ja, cloned from en at 2026-04-20]
+    'biz.card.summary3': 'Settlement & Ongoing Support',
     },
 
     // ========================================
@@ -8025,6 +8054,13 @@ const translations = {
     'home.urgent.subhead': 'We handle time-sensitive immigration and criminal cases such as deportation orders, visa denials, and related proceedings.',
     // [TRANSLATION_PENDING: home.urgent.cta, mn, cloned from en at 2026-04-20]
     'home.urgent.cta': 'Request Urgent Consultation',
+    // === biz.* (사업이민 섹션 14) ===
+    // [TRANSLATION_PENDING: biz.card.summary1, mn, cloned from en at 2026-04-20]
+    'biz.card.summary1': 'Immigration Project Design',
+    // [TRANSLATION_PENDING: biz.card.summary2, mn, cloned from en at 2026-04-20]
+    'biz.card.summary2': 'Contracts & Regulatory Management',
+    // [TRANSLATION_PENDING: biz.card.summary3, mn, cloned from en at 2026-04-20]
+    'biz.card.summary3': 'Settlement & Ongoing Support',
     },
 
     // ========================================
@@ -9374,6 +9410,13 @@ const translations = {
     'home.urgent.subhead': 'We handle time-sensitive immigration and criminal cases such as deportation orders, visa denials, and related proceedings.',
     // [TRANSLATION_PENDING: home.urgent.cta, th, cloned from en at 2026-04-20]
     'home.urgent.cta': 'Request Urgent Consultation',
+    // === biz.* (사업이민 섹션 14) ===
+    // [TRANSLATION_PENDING: biz.card.summary1, th, cloned from en at 2026-04-20]
+    'biz.card.summary1': 'Immigration Project Design',
+    // [TRANSLATION_PENDING: biz.card.summary2, th, cloned from en at 2026-04-20]
+    'biz.card.summary2': 'Contracts & Regulatory Management',
+    // [TRANSLATION_PENDING: biz.card.summary3, th, cloned from en at 2026-04-20]
+    'biz.card.summary3': 'Settlement & Ongoing Support',
     },
 };
 

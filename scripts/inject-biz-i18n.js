@@ -116,7 +116,11 @@ const MASTER_KO = {
     // 풀폭 긴급 법률 구제 배너 (placeholder 카피, PM 교체 예정)
     'home.urgent.headline': '긴급 법률 구제가 필요하십니까?',
     'home.urgent.subhead': '출국 명령·체류 거부·형사 사건 등 시간 민감 사안을 전담합니다.',
-    'home.urgent.cta': '긴급 상담 요청'
+    'home.urgent.cta': '긴급 상담 요청',
+    // 대문 히어로 사업이민 카드 요약 3항목
+    'biz.card.summary1': '이민 프로젝트 설계',
+    'biz.card.summary2': '계약 및 규제 관리',
+    'biz.card.summary3': '정착 및 사후 지원'
 };
 
 // ----- 영어 번역 (en) -----
@@ -202,7 +206,10 @@ const MASTER_EN = {
     'biz.request.prepare.disclaimer': 'Details on funding scale and investment structure will be reviewed in the detailed consultation stage.',
     'home.urgent.headline': 'Facing an urgent legal matter?',
     'home.urgent.subhead': 'We handle time-sensitive immigration and criminal cases such as deportation orders, visa denials, and related proceedings.',
-    'home.urgent.cta': 'Request Urgent Consultation'
+    'home.urgent.cta': 'Request Urgent Consultation',
+    'biz.card.summary1': 'Immigration Project Design',
+    'biz.card.summary2': 'Contracts & Regulatory Management',
+    'biz.card.summary3': 'Settlement & Ongoing Support'
 };
 
 // 단일 문자열 이스케이프(작은따옴표·역슬래시)
