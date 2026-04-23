@@ -33,7 +33,7 @@ function renderTopbar(post) {
   <div class="C-topbar-right">
     <span class="C-mono">DOC-ID</span><span>${esc(epLabel)}${esc(rev)}</span>
     <span class="C-mono">STATUS</span><span class="C-badge-pub">PUBLISHED</span>
-    <a class="C-topbar-cta" href="/consultation-request.html">${ctaLabel} [↗]</a>
+    <a class="C-topbar-cta" href="/business-immigration-request.html">${ctaLabel} [↗]</a>
   </div>
 </header>`;
 }
@@ -81,7 +81,7 @@ function renderRail(post) {
   </div>` : ''}
   <div class="C-rail-block">
     <div class="C-rail-label">${labels.action}</div>
-    <a class="C-rail-cta" href="/consultation-request.html">${labels.cta}</a>
+    <a class="C-rail-cta" href="/business-immigration-request.html">${labels.cta}</a>
   </div>
 </aside>`;
 }
@@ -102,7 +102,7 @@ function renderSection(sec, idx, total, lang) {
       <div class="C-midcta-title">${title}</div>
       <div class="C-midcta-text">${text}</div>
     </div>
-    <a class="C-midcta-btn" href="/consultation-request.html">${cta}</a>
+    <a class="C-midcta-btn" href="/business-immigration-request.html">${cta}</a>
   </div>
   <div class="C-midcta-bar">${bar}</div>
 </div>`;
@@ -134,7 +134,7 @@ function renderClosing(post) {
   <div class="C-closing-cta">
     <div class="C-closing-cta-label">${labels.next}</div>
     <div class="C-closing-cta-list">
-      <a href="/consultation-request.html"><span class="C-mono">→</span> ${labels.action1}</a>
+      <a href="/business-immigration-request.html"><span class="C-mono">→</span> ${labels.action1}</a>
       <a href="/"><span class="C-mono">→</span> ${labels.action2}</a>
     </div>
   </div>
