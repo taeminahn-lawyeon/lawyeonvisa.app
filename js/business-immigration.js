@@ -30,51 +30,11 @@
  */
 async function evaluateThreadProfileBanner() {
     const banner = document.getElementById('thread-profile-banner');
-    if (!banner || !window.supabaseClient) return;
-
-    const cta = document.getElementById('thread-profile-banner-cta');
-    const threadId = new URLSearchParams(location.search).get('id');
-    if (!threadId) return;
-
-    try {
-        // 1) 쓰레드 정보 조회
-        const { data: thread } = await supabaseClient
-            .from('threads')
-            .select('id, user_id, request_type, business_immigration_status')
-            .eq('id', threadId)
-            .maybeSingle();
-        if (!thread) return;
-
-        // 2) 사업이민 쓰레드가 아니면 배너 비활성 (기존 경로 보존)
-        if (thread.request_type !== 'business_immigration') {
-            banner.classList.add('thread-banner-hidden');
-            return;
-        }
-
-        // 3) 현재 사용자가 쓰레드 소유자인지 확인 (관리자 뷰는 숨김)
-        const session = await supabaseClient.auth.getSession();
-        const userId = session?.data?.session?.user?.id;
-        if (!userId || userId !== thread.user_id) {
-            banner.classList.add('thread-banner-hidden');
-            return;
-        }
-
-        // 4) 프로필 완성 여부 조회
-        const completed = await isProfileCompleteForRequest(userId, 'business_immigration');
-
-        // 5) 미완이면 배너 표시, CTA 링크 세팅
-        if (!completed) {
-            if (cta) {
-                cta.href = 'profile-submit.html?type=business&thread=' + encodeURIComponent(threadId);
-            }
-            banner.classList.remove('thread-banner-hidden');
-        } else {
-            banner.classList.add('thread-banner-hidden');
-        }
-    } catch (err) {
-        console.error('[biz banner] evaluation error:', err);
-        // 실패 시 배너 유지(기본 hidden)
-    }
+    if (!banner) return;
+    // 사업이민 신청 페이지에서 폼이 삭제되어 별도 프로필 작성 단계가 없음.
+    // 따라서 사업이민 쓰레드에서도 배너를 항상 숨김.
+    // 일반 쓰레드에는 원래도 배너가 뜨지 않음(기존 로직에서 request_type 체크).
+    banner.classList.add('thread-banner-hidden');
 }
 
 // ============================================
@@ -292,7 +252,7 @@ function mapBizStatusToStage(status) {
 }
 
 async function renderBizImmigrationSidebar() {
-    const sidebar = document.getElementById('biz-immigration-sidebar');
+    const sidebar = document.getElementById('bizImmigrationSidebar');
     if (!sidebar || !window.supabaseClient) return;
 
     const threadId = new URLSearchParams(location.search).get('id');
@@ -304,10 +264,17 @@ async function renderBizImmigrationSidebar() {
             .select('id, request_type, business_immigration_status')
             .eq('id', threadId)
             .maybeSingle();
+
+        // 일반 쓰레드: 사업이민 섹션 숨김 유지, 기존 섹션 그대로
         if (!thread || thread.request_type !== 'business_immigration') {
             sidebar.classList.add('biz-sidebar-hidden');
             return;
         }
+
+        // 사업이민 쓰레드: 기존 사이드바 섹션 숨김 + 사업이민 5단계 표시
+        document.querySelectorAll(
+            '#threadProgressSection, #threadSubmittedFilesSection, .visa-thread-default-section'
+        ).forEach(function (el) { el.style.display = 'none'; });
 
         const currentStage = mapBizStatusToStage(thread.business_immigration_status);
         const isArchived = thread.business_immigration_status === 'archived';

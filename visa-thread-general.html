@@ -724,7 +724,34 @@
         </div>
 
         <div class="thread-sidebar">
-            <div class="sidebar-section">
+            <!-- 사업이민 5단계 (request_type='business_immigration'일 때만 JS가 노출) -->
+            <div id="bizImmigrationSidebar" class="biz-sidebar-section biz-sidebar-hidden" aria-label="사업이민 진행 단계">
+                <h3 class="biz-sidebar-heading" data-i18n="biz.sidebar.heading">프로젝트 진행 단계</h3>
+                <ol class="biz-sidebar-list">
+                    <li class="biz-sidebar-step" data-stage="1">
+                        <span class="biz-sidebar-num">1</span>
+                        <span class="biz-sidebar-label" data-i18n="biz.dashboard.progress.stage1">사전 상담</span>
+                    </li>
+                    <li class="biz-sidebar-step" data-stage="2">
+                        <span class="biz-sidebar-num">2</span>
+                        <span class="biz-sidebar-label" data-i18n="biz.dashboard.progress.stage2">본 상담</span>
+                    </li>
+                    <li class="biz-sidebar-step" data-stage="3">
+                        <span class="biz-sidebar-num">3</span>
+                        <span class="biz-sidebar-label" data-i18n="biz.dashboard.progress.stage3">착수</span>
+                    </li>
+                    <li class="biz-sidebar-step" data-stage="4">
+                        <span class="biz-sidebar-num">4</span>
+                        <span class="biz-sidebar-label" data-i18n="biz.dashboard.progress.stage4">정착</span>
+                    </li>
+                    <li class="biz-sidebar-step" data-stage="5">
+                        <span class="biz-sidebar-num">5</span>
+                        <span class="biz-sidebar-label" data-i18n="biz.dashboard.progress.stage5">사후관리</span>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="sidebar-section visa-thread-default-section">
                 <h3><i class="fas fa-info-circle"></i> <span data-i18n="thread.info.title">신청 정보</span></h3>
                 <div class="info-item">
                     <div class="info-label" data-i18n="thread.info.applicationNumber">신청 번호</div>
@@ -744,14 +771,14 @@
                 </div>
             </div>
 
-            <div class="sidebar-section">
+            <div class="sidebar-section visa-thread-default-section">
                 <h3><i class="fas fa-file-alt"></i> <span data-i18n="thread.documents.title">첨부 서류</span></h3>
                 <div id="documentsList">
                     <p style="color: #6B7280; font-size: 14px; padding: 12px 0;" data-i18n="thread.documents.empty">아직 첨부된 서류가 없습니다.</p>
                 </div>
             </div>
 
-            <div class="sidebar-section">
+            <div class="sidebar-section visa-thread-default-section">
                 <h3><i class="fas fa-clock"></i> <span data-i18n="thread.progress.title">진행 현황</span></h3>
                 <div class="info-item">
                     <div class="info-label" data-i18n="thread.progress.currentStatus">현재 단계</div>
@@ -1028,7 +1055,13 @@
                 // console.log('✅ [loadThread] 쓰레드 조회 성공:', thread);
                 
                 // UI 업데이트
-                document.getElementById('serviceTitle').textContent = thread.service_name || t('thread.noServiceName', '서비스명 없음');
+                // 사업이민 쓰레드는 service_name('Business Immigration Consultation') 대신 i18n 키 사용
+                if (thread.request_type === 'business_immigration') {
+                    const bizTitle = (typeof t === 'function') ? t('biz.thread.title', '사업이민 사전 상담') : '사업이민 사전 상담';
+                    document.getElementById('serviceTitle').textContent = bizTitle;
+                } else {
+                    document.getElementById('serviceTitle').textContent = thread.service_name || t('thread.noServiceName', '서비스명 없음');
+                }
                 document.getElementById('threadDate').textContent = typeof i18n !== 'undefined' ? i18n.formatDate(thread.created_at) : new Date(thread.created_at).toLocaleDateString('ko-KR');
                 document.getElementById('applicationId').textContent = thread.order_id || thread.id;
                 document.getElementById('applicationDate').textContent = typeof i18n !== 'undefined' ? i18n.formatDate(thread.created_at) : new Date(thread.created_at).toLocaleDateString('ko-KR');
@@ -1369,34 +1402,5 @@
     <!-- 다국어 시스템 -->
     <script src="js/translations.js"></script>
     <script src="js/i18n.js"></script>
-
-    <!-- 사업이민 쓰레드 우측 세로 5단계 사이드바 (request_type='business_immigration'일 때만 표시) -->
-    <aside id="biz-immigration-sidebar" class="biz-sidebar biz-sidebar-hidden" aria-label="사업이민 진행 단계">
-        <div class="biz-sidebar-inner">
-            <h3 class="biz-sidebar-heading" data-i18n="biz.sidebar.heading">프로젝트 진행 단계</h3>
-            <ol class="biz-sidebar-list">
-                <li class="biz-sidebar-step" data-stage="1">
-                    <span class="biz-sidebar-num">1</span>
-                    <span class="biz-sidebar-label" data-i18n="biz.dashboard.progress.stage1">사전 상담</span>
-                </li>
-                <li class="biz-sidebar-step" data-stage="2">
-                    <span class="biz-sidebar-num">2</span>
-                    <span class="biz-sidebar-label" data-i18n="biz.dashboard.progress.stage2">본 상담</span>
-                </li>
-                <li class="biz-sidebar-step" data-stage="3">
-                    <span class="biz-sidebar-num">3</span>
-                    <span class="biz-sidebar-label" data-i18n="biz.dashboard.progress.stage3">착수</span>
-                </li>
-                <li class="biz-sidebar-step" data-stage="4">
-                    <span class="biz-sidebar-num">4</span>
-                    <span class="biz-sidebar-label" data-i18n="biz.dashboard.progress.stage4">정착</span>
-                </li>
-                <li class="biz-sidebar-step" data-stage="5">
-                    <span class="biz-sidebar-num">5</span>
-                    <span class="biz-sidebar-label" data-i18n="biz.dashboard.progress.stage5">사후관리</span>
-                </li>
-            </ol>
-        </div>
-    </aside>
 </body>
 </html>

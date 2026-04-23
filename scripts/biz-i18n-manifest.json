@@ -90,7 +90,8 @@
     "biz.request.threadPreview.title",
     "biz.request.threadPreview.subtitle",
     "biz.request.threadPreview.caption",
-    "biz.sidebar.heading"
+    "biz.sidebar.heading",
+    "biz.thread.title"
   ],
   "nonBizKeys": [
     "common.retry",

@@ -1166,24 +1166,16 @@ textarea:focus-visible {
 .toast-with-retry .toast-close:hover { color: #191f28; }
 
 /* ============================================
- * 사업이민 쓰레드 페이지 우측 세로 5단계 사이드바
- * 참조: BUSINESS_IMMIGRATION_SPEC.md 섹션 4·6-2
+ * 사업이민 쓰레드 사이드바 섹션 (기존 .thread-sidebar 내부에 인라인 배치)
  * ============================================ */
-.biz-sidebar {
-    position: fixed;
-    top: 96px;
-    right: 20px;
-    width: 220px;
+.biz-sidebar-section {
     background: #FFFFFF;
     border: 1px solid #E5E8EB;
     border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-    z-index: 50;
+    padding: 20px 18px;
+    margin-bottom: 16px;
 }
 .biz-sidebar-hidden { display: none !important; }
-.biz-sidebar-inner {
-    padding: 20px 18px;
-}
 .biz-sidebar-heading {
     font-size: 14px;
     font-weight: 700;
@@ -1204,7 +1196,6 @@ textarea:focus-visible {
     padding: 10px 8px;
     border-radius: 8px;
     margin-bottom: 4px;
-    transition: background 0.15s;
 }
 .biz-sidebar-num {
     display: inline-flex;
@@ -1241,11 +1232,5 @@ textarea:focus-visible {
 }
 .biz-sidebar-step-done .biz-sidebar-label {
     color: #6B7684;
-    text-decoration: line-through;
-    text-decoration-color: #B0C7B7;
 }
-.biz-sidebar-step-upcoming { opacity: 0.65; }
-
-@media (max-width: 1200px) {
-    .biz-sidebar { display: none !important; }
-}
+.biz-sidebar-step-upcoming { opacity: 0.6; }
