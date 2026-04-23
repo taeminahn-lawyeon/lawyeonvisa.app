@@ -1566,7 +1566,7 @@
                         <div class="desc-item" data-i18n="emergency.freeConsult.item2">Get a cost estimate before you pay</div>
                         <div class="desc-item" data-i18n="emergency.freeConsult.item3">No payment required to start</div>
                     </div>
-                    <button class="cta-btn" onclick="event.stopPropagation(); location.href='consultation-request.html'"><span data-i18n="emergency.freeConsult.cta">Start Free Consultation</span> <span class="arrow">→</span></button>
+                    <button class="cta-btn" onclick="event.stopPropagation(); goToServicePage('consultation-request.html')"><span data-i18n="emergency.freeConsult.cta">Start Free Consultation</span> <span class="arrow">→</span></button>
                 </div>
                 <!-- Card 2: 비자 진단 및 자문 -->
                 <div class="premium-service-card" id="visaDiagnosisCard">
@@ -1576,7 +1576,7 @@
                         <div class="desc-item" data-i18n="emergency.diagnosis.item2">Immigration law violation consultation</div>
                         <div class="desc-item" data-i18n="emergency.diagnosis.item3">Overstay risk assessment</div>
                     </div>
-                    <button class="cta-btn" onclick="event.stopPropagation(); goToConsent({id: 'visa-prediagnosis'})"><span data-i18n="emergency.diagnosis.cta">Request Diagnosis</span> <span class="arrow">→</span></button>
+                    <button class="cta-btn" onclick="event.stopPropagation(); goToServicePage('service-apply-general.html?service=visa-prediagnosis')"><span data-i18n="emergency.diagnosis.cta">Request Diagnosis</span> <span class="arrow">→</span></button>
                 </div>
                 <!-- Card 3: 사업 이민 (신규) -->
                 <div class="premium-service-card" id="businessImmigrationCard">
@@ -1586,7 +1586,7 @@
                         <div class="desc-item" data-i18n="biz.card.summary2">계약 및 규제 관리</div>
                         <div class="desc-item" data-i18n="biz.card.summary3">정착 및 사후 지원</div>
                     </div>
-                    <button class="cta-btn" onclick="event.stopPropagation(); location.href='business-immigration-request.html'"><span data-i18n="biz.hero.cta">사업이민 사전 상담 신청</span> <span class="arrow">→</span></button>
+                    <button class="cta-btn" onclick="event.stopPropagation(); goToServicePage('business-immigration-request.html')"><span data-i18n="biz.hero.cta">사업이민 사전 상담 신청</span> <span class="arrow">→</span></button>
                 </div>
             </div>
         </div>
@@ -2585,6 +2585,27 @@
 
 
         // 서비스 신청 - 로그인 필요 (기본사항은 쓰레드에서 요청)
+        // 3개 신속 신청 카드(사전 상담·비자 자문·사업이민)를 통일된 로그인 플로우로 처리.
+        // D-10-1 신청(goToConsent) 패턴 그대로:
+        //   - 관리자: 바로 이동
+        //   - 비로그인: redirectAfterLogin 저장 후 확인창 → signInWithGoogle (로그인 후 목표 페이지로 복귀)
+        //   - 로그인됨: 바로 이동
+        async function goToServicePage(targetUrl) {
+            if (window.isAdminLoggedIn && window.isAdminLoggedIn()) {
+                window.location.href = targetUrl;
+                return;
+            }
+            const session = await checkSession();
+            if (!session || !session.user) {
+                localStorage.setItem('redirectAfterLogin', window.location.origin + '/' + targetUrl);
+                if (confirm(window.i18n.translate('common.serviceLoginConfirm'))) {
+                    await signInWithGoogle();
+                }
+                return;
+            }
+            window.location.href = targetUrl;
+        }
+
         async function goToConsent(service) {
             // console.log('👉 민원 신청 카드 클릭:', service);
 
