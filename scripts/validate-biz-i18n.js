@@ -45,27 +45,17 @@ if (allKeys.length === 0) {
     process.exit(1);
 }
 
-// 2) translations.js 로드 및 평가
-//    파일이 전역 변수 선언 형태(const translations = { ... })이므로
-//    Node에서 실행하기 위해 문자열을 약간 조작해 평가.
-let src;
-try {
-    src = fs.readFileSync(TRANSLATIONS_PATH, 'utf8');
-} catch (err) {
-    console.error('[validate-biz-i18n] translations.js 로드 실패: ' + TRANSLATIONS_PATH);
-    console.error(err.message);
-    process.exit(1);
-}
-
-// `const translations = ` → `translations = ` 로 치환해 글로벌 스코프에 할당
-const evalSrc = src.replace(/^\s*const\s+translations\s*=/m, 'translations =');
-
+// 2) translations.js 로드
+//    translations.js 말미의 `module.exports = translations;` 덕분에 require로 그대로 import 가능.
+//    기존 eval 방식은 Node 버전·CI 환경에 따라 동작 차이가 있어 require 방식으로 단순화.
 let translations;
 try {
-    // eslint-disable-next-line no-eval
-    eval(evalSrc); // translations 변수에 객체 할당됨
+    // require 캐시를 비워 재실행 안전성 확보
+    const resolved = require.resolve(TRANSLATIONS_PATH);
+    delete require.cache[resolved];
+    translations = require(TRANSLATIONS_PATH);
 } catch (err) {
-    console.error('[validate-biz-i18n] translations.js 평가 실패');
+    console.error('[validate-biz-i18n] translations.js 로드 실패: ' + TRANSLATIONS_PATH);
     console.error(err.message);
     process.exit(1);
 }
@@ -110,7 +100,11 @@ if (missing.length > 0) {
 
 // 5) 통과
 const totalChecks = allKeys.length * requiredLangs.length;
-const pendingCount = (src.match(/TRANSLATION_PENDING/g) || []).length;
+let pendingCount = 0;
+try {
+    const srcStr = fs.readFileSync(TRANSLATIONS_PATH, 'utf8');
+    pendingCount = (srcStr.match(/TRANSLATION_PENDING/g) || []).length;
+} catch (_) { /* 실패 시 0으로 표기 */ }
 console.log('[validate-biz-i18n] ✅ OK');
 console.log('  · 검증 키: ' + allKeys.length + '개');
 console.log('  · 언어: ' + requiredLangs.length + '개 (' + requiredLangs.join(', ') + ')');
