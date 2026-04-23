@@ -51,6 +51,10 @@ async function signInWithGoogle() {
         } else if (currentPage === 'thread-general-v2.html') {
             // 쓰레드 페이지: 이메일 링크 자동 로그인 흐름을 위해 현재 URL(?id= 포함) 보존
             redirectUrl = window.location.href;
+        } else if (currentPage === 'business-immigration-request.html') {
+            // 사업이민 신청 페이지: 로그인 후 같은 페이지로 돌아와 제출 이어가기
+            localStorage.removeItem('universityCode');
+            redirectUrl = window.location.href;
         } else {
             localStorage.removeItem('universityCode');
             redirectUrl = window.location.origin + '/index.html';
