@@ -86,7 +86,11 @@
     "home.urgent.cta",
     "biz.card.summary1",
     "biz.card.summary2",
-    "biz.card.summary3"
+    "biz.card.summary3",
+    "biz.request.threadPreview.title",
+    "biz.request.threadPreview.subtitle",
+    "biz.request.threadPreview.caption",
+    "biz.sidebar.heading"
   ],
   "nonBizKeys": [
     "common.retry",

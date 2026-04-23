@@ -153,14 +153,25 @@ async function submitBusinessImmigrationRequest() {
     }
     const user = session.data.session.user;
 
-    const formData = collectBizRequestFormData(form, user);
-
-    // 필수 검증 (클라이언트 레벨)
-    if (!formData.nationality || !formData.residence_country ||
-        !formData.visa_type_interest || !formData.contact_method) {
-        alert('필수 항목을 확인해 주세요.');
+    // 약관 동의 체크 (폼 필드는 제거되고 약관 체크박스만 남음)
+    const consentCheck = form.querySelector('#consultConsentCheck');
+    if (consentCheck && !consentCheck.checked) {
+        alert((window.i18n && i18n.translate) ? i18n.translate('consultation.consentRequired') : '이용약관 및 개인정보 처리방침에 동의해 주세요.');
         return;
     }
+
+    // 상세 정보는 본 상담 쓰레드에서 수집. 이메일만 Google OAuth에서 자동.
+    const formData = {
+        nationality: null,
+        residence_country: null,
+        visa_type_interest: null,
+        family_composition: null,
+        children_count: null,
+        timeline: null,
+        message: null,
+        contact_method: null,
+        email: user?.email || null
+    };
 
     const submitBtn = form.querySelector('button[type="submit"]');
     if (submitBtn) submitBtn.disabled = true;
@@ -214,35 +225,6 @@ async function submitBusinessImmigrationRequest() {
     }
 }
 
-/**
- * 폼 DOM에서 RPC 파라미터로 전달할 객체 수집.
- */
-function collectBizRequestFormData(form, user) {
-    const fd = new FormData(form);
-
-    // family_composition 구성 (체크박스 + 자녀 수)
-    const spouse   = fd.get('family_spouse')  === 'on' || fd.get('family_spouse')  === '1';
-    const parents  = fd.get('family_parents') === 'on' || fd.get('family_parents') === '1';
-    const childrenRaw = fd.get('children_count');
-    const children = childrenRaw ? parseInt(childrenRaw, 10) : 0;
-
-    const familyComposition = (spouse || parents || children > 0)
-        ? { spouse: spouse, children: children, parents: parents }
-        : null;
-
-    return {
-        nationality:        fd.get('nationality') || null,
-        residence_country:  fd.get('residence_country') || null,
-        visa_type_interest: fd.get('visa_type_interest') || null,
-        family_composition: familyComposition,
-        children_count:     children > 0 ? children : null,
-        timeline:           fd.get('timeline') || null,
-        message:            fd.get('message') || null,
-        contact_method:     fd.get('contact_method') || null,
-        email:              fd.get('email') || user?.email || null
-    };
-}
-
 // ============================================
 // 4. 사업이민 welcome 메시지 빌더 (섹션 14-7-5)
 // ============================================
@@ -284,6 +266,72 @@ function escapeHtml(s) {
 // 5. 관리자 대시보드 system_errors 뱃지 (섹션 14-8-6)
 // ============================================
 
+/**
+ * 사업이민 쓰레드 페이지 우측 세로 5단계 사이드바 렌더.
+ * DB 8단계 business_immigration_status → UI 5단계 매핑:
+ *   1. 사전 상담: pre_consultation
+ *   2. 본 상담: detailed_consultation
+ *   3. 착수: stage1_engaged, stage1_completed
+ *   4. 정착: stage2_engaged, visa_issued
+ *   5. 사후관리: aftercare
+ *   (archived는 전체 완료 상태)
+ */
+function mapBizStatusToStage(status) {
+    if (!status) return 0;
+    const map = {
+        pre_consultation: 1,
+        detailed_consultation: 2,
+        stage1_engaged: 3,
+        stage1_completed: 3,
+        stage2_engaged: 4,
+        visa_issued: 4,
+        aftercare: 5,
+        archived: 5
+    };
+    return map[status] || 0;
+}
+
+async function renderBizImmigrationSidebar() {
+    const sidebar = document.getElementById('biz-immigration-sidebar');
+    if (!sidebar || !window.supabaseClient) return;
+
+    const threadId = new URLSearchParams(location.search).get('id');
+    if (!threadId) return;
+
+    try {
+        const { data: thread } = await supabaseClient
+            .from('threads')
+            .select('id, request_type, business_immigration_status')
+            .eq('id', threadId)
+            .maybeSingle();
+        if (!thread || thread.request_type !== 'business_immigration') {
+            sidebar.classList.add('biz-sidebar-hidden');
+            return;
+        }
+
+        const currentStage = mapBizStatusToStage(thread.business_immigration_status);
+        const isArchived = thread.business_immigration_status === 'archived';
+
+        sidebar.querySelectorAll('.biz-sidebar-step').forEach(function (el) {
+            const stage = parseInt(el.getAttribute('data-stage'), 10);
+            el.classList.remove('biz-sidebar-step-current', 'biz-sidebar-step-done', 'biz-sidebar-step-upcoming');
+            if (isArchived) {
+                el.classList.add('biz-sidebar-step-done');
+            } else if (stage < currentStage) {
+                el.classList.add('biz-sidebar-step-done');
+            } else if (stage === currentStage) {
+                el.classList.add('biz-sidebar-step-current');
+            } else {
+                el.classList.add('biz-sidebar-step-upcoming');
+            }
+        });
+
+        sidebar.classList.remove('biz-sidebar-hidden');
+    } catch (err) {
+        console.error('[biz sidebar]', err);
+    }
+}
+
 async function refreshSystemErrorsBadge() {
     const badge = document.getElementById('system-errors-badge');
     if (!badge || !window.supabaseClient) return;
@@ -319,6 +367,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // 쓰레드 페이지에서만 배너 평가(해당 DOM 없으면 조기 반환됨)
     evaluateThreadProfileBanner();
 
+    // 쓰레드 페이지에서만 사업이민 사이드바 렌더(해당 DOM 없으면 조기 반환됨)
+    renderBizImmigrationSidebar();
+
     // 관리자 대시보드에서만 뱃지 갱신(해당 DOM 없으면 조기 반환됨)
     refreshSystemErrorsBadge();
 
@@ -335,8 +386,10 @@ document.addEventListener('DOMContentLoaded', function () {
 // 외부 호출용으로 window에 노출 (필요 시)
 window.businessImmigration = {
     evaluateThreadProfileBanner: evaluateThreadProfileBanner,
+    renderBizImmigrationSidebar: renderBizImmigrationSidebar,
     submitBusinessImmigrationRequest: submitBusinessImmigrationRequest,
     refreshSystemErrorsBadge: refreshSystemErrorsBadge,
     showToastWithRetry: showToastWithRetry,
-    buildBusinessImmigrationWelcome: buildBusinessImmigrationWelcome
+    buildBusinessImmigrationWelcome: buildBusinessImmigrationWelcome,
+    mapBizStatusToStage: mapBizStatusToStage
 };
