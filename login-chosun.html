@@ -520,7 +520,8 @@
                         await createOrUpdateProfile(user.id, {
                             name: user.user_metadata?.full_name || '',
                             email: user.email || '',
-                            phone: ''
+                            phone: '',
+                            organization: 'chosun'
                         });
                     }
                 } catch (e) { console.error('Profile check error:', e); }
@@ -661,7 +662,8 @@
                     await createOrUpdateProfile(currentUser.id, {
                         name: currentUser.user_metadata?.full_name || '',
                         email: currentUser.email || '',
-                        phone: ''
+                        phone: '',
+                        organization: 'chosun'
                     });
                 }
 
