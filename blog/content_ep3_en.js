@@ -10,7 +10,8 @@ window.POST = {
     { no: "03", label: "Relocation & Launch Flow", active: true },
     { no: "04", label: "After Business Immigration" },
   ],
-  title: "What Actually Happens When You Start a Business in Korea",
+  title: "How to Open a Store in Korea as a Foreigner — The Step-by-Step 2026 Process",
+  url: "how-to-open-a-store-in-korea-as-a-foreigner-2026",
   disclaimer: "This is the third installment of our Business Immigration series. Episode 1 covered the D-9-4 and D-9-5 visa overview, Episode 2 the structure of the visa system. This episode explains, stage by stage, how the actual relocation and launch unfolds. Post-settlement matters are covered in Episode 4. The examples in this article are hypothetical compositions of conditions frequently seen in consultations, not actual cases.",
   series: "Episode 3 · Business Immigration Series",
   publishedAt: "2026.04.24",
@@ -154,9 +155,9 @@ window.POST = {
     }
   ],
   related: [
-    { tag: "EP 1", title: "Korean Business Immigration Visa Overview — D-9-4, D-9-5, and Why Franchise Is a Practical Path" },
-    { tag: "EP 2", title: "Structure of Korea's Business Immigration Visa System — Investment, Stay, Extension, Family" },
-    { tag: "EP 4", title: "After Business Immigration to Korea — Long-Term Residency, Family, Real Estate, Social Insurance" }
+    { tag: "EP 1", title: "How to Start a Business in Korea as a Foreigner — The 2026 Guide", url: "start-a-business-in-korea-as-a-foreigner-2026" },
+    { tag: "EP 2", title: "Korea Business Visa in 2026 — How Much to Invest, How Long You Can Stay, and Bringing Your Family", url: "korea-business-visa-investment-and-family-guide-2026" },
+    { tag: "EP 4", title: "How to Stay in Korea Long-Term as a Foreign Business Owner — Residency, Family, Real Estate, Healthcare (2026)", url: "how-to-stay-in-korea-long-term-as-a-business-owner-2026" }
   ]
 };
 window.TOC = window.POST.sections.filter(s => s.heading).map(s => ({ id: s.id, label: s.heading }));
