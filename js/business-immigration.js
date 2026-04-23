@@ -272,8 +272,9 @@ async function renderBizImmigrationSidebar() {
         }
 
         // 사업이민 쓰레드: 기존 사이드바 섹션 숨김 + 사업이민 5단계 표시
+        // (고객용 · 관리자 페이지 양쪽에서 동일 id/class 재사용)
         document.querySelectorAll(
-            '#threadProgressSection, #threadSubmittedFilesSection, .visa-thread-default-section'
+            '#threadProgressSection, #threadSubmittedFilesSection, #threadFeeSection, .visa-thread-default-section'
         ).forEach(function (el) { el.style.display = 'none'; });
 
         const currentStage = mapBizStatusToStage(thread.business_immigration_status);
