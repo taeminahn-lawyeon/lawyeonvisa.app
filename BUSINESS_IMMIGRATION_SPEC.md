@@ -40,13 +40,14 @@
 
 ```
 lawyeonvisa.app/
-├── business-immigration.html            [신설] 사업이민 랜딩
-├── business-immigration-request.html    [신설] 사업이민 전용 상담 신청 폼
+├── business-immigration-request.html    [신설] 사업이민 전용 상담 신청 페이지 (랜딩+폼 통합)
 ```
+
+> **2026-04-20 개정**: 초기 설계에 있던 `business-immigration.html` 랜딩 페이지는 **폐지**되었습니다. 사업이민 전용 대문 페이지 대신, 기존 대문 3종(`index.html` + 대학 랜딩 2종)에 "사업이민" 진입 엔트리를 추가하는 방식으로 변경. 상세는 섹션 3 참조.
 
 ### 신규 CSS/JS 파일
 - 신규 스타일시트 생성 금지. 기존 `css/` 재사용.
-- 신규 JS 필요 시 `js/business-immigration.js` 1개만 생성 (폼 로직·진행 단계 라벨 맵핑).
+- `js/business-immigration.js` 1개 (배너·폼 로직·토스트·뱃지).
 
 ---
 
@@ -54,163 +55,120 @@ lawyeonvisa.app/
 
 GitHub Pages 정적 라우팅 기준.
 
-| 경로 | 파일 |
+| 경로 | 역할 |
 |---|---|
-| `/business-immigration.html` | 사업이민 랜딩 (언어는 쿼리/로컬스토리지로 제어) |
-| `/business-immigration-request.html` | 사업이민 상담 신청 폼 |
+| `/index.html` | 기존 메인 랜딩. 히어로 카드 중 "사업이민" 엔트리로 진입 경로 제공. |
+| `/service-chosun.html`, `/service-kdu.html` | 대학 랜딩. 동일하게 "사업이민" 엔트리 포함. |
+| `/business-immigration-request.html` | 사업이민 전용 상담 신청 페이지 (설명 콘텐츠 + 9필드 폼 통합) |
+
+### 진입 경로
+`index.html` 또는 대학 랜딩의 히어로 3카드 중 **사업이민 카드**를 클릭하면 비로그인 상태에서도 즉시 `business-immigration-request.html`로 이동. 해당 페이지에서 Google 로그인 게이트 통과 후 폼 제출.
 
 ### 언어 전환
-- 기존 i18n 방식 그대로. URL 변경 없이 `localStorage.language` 키 기반.
-- 랜딩 진입 시 기본값 `en` (기존 원칙 유지).
+기존 i18n 방식 그대로. URL 변경 없이 `localStorage.i18n_language` 키 기반.
 
 ---
 
-## 3. 랜딩 페이지 구조 (`business-immigration.html`)
+## 3. 대문 페이지 진입 엔트리 구조 (`index.html` + 대학 랜딩)
 
-### 3-1. 베이스 원본
-기존 `index.html`을 복제 후 수정하는 방식으로 구현. 기존 `index.html`의 다음 블록을 그대로 재활용.
+> **개정 배경**: 별도의 사업이민 대문 페이지(`business-immigration.html`)는 폐지. 대신 기존 대문 3종에 공통 진입 엔트리를 추가하고, 사업이민 상세 설명은 신청 페이지 안에서 제공(섹션 4).
 
-- 상단 헤더 (로고·언어 드롭다운·Google 로그인·관리자)
-- 법무법인 신뢰 배지 + 변호사 6인 캐러셀 블록 (그대로 유지, 통역사·전문가 추가 없음)
-- 뉴스 & 인사이트 블록
-- 나의 신청 내역 블록 (라벨만 "나의 프로젝트 진행 현황"으로 교체)
-- 푸터
+### 3-1. 히어로 3카드 재구성
 
-### 3-2. 섹션 구성 (위→아래)
+`index.html`·`service-chosun.html`·`service-kdu.html`의 기존 `premium-service-banner` 블록을 아래 3카드 구성으로 변경. 변경 전 3카드(긴급 법률 구제 · 사전 상담 · 비자 진단) 중 **긴급 법률 구제는 풀폭 배너로 이동**하고, 그 자리에 **사업이민 카드를 신설**.
 
-**섹션 1 — 상단 헤더**
-기존 `index.html`과 동일. 변경 없음.
+| 카드 | id | 이동 경로 | 데이터 |
+|---|---|---|---|
+| 1 | `freeConsultationCard` (index) / 사전 상담 (대학) | `consultation-request.html` 또는 학교별 사전 상담 플로우 | 기존 유지 |
+| 2 | `visaDiagnosisCard` | `consultation-request.html?type=visa-prediagnosis` | 기존 유지 |
+| 3 | **`businessImmigrationCard`** (신규) | `business-immigration-request.html` | `data-i18n="biz.hero.cta"` 타이틀, 요약 3항목은 `biz.step1.title`·`biz.step2.title`·`biz.step4.title` |
 
-**섹션 2 — 히어로 + 단일 CTA**
-기존 `index.html`의 3개 카드(Immigration Legal Services / Free Pre-Consultation / Visa Diagnosis)를 단일 CTA 블록으로 교체.
+### 3-2. 풀폭 긴급 법률 구제 배너 (히어로 직후)
 
-레이아웃:
-- 좌측: 헤드라인 + 서브헤드 + CTA 버튼
-- 우측: 대표 이미지 영역 (이미지 자산은 추후 전달, 임시로 기존 이미지 중 하나 placeholder)
+디자인 원칙: **무색·무아이콘·무로고**. 타이포와 얇은 보더만으로 무게 전달.
 
-콘텐츠 (번역 키 기준):
-```
-data-i18n="biz.hero.headline"    → "한국에서 사업을 시작하고 이주하기 위한 통합 법률서비스"
-data-i18n="biz.hero.subhead"     → "해외에서 한국 이주를 검토하는 외국인을 대상으로, 프로젝트 탐색·규제 자문·비자 취득을 순차 수행합니다."
-data-i18n="biz.hero.cta"         → "사업이민 사전 상담 신청"
-```
+| 항목 | 값 |
+|---|---|
+| 배경 | `#F8FAFC` 단색 |
+| 보더 | 상하 `1px solid #E5E8EB` |
+| 섀도우 | 없음 |
+| 패딩 | 가로 48px · 세로 28px |
+| 좌측 | `home.urgent.headline` (20px / 800 / `#0F172A`) + `home.urgent.subhead` (14px / `#4E5968`) |
+| 우측 | `cta-btn` 재사용, `home.urgent.cta` 라벨. 클릭 시 `consultation-request.html?type=emergency` |
+| 모바일 (≤900px) | 세로 스택, CTA 풀폭 |
 
-CTA 버튼 동작:
-- 클릭 시 `/business-immigration-request.html` 이동.
-- Google 로그인 상태가 아니면 로그인 모달 선표시 후 이동.
+> 풀폭 배너의 `home.urgent.*` 카피는 현재 개발자 placeholder. PM 최종 카피로 교체 예정.
 
-**섹션 3 — 법무법인 신뢰 배지 + 변호사 캐러셀**
-기존 `index.html` 블록 그대로 복제. 통역사·전문가 추가 없음.
-- 법무부 등록 출입국민원대행기관 배지 (#25-SM-RG-063)
-- 변호사 6인 캐러셀 (S.H. Bong, J.W. Min, D.H. Nam, S.C. Kim, Y.H. Hwang, D.G. Shin)
+### 3-3. 대학 랜딩 적용 범위
 
-상단 한 문장 설명은 사업이민용 번역 키로 교체:
-```
-data-i18n="biz.badge.description" → "법무법인 로연 출입국이민지원센터는 외국인의 한국 사업이민 법률서비스를 제공합니다."
-```
+`service-chosun.html`·`service-kdu.html`에도 **동일 히어로 3카드 재구성 + 풀폭 배너**를 적용. 단, 각 대학의 브랜드 컬러·식별자·기존 서비스 그리드는 유지.
 
-**섹션 4 — 서비스 명세 5단계 카드**
-기존 `index.html`의 "출입국 민원 대행 6카테고리" 블록 자리에 배치. 5그리드 레이아웃. 각 카드는 헤드 + 본문 1~2문장 구조.
+### 3-4. 변호사광고규칙 체크포인트
 
-```
-[카드 1] 사전 상담
-  biz.step1.title   → "사전 상담"
-  biz.step1.body    → "쓰레드를 통해 귀하의 국적, 자금 조달 방식, 이주 시점, 가족 구성을 확인하고 한국 사업이민 경로 개요를 안내합니다."
-
-[카드 2] 본 상담
-  biz.step2.title   → "본 상담"
-  biz.step2.body    → "이민 경로 상세 자문, 사업 개시 절차 및 예산 배정 구조화, 주요 리스크 안내, 비자 발급 등 출입국 행정 안내를 제공합니다."
-
-[카드 3] 착수
-  biz.step3.title   → "착수"
-  biz.step3.body    → "프로젝트 설계, 오퍼레이션 설계, 실사 방문 코디네이션, 최종 점검 회의를 수행합니다."
-
-[카드 4] 잔금
-  biz.step4.title   → "잔금"
-  biz.step4.body    → "계약 체결 지원, 외국인 투자 절차, 행정 등록 감독, 비자 취득, 동반가족 비자를 수행합니다."
-
-[카드 5] 사후관리
-  biz.step5.title   → "사후관리"
-  biz.step5.body    → "주거 임대차 검토, 가맹본부-점주 분쟁 조정, 근로계약 자문, 체류기간 연장, 영주권 전환 자문을 별도 계약으로 제공합니다."
-```
-
-카드 클릭 동작: 각 카드는 CTA로 작동하지 않음(정보 제공용). 페이지 하단 CTA로 유도.
-주의: 어느 카드에도 가격·비용·기간 언급 금지.
-
-**섹션 5 — 뉴스 & 인사이트**
-기존 `index.html`의 뉴스 블록 구조 재활용. 단, 다음 차이점 적용:
-- 기본 카테고리 필터를 "사업·투자"로 설정.
-- "더 많은 글 보기" 버튼 링크를 `/blog.html?category=사업·투자`로 지정 (기존 카테고리 필터 URL 컨벤션 따름).
-- 카드 3~4개 노출.
-
-**섹션 6 — 나의 프로젝트 진행 현황**
-기존 `index.html`의 "나의 신청 내역" 블록 재활용. 다음만 수정.
-
-라벨 교체:
-- 블록 제목: "나의 신청 내역" → "나의 프로젝트 진행 현황"
-- 비로그인 안내 문구: `biz.dashboard.guest` → "로그인하시면 나의 프로젝트 진행 현황, 상담 내역, 쓰레드를 확인하실 수 있습니다."
-
-**진행 단계 바 라벨 맵핑**:
-사업이민 쓰레드는 `status='active'` 고정이며, 진행 단계는 신규 컬럼 `business_immigration_status`가 추적합니다. 8단계 값은 섹션 14-2-2·섹션 6-2 참조.
-
-실제 UI에서는 압축된 **5단계 바**(사전 상담 / 본 상담 / 착수 / 잔금 / 사후관리)로 시각화하고, 각 단계 내부 세부 스텝은 쓰레드 상세 페이지에서 노출.
-
-**분기 로직**:
-- 로그인 사용자의 쓰레드가 `request_type='business_immigration'`인 경우 사업이민용 5단계 바 표시.
-- `request_type='general'` 쓰레드는 기존 5단계 바(`payment`→`document`→`processing`→`completed`→`archived`) 유지.
-
-**섹션 7 — 푸터**
-기존 `index.html` 푸터 재활용. 다음 수정:
-- "서비스 가격표" 링크 제거 (사업이민 랜딩 전용 푸터).
-- 나머지(개인정보처리방침·이용약관·환불규정·법무법인 로연 링크·광고책임변호사 남도현·민준우 표기)는 그대로 유지.
-
-### 3-3. 변호사광고규칙 체크포인트
-구현 시 다음 요건 자동 충족되도록 배치.
-- 푸터에 "법무법인 로연" 표기 + 광고책임변호사 남도현·민준우 표기 (기존 유지)
-- 가격·수임료 표기 전면 제거
-- "비자가 반드시 나옵니다" 류 결과 보장·예측 표현 금지 → 카피 확정 시 검수 필요
-- 변호사 프로필의 공직 재직 사실 표기 시 부당 영향력 암시 없는 형태만 허용 (기존 캐러셀 그대로이므로 추가 조치 불필요)
+- 모든 대문 페이지 푸터에 "법무법인 로연" 표기 + 광고책임변호사 남도현·민준우 (기존 유지)
+- 히어로 카드·풀폭 배너 어디에도 가격·수임료·비용 언급 없음
+- 결과 보장·예측 표현 금지
 
 ---
 
 ## 4. 상담 신청 페이지 (`business-immigration-request.html`)
 
+사업이민 전용 **설명 콘텐츠 + 폼 통합** 페이지. 기존 `consultation-request.html`·긴급 상담 등과 다른 6블록 스크롤 선형 레이아웃으로 차별화.
+
 ### 4-1. 베이스 원본
-기존 `consultation-request.html` 복제 후 필드·카피 수정.
+기존 `consultation-request.html` 복제 후 **좌측 컬럼의 banner·process-steps 블록을 사업이민 설명 콘텐츠(6블록)로 교체**. 우측 컬럼의 thread-preview 이미지 블록은 기존 유지. **중복 방지 원칙**: 대문 페이지(`index.html`·대학 랜딩)에 이미 있는 신뢰 배지·변호사 캐러셀·법무법인 소개 섹션은 본 페이지에서 **제외**.
 
-### 4-2. 폼 필드
+### 4-2. 페이지 블록 구조 (Q3 강화 기획)
 
-| 필드명 | 타입 | 필수 | 번역 키 |
+좌측 컬럼(`.left-column`) 위→아래 순서:
+
+**[1] 페이지 히어로** — `.biz-request-hero`
+- 헤드라인 + 서브헤드 2줄. **CTA 없음** (폼이 하단에 있으므로).
+- i18n: `biz.request.hero.headline`, `biz.request.hero.subhead`
+
+**[2] 사업이민 서비스 개요** — `.biz-request-overview`
+- 3단락: 센터 역할 → 서비스 범위 → 사전 상담 무상 안내.
+- i18n: `biz.request.overview.para1`, `para2`, `para3`
+
+**[3] 프로젝트 5단계** — `.biz-request-steps`
+- 5단계 번호+제목+본문 (사전 상담 / 본 상담 / 착수 / **정착** / 사후관리).
+- i18n: `biz.request.steps.heading`, `biz.step1.title`~`biz.step5.title`, `biz.step1.body`~`biz.step5.body`
+- **4단계 명칭**: 2026-04-20 개정으로 "잔금" → "정착" 변경. `biz.step4.title`·`biz.step4.body`·`biz.dashboard.progress.stage4` 모두 갱신됨.
+
+**[4] 고객이 준비해야 할 것** — `.biz-request-prepare`
+- 5개 불릿(이주 시점·가족 동반·본국 경력·한국 경험·한국어 수준) + 자금 규모는 본 상담 단계 안내.
+- i18n: `biz.request.prepare.heading`, `intro`, `item1`~`item5`, `disclaimer`
+
+**[5] 신청 폼** — `<form id="biz-request-form">` · 9필드 유지
+
+| 필드 | 타입 | 필수 | 번역 키 |
 |---|---|---|---|
-| 국적 | select (국가 리스트) | 필수 | `biz.form.nationality` |
-| 현재 거주국 | select (국가 리스트) | 필수 | `biz.form.residence_country` |
-| 관심 비자 유형 | radio (D-9-4 / D-9-5 / 잘 모름) | 필수 | `biz.form.visa_type` |
-| 가족 구성 — 본인 외 | checkbox (배우자 / 자녀 / 부모) | 선택 | `biz.form.family` |
-| 자녀 수 | number (0~10) | 조건부 (자녀 체크 시) | `biz.form.children_count` |
-| 예상 이주 시점 | select (3개월 내 / 6개월 내 / 1년 내 / 1년 이상 / 미정) | 필수 | `biz.form.timeline` |
-| 자유 메시지 | textarea (모국어 입력 가능) | 선택 | `biz.form.message` |
-| 이메일 | email (Google 로그인 시 자동 채움) | 필수 | 기존 재활용 |
-| 연락 가능 수단 | radio (이메일 / 쓰레드 / 전화) | 필수 | `biz.form.contact_method` |
+| 국적 | text | ✅ | `biz.form.nationality` |
+| 현재 거주국 | text | ✅ | `biz.form.residence_country` |
+| 관심 비자 유형 | radio (D-9-4 / D-9-5 / undecided) | ✅ | `biz.form.visa_type` |
+| 가족 구성 | checkbox (배우자·자녀·부모) | — | `biz.form.family` |
+| 자녀 수 | number (0~10, 자녀 체크 시) | 조건부 | `biz.form.children_count` |
+| 예상 이주 시점 | select (5 값) | ✅ | `biz.form.timeline` |
+| 자유 메시지 | textarea | — | `biz.form.message` |
+| 이메일 | email (OAuth 자동 채움) | ✅ | `biz.form.email` |
+| 연락 가능 수단 | radio (이메일·쓰레드·전화) | ✅ | `biz.form.contact_method` |
 
-자금 관련 필드 없음 (가격 언급 금지 원칙에 따라 폼 단계에서도 자금 규모 질문 없음. 본 상담에서 확인).
+자금 관련 필드 없음(변호사광고규칙 + 사전 상담 무상 원칙).
+
+**[6] 제출 영역** — 약관 동의 체크박스(법적 필수) + 제출 버튼(`biz.form.submit`) + 무상 안내 문구.
 
 ### 4-3. 제출 동작
-- Google 로그인 상태 강제 (로그인하지 않은 경우 로그인 유도).
-- 단일 RPC 호출 `create_business_immigration_request`로 **트랜잭션 처리** (상세는 섹션 14-8-4):
-  - `consultation_requests` 레코드 생성 (`request_type='business_immigration'`)
-  - `threads` 레코드 생성 (`request_type='business_immigration'`, `status='active'`, `business_immigration_status='pre_consultation'`)
-  - 양방향 연결 자동 수행
-- 제출 직후 환영 메시지 INSERT (사업이민 전용 템플릿).
-- 자동 회신 메시지 표시:
-  ```
-  biz.form.auto_reply → "상담 신청이 접수되었습니다. 담당자가 쓰레드로 회신드립니다."
-  ```
-- 제출 완료 후 `/thread-general-v2.html?id={thread_id}`로 직행.
-- RPC 실패 시 토스트 + 재시도 버튼(섹션 14-8-5 참조). 재시도 시 중복 없음(전체 롤백).
+- Google 로그인 필수. 비로그인 시 게이트 노출.
+- 단일 RPC 호출 `create_business_immigration_request`로 트랜잭션 처리(섹션 14-8-4):
+  - `consultation_requests` INSERT (`request_type='business_immigration'`)
+  - `threads` INSERT (`request_type='business_immigration'`, `status='active'`, `business_immigration_status='pre_consultation'`)
+  - 양방향 연결
+- 환영 메시지 INSERT (사업이민 전용 빌더).
+- `thread-general-v2.html?id={thread_id}`로 리다이렉트.
+- RPC 실패 시 `showToastWithRetry` + `system_errors` 로그(섹션 14-8-5).
 
 ### 4-4. 결제 관련
-- 이 페이지에서는 결제 없음. 사전 상담은 무상.
-- 기존 `consultation-request.html`에 결제 관련 로직이 있다면 사업이민 버전에서 완전 제거.
+이 페이지에서는 결제 없음. 사전 상담 무상. `consultation-request.html` 기반 복제 시 결제 관련 로직은 제거됨.
 
 ---
 
@@ -298,7 +256,16 @@ Stage 1 착수 결제(25%)가 완료되면 상태를 `pre_consultation` → `det
 ## 8. i18n 번역 키 추가
 
 ### 8-1. 추가할 네임스페이스
-`js/translations.js`에 `biz.*` 네임스페이스 신규 추가.
+`js/translations.js`에 다음 네임스페이스 신규 추가:
+- `biz.*` — 사업이민 공통(히어로·단계·폼 라벨 등)
+- `biz.request.*` — 사업이민 신청 페이지 전용 설명 콘텐츠 (히어로·개요·준비사항 등, Q3 강화 기획에 따라 2026-04-20 추가)
+- `home.urgent.*` — 대문 페이지 풀폭 긴급 배너 3개 키 (placeholder 카피, PM 교체 예정)
+
+**2026-04-20 개정 이력**:
+- `biz.step4.title` 값 "잔금" → "정착" (ko 마스터). `biz.step4.body` 본문도 정착 맥락으로 교체("계약 체결 지원, 외국인 투자 절차, 행정 등록 감독, 비자 취득, 동반 가족 비자 발급").
+- `biz.dashboard.progress.stage4` 값 동일하게 "정착" 교체.
+- en 마스터도 "Settlement"로 교체. vi·zh·ja·mn·th는 en 복제 + `TRANSLATION_PENDING` 주석 유지.
+- 총 키 수 65 → 82개, TRANSLATION_PENDING 주석 잔여 325 → 410건.
 
 ### 8-2. 주요 키 목록 (부분 발췌 — 전체 목록은 섹션 14-9-5)
 
