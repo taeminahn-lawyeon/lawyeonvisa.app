@@ -74,7 +74,10 @@ function renderRail(post) {
     }
     const slug = (SLUG_BY_EP[post.__lang] || {})[String(n.no).padStart(2, '0')];
     if (!slug) return `<li>${inner}</li>`;
-    return `<li><a href="/blog/${slug}.html">${inner}</a></li>`;
+    const href = `/blog/${slug}.html`;
+    // onclick on <li> so the whole row (including padding) is clickable even
+    // if the user hits the 5px padding area outside the <a>.
+    return `<li onclick="location.href='${href}'"><a href="${href}">${inner}</a></li>`;
   }).join('');
   return `<aside class="C-rail">
   <div class="C-rail-block">

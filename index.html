@@ -2726,6 +2726,7 @@
                 const { data: posts, error } = await supabaseClient
                     .from('blog_posts')
                     .select('*')
+                    .eq('is_published', true)
                     .order('created_at', { ascending: false })
                     .limit(3);
 
@@ -2744,9 +2745,12 @@
                 blogGrid.innerHTML = posts.map(post => {
                     const date = new Date(post.created_at);
                     const dateStr = date.getFullYear() + '.' + String(date.getMonth() + 1).padStart(2, '0') + '.' + String(date.getDate()).padStart(2, '0');
+                    const href = post.template === 'navy_v4'
+                        ? `blog/${post.slug}.html`
+                        : `blog-post.html?slug=${post.slug}`;
 
                     return `
-                        <a href="blog-post.html?slug=${post.slug}" class="blog-card">
+                        <a href="${href}" class="blog-card">
                             <div class="blog-card-thumb">
                                 ${post.thumbnail_url
                                     ? '<img src="' + post.thumbnail_url + '" alt="' + post.title + '">'
