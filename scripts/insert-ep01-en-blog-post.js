@@ -5,7 +5,7 @@
  *   node scripts/insert-ep01-en-blog-post.js
  *
  * Default: is_published = false so the post is visible only via direct URL
- *   (/blog/d9-visa-korea-business-immigration-franchise-overview-2026.html)
+ *   (/blog/start-a-business-in-korea-as-a-foreigner-2026.html)
  *   for verification. Flip to true when ready to list on blog.html
  *   (news & insight).
  *
@@ -21,7 +21,7 @@ const SUPABASE_URL = 'https://gqistzsergddnpcvuzba.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxaXN0enNlcmdkZG5wY3Z1emJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNTEyMjEsImV4cCI6MjA4MDcyNzIyMX0.X_GgShObq9OJ6z7aEKdUCoyHYo-OJL-I5hcIDt4komg';
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const SLUG = 'd9-visa-korea-business-immigration-franchise-overview-2026';
+const SLUG = 'start-a-business-in-korea-as-a-foreigner-2026';
 const CONTENT_FILE = path.resolve(__dirname, '..', 'blog', 'content_ep1_en.js');
 const IS_PUBLISHED = false; // ← Flip to true to make it appear in news & insight
 

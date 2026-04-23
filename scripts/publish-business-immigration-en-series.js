@@ -23,10 +23,10 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const POSTS = [
-  { file: 'blog/content_ep1_en.js', slug: 'd9-visa-korea-business-immigration-franchise-overview-2026' },
-  { file: 'blog/content_ep2_en.js', slug: 'd9-visa-korea-business-immigration-visa-system-structure-2026' },
-  { file: 'blog/content_ep3_en.js', slug: 'd9-visa-korea-business-immigration-relocation-launch-flow-2026' },
-  { file: 'blog/content_ep4_en.js', slug: 'd9-visa-korea-business-immigration-after-settlement-2026' },
+  { file: 'blog/content_ep1_en.js', slug: 'start-a-business-in-korea-as-a-foreigner-2026' },
+  { file: 'blog/content_ep2_en.js', slug: 'korea-business-visa-investment-and-family-guide-2026' },
+  { file: 'blog/content_ep3_en.js', slug: 'how-to-open-a-store-in-korea-as-a-foreigner-2026' },
+  { file: 'blog/content_ep4_en.js', slug: 'how-to-stay-in-korea-long-term-as-a-business-owner-2026' },
 ];
 
 const DRY = process.argv.includes('--dry');

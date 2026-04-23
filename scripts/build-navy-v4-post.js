@@ -2,7 +2,7 @@
  * Generate static Navy v4 blog HTML from a content_ep*.js file.
  *
  * Usage: node scripts/build-navy-v4-post.js <content-file> <output-slug>
- * Example: node scripts/build-navy-v4-post.js blog/content_ep1_en.js d9-visa-korea-business-immigration-franchise-overview-2026
+ * Example: node scripts/build-navy-v4-post.js blog/content_ep1_en.js start-a-business-in-korea-as-a-foreigner-2026
  */
 
 const fs = require('fs');
@@ -131,16 +131,16 @@ function renderSection(sec, idx, total, lang) {
 // EP-no (e.g. "01", "EP 2", "편 3") → slug mapping for RELATED row links.
 const SLUG_BY_EP = {
   en: {
-    '01': 'd9-visa-korea-business-immigration-franchise-overview-2026',
-    '02': 'd9-visa-korea-business-immigration-visa-system-structure-2026',
-    '03': 'd9-visa-korea-business-immigration-relocation-launch-flow-2026',
-    '04': 'd9-visa-korea-business-immigration-after-settlement-2026',
+    '01': 'start-a-business-in-korea-as-a-foreigner-2026',
+    '02': 'korea-business-visa-investment-and-family-guide-2026',
+    '03': 'how-to-open-a-store-in-korea-as-a-foreigner-2026',
+    '04': 'how-to-stay-in-korea-long-term-as-a-business-owner-2026',
   },
   ko: {
-    '01': 'd9-visa-korea-business-immigration-franchise-overview-2026',
-    '02': 'd9-visa-korea-business-immigration-visa-system-structure-2026',
+    '01': 'start-a-business-in-korea-as-a-foreigner-2026',
+    '02': 'korea-business-visa-investment-and-family-guide-2026',
     '03': 'business-immigration-korea-startup-process-2026',
-    '04': 'd9-visa-korea-business-immigration-after-settlement-2026',
+    '04': 'how-to-stay-in-korea-long-term-as-a-business-owner-2026',
   },
 };
 
