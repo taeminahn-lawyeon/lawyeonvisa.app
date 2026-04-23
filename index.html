@@ -2045,23 +2045,7 @@
                 });
             });
 
-            // 긴급 구제 카드 클릭 이벤트 - 상세 페이지로 바로 이동 (기본사항은 쓰레드에서 요청)
-            document.getElementById('emergencyLegalCard').addEventListener('click', async function() {
-                // console.log('👉 긴급 구제 카드 클릭');
-
-                // ✅ Supabase 세션 체크
-                const session = await checkSession();
-                // console.log('🔍 세션:', session);
-
-                if (!session || !session.user) {
-                    alert(window.i18n.translate('common.loginRequired'));
-                    document.getElementById('newGoogleLoginBtn').scrollIntoView({ behavior: 'smooth' });
-                    return;
-                }
-
-                // 상담 요청 페이지로 이동 (기본사항은 쓰레드에서 요청)
-                window.location.href = 'consultation-request.html?type=emergency';
-            });
+            // (긴급 구제 카드 리스너 제거 — 히어로에서 카드가 빠지고 풀폭 배너의 onclick으로 대체됨)
 
             // 비자 사전진단 카드 클릭 이벤트 - 상세 페이지로 바로 이동 (기본사항은 쓰레드에서 요청)
             document.getElementById('visaDiagnosisCard').addEventListener('click', async function() {
