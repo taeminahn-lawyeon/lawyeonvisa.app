@@ -67,9 +67,15 @@ function renderRail(post) {
   const toc = (post.sections || []).filter(s => s.heading).map((s, i) =>
     `<li data-id="${esc(s.id)}"${i === 0 ? ' class="C-active"' : ''}><a href="#${esc(s.id)}"><span class="C-mono">${String(i + 1).padStart(2, '0')}</span><span>${esc(s.heading)}</span></a></li>`
   ).join('');
-  const series = (post.seriesNav || []).map(n =>
-    `<li${n.active ? ' class="C-active"' : ''}><span class="C-mono">${esc(n.no)}</span><span>${esc(n.label)}${n.active ? ' ◀' : ''}</span></li>`
-  ).join('');
+  const series = (post.seriesNav || []).map(n => {
+    const inner = `<span class="C-mono">${esc(n.no)}</span><span>${esc(n.label)}${n.active ? ' ◀' : ''}</span>`;
+    if (n.active) {
+      return `<li class="C-active">${inner}</li>`;
+    }
+    const slug = (SLUG_BY_EP[post.__lang] || {})[String(n.no).padStart(2, '0')];
+    if (!slug) return `<li>${inner}</li>`;
+    return `<li><a href="/blog/${slug}.html">${inner}</a></li>`;
+  }).join('');
   return `<aside class="C-rail">
   <div class="C-rail-block">
     <div class="C-rail-label">${labels.contents}</div>
