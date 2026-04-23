@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EN Business Immigration 시리즈 발행</title>
+<style>
+  body{font-family:-apple-system,BlinkMacSystemFont,"Noto Sans KR",sans-serif;max-width:860px;margin:40px auto;padding:20px;color:#191f28;}
+  h1{font-size:22px;margin-bottom:6px;}
+  .subtitle{color:#6b7684;margin-bottom:24px;font-size:14px;}
+  .gate{background:#fff8e6;border:1px solid #f5c518;padding:16px;border-radius:8px;margin-bottom:20px;font-size:14px;}
+  .gate label{display:block;margin-top:10px;font-weight:600;}
+  .gate input{padding:8px 12px;border:1px solid #c9c7c0;border-radius:6px;font-size:14px;width:240px;margin-top:6px;}
+  .posts{border:1px solid #e5e8eb;border-radius:8px;overflow:hidden;margin-bottom:20px;}
+  .post{padding:14px 18px;border-bottom:1px solid #e5e8eb;font-size:13px;}
+  .post:last-child{border-bottom:0;}
+  .post-ep{display:inline-block;background:#0f2552;color:#fff;padding:2px 8px;border-radius:3px;font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:700;margin-right:10px;}
+  .post-title{font-weight:600;color:#191f28;}
+  .post-slug{color:#8b95a1;font-family:monospace;font-size:12px;margin-top:4px;}
+  .btn{padding:12px 24px;background:#0f2552;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;margin-right:8px;}
+  .btn:hover:not(:disabled){background:#081838;}
+  .btn:disabled{background:#ccc;cursor:not-allowed;}
+  .btn-dry{background:#6b7684;}
+  #result{margin-top:20px;padding:16px;border-radius:8px;white-space:pre-wrap;font-family:monospace;font-size:13px;display:none;}
+  .success{background:#e6fcf5;color:#087f5b;display:block!important;}
+  .error{background:#ffeaea;color:#c92a2a;display:block!important;}
+  .info{background:#e8f4fd;color:#1864ab;display:block!important;}
+  .note{font-size:12px;color:#6b7684;margin-top:24px;border-top:1px dashed #e5e8eb;padding-top:14px;}
+</style>
+</head>
+<body>
+<h1>Business Immigration (EN) 시리즈 발행</h1>
+<div class="subtitle">EP01~EP04 영문판 4편을 Supabase <code>blog_posts</code>에 일괄 upsert합니다. 버튼 누르면 즉시 <code>blog.html</code>(뉴스&amp;인사이트)에 카드로 노출됩니다.</div>
+
+<div class="gate">
+  <b>사전 조건 체크</b>
+  <div style="margin-top:6px;font-size:13px;color:#6b7684;">
+    1. <code>migrations/add_blog_template_column.sql</code>을 Supabase SQL Editor에서 1회 실행했는가?<br>
+    2. PR #268(또는 그 이후)이 main으로 머지되어 이 페이지가 배포된 상태인가?
+  </div>
+  <label>확인되었으면 <code>PUBLISH</code>를 입력하고 버튼을 누르세요</label>
+  <input type="text" id="confirmInput" placeholder="PUBLISH" oninput="toggleButtons()">
+</div>
+
+<div class="posts" id="posts">Loading posts…</div>
+
+<button class="btn btn-dry" id="dryBtn" onclick="run(true)" disabled>Dry run (아무 것도 쓰지 않음)</button>
+<button class="btn" id="publishBtn" onclick="run(false)" disabled>4편 모두 발행 (is_published=true)</button>
+<div id="result"></div>
+
+<div class="note">
+  발행 후 취소는 Supabase Dashboard에서 해당 row의 <code>is_published</code>를 <code>false</code>로 바꾸거나 이 스크립트의 상수를 수정 후 다시 실행하시면 됩니다. upsert 방식이라 재실행해도 중복 생성되지 않습니다.
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = 'https://gqistzsergddnpcvuzba.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxaXN0enNlcmdkZG5wY3Z1emJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNTEyMjEsImV4cCI6MjA4MDcyNzIyMX0.X_GgShObq9OJ6z7aEKdUCoyHYo-OJL-I5hcIDt4komg';
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const POSTS = [
+  { file: '../blog/content_ep1_en.js', slug: 'd9-visa-korea-business-immigration-franchise-overview-2026' },
+  { file: '../blog/content_ep2_en.js', slug: 'd9-visa-korea-business-immigration-visa-system-structure-2026' },
+  { file: '../blog/content_ep3_en.js', slug: 'd9-visa-korea-business-immigration-relocation-launch-flow-2026' },
+  { file: '../blog/content_ep4_en.js', slug: 'd9-visa-korea-business-immigration-after-settlement-2026' },
+];
+
+const loaded = [];
+
+function toggleButtons() {
+  const ok = document.getElementById('confirmInput').value.trim() === 'PUBLISH' && loaded.length === POSTS.length;
+  document.getElementById('dryBtn').disabled = !ok;
+  document.getElementById('publishBtn').disabled = !ok;
+}
+
+function setResult(msg, cls) {
+  const el = document.getElementById('result');
+  el.className = cls;
+  el.textContent = msg;
+}
+
+async function loadPost(url) {
+  const src = await fetch(url).then(r => {
+    if (!r.ok) throw new Error(`${r.status} ${url}`);
+    return r.text();
+  });
+  const shim = { POST: null };
+  new Function('window', src)(shim);
+  if (!shim.POST) throw new Error(`window.POST not set in ${url}`);
+  return shim.POST;
+}
+
+(async () => {
+  const list = document.getElementById('posts');
+  list.innerHTML = '';
+  for (const entry of POSTS) {
+    try {
+      const post = await loadPost(entry.file);
+      loaded.push({ ...entry, post });
+      const div = document.createElement('div');
+      div.className = 'post';
+      div.innerHTML = `<div><span class="post-ep">EP${post.episodeNo}</span><span class="post-title">${post.title}</span></div><div class="post-slug">${entry.slug}</div>`;
+      list.appendChild(div);
+    } catch (e) {
+      const div = document.createElement('div');
+      div.className = 'post';
+      div.style.color = '#c92a2a';
+      div.textContent = `❌ ${entry.file}: ${e.message}`;
+      list.appendChild(div);
+    }
+  }
+  toggleButtons();
+})();
+
+async function run(dry) {
+  document.getElementById('dryBtn').disabled = true;
+  document.getElementById('publishBtn').disabled = true;
+  const mode = dry ? 'DRY RUN' : 'PUBLISH';
+  setResult(`[${mode}] Starting…\n`, 'info');
+
+  const log = [];
+  for (const { slug, post } of loaded) {
+    const row = {
+      title: post.title,
+      slug: slug,
+      category: post.category,
+      excerpt: post.disclaimer,
+      meta_description: post.disclaimer,
+      thumbnail_url: null,
+      is_published: true,
+      template: 'navy_v4',
+      related_services: JSON.stringify([]),
+      content: JSON.stringify(post),
+      updated_at: new Date().toISOString(),
+    };
+
+    if (dry) {
+      log.push(`[DRY] EP${post.episodeNo} ${slug} (title: ${post.title.slice(0,50)}…)`);
+      continue;
+    }
+
+    try {
+      const { data: existing } = await sb.from('blog_posts').select('id').eq('slug', slug).maybeSingle();
+      let r;
+      if (existing) {
+        r = await sb.from('blog_posts').update(row).eq('id', existing.id).select();
+        log.push(`✓ Updated   EP${post.episodeNo}  id=${existing.id}  ${slug}`);
+      } else {
+        row.created_at = new Date().toISOString();
+        r = await sb.from('blog_posts').insert(row).select();
+        log.push(`✓ Inserted  EP${post.episodeNo}  id=${r.data?.[0]?.id}  ${slug}`);
+      }
+      if (r.error) throw r.error;
+    } catch (e) {
+      log.push(`✗ FAILED  EP${post.episodeNo}  ${slug}: ${e.message || JSON.stringify(e)}`);
+      setResult(log.join('\n'), 'error');
+      toggleButtons();
+      return;
+    }
+    setResult(log.join('\n'), 'info');
+  }
+  log.push(`\n✓ Done. ${dry ? '(dry run - no writes)' : 'Visit /blog.html to verify.'}`);
+  setResult(log.join('\n'), dry ? 'info' : 'success');
+  toggleButtons();
+}
+</script>
+</body>
+</html>
