@@ -36,7 +36,7 @@ function renderBlock(b) {
     return `<div class="C-callout"><div class="C-callout-head">${esc(b.head || '▲ NOTE')}</div><div>${b.text}</div></div>`;
   }
   if (b.type === 'table') {
-    const headerBar = b.tableLabel ? esc(b.tableLabel) : 'TABLE';
+    const headerBar = esc(b.title || b.tableLabel || 'TABLE');
     const ths = (b.headers || b.columns || []).map((h, i) =>
       `<th${i === 0 ? '' : ' class="C-th-opt"'}>${esc(h)}</th>`).join('');
     const rows = (b.rows || []).map(r =>
@@ -47,10 +47,11 @@ function renderBlock(b) {
     return `<div class="C-tablewrap"><div class="C-table-head">${headerBar}</div><table class="C-table"><thead><tr>${ths}</tr></thead><tbody>${rows}</tbody></table>${note}</div>`;
   }
   if (b.type === 'steps' || b.type === 'numbered') {
+    const labelPrefix = b.label || 'PROCEDURE';
     const items = (b.items || []).map((it, i, arr) => {
       const line = i < arr.length - 1 ? '<div class="C-step-line"></div>' : '';
       const n = String(it.n || (i + 1)).padStart(2, '0');
-      return `<div class="C-step"><div class="C-step-left"><div class="C-step-n">${n}</div>${line}</div><div class="C-step-body"><div class="C-step-label">PROCEDURE ${n}</div><h3>${esc(it.title)}</h3><p>${it.text}</p></div></div>`;
+      return `<div class="C-step"><div class="C-step-left"><div class="C-step-n">${n}</div>${line}</div><div class="C-step-body"><div class="C-step-label">${esc(labelPrefix)} ${n}</div><h3>${esc(it.title)}</h3><p>${it.text}</p></div></div>`;
     }).join('');
     return `<div class="C-steps">${items}</div>`;
   }
