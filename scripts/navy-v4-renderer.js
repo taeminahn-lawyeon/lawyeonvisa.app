@@ -134,7 +134,7 @@ body{font-family:"Noto Sans KR",-apple-system,sans-serif;background:#ededea;colo
 .designC .C-table th{padding:10px 12px;background:var(--c-paper);color:var(--c-ink);font-weight:700;font-family:"IBM Plex Mono",monospace;text-align:left;border-bottom:2px solid var(--c-accent);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;}
 .designC .C-th-opt{background:var(--c-yellow)!important;}
 .designC .C-table td{padding:8px 12px;border-bottom:1px dashed var(--c-rule-2);color:var(--c-ink-2);vertical-align:top;}
-.designC .C-td-label{font-weight:700;color:var(--c-ink);background:var(--c-paper);font-family:"IBM Plex Mono",monospace;font-size:11px;}
+.designC .C-td-label{font-weight:700;color:var(--c-ink);background:var(--c-paper);font-family:"IBM Plex Mono",monospace;font-size:11px;white-space:nowrap;}
 .designC .C-table-note{padding:8px 14px;font-size:11px;color:var(--c-ink-3);font-family:"IBM Plex Mono",monospace;border-top:1px solid var(--c-rule-2);}
 .designC .C-steps{margin:24px 0;}
 .designC .C-step{display:grid;grid-template-columns:72px 1fr;gap:24px;padding:20px 0;position:relative;}
