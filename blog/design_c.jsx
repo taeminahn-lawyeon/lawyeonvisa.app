@@ -39,7 +39,7 @@ function TopBarC({ mobile }) {
       {!mobile ? (
         <div className="C-topbar-right">
           <span className="C-mono">DOC-ID</span>
-          <span>EP04 · REV.03</span>
+          <span>EP{window.POST.episodeNo} · REV.{(window.POST.rev || "01")}</span>
           <span className="C-mono">STATUS</span>
           <span className="C-badge-pub">PUBLISHED</span>
           <a className="C-topbar-cta">상담 신청 [↗]</a>
@@ -67,7 +67,7 @@ function HeaderC({ mobile }) {
       </div>
 
       <div className="C-title-block">
-        <div className="C-bigno">04</div>
+        <div className="C-bigno">{p.episodeNo}</div>
         <h1 className="C-title">{p.title}</h1>
       </div>
 
@@ -96,12 +96,11 @@ function RailC() {
       <div className="C-rail-block">
         <div className="C-rail-label">SERIES</div>
         <ul className="C-rail-series">
-          <li><span className="C-mono">00</span> 프랜차이즈 구조</li>
-          <li><span className="C-mono">01</span> 경로 개요</li>
-          <li><span className="C-mono">02</span> D-9-4</li>
-          <li><span className="C-mono">03</span> D-9-5</li>
-          <li className="C-active"><span className="C-mono">04</span> 진행 흐름 ◀</li>
-          <li><span className="C-mono">05</span> 사업이민 이후</li>
+          {(window.POST.seriesNav || []).map((s, i) => (
+            <li key={i} className={s.active ? "C-active" : ""}>
+              <span className="C-mono">{s.no}</span> {s.label}{s.active ? " ◀" : ""}
+            </li>
+          ))}
         </ul>
       </div>
       <div className="C-rail-block">
@@ -122,7 +121,7 @@ function BlockC({ block }) {
   );
   if (block.type === "table") return (
     <div className="C-tablewrap">
-      <div className="C-table-head">TABLE · 세 선택지 비교</div>
+      <div className="C-table-head">TABLE · {block.title || "비교"}</div>
       <table className="C-table">
         <thead>
           <tr>{block.headers.map((h, i) => <th key={i} className={i === 0 ? "" : "C-th-opt"}>{h}</th>)}</tr>
@@ -204,7 +203,7 @@ function ClosingC() {
   return (
     <footer className="C-closing">
       <div className="C-closing-head">{"━".repeat(60)}</div>
-      <div className="C-closing-title">END OF DOCUMENT · EP04</div>
+      <div className="C-closing-title">END OF DOCUMENT · EP{window.POST.episodeNo}</div>
 
       <div className="C-closing-cta">
         <div className="C-closing-cta-label">NEXT ACTIONS</div>

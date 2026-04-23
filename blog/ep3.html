@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>블로그 상세 · 편 3 · 미리보기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&family=Noto+Serif+KR:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../src/design_c_navy_v4.css?v=5" />
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: "Noto Sans KR", -apple-system, sans-serif; background: #e8e6df; min-height: 100vh; }
+  .compare-shell { padding: 24px 32px 48px; }
+  .compare-header { margin-bottom: 20px; }
+  .compare-title { font-size: 18px; font-weight: 700; color: #1a1a1a; }
+  .compare-subtitle { font-size: 13px; color: #666; margin-top: 2px; }
+  .viewports { display: grid; grid-template-columns: minmax(0,1fr) 420px; gap: 24px; align-items: start; }
+  .viewport { background: #fff; border: 1px solid #c9c7c0; box-shadow: 0 4px 12px rgba(0,0,0,0.04); overflow: hidden; }
+  .viewport-label { background: #1a1a1a; color: #fff; padding: 8px 14px; font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: 0.08em; display: flex; justify-content: space-between; }
+  .viewport-body { height: calc(100vh - 180px); min-height: 700px; overflow-y: auto; overflow-x: hidden; background: #fff; }
+  .vp-mobile .viewport-body { max-width: 420px; }
+  .design-note { background: #fff; border: 1px solid #c9c7c0; padding: 16px 20px; margin-bottom: 16px; font-size: 13px; line-height: 1.6; color: #333; }
+  .design-note-title { font-weight: 700; margin-bottom: 4px; font-size: 13px; }
+  .design-note-tag { display: inline-block; font-family: "IBM Plex Mono", monospace; font-size: 10px; background: #1a1a1a; color: #fff; padding: 2px 8px; margin-right: 8px; letter-spacing: 0.08em; vertical-align: middle; }
+  .series-links { margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap; font-family: "IBM Plex Mono", monospace; font-size: 11px; }
+  @media (max-width: 1200px) { .viewports { grid-template-columns: 1fr; } .vp-mobile .viewport-body { max-width: 100%; } }
+</style>
+</head>
+<body>
+  <div class="compare-shell">
+    <div class="compare-header">
+      <div class="compare-title">블로그 상세 · 편 3 · 한국에서 사업을 시작하기까지, 실제로 무엇이 진행되는가</div>
+      <div class="compare-subtitle">법무법인 로연 · 사업이민 시리즈 4편 · 데스크톱 + 모바일 병렬 미리보기</div>
+    </div>
+    <div class="design-note">
+      <span class="design-note-tag">EP 03</span>
+      <b class="design-note-title">한국에서 사업을 시작하기까지, 실제로 무엇이 진행되는가</b>
+      <div>5단계 프로젝트의 실제 내용 · FAQ · 흔한 실수</div>
+      <div class="series-links"><a href="ep1.html" style="padding:4px 10px;border:1px solid #c9c7c0;background:#fff;color:#333;text-decoration:none;">편 1</a><a href="ep2.html" style="padding:4px 10px;border:1px solid #c9c7c0;background:#fff;color:#333;text-decoration:none;">편 2</a><a href="ep3.html" style="padding:4px 10px;border:1px solid #0f2552;background:#0f2552;color:#fff;text-decoration:none;font-weight:700;">편 3</a><a href="ep4.html" style="padding:4px 10px;border:1px solid #c9c7c0;background:#fff;color:#333;text-decoration:none;">편 4</a></div>
+    </div>
+    <div class="viewports">
+      <div class="viewport vp-desktop">
+        <div class="viewport-label"><span>DESKTOP · 1280px</span><span>스크롤 가능 ↓</span></div>
+        <div class="viewport-body" id="vp-desktop"></div>
+      </div>
+      <div class="viewport vp-mobile">
+        <div class="viewport-label"><span>MOBILE · 390px</span><span>스크롤 가능 ↓</span></div>
+        <div class="viewport-body" id="vp-mobile"></div>
+      </div>
+    </div>
+  </div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="../src/content_ep3.js?v=5"></script>
+  <script type="text/babel" src="../src/design_c.jsx?v=5"></script>
+  <script type="text/babel">
+    const rootD = ReactDOM.createRoot(document.getElementById("vp-desktop"));
+    const rootM = ReactDOM.createRoot(document.getElementById("vp-mobile"));
+    const C = window.DesignC;
+    rootD.render(<C mobile={false} />);
+    rootM.render(<C mobile={true} />);
+  </script>
+</body>
+</html>
