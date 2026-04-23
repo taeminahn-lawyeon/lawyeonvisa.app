@@ -1458,7 +1458,25 @@
             margin: 0;
             line-height: 1.5;
         }
-        .urgent-fullwidth-cta { flex-shrink: 0; }
+        .urgent-fullwidth-cta {
+            flex-shrink: 0;
+            background: #3182F6;
+            color: #FFFFFF;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .urgent-fullwidth-cta:hover { background: #1B64DA; }
+        .urgent-fullwidth-cta .arrow { margin-left: 2px; }
 
         @media (max-width: 900px) {
             .urgent-fullwidth-inner {
