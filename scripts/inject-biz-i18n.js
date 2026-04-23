@@ -120,7 +120,13 @@ const MASTER_KO = {
     // 대문 히어로 사업이민 카드 요약 3항목
     'biz.card.summary1': '이민 프로젝트 설계',
     'biz.card.summary2': '계약 및 규제 관리',
-    'biz.card.summary3': '정착 및 사후 지원'
+    'biz.card.summary3': '정착 및 사후 지원',
+    // 신청 페이지 우측 "사업이민 쓰레드" 프리뷰
+    'biz.request.threadPreview.title': '사업이민 쓰레드',
+    'biz.request.threadPreview.subtitle': '담당자와 실시간 커뮤니케이션',
+    'biz.request.threadPreview.caption': '쓰레드에서 상담 진행, 서류 요청, 단계 전환이 이루어집니다.',
+    // 쓰레드 페이지 우측 사이드바 제목
+    'biz.sidebar.heading': '프로젝트 진행 단계'
 };
 
 // ----- 영어 번역 (en) -----
@@ -209,7 +215,11 @@ const MASTER_EN = {
     'home.urgent.cta': 'Request Urgent Consultation',
     'biz.card.summary1': 'Immigration Project Design',
     'biz.card.summary2': 'Contracts & Regulatory Management',
-    'biz.card.summary3': 'Settlement & Ongoing Support'
+    'biz.card.summary3': 'Settlement & Ongoing Support',
+    'biz.request.threadPreview.title': 'Business Immigration Thread',
+    'biz.request.threadPreview.subtitle': 'Real-time communication with our specialist',
+    'biz.request.threadPreview.caption': 'Consultation progress, document requests, and stage transitions are handled within the thread.',
+    'biz.sidebar.heading': 'Project Progress'
 };
 
 // 단일 문자열 이스케이프(작은따옴표·역슬래시)

@@ -1256,6 +1256,11 @@ const translations = {
     'biz.card.summary1': '이민 프로젝트 설계',
     'biz.card.summary2': '계약 및 규제 관리',
     'biz.card.summary3': '정착 및 사후 지원',
+    // === biz.* (사업이민 섹션 14) ===
+    'biz.request.threadPreview.title': '사업이민 쓰레드',
+    'biz.request.threadPreview.subtitle': '담당자와 실시간 커뮤니케이션',
+    'biz.request.threadPreview.caption': '쓰레드에서 상담 진행, 서류 요청, 단계 전환이 이루어집니다.',
+    'biz.sidebar.heading': '프로젝트 진행 단계',
     },
 
     // ========================================
@@ -2633,6 +2638,11 @@ const translations = {
     'biz.card.summary1': 'Immigration Project Design',
     'biz.card.summary2': 'Contracts & Regulatory Management',
     'biz.card.summary3': 'Settlement & Ongoing Support',
+    // === biz.* (사업이민 섹션 14) ===
+    'biz.request.threadPreview.title': 'Business Immigration Thread',
+    'biz.request.threadPreview.subtitle': 'Real-time communication with our specialist',
+    'biz.request.threadPreview.caption': 'Consultation progress, document requests, and stage transitions are handled within the thread.',
+    'biz.sidebar.heading': 'Project Progress',
     },
 
     // ========================================
@@ -3991,6 +4001,15 @@ const translations = {
     'biz.card.summary2': 'Contracts & Regulatory Management',
     // [TRANSLATION_PENDING: biz.card.summary3, zh, cloned from en at 2026-04-20]
     'biz.card.summary3': 'Settlement & Ongoing Support',
+    // === biz.* (사업이민 섹션 14) ===
+    // [TRANSLATION_PENDING: biz.request.threadPreview.title, zh, cloned from en at 2026-04-20]
+    'biz.request.threadPreview.title': 'Business Immigration Thread',
+    // [TRANSLATION_PENDING: biz.request.threadPreview.subtitle, zh, cloned from en at 2026-04-20]
+    'biz.request.threadPreview.subtitle': 'Real-time communication with our specialist',
+    // [TRANSLATION_PENDING: biz.request.threadPreview.caption, zh, cloned from en at 2026-04-20]
+    'biz.request.threadPreview.caption': 'Consultation progress, document requests, and stage transitions are handled within the thread.',
+    // [TRANSLATION_PENDING: biz.sidebar.heading, zh, cloned from en at 2026-04-20]
+    'biz.sidebar.heading': 'Project Progress',
     },
 
     // ========================================
@@ -5349,6 +5368,15 @@ const translations = {
     'biz.card.summary2': 'Contracts & Regulatory Management',
     // [TRANSLATION_PENDING: biz.card.summary3, vi, cloned from en at 2026-04-20]
     'biz.card.summary3': 'Settlement & Ongoing Support',
+    // === biz.* (사업이민 섹션 14) ===
+    // [TRANSLATION_PENDING: biz.request.threadPreview.title, vi, cloned from en at 2026-04-20]
+    'biz.request.threadPreview.title': 'Business Immigration Thread',
+    // [TRANSLATION_PENDING: biz.request.threadPreview.subtitle, vi, cloned from en at 2026-04-20]
+    'biz.request.threadPreview.subtitle': 'Real-time communication with our specialist',
+    // [TRANSLATION_PENDING: biz.request.threadPreview.caption, vi, cloned from en at 2026-04-20]
+    'biz.request.threadPreview.caption': 'Consultation progress, document requests, and stage transitions are handled within the thread.',
+    // [TRANSLATION_PENDING: biz.sidebar.heading, vi, cloned from en at 2026-04-20]
+    'biz.sidebar.heading': 'Project Progress',
     },
 
     // ========================================
@@ -6705,6 +6733,15 @@ const translations = {
     'biz.card.summary2': 'Contracts & Regulatory Management',
     // [TRANSLATION_PENDING: biz.card.summary3, ja, cloned from en at 2026-04-20]
     'biz.card.summary3': 'Settlement & Ongoing Support',
+    // === biz.* (사업이민 섹션 14) ===
+    // [TRANSLATION_PENDING: biz.request.threadPreview.title, ja, cloned from en at 2026-04-20]
+    'biz.request.threadPreview.title': 'Business Immigration Thread',
+    // [TRANSLATION_PENDING: biz.request.threadPreview.subtitle, ja, cloned from en at 2026-04-20]
+    'biz.request.threadPreview.subtitle': 'Real-time communication with our specialist',
+    // [TRANSLATION_PENDING: biz.request.threadPreview.caption, ja, cloned from en at 2026-04-20]
+    'biz.request.threadPreview.caption': 'Consultation progress, document requests, and stage transitions are handled within the thread.',
+    // [TRANSLATION_PENDING: biz.sidebar.heading, ja, cloned from en at 2026-04-20]
+    'biz.sidebar.heading': 'Project Progress',
     },
 
     // ========================================
@@ -8061,6 +8098,15 @@ const translations = {
     'biz.card.summary2': 'Contracts & Regulatory Management',
     // [TRANSLATION_PENDING: biz.card.summary3, mn, cloned from en at 2026-04-20]
     'biz.card.summary3': 'Settlement & Ongoing Support',
+    // === biz.* (사업이민 섹션 14) ===
+    // [TRANSLATION_PENDING: biz.request.threadPreview.title, mn, cloned from en at 2026-04-20]
+    'biz.request.threadPreview.title': 'Business Immigration Thread',
+    // [TRANSLATION_PENDING: biz.request.threadPreview.subtitle, mn, cloned from en at 2026-04-20]
+    'biz.request.threadPreview.subtitle': 'Real-time communication with our specialist',
+    // [TRANSLATION_PENDING: biz.request.threadPreview.caption, mn, cloned from en at 2026-04-20]
+    'biz.request.threadPreview.caption': 'Consultation progress, document requests, and stage transitions are handled within the thread.',
+    // [TRANSLATION_PENDING: biz.sidebar.heading, mn, cloned from en at 2026-04-20]
+    'biz.sidebar.heading': 'Project Progress',
     },
 
     // ========================================
@@ -9417,6 +9463,15 @@ const translations = {
     'biz.card.summary2': 'Contracts & Regulatory Management',
     // [TRANSLATION_PENDING: biz.card.summary3, th, cloned from en at 2026-04-20]
     'biz.card.summary3': 'Settlement & Ongoing Support',
+    // === biz.* (사업이민 섹션 14) ===
+    // [TRANSLATION_PENDING: biz.request.threadPreview.title, th, cloned from en at 2026-04-20]
+    'biz.request.threadPreview.title': 'Business Immigration Thread',
+    // [TRANSLATION_PENDING: biz.request.threadPreview.subtitle, th, cloned from en at 2026-04-20]
+    'biz.request.threadPreview.subtitle': 'Real-time communication with our specialist',
+    // [TRANSLATION_PENDING: biz.request.threadPreview.caption, th, cloned from en at 2026-04-20]
+    'biz.request.threadPreview.caption': 'Consultation progress, document requests, and stage transitions are handled within the thread.',
+    // [TRANSLATION_PENDING: biz.sidebar.heading, th, cloned from en at 2026-04-20]
+    'biz.sidebar.heading': 'Project Progress',
     },
 };
 
