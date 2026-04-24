@@ -900,6 +900,14 @@
                     return;
                 }
 
+                // Navy v4 템플릿 게시물은 사전 렌더된 정적 파일로 리다이렉트
+                // (이 페이지는 Toss 템플릿만 렌더하므로 Navy v4 콘텐츠는
+                //  원시 JSON으로 표시되는 회귀가 발생)
+                if (post.template === 'navy_v4') {
+                    window.location.replace(`blog/${post.slug}.html`);
+                    return;
+                }
+
                 // 페이지 타이틀 업데이트
                 document.title = `${post.title} | 법무법인 로연`;
 
