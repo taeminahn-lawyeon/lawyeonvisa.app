@@ -17,10 +17,10 @@ const path = require('path');
 const vm = require('vm');
 
 const POSTS = [
-  { file: 'blog/content_ep1_en.js', slug: 'd9-visa-korea-business-immigration-franchise-overview-2026' },
-  { file: 'blog/content_ep2_en.js', slug: 'd9-visa-korea-business-immigration-visa-system-structure-2026' },
-  { file: 'blog/content_ep3_en.js', slug: 'd9-visa-korea-business-immigration-relocation-launch-flow-2026' },
-  { file: 'blog/content_ep4_en.js', slug: 'd9-visa-korea-business-immigration-after-settlement-2026' },
+  { file: 'blog/content_ep1_en.js', slug: 'start-a-business-in-korea-as-a-foreigner-2026' },
+  { file: 'blog/content_ep2_en.js', slug: 'korea-business-visa-investment-and-family-guide-2026' },
+  { file: 'blog/content_ep3_en.js', slug: 'how-to-open-a-store-in-korea-as-a-foreigner-2026' },
+  { file: 'blog/content_ep4_en.js', slug: 'how-to-stay-in-korea-long-term-as-a-business-owner-2026' },
 ];
 
 function loadPost(file) {
