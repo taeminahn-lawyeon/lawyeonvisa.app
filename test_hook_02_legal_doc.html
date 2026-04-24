@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lawyeon — Living Legal Document (test_hook_02)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory: #f8f4ea;
+    --ink: #1a1a1a;
+    --stamp: #c4302b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%;
+    min-height: 100vh;
+    background: #2a2a28;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    overflow: auto;
+  }
+
+  .stage {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+    flex: 0 0 auto;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.55);
+    background: var(--ivory);
+    overflow: hidden;
+    transform-origin: top center;
+  }
+
+  /* Scale the 1080x1920 stage down for smaller screens so users can preview */
+  @media (max-height: 1960px) {
+    .stage { transform: scale(var(--fit, 1)); }
+  }
+
+  /* ====== PAPER TEXTURE ====== */
+  .paper-noise {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.55;
+    mix-blend-mode: multiply;
+  }
+
+  /* Faint legal-pad grid */
+  .grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(26,26,26,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(26,26,26,0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  /* Subtle vignette for aged paper */
+  .vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 55%, rgba(120,90,40,0.14) 100%);
+  }
+
+  /* ====== HEADER AREA ====== */
+  .header-wrap {
+    position: absolute;
+    top: 140px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--ink);
+  }
+
+  .header-title {
+    font-size: 34px;
+    font-weight: 500;
+    letter-spacing: 12px;
+    opacity: 0;
+    animation: fadeInTxt 0.4s ease 0.15s forwards;
+  }
+
+  .case-file {
+    position: absolute;
+    top: 150px;
+    right: 90px;
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    color: var(--ink);
+    opacity: 0;
+    animation: fadeInTxt 0.35s ease 0.25s forwards;
+  }
+  .case-file .num {
+    color: var(--stamp);
+    font-weight: 700;
+  }
+
+  @keyframes fadeInTxt {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Header underline drawn stroke */
+  .header-line {
+    position: absolute;
+    top: 220px;
+    left: 90px;
+    right: 90px;
+    height: 3px;
+    overflow: visible;
+  }
+
+  /* ====== BODY / TYPEWRITER ====== */
+  .body-text {
+    position: absolute;
+    left: 120px;
+    right: 120px;
+    top: 720px;
+    font-family: 'Merriweather', 'Times New Roman', serif;
+    font-weight: 700;
+    font-size: 72px;
+    line-height: 1.28;
+    color: var(--ink);
+    letter-spacing: -0.5px;
+  }
+
+  .typed {
+    display: inline;
+    white-space: pre-wrap;
+    word-break: keep-all;
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 28px;
+    height: 72px;
+    background: var(--ink);
+    margin-left: 6px;
+    vertical-align: -12px;
+    animation: blink 0.55s steps(1) infinite;
+  }
+  .cursor.hidden { display: none; }
+
+  @keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+
+  /* ====== STAMP ====== */
+  .stamp-wrap {
+    position: absolute;
+    top: 1180px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  .stamp {
+    position: relative;
+    display: inline-block;
+    padding: 32px 96px;
+    border: 12px solid var(--stamp);
+    color: var(--stamp);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    font-size: 180px;
+    letter-spacing: 14px;
+    transform: rotate(-8deg) scale(1.5);
+    filter: url(#inkBlur);
+    mix-blend-mode: multiply;
+  }
+
+  .stamp::before,
+  .stamp::after {
+    content: "";
+    position: absolute;
+    background: var(--stamp);
+    opacity: 0.85;
+  }
+  .stamp::before {
+    top: -28px; left: 50%;
+    width: 14px; height: 14px;
+    transform: translateX(-50%) rotate(45deg);
+    opacity: 0.5;
+  }
+  .stamp::after {
+    bottom: -32px; right: 10%;
+    width: 22px; height: 8px;
+    opacity: 0.4;
+  }
+
+  .stamp-wrap.stamped {
+    animation: stampPlay 0.32s cubic-bezier(0.2, 1.4, 0.4, 1) forwards;
+  }
+
+  @keyframes stampPlay {
+    0%   { opacity: 0; transform: translateY(-60px) scale(1.05); }
+    55%  { opacity: 1; transform: translateY(6px) scale(1.0); }
+    70%  { transform: translateY(-3px) scale(1.0); }
+    100% { opacity: 1; transform: translateY(0) scale(1.0); }
+  }
+
+  .stamp-wrap.stamped .stamp {
+    animation: stampImpact 0.28s cubic-bezier(0.2, 1.4, 0.4, 1) forwards;
+  }
+
+  @keyframes stampImpact {
+    0%   { transform: rotate(-8deg) scale(1.5); filter: url(#inkBlur) blur(2px); }
+    60%  { transform: rotate(-8deg) scale(0.94); filter: url(#inkBlur) blur(0.4px); }
+    100% { transform: rotate(-8deg) scale(1.0);  filter: url(#inkBlur); }
+  }
+
+  /* Red underline */
+  .underline {
+    position: absolute;
+    top: 1460px;
+    left: 180px;
+    right: 180px;
+    height: 18px;
+    overflow: visible;
+  }
+
+  /* ====== FOOTER LABELS ====== */
+  .footer {
+    position: absolute;
+    bottom: 120px;
+    left: 90px;
+    right: 90px;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    letter-spacing: 4px;
+    color: var(--ink);
+    opacity: 0;
+    animation: fadeInTxt 0.4s ease 0.3s forwards;
+  }
+  .footer .dot { color: var(--stamp); }
+
+  /* ====== REPLAY BUTTON ====== */
+  .controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 50;
+    display: flex;
+    gap: 10px;
+  }
+  .replay-btn {
+    background: var(--ivory);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 3px;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .replay-btn:hover {
+    background: var(--stamp);
+    color: var(--ivory);
+    border-color: var(--stamp);
+  }
+  .replay-btn:active {
+    transform: translateY(1px);
+  }
+
+  /* Reset class used by JS */
+  .prep * {
+    animation: none !important;
+  }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <button class="replay-btn" id="replayBtn">▶ REPLAY</button>
+</div>
+
+<div class="stage" id="stage">
+
+  <!-- SVG defs: paper noise filter + ink blur filter -->
+  <svg width="0" height="0" style="position:absolute;">
+    <defs>
+      <filter id="paperNoise" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" stitchTiles="stitch"/>
+        <feColorMatrix values="0 0 0 0 0.55
+                               0 0 0 0 0.45
+                               0 0 0 0 0.30
+                               0 0 0 0.22 0"/>
+      </filter>
+
+      <filter id="inkBlur" x="-20%" y="-20%" width="140%" height="140%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3"/>
+        <feGaussianBlur stdDeviation="0.6"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Paper textures -->
+  <svg class="paper-noise" viewBox="0 0 1080 1920" preserveAspectRatio="none">
+    <rect width="1080" height="1920" filter="url(#paperNoise)"/>
+  </svg>
+  <div class="grid"></div>
+  <div class="vignette"></div>
+
+  <!-- Header -->
+  <div class="header-wrap">
+    <div class="header-title">LAW&nbsp;&nbsp;FIRM&nbsp;&nbsp;LAWYEON</div>
+  </div>
+  <div class="case-file">
+    CASE&nbsp;FILE&nbsp;·&nbsp;<span class="num">No.&nbsp;0247</span>
+  </div>
+
+  <!-- Horizontal drawn line below header -->
+  <svg class="header-line" viewBox="0 0 900 3" preserveAspectRatio="none">
+    <line id="hLine" x1="0" y1="1.5" x2="900" y2="1.5"
+          stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"
+          pathLength="1"
+          stroke-dasharray="1 1"
+          stroke-dashoffset="1"/>
+  </svg>
+
+  <!-- Body typewriter text -->
+  <div class="body-text">
+    <span class="typed" id="typed"></span><span class="cursor" id="cursor"></span>
+  </div>
+
+  <!-- Red stamp -->
+  <div class="stamp-wrap" id="stampWrap">
+    <div class="stamp">STOP.</div>
+  </div>
+
+  <!-- Red underline drawn below stamp -->
+  <svg class="underline" viewBox="0 0 720 18" preserveAspectRatio="none">
+    <line id="uLine" x1="0" y1="9" x2="720" y2="9"
+          stroke="#c4302b" stroke-width="6" stroke-linecap="round"
+          pathLength="1"
+          stroke-dasharray="1 1"
+          stroke-dashoffset="1"/>
+  </svg>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span>LAWYEON<span class="dot">.</span>LEGAL</span>
+    <span>SEOUL · KR</span>
+    <span>PG 01 / 03</span>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  const stage      = document.getElementById('stage');
+  const hLine      = document.getElementById('hLine');
+  const uLine      = document.getElementById('uLine');
+  const typed      = document.getElementById('typed');
+  const cursor     = document.getElementById('cursor');
+  const stampWrap  = document.getElementById('stampWrap');
+  const replayBtn  = document.getElementById('replayBtn');
+
+  const MESSAGE = "Moving to Korea to open a small business?";
+
+  const timers = [];
+  let rafId = null;
+
+  // Scale stage to fit viewport height
+  function fitStage() {
+    const vh = window.innerHeight;
+    const vw = window.innerWidth;
+    const scale = Math.min(vh / 1920, vw / 1080, 1);
+    stage.style.setProperty('--fit', scale);
+  }
+  window.addEventListener('resize', fitStage);
+  fitStage();
+
+  function clearAll() {
+    timers.forEach(t => clearTimeout(t));
+    timers.length = 0;
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = null;
+  }
+
+  // Animate a stroke-dashoffset from 1 -> 0 over duration ms
+  function drawLine(el, duration, easing) {
+    return new Promise(resolve => {
+      const start = performance.now();
+      const ease = easing || (t => t);
+      function tick(now) {
+        const p = Math.min(1, (now - start) / duration);
+        const v = 1 - ease(p);
+        el.setAttribute('stroke-dashoffset', v.toFixed(4));
+        if (p < 1) {
+          rafId = requestAnimationFrame(tick);
+        } else {
+          resolve();
+        }
+      }
+      rafId = requestAnimationFrame(tick);
+    });
+  }
+
+  // Typewriter with variable per-char delay for natural feel
+  function typeOut(text, totalMs) {
+    return new Promise(resolve => {
+      const n = text.length;
+      const base = totalMs / n;
+      let i = 0;
+      function next() {
+        if (i > n) return resolve();
+        typed.textContent = text.slice(0, i);
+        i++;
+        // small random jitter between keystrokes
+        const ch = text[i - 1] || '';
+        let delay = base + (Math.random() * base * 0.6 - base * 0.3);
+        if (ch === ' ') delay *= 0.6;
+        if (ch === '?' || ch === ',') delay *= 2.2;
+        const t = setTimeout(next, Math.max(18, delay));
+        timers.push(t);
+      }
+      next();
+    });
+  }
+
+  function sleep(ms) {
+    return new Promise(resolve => {
+      const t = setTimeout(resolve, ms);
+      timers.push(t);
+    });
+  }
+
+  function resetAll() {
+    clearAll();
+    hLine.setAttribute('stroke-dashoffset', '1');
+    uLine.setAttribute('stroke-dashoffset', '1');
+    typed.textContent = '';
+    cursor.classList.remove('hidden');
+    stampWrap.classList.remove('stamped');
+    stampWrap.style.opacity = '0';
+    // reset header fade animations by toggling reflow
+    stage.classList.add('prep');
+    void stage.offsetWidth;
+    stage.classList.remove('prep');
+  }
+
+  async function play() {
+    resetAll();
+
+    // 0.0 – 0.5s: header text fades in (via CSS) + horizontal line drawn
+    await drawLine(hLine, 450, t => 1 - Math.pow(1 - t, 2));
+    // small breath
+    await sleep(60);
+
+    // 0.5 – 1.8s: typewriter (~1.3s)
+    await typeOut(MESSAGE, 1250);
+
+    // 1.8 – 2.2s: pause with blinking cursor
+    await sleep(380);
+
+    // Hide cursor just before stamp
+    cursor.classList.add('hidden');
+
+    // 2.2 – 2.5s: stamp impact
+    stampWrap.classList.add('stamped');
+    await sleep(320);
+
+    // 2.5 – 3.0s: red underline drawn
+    await drawLine(uLine, 480, t => 1 - Math.pow(1 - t, 3));
+  }
+
+  replayBtn.addEventListener('click', () => {
+    play();
+  });
+
+  // Autoplay on load (wait a frame so fonts/layout settle)
+  window.addEventListener('load', () => {
+    requestAnimationFrame(() => requestAnimationFrame(play));
+  });
+})();
+</script>
+
+</body>
+</html>
