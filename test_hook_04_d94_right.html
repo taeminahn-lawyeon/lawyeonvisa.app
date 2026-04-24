@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lawyeon — Living Legal Document (test_hook_04 · D-9-4 Right Visa)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory: #f8f4ea;
+    --ink: #1a1a1a;
+    --stamp: #c4302b;
+
+    /* 9:16 shortform safe zone: y = 220 ~ 1470 */
+    --safe-top: 220px;
+    --safe-bottom: 1470px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%;
+    min-height: 100vh;
+    background: #2a2a28;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    overflow: auto;
+  }
+
+  .stage {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+    flex: 0 0 auto;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.55);
+    background: var(--ivory);
+    overflow: hidden;
+    transform-origin: top center;
+  }
+  @media (max-height: 1960px) {
+    .stage { transform: scale(var(--fit, 1)); }
+  }
+
+  /* ====== PAPER TEXTURE ====== */
+  .paper-noise { position: absolute; inset: 0; pointer-events: none; opacity: 0.55; mix-blend-mode: multiply; }
+  .grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(26,26,26,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(26,26,26,0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .vignette {
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 55%, rgba(120,90,40,0.14) 100%);
+  }
+
+  .safe-zone-overlay {
+    position: absolute; left: 0; right: 0;
+    top: var(--safe-top);
+    height: calc(var(--safe-bottom) - var(--safe-top));
+    pointer-events: none; display: none;
+    border: 2px dashed rgba(196, 48, 43, 0.55);
+    z-index: 30;
+  }
+  .debug .safe-zone-overlay { display: block; }
+
+  /* ====== HEADER ====== */
+  .header-wrap {
+    position: absolute; top: 260px; left: 0; right: 0;
+    text-align: center; color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .header-title {
+    font-size: 30px; font-weight: 500; letter-spacing: 7px;
+    opacity: 0; animation: fadeInTxt 0.45s ease 0.15s forwards;
+  }
+  .header-line {
+    position: absolute; top: 320px; left: 90px; right: 90px;
+    height: 3px; overflow: visible;
+  }
+  @keyframes fadeInTxt {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ====== REVEAL: D-9-4 TITLE ====== */
+  .reveal-block {
+    position: absolute; top: 430px; left: 0; right: 0;
+    text-align: center; color: var(--ink);
+  }
+  .reveal-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 30px;
+    letter-spacing: 8px;
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  .answer-title {
+    font-family: 'Merriweather', 'Times New Roman', serif;
+    font-weight: 900;
+    font-size: 200px;
+    letter-spacing: 2px;
+    line-height: 1.0;
+    margin-top: 24px;
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+
+  /* Red accent underline beneath D-9-4 */
+  .answer-underline {
+    position: absolute; top: 740px;
+    left: 280px; right: 280px;
+    height: 22px; overflow: visible;
+  }
+
+  .answer-subtitle {
+    position: absolute; top: 800px; left: 90px; right: 90px;
+    text-align: center;
+    font-family: 'Merriweather', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 1.3;
+    color: var(--ink);
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  /* ====== REQUIREMENTS LIST ====== */
+  .reqs {
+    position: absolute; top: 940px; left: 0; right: 0;
+    text-align: center;
+  }
+  .reqs-inner {
+    display: inline-block;
+    text-align: left;
+    font-family: 'Merriweather', 'Times New Roman', serif;
+    font-weight: 400;
+    font-size: 46px;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+  .req {
+    display: block;
+    padding: 6px 0;
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+  .req .check {
+    display: inline-block;
+    width: 54px;
+    color: var(--stamp);
+    font-weight: 900;
+    font-size: 50px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .req .krw {
+    font-weight: 900;
+    font-size: 52px;
+  }
+  .req .usd {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 36px;
+    color: rgba(26,26,26,0.65);
+    letter-spacing: 1px;
+  }
+
+  /* Reveal animations */
+  .reveal-label.in,
+  .answer-title.in,
+  .answer-subtitle.in {
+    animation: rise 0.6s cubic-bezier(0.2, 0.9, 0.25, 1) forwards;
+  }
+  @keyframes rise {
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .req.in {
+    animation: reqIn 0.5s cubic-bezier(0.2, 0.9, 0.25, 1) forwards;
+  }
+  @keyframes reqIn {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* ====== FOOTER ====== */
+  .footer {
+    position: absolute; top: 1428px; left: 0; right: 0;
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 24px; font-weight: 500; letter-spacing: 5px;
+    color: var(--ink);
+    opacity: 0;
+    animation: fadeInTxt 0.45s ease 0.3s forwards;
+  }
+
+  /* ====== CONTROLS ====== */
+  .controls {
+    position: fixed; top: 20px; right: 20px; z-index: 50;
+    display: flex; gap: 10px;
+  }
+  .replay-btn {
+    background: var(--ivory); color: var(--ink);
+    border: 2px solid var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600; font-size: 14px; letter-spacing: 3px;
+    padding: 12px 20px; cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .replay-btn:hover { background: var(--stamp); color: var(--ivory); border-color: var(--stamp); }
+  .replay-btn:active { transform: translateY(1px); }
+  .capture .controls { display: none; }
+
+  .prep * { animation: none !important; }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <button class="replay-btn" id="replayBtn">▶ REPLAY</button>
+</div>
+
+<div class="stage" id="stage">
+
+  <svg width="0" height="0" style="position:absolute;">
+    <defs>
+      <filter id="paperNoise" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="17" stitchTiles="stitch"/>
+        <feColorMatrix values="0 0 0 0 0.55
+                               0 0 0 0 0.45
+                               0 0 0 0 0.30
+                               0 0 0 0.22 0"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <svg class="paper-noise" viewBox="0 0 1080 1920" preserveAspectRatio="none">
+    <rect width="1080" height="1920" filter="url(#paperNoise)"/>
+  </svg>
+  <div class="grid"></div>
+  <div class="vignette"></div>
+  <div class="safe-zone-overlay"></div>
+
+  <!-- Header -->
+  <div class="header-wrap">
+    <div class="header-title">IMMIGRATION&nbsp;&nbsp;LAW&nbsp;&nbsp;FIRM&nbsp;&nbsp;IN&nbsp;&nbsp;KOREA</div>
+  </div>
+  <svg class="header-line" viewBox="0 0 900 3" preserveAspectRatio="none">
+    <line id="hLine" x1="0" y1="1.5" x2="900" y2="1.5"
+          stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"
+          pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1"/>
+  </svg>
+
+  <!-- D-9-4 reveal -->
+  <div class="reveal-block">
+    <div class="reveal-label" id="revealLabel">THE&nbsp;&nbsp;RIGHT&nbsp;&nbsp;VISA&nbsp;&nbsp;IS</div>
+    <div class="answer-title" id="answerTitle">D‑9‑4</div>
+  </div>
+
+  <svg class="answer-underline" viewBox="0 0 520 22" preserveAspectRatio="none">
+    <line id="uLine" x1="0" y1="11" x2="520" y2="11"
+          stroke="#c4302b" stroke-width="7" stroke-linecap="round"
+          pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1"/>
+  </svg>
+
+  <div class="answer-subtitle" id="answerSubtitle">Built for foreign sole proprietors.</div>
+
+  <!-- Requirements -->
+  <div class="reqs">
+    <div class="reqs-inner">
+      <span class="req" data-i="0">
+        <span class="check">✓</span>
+        Invest&nbsp;<span class="krw">₩300M</span>&nbsp;&nbsp;<span class="usd">(≈&nbsp;$215K&nbsp;USD)</span>
+      </span>
+      <span class="req" data-i="1">
+        <span class="check">✓</span>
+        Register&nbsp;in&nbsp;your&nbsp;own&nbsp;name
+      </span>
+      <span class="req" data-i="2">
+        <span class="check">✓</span>
+        Run&nbsp;it&nbsp;yourself&nbsp;—&nbsp;no&nbsp;corporation
+      </span>
+      <span class="req" data-i="3">
+        <span class="check">✓</span>
+        No&nbsp;nationality&nbsp;/&nbsp;industry&nbsp;limits
+      </span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    Lawyeon&nbsp;&nbsp;Visa&nbsp;&nbsp;&&nbsp;&nbsp;Immigration&nbsp;&nbsp;Center
+  </div>
+
+</div>
+
+<script>
+(function () {
+  const stage          = document.getElementById('stage');
+  const hLine          = document.getElementById('hLine');
+  const uLine          = document.getElementById('uLine');
+  const revealLabel    = document.getElementById('revealLabel');
+  const answerTitle    = document.getElementById('answerTitle');
+  const answerSubtitle = document.getElementById('answerSubtitle');
+  const replayBtn      = document.getElementById('replayBtn');
+  const reqs           = Array.from(document.querySelectorAll('.req'));
+
+  const params = new URLSearchParams(location.search);
+  if (params.get('debug') === '1') document.body.classList.add('debug');
+  if (params.get('capture') === '1') document.body.classList.add('capture');
+
+  const timers = [];
+  let rafId = null;
+
+  function fitStage() {
+    const vh = window.innerHeight;
+    const vw = window.innerWidth;
+    const scale = Math.min(vh / 1920, vw / 1080, 1);
+    stage.style.setProperty('--fit', scale);
+  }
+  window.addEventListener('resize', fitStage);
+  fitStage();
+
+  function clearAll() {
+    timers.forEach(t => clearTimeout(t));
+    timers.length = 0;
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = null;
+  }
+
+  function drawLine(el, duration, easing) {
+    return new Promise(resolve => {
+      const start = performance.now();
+      const ease = easing || (t => t);
+      function tick(now) {
+        const p = Math.min(1, (now - start) / duration);
+        const v = 1 - ease(p);
+        el.setAttribute('stroke-dashoffset', v.toFixed(4));
+        if (p < 1) rafId = requestAnimationFrame(tick);
+        else resolve();
+      }
+      rafId = requestAnimationFrame(tick);
+    });
+  }
+
+  function reveal(el) { el.classList.add('in'); }
+
+  function sleep(ms) {
+    return new Promise(resolve => {
+      const t = setTimeout(resolve, ms);
+      timers.push(t);
+    });
+  }
+
+  function resetAll() {
+    clearAll();
+    hLine.setAttribute('stroke-dashoffset', '1');
+    uLine.setAttribute('stroke-dashoffset', '1');
+    [revealLabel, answerTitle, answerSubtitle, ...reqs].forEach(el => el.classList.remove('in'));
+    stage.classList.add('prep');
+    void stage.offsetWidth;
+    stage.classList.remove('prep');
+  }
+
+  // ============================================================
+  // Timeline (~18.0s) synced to VO:
+  // 0.0–0.6   : header underline draws
+  // 0.6–1.0   : "THE RIGHT VISA IS" label
+  // 1.0–1.8   : "D-9-4" title rises with scale pop
+  //             VO: "The right visa is D-9-4."
+  // 1.8–2.4   : red underline draws under D-9-4
+  // 2.4–3.8   : italic subtitle "Built for foreign sole proprietors."
+  //             VO: "It's built for foreign sole proprietors."
+  // 3.8–6.3   : req 1 — Invest ₩300M (≈ $215K USD)
+  //             VO: "Invest 300 million Korean won — about 215 thousand US dollars."
+  // 6.3–8.3   : req 2 — Register in your own name
+  //             VO: "Register a business in your own name."
+  // 8.3–10.6  : req 3 — Run it yourself — no corporation
+  //             VO: "Run it yourself. No corporation required."
+  // 10.6–13.3 : req 4 — No nationality / industry limits
+  //             VO: "No nationality restrictions. Almost no industry restrictions."
+  // 13.3–18.0 : tail hold
+  // ============================================================
+  async function play() {
+    resetAll();
+
+    await drawLine(hLine, 600, t => 1 - Math.pow(1 - t, 2));
+
+    reveal(revealLabel);
+    await sleep(400);
+
+    reveal(answerTitle);
+    await sleep(800);
+
+    await drawLine(uLine, 600, t => 1 - Math.pow(1 - t, 3));
+
+    reveal(answerSubtitle);
+    await sleep(1400);
+
+    // Requirement 1: emphasis (longest audio line)
+    reveal(reqs[0]);
+    await sleep(2500);
+
+    // Requirement 2
+    reveal(reqs[1]);
+    await sleep(2000);
+
+    // Requirement 3
+    reveal(reqs[2]);
+    await sleep(2300);
+
+    // Requirement 4
+    reveal(reqs[3]);
+    await sleep(2700);
+
+    // Tail hold to reach ~18s total
+    await sleep(4700);
+  }
+
+  replayBtn.addEventListener('click', () => play());
+
+  window.addEventListener('load', () => {
+    requestAnimationFrame(() => requestAnimationFrame(play));
+  });
+})();
+</script>
+
+</body>
+</html>
