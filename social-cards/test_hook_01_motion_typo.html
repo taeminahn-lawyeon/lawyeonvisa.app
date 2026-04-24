@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Hook 01 · Motion Typo — Lawyeon</title>
+
+<!-- Preconnect + Playfair Display (serif) + Inter (sans) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --cream:   #f5f2ea;
+    --navy:    #1a2942;
+    --accent:  #9a3b2c;   /* warm burgundy / ochre */
+    --ink-2:   #2b3547;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 100%; height: 100%;
+    background: #222;        /* shows stage boundary while previewing */
+    overflow: hidden;
+    font-family: "Inter", -apple-system, sans-serif;
+    color: #fff;
+  }
+
+  /* Center the 1080×1920 stage in the viewport */
+  .viewport {
+    width: 100vw; height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 18px; padding: 24px 0;
+  }
+
+  /* ─── The stage — record THIS rectangle ─── */
+  .stage {
+    width: 1080px; height: 1920px;
+    background: var(--cream);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  /* Scale down if viewport shorter than 1920 (preview only) */
+  @media (max-height: 1940px) {
+    .stage {
+      transform: scale(calc((100vh - 80px) / 1920));
+      transform-origin: center center;
+    }
+  }
+
+  /* ─── 1. Top hairline (draws L→R 0.0s – 0.8s) ─── */
+  .top-line {
+    position: absolute;
+    top: 200px; left: 180px;
+    width: 0; height: 1.5px;
+    background: var(--navy);
+    transform-origin: left center;
+  }
+  .stage.play .top-line {
+    animation: drawLineH 0.8s cubic-bezier(0.65, 0.02, 0.35, 1.0) 0s forwards;
+  }
+  @keyframes drawLineH {
+    0%   { width: 0; }
+    100% { width: 720px; }
+  }
+
+  /* ─── Main text block (Moving to Korea / to open a small business?) ─── */
+  .question {
+    position: absolute;
+    top: 760px; left: 180px;
+    width: 720px;
+    font-family: "Playfair Display", serif;
+    color: var(--navy);
+    font-weight: 500;
+    font-size: 104px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    will-change: transform, opacity;
+  }
+  .question .line1,
+  .question .line2 {
+    display: block;
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  .stage.play .question .line1 {
+    animation: fadeRise 1.2s cubic-bezier(0.3, 0.7, 0.4, 1.0) 0.3s forwards;
+  }
+  .stage.play .question .line2 {
+    animation: fadeRise 1.2s cubic-bezier(0.3, 0.7, 0.4, 1.0) 1.0s forwards;
+  }
+  @keyframes fadeRise {
+    0%   { opacity: 0; transform: translateY(14px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .question .qmark {
+    display: inline-block;
+    transform-origin: center 70%;
+  }
+  .stage.play .qmark {
+    animation: pulseQ 0.6s cubic-bezier(0.4, 0.0, 0.2, 1.0) 1.8s both;
+  }
+  @keyframes pulseQ {
+    0%   { transform: scale(1); }
+    45%  { transform: scale(1.05); }
+    100% { transform: scale(1.02); }
+  }
+
+  /* Shift question block slightly right + fade at 2.2s */
+  .stage.play .question {
+    animation: shiftAside 0.8s cubic-bezier(0.4, 0.0, 0.2, 1.0) 2.2s forwards;
+  }
+  @keyframes shiftAside {
+    0%   { transform: translate(0, 0);    opacity: 1; }
+    100% { transform: translate(110px, -40px); opacity: 0.45; }
+  }
+
+  /* ─── STOP. — emerges at 2.2s ─── */
+  .stop-block {
+    position: absolute;
+    top: 860px; left: 180px;
+    opacity: 0;
+    transform: translateX(-24px);
+    z-index: 2;
+  }
+  .stage.play .stop-block {
+    animation: stopIn 0.8s cubic-bezier(0.25, 0.1, 0.25, 1.0) 2.2s forwards;
+  }
+  @keyframes stopIn {
+    0%   { opacity: 0; transform: translateX(-24px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+
+  .stop-word {
+    font-family: "Inter", sans-serif;
+    font-weight: 900;
+    font-size: 280px;
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+    color: var(--accent);
+  }
+
+  .stop-line {
+    margin-top: 28px;
+    width: 0; height: 3px;
+    background: var(--accent);
+    transform-origin: left center;
+  }
+  .stage.play .stop-line {
+    animation: drawLineH2 0.55s cubic-bezier(0.65, 0.02, 0.35, 1.0) 2.5s forwards;
+  }
+  @keyframes drawLineH2 {
+    0%   { width: 0; }
+    100% { width: 480px; }
+  }
+
+  /* ─── Corner caption + brand mark (static, subtle) ─── */
+  .mark {
+    position: absolute;
+    left: 180px; bottom: 200px;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: 0.24em;
+    color: var(--ink-2);
+    text-transform: uppercase;
+    opacity: 0;
+  }
+  .stage.play .mark {
+    animation: fadeRise 1.0s cubic-bezier(0.3, 0.7, 0.4, 1.0) 2.8s forwards;
+  }
+  .mark::before {
+    content: '';
+    display: inline-block;
+    width: 10px; height: 10px;
+    background: var(--accent);
+    margin-right: 14px;
+    vertical-align: baseline;
+    transform: translateY(-2px);
+  }
+
+  /* ─── Replay button — OUTSIDE the stage (not in recording) ─── */
+  .replay-btn {
+    flex-shrink: 0;
+    padding: 10px 22px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.4);
+    color: #fff;
+    font-family: "Inter", monospace;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .replay-btn:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.7);
+  }
+
+  .help {
+    flex-shrink: 0;
+    color: rgba(255,255,255,0.45);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-align: center;
+    max-width: 800px;
+    line-height: 1.6;
+  }
+  .help code {
+    background: rgba(255,255,255,0.08);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-family: ui-monospace, monospace;
+    color: #fff;
+  }
+</style>
+</head>
+
+<body>
+<div class="viewport">
+
+  <div class="stage play" id="stage">
+
+    <div class="top-line"></div>
+
+    <div class="question">
+      <span class="line1">Moving to Korea</span>
+      <span class="line2">to open a small business<span class="qmark">?</span></span>
+    </div>
+
+    <div class="stop-block">
+      <div class="stop-word">STOP.</div>
+      <div class="stop-line"></div>
+    </div>
+
+    <div class="mark">Law Firm Lawyeon</div>
+
+  </div>
+
+  <button class="replay-btn" onclick="replay()">▶ REPLAY</button>
+  <div class="help">
+    Record just the <b style="color:#fff">cream rectangle</b> (1080×1920) — the replay button is outside it so it won't appear in your recording.<br>
+    <b style="color:#fff">Chrome DevTools</b>: F12 → toggle device toolbar → custom 1080×1920 → record via browser extension or OS screen recorder.
+  </div>
+
+</div>
+
+<script>
+  function replay() {
+    const stage = document.getElementById('stage');
+    stage.classList.remove('play');
+    // Force reflow so the animation restarts from keyframe 0%
+    void stage.offsetWidth;
+    stage.classList.add('play');
+  }
+
+  // Wait for fonts so first animation uses correct metrics
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      const stage = document.getElementById('stage');
+      stage.classList.remove('play');
+      void stage.offsetWidth;
+      stage.classList.add('play');
+    });
+  }
+</script>
+</body>
+</html>
