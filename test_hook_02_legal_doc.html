@@ -11,6 +11,10 @@
     --ivory: #f8f4ea;
     --ink: #1a1a1a;
     --stamp: #c4302b;
+
+    /* 9:16 shortform safe zone: y = 220 ~ 1470 (height 1250) */
+    --safe-top: 220px;
+    --safe-bottom: 1470px;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -70,39 +74,56 @@
     background: radial-gradient(ellipse at center, transparent 55%, rgba(120,90,40,0.14) 100%);
   }
 
-  /* ====== HEADER AREA ====== */
+  /* ====== SAFE ZONE DEBUG (toggled by ?debug=1) ====== */
+  .safe-zone-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--safe-top);
+    height: calc(var(--safe-bottom) - var(--safe-top));
+    pointer-events: none;
+    display: none;
+    border: 2px dashed rgba(196, 48, 43, 0.55);
+    z-index: 30;
+  }
+  .safe-zone-overlay::before,
+  .safe-zone-overlay::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    height: 0;
+    border-top: 1px dashed rgba(196, 48, 43, 0.35);
+  }
+  .safe-zone-overlay::before { top: -60px; }
+  .safe-zone-overlay::after  { bottom: -60px; }
+  .debug .safe-zone-overlay { display: block; }
+
+  /* ====== HEADER (persistent) ====== */
   .header-wrap {
     position: absolute;
-    top: 140px;
+    top: 260px;
     left: 0;
     right: 0;
     text-align: center;
     font-family: 'IBM Plex Mono', monospace;
     color: var(--ink);
   }
-
   .header-title {
-    font-size: 34px;
+    font-size: 30px;
     font-weight: 500;
-    letter-spacing: 12px;
+    letter-spacing: 7px;
     opacity: 0;
-    animation: fadeInTxt 0.4s ease 0.15s forwards;
+    animation: fadeInTxt 0.45s ease 0.15s forwards;
   }
 
-  .case-file {
+  /* Header underline drawn stroke */
+  .header-line {
     position: absolute;
-    top: 150px;
+    top: 320px;
+    left: 90px;
     right: 90px;
-    font-size: 22px;
-    font-weight: 400;
-    letter-spacing: 3px;
-    color: var(--ink);
-    opacity: 0;
-    animation: fadeInTxt 0.35s ease 0.25s forwards;
-  }
-  .case-file .num {
-    color: var(--stamp);
-    font-weight: 700;
+    height: 3px;
+    overflow: visible;
   }
 
   @keyframes fadeInTxt {
@@ -110,28 +131,19 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Header underline drawn stroke */
-  .header-line {
-    position: absolute;
-    top: 220px;
-    left: 90px;
-    right: 90px;
-    height: 3px;
-    overflow: visible;
-  }
-
   /* ====== BODY / TYPEWRITER ====== */
   .body-text {
     position: absolute;
     left: 120px;
     right: 120px;
-    top: 720px;
+    top: 500px;
     font-family: 'Merriweather', 'Times New Roman', serif;
     font-weight: 700;
-    font-size: 72px;
+    font-size: 74px;
     line-height: 1.28;
     color: var(--ink);
     letter-spacing: -0.5px;
+    min-height: 230px;
   }
 
   .typed {
@@ -142,7 +154,7 @@
 
   .cursor {
     display: inline-block;
-    width: 28px;
+    width: 26px;
     height: 72px;
     background: var(--ink);
     margin-left: 6px;
@@ -159,7 +171,7 @@
   /* ====== STAMP ====== */
   .stamp-wrap {
     position: absolute;
-    top: 1180px;
+    top: 880px;
     left: 0;
     right: 0;
     display: flex;
@@ -171,18 +183,17 @@
   .stamp {
     position: relative;
     display: inline-block;
-    padding: 32px 96px;
-    border: 12px solid var(--stamp);
+    padding: 26px 80px;
+    border: 10px solid var(--stamp);
     color: var(--stamp);
     font-family: 'IBM Plex Mono', monospace;
     font-weight: 700;
-    font-size: 180px;
-    letter-spacing: 14px;
+    font-size: 140px;
+    letter-spacing: 12px;
     transform: rotate(-8deg) scale(1.5);
     filter: url(#inkBlur);
     mix-blend-mode: multiply;
   }
-
   .stamp::before,
   .stamp::after {
     content: "";
@@ -191,64 +202,94 @@
     opacity: 0.85;
   }
   .stamp::before {
-    top: -28px; left: 50%;
-    width: 14px; height: 14px;
+    top: -24px; left: 50%;
+    width: 12px; height: 12px;
     transform: translateX(-50%) rotate(45deg);
     opacity: 0.5;
   }
   .stamp::after {
-    bottom: -32px; right: 10%;
-    width: 22px; height: 8px;
+    bottom: -28px; right: 10%;
+    width: 20px; height: 7px;
     opacity: 0.4;
   }
 
   .stamp-wrap.stamped {
     animation: stampPlay 0.32s cubic-bezier(0.2, 1.4, 0.4, 1) forwards;
   }
-
   @keyframes stampPlay {
     0%   { opacity: 0; transform: translateY(-60px) scale(1.05); }
     55%  { opacity: 1; transform: translateY(6px) scale(1.0); }
     70%  { transform: translateY(-3px) scale(1.0); }
     100% { opacity: 1; transform: translateY(0) scale(1.0); }
   }
-
   .stamp-wrap.stamped .stamp {
     animation: stampImpact 0.28s cubic-bezier(0.2, 1.4, 0.4, 1) forwards;
   }
-
   @keyframes stampImpact {
     0%   { transform: rotate(-8deg) scale(1.5); filter: url(#inkBlur) blur(2px); }
     60%  { transform: rotate(-8deg) scale(0.94); filter: url(#inkBlur) blur(0.4px); }
     100% { transform: rotate(-8deg) scale(1.0);  filter: url(#inkBlur); }
   }
 
-  /* Red underline */
+  /* ====== ANSWER: D-8 VISA ====== */
+  .answer {
+    position: absolute;
+    top: 1200px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    opacity: 0;
+  }
+  .answer-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 28px;
+    letter-spacing: 8px;
+    color: var(--ink);
+    opacity: 0.65;
+    margin-bottom: 10px;
+  }
+  .answer-text {
+    display: inline-block;
+    font-family: 'Merriweather', 'Times New Roman', serif;
+    font-weight: 900;
+    font-size: 128px;
+    color: var(--ink);
+    letter-spacing: 2px;
+    line-height: 1.0;
+  }
+  .answer.revealed {
+    animation: answerRise 0.7s cubic-bezier(0.2, 0.9, 0.25, 1) forwards;
+  }
+  @keyframes answerRise {
+    0%   { opacity: 0; transform: translateY(28px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Red underline beneath D-8 VISA */
   .underline {
     position: absolute;
-    top: 1460px;
-    left: 180px;
-    right: 180px;
+    top: 1380px;
+    left: 280px;
+    right: 280px;
     height: 18px;
     overflow: visible;
   }
 
-  /* ====== FOOTER LABELS ====== */
+  /* ====== FOOTER (persistent, just above dead zone) ====== */
   .footer {
     position: absolute;
-    bottom: 120px;
-    left: 90px;
-    right: 90px;
-    display: flex;
-    justify-content: space-between;
+    top: 1428px;
+    left: 0;
+    right: 0;
+    text-align: center;
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 22px;
-    letter-spacing: 4px;
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 5px;
     color: var(--ink);
     opacity: 0;
-    animation: fadeInTxt 0.4s ease 0.3s forwards;
+    animation: fadeInTxt 0.45s ease 0.3s forwards;
   }
-  .footer .dot { color: var(--stamp); }
 
   /* ====== REPLAY BUTTON ====== */
   .controls {
@@ -279,11 +320,11 @@
   .replay-btn:active {
     transform: translateY(1px);
   }
+  /* Hidden in capture mode */
+  .capture .controls { display: none; }
 
   /* Reset class used by JS */
-  .prep * {
-    animation: none !important;
-  }
+  .prep * { animation: none !important; }
 </style>
 </head>
 <body>
@@ -304,7 +345,6 @@
                                0 0 0 0 0.30
                                0 0 0 0.22 0"/>
       </filter>
-
       <filter id="inkBlur" x="-20%" y="-20%" width="140%" height="140%">
         <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" result="noise"/>
         <feDisplacementMap in="SourceGraphic" in2="noise" scale="3"/>
@@ -320,12 +360,12 @@
   <div class="grid"></div>
   <div class="vignette"></div>
 
-  <!-- Header -->
+  <!-- Safe zone debug overlay (enabled with ?debug=1) -->
+  <div class="safe-zone-overlay"></div>
+
+  <!-- Header (persistent) -->
   <div class="header-wrap">
-    <div class="header-title">LAW&nbsp;&nbsp;FIRM&nbsp;&nbsp;LAWYEON</div>
-  </div>
-  <div class="case-file">
-    CASE&nbsp;FILE&nbsp;·&nbsp;<span class="num">No.&nbsp;0247</span>
+    <div class="header-title">IMMIGRATION&nbsp;&nbsp;LAW&nbsp;&nbsp;FIRM&nbsp;&nbsp;IN&nbsp;&nbsp;KOREA</div>
   </div>
 
   <!-- Horizontal drawn line below header -->
@@ -342,25 +382,29 @@
     <span class="typed" id="typed"></span><span class="cursor" id="cursor"></span>
   </div>
 
-  <!-- Red stamp -->
+  <!-- Red STOP. stamp -->
   <div class="stamp-wrap" id="stampWrap">
     <div class="stamp">STOP.</div>
   </div>
 
-  <!-- Red underline drawn below stamp -->
-  <svg class="underline" viewBox="0 0 720 18" preserveAspectRatio="none">
-    <line id="uLine" x1="0" y1="9" x2="720" y2="9"
+  <!-- Answer: D-8 VISA -->
+  <div class="answer" id="answer">
+    <div class="answer-label">YOU&nbsp;NEED</div>
+    <div class="answer-text">D‑8&nbsp;VISA</div>
+  </div>
+
+  <!-- Red underline under D-8 VISA -->
+  <svg class="underline" viewBox="0 0 520 18" preserveAspectRatio="none">
+    <line id="uLine" x1="0" y1="9" x2="520" y2="9"
           stroke="#c4302b" stroke-width="6" stroke-linecap="round"
           pathLength="1"
           stroke-dasharray="1 1"
           stroke-dashoffset="1"/>
   </svg>
 
-  <!-- Footer -->
+  <!-- Footer (persistent, just above dead zone) -->
   <div class="footer">
-    <span>LAWYEON<span class="dot">.</span>LEGAL</span>
-    <span>SEOUL · KR</span>
-    <span>PG 01 / 03</span>
+    Lawyeon&nbsp;&nbsp;Visa&nbsp;&nbsp;&&nbsp;&nbsp;Immigration&nbsp;&nbsp;Center
   </div>
 
 </div>
@@ -373,14 +417,19 @@
   const typed      = document.getElementById('typed');
   const cursor     = document.getElementById('cursor');
   const stampWrap  = document.getElementById('stampWrap');
+  const answerEl   = document.getElementById('answer');
   const replayBtn  = document.getElementById('replayBtn');
 
   const MESSAGE = "Moving to Korea to open a small business?";
 
+  const params = new URLSearchParams(location.search);
+  if (params.get('debug') === '1') document.body.classList.add('debug');
+  if (params.get('capture') === '1') document.body.classList.add('capture');
+
   const timers = [];
   let rafId = null;
 
-  // Scale stage to fit viewport height
+  // Scale stage to fit viewport
   function fitStage() {
     const vh = window.innerHeight;
     const vw = window.innerWidth;
@@ -397,7 +446,6 @@
     rafId = null;
   }
 
-  // Animate a stroke-dashoffset from 1 -> 0 over duration ms
   function drawLine(el, duration, easing) {
     return new Promise(resolve => {
       const start = performance.now();
@@ -406,17 +454,13 @@
         const p = Math.min(1, (now - start) / duration);
         const v = 1 - ease(p);
         el.setAttribute('stroke-dashoffset', v.toFixed(4));
-        if (p < 1) {
-          rafId = requestAnimationFrame(tick);
-        } else {
-          resolve();
-        }
+        if (p < 1) rafId = requestAnimationFrame(tick);
+        else resolve();
       }
       rafId = requestAnimationFrame(tick);
     });
   }
 
-  // Typewriter with variable per-char delay for natural feel
   function typeOut(text, totalMs) {
     return new Promise(resolve => {
       const n = text.length;
@@ -426,7 +470,6 @@
         if (i > n) return resolve();
         typed.textContent = text.slice(0, i);
         i++;
-        // small random jitter between keystrokes
         const ch = text[i - 1] || '';
         let delay = base + (Math.random() * base * 0.6 - base * 0.3);
         if (ch === ' ') delay *= 0.6;
@@ -453,7 +496,8 @@
     cursor.classList.remove('hidden');
     stampWrap.classList.remove('stamped');
     stampWrap.style.opacity = '0';
-    // reset header fade animations by toggling reflow
+    answerEl.classList.remove('revealed');
+    answerEl.style.opacity = '0';
     stage.classList.add('prep');
     void stage.offsetWidth;
     stage.classList.remove('prep');
@@ -462,33 +506,39 @@
   async function play() {
     resetAll();
 
-    // 0.0 – 0.5s: header text fades in (via CSS) + horizontal line drawn
-    await drawLine(hLine, 450, t => 1 - Math.pow(1 - t, 2));
-    // small breath
-    await sleep(60);
+    // 0.0 – 0.7s: header + horizontal line drawn
+    await drawLine(hLine, 600, t => 1 - Math.pow(1 - t, 2));
+    await sleep(80);
 
-    // 0.5 – 1.8s: typewriter (~1.3s)
-    await typeOut(MESSAGE, 1250);
+    // 0.7 – 2.9s: typewriter (~2.2s, natural pace)
+    await typeOut(MESSAGE, 2150);
 
-    // 1.8 – 2.2s: pause with blinking cursor
-    await sleep(380);
+    // 2.9 – 3.6s: pause with blinking cursor
+    await sleep(700);
 
     // Hide cursor just before stamp
     cursor.classList.add('hidden');
 
-    // 2.2 – 2.5s: stamp impact
+    // 3.6 – 4.0s: stamp impact
     stampWrap.classList.add('stamped');
-    await sleep(320);
+    await sleep(380);
 
-    // 2.5 – 3.0s: red underline drawn
-    await drawLine(uLine, 480, t => 1 - Math.pow(1 - t, 3));
+    // 4.0 – 5.0s: stamp hold (beat)
+    await sleep(1000);
+
+    // 5.0 – 5.8s: D-8 VISA reveals
+    answerEl.classList.add('revealed');
+    await sleep(700);
+
+    // 5.8 – 6.4s: red underline draws under D-8 VISA
+    await drawLine(uLine, 600, t => 1 - Math.pow(1 - t, 3));
+
+    // 6.4 – 8.0s: hold (1.6s) for voiceover tail
+    await sleep(1600);
   }
 
-  replayBtn.addEventListener('click', () => {
-    play();
-  });
+  replayBtn.addEventListener('click', () => play());
 
-  // Autoplay on load (wait a frame so fonts/layout settle)
   window.addEventListener('load', () => {
     requestAnimationFrame(() => requestAnimationFrame(play));
   });
