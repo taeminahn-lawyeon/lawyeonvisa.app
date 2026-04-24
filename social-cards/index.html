@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Social Cards · Lawyeon (Internal)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Noto Sans KR", -apple-system, sans-serif;
+    background: #e8e6df;
+    color: #191f28;
+    padding: 32px 20px 80px;
+  }
+  .toolbar {
+    max-width: 1280px; margin: 0 auto 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .toolbar h1 { font-size: 20px; font-weight: 800; }
+  .toolbar .hint { font-size: 13px; color: #6b7684; }
+  .toolbar button {
+    padding: 10px 18px; background: #0f2552; color: #fff;
+    border: none; border-radius: 8px; font-weight: 700; cursor: pointer;
+    font-size: 14px;
+  }
+  .toolbar button:hover { background: #081838; }
+  .grid {
+    max-width: 1280px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(540px, 1fr));
+    gap: 24px;
+  }
+  .slot {
+    background: #fff; border: 1px solid #c9c7c0; border-radius: 8px;
+    overflow: hidden;
+  }
+  .slot-head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px; background: #f5f5f2; border-bottom: 1px solid #e5e8eb;
+    font-family: "IBM Plex Mono", monospace; font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+  .slot-head .dl {
+    padding: 4px 10px; background: #0f2552; color: #fff;
+    border: none; border-radius: 4px; cursor: pointer;
+    font-family: inherit; font-size: 10px; font-weight: 700;
+  }
+  .slot-head .dl:hover { background: #081838; }
+  .stage {
+    width: 100%; aspect-ratio: 1; overflow: hidden; position: relative;
+    background: #0f2552;
+  }
+  /* Card is rendered at natural 1080×1080; scale down visually to fit .stage */
+  .card {
+    width: 1080px; height: 1080px;
+    position: absolute; top: 0; left: 0;
+    transform-origin: top left;
+    /* transform:scale() is set in JS based on slot width */
+  }
+
+  /* ── Card design ── */
+  .card {
+    background: #0f2552;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 54px 54px;
+    color: #fff;
+    font-family: "Noto Sans KR", sans-serif;
+    padding: 56px 64px 48px;
+    display: flex; flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  .topbar {
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .brand {
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .brand-square {
+    width: 14px; height: 14px; background: #f5c518; margin-top: 12px;
+    flex-shrink: 0;
+  }
+  .brand-text .name {
+    font-weight: 800; font-size: 26px; letter-spacing: -0.01em;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .brand-text .name .sq { color: #f5c518; font-size: 18px; }
+  .brand-text .subtitle {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px; letter-spacing: 0.18em; color: rgba(255,255,255,0.7);
+    margin-top: 4px;
+  }
+  .page-counter {
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 700; font-size: 22px;
+    color: #f5c518;
+    text-align: right; line-height: 1.05;
+  }
+  .page-counter .slash { color: rgba(245,197,24,0.6); padding: 0 4px; }
+
+  .body {
+    flex: 1;
+    display: flex; flex-direction: column; justify-content: space-between;
+    margin-top: 32px;
+    position: relative;
+  }
+
+  .badge {
+    display: inline-flex; align-items: center;
+    align-self: flex-start;
+    background: #fff; color: #0f2552;
+    padding: 12px 22px;
+    font-weight: 800; font-size: 22px;
+    border: 4px solid #f5c518;
+    position: relative;
+    letter-spacing: -0.01em;
+  }
+  .badge::after {
+    content: ''; position: absolute;
+    left: 4px; bottom: -18px;
+    width: 56px; height: 6px; background: #f5c518;
+  }
+
+  .title {
+    font-weight: 900; font-size: 128px; line-height: 1.02;
+    letter-spacing: -0.035em;
+    color: #fff; margin-top: auto; margin-bottom: 24px;
+    text-wrap: balance;
+    word-break: keep-all;
+  }
+  .title y, .title .y {
+    color: #f5c518;
+  }
+
+  .note {
+    position: absolute;
+    top: 48px; right: -8px;
+    background: #f5c518; color: #0a0a0a;
+    padding: 26px 32px;
+    font-weight: 800; font-size: 32px;
+    line-height: 1.2;
+    max-width: 340px;
+    transform: rotate(-4deg);
+    box-shadow: 6px 10px 20px rgba(0,0,0,0.25);
+    text-wrap: balance;
+    word-break: keep-all;
+  }
+  .note::before {
+    content: ''; position: absolute;
+    top: -14px; left: 50%;
+    transform: translateX(-50%) rotate(3deg);
+    width: 96px; height: 24px;
+    background: rgba(255,255,255,0.45);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+  }
+
+  .swipe {
+    position: absolute; right: 48px; bottom: 40px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 18px; font-weight: 600; letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.55);
+  }
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <div>
+    <h1>Lawyeon — Social Cards (Internal)</h1>
+    <div class="hint">Edit <code>content.js</code> → reload. 각 카드 우측 상단 <b>PNG</b> 버튼으로 1080×1080 다운로드.</div>
+  </div>
+  <button onclick="downloadAll()">Download all 10 PNGs</button>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="content.js"></script>
+<script>
+const CARD_SIZE = 1080;
+
+function renderTitle(html) {
+  // Convert <y>...</y> to <span class="y">...</span>
+  return String(html || '')
+    .replace(/<y>/g, '<span class="y">')
+    .replace(/<\/y>/g, '</span>');
+}
+
+function buildCard(slide, index, total) {
+  const pageNo = slide.no || String(index + 1).padStart(2, '0');
+  const pageTotal = String(total).padStart(2, '0');
+  return `
+    <div class="card" data-index="${index}">
+      <div class="topbar">
+        <div class="brand">
+          <div class="brand-square"></div>
+          <div class="brand-text">
+            <div class="name">Law Firm <span class="sq">■</span> Lawyeon</div>
+            <div class="subtitle">VISA &amp; IMMIGRATION CENTER</div>
+          </div>
+        </div>
+        <div class="page-counter">${pageNo}<span class="slash">/</span>${pageTotal}</div>
+      </div>
+      <div class="body">
+        ${slide.badge ? `<div class="badge">${slide.badge}</div>` : ''}
+        <h1 class="title">${renderTitle(slide.title)}</h1>
+      </div>
+      ${slide.note ? `<div class="note">${slide.note}</div>` : ''}
+      ${slide.swipe ? `<div class="swipe">SWIPE →</div>` : ''}
+    </div>
+  `;
+}
+
+function fitCardToSlot(slot) {
+  const card = slot.querySelector('.card');
+  const stage = slot.querySelector('.stage');
+  const scale = stage.clientWidth / CARD_SIZE;
+  card.style.transform = `scale(${scale})`;
+}
+
+function render() {
+  const grid = document.getElementById('grid');
+  const total = window.SLIDES.length;
+  grid.innerHTML = window.SLIDES.map((slide, i) => `
+    <div class="slot" data-index="${i}">
+      <div class="slot-head">
+        <span>SLIDE ${String(i + 1).padStart(2, '0')} · ${slide.badge || '—'}</span>
+        <button class="dl" onclick="downloadCard(${i})">PNG</button>
+      </div>
+      <div class="stage">${buildCard(slide, i, total)}</div>
+    </div>
+  `).join('');
+  document.querySelectorAll('.slot').forEach(fitCardToSlot);
+}
+
+async function downloadCard(index) {
+  const slot = document.querySelector(`.slot[data-index="${index}"]`);
+  const card = slot.querySelector('.card');
+  const originalTransform = card.style.transform;
+  card.style.transform = 'none';
+
+  const canvas = await html2canvas(card, {
+    width: CARD_SIZE,
+    height: CARD_SIZE,
+    scale: 2,                // 2160×2160 for crisp export
+    backgroundColor: '#0f2552',
+    useCORS: true,
+    logging: false,
+  });
+
+  card.style.transform = originalTransform;
+
+  canvas.toBlob((blob) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const slide = window.SLIDES[index];
+    const no = slide.no || String(index + 1).padStart(2, '0');
+    a.href = url;
+    a.download = `lawyeon-card-${no}.png`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, 'image/png');
+}
+
+async function downloadAll() {
+  for (let i = 0; i < window.SLIDES.length; i++) {
+    await downloadCard(i);
+    await new Promise(r => setTimeout(r, 400));  // throttle browser download
+  }
+}
+
+// Re-fit cards on window resize
+window.addEventListener('resize', () => {
+  document.querySelectorAll('.slot').forEach(fitCardToSlot);
+});
+
+// Wait for fonts before first render so dimensions are correct
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(render);
+} else {
+  render();
+}
+</script>
+</body>
+</html>
