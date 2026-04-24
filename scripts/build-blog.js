@@ -1198,10 +1198,19 @@ async function build() {
     console.log(`✅ ${posts.length}개의 블로그 포스트 발견\n`);
 
     // 3. 각 포스트에 대해 정적 HTML 생성
+    //    template='navy_v4' 로 저장된 post는 별도 Navy v4 렌더러
+    //    (scripts/build-navy-v4-post.js)로 이미 생성된 정적 파일이 있으므로
+    //    이 Toss 템플릿 빌더가 덮어쓰지 않도록 스킵한다. 덮어쓰면 Navy v4
+    //    구조 JSON이 Toss 블록으로 파싱되지 못해 본문이 원시 JSON 텍스트로
+    //    찍히는 회귀가 발생.
     for (const post of posts) {
+        if (post.template === 'navy_v4') {
+            console.log(`⏭️  스킵: /blog/${post.slug}.html (template=navy_v4, 별도 빌더 사용)`);
+            continue;
+        }
         // 관련 글 가져오기 (같은 카테고리, 최대 4개)
         const relatedPosts = posts
-            .filter(p => p.category === post.category && p.id !== post.id)
+            .filter(p => p.category === post.category && p.id !== post.id && p.template !== 'navy_v4')
             .slice(0, 4);
 
         const html = generatePostHTML(post, relatedPosts);
