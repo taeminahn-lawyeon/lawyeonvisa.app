@@ -8,6 +8,10 @@ Allow: /
 Disallow: /admin-*.html
 Disallow: /partner-dashboard*.html
 
+# 내부 도구 (SNS 카드 생성기 등) 크롤링 제외
+Disallow: /social-cards/
+Disallow: /scripts/
+
 # 결제/인증 페이지 크롤링 제외
 Disallow: /payment-*.html
 Disallow: /login-*.html
