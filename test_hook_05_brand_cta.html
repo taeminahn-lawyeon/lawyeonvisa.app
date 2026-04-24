@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Lawyeon — Living Legal Document (test_hook_05 · Brand & CTA)</title>
+<title>Lawyeon — Living Legal Document (test_hook_05 · Blog Series Index)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
@@ -11,6 +11,7 @@
     --ivory: #f8f4ea;
     --ink: #1a1a1a;
     --stamp: #c4302b;
+    --navy: #0f2552;
 
     --safe-top: 220px;
     --safe-bottom: 1470px;
@@ -43,7 +44,6 @@
     .stage { transform: scale(var(--fit, 1)); }
   }
 
-  /* ====== PAPER TEXTURE ====== */
   .paper-noise { position: absolute; inset: 0; pointer-events: none; opacity: 0.55; mix-blend-mode: multiply; }
   .grid {
     position: absolute; inset: 0; pointer-events: none;
@@ -86,128 +86,79 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* ====== BRAND REVEAL ====== */
-  .brand-block {
-    position: absolute; top: 460px; left: 0; right: 0;
-    text-align: center; color: var(--ink);
-  }
-  .this-is {
+  /* ====== SERIES LABEL ====== */
+  .series-label {
+    position: absolute; top: 380px; left: 0; right: 0;
+    text-align: center;
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 32px;
+    font-size: 28px;
+    font-weight: 500;
     letter-spacing: 10px;
+    color: var(--stamp);
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(8px);
   }
-  .brand-name {
+
+  /* ====== BLOG POSTS LIST ====== */
+  .blog-post {
+    position: absolute;
+    left: 80px;
+    right: 80px;
+    display: flex;
+    align-items: flex-start;
+    gap: 38px;
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  .blog-post .num {
+    flex: 0 0 auto;
+    width: 170px;
     font-family: 'Merriweather', 'Times New Roman', serif;
     font-weight: 900;
-    font-size: 110px;
-    letter-spacing: 0px;
-    line-height: 1.0;
-    margin-top: 32px;
-    opacity: 0;
-    transform: translateY(18px) scale(0.97);
+    font-size: 150px;
+    line-height: 0.95;
+    color: var(--navy);
+    letter-spacing: -4px;
+    text-align: left;
   }
-  .brand-sub {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 32px;
-    font-weight: 500;
-    letter-spacing: 9px;
-    margin-top: 28px;
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  /* Red underline beneath the brand name */
-  .brand-underline {
-    position: absolute; top: 720px;
-    left: 180px; right: 180px;
-    height: 22px; overflow: visible;
-  }
-
-  /* ====== MIDDLE: FULL GUIDE + LINK IN BIO ====== */
-  .guide-line {
-    position: absolute; top: 900px; left: 100px; right: 100px;
-    text-align: center;
-    font-family: 'Merriweather', serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 44px;
-    line-height: 1.3;
+  .blog-post .title {
+    flex: 1 1 auto;
+    font-family: 'Merriweather', 'Times New Roman', serif;
+    font-weight: 900;
+    font-size: 42px;
+    line-height: 1.18;
     color: var(--ink);
-    opacity: 0;
-    transform: translateY(12px);
+    letter-spacing: -0.3px;
+    padding-top: 14px;
   }
 
-  .link-callout-wrap {
-    position: absolute; top: 1030px; left: 0; right: 0;
-    text-align: center;
-    pointer-events: none;
-    opacity: 0;
-  }
-  .link-callout {
-    display: inline-block;
-    border: 6px solid var(--stamp);
-    color: var(--stamp);
-    padding: 18px 50px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-weight: 700;
-    font-size: 52px;
-    letter-spacing: 6px;
-    transform: rotate(-2deg);
-    filter: url(#inkBlur);
-    mix-blend-mode: multiply;
-  }
-  .link-arrow {
-    display: inline-block;
-    margin-right: 18px;
-  }
-
-  .link-callout-wrap.stamped {
-    animation: stampPlay 0.34s cubic-bezier(0.2, 1.4, 0.4, 1) forwards;
-  }
-  @keyframes stampPlay {
-    0%   { opacity: 0; transform: translateY(-40px) scale(1.04); }
-    55%  { opacity: 1; transform: translateY(4px) scale(1.0); }
-    100% { opacity: 1; transform: translateY(0) scale(1.0); }
-  }
-
-  /* ====== BOTTOM CTA ====== */
-  .cta-block {
-    position: absolute; top: 1220px; left: 0; right: 0;
-    text-align: center;
-    color: var(--ink);
-  }
-  .cta-main {
-    font-family: 'IBM Plex Mono', monospace;
-    font-weight: 700;
-    font-size: 44px;
-    letter-spacing: 6px;
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  .cta-sub {
-    font-family: 'IBM Plex Mono', monospace;
-    font-weight: 400;
-    font-size: 30px;
-    letter-spacing: 10px;
-    color: var(--stamp);
-    margin-top: 18px;
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  /* Reveal animations */
-  .this-is.in,
-  .brand-name.in,
-  .brand-sub.in,
-  .guide-line.in,
-  .cta-main.in,
-  .cta-sub.in {
-    animation: rise 0.6s cubic-bezier(0.2, 0.9, 0.25, 1) forwards;
+  .blog-post.in {
+    animation: rise 0.55s cubic-bezier(0.2, 0.9, 0.25, 1) forwards;
   }
   @keyframes rise {
-    to { opacity: 1; transform: translateY(0) scale(1); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Per-post positions (safe zone: 220-1470) */
+  #p1 { top: 470px; }
+  #p2 { top: 690px; }
+  #p3 { top: 910px; }
+  #p4 { top: 1130px; }
+
+  /* ====== BOTTOM HINT ====== */
+  .bottom-hint {
+    position: absolute; top: 1360px; left: 0; right: 0;
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 26px;
+    letter-spacing: 5px;
+    color: rgba(26,26,26,0.78);
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  .bottom-hint .dot { color: var(--stamp); margin: 0 14px; }
+  .bottom-hint.in {
+    animation: rise 0.55s cubic-bezier(0.2, 0.9, 0.25, 1) forwards;
   }
 
   /* ====== FOOTER ====== */
@@ -221,7 +172,6 @@
     animation: fadeInTxt 0.45s ease 0.3s forwards;
   }
 
-  /* ====== CONTROLS ====== */
   .controls {
     position: fixed; top: 20px; right: 20px; z-index: 50;
     display: flex; gap: 10px;
@@ -237,6 +187,10 @@
   .replay-btn:hover { background: var(--stamp); color: var(--ivory); border-color: var(--stamp); }
   .replay-btn:active { transform: translateY(1px); }
   .capture .controls { display: none; }
+
+  .series-label.in {
+    animation: rise 0.55s cubic-bezier(0.2, 0.9, 0.25, 1) forwards;
+  }
 
   .prep * { animation: none !important; }
 </style>
@@ -258,11 +212,6 @@
                                0 0 0 0 0.30
                                0 0 0 0.22 0"/>
       </filter>
-      <filter id="inkBlur" x="-20%" y="-20%" width="140%" height="140%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="9" result="noise"/>
-        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3"/>
-        <feGaussianBlur stdDeviation="0.6"/>
-      </filter>
     </defs>
   </svg>
 
@@ -283,35 +232,33 @@
           pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1"/>
   </svg>
 
-  <!-- Brand reveal -->
-  <div class="brand-block">
-    <div class="this-is" id="thisIs">THIS&nbsp;&nbsp;IS</div>
-    <div class="brand-name" id="brandName">Law&nbsp;Firm&nbsp;Lawyeon</div>
-    <div class="brand-sub" id="brandSub">VISA&nbsp;&nbsp;&&nbsp;&nbsp;IMMIGRATION&nbsp;&nbsp;CENTER</div>
+  <!-- Series label -->
+  <div class="series-label" id="seriesLabel">THE&nbsp;&nbsp;BUSINESS&nbsp;&nbsp;IMMIGRATION&nbsp;&nbsp;SERIES</div>
+
+  <!-- Blog posts -->
+  <div class="blog-post" id="p1">
+    <div class="num">01</div>
+    <div class="title">How&nbsp;to&nbsp;Start&nbsp;a&nbsp;Business&nbsp;in&nbsp;Korea<br>as&nbsp;a&nbsp;Foreigner</div>
   </div>
 
-  <svg class="brand-underline" viewBox="0 0 720 22" preserveAspectRatio="none">
-    <line id="uLine" x1="0" y1="11" x2="720" y2="11"
-          stroke="#c4302b" stroke-width="7" stroke-linecap="round"
-          pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1"/>
-  </svg>
-
-  <!-- Guide line -->
-  <div class="guide-line" id="guideLine">
-    Full guide: how to start a business in Korea
+  <div class="blog-post" id="p2">
+    <div class="num">02</div>
+    <div class="title">Korea&nbsp;Business&nbsp;Visa&nbsp;in&nbsp;2026</div>
   </div>
 
-  <!-- LINK IN BIO callout -->
-  <div class="link-callout-wrap" id="linkCallout">
-    <div class="link-callout">
-      <span class="link-arrow">→</span>LINK&nbsp;IN&nbsp;BIO
-    </div>
+  <div class="blog-post" id="p3">
+    <div class="num">03</div>
+    <div class="title">How&nbsp;to&nbsp;Open&nbsp;a&nbsp;Store&nbsp;in&nbsp;Korea<br>as&nbsp;a&nbsp;Foreigner</div>
   </div>
 
-  <!-- Bottom CTA -->
-  <div class="cta-block">
-    <div class="cta-main" id="ctaMain">FREE&nbsp;&nbsp;PRE‑CONSULTATION</div>
-    <div class="cta-sub" id="ctaSub">AVAILABLE</div>
+  <div class="blog-post" id="p4">
+    <div class="num">04</div>
+    <div class="title">How&nbsp;to&nbsp;Stay&nbsp;in&nbsp;Korea&nbsp;Long‑Term<br>as&nbsp;a&nbsp;Foreign&nbsp;Business&nbsp;Owner</div>
+  </div>
+
+  <!-- Bottom hint -->
+  <div class="bottom-hint" id="bottomHint">
+    READ&nbsp;THE&nbsp;FULL&nbsp;SERIES<span class="dot">·</span>SEE&nbsp;BIO
   </div>
 
   <!-- Footer -->
@@ -325,14 +272,9 @@
 (function () {
   const stage        = document.getElementById('stage');
   const hLine        = document.getElementById('hLine');
-  const uLine        = document.getElementById('uLine');
-  const thisIs       = document.getElementById('thisIs');
-  const brandName    = document.getElementById('brandName');
-  const brandSub     = document.getElementById('brandSub');
-  const guideLine    = document.getElementById('guideLine');
-  const linkCallout  = document.getElementById('linkCallout');
-  const ctaMain      = document.getElementById('ctaMain');
-  const ctaSub       = document.getElementById('ctaSub');
+  const seriesLabel  = document.getElementById('seriesLabel');
+  const posts        = ['p1','p2','p3','p4'].map(id => document.getElementById(id));
+  const bottomHint   = document.getElementById('bottomHint');
   const replayBtn    = document.getElementById('replayBtn');
 
   const params = new URLSearchParams(location.search);
@@ -385,63 +327,43 @@
   function resetAll() {
     clearAll();
     hLine.setAttribute('stroke-dashoffset', '1');
-    uLine.setAttribute('stroke-dashoffset', '1');
-    [thisIs, brandName, brandSub, guideLine, ctaMain, ctaSub].forEach(el => el.classList.remove('in'));
-    linkCallout.classList.remove('stamped');
-    linkCallout.style.opacity = '0';
+    [seriesLabel, bottomHint, ...posts].forEach(el => el.classList.remove('in'));
     stage.classList.add('prep');
     void stage.offsetWidth;
     stage.classList.remove('prep');
   }
 
   // ============================================================
-  // Timeline (~12.0s) synced to VO:
-  // 0.0–0.6  : header line draws
-  // 0.6–1.0  : "THIS IS" label
-  //            VO: "This is..."
-  // 1.0–1.8  : "Law Firm Lawyeon" brand reveal (rise + scale)
-  // 1.8–2.4  : "VISA & IMMIGRATION CENTER" subtitle
-  // 2.4–3.0  : red underline beneath brand
-  //            [end of VO sentence 1]
-  // 3.0–4.2  : "Full guide: how to start a business in Korea"
-  //            VO: "Full guide on how to start a business in Korea —"
-  // 4.2–5.0  : "-> LINK IN BIO" callout stamps in
-  //            VO: "— link in bio."
-  // 5.0–7.0  : FREE PRE-CONSULTATION main line
-  //            VO: "Free pre-consultation available."
-  // 7.0–8.0  : AVAILABLE accent
-  // 8.0–12.0 : tail hold for outro breathing room
+  // Timeline (~12.0s):
+  // 0.0–0.6 : header line draws
+  // 0.6–1.0 : series label "THE BUSINESS IMMIGRATION SERIES"
+  //           VO: "This is Law Firm Lawyeon..."
+  // 1.0–2.2 : Post 01 rises — matches "Full guide on how to
+  //           start a business in Korea" (the exact post title)
+  // 2.2–3.4 : Post 02
+  // 3.4–4.6 : Post 03
+  // 4.6–5.8 : Post 04
+  // 5.8–7.2 : bottom hint "READ THE FULL SERIES · SEE BIO"
+  //           VO: "Free pre-consultation available."
+  // 7.2–12  : tail hold
   // ============================================================
   async function play() {
     resetAll();
 
     await drawLine(hLine, 600, t => 1 - Math.pow(1 - t, 2));
 
-    reveal(thisIs);
+    reveal(seriesLabel);
     await sleep(400);
 
-    reveal(brandName);
-    await sleep(800);
+    for (let i = 0; i < posts.length; i++) {
+      reveal(posts[i]);
+      await sleep(1200);
+    }
 
-    reveal(brandSub);
-    await sleep(600);
+    await sleep(200);
+    reveal(bottomHint);
 
-    await drawLine(uLine, 600, t => 1 - Math.pow(1 - t, 3));
-
-    reveal(guideLine);
-    await sleep(1200);
-
-    linkCallout.classList.add('stamped');
-    await sleep(800);
-
-    reveal(ctaMain);
-    await sleep(2000);
-
-    reveal(ctaSub);
-    await sleep(1000);
-
-    // Tail hold to reach ~12s total
-    await sleep(4000);
+    await sleep(4800);
   }
 
   replayBtn.addEventListener('click', () => play());
