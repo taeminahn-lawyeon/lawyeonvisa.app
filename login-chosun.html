@@ -523,6 +523,8 @@
                             phone: '',
                             organization: 'chosun'
                         });
+                    } else if (!profileResult.data.organization) {
+                        await updateUserProfile(user.id, { organization: 'chosun' });
                     }
                 } catch (e) { console.error('Profile check error:', e); }
                 window.location.replace(`service-chosun.html?lectureCode=${encodeURIComponent(savedLectureCode)}`);
@@ -665,6 +667,8 @@
                         phone: '',
                         organization: 'chosun'
                     });
+                } else if (!profileResult.data.organization) {
+                    await updateUserProfile(currentUser.id, { organization: 'chosun' });
                 }
 
                 // Store lecture code for later use
