@@ -2097,16 +2097,25 @@
                 }
                 
                 const phoneDisplay = customer.phone || '-';
-                const phoneLink = customer.phone 
+                const phoneLink = customer.phone
                     ? `<a href="tel:${customer.phone}" style="color: #3182F6; text-decoration: none;">${customer.phone}</a>`
                     : '-';
-                
+
+                const customerOrgLabels = {
+                    'chosun': { name: '조선대', bg: '#1B3A7B' },
+                    'kdu': { name: '극동대', bg: '#003366' }
+                };
+                const customerOrgInfo = customerOrgLabels[customer.organization];
+                const customerOrgBadge = customerOrgInfo
+                    ? `<span class="org-badge" style="background:${customerOrgInfo.bg}; color:white; padding:4px 10px; border-radius:6px; font-size:12px; font-weight:600; display:inline-block;">${customerOrgInfo.name}</span>`
+                    : `<span style="color: #9CA3AF; font-size: 12px;">일반</span>`;
+
                 tableHTML += `
                     <tr>
                         <td><strong>${customer.name || '알 수 없음'}</strong></td>
                         <td>${customer.email || '-'}</td>
                         <td>${phoneLink}</td>
-                        <td>${customer.organization || '-'}</td>
+                        <td>${customerOrgBadge}</td>
                         <td>${customer.visa_type ? `<span class="visa-badge">${customer.visa_type}</span>` : '-'}</td>
                         <td>${customer.nationality || '-'}</td>
                         <td class="${expiryClass}">${expiryDisplay}</td>
