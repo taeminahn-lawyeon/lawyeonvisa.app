@@ -525,6 +525,8 @@
                             phone: '',
                             organization: 'kdu'
                         });
+                    } else if (!profileResult.data.organization) {
+                        await updateUserProfile(user.id, { organization: 'kdu' });
                     }
                 } catch (e) { console.error('Profile check error:', e); }
                 window.location.replace(`service-kdu.html?lectureCode=${encodeURIComponent(savedLectureCode)}`);
@@ -667,6 +669,8 @@
                         phone: '',
                         organization: 'kdu'
                     });
+                } else if (!profileResult.data.organization) {
+                    await updateUserProfile(currentUser.id, { organization: 'kdu' });
                 }
 
                 // Store lecture code for later use
