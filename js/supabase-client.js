@@ -340,6 +340,15 @@ async function createThread(threadData) {
         }
 
         debugLog('쓰레드 생성 성공:', data);
+
+        // 📧 신규 쓰레드 생성 시 어드민에게 이메일 알림
+        if (typeof notifyAdminOnNewThread === 'function') {
+            debugLog('📧 [createThread] 어드민 알림 발송');
+            notifyAdminOnNewThread(data.id)
+                .then(result => debugLog('📧 [createThread] 어드민 알림 결과:', result))
+                .catch(err => debugLog('Admin notification error (ignored):', err));
+        }
+
         return { success: true, data };
     } catch (error) {
         console.error('쓰레드 생성 실패:', error);
@@ -896,6 +905,16 @@ async function createMessage(messageData) {
                     }
                 })
                 .catch(err => debugLog('Email notification error (ignored):', err));
+        }
+
+        // 📧 고객(user) 메시지인 경우 어드민에게 이메일 알림 발송
+        // 첫 user 메시지는 createThread의 new_thread 이벤트와 중복되므로 서버에서 dedup 처리됨
+        const senderType = messageData.sender_type || 'user';
+        if (senderType === 'user' && typeof notifyAdminOnNewMessage === 'function') {
+            debugLog('📧 [createMessage] 고객 메시지 - 어드민 알림 발송');
+            notifyAdminOnNewMessage(messageData.thread_id)
+                .then(result => debugLog('📧 [createMessage] 어드민 알림 결과:', result))
+                .catch(err => debugLog('Admin notification error (ignored):', err));
         }
 
         return { success: true, data };
