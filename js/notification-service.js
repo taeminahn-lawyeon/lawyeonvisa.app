@@ -5,6 +5,7 @@
 
 // Supabase Edge Function URL (배포 후 설정)
 const NOTIFICATION_FUNCTION_URL = 'https://gqistzsergddnpcvuzba.supabase.co/functions/v1/send-notification';
+const EMAIL_FUNCTION_URL = 'https://gqistzsergddnpcvuzba.supabase.co/functions/v1/send-email';
 
 // 알림 템플릿 (이미지와 동일한 카드 스타일)
 const NOTIFICATION_TEMPLATES = {
@@ -296,6 +297,45 @@ async function notifyStatusUpdate(threadId, newStatus) {
         });
     } catch (error) {
         console.error('📱 [notifyStatusUpdate] 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+/**
+ * 관리자가 메시지를 보낼 때 고객에게 이메일 알림 발송 (Resend 경유)
+ * @param {string} threadId - 쓰레드 ID
+ */
+async function notifyUserByEmailOnNewMessage(threadId) {
+    try {
+        console.log('📧 [notifyUserByEmailOnNewMessage] 이메일 알림 발송 시작');
+
+        const session = await checkSession();
+        if (!session) {
+            console.error('📧 [notifyUserByEmailOnNewMessage] 세션 없음');
+            return { success: false, error: 'Not authenticated' };
+        }
+
+        const response = await fetch(EMAIL_FUNCTION_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${session.access_token}`
+            },
+            body: JSON.stringify({ threadId })
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('📧 [notifyUserByEmailOnNewMessage] Edge Function 오류:', errorText);
+            return { success: false, error: errorText };
+        }
+
+        const result = await response.json();
+        console.log('📧 [notifyUserByEmailOnNewMessage] 결과:', result);
+        return { success: true, data: result };
+
+    } catch (error) {
+        console.error('📧 [notifyUserByEmailOnNewMessage] 오류:', error);
         return { success: false, error: error.message };
     }
 }

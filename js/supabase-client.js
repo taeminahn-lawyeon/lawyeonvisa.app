@@ -884,6 +884,20 @@ async function createMessage(messageData) {
                 .catch(err => debugLog('SNS notification error (ignored):', err));
         }
 
+        // 📧 관리자 메시지인 경우 고객에게 이메일 알림 발송 (Resend)
+        if (messageData.sender_type === 'admin' && typeof notifyUserByEmailOnNewMessage === 'function') {
+            debugLog('📧 [createMessage] 관리자 메시지 - 이메일 알림 발송');
+            notifyUserByEmailOnNewMessage(messageData.thread_id)
+                .then(result => {
+                    if (result.success) {
+                        debugLog('📧 [createMessage] 이메일 알림 발송 성공');
+                    } else {
+                        debugLog('📧 [createMessage] 이메일 알림 발송 실패 (무시):', result.error);
+                    }
+                })
+                .catch(err => debugLog('Email notification error (ignored):', err));
+        }
+
         return { success: true, data };
     } catch (error) {
         console.error('메시지 생성 오류:', error);
