@@ -59,10 +59,10 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const POSTS = [
-  { file: '../blog/content_ep1_en.js', slug: 'start-a-business-in-korea-as-a-foreigner-2026' },
-  { file: '../blog/content_ep2_en.js', slug: 'korea-business-visa-investment-and-family-guide-2026' },
-  { file: '../blog/content_ep3_en.js', slug: 'how-to-open-a-store-in-korea-as-a-foreigner-2026' },
-  { file: '../blog/content_ep4_en.js', slug: 'how-to-stay-in-korea-long-term-as-a-business-owner-2026' },
+  { file: '../blog/content_ep1_en.js', slug: 'start-a-business-in-korea-as-a-foreigner-2026', translation_group: 'biz-immigration-ep1' },
+  { file: '../blog/content_ep2_en.js', slug: 'korea-franchise-business-foreign-entrepreneur-2026', translation_group: 'biz-immigration-ep2' },
+  { file: '../blog/content_ep3_en.js', slug: 'how-to-open-a-store-in-korea-as-a-foreigner-2026', translation_group: 'biz-immigration-ep3' },
+  { file: '../blog/content_ep4_en.js', slug: 'permanent-residency-korea-foreign-business-owner-2026', translation_group: 'biz-immigration-ep4' },
 ];
 
 const loaded = [];
@@ -119,16 +119,18 @@ async function run(dry) {
   setResult(`[${mode}] Starting…\n`, 'info');
 
   const log = [];
-  for (const { slug, post } of loaded) {
+  for (const { slug, translation_group, post } of loaded) {
     const row = {
       title: post.title,
       slug: slug,
       category: post.category,
       excerpt: post.disclaimer,
-      meta_description: post.disclaimer,
+      meta_description: post.metaDescription || post.disclaimer,
       thumbnail_url: null,
       is_published: true,
       template: 'navy_v4',
+      language: post.lang || 'en',
+      translation_group: translation_group,
       related_services: JSON.stringify([]),
       content: JSON.stringify(post),
       updated_at: new Date().toISOString(),
