@@ -135,13 +135,17 @@ serve(async (req) => {
 
     const resendBody = await resendRes.json()
 
-    await supabase.from('notification_logs').insert({
-      messenger: 'email',
-      recipient: profile.email,
-      template_type: 'new_reply_email',
-      status: resendRes.ok ? 'sent' : 'failed',
-      sent_at: new Date().toISOString()
-    }).catch((err) => console.log('notification_logs insert error:', err))
+    try {
+      await supabase.from('notification_logs').insert({
+        messenger: 'email',
+        recipient: profile.email,
+        template_type: 'new_reply_email',
+        status: resendRes.ok ? 'sent' : 'failed',
+        sent_at: new Date().toISOString()
+      })
+    } catch (err) {
+      console.log('notification_logs insert error:', err)
+    }
 
     if (!resendRes.ok) {
       console.error('📧 Resend error:', resendBody)
