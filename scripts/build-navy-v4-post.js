@@ -12,6 +12,67 @@ const { esc, renderBlock, navyV4Css } = require('./navy-v4-renderer');
 
 const SITE = 'https://www.lawyeonvisa.app';
 
+// Display labels for each language in the switcher. Order here is the order
+// rendered (English first, then localized languages).
+const LANG_LABELS = {
+  en: 'English',
+  ko: '한국어',
+  vi: 'Tiếng Việt',
+  th: 'ไทย',
+  zh: '中文',
+  ja: '日本語',
+};
+const LANG_ORDER = ['en', 'ko', 'vi', 'th', 'zh', 'ja'];
+
+// Centralized UI strings used throughout the post template, keyed by language.
+// PR-A includes en + ko (preserving existing behavior). VI/TH/ZH/JA strings are
+// added in subsequent PRs alongside the actual content translations.
+const UI = {
+  en: {
+    topbarCta: 'Consultation',
+    publishedLabel: 'PUBLISHED',
+    readSuffix: ' MIN',
+    disclaimerLabel: '[ DISCLAIMER ]',
+    railContents: 'CONTENTS',
+    railSeries: 'SERIES',
+    railAction: 'ACTION',
+    railCta: '[ Free Pre-Consultation → ]',
+    midCtaTitle: 'Free Pre-Consultation',
+    midCtaText: 'Share your profile via our consultation thread,<br>and we will outline the feasible pathways and budget range for you.',
+    midCtaBtn: '[ Apply → ]',
+    closingNext: 'NEXT ACTIONS',
+    closingAction1: 'Free Pre-Consultation',
+    closingAction2: 'Business Immigration Page',
+    closingRelated: 'RELATED · Business Immigration Series',
+    closingRead: '[Read →]',
+  },
+  ko: {
+    topbarCta: '상담 신청',
+    publishedLabel: 'PUBLISHED',
+    readSuffix: 'MIN',
+    disclaimerLabel: '[ DISCLAIMER ]',
+    railContents: 'CONTENTS',
+    railSeries: 'SERIES',
+    railAction: 'ACTION',
+    railCta: '[ 무상 사전 상담 → ]',
+    midCtaTitle: '무상 사전 상담',
+    midCtaText: '다섯 가지 조건을 쓰레드로 알려주시면<br>가능한 경로와 예산 범위를 개략적으로 안내합니다.',
+    midCtaBtn: '[ 신청 → ]',
+    closingNext: 'NEXT ACTIONS',
+    closingAction1: '무상 사전 상담 신청',
+    closingAction2: '사업 이민 페이지',
+    closingRelated: 'RELATED · 사업이민 시리즈',
+    closingRead: '[읽기 →]',
+  },
+  // vi, th, zh, ja are populated in PR-B / PR-C / PR-D / PR-E alongside
+  // their content translations. Until then, posts in those languages fall
+  // back to English UI strings via `uiFor()` below.
+};
+
+function uiFor(lang) {
+  return UI[lang] || UI.en;
+}
+
 function loadPost(contentFile) {
   const src = fs.readFileSync(contentFile, 'utf-8');
   const sandbox = { window: {} };
@@ -24,7 +85,7 @@ function loadPost(contentFile) {
 function renderTopbar(post) {
   const epLabel = post.episodeNo ? `EP${post.episodeNo}` : '';
   const rev = post.rev ? ` · REV.${post.rev}` : '';
-  const ctaLabel = post.__lang === 'en' ? 'Consultation' : '상담 신청';
+  const ui = uiFor(post.__lang);
   return `<header class="C-topbar">
   <div class="C-topbar-left">
     <span class="C-mono">LAWYEON /</span>
@@ -33,37 +94,63 @@ function renderTopbar(post) {
   <div class="C-topbar-right">
     <span class="C-mono">DOC-ID</span><span>${esc(epLabel)}${esc(rev)}</span>
     <span class="C-mono">STATUS</span><span class="C-badge-pub">PUBLISHED</span>
-    <a class="C-topbar-cta" href="/business-immigration-request.html">${ctaLabel} [↗]</a>
+    <a class="C-topbar-cta" href="/business-immigration-request.html">${ui.topbarCta} [↗]</a>
   </div>
 </header>`;
 }
 
+// Renders the language switcher row directly above <header class="C-header">.
+// Reads post.translations (a map of langCode -> slug). Only languages with
+// a non-empty slug are rendered (so as new languages get added, they appear
+// automatically; missing ones are simply absent).
+function renderLanguageSwitcher(post) {
+  const t = post.translations || {};
+  const links = LANG_ORDER
+    .filter((lang) => t[lang])
+    .map((lang) => {
+      const slug = t[lang];
+      const label = LANG_LABELS[lang] || lang;
+      const isCurrent = lang === post.__lang;
+      const href = `/blog/${slug}.html`;
+      const cls = isCurrent ? 'C-lang-link C-lang-current' : 'C-lang-link';
+      const aria = isCurrent ? ' aria-current="page"' : '';
+      return `<a class="${cls}" hreflang="${lang}" lang="${lang}" href="${href}"${aria}>${esc(label)}</a>`;
+    })
+    .join('');
+  // Hide the switcher entirely when only one (or zero) language is available —
+  // showing a single "English" pill on every EN post until other translations
+  // ship would be confusing. Once VI/TH/ZH/JA arrive, this becomes visible.
+  const availableCount = Object.values(t).filter(Boolean).length;
+  if (availableCount < 2) return '';
+  return `<nav class="C-langswitch" aria-label="Language">
+  <span class="C-mono C-langswitch-label">LANG /</span>
+  ${links}
+</nav>`;
+}
+
 function renderHeader(post) {
-  const pubLabel = post.__lang === 'en' ? 'PUBLISHED' : 'PUBLISHED';
-  const readSuffix = post.__lang === 'en' ? ' MIN' : 'MIN';
-  const disclaimerLabel = post.__lang === 'en' ? '[ DISCLAIMER ]' : '[ DISCLAIMER ]';
+  const ui = uiFor(post.__lang);
   const revTxt = post.updatedAt ? ` · REV ${esc(post.updatedAt)}` : '';
   return `<header class="C-header">
   <div class="C-header-grid">
     <div class="C-label">SERIES</div><div class="C-value">${esc(post.series || '')}</div>
     <div class="C-label">CATEGORY</div><div class="C-value"><span class="C-pill">[${esc(post.categoryLabel || '')}]</span></div>
-    <div class="C-label">${pubLabel}</div><div class="C-value C-mono">${esc(post.publishedAt || '')}${revTxt} · ~${esc(post.readingMin || '')}${readSuffix}</div>
+    <div class="C-label">${ui.publishedLabel}</div><div class="C-value C-mono">${esc(post.publishedAt || '')}${revTxt} · ~${esc(post.readingMin || '')}${ui.readSuffix}</div>
   </div>
   <div class="C-title-block">
     <div class="C-bigno">${esc(post.episodeNo || '01')}</div>
     <h1 class="C-title">${esc(post.title)}</h1>
   </div>
   <div class="C-disclaimer">
-    <span class="C-mono">${disclaimerLabel}</span>
+    <span class="C-mono">${ui.disclaimerLabel}</span>
     <span>${esc(post.disclaimer || '')}</span>
   </div>
 </header>`;
 }
 
 function renderRail(post) {
-  const labels = post.__lang === 'en'
-    ? { contents: 'CONTENTS', series: 'SERIES', action: 'ACTION', cta: '[ Free Pre-Consultation → ]' }
-    : { contents: 'CONTENTS', series: 'SERIES', action: 'ACTION', cta: '[ 무상 사전 상담 → ]' };
+  const ui = uiFor(post.__lang);
+  const labels = { contents: ui.railContents, series: ui.railSeries, action: ui.railAction, cta: ui.railCta };
   const toc = (post.sections || []).filter(s => s.heading).map((s, i) =>
     `<li data-id="${esc(s.id)}"${i === 0 ? ' class="C-active"' : ''}><a href="#${esc(s.id)}"><span class="C-mono">${String(i + 1).padStart(2, '0')}</span><span>${esc(s.heading)}</span></a></li>`
   ).join('');
@@ -97,21 +184,17 @@ function renderRail(post) {
 
 function renderSection(sec, idx, total, lang) {
   if (sec.type === 'midCta') {
-    const title = lang === 'en' ? 'Free Pre-Consultation' : '무상 사전 상담';
-    const text = lang === 'en'
-      ? 'Share your profile via our consultation thread,<br>and we will outline the feasible pathways and budget range for you.'
-      : '다섯 가지 조건을 쓰레드로 알려주시면<br>가능한 경로와 예산 범위를 개략적으로 안내합니다.';
-    const cta = lang === 'en' ? '[ Apply → ]' : '[ 신청 → ]';
+    const ui = uiFor(lang);
     const bar = '═'.repeat(80);
     return `<div class="C-midcta">
   <div class="C-midcta-bar">${bar}</div>
   <div class="C-midcta-grid">
     <div class="C-midcta-label">ACTION · 01</div>
     <div class="C-midcta-body">
-      <div class="C-midcta-title">${title}</div>
-      <div class="C-midcta-text">${text}</div>
+      <div class="C-midcta-title">${ui.midCtaTitle}</div>
+      <div class="C-midcta-text">${ui.midCtaText}</div>
     </div>
-    <a class="C-midcta-btn" href="/business-immigration-request.html">${cta}</a>
+    <a class="C-midcta-btn" href="/business-immigration-request.html">${ui.midCtaBtn}</a>
   </div>
   <div class="C-midcta-bar">${bar}</div>
 </div>`;
@@ -153,9 +236,15 @@ function slugFromTag(tag, lang) {
 
 function renderClosing(post) {
   const lang = post.__lang;
-  const labels = lang === 'en'
-    ? { end: `END OF DOCUMENT · EP${post.episodeNo || '01'}`, next: 'NEXT ACTIONS', action1: 'Free Pre-Consultation', action2: 'Business Immigration Page', related: 'RELATED · Business Immigration Series', read: '[Read →]' }
-    : { end: `END OF DOCUMENT · EP${post.episodeNo || '01'}`, next: 'NEXT ACTIONS', action1: '무상 사전 상담 신청', action2: '사업 이민 페이지', related: 'RELATED · 사업이민 시리즈', read: '[읽기 →]' };
+  const ui = uiFor(lang);
+  const labels = {
+    end: `END OF DOCUMENT · EP${post.episodeNo || '01'}`,
+    next: ui.closingNext,
+    action1: ui.closingAction1,
+    action2: ui.closingAction2,
+    related: ui.closingRelated,
+    read: ui.closingRead,
+  };
   const relatedRows = (post.related || []).map(r => {
     const slug = slugFromTag(r.tag, lang);
     const hrefAttr = slug ? ` onclick="location.href='/blog/${slug}.html'"` : '';
@@ -179,33 +268,64 @@ function renderClosing(post) {
 </footer>`;
 }
 
+// Map of post.lang ('vi' / 'th' / 'zh' / 'ja' / etc.) → BCP-47 locale tag
+// used in <html lang> and og:locale.
+const HTML_LANG_BY_POST_LANG = {
+  en: { html: 'en', og: 'en_US' },
+  ko: { html: 'ko', og: 'ko_KR' },
+  vi: { html: 'vi', og: 'vi_VN' },
+  th: { html: 'th', og: 'th_TH' },
+  zh: { html: 'zh', og: 'zh_CN' },
+  ja: { html: 'ja', og: 'ja_JP' },
+};
+
 function buildHtml(post, slug) {
-  const isEn = !/[ㄱ-힝]/.test(post.title);
-  post.__lang = isEn ? 'en' : 'ko';
-  const lang = isEn ? 'en' : 'ko';
+  // Prefer explicit post.lang. Fall back to Korean-character heuristic for
+  // legacy content files that don't yet set it.
+  if (!post.lang) {
+    post.lang = /[ㄱ-힝]/.test(post.title) ? 'ko' : 'en';
+  }
+  post.__lang = post.lang;
+  const lang = post.lang;
+  const isEn = lang === 'en';
+  const localeMap = HTML_LANG_BY_POST_LANG[lang] || HTML_LANG_BY_POST_LANG.en;
   const url = `${SITE}/blog/${slug}.html`;
   const totalSections = post.sections.length;
   const sections = post.sections.map((s, i) => renderSection(s, i, totalSections, lang)).join('\n');
   const titleTag = `${esc(post.title)} | ${isEn ? 'Law Firm Lawyeon' : '법무법인 로연'}`;
   const description = esc(post.disclaimer || '').slice(0, 200);
+  // hreflang alternates: every other-language version of the same article,
+  // plus self as canonical. Helps Google show the right language to each user.
+  const altLinks = (post.translations || {});
+  const hreflangTags = Object.entries(altLinks)
+    .filter(([, s]) => s)
+    .map(([l, s]) => {
+      const lm = HTML_LANG_BY_POST_LANG[l] || HTML_LANG_BY_POST_LANG.en;
+      return `<link rel="alternate" hreflang="${lm.html}" href="${SITE}/blog/${s}.html">`;
+    })
+    .join('\n');
+  // x-default points at the English version when present.
+  const xDefault = altLinks.en ? `<link rel="alternate" hreflang="x-default" href="${SITE}/blog/${altLinks.en}.html">` : '';
   return `<!DOCTYPE html>
-<html lang="${lang}">
+<html lang="${localeMap.html}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${titleTag}</title>
 <meta name="description" content="${description}">
-<meta name="author" content="${isEn ? 'Law Firm Lawyeon Immigration Center' : '법무법인 로연 출입국이민지원센터'}">
+<meta name="author" content="${lang === 'ko' ? '법무법인 로연 출입국이민지원센터' : 'Law Firm Lawyeon Immigration Center'}">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="${url}">
+${hreflangTags}
+${xDefault}
 <meta property="og:type" content="article">
 <meta property="og:title" content="${titleTag}">
 <meta property="og:description" content="${description}">
 <meta property="og:url" content="${url}">
-<meta property="og:locale" content="${isEn ? 'en_US' : 'ko_KR'}">
+<meta property="og:locale" content="${localeMap.og}">
 <meta property="og:image" content="${SITE}/images/og-default.png">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Article","headline":"${esc(post.title)}","description":"${description}","author":{"@type":"Organization","name":"${isEn ? 'Law Firm Lawyeon Immigration Center' : '법무법인 로연 출입국이민지원센터'}","url":"${SITE}"},"publisher":{"@type":"Organization","name":"${isEn ? 'Law Firm Lawyeon' : '법무법인 로연'}","logo":{"@type":"ImageObject","url":"${SITE}/images/logo.png"}},"datePublished":"${esc(post.publishedAt || '')}","dateModified":"${esc(post.updatedAt || post.publishedAt || '')}","mainEntityOfPage":{"@type":"WebPage","@id":"${url}"}}
+{"@context":"https://schema.org","@type":"Article","headline":"${esc(post.title)}","description":"${description}","inLanguage":"${localeMap.html}","author":{"@type":"Organization","name":"${lang === 'ko' ? '법무법인 로연 출입국이민지원센터' : 'Law Firm Lawyeon Immigration Center'}","url":"${SITE}"},"publisher":{"@type":"Organization","name":"${lang === 'ko' ? '법무법인 로연' : 'Law Firm Lawyeon'}","logo":{"@type":"ImageObject","url":"${SITE}/images/logo.png"}},"datePublished":"${esc(post.publishedAt || '')}","dateModified":"${esc(post.updatedAt || post.publishedAt || '')}","mainEntityOfPage":{"@type":"WebPage","@id":"${url}"}}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -216,6 +336,7 @@ function buildHtml(post, slug) {
 <body>
 <article class="designC">
 ${renderTopbar(post)}
+${renderLanguageSwitcher(post)}
 ${renderHeader(post)}
 <div class="C-shell">
 ${renderRail(post)}

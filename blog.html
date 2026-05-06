@@ -403,8 +403,25 @@
                 }
 
                 // console.log('Executing query...');
-                const { data: posts, error } = await query;
-                // console.log('Query result:', { posts, error });
+                const { data: allPosts, error } = await query;
+                // console.log('Query result:', { allPosts, error });
+
+                // Multilingual filter: prefer user's i18n language; fall back
+                // to English per translation_group. Posts without
+                // translation_group are treated as standalone.
+                const userLang = (typeof localStorage !== 'undefined'
+                    && localStorage.getItem('i18n_language')) || 'en';
+                const byGroup = {};
+                (allPosts || []).forEach(p => {
+                    const key = p.translation_group || `__solo_${p.id}`;
+                    if (!byGroup[key]) byGroup[key] = {};
+                    byGroup[key][p.language || 'en'] = p;
+                });
+                const posts = Object.values(byGroup).map(versions =>
+                    versions[userLang] || versions['en'] || Object.values(versions)[0]
+                ).filter(Boolean).sort((a, b) =>
+                    new Date(b.created_at) - new Date(a.created_at)
+                );
 
                 // 테이블이 없거나 에러인 경우
                 if (error) {

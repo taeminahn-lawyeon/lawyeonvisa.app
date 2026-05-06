@@ -12,6 +12,12 @@ window.POST = {
   ],
   title: "How to Start a Business in Korea as a Foreigner — The 2026 Guide",
   url: "start-a-business-in-korea-as-a-foreigner-2026",
+  lang: "en",
+  translation_group: "biz-immigration-ep1",
+  translations: {
+    en: "start-a-business-in-korea-as-a-foreigner-2026",
+    // vi, th, zh, ja added in subsequent PRs alongside their translations
+  },
   disclaimer: "This is the first installment of our series for foreign nationals considering Business Immigration to Korea. How visa rules apply in practice is covered in Episode 2, the full relocation and launch timeline in Episode 3, and life after settlement in Episode 4.",
   series: "Episode 1 · Business Immigration Series",
   publishedAt: "2026.04.10",

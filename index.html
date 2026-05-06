@@ -2737,14 +2737,34 @@
             };
 
             try {
-                const { data: posts, error } = await supabaseClient
+                // Multilingual filter: prefer the user's current i18n language;
+                // fall back to English when a translation_group has no version
+                // in the user's language. Posts without translation_group are
+                // treated as standalone (one row = one group).
+                const userLang = (typeof localStorage !== 'undefined'
+                    && localStorage.getItem('i18n_language')) || 'en';
+
+                const { data: allPosts, error } = await supabaseClient
                     .from('blog_posts')
                     .select('*')
                     .eq('is_published', true)
-                    .order('created_at', { ascending: false })
-                    .limit(3);
+                    .order('created_at', { ascending: false });
 
                 if (error) throw error;
+
+                // Group by translation_group, then pick userLang version if
+                // present, else 'en' fallback, else any first version.
+                const byGroup = {};
+                (allPosts || []).forEach(p => {
+                    const key = p.translation_group || `__solo_${p.id}`;
+                    if (!byGroup[key]) byGroup[key] = {};
+                    byGroup[key][p.language || 'en'] = p;
+                });
+                const filtered = Object.values(byGroup).map(versions =>
+                    versions[userLang] || versions['en'] || Object.values(versions)[0]
+                ).filter(Boolean);
+                filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                const posts = filtered.slice(0, 6);
 
                 if (!posts || posts.length === 0) {
                     blogGrid.innerHTML = `

@@ -96,6 +96,12 @@ body{font-family:"Noto Sans KR",-apple-system,sans-serif;background:#ededea;colo
 .designC .C-topbar-right>span:nth-child(odd){color:#888;}
 .designC .C-badge-pub{background:var(--c-yellow);color:#000;padding:2px 8px;font-weight:700;}
 .designC .C-topbar-cta{background:var(--c-accent);color:#fff!important;padding:6px 12px;font-weight:700;cursor:pointer;}
+.designC .C-langswitch{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:10px max(40px,calc(50vw - 660px));background:var(--c-paper);border-bottom:1px solid var(--c-rule-2);font-size:13px;}
+.designC .C-langswitch-label{color:var(--c-ink-3);font-size:11px;letter-spacing:0.08em;}
+.designC .C-lang-link{color:var(--c-ink-2);padding:2px 6px;border:1px solid transparent;text-decoration:none;}
+.designC .C-lang-link:hover{border-color:var(--c-rule-2);background:#fff;}
+.designC .C-lang-current{background:var(--c-accent);color:#fff!important;border-color:var(--c-accent);font-weight:700;cursor:default;}
+.designC .C-lang-current:hover{background:var(--c-accent);border-color:var(--c-accent);}
 .designC .C-header{padding:32px max(40px,calc(50vw - 660px)) 40px;background:var(--c-paper);border-bottom:3px solid var(--c-accent);}
 .designC .C-header-grid{display:grid;grid-template-columns:120px 1fr;gap:4px 20px;font-size:12px;font-family:"IBM Plex Mono",monospace;border:1px solid var(--c-accent);padding:14px 18px;background:#fff;margin-bottom:32px;}
 .designC .C-label{color:var(--c-ink-3);font-weight:700;letter-spacing:0.08em;}
