@@ -1267,6 +1267,11 @@ const translations = {
     'biz.sidebar.heading': '프로젝트 진행 단계',
     // === biz.* (사업이민 섹션 14) ===
     'biz.thread.title': '사업이민 사전 상담',
+
+    // === consult.consent.* (사업이민 신청 약관 동의) ===
+    'consult.consent.text': '서비스 이용약관 및 개인정보 처리방침에 동의합니다. 상담 목적의 개인정보 수집·이용에 동의합니다.',
+    'consult.consent.tosLink': '이용약관',
+    'consult.consent.privacyLink': '개인정보 처리방침',
     },
 
     // ========================================
@@ -2655,6 +2660,11 @@ const translations = {
     'biz.sidebar.heading': 'Project Progress',
     // === biz.* (사업이민 섹션 14) ===
     'biz.thread.title': 'Business Immigration Consultation',
+
+    // === consult.consent.* (사업이민 신청 약관 동의) ===
+    'consult.consent.text': 'I agree to the Terms of Service and Privacy Policy. I consent to the collection and use of personal information for consultation purposes.',
+    'consult.consent.tosLink': 'Terms of Service',
+    'consult.consent.privacyLink': 'Privacy Policy',
     },
 
     // ========================================
@@ -2667,7 +2677,7 @@ const translations = {
         'common.loginRequired': '需要登录。',
         'common.comingSoon': '准备中',
         'common.serviceLoginRequired': '申请服务需要登录。',
-        'common.serviceLoginConfirm': '申请服务需要登录。\n\n使用Google账户登录？',
+        'common.serviceLoginConfirm': '申请咨询需要登录。是否继续？',
         'common.logout': '退出',
         'login.google': 'Google 登录',
         'site.name': '律渊律师事务所 出入境移民支援中心',
@@ -3537,15 +3547,15 @@ const translations = {
         'thread.welcome.greeting': '您好！<strong>{serviceName}</strong> 咨询请求已受理。',
         'thread.welcome.procedureTitle': '流程指南',
         'thread.welcome.procedureDesc': '为顺利进行咨询，请按以下顺序操作。',
-        'thread.welcome.step1Title': '1. 填写基本信息',
-        'thread.welcome.step1Desc': '请填写咨询所需的基本信息。',
+        'thread.welcome.step1Title': '1. 工作人员审核',
+        'thread.welcome.step1Desc': '工作人员将审核您的请求，并通过此对话联系您。',
         'thread.welcome.step1Link': '填写基本信息',
-        'thread.welcome.step2Title': '2. 工作人员审核',
-        'thread.welcome.step2Desc': '工作人员将审核您的请求，并通过此对话联系您。',
-        'thread.welcome.step3Title': '3. 进行咨询',
-        'thread.welcome.step3Desc': '审核案件后，将为您提供准确的费用和所需文件。',
+        'thread.welcome.step2Title': '2. 进行咨询',
+        'thread.welcome.step2Desc': '审核案件后，将为您提供准确的费用和所需文件。',
+        'thread.welcome.step3Title': '3. 文件提交',
+        'thread.welcome.step3Desc': '请按照工作人员的指引提交所需文件。',
         'thread.welcome.footer': '如有其他问题，请在此线程中留言。',
-        'thread.welcome.senderName': '律渊律师事务所',
+        'thread.welcome.senderName': 'Lawyeon 律师事务所',
         // === D-10-1 付款完成欢迎消息 ===
         'thread.welcome.d10.title': 'D-10-1 签证变更申请 - 付款完成',
         'thread.welcome.d10.greeting': '<strong>{serviceName}</strong> 的付款已完成。请按以下步骤进行。',
@@ -3846,7 +3856,8 @@ const translations = {
     // [TRANSLATION_PENDING: biz.hero.subhead, zh, cloned from en at 2026-04-20]
     'biz.hero.subhead': 'For foreigners considering relocation to Korea from abroad, we sequentially perform project exploration, regulatory advice, and visa acquisition.',
     // [TRANSLATION_PENDING: biz.hero.cta, zh, cloned from en at 2026-04-20]
-    'biz.hero.cta': 'Request Business Immigration\nPre-Consultation',
+    'biz.hero.cta': '申请商业移民
+预先咨询',
     // [TRANSLATION_PENDING: biz.badge.description, zh, cloned from en at 2026-04-20]
     'biz.badge.description': 'Law Firm Lawyeon Immigration Support Center provides business immigration legal services for foreigners relocating to Korea.',
     // [TRANSLATION_PENDING: biz.step1.title, zh, cloned from en at 2026-04-20]
@@ -3872,21 +3883,21 @@ const translations = {
     // [TRANSLATION_PENDING: biz.news.heading, zh, cloned from en at 2026-04-20]
     'biz.news.heading': 'News & Insights',
     // [TRANSLATION_PENDING: biz.dashboard.heading, zh, cloned from en at 2026-04-20]
-    'biz.dashboard.heading': 'My Project Progress',
+    'biz.dashboard.heading': '我的项目进度',
     // [TRANSLATION_PENDING: biz.dashboard.guest, zh, cloned from en at 2026-04-20]
     'biz.dashboard.guest': 'Sign in to view your project progress, consultation history, and threads.',
     // [TRANSLATION_PENDING: biz.dashboard.progress.stage1, zh, cloned from en at 2026-04-20]
-    'biz.dashboard.progress.stage1': 'Pre-Consultation',
+    'biz.dashboard.progress.stage1': '预先咨询',
     // [TRANSLATION_PENDING: biz.dashboard.progress.stage2, zh, cloned from en at 2026-04-20]
-    'biz.dashboard.progress.stage2': 'Detailed Consultation',
+    'biz.dashboard.progress.stage2': '正式咨询',
     // [TRANSLATION_PENDING: biz.dashboard.progress.stage3, zh, cloned from en at 2026-04-20]
-    'biz.dashboard.progress.stage3': 'Stage 1 Engagement',
+    'biz.dashboard.progress.stage3': '启动',
     // [TRANSLATION_PENDING: biz.dashboard.progress.stage4, zh, cloned from en at 2026-04-20]
-    'biz.dashboard.progress.stage4': 'Settlement',
+    'biz.dashboard.progress.stage4': '定居',
     // [TRANSLATION_PENDING: biz.dashboard.progress.stage5, zh, cloned from en at 2026-04-20]
-    'biz.dashboard.progress.stage5': 'Aftercare',
+    'biz.dashboard.progress.stage5': '后续支持',
     // [TRANSLATION_PENDING: biz.form.title, zh, cloned from en at 2026-04-20]
-    'biz.form.title': 'Business Immigration Pre-Consultation Request',
+    'biz.form.title': '商业移民预先咨询申请',
     // [TRANSLATION_PENDING: biz.form.nationality, zh, cloned from en at 2026-04-20]
     'biz.form.nationality': 'Nationality',
     // [TRANSLATION_PENDING: biz.form.residence_country, zh, cloned from en at 2026-04-20]
@@ -3906,7 +3917,7 @@ const translations = {
     // [TRANSLATION_PENDING: biz.form.submit, zh, cloned from en at 2026-04-20]
     'biz.form.submit': '申请咨询',
     // [TRANSLATION_PENDING: biz.form.auto_reply, zh, cloned from en at 2026-04-20]
-    'biz.form.auto_reply': 'Your consultation request has been received. Our representative will reply via the thread.',
+    'biz.form.auto_reply': '咨询申请已受理。专员将通过线程回复您。',
     // [TRANSLATION_PENDING: biz.banner.title, zh, cloned from en at 2026-04-20]
     'biz.banner.title': 'Profile Required',
     // [TRANSLATION_PENDING: biz.banner.description, zh, cloned from en at 2026-04-20]
@@ -4005,18 +4016,18 @@ const translations = {
     // [TRANSLATION_PENDING: biz.request.prepare.disclaimer, zh, cloned from en at 2026-04-20]
     'biz.request.prepare.disclaimer': '资金规模与投资结构的细节将在正式咨询阶段确认。',
     // [TRANSLATION_PENDING: home.urgent.headline, zh, cloned from en at 2026-04-20]
-    'home.urgent.headline': 'Facing an urgent legal matter?',
+    'home.urgent.headline': '面临紧急法律事务？',
     // [TRANSLATION_PENDING: home.urgent.subhead, zh, cloned from en at 2026-04-20]
-    'home.urgent.subhead': 'We handle time-sensitive immigration and criminal cases such as deportation orders, visa denials, and related proceedings.',
+    'home.urgent.subhead': '我们处理时间紧迫的出入境与刑事案件，例如出境命令、签证拒签及相关程序。',
     // [TRANSLATION_PENDING: home.urgent.cta, zh, cloned from en at 2026-04-20]
-    'home.urgent.cta': 'Request Urgent Consultation',
+    'home.urgent.cta': '申请紧急咨询',
     // === biz.* (사업이민 섹션 14) ===
     // [TRANSLATION_PENDING: biz.card.summary1, zh, cloned from en at 2026-04-20]
-    'biz.card.summary1': 'Immigration Project Design',
+    'biz.card.summary1': '移民项目设计',
     // [TRANSLATION_PENDING: biz.card.summary2, zh, cloned from en at 2026-04-20]
-    'biz.card.summary2': 'Contracts & Regulatory Management',
+    'biz.card.summary2': '合同与法规管理',
     // [TRANSLATION_PENDING: biz.card.summary3, zh, cloned from en at 2026-04-20]
-    'biz.card.summary3': 'Settlement & Ongoing Support',
+    'biz.card.summary3': '定居与后续支持',
     // === biz.* (사업이민 섹션 14) ===
     // [TRANSLATION_PENDING: biz.request.threadPreview.title, zh, cloned from en at 2026-04-20]
     'biz.request.threadPreview.title': '商业移民线程',
@@ -4025,10 +4036,15 @@ const translations = {
     // [TRANSLATION_PENDING: biz.request.threadPreview.caption, zh, cloned from en at 2026-04-20]
     'biz.request.threadPreview.caption': '咨询进度、文件请求与阶段转换均在线程中处理。',
     // [TRANSLATION_PENDING: biz.sidebar.heading, zh, cloned from en at 2026-04-20]
-    'biz.sidebar.heading': 'Project Progress',
+    'biz.sidebar.heading': '项目进度',
     // === biz.* (사업이민 섹션 14) ===
     // [TRANSLATION_PENDING: biz.thread.title, zh, cloned from en at 2026-04-20]
-    'biz.thread.title': 'Business Immigration Consultation',
+    'biz.thread.title': '商业移民咨询',
+
+    // === consult.consent.* (사업이민 신청 약관 동의) ===
+    'consult.consent.text': '我同意服务条款与隐私政策。我同意为咨询目的收集与使用个人信息。',
+    'consult.consent.tosLink': '服务条款',
+    'consult.consent.privacyLink': '隐私政策',
     },
 
     // ========================================
@@ -5403,6 +5419,11 @@ const translations = {
     // === biz.* (사업이민 섹션 14) ===
     // [TRANSLATION_PENDING: biz.thread.title, vi, cloned from en at 2026-04-20]
     'biz.thread.title': 'Business Immigration Consultation',
+
+    // === consult.consent.* (사업이민 신청 약관 동의) ===
+    'consult.consent.text': 'Tôi đồng ý với Điều khoản Dịch vụ và Chính sách Bảo mật. Tôi đồng ý thu thập và sử dụng thông tin cá nhân cho mục đích tư vấn.',
+    'consult.consent.tosLink': 'Điều khoản Dịch vụ',
+    'consult.consent.privacyLink': 'Chính sách Bảo mật',
     },
 
     // ========================================
@@ -6775,6 +6796,11 @@ const translations = {
     // === biz.* (사업이민 섹션 14) ===
     // [TRANSLATION_PENDING: biz.thread.title, ja, cloned from en at 2026-04-20]
     'biz.thread.title': 'Business Immigration Consultation',
+
+    // === consult.consent.* (사업이민 신청 약관 동의) ===
+    'consult.consent.text': '利用規約および個人情報保護方針に同意します。相談目的での個人情報の収集・利用に同意します。',
+    'consult.consent.tosLink': '利用規約',
+    'consult.consent.privacyLink': '個人情報保護方針',
     },
 
     // ========================================
@@ -8147,6 +8173,11 @@ const translations = {
     // === biz.* (사업이민 섹션 14) ===
     // [TRANSLATION_PENDING: biz.thread.title, mn, cloned from en at 2026-04-20]
     'biz.thread.title': 'Business Immigration Consultation',
+
+    // === consult.consent.* (사업이민 신청 약관 동의) ===
+    'consult.consent.text': 'Үйлчилгээний нөхцөл болон Нууцлалын бодлогыг зөвшөөрч байна. Зөвлөгөө өгөх зорилгоор хувийн мэдээллийг цуглуулах, ашиглахыг зөвшөөрч байна.',
+    'consult.consent.tosLink': 'Үйлчилгээний нөхцөл',
+    'consult.consent.privacyLink': 'Нууцлалын бодлого',
     },
 
     // ========================================
@@ -9519,6 +9550,11 @@ const translations = {
     // === biz.* (사업이민 섹션 14) ===
     // [TRANSLATION_PENDING: biz.thread.title, th, cloned from en at 2026-04-20]
     'biz.thread.title': 'Business Immigration Consultation',
+
+    // === consult.consent.* (사업이민 신청 약관 동의) ===
+    'consult.consent.text': 'ฉันยอมรับข้อกำหนดการให้บริการและนโยบายความเป็นส่วนตัว ฉันยินยอมให้เก็บรวบรวมและใช้ข้อมูลส่วนบุคคลเพื่อวัตถุประสงค์ในการให้คำปรึกษา',
+    'consult.consent.tosLink': 'ข้อกำหนดการให้บริการ',
+    'consult.consent.privacyLink': 'นโยบายความเป็นส่วนตัว',
     },
 };
 
