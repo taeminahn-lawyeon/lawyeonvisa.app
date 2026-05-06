@@ -22,11 +22,13 @@ const SUPABASE_URL = 'https://gqistzsergddnpcvuzba.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxaXN0enNlcmdkZG5wY3Z1emJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNTEyMjEsImV4cCI6MjA4MDcyNzIyMX0.X_GgShObq9OJ6z7aEKdUCoyHYo-OJL-I5hcIDt4komg';
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
+// 2026.05 SEO rework: EP2 and EP4 slugs changed; DB rows for those slugs
+// were updated in migrations/20260506_blog_en_seo_rework_slug_update.sql.
 const POSTS = [
   { file: 'blog/content_ep1_en.js', slug: 'start-a-business-in-korea-as-a-foreigner-2026', translation_group: 'biz-immigration-ep1' },
-  { file: 'blog/content_ep2_en.js', slug: 'korea-business-visa-investment-and-family-guide-2026', translation_group: 'biz-immigration-ep2' },
+  { file: 'blog/content_ep2_en.js', slug: 'korea-franchise-business-foreign-entrepreneur-2026', translation_group: 'biz-immigration-ep2' },
   { file: 'blog/content_ep3_en.js', slug: 'how-to-open-a-store-in-korea-as-a-foreigner-2026', translation_group: 'biz-immigration-ep3' },
-  { file: 'blog/content_ep4_en.js', slug: 'how-to-stay-in-korea-long-term-as-a-business-owner-2026', translation_group: 'biz-immigration-ep4' },
+  { file: 'blog/content_ep4_en.js', slug: 'permanent-residency-korea-foreign-business-owner-2026', translation_group: 'biz-immigration-ep4' },
 ];
 
 const DRY = process.argv.includes('--dry');

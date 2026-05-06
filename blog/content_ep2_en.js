@@ -1,82 +1,68 @@
-// Episode 2 (EN) — Structure of Korea's Business Immigration Visa System (Investment · Stay · Extension · Family)
+// Episode 2 (EN) — Industry Choice & Franchise (foreign sole-proprietor focus)
+// 2026.05 SEO rework: slug changed; content rebuilt from current EP3 (industry
+// selection sections) + current EP2 industry/licensing section + current EP1
+// franchise sections.
 window.POST = {
   category: "business",
   categoryLabel: "Business & Investment",
   episodeNo: "02",
-  rev: "01",
+  rev: "02",
   seriesNav: [
-    { no: "01", label: "Visa Overview · Franchise" },
-    { no: "02", label: "Visa System Structure", active: true },
-    { no: "03", label: "Relocation & Launch Flow" },
-    { no: "04", label: "After Business Immigration" },
+    { no: "01", label: "Visa System & Sole Proprietor Path" },
+    { no: "02", label: "Industry Choice & Franchise", active: true },
+    { no: "03", label: "5-Stage Relocation Process" },
+    { no: "04", label: "Permanent Residency & Settlement" },
   ],
-  title: "Korea Business Visa in 2026 — How Much to Invest, How Long You Can Stay, and Bringing Your Family",
-  url: "korea-business-visa-investment-and-family-guide-2026",
+  title: "What Franchise Business Should a Foreigner Open in Korea? Industries, Brands & the Disclosure Document (2026)",
+  ogTitle: "What Franchise Business Can a Foreigner Open in Korea? (2026)",
+  url: "korea-franchise-business-foreign-entrepreneur-2026",
   lang: "en",
   translation_group: "biz-immigration-ep2",
   translations: {
-    en: "korea-business-visa-investment-and-family-guide-2026",
+    en: "korea-franchise-business-foreign-entrepreneur-2026",
     // vi, th, zh, ja added in subsequent PRs alongside their translations
   },
-  disclaimer: "This installment covers how the D-9-4 and D-9-5 visas introduced in Episode 1 are actually applied in practice. The full relocation timeline is addressed in Episode 3, and life after settlement in Episode 4.",
+  disclaimer: "This second installment covers how foreign sole-proprietor entrepreneurs decide what business to start in Korea. Episode 1 introduced the D-9-4 and D-9-5 visa system; the full relocation and launch process is covered in Episode 3, and life after settlement in Episode 4.",
+  metaDescription: "Choosing the right business is the hardest decision for foreign entrepreneurs in Korea. This 2026 guide explains why prior residency drives the choice, why low-interaction businesses (convenience stores, unmanned shops) often work better than F&B for newcomers, and how the legally mandated Franchise Disclosure Document protects you when selecting a brand.",
   series: "Episode 2 · Business Immigration Series",
   publishedAt: "2026.04.17",
-  updatedAt: "2026.04.23",
-  readingMin: 11,
+  updatedAt: "2026.05.06",
+  readingMin: 14,
   sections: [
     {
       id: "s1",
-      heading: "Investment is assessed not by \"how much\" but by \"how it arrived\"",
+      heading: "Most applicants start by thinking of F&B",
       blocks: [
-        { type: "p", text: "The minimum investment thresholds are straightforward: <b>300 million KRW or more for D-9-4</b> and <b>100 million KRW or more for D-9-5</b>. The numbers themselves are simple. What actually matters in review, however, is not the <b>size</b> of the funds but <b>how those funds reached Korea</b>." },
-        {
-          type: "numbered",
-          label: "REQUIREMENT",
-          items: [
-            { n: 1, title: "Remittance under the applicant's own name", text: "Investment funds must be remitted from the applicant's own overseas account to a Korean account held in the applicant's own name. Funds sent from a third-party account, funds borrowed in Korea, funds brought in through cryptocurrency, and funds routed through remittance or payment apps do not qualify as investment capital. Even when a family member has remitted on the applicant's behalf, the applicant must separately prove that the funds substantively belong to them." },
-            { n: 2, title: "Clarity of remittance purpose", text: "When remitting to Korea, the purpose declared to the bank must clearly state <b>\"investment.\"</b> If the funds were originally declared as \"living expenses,\" \"travel expenses,\" or \"tuition\" and later redirected to business use, recognition as investment capital becomes problematic." },
-            { n: 3, title: "Legitimacy of the source of funds", text: "The applicant must be able to document how the funds were accumulated in their home country. Employment income requires proof of employment and pay statements; business income requires operational records and tax filings; inheritance or gift requires the corresponding certificates; asset sales require the sale contract and records of the sale proceeds. <b>Clarity of origin carries more weight in review than absolute size</b> of the investment." }
-          ]
-        }
+        { type: "p", text: "The industry most applicants first consider when pursuing Business Immigration to Korea is <b>mainstream F&B</b> — Korean, Chinese, or Korean street-food (bunsik) restaurants. It is familiar, they often have prior experience at home, and the market is large. As of the end of 2025, Korea had roughly 180,000 F&B franchise stores, accounting for about 48% of the entire franchise sector. Korean food and coffee are among the fastest-growing segments, and Vietnamese pho has gone mainstream, with several brands now operating nationwide store networks." },
+        { type: "p", text: "In practice, however, many applicants change direction as the pre-consultation and main consultation proceed. The reasons are usually similar: <b>Korean-language ability and prior residency in Korea</b>." }
       ]
     },
     {
       id: "s2",
-      heading: "Part of the 100 million KRW may be domestic funds — a D-9-5 special provision",
+      heading: "Prior residency experience drives industry selection",
       blocks: [
-        { type: "p", text: "For D-9-5, <b>up to 50 million KRW of the 100 million KRW investment may consist of funds raised domestically in Korea</b>. The remaining 50 million KRW must still be foreign capital remitted from abroad." },
-        { type: "p", text: "Funds that typically qualify as domestically raised include savings accumulated during the applicant's studies in Korea — part-time work, teaching assistantships, scholarships, or family remittances that the applicant held in a Korean account while residing on a D-2 (Student) or D-10 (Job-seeking) status. Even in this case, the applicant must still document how the funds were lawfully accumulated." },
-        { type: "callout", text: "This provision is designed so that <b>those who completed their education in Korea can start their own business here without depending on remittances from home</b>. For applicants who cannot send the full amount from overseas, or who have accumulated savings during their studies in Korea, D-9-5 is substantively more accessible than D-9-4." }
+        { type: "p", text: "The single most important factor we use in advising Business Immigration clients on their project is not the size of their capital or their nationality. It is <b>whether they have lived in Korea before</b>. That one condition changes the direction of industry selection significantly." },
+        { type: "p", text: "<b>For applicants without prior residency in Korea</b>, we first recommend industries with limited service interaction. Unmanned businesses and distribution businesses such as convenience stores fit this profile. Starting an F&B business without prior residency in Korea tends to create difficulties not in opening the store but in operating it afterward." },
+        { type: "p", text: "<b>For former international students or applicants with prior residency experience</b>, the situation is different. Those who attended school in Korea or previously held E-7 or D-10 status are already familiar not only with the Korean language but also with local practices and business culture. Such applicants can realistically manage industries with high customer interaction. Home-country cuisine restaurants, cafés, general F&B — they can choose the direction they prefer. The D-9-5 visa is designed for this profile; <b>Episode 1 covered the D-9-5 structure and the path of changing status while already residing in Korea</b>." },
+        { type: "callout", text: "This article is written from the perspective of a <b>prospective Business Immigration applicant without prior residency in Korea</b>. It reflects the typical progression for those simultaneously undertaking business launch and relocation from abroad." }
       ]
     },
     {
       id: "s3",
-      heading: "Where the funds must be spent to be \"recognized as investment\"",
+      heading: "Low-interaction industries as an alternative",
       blocks: [
-        { type: "p", text: "Simply holding the remitted funds in a personal account in Korea does not qualify them as investment capital. There must be <b>documented evidence that the funds were actually deployed into the business</b>." },
-        {
-          type: "table",
-          title: "Recognized Uses vs. Non-Recognized Uses of Investment Funds",
-          headers: ["Recognized deployment", "Non-recognized deployment"],
-          rows: [
-            ["Franchise fees · lease security deposits", "Personal living expenses (housing, food, communications)"],
-            ["Interior construction · facilities and equipment", "Asset purchases unrelated to the business"],
-            ["Initial inventory purchases", "Loans to the applicant or family members"],
-            ["Consulting and advisory fees · working capital", "Payments to entities with no clear business substance"]
-          ],
-          note: "Each item requires a remittance record, contract, tax invoice, and receipt; the source of funds must be traceable back to the applicant's own remittance account."
-        },
-        { type: "p", text: "This is why our project design begins with a budget allocation plan. Rather than first remitting 300 million KRW or 100 million KRW and then deciding where to spend it, <b>the deployment plan should be designed before relocation, and funds should be moved in accordance with that plan so that investment capital is fully recognized at visa review</b>." }
+        { type: "p", text: "Industries with limited service interaction fall broadly into two categories: <b>unmanned businesses</b> and <b>distribution businesses</b>." },
+        { type: "p", text: "Unmanned businesses operate through kiosks, CCTV, and automated systems. Examples include unmanned ice cream discount stores, self-service photo studios, unmanned cafés, unmanned meal-kit shops, and unmanned ramen shops. The owner visits the store once or twice a day to restock, clean, and check the CCTV. Staff hiring is generally unnecessary, and direct customer conversation is rare. This is the option with the lowest Korean-language burden and also the smallest initial investment among the three choices. However, market saturation is advancing rapidly, so location analysis is decisive." },
+        { type: "p", text: "Among distribution businesses, convenience stores occupy a distinctive position. They do involve face-to-face customer service, but that interaction is <b>highly standardized</b>. Payment, tobacco sales, parcel pickup, utility bill payment, and most other tasks follow manuals built into the POS system, while the headquarters provides continuous operational support through supervisors. Even with elementary or intermediate Korean, the POS system and manuals make operation feasible — and there are in fact already foreign-owned stores in operation. Four headquarters — GS25, CU, 7-Eleven, and Emart24 — hold 97.2% of the Korean convenience store market, each with a different revenue-sharing model." }
       ]
     },
     {
       id: "s4",
-      heading: "How industry classification and licensing are interwoven with the visa",
+      heading: "Industry decisions, illustrated through examples",
       blocks: [
-        { type: "p", text: "In starting a business in Korea, business registration (for tax purposes) and industry-specific licensing are handled by different authorities. Business registration is processed at the district tax office, while industry-specific licensing is handled by the authority competent for each business type. The business visa review can proceed only after both are complete." },
-        { type: "p", text: "Consider opening a Korean restaurant, for example. First, the commercial lease must be signed. Next, business registration is filed at the competent tax office. Since food service is involved, a <b>business operation filing (영업 신고)</b> must then be submitted to the district or city office, and before that filing, <b>mandatory food-hygiene training</b> must be completed at the public health center. Verification that the kitchen equipment meets Food Sanitation Act standards, fire safety equipment filing, and confirmation that the building's use classification is compatible with a food service business all proceed in parallel. Only after all of this is completed can the visa application stage begin." },
-        { type: "p", text: "The number and types of authorities involved depend on the industry. A convenience store requires a separate tobacco retailer designation at the district office; an unmanned photo studio may require a mail-order retail filing; a coffee shop is classified as a refreshment establishment within the food service category. Across industries, the district office, public health center, fire department, small-business support center, and tax office each play their respective roles." },
-        { type: "callout", text: "The challenge is that these procedures follow a <b>strict temporal order</b>. Business registration cannot proceed without a commercial lease, the operation filing cannot proceed without business registration, and the visa review cannot proceed without the operation filing. A delay at any single step pushes back the entire timeline like falling dominoes. This is why it is practically difficult for an applicant still overseas to coordinate sequentially with multiple Korean authorities — and why <b>an integrated pre-relocation plan is essential</b>." }
+        { type: "p", text: "Take, for example, an applicant with home-country restaurant experience and 300 million KRW ready, but no prior residency in Korea and only elementary Korean. In this case, we would first examine opening two unmanned stores in sequence. Running two stores together naturally satisfies the 300 million KRW investment threshold for D-9-4, and allows the applicant to settle in without a language burden. The home-country restaurant experience is not immediately utilized, but becomes the foundation for a later transition into another industry once the applicant is settled." },
+        { type: "p", text: "Conversely, consider an applicant who completed studies in Korea and then worked at a Korean company for two to three years. Their Korean is at intermediate or higher level, and they are familiar with Korean commercial practices — so they can start directly in high-interaction industries such as a home-country cuisine specialty restaurant or a café. In this case, <b>D-9-5</b> rather than D-9-4 may apply (<b>see Episode 1</b>). D-9-5 has a lower barrier to entry than D-9-4: a 100 million KRW investment requirement for holders of a Korean master's degree or higher, or a bachelor's degree plus 30+ OASIS points." },
+        { type: "callout", text: "Either way, the core factors we confirm during pre-consultation are the same: <b>prior residency, Korean-language level, capital size, family composition, and relocation timing</b>. The combination of these five conditions determines the recommended industry, visa path, and budget allocation." }
       ]
     },
     {
@@ -86,44 +72,62 @@ window.POST = {
     },
     {
       id: "s5",
-      heading: "For those already residing in Korea — continuing on a business visa via status change",
+      heading: "How industry classification and licensing are interwoven with the visa",
       blocks: [
-        { type: "p", text: "Everything above assumes a relocation from abroad. But there are also <b>foreign nationals already residing in Korea</b>. Typical cases include those on F-3 (Accompanying Family) as the dependent of a Korean spouse's family, those on E-7 (Specially-designated Activities) employed by a Korean company, and those on D-2 (Student) or D-10 (Job-seeking)." },
-        { type: "p", text: "Those already in Korea can continue on a business visa through a <b>change of status of stay</b>, without having to return to the home country. Rather than obtaining a new D-9 visa via a Korean diplomatic mission abroad, the application is filed directly with the Immigration Office inside Korea. The home-country documentation burden is significantly lighter, and the entire procedure can be completed in Korea without a break in residency." },
-        { type: "p", text: "For former international students who meet the D-9-5 requirements, this is the default path. Since both the Korean degree and the residency record are verifiable domestically, an in-country status change is the natural route. Those currently in Korea on employment or accompanying-family status who wish to transition into business can likewise pursue an in-country status change, provided they meet the requirements." }
+        { type: "p", text: "In starting a business in Korea, business registration (for tax purposes) and industry-specific licensing are handled by different authorities. Business registration is processed at the district tax office, while industry-specific licensing is handled by the authority competent for each business type. The business visa review can proceed only after both are complete." },
+        { type: "p", text: "Consider opening a Korean restaurant, for example. First, the commercial lease must be signed. Next, business registration is filed at the competent tax office. Since food service is involved, a <b>business operation filing (영업 신고)</b> must then be submitted to the district or city office, and before that filing, <b>mandatory food-hygiene training</b> must be completed at the public health center. Verification that the kitchen equipment meets Food Sanitation Act standards, fire safety equipment filing, and confirmation that the building's use classification is compatible with a food service business all proceed in parallel. Only after all of this is completed can the visa application stage begin." },
+        { type: "p", text: "The number and types of authorities involved depend on the industry. A convenience store requires a separate tobacco retailer designation at the district office; an unmanned photo studio may require a mail-order retail filing; a coffee shop is classified as a refreshment establishment within the food service category. Across industries, the district office, public health center, fire department, small-business support center, and tax office each play their respective roles." },
+        { type: "callout", text: "The challenge is that these procedures follow a <b>strict temporal order</b>. Business registration cannot proceed without a commercial lease, the operation filing cannot proceed without business registration, and the visa review cannot proceed without the operation filing. A delay at any single step pushes back the entire timeline like falling dominoes. This is why it is practically difficult for an applicant still overseas to coordinate sequentially with multiple Korean authorities — and why <b>an integrated pre-relocation plan is essential</b>." }
       ]
     },
     {
       id: "s6",
-      heading: "Period of stay and extension review",
+      heading: "Building a business from scratch is not realistic for a newcomer",
       blocks: [
-        { type: "p", text: "For both D-9-4 and D-9-5, <b>the initial period of stay is typically one year</b>. Continuing to reside in Korea beyond that year requires a period-of-stay extension." },
-        { type: "p", text: "What is evaluated at extension review is <b>whether the business is actually operating</b>. Specifically, revenue performance, tax filing history, maintenance of the business premises, employment status, and continuity of the commercial lease are all examined. Applicants who only formally satisfied the investment threshold at visa issuance but have no actual business activity will find extension difficult." },
-        { type: "callout", text: "The implication is clear. In Business Immigration, obtaining the visa is not the finish line — <b>sustaining active business operation is the condition for sustaining residency</b>. This is why our center provides post-settlement legal support as a separate ongoing service, in addition to the initial relocation and launch work. Episode 4 addresses this long-term perspective in detail." }
+        { type: "p", text: "Once D-9-4 or D-9-5 is on the table and the idea of relocating to Korea as a sole proprietor becomes concrete, the next question is naturally: \"What business, and how?\"" },
+        { type: "p", text: "From the perspective of someone moving to Korea, the Korean market is unfamiliar territory. The dynamics of commercial districts, consumer behavior, raw-material supply chains, distribution practices, licensing procedures, and labor management conventions all differ from those at home. The Korean-language information environment compounds the difficulty. Selecting an industry, picking a location, securing suppliers, arranging interior construction, hiring staff, and designing marketing — doing all of this from abroad, the same way one might in a familiar home market, is simply not feasible. What makes it more demanding still: <b>all of these decisions must be made before relocating, because the visa cannot be issued without a registered business and a signed commercial lease</b>." },
+        { type: "p", text: "Given these constraints, the realistic option for a foreign applicant is to enter a business model that is <b>already structured</b>. One where operational playbooks are standardized, supply chains and ordering systems are centralized at the headquarters level, and location selection and interior design follow an established template. A business, in short, that fits the profile of a <b>franchise</b>." }
       ]
     },
     {
       id: "s7",
-      heading: "Inviting accompanying family — bringing spouse and children on F-3 status",
+      heading: "Why Korean franchise businesses fit Business Immigration",
       blocks: [
-        { type: "p", text: "A D-9-4 or D-9-5 holder may <b>invite their spouse and minor children to Korea</b>. The status granted to family members is <b>F-3 (Accompanying Family)</b>." },
-        { type: "p", text: "The invitation procedure works as follows: the principal applicant first obtains a <b>Certificate for Confirmation of Visa Issuance (CCVI, 사증발급인정서)</b> from the Immigration Office in Korea; family members abroad then use this certificate to apply for an F-3 visa at the competent Korean diplomatic mission. The F-3 period of stay is tied to the principal holder's (D-9 holder's) period of stay. When the principal holder receives an extension, the family's F-3 can be extended together; conversely, if the principal holder's stay ends, the family's F-3 ends as well." },
-        { type: "p", text: "A key point to note about F-3: <b>employment is restricted as a general rule</b>. If a spouse wishes to pursue separate employment in Korea, a change from F-3 to a work-eligible status must be considered separately. For school-age children, enrollment in Korean public or private schools is available, and special admissions tracks for foreign students are offered for university admission." },
-        { type: "p", text: "Inviting parents is not feasible on the D-9 holder's status alone; it must be examined separately through a different status (for example, F-1 Visitor/Cohabitant). The scope of family members to be invited and the status design for each is something we review together during the pre-consultation stage." }
+        { type: "p", text: "Among the major markets worldwide, the Korean franchise sector is one of the most highly standardized in terms of business structure." },
+        {
+          type: "numbered",
+          label: "TYPE",
+          items: [
+            { n: 1, title: "Convenience stores — headquarters infrastructure compensates for language and market-knowledge gaps", text: "Four headquarters — GS25, CU, 7-Eleven, and Emart24 — account for the majority of the Korean market. All four operate at a similar level of sophistication: standardized operating manuals, integrated ordering systems, consolidated POS data analytics, and regular in-person visits from regional supervisors. A foreign store owner simply plugs into this infrastructure and uses it as-is." },
+            { n: 2, title: "Unmanned stores — minimal Korean-language face-time required", text: "Unmanned ice cream discount stores, self-service photo studios, unmanned cafés, unmanned meal-kit shops, and the like are operated through kiosks, CCTV, and remote monitoring systems. Physical presence of the owner at the store is not required for day-to-day operation." },
+            { n: 3, title: "F&B franchises — viable where the operator has prior Korean residency experience", text: "Korean, snack-bar (bunsik), chicken, and café franchises involve more face-to-face customer contact, but much of the operation — menu development, ingredient supply, promotional activity — is handled centrally by the headquarters. Suitable for applicants with prior residency in Korea or a certain level of Korean-language ability." }
+          ]
+        },
+        { type: "callout", text: "The fundamental reason franchises suit Business Immigration is <b>predictability</b>. The hardest part for a foreign applicant deciding on a Korean business from abroad is gauging \"how this business actually runs day-to-day.\" With franchises, that information is structured and made available at the headquarters level in advance." }
+      ]
+    },
+    {
+      id: "s8",
+      heading: "The Franchise Disclosure Document — predictability backed by law",
+      blocks: [
+        { type: "p", text: "The Korean franchise market is not just voluntarily standardized. <b>Korean law requires franchise headquarters to disclose the actual state of their business to prospective franchisees.</b> The governing statute is the <b>Fair Transactions in Franchise Business Act</b>, and the central mechanism is the <b>Franchise Disclosure Document (정보공개서)</b>." },
+        { type: "p", text: "The disclosure document is filed with and published on the Korea Fair Trade Commission's official portal, and the headquarters is legally obligated to <b>provide it to a prospective franchisee at least 14 days before contract signing</b>." },
+        { type: "p", text: "The content of the disclosure document is of a different character from marketing brochures. It breaks down <b>costs by category</b> — licensing, training, interior construction — and discloses the headquarters' financial status, any legal violations by its executives, <b>average revenue per franchise store</b>, opening rates, <b>closure rates</b>, and the number of dispute-mediation cases between headquarters and franchisees. <b>It is a legally mandated disclosure — meaning even unfavorable figures must be published.</b>" },
+        { type: "p", text: "This framework effectively closes the information asymmetry between a franchise headquarters and a prospective franchisee by law. For a foreign applicant, the mechanism is especially valuable: marketing brochures alone make it hard to assess a headquarters' true condition, but the standardized disclosure fields allow multiple headquarters to be compared on a like-for-like basis. In our project design phase, we apply an internal screening model to exclude headquarters with unstable financials or abnormally high closure rates, and we analyze the disclosure document with the client together." }
       ]
     },
     {
       id: "closing",
       heading: "What the next episodes cover",
       blocks: [
-        { type: "p", text: "This completes the practical structure of Korea's Business Immigration visa system: how investment funds are recognized, how they should be deployed, how industry classification and licensing interlock with the visa, the change-of-status route for those already in Korea, the extension review, and the accompanying-family invitation structure." },
-        { type: "p", text: "The next installment turns to the question: <b>given these requirements, how does the actual relocation and launch unfold?</b> From the first pre-consultation from the home country through the day the doors open in Korea — the substance of our five-stage project." },
+        { type: "p", text: "This installment covered the practical questions of starting a business under the D-9-4 or D-9-5 visa: which industries suit applicants without prior residency in Korea, why low-interaction businesses such as convenience stores and unmanned shops often work better than F&B as a first business, and why Korean franchises — disclosed in detail under the Fair Transactions in Franchise Business Act — are the most predictable framework available to a foreign newcomer." },
+        { type: "p", text: "With the visa system from Episode 1 and the industry-and-franchise structure from this episode, the picture of \"what to do\" is largely complete. The next two episodes address \"how it actually unfolds\" and \"what comes after.\"" },
         {
           type: "numbered",
           label: "EPISODE",
           items: [
-            { n: 3, title: "Episode 3 — The Relocation & Launch Flow", text: "What actually happens when starting a business in Korea — the content of the five-stage project and the common mistakes to avoid" },
-            { n: 4, title: "Episode 4 — After Business Immigration", text: "Long-term residency, family settlement, real estate, social insurance — the starting point of the long arc that follows visa issuance" }
+            { n: 3, title: "Episode 3 — The 5-Stage Relocation Process", text: "What actually happens from pre-consultation through ongoing support — the five stages of a Business Immigration project and the common mistakes to avoid." },
+            { n: 4, title: "Episode 4 — Permanent Residency & Settlement", text: "Long-term residency, the path from F-2-99 to F-5, family settlement, real estate, lease protection, healthcare, and the structure of ongoing legal support — the long horizon that begins after the visa is issued." }
           ]
         },
         { type: "p", text: "Lawyeon Visa & Immigration Center brings together experienced attorneys from Law Firm Lawyeon, interpreter-coordinators, and startup immigration specialists to support foreign sole-proprietor Business Immigration via D-9-4 and D-9-5. Initial consultations are free of charge, and applicants can submit inquiries directly from their home country through our consultation thread." }
@@ -131,9 +135,9 @@ window.POST = {
     }
   ],
   related: [
-    { tag: "EP 1", title: "How to Start a Business in Korea as a Foreigner — The 2026 Guide", url: "start-a-business-in-korea-as-a-foreigner-2026" },
-    { tag: "EP 3", title: "How to Open a Store in Korea as a Foreigner — The Step-by-Step 2026 Process", url: "how-to-open-a-store-in-korea-as-a-foreigner-2026" },
-    { tag: "EP 4", title: "How to Stay in Korea Long-Term as a Foreign Business Owner — Residency, Family, Real Estate, Healthcare (2026)", url: "how-to-stay-in-korea-long-term-as-a-business-owner-2026" }
+    { tag: "EP 1", title: "How to Start a Business in Korea as a Foreigner — D-9-4, D-9-5 & the Sole Proprietor Visa Guide (2026)", url: "start-a-business-in-korea-as-a-foreigner-2026" },
+    { tag: "EP 3", title: "How to Open a Store in Korea as a Foreigner — The Step-by-Step 2026 Process from Pre-Consultation to Opening Day", url: "how-to-open-a-store-in-korea-as-a-foreigner-2026" },
+    { tag: "EP 4", title: "Permanent Residency in Korea for Foreign Business Owners — F-2-99, Family, Real Estate & Settlement (2026)", url: "permanent-residency-korea-foreign-business-owner-2026" }
   ]
 };
 window.TOC = window.POST.sections.filter(s => s.heading).map(s => ({ id: s.id, label: s.heading }));

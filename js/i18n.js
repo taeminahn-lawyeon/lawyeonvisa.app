@@ -46,15 +46,29 @@ const i18n = {
      * 초기화 - 저장된 언어 설정 불러오기 및 UI 업데이트
      */
     init: function() {
-        // localStorage에서 저장된 언어 불러오기
-        const savedLanguage = localStorage.getItem('i18n_language');
+        // URL ?lang=<code>이 있고 지원 언어이면 우선 적용 + 영구 저장
+        // (블로그 CTA에서 `?lang=vi` 등으로 진입 시 페이지 언어가 자동으로 맞춰짐)
+        let urlLang = null;
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const cand = params.get('lang');
+            if (cand && this.supportedLanguages[cand]) {
+                urlLang = cand;
+            }
+        } catch (e) {}
 
-        if (savedLanguage && this.supportedLanguages[savedLanguage]) {
-            // 사용자가 이전에 선택한 언어가 있으면 해당 언어 사용
-            this.currentLanguage = savedLanguage;
+        if (urlLang) {
+            this.currentLanguage = urlLang;
+            try { localStorage.setItem('i18n_language', urlLang); } catch (e) {}
         } else {
-            // 저장된 언어가 없으면 항상 영어로 기본 설정 (브라우저 언어 감지 안함)
-            this.currentLanguage = 'en';
+            const savedLanguage = localStorage.getItem('i18n_language');
+
+            if (savedLanguage && this.supportedLanguages[savedLanguage]) {
+                this.currentLanguage = savedLanguage;
+            } else {
+                // 저장된 언어가 없으면 항상 영어로 기본 설정 (브라우저 언어 감지 안함)
+                this.currentLanguage = 'en';
+            }
         }
 
         // 번역 적용

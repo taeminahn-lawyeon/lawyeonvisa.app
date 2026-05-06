@@ -73,6 +73,15 @@ function uiFor(lang) {
   return UI[lang] || UI.en;
 }
 
+// Append ?lang=<post.lang> to all consultation-page CTA URLs so the
+// destination page (business-immigration-request.html) auto-switches its
+// language to match the blog the user came from. The ?lang= handler is in
+// js/i18n.js init().
+function ctaHref(post) {
+  const lang = post.__lang || post.lang || 'en';
+  return `/business-immigration-request.html?lang=${encodeURIComponent(lang)}`;
+}
+
 function loadPost(contentFile) {
   const src = fs.readFileSync(contentFile, 'utf-8');
   const sandbox = { window: {} };
@@ -94,7 +103,7 @@ function renderTopbar(post) {
   <div class="C-topbar-right">
     <span class="C-mono">DOC-ID</span><span>${esc(epLabel)}${esc(rev)}</span>
     <span class="C-mono">STATUS</span><span class="C-badge-pub">PUBLISHED</span>
-    <a class="C-topbar-cta" href="/business-immigration-request.html">${ui.topbarCta} [↗]</a>
+    <a class="C-topbar-cta" href="${ctaHref(post)}">${ui.topbarCta} [↗]</a>
   </div>
 </header>`;
 }
@@ -151,9 +160,24 @@ function renderHeader(post) {
 function renderRail(post) {
   const ui = uiFor(post.__lang);
   const labels = { contents: ui.railContents, series: ui.railSeries, action: ui.railAction, cta: ui.railCta };
-  const toc = (post.sections || []).filter(s => s.heading).map((s, i) =>
-    `<li data-id="${esc(s.id)}"${i === 0 ? ' class="C-active"' : ''}><a href="#${esc(s.id)}"><span class="C-mono">${String(i + 1).padStart(2, '0')}</span><span>${esc(s.heading)}</span></a></li>`
-  ).join('');
+  // TOC includes both headings and midCta entries. Numbers align with body §
+  // positions (absolute index in the sections array), so the TOC's "05 ACTION"
+  // matches the visual gap between body § 04 and § 06.
+  const tocCtaLabel = `ACTION · ${ui.midCtaTitle}`;
+  let firstShown = true;
+  const toc = (post.sections || []).map((s, i) => {
+    const num = String(i + 1).padStart(2, '0');
+    if (s.type === 'midCta') {
+      const html = `<li class="C-rail-toc-cta" data-id="${esc(s.id)}"><a href="#${esc(s.id)}"><span class="C-mono">${num}</span><span>${esc(tocCtaLabel)}</span></a></li>`;
+      return html;
+    }
+    if (s.heading) {
+      const cls = firstShown ? ' class="C-active"' : '';
+      firstShown = false;
+      return `<li data-id="${esc(s.id)}"${cls}><a href="#${esc(s.id)}"><span class="C-mono">${num}</span><span>${esc(s.heading)}</span></a></li>`;
+    }
+    return null;
+  }).filter(Boolean).join('');
   const series = (post.seriesNav || []).map(n => {
     const inner = `<span class="C-mono">${esc(n.no)}</span><span>${esc(n.label)}${n.active ? ' ◀' : ''}</span>`;
     if (n.active) {
@@ -177,7 +201,7 @@ function renderRail(post) {
   </div>` : ''}
   <div class="C-rail-block">
     <div class="C-rail-label">${labels.action}</div>
-    <a class="C-rail-cta" href="/business-immigration-request.html">${labels.cta}</a>
+    <a class="C-rail-cta" href="${ctaHref(post)}">${labels.cta}</a>
   </div>
 </aside>`;
 }
@@ -186,7 +210,7 @@ function renderSection(sec, idx, total, lang) {
   if (sec.type === 'midCta') {
     const ui = uiFor(lang);
     const bar = '═'.repeat(80);
-    return `<div class="C-midcta">
+    return `<div id="${esc(sec.id || 's-cta-mid')}" class="C-midcta">
   <div class="C-midcta-bar">${bar}</div>
   <div class="C-midcta-grid">
     <div class="C-midcta-label">ACTION · 01</div>
@@ -194,7 +218,7 @@ function renderSection(sec, idx, total, lang) {
       <div class="C-midcta-title">${ui.midCtaTitle}</div>
       <div class="C-midcta-text">${ui.midCtaText}</div>
     </div>
-    <a class="C-midcta-btn" href="/business-immigration-request.html">${ui.midCtaBtn}</a>
+    <a class="C-midcta-btn" href="${ctaHref({ __lang: lang })}">${ui.midCtaBtn}</a>
   </div>
   <div class="C-midcta-bar">${bar}</div>
 </div>`;
@@ -211,13 +235,14 @@ function renderSection(sec, idx, total, lang) {
 </section>`;
 }
 
-// EP-no (e.g. "01", "EP 2", "편 3") → slug mapping for RELATED row links.
+// EP-no (e.g. "01", "EP 2", "편 3") → slug mapping for RELATED row + seriesNav links.
+// EN slugs reflect the 2026.05 SEO rework: EP2/EP4 received new intent-based slugs.
 const SLUG_BY_EP = {
   en: {
     '01': 'start-a-business-in-korea-as-a-foreigner-2026',
-    '02': 'korea-business-visa-investment-and-family-guide-2026',
+    '02': 'korea-franchise-business-foreign-entrepreneur-2026',
     '03': 'how-to-open-a-store-in-korea-as-a-foreigner-2026',
-    '04': 'how-to-stay-in-korea-long-term-as-a-business-owner-2026',
+    '04': 'permanent-residency-korea-foreign-business-owner-2026',
   },
   ko: {
     '01': 'start-a-business-in-korea-as-a-foreigner-2026',
@@ -257,7 +282,7 @@ function renderClosing(post) {
   <div class="C-closing-cta">
     <div class="C-closing-cta-label">${labels.next}</div>
     <div class="C-closing-cta-list">
-      <a href="/business-immigration-request.html"><span class="C-mono">→</span> ${labels.action1}</a>
+      <a href="${ctaHref(post)}"><span class="C-mono">→</span> ${labels.action1}</a>
       <a href="/"><span class="C-mono">→</span> ${labels.action2}</a>
     </div>
   </div>
@@ -293,7 +318,10 @@ function buildHtml(post, slug) {
   const totalSections = post.sections.length;
   const sections = post.sections.map((s, i) => renderSection(s, i, totalSections, lang)).join('\n');
   const titleTag = `${esc(post.title)} | ${isEn ? 'Law Firm Lawyeon' : '법무법인 로연'}`;
-  const description = esc(post.disclaimer || '').slice(0, 200);
+  // Prefer explicit metaDescription; fall back to disclaimer for legacy posts.
+  // ogTitle can be a shorter, click-optimized variant of the long SEO title.
+  const description = esc(post.metaDescription || post.disclaimer || '').slice(0, 280);
+  const ogTitleTag = `${esc(post.ogTitle || post.title)} | ${isEn ? 'Law Firm Lawyeon' : '법무법인 로연'}`;
   // hreflang alternates: every other-language version of the same article,
   // plus self as canonical. Helps Google show the right language to each user.
   const altLinks = (post.translations || {});
@@ -319,7 +347,7 @@ function buildHtml(post, slug) {
 ${hreflangTags}
 ${xDefault}
 <meta property="og:type" content="article">
-<meta property="og:title" content="${titleTag}">
+<meta property="og:title" content="${ogTitleTag}">
 <meta property="og:description" content="${description}">
 <meta property="og:url" content="${url}">
 <meta property="og:locale" content="${localeMap.og}">
