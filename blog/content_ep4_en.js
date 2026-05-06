@@ -96,15 +96,6 @@ window.POST = {
       ]
     },
     {
-      id: "s5",
-      heading: "University admission for children — the special admissions track",
-      blocks: [
-        { type: "p", text: "When a child, after completing middle and high school in Korea, applies to a Korean university, the Korean admissions system provides a separate track called the <b>special admissions track for foreign students</b>." },
-        { type: "p", text: "The special admissions track generally targets applicants whose own nationality and both parents' nationalities are foreign, and proceeds through a path independent of the regular regular/rolling admissions. Review is primarily document-based and interview-based, and a grade on the Test of Proficiency in Korean (TOPIK) is commonly required. Specific eligibility requirements vary by university, and some universities additionally offer a separate international track for applicants who completed their entire high school education overseas." },
-        { type: "callout", text: "The special admissions track is a substantive opportunity for the children of Business Immigration families. It naturally connects to a change to D-2 (Student) status, and it also links to other topics in this episode (F-2-99 transition and F-3 residency linkage). We recommend reviewing the university admission path in advance, around the time the child advances through upper grades." }
-      ]
-    },
-    {
       id: "s-cta-mid",
       type: "midCta",
       blocks: []
