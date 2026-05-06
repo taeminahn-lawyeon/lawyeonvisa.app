@@ -64,9 +64,27 @@ const UI = {
     closingRelated: 'RELATED · 사업이민 시리즈',
     closingRead: '[읽기 →]',
   },
-  // vi, th, zh, ja are populated in PR-B / PR-C / PR-D / PR-E alongside
-  // their content translations. Until then, posts in those languages fall
-  // back to English UI strings via `uiFor()` below.
+  zh: {
+    topbarCta: '免费咨询',
+    publishedLabel: 'PUBLISHED',
+    readSuffix: '分钟',
+    disclaimerLabel: '[ DISCLAIMER ]',
+    railContents: 'CONTENTS',
+    railSeries: 'SERIES',
+    railAction: 'ACTION',
+    railCta: '[ 免费预先咨询 → ]',
+    midCtaTitle: '免费预先咨询',
+    midCtaText: '通过咨询线程告知您的情况，<br>我们将为您梳理可行路径与预算范围。',
+    midCtaBtn: '[ 申请 → ]',
+    closingNext: 'NEXT ACTIONS',
+    closingAction1: '免费预先咨询',
+    closingAction2: '商业移民页面',
+    closingRelated: 'RELATED · 商业移民系列',
+    closingRead: '[阅读 →]',
+  },
+  // vi, th, ja are populated in subsequent PRs alongside their content
+  // translations. Until then, posts in those languages fall back to English
+  // UI strings via `uiFor()` below.
 };
 
 function uiFor(lang) {
@@ -249,6 +267,12 @@ const SLUG_BY_EP = {
     '02': 'korea-business-visa-investment-and-family-guide-2026',
     '03': 'business-immigration-korea-startup-process-2026',
     '04': 'how-to-stay-in-korea-long-term-as-a-business-owner-2026',
+  },
+  zh: {
+    '01': '外国人在韩国创业-D-9-4-D-9-5签证完全指南-2026',
+    '02': '外国人在韩国开加盟店-行业品牌指南-2026',
+    '03': '外国人在韩国开店流程-五阶段完整指南-2026',
+    '04': '外国企业主韩国永久居留-F-2-99到F-5指南-2026',
   },
 };
 
