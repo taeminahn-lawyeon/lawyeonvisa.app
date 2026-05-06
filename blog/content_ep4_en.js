@@ -20,7 +20,8 @@ window.POST = {
   translation_group: "biz-immigration-ep4",
   translations: {
     en: "permanent-residency-korea-foreign-business-owner-2026",
-    // vi, th, zh, ja added in subsequent PRs alongside their translations
+    zh: "外国企业主韩国永久居留-F-2-99到F-5指南-2026",
+    // vi, th, ja added in subsequent PRs alongside their translations
   },
   disclaimer: "This is the fourth and final installment of our Business Immigration series. Episodes 1 through 3 covered the D-9-4 and D-9-5 visa system, the industry and franchise selection logic, and the actual relocation and launch process. This episode addresses the long-term perspective after settling in Korea.",
   metaDescription: "After your D-9-4 or D-9-5 visa is issued, settlement begins — and it's a long horizon. Period-of-stay extension, F-2-99 long-term residency transition, family on F-3, children's university admission, real estate acquisition, the Commercial Building Lease Protection Act, public healthcare, and Korea's small-business support that applies to foreign sole proprietors on equal terms (2026).",

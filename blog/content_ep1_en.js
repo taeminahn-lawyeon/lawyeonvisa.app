@@ -18,7 +18,8 @@ window.POST = {
   translation_group: "biz-immigration-ep1",
   translations: {
     en: "start-a-business-in-korea-as-a-foreigner-2026",
-    // vi, th, zh, ja added in subsequent PRs alongside their translations
+    zh: "外国人在韩国创业-D-9-4-D-9-5签证完全指南-2026",
+    // vi, th, ja added in subsequent PRs alongside their translations
   },
   disclaimer: "This is the first installment of our series for foreign nationals considering Business Immigration to Korea. The detailed industry and franchise selection logic is covered in Episode 2, the full relocation and launch process in Episode 3, and life after settlement in Episode 4.",
   metaDescription: "The complete 2026 guide to Business Immigration to Korea for foreign sole proprietors. Why D-9-4 and D-9-5 — not D-8 — fit small business owners, plus how investment, status change, stay extension, and family visas work in practice.",

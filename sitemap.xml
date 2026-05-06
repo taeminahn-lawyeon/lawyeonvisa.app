@@ -77,4 +77,38 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- Chinese (zh) translations of Business Immigration series -->
+  <url>
+    <loc>https://www.lawyeonvisa.app/blog/外国人在韩国创业-D-9-4-D-9-5签证完全指南-2026.html</loc>
+    <lastmod>2026-05-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/blog/start-a-business-in-korea-as-a-foreigner-2026.html"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.lawyeonvisa.app/blog/外国人在韩国创业-D-9-4-D-9-5签证完全指南-2026.html"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeonvisa.app/blog/外国人在韩国开加盟店-行业品牌指南-2026.html</loc>
+    <lastmod>2026-05-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/blog/korea-franchise-business-foreign-entrepreneur-2026.html"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.lawyeonvisa.app/blog/外国人在韩国开加盟店-行业品牌指南-2026.html"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeonvisa.app/blog/外国人在韩国开店流程-五阶段完整指南-2026.html</loc>
+    <lastmod>2026-05-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/blog/how-to-open-a-store-in-korea-as-a-foreigner-2026.html"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.lawyeonvisa.app/blog/外国人在韩国开店流程-五阶段完整指南-2026.html"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeonvisa.app/blog/外国企业主韩国永久居留-F-2-99到F-5指南-2026.html</loc>
+    <lastmod>2026-05-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/blog/permanent-residency-korea-foreign-business-owner-2026.html"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.lawyeonvisa.app/blog/外国企业主韩国永久居留-F-2-99到F-5指南-2026.html"/>
+  </url>
 </urlset>
