@@ -1,28 +1,33 @@
-// Episode 4 (EN) — After Business Immigration to Korea: Long-Term Residency, Family, Real Estate, Social Insurance
+// Episode 4 (EN) — Permanent Residency & Settlement
+// 2026.05 SEO rework: slug changed; title repositioned to permanent residency
+// (F-2-99 → F-5); F-2-99/F-5 clarification paragraph added in s3; small-business
+// support section relocated from EP1 with settlement-perspective tone.
 window.POST = {
   category: "business",
   categoryLabel: "Business & Investment",
   episodeNo: "04",
-  rev: "01",
+  rev: "02",
   seriesNav: [
-    { no: "01", label: "Visa Overview · Franchise" },
-    { no: "02", label: "Visa System Structure" },
-    { no: "03", label: "Relocation & Launch Flow" },
-    { no: "04", label: "After Business Immigration", active: true },
+    { no: "01", label: "Visa System & Sole Proprietor Path" },
+    { no: "02", label: "Industry Choice & Franchise" },
+    { no: "03", label: "5-Stage Relocation Process" },
+    { no: "04", label: "Permanent Residency & Settlement", active: true },
   ],
-  title: "How to Stay in Korea Long-Term as a Foreign Business Owner — Residency, Family, Real Estate, Healthcare (2026)",
-  url: "how-to-stay-in-korea-long-term-as-a-business-owner-2026",
+  title: "Permanent Residency in Korea for Foreign Business Owners — F-2-99, Family, Real Estate & Settlement (2026)",
+  ogTitle: "From D-9 to F-2-99: Permanent Residency for Foreign Business Owners in Korea (2026)",
+  url: "permanent-residency-korea-foreign-business-owner-2026",
   lang: "en",
   translation_group: "biz-immigration-ep4",
   translations: {
-    en: "how-to-stay-in-korea-long-term-as-a-business-owner-2026",
+    en: "permanent-residency-korea-foreign-business-owner-2026",
     // vi, th, zh, ja added in subsequent PRs alongside their translations
   },
-  disclaimer: "This is the fourth installment of our Business Immigration series. Episode 1 covered the visa overview, Episode 2 the structure of the system, and Episode 3 the actual relocation and launch flow. This episode addresses the long-term perspective after settling in Korea.",
+  disclaimer: "This is the fourth and final installment of our Business Immigration series. Episodes 1 through 3 covered the D-9-4 and D-9-5 visa system, the industry and franchise selection logic, and the actual relocation and launch process. This episode addresses the long-term perspective after settling in Korea.",
+  metaDescription: "After your D-9-4 or D-9-5 visa is issued, settlement begins — and it's a long horizon. Period-of-stay extension, F-2-99 long-term residency transition, family on F-3, children's university admission, real estate acquisition, the Commercial Building Lease Protection Act, public healthcare, and Korea's small-business support that applies to foreign sole proprietors on equal terms (2026).",
   series: "Episode 4 · Business Immigration Series",
   publishedAt: "2026.05.01",
-  updatedAt: "2026.05.02",
-  readingMin: 12,
+  updatedAt: "2026.05.06",
+  readingMin: 14,
   sections: [
     {
       id: "s1",
@@ -70,7 +75,8 @@ window.POST = {
           ],
           note: "Specific evaluation criteria are subject to change; re-verification at the time of application is necessary."
         },
-        { type: "callout", text: "The key point is to <b>design your life during D-9 residency so that these areas naturally accumulate</b>. This is not something that can suddenly be prepared five years later." }
+        { type: "callout", text: "The key point is to <b>design your life during D-9 residency so that these areas naturally accumulate</b>. This is not something that can suddenly be prepared five years later." },
+        { type: "p", text: "A note on terminology: F-2-99 is not yet permanent residency in the strict sense. It is the long-term residency status that opens the path to <b>F-5 (Permanent Residency)</b>, which is typically considered after several additional years on F-2-99 with stable income, clean conduct, and continued business operation. For foreign business owners, F-2-99 marks the transition from \"business-conditional\" residency under D-9 — where the visa stands or falls with how the business is performing — to \"life-stage\" residency, where the basis for staying in Korea has shifted from a single business to the applicant's overall life in Korea. F-5 follows this stage as the next milestone for those who plan to remain indefinitely." }
       ]
     },
     {
@@ -129,6 +135,15 @@ window.POST = {
     },
     {
       id: "s9",
+      heading: "Korea's small-business support programs apply to foreign sole proprietors on equal terms",
+      blocks: [
+        { type: "p", text: "Beyond the legal protections of real estate and lease law, and the social insurance framework, foreign business owners settled in Korea have access to one more category of public resources that is often overlooked: Korea's <b>small-business support ecosystem</b>." },
+        { type: "p", text: "The Korean government operates a range of programs for small business owners, including low-interest policy loans, guarantee-backed financing, business stabilization grants, and emergency assistance funds. These programs are administered by the <b>Korea Small Enterprise and Market Service (SEMAS)</b>, under the Framework Act on Small Enterprises. <b>Nationality is not a distinguishing factor: any sole proprietor that meets the statutory small-enterprise criteria — such as the employee-count threshold — is eligible on the same terms, whether Korean or foreign.</b> A foreign national who has completed sole-proprietor business registration becomes eligible for the same support, on the same conditions, as a Korean small business owner." },
+        { type: "callout", text: "The legal framework itself does not separate foreign and domestic sole proprietors — both are included within the same \"small enterprise\" category. In practice, this means a settled foreign operator gains access to public resources that would typically be unavailable to them in their home country: low-interest financing for working capital, government-backed guarantees, support during business downturns. These programs are available not only at the time of opening but throughout the lifecycle of the business — including during the period covered by this episode, as your residency transitions from D-9 to F-2-99 and beyond." }
+      ]
+    },
+    {
+      id: "s10",
       heading: "Areas covered by the ongoing support agreement",
       blocks: [
         { type: "p", text: "All of the topics covered above fall within the scope of our law firm's <b>ongoing support agreement</b>." },
@@ -151,15 +166,16 @@ window.POST = {
       id: "closing",
       heading: "Settlement is a long-horizon endeavor",
       blocks: [
-        { type: "p", text: "If Episodes 1 through 3 addressed <b>the beginning of Business Immigration to Korea</b>, Episode 4 addresses <b>the beginning of settlement</b>. The core perspective this episode conveys is that visa acquisition is not the destination of the project — rather, it is the starting point of a long horizon: two-year-cycle residency extensions, the five-year F-2-99 transition, the ten-year arc of commercial lease stability, and throughout, the family settlement and asset formation that continue in between." },
-        { type: "p", text: "Lawyeon Visa & Immigration Center brings together experienced attorneys from Law Firm Lawyeon, interpreter-coordinators, and startup immigration specialists to support Business Immigration for foreign nationals residing abroad. Initial consultations are free of charge, and applicants can submit inquiries directly from their home country through our consultation thread." }
+        { type: "p", text: "If Episodes 1 through 3 addressed <b>the beginning of Business Immigration to Korea</b>, Episode 4 has addressed <b>the beginning of settlement</b>. The core perspective this episode conveys is that visa acquisition is not the destination of the project — it is the starting point of a long horizon. Two-year-cycle residency extensions. The five-year transition to F-2-99, and the further milestone of F-5 Permanent Residency that follows. The ten-year arc of commercial lease stability. The legal protections of the Commercial Building Lease Protection Act and the public healthcare system. The small-business support programs that apply to foreign sole proprietors on the same terms as to Korean nationals. And throughout, the family settlement and asset formation that continue in between." },
+        { type: "p", text: "Across the four episodes of this series, we have covered: why D-9-4 and D-9-5 are the visas that fit foreign sole-proprietor Business Immigration to Korea (Episode 1); how to choose an industry and why franchises offer the most predictable path (Episode 2); the five-stage process from pre-consultation through ongoing support (Episode 3); and the long horizon that begins after the visa is issued (this episode). Business Immigration to Korea is rarely a single event — it is a sequence of decisions that compound over years. Designing those decisions early, together, is what we do." },
+        { type: "p", text: "Lawyeon Visa & Immigration Center brings together experienced attorneys from Law Firm Lawyeon, interpreter-coordinators, and startup immigration specialists to support foreign sole-proprietor Business Immigration via D-9-4 and D-9-5. Initial consultations are free of charge, and applicants can submit inquiries directly from their home country through our consultation thread." }
       ]
     }
   ],
   related: [
-    { tag: "EP 1", title: "How to Start a Business in Korea as a Foreigner — The 2026 Guide", url: "start-a-business-in-korea-as-a-foreigner-2026" },
-    { tag: "EP 2", title: "Korea Business Visa in 2026 — How Much to Invest, How Long You Can Stay, and Bringing Your Family", url: "korea-business-visa-investment-and-family-guide-2026" },
-    { tag: "EP 3", title: "How to Open a Store in Korea as a Foreigner — The Step-by-Step 2026 Process", url: "how-to-open-a-store-in-korea-as-a-foreigner-2026" }
+    { tag: "EP 1", title: "How to Start a Business in Korea as a Foreigner — D-9-4, D-9-5 & the Sole Proprietor Visa Guide (2026)", url: "start-a-business-in-korea-as-a-foreigner-2026" },
+    { tag: "EP 2", title: "What Franchise Business Should a Foreigner Open in Korea? Industries, Brands & the Disclosure Document (2026)", url: "korea-franchise-business-foreign-entrepreneur-2026" },
+    { tag: "EP 3", title: "How to Open a Store in Korea as a Foreigner — The Step-by-Step 2026 Process from Pre-Consultation to Opening Day", url: "how-to-open-a-store-in-korea-as-a-foreigner-2026" }
   ]
 };
 window.TOC = window.POST.sections.filter(s => s.heading).map(s => ({ id: s.id, label: s.heading }));

@@ -102,6 +102,8 @@ body{font-family:"Noto Sans KR",-apple-system,sans-serif;background:#ededea;colo
 .designC .C-lang-link:hover{border-color:var(--c-rule-2);background:#fff;}
 .designC .C-lang-current{background:var(--c-accent);color:#fff!important;border-color:var(--c-accent);font-weight:700;cursor:default;}
 .designC .C-lang-current:hover{background:var(--c-accent);border-color:var(--c-accent);}
+.designC .C-rail-toc-cta a{color:var(--c-ink-3);font-style:italic;text-decoration:underline dotted;text-underline-offset:3px;}
+.designC .C-rail-toc-cta.C-active a,.designC .C-rail-toc-cta a:hover{color:var(--c-accent);}
 .designC .C-header{padding:32px max(40px,calc(50vw - 660px)) 40px;background:var(--c-paper);border-bottom:3px solid var(--c-accent);}
 .designC .C-header-grid{display:grid;grid-template-columns:120px 1fr;gap:4px 20px;font-size:12px;font-family:"IBM Plex Mono",monospace;border:1px solid var(--c-accent);padding:14px 18px;background:#fff;margin-bottom:32px;}
 .designC .C-label{color:var(--c-ink-3);font-weight:700;letter-spacing:0.08em;}

@@ -1,16 +1,19 @@
-// Episode 3 (EN) — What Actually Happens When You Start a Business in Korea
+// Episode 3 (EN) — 5-Stage Relocation Process
+// 2026.05 SEO rework: industry selection sections moved to Episode 2; this
+// episode now focuses purely on the 5-stage procedural arc.
 window.POST = {
   category: "business",
   categoryLabel: "Business & Investment",
   episodeNo: "03",
-  rev: "01",
+  rev: "02",
   seriesNav: [
-    { no: "01", label: "Visa Overview · Franchise" },
-    { no: "02", label: "Visa System Structure" },
-    { no: "03", label: "Relocation & Launch Flow", active: true },
-    { no: "04", label: "After Business Immigration" },
+    { no: "01", label: "Visa System & Sole Proprietor Path" },
+    { no: "02", label: "Industry Choice & Franchise" },
+    { no: "03", label: "5-Stage Relocation Process", active: true },
+    { no: "04", label: "Permanent Residency & Settlement" },
   ],
-  title: "How to Open a Store in Korea as a Foreigner — The Step-by-Step 2026 Process",
+  title: "How to Open a Store in Korea as a Foreigner — The Step-by-Step 2026 Process from Pre-Consultation to Opening Day",
+  ogTitle: "How to Open a Business in Korea as a Foreigner: The 5-Stage Process (2026)",
   url: "how-to-open-a-store-in-korea-as-a-foreigner-2026",
   lang: "en",
   translation_group: "biz-immigration-ep3",
@@ -18,55 +21,15 @@ window.POST = {
     en: "how-to-open-a-store-in-korea-as-a-foreigner-2026",
     // vi, th, zh, ja added in subsequent PRs alongside their translations
   },
-  disclaimer: "This is the third installment of our Business Immigration series. Episode 1 covered the D-9-4 and D-9-5 visa overview, Episode 2 the structure of the visa system. This episode explains, stage by stage, how the actual relocation and launch unfolds. Post-settlement matters are covered in Episode 4. The examples in this article are hypothetical compositions of conditions frequently seen in consultations, not actual cases.",
+  disclaimer: "This is the third installment of our Business Immigration series. Episode 1 covered the D-9-4 and D-9-5 visa system, and Episode 2 the industry choice and franchise selection. This episode explains, stage by stage, how the actual relocation and launch unfolds. Post-settlement matters are covered in Episode 4. The examples in this article are hypothetical compositions of conditions frequently seen in consultations, not actual cases.",
+  metaDescription: "The actual 5-stage process to open a business in Korea as a foreigner — pre-consultation, main consultation, onboarding, settlement, and ongoing support. Includes industry selection examples, step-by-step procedures from foreign exchange remittance to visa acquisition, FAQ, and common mistakes to avoid (2026).",
   series: "Episode 3 · Business Immigration Series",
   publishedAt: "2026.04.24",
-  updatedAt: "2026.04.25",
-  readingMin: 14,
+  updatedAt: "2026.05.06",
+  readingMin: 12,
   sections: [
     {
       id: "s1",
-      heading: "Most applicants start by thinking of F&B",
-      blocks: [
-        { type: "p", text: "The industry most applicants first consider when pursuing Business Immigration to Korea is <b>mainstream F&B</b> — Korean, Chinese, or Korean street-food (bunsik) restaurants. It is familiar, they often have prior experience at home, and the market is large. As of the end of 2025, Korea had roughly 180,000 F&B franchise stores, accounting for about 48% of the entire franchise sector. Korean food and coffee are among the fastest-growing segments, and Vietnamese pho has gone mainstream, with several brands now operating nationwide store networks." },
-        { type: "p", text: "In practice, however, many applicants change direction as the pre-consultation and main consultation proceed. The reasons are usually similar: <b>Korean-language ability and prior residency in Korea</b>." }
-      ]
-    },
-    {
-      id: "s2",
-      heading: "Prior residency experience drives industry selection",
-      blocks: [
-        { type: "p", text: "The single most important factor we use in advising Business Immigration clients on their project is not the size of their capital or their nationality. It is <b>whether they have lived in Korea before</b>. That one condition changes the direction of industry selection significantly." },
-        { type: "p", text: "<b>For applicants without prior residency in Korea</b>, we first recommend industries with limited service interaction. Unmanned businesses and distribution businesses such as convenience stores fit this profile. Starting an F&B business without prior residency in Korea tends to create difficulties not in opening the store but in operating it afterward." },
-        { type: "p", text: "<b>For former international students or applicants with prior residency experience</b>, the situation is different. Those who attended school in Korea or previously held E-7 or D-10 status are already familiar not only with the Korean language but also with local practices and business culture. Such applicants can realistically manage industries with high customer interaction. Home-country cuisine restaurants, cafés, general F&B — they can choose the direction they prefer. The D-9-5 visa is designed for this profile; Episode 2 covered the D-9-5 structure and the path of changing status while already residing in Korea." },
-        { type: "callout", text: "This article is written from the perspective of a <b>prospective Business Immigration applicant without prior residency in Korea</b>. It reflects the typical progression for those simultaneously undertaking business launch and relocation from abroad." }
-      ]
-    },
-    {
-      id: "s3",
-      heading: "Low-interaction industries as an alternative",
-      blocks: [
-        { type: "p", text: "Industries with limited service interaction fall broadly into two categories: <b>unmanned businesses</b> and <b>distribution businesses</b>." },
-        { type: "p", text: "Unmanned businesses operate through kiosks, CCTV, and automated systems. Examples include unmanned ice cream discount stores, self-service photo studios, unmanned cafés, unmanned meal-kit shops, and unmanned ramen shops. The owner visits the store once or twice a day to restock, clean, and check the CCTV. Staff hiring is generally unnecessary, and direct customer conversation is rare. This is the option with the lowest Korean-language burden and also the smallest initial investment among the three choices. However, market saturation is advancing rapidly, so location analysis is decisive." },
-        { type: "p", text: "Among distribution businesses, convenience stores occupy a distinctive position. They do involve face-to-face customer service, but that interaction is <b>highly standardized</b>. Payment, tobacco sales, parcel pickup, utility bill payment, and most other tasks follow manuals built into the POS system, while the headquarters provides continuous operational support through supervisors. Even with elementary or intermediate Korean, the POS system and manuals make operation feasible — and there are in fact already foreign-owned stores in operation. Four headquarters — GS25, CU, 7-Eleven, and Emart24 — hold 97.2% of the Korean convenience store market, each with a different revenue-sharing model." }
-      ]
-    },
-    {
-      id: "s4",
-      heading: "Industry decisions, illustrated through examples",
-      blocks: [
-        { type: "p", text: "Take, for example, an applicant with home-country restaurant experience and 300 million KRW ready, but no prior residency in Korea and only elementary Korean. In this case, we would first examine opening two unmanned stores in sequence. Running two stores together naturally satisfies the 300 million KRW investment threshold for D-9-4, and allows the applicant to settle in without a language burden. The home-country restaurant experience is not immediately utilized, but becomes the foundation for a later transition into another industry once the applicant is settled." },
-        { type: "p", text: "Conversely, consider an applicant who completed studies in Korea and then worked at a Korean company for two to three years. Their Korean is at intermediate or higher level, and they are familiar with Korean commercial practices — so they can start directly in high-interaction industries such as a home-country cuisine specialty restaurant or a café. In this case, <b>D-9-5</b> rather than D-9-4 may apply (see Episode 2). D-9-5 has a lower barrier to entry than D-9-4: a 100 million KRW investment requirement for holders of a Korean master's degree or higher, or a bachelor's degree plus 30+ OASIS points." },
-        { type: "callout", text: "Either way, the core factors we confirm during pre-consultation are the same: <b>prior residency, Korean-language level, capital size, family composition, and relocation timing</b>. The combination of these five conditions determines the recommended industry, visa path, and budget allocation." }
-      ]
-    },
-    {
-      id: "s-cta-mid",
-      type: "midCta",
-      blocks: []
-    },
-    {
-      id: "s5",
       heading: "Pre-consultation and main consultation",
       blocks: [
         { type: "p", text: "The <b>pre-consultation</b> is free of charge. Through our consultation thread, we confirm the five conditions above and provide a preliminary outline of which paths are feasible for Business Immigration to Korea and whether the budget and timeline are realistic. This stage is also when the client evaluates our way of working, and when we come to understand the client's circumstances." },
@@ -74,7 +37,7 @@ window.POST = {
       ]
     },
     {
-      id: "s6",
+      id: "s2",
       heading: "Procedures in the onboarding stage",
       blocks: [
         { type: "p", text: "Once engagement is decided, four work streams proceed in parallel or in sequence." },
@@ -91,7 +54,7 @@ window.POST = {
       ]
     },
     {
-      id: "s7",
+      id: "s3",
       heading: "Procedures in the settlement stage",
       blocks: [
         { type: "p", text: "Once the decision is to proceed, the <b>settlement stage</b> begins. The tasks performed in this stage are as follows." },
@@ -111,14 +74,19 @@ window.POST = {
       ]
     },
     {
-      id: "s8",
+      id: "s-cta-mid",
+      type: "midCta",
+      blocks: []
+    },
+    {
+      id: "s4",
       heading: "Procedures in ongoing support",
       blocks: [
         { type: "p", text: "Once the settlement stage is complete and the business is up and running, the legal and administrative matters that arise thereafter fall within the <b>ongoing support</b> area. This includes residential lease renewals, dispute resolution with the franchise headquarters, review of employment contracts when hiring additional staff, D-9 period-of-stay extension applications, and advisory on transitioning to a long-term residency status. The detailed structure of this area is covered in Episode 4." }
       ]
     },
     {
-      id: "s9",
+      id: "s5",
       heading: "Frequently asked questions",
       blocks: [
         {
@@ -136,7 +104,7 @@ window.POST = {
       ]
     },
     {
-      id: "s10",
+      id: "s6",
       heading: "Common mistakes",
       blocks: [
         {
@@ -156,14 +124,22 @@ window.POST = {
       heading: "Five stages, one team",
       blocks: [
         { type: "p", text: "The process described above is organized into five stages: <b>pre-consultation, main consultation, onboarding, settlement, and ongoing support</b>. These five stages matter because the decisions at each stage are the premises of the next. If industry direction is set incorrectly at pre-consultation, the path advised at the main consultation is misaligned; if the onboarding-stage project design does not match reality, contract signing and visa acquisition in the settlement stage are delayed." },
-        { type: "p", text: "Lawyeon Visa & Immigration Center brings together experienced attorneys from Law Firm Lawyeon, interpreter-coordinators, and startup immigration specialists to support Business Immigration for foreign nationals residing abroad. Initial consultations are free of charge, and applicants can submit inquiries directly from their home country through our consultation thread." }
+        { type: "p", text: "Once the doors open and the business begins operating, the project moves into a different time horizon. Period-of-stay extensions, family settlement, the eventual transition to long-term residency, real estate acquisition, and the legal protections available to foreign business owners — these belong to the long arc that follows visa issuance, and are addressed in the final installment." },
+        {
+          type: "numbered",
+          label: "EPISODE",
+          items: [
+            { n: 4, title: "Episode 4 — Permanent Residency & Settlement", text: "Long-term residency, the path from F-2-99 to F-5, family settlement, real estate, lease protection, healthcare, and the structure of ongoing legal support — the long horizon that begins after the visa is issued." }
+          ]
+        },
+        { type: "p", text: "Lawyeon Visa & Immigration Center brings together experienced attorneys from Law Firm Lawyeon, interpreter-coordinators, and startup immigration specialists to support foreign sole-proprietor Business Immigration via D-9-4 and D-9-5. Initial consultations are free of charge, and applicants can submit inquiries directly from their home country through our consultation thread." }
       ]
     }
   ],
   related: [
-    { tag: "EP 1", title: "How to Start a Business in Korea as a Foreigner — The 2026 Guide", url: "start-a-business-in-korea-as-a-foreigner-2026" },
-    { tag: "EP 2", title: "Korea Business Visa in 2026 — How Much to Invest, How Long You Can Stay, and Bringing Your Family", url: "korea-business-visa-investment-and-family-guide-2026" },
-    { tag: "EP 4", title: "How to Stay in Korea Long-Term as a Foreign Business Owner — Residency, Family, Real Estate, Healthcare (2026)", url: "how-to-stay-in-korea-long-term-as-a-business-owner-2026" }
+    { tag: "EP 1", title: "How to Start a Business in Korea as a Foreigner — D-9-4, D-9-5 & the Sole Proprietor Visa Guide (2026)", url: "start-a-business-in-korea-as-a-foreigner-2026" },
+    { tag: "EP 2", title: "What Franchise Business Should a Foreigner Open in Korea? Industries, Brands & the Disclosure Document (2026)", url: "korea-franchise-business-foreign-entrepreneur-2026" },
+    { tag: "EP 4", title: "Permanent Residency in Korea for Foreign Business Owners — F-2-99, Family, Real Estate & Settlement (2026)", url: "permanent-residency-korea-foreign-business-owner-2026" }
   ]
 };
 window.TOC = window.POST.sections.filter(s => s.heading).map(s => ({ id: s.id, label: s.heading }));
