@@ -26,3 +26,7 @@ build/
 
 # Generated video captures (Playwright + FFmpeg, see scripts/capture_hooks.js)
 captures/
+
+# Supabase CLI temp files
+supabase/.temp/
+supabase/.branches/
