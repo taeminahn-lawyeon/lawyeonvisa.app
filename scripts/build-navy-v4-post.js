@@ -30,6 +30,11 @@ const LANG_ORDER = ['en', 'ko', 'vi', 'th', 'zh', 'ja'];
 const UI = {
   en: {
     topbarCta: 'Consultation',
+    topbarDocId: 'DOC-ID',
+    topbarStatus: 'STATUS',
+    topbarStatusBadge: 'PUBLISHED',
+    headerSeries: 'SERIES',
+    headerCategory: 'CATEGORY',
     publishedLabel: 'PUBLISHED',
     readSuffix: ' MIN',
     disclaimerLabel: '[ DISCLAIMER ]',
@@ -40,6 +45,9 @@ const UI = {
     midCtaTitle: 'Free Pre-Consultation',
     midCtaText: 'Share your profile via our consultation thread,<br>and we will outline the feasible pathways and budget range for you.',
     midCtaBtn: '[ Apply → ]',
+    midCtaActionLabel: 'ACTION · 01',
+    tocCtaPrefix: 'ACTION ·',
+    closingEnd: 'END OF DOCUMENT',
     closingNext: 'NEXT ACTIONS',
     closingAction1: 'Free Pre-Consultation',
     closingAction2: 'Business Immigration Page',
@@ -48,6 +56,11 @@ const UI = {
   },
   ko: {
     topbarCta: '상담 신청',
+    topbarDocId: 'DOC-ID',
+    topbarStatus: 'STATUS',
+    topbarStatusBadge: 'PUBLISHED',
+    headerSeries: 'SERIES',
+    headerCategory: 'CATEGORY',
     publishedLabel: 'PUBLISHED',
     readSuffix: 'MIN',
     disclaimerLabel: '[ DISCLAIMER ]',
@@ -58,6 +71,9 @@ const UI = {
     midCtaTitle: '무상 사전 상담',
     midCtaText: '다섯 가지 조건을 쓰레드로 알려주시면<br>가능한 경로와 예산 범위를 개략적으로 안내합니다.',
     midCtaBtn: '[ 신청 → ]',
+    midCtaActionLabel: 'ACTION · 01',
+    tocCtaPrefix: 'ACTION ·',
+    closingEnd: 'END OF DOCUMENT',
     closingNext: 'NEXT ACTIONS',
     closingAction1: '무상 사전 상담 신청',
     closingAction2: '사업 이민 페이지',
@@ -66,20 +82,28 @@ const UI = {
   },
   zh: {
     topbarCta: '免费咨询',
-    publishedLabel: 'PUBLISHED',
-    readSuffix: '分钟',
-    disclaimerLabel: '[ DISCLAIMER ]',
-    railContents: 'CONTENTS',
-    railSeries: 'SERIES',
-    railAction: 'ACTION',
+    topbarDocId: '编号',
+    topbarStatus: '状态',
+    topbarStatusBadge: '已发布',
+    headerSeries: '系列',
+    headerCategory: '类别',
+    publishedLabel: '发布',
+    readSuffix: ' 分钟',
+    disclaimerLabel: '[ 说明 ]',
+    railContents: '目录',
+    railSeries: '系列',
+    railAction: '操作',
     railCta: '[ 免费预先咨询 → ]',
     midCtaTitle: '免费预先咨询',
     midCtaText: '通过咨询线程告知您的情况，<br>我们将为您梳理可行路径与预算范围。',
     midCtaBtn: '[ 申请 → ]',
-    closingNext: 'NEXT ACTIONS',
+    midCtaActionLabel: '操作 · 01',
+    tocCtaPrefix: '操作 ·',
+    closingEnd: '文档结束',
+    closingNext: '下一步操作',
     closingAction1: '免费预先咨询',
     closingAction2: '商业移民页面',
-    closingRelated: 'RELATED · 商业移民系列',
+    closingRelated: '相关 · 商业移民系列',
     closingRead: '[阅读 →]',
   },
   // vi, th, ja are populated in subsequent PRs alongside their content
@@ -119,8 +143,8 @@ function renderTopbar(post) {
     <span class="C-topbar-title">Law Firm Lawyeon</span>
   </div>
   <div class="C-topbar-right">
-    <span class="C-mono">DOC-ID</span><span>${esc(epLabel)}${esc(rev)}</span>
-    <span class="C-mono">STATUS</span><span class="C-badge-pub">PUBLISHED</span>
+    <span class="C-mono">${ui.topbarDocId}</span><span>${esc(epLabel)}${esc(rev)}</span>
+    <span class="C-mono">${ui.topbarStatus}</span><span class="C-badge-pub">${ui.topbarStatusBadge}</span>
     <a class="C-topbar-cta" href="${ctaHref(post)}">${ui.topbarCta} [↗]</a>
   </div>
 </header>`;
@@ -160,8 +184,8 @@ function renderHeader(post) {
   const revTxt = post.updatedAt ? ` · REV ${esc(post.updatedAt)}` : '';
   return `<header class="C-header">
   <div class="C-header-grid">
-    <div class="C-label">SERIES</div><div class="C-value">${esc(post.series || '')}</div>
-    <div class="C-label">CATEGORY</div><div class="C-value"><span class="C-pill">[${esc(post.categoryLabel || '')}]</span></div>
+    <div class="C-label">${ui.headerSeries}</div><div class="C-value">${esc(post.series || '')}</div>
+    <div class="C-label">${ui.headerCategory}</div><div class="C-value"><span class="C-pill">[${esc(post.categoryLabel || '')}]</span></div>
     <div class="C-label">${ui.publishedLabel}</div><div class="C-value C-mono">${esc(post.publishedAt || '')}${revTxt} · ~${esc(post.readingMin || '')}${ui.readSuffix}</div>
   </div>
   <div class="C-title-block">
@@ -181,7 +205,7 @@ function renderRail(post) {
   // TOC includes both headings and midCta entries. Numbers align with body §
   // positions (absolute index in the sections array), so the TOC's "05 ACTION"
   // matches the visual gap between body § 04 and § 06.
-  const tocCtaLabel = `ACTION · ${ui.midCtaTitle}`;
+  const tocCtaLabel = `${ui.tocCtaPrefix} ${ui.midCtaTitle}`;
   let firstShown = true;
   const toc = (post.sections || []).map((s, i) => {
     const num = String(i + 1).padStart(2, '0');
@@ -231,7 +255,7 @@ function renderSection(sec, idx, total, lang) {
     return `<div id="${esc(sec.id || 's-cta-mid')}" class="C-midcta">
   <div class="C-midcta-bar">${bar}</div>
   <div class="C-midcta-grid">
-    <div class="C-midcta-label">ACTION · 01</div>
+    <div class="C-midcta-label">${ui.midCtaActionLabel}</div>
     <div class="C-midcta-body">
       <div class="C-midcta-title">${ui.midCtaTitle}</div>
       <div class="C-midcta-text">${ui.midCtaText}</div>
@@ -287,7 +311,7 @@ function renderClosing(post) {
   const lang = post.__lang;
   const ui = uiFor(lang);
   const labels = {
-    end: `END OF DOCUMENT · EP${post.episodeNo || '01'}`,
+    end: `${ui.closingEnd} · EP${post.episodeNo || '01'}`,
     next: ui.closingNext,
     action1: ui.closingAction1,
     action2: ui.closingAction2,
