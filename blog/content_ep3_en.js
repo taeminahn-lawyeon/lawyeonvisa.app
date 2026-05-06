@@ -12,6 +12,12 @@ window.POST = {
   ],
   title: "How to Open a Store in Korea as a Foreigner — The Step-by-Step 2026 Process",
   url: "how-to-open-a-store-in-korea-as-a-foreigner-2026",
+  lang: "en",
+  translation_group: "biz-immigration-ep3",
+  translations: {
+    en: "how-to-open-a-store-in-korea-as-a-foreigner-2026",
+    // vi, th, zh, ja added in subsequent PRs alongside their translations
+  },
   disclaimer: "This is the third installment of our Business Immigration series. Episode 1 covered the D-9-4 and D-9-5 visa overview, Episode 2 the structure of the visa system. This episode explains, stage by stage, how the actual relocation and launch unfolds. Post-settlement matters are covered in Episode 4. The examples in this article are hypothetical compositions of conditions frequently seen in consultations, not actual cases.",
   series: "Episode 3 · Business Immigration Series",
   publishedAt: "2026.04.24",

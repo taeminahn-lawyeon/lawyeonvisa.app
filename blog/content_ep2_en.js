@@ -12,6 +12,12 @@ window.POST = {
   ],
   title: "Korea Business Visa in 2026 — How Much to Invest, How Long You Can Stay, and Bringing Your Family",
   url: "korea-business-visa-investment-and-family-guide-2026",
+  lang: "en",
+  translation_group: "biz-immigration-ep2",
+  translations: {
+    en: "korea-business-visa-investment-and-family-guide-2026",
+    // vi, th, zh, ja added in subsequent PRs alongside their translations
+  },
   disclaimer: "This installment covers how the D-9-4 and D-9-5 visas introduced in Episode 1 are actually applied in practice. The full relocation timeline is addressed in Episode 3, and life after settlement in Episode 4.",
   series: "Episode 2 · Business Immigration Series",
   publishedAt: "2026.04.17",

@@ -12,6 +12,12 @@ window.POST = {
   ],
   title: "How to Stay in Korea Long-Term as a Foreign Business Owner — Residency, Family, Real Estate, Healthcare (2026)",
   url: "how-to-stay-in-korea-long-term-as-a-business-owner-2026",
+  lang: "en",
+  translation_group: "biz-immigration-ep4",
+  translations: {
+    en: "how-to-stay-in-korea-long-term-as-a-business-owner-2026",
+    // vi, th, zh, ja added in subsequent PRs alongside their translations
+  },
   disclaimer: "This is the fourth installment of our Business Immigration series. Episode 1 covered the visa overview, Episode 2 the structure of the system, and Episode 3 the actual relocation and launch flow. This episode addresses the long-term perspective after settling in Korea.",
   series: "Episode 4 · Business Immigration Series",
   publishedAt: "2026.05.01",

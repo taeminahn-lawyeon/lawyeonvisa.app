@@ -23,10 +23,10 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const POSTS = [
-  { file: 'blog/content_ep1_en.js', slug: 'start-a-business-in-korea-as-a-foreigner-2026' },
-  { file: 'blog/content_ep2_en.js', slug: 'korea-business-visa-investment-and-family-guide-2026' },
-  { file: 'blog/content_ep3_en.js', slug: 'how-to-open-a-store-in-korea-as-a-foreigner-2026' },
-  { file: 'blog/content_ep4_en.js', slug: 'how-to-stay-in-korea-long-term-as-a-business-owner-2026' },
+  { file: 'blog/content_ep1_en.js', slug: 'start-a-business-in-korea-as-a-foreigner-2026', translation_group: 'biz-immigration-ep1' },
+  { file: 'blog/content_ep2_en.js', slug: 'korea-business-visa-investment-and-family-guide-2026', translation_group: 'biz-immigration-ep2' },
+  { file: 'blog/content_ep3_en.js', slug: 'how-to-open-a-store-in-korea-as-a-foreigner-2026', translation_group: 'biz-immigration-ep3' },
+  { file: 'blog/content_ep4_en.js', slug: 'how-to-stay-in-korea-long-term-as-a-business-owner-2026', translation_group: 'biz-immigration-ep4' },
 ];
 
 const DRY = process.argv.includes('--dry');
@@ -51,6 +51,8 @@ async function upsertOne(entry) {
     thumbnail_url: null,
     is_published: IS_PUBLISHED,
     template: 'navy_v4',
+    language: post.lang || 'en',
+    translation_group: entry.translation_group,
     related_services: JSON.stringify([]),
     content: JSON.stringify(post),
     updated_at: new Date().toISOString(),
