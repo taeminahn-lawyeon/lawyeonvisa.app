@@ -20,7 +20,7 @@ function getCorsHeaders(origin: string | null) {
   }
 }
 
-const FROM_EMAIL = 'Law Firm Lawyeon <noreply@lawyeon.com>'
+const FROM_EMAIL = 'Law Firm Lawyeon <noreply@lawyeonvisa.app>'
 const SITE_URL = 'https://lawyeonvisa.app'
 const SUBJECT = '[Lawyeon Visa & Immigration Center] You have a new message regarding your consultation'
 
