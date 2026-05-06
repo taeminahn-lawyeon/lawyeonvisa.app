@@ -6,6 +6,7 @@
 // Supabase Edge Function URL (배포 후 설정)
 const NOTIFICATION_FUNCTION_URL = 'https://gqistzsergddnpcvuzba.supabase.co/functions/v1/send-notification';
 const EMAIL_FUNCTION_URL = 'https://gqistzsergddnpcvuzba.supabase.co/functions/v1/send-email';
+const ADMIN_EMAIL_FUNCTION_URL = 'https://gqistzsergddnpcvuzba.supabase.co/functions/v1/send-admin-email';
 
 // 알림 템플릿 (이미지와 동일한 카드 스타일)
 const NOTIFICATION_TEMPLATES = {
@@ -338,6 +339,54 @@ async function notifyUserByEmailOnNewMessage(threadId) {
         console.error('📧 [notifyUserByEmailOnNewMessage] 오류:', error);
         return { success: false, error: error.message };
     }
+}
+
+/**
+ * 어드민에게 이메일 알림 발송 (Resend 경유)
+ * @param {string} threadId - 쓰레드 ID
+ * @param {'new_thread'|'new_message'} eventType - 이벤트 종류
+ */
+async function notifyAdminEmail(threadId, eventType) {
+    try {
+        console.log(`📧 [notifyAdminEmail] ${eventType} 발송 시작, threadId=${threadId}`);
+
+        const session = await checkSession();
+        if (!session) {
+            console.error('📧 [notifyAdminEmail] 세션 없음');
+            return { success: false, error: 'Not authenticated' };
+        }
+
+        const response = await fetch(ADMIN_EMAIL_FUNCTION_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${session.access_token}`
+            },
+            body: JSON.stringify({ threadId, eventType })
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('📧 [notifyAdminEmail] Edge Function 오류:', errorText);
+            return { success: false, error: errorText };
+        }
+
+        const result = await response.json();
+        console.log('📧 [notifyAdminEmail] 결과:', result);
+        return { success: true, data: result };
+
+    } catch (error) {
+        console.error('📧 [notifyAdminEmail] 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+async function notifyAdminOnNewThread(threadId) {
+    return notifyAdminEmail(threadId, 'new_thread');
+}
+
+async function notifyAdminOnNewMessage(threadId) {
+    return notifyAdminEmail(threadId, 'new_message');
 }
 
 console.log('✅ Notification Service 로드 완료');
