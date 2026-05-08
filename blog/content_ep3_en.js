@@ -20,6 +20,7 @@ window.POST = {
   translations: {
     en: "how-to-open-a-store-in-korea-as-a-foreigner-2026",
     zh: "外国人在韩国开店流程-五阶段完整指南-2026",
+    vi: "quy-trinh-mo-cua-hang-tai-han-quoc-cho-nguoi-nuoc-ngoai-2026",
     // vi, th, ja added in subsequent PRs alongside their translations
   },
   disclaimer: "This is the third installment of our Business Immigration series. Episode 1 covered the D-9-4 and D-9-5 visa system, and Episode 2 the industry choice and franchise selection. This episode explains, stage by stage, how the actual relocation and launch unfolds. Post-settlement matters are covered in Episode 4. The examples in this article are hypothetical compositions of conditions frequently seen in consultations, not actual cases.",

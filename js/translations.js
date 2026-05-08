@@ -4057,9 +4057,9 @@ const translations = {
         'common.loginRequired': 'Cần đăng nhập.',
         'common.comingSoon': 'Sắp ra mắt',
         'common.serviceLoginRequired': 'Đăng nhập để sử dụng dịch vụ.',
-        'common.serviceLoginConfirm': 'Đăng nhập để sử dụng dịch vụ.\n\nĐăng nhập bằng Google?',
+        'common.serviceLoginConfirm': 'Cần đăng nhập để gửi yêu cầu tư vấn. Tiếp tục?',
         'common.logout': 'Đăng xuất',
-        'login.google': 'Đăng nhập Google',
+        'login.google': 'Đăng nhập với Google',
         'site.name': 'Trung Tâm Hỗ Trợ Xuất Nhập Cảnh Lawyeon',
         'site.company': 'Công Ty Luật Lawyeon',
         'site.title': 'Law Firm Lawyeon LLC.',
@@ -4923,19 +4923,19 @@ const translations = {
         'thread.survey.completedD10': '✓ Đã gửi thông tin D-10-1',
         'thread.survey.completedVisaLegal': '✓ Đã gửi khảo sát',
         // === Thread Welcome Message ===
-        'thread.welcome.title': 'Xác nhận yêu cầu tư vấn',
-        'thread.welcome.greeting': 'Xin chào! Yêu cầu tư vấn <strong>{serviceName}</strong> đã được tiếp nhận.',
+        'thread.welcome.title': 'Xác nhận Yêu cầu Tư vấn',
+        'thread.welcome.greeting': 'Xin chào! Yêu cầu tư vấn cho <strong>{serviceName}</strong> của bạn đã được tiếp nhận.',
         'thread.welcome.procedureTitle': 'Hướng dẫn quy trình',
-        'thread.welcome.procedureDesc': 'Vui lòng thực hiện theo các bước sau để tư vấn diễn ra suôn sẻ.',
-        'thread.welcome.step1Title': '1. Nhập thông tin cơ bản',
-        'thread.welcome.step1Desc': 'Vui lòng nhập thông tin cơ bản cần thiết cho tư vấn.',
+        'thread.welcome.procedureDesc': 'Để tư vấn diễn ra suôn sẻ, vui lòng tiến hành theo thứ tự bên dưới.',
+        'thread.welcome.step1Title': '1. Nhân viên xem xét',
+        'thread.welcome.step1Desc': 'Nhân viên sẽ xem xét yêu cầu của bạn và liên hệ qua cuộc trò chuyện này.',
         'thread.welcome.step1Link': 'Nhập thông tin cơ bản',
-        'thread.welcome.step2Title': '2. Nhân viên xem xét',
-        'thread.welcome.step2Desc': 'Chuyên viên sẽ xem xét yêu cầu và liên hệ qua cuộc trò chuyện này.',
-        'thread.welcome.step3Title': '3. Tiến hành tư vấn',
-        'thread.welcome.step3Desc': 'Sau khi xem xét hồ sơ, chúng tôi sẽ cung cấp chi phí chính xác và tài liệu cần thiết.',
-        'thread.welcome.footer': 'Nếu có câu hỏi thêm, vui lòng để lại phản hồi trong chủ đề này.',
-        'thread.welcome.senderName': 'Công ty Luật Lawyeon',
+        'thread.welcome.step2Title': '2. Tiến hành tư vấn',
+        'thread.welcome.step2Desc': 'Sau khi xem xét hồ sơ, chúng tôi sẽ cung cấp chi phí chính xác và các tài liệu cần thiết.',
+        'thread.welcome.step3Title': '3. Nộp tài liệu',
+        'thread.welcome.step3Desc': 'Vui lòng nộp các tài liệu cần thiết theo hướng dẫn của nhân viên.',
+        'thread.welcome.footer': 'Nếu có thêm câu hỏi, vui lòng để lại tin nhắn trong luồng này.',
+        'thread.welcome.senderName': 'Văn phòng Luật Lawyeon',
         // === D-10-1 Thanh toán hoàn tất ===
         'thread.welcome.d10.title': 'Thay đổi visa D-10-1 - Thanh toán hoàn tất',
         'thread.welcome.d10.greeting': 'Thanh toán cho <strong>{serviceName}</strong> đã hoàn tất. Vui lòng làm theo các bước dưới đây.',
@@ -5236,47 +5236,48 @@ const translations = {
     // [TRANSLATION_PENDING: biz.hero.subhead, vi, cloned from en at 2026-04-20]
     'biz.hero.subhead': 'For foreigners considering relocation to Korea from abroad, we sequentially perform project exploration, regulatory advice, and visa acquisition.',
     // [TRANSLATION_PENDING: biz.hero.cta, vi, cloned from en at 2026-04-20]
-    'biz.hero.cta': 'Request Business Immigration\nPre-Consultation',
+    'biz.hero.cta': 'Đăng ký tư vấn sơ bộ
+Định cư Kinh doanh',
     // [TRANSLATION_PENDING: biz.badge.description, vi, cloned from en at 2026-04-20]
     'biz.badge.description': 'Law Firm Lawyeon Immigration Support Center provides business immigration legal services for foreigners relocating to Korea.',
     // [TRANSLATION_PENDING: biz.step1.title, vi, cloned from en at 2026-04-20]
-    'biz.step1.title': 'Pre-Consultation',
+    'biz.step1.title': 'Tư vấn sơ bộ',
     // [TRANSLATION_PENDING: biz.step1.body, vi, cloned from en at 2026-04-20]
-    'biz.step1.body': 'Through a thread we confirm your nationality, funding method, target relocation date, and family composition, then outline the Korean business immigration paths.',
+    'biz.step1.body': 'Qua luồng tư vấn, chúng tôi xác nhận quốc tịch, phương thức huy động vốn, thời điểm di trú, cấu trúc gia đình của bạn và phác thảo các lộ trình Định cư Kinh doanh tại Hàn Quốc.',
     // [TRANSLATION_PENDING: biz.step2.title, vi, cloned from en at 2026-04-20]
-    'biz.step2.title': 'Detailed Consultation',
+    'biz.step2.title': 'Tư vấn chính thức',
     // [TRANSLATION_PENDING: biz.step2.body, vi, cloned from en at 2026-04-20]
-    'biz.step2.body': 'We provide detailed advice on immigration paths, structure the business launch procedure and budget allocation, outline key risks, and guide immigration administration including visa issuance.',
+    'biz.step2.body': 'Cung cấp tư vấn chi tiết về lộ trình di trú, cơ cấu hóa thủ tục khởi nghiệp và phân bổ ngân sách, hướng dẫn các rủi ro chính, và hành chính xuất nhập cảnh bao gồm cấp visa.',
     // [TRANSLATION_PENDING: biz.step3.title, vi, cloned from en at 2026-04-20]
-    'biz.step3.title': 'Stage 1 Engagement',
+    'biz.step3.title': 'Khởi động',
     // [TRANSLATION_PENDING: biz.step3.body, vi, cloned from en at 2026-04-20]
-    'biz.step3.body': 'We conduct project design, operations design, site visit coordination, and the final review meeting.',
+    'biz.step3.body': 'Thực hiện thiết kế dự án, thiết kế vận hành, phối hợp chuyến thăm khảo sát, và cuộc họp xem xét cuối cùng.',
     // [TRANSLATION_PENDING: biz.step4.title, vi, cloned from en at 2026-04-20]
-    'biz.step4.title': 'Settlement',
+    'biz.step4.title': 'Định cư',
     // [TRANSLATION_PENDING: biz.step4.body, vi, cloned from en at 2026-04-20]
-    'biz.step4.body': 'Contract execution support, foreign investment procedures, administrative registration oversight, visa acquisition, and accompanying family visa issuance.',
+    'biz.step4.body': 'Hỗ trợ ký hợp đồng, thủ tục đầu tư nước ngoài, giám sát đăng ký hành chính, nhận visa, và cấp visa thân nhân đi cùng.',
     // [TRANSLATION_PENDING: biz.step5.title, vi, cloned from en at 2026-04-20]
-    'biz.step5.title': 'Aftercare',
+    'biz.step5.title': 'Hỗ trợ tiếp nối',
     // [TRANSLATION_PENDING: biz.step5.body, vi, cloned from en at 2026-04-20]
-    'biz.step5.body': 'Residential lease review, franchise dispute mediation, employment contract advice, stay extension, and permanent residency transition advice are provided under separate agreements.',
+    'biz.step5.body': 'Xem xét hợp đồng thuê nhà, hòa giải tranh chấp giữa tổng công ty nhượng quyền và chủ cửa hàng, tư vấn hợp đồng lao động, gia hạn thời hạn lưu trú, tư vấn chuyển đổi thường trú được cung cấp theo hợp đồng riêng.',
     // [TRANSLATION_PENDING: biz.news.heading, vi, cloned from en at 2026-04-20]
     'biz.news.heading': 'News & Insights',
     // [TRANSLATION_PENDING: biz.dashboard.heading, vi, cloned from en at 2026-04-20]
-    'biz.dashboard.heading': 'My Project Progress',
+    'biz.dashboard.heading': 'Tiến độ Dự án của Tôi',
     // [TRANSLATION_PENDING: biz.dashboard.guest, vi, cloned from en at 2026-04-20]
     'biz.dashboard.guest': 'Sign in to view your project progress, consultation history, and threads.',
     // [TRANSLATION_PENDING: biz.dashboard.progress.stage1, vi, cloned from en at 2026-04-20]
-    'biz.dashboard.progress.stage1': 'Pre-Consultation',
+    'biz.dashboard.progress.stage1': 'Tư vấn sơ bộ',
     // [TRANSLATION_PENDING: biz.dashboard.progress.stage2, vi, cloned from en at 2026-04-20]
-    'biz.dashboard.progress.stage2': 'Detailed Consultation',
+    'biz.dashboard.progress.stage2': 'Tư vấn chính thức',
     // [TRANSLATION_PENDING: biz.dashboard.progress.stage3, vi, cloned from en at 2026-04-20]
-    'biz.dashboard.progress.stage3': 'Stage 1 Engagement',
+    'biz.dashboard.progress.stage3': 'Khởi động',
     // [TRANSLATION_PENDING: biz.dashboard.progress.stage4, vi, cloned from en at 2026-04-20]
-    'biz.dashboard.progress.stage4': 'Settlement',
+    'biz.dashboard.progress.stage4': 'Định cư',
     // [TRANSLATION_PENDING: biz.dashboard.progress.stage5, vi, cloned from en at 2026-04-20]
-    'biz.dashboard.progress.stage5': 'Aftercare',
+    'biz.dashboard.progress.stage5': 'Hỗ trợ tiếp nối',
     // [TRANSLATION_PENDING: biz.form.title, vi, cloned from en at 2026-04-20]
-    'biz.form.title': 'Business Immigration Pre-Consultation Request',
+    'biz.form.title': 'Đăng ký tư vấn sơ bộ Định cư Kinh doanh',
     // [TRANSLATION_PENDING: biz.form.nationality, vi, cloned from en at 2026-04-20]
     'biz.form.nationality': 'Nationality',
     // [TRANSLATION_PENDING: biz.form.residence_country, vi, cloned from en at 2026-04-20]
@@ -5294,9 +5295,9 @@ const translations = {
     // [TRANSLATION_PENDING: biz.form.contact_method, vi, cloned from en at 2026-04-20]
     'biz.form.contact_method': 'Preferred Contact Method',
     // [TRANSLATION_PENDING: biz.form.submit, vi, cloned from en at 2026-04-20]
-    'biz.form.submit': 'Submit Consultation Request',
+    'biz.form.submit': 'Gửi yêu cầu tư vấn',
     // [TRANSLATION_PENDING: biz.form.auto_reply, vi, cloned from en at 2026-04-20]
-    'biz.form.auto_reply': 'Your consultation request has been received. Our representative will reply via the thread.',
+    'biz.form.auto_reply': 'Yêu cầu tư vấn đã được tiếp nhận. Chuyên viên sẽ phản hồi qua luồng tư vấn.',
     // [TRANSLATION_PENDING: biz.banner.title, vi, cloned from en at 2026-04-20]
     'biz.banner.title': 'Profile Required',
     // [TRANSLATION_PENDING: biz.banner.description, vi, cloned from en at 2026-04-20]
@@ -5363,62 +5364,62 @@ const translations = {
     'admin.nav.system_errors': 'System Errors',
     // === biz.* (사업이민 섹션 14) ===
     // [TRANSLATION_PENDING: biz.request.hero.headline, vi, cloned from en at 2026-04-20]
-    'biz.request.hero.headline': 'Integrated legal services for launching a business and emigrating to Korea',
+    'biz.request.hero.headline': 'Dịch vụ pháp lý tích hợp cho khởi nghiệp và di trú đến Hàn Quốc',
     // [TRANSLATION_PENDING: biz.request.hero.subhead, vi, cloned from en at 2026-04-20]
-    'biz.request.hero.subhead': 'A dedicated consultation path for immigration clients considering business relocation to Korea.',
-    'biz.request.loginGate.title': 'Sign in required',
-    'biz.request.loginGate.desc': 'Business Immigration consultations are conducted through your dedicated thread, so a Google sign-in is required before you can view the details and submit your request.',
-    'biz.request.loginGate.cta': 'Continue with Google',
-    'biz.request.loginGate.note': 'By continuing you agree to our Terms of Service and Privacy Policy.',
+    'biz.request.hero.subhead': 'Lộ trình tư vấn chuyên biệt cho khách hàng di trú đang xem xét chuyển doanh nghiệp đến Hàn Quốc.',
+    'biz.request.loginGate.title': 'Yêu cầu đăng nhập',
+    'biz.request.loginGate.desc': 'Tư vấn Định cư Kinh doanh được tiến hành qua luồng riêng của bạn, vì vậy cần đăng nhập Google trước khi bạn có thể xem chi tiết và gửi yêu cầu.',
+    'biz.request.loginGate.cta': 'Tiếp tục với Google',
+    'biz.request.loginGate.note': 'Tiếp tục đồng nghĩa bạn chấp nhận Điều khoản Dịch vụ và Chính sách Bảo mật của chúng tôi.',
     // [TRANSLATION_PENDING: biz.request.overview.para1, vi, cloned from en at 2026-04-20]
-    'biz.request.overview.para1': 'Law Firm Lawyeon Immigration Support Center provides integrated legal services for foreigners residing abroad who wish to start a business and settle in Korea.',
+    'biz.request.overview.para1': 'Lawyeon Trung tâm Hỗ trợ Xuất nhập cảnh & Di trú cung cấp dịch vụ pháp lý tích hợp cho người nước ngoài đang ở nước ngoài muốn khởi nghiệp và định cư tại Hàn Quốc.',
     // [TRANSLATION_PENDING: biz.request.overview.para2, vi, cloned from en at 2026-04-20]
-    'biz.request.overview.para2': 'Project exploration, regulatory advice, visa acquisition, settlement in Korea, and accompanying family support are all handled within a single legal retainer.',
+    'biz.request.overview.para2': 'Khám phá dự án, tư vấn pháp quy, nhận visa, định cư tại Hàn Quốc, và hỗ trợ thân nhân đi cùng đều được xử lý trong một hợp đồng pháp lý duy nhất.',
     // [TRANSLATION_PENDING: biz.request.overview.para3, vi, cloned from en at 2026-04-20]
-    'biz.request.overview.para3': 'The pre-consultation is free of charge and can be requested on this page.',
+    'biz.request.overview.para3': 'Tư vấn sơ bộ miễn phí và có thể được yêu cầu trên trang này.',
     // [TRANSLATION_PENDING: biz.request.steps.heading, vi, cloned from en at 2026-04-20]
-    'biz.request.steps.heading': 'Five-Stage Project Structure',
+    'biz.request.steps.heading': 'Cấu trúc Dự án 5 Giai đoạn',
     // [TRANSLATION_PENDING: biz.request.prepare.heading, vi, cloned from en at 2026-04-20]
-    'biz.request.prepare.heading': 'What to Prepare',
+    'biz.request.prepare.heading': 'Khách hàng cần chuẩn bị gì',
     // [TRANSLATION_PENDING: biz.request.prepare.intro, vi, cloned from en at 2026-04-20]
-    'biz.request.prepare.intro': 'Organizing the following points before submitting will help the pre-consultation proceed smoothly.',
+    'biz.request.prepare.intro': 'Tổ chức các điểm sau trước khi gửi sẽ giúp tư vấn sơ bộ tiến hành thuận lợi.',
     // [TRANSLATION_PENDING: biz.request.prepare.item1, vi, cloned from en at 2026-04-20]
-    'biz.request.prepare.item1': 'Target relocation timeline (short-term / mid-term / undecided)',
+    'biz.request.prepare.item1': 'Thời gian di trú dự kiến đến Hàn Quốc (ngắn hạn / trung hạn / chưa quyết định)',
     // [TRANSLATION_PENDING: biz.request.prepare.item2, vi, cloned from en at 2026-04-20]
-    'biz.request.prepare.item2': 'Accompanying family plan (spouse / children / parents)',
+    'biz.request.prepare.item2': 'Kế hoạch thân nhân đi cùng (vợ/chồng / con cái / cha mẹ)',
     // [TRANSLATION_PENDING: biz.request.prepare.item3, vi, cloned from en at 2026-04-20]
-    'biz.request.prepare.item3': 'Business or employment history in your home country',
+    'biz.request.prepare.item3': 'Lịch sử kinh doanh hoặc làm việc tại quê nhà',
     // [TRANSLATION_PENDING: biz.request.prepare.item4, vi, cloned from en at 2026-04-20]
-    'biz.request.prepare.item4': 'Previous residence or visit history in Korea',
+    'biz.request.prepare.item4': 'Lịch sử cư trú hoặc thăm trước đây tại Hàn Quốc',
     // [TRANSLATION_PENDING: biz.request.prepare.item5, vi, cloned from en at 2026-04-20]
-    'biz.request.prepare.item5': 'Korean language proficiency',
+    'biz.request.prepare.item5': 'Trình độ tiếng Hàn',
     // [TRANSLATION_PENDING: biz.request.prepare.disclaimer, vi, cloned from en at 2026-04-20]
-    'biz.request.prepare.disclaimer': 'Details on funding scale and investment structure will be reviewed in the detailed consultation stage.',
+    'biz.request.prepare.disclaimer': 'Chi tiết về quy mô vốn và cấu trúc đầu tư sẽ được xem xét trong giai đoạn tư vấn chính thức.',
     // [TRANSLATION_PENDING: home.urgent.headline, vi, cloned from en at 2026-04-20]
-    'home.urgent.headline': 'Facing an urgent legal matter?',
+    'home.urgent.headline': 'Đối mặt với vấn đề pháp lý khẩn cấp?',
     // [TRANSLATION_PENDING: home.urgent.subhead, vi, cloned from en at 2026-04-20]
-    'home.urgent.subhead': 'We handle time-sensitive immigration and criminal cases such as deportation orders, visa denials, and related proceedings.',
+    'home.urgent.subhead': 'Chúng tôi xử lý các vụ việc xuất nhập cảnh và hình sự nhạy cảm về thời gian như lệnh trục xuất, từ chối visa và các thủ tục liên quan.',
     // [TRANSLATION_PENDING: home.urgent.cta, vi, cloned from en at 2026-04-20]
-    'home.urgent.cta': 'Request Urgent Consultation',
+    'home.urgent.cta': 'Yêu cầu tư vấn khẩn cấp',
     // === biz.* (사업이민 섹션 14) ===
     // [TRANSLATION_PENDING: biz.card.summary1, vi, cloned from en at 2026-04-20]
-    'biz.card.summary1': 'Immigration Project Design',
+    'biz.card.summary1': 'Thiết kế Dự án Di trú',
     // [TRANSLATION_PENDING: biz.card.summary2, vi, cloned from en at 2026-04-20]
-    'biz.card.summary2': 'Contracts & Regulatory Management',
+    'biz.card.summary2': 'Quản lý Hợp đồng & Pháp quy',
     // [TRANSLATION_PENDING: biz.card.summary3, vi, cloned from en at 2026-04-20]
-    'biz.card.summary3': 'Settlement & Ongoing Support',
+    'biz.card.summary3': 'Định cư & Hỗ trợ Tiếp nối',
     // === biz.* (사업이민 섹션 14) ===
     // [TRANSLATION_PENDING: biz.request.threadPreview.title, vi, cloned from en at 2026-04-20]
-    'biz.request.threadPreview.title': 'Business Immigration Thread',
+    'biz.request.threadPreview.title': 'Luồng Định cư Kinh doanh',
     // [TRANSLATION_PENDING: biz.request.threadPreview.subtitle, vi, cloned from en at 2026-04-20]
-    'biz.request.threadPreview.subtitle': 'Real-time communication with our specialist',
+    'biz.request.threadPreview.subtitle': 'Giao tiếp thời gian thực với chuyên viên',
     // [TRANSLATION_PENDING: biz.request.threadPreview.caption, vi, cloned from en at 2026-04-20]
-    'biz.request.threadPreview.caption': 'Consultation progress, document requests, and stage transitions are handled within the thread.',
+    'biz.request.threadPreview.caption': 'Tiến độ tư vấn, yêu cầu tài liệu, và chuyển đổi giai đoạn được xử lý trong luồng.',
     // [TRANSLATION_PENDING: biz.sidebar.heading, vi, cloned from en at 2026-04-20]
-    'biz.sidebar.heading': 'Project Progress',
+    'biz.sidebar.heading': 'Tiến độ Dự án',
     // === biz.* (사업이민 섹션 14) ===
     // [TRANSLATION_PENDING: biz.thread.title, vi, cloned from en at 2026-04-20]
-    'biz.thread.title': 'Business Immigration Consultation',
+    'biz.thread.title': 'Tư vấn Định cư Kinh doanh',
 
     // === consult.consent.* (사업이민 신청 약관 동의) ===
     'consult.consent.text': 'Tôi đồng ý với Điều khoản Dịch vụ và Chính sách Bảo mật. Tôi đồng ý thu thập và sử dụng thông tin cá nhân cho mục đích tư vấn.',

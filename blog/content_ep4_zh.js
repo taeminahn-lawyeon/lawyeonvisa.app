@@ -19,6 +19,7 @@ window.POST = {
   translations: {
     en: "permanent-residency-korea-foreign-business-owner-2026",
     zh: "外国企业主韩国永久居留-F-2-99到F-5指南-2026",
+    vi: "thuong-tru-tai-han-quoc-cho-chu-doanh-nghiep-nuoc-ngoai-2026",
   },
   disclaimer: "本系列第 4 集，也是终篇。第 1 至 3 集介绍了 D-9-4 与 D-9-5 签证体系、行业与加盟选择逻辑，以及实际的移居与开业流程。本集讨论在韩定居后的长期视野。",
   metaDescription: "D-9-4 或 D-9-5 签证发给后，定居才刚刚开始 —— 而这是一段长程。停留期间延长、F-2-99 长期居留转换、F-3 家属、子女大学入学、不动产购置、商业楼宇租赁保护法、公共医疗，以及在外国个体经营者上同等适用的韩国小工商业支援（2026）。",
