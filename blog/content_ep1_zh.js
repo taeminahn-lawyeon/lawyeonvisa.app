@@ -30,7 +30,8 @@ window.POST = {
     en: "start-a-business-in-korea-as-a-foreigner-2026",
     zh: "外国人在韩国创业-D-9-4-D-9-5签证完全指南-2026",
     vi: "cach-bat-dau-kinh-doanh-tai-han-quoc-cho-nguoi-nuoc-ngoai-2026",
-    // vi, th, ja added in subsequent PRs alongside their translations
+    th: "วิธีเริ่มต้นธุรกิจในเกาหลีสำหรับชาวต่างชาติ-2026",
+    // ja added in a subsequent PR alongside its translation
   },
   disclaimer: "本文是面向考虑移居韩国进行商业移民的外国人的系列首篇。详细的行业与加盟选择逻辑在第 2 集，完整的移居与开业流程在第 3 集，定居后的生活在第 4 集中分别讨论。",
   metaDescription: "面向外国个体经营者的 2026 年韩国商业移民完全指南。为何 D-9-4 与 D-9-5（而非 D-8）才适合小型企业主，以及投资、资格变更、停留延长、家属签证在实务中如何运作。",
