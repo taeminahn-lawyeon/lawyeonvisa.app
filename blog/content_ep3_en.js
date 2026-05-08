@@ -22,7 +22,7 @@ window.POST = {
     zh: "外国人在韩国开店流程-五阶段完整指南-2026",
     vi: "quy-trinh-mo-cua-hang-tai-han-quoc-cho-nguoi-nuoc-ngoai-2026",
     th: "ขั้นตอนการเปิดร้านในเกาหลีสำหรับชาวต่างชาติ-2026",
-    // ja added in a subsequent PR alongside its translation
+    ja: "韓国で店舗を開く方法-外国人向け5段階プロセス-2026",
   },
   disclaimer: "This is the third installment of our Business Immigration series. Episode 1 covered the D-9-4 and D-9-5 visa system, and Episode 2 the industry choice and franchise selection. This episode explains, stage by stage, how the actual relocation and launch unfolds. Post-settlement matters are covered in Episode 4. The examples in this article are hypothetical compositions of conditions frequently seen in consultations, not actual cases.",
   metaDescription: "The actual 5-stage process to open a business in Korea as a foreigner — pre-consultation, main consultation, onboarding, settlement, and ongoing support. Includes industry selection examples, step-by-step procedures from foreign exchange remittance to visa acquisition, FAQ, and common mistakes to avoid (2026).",

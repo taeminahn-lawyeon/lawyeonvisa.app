@@ -6607,194 +6607,104 @@ const translations = {
         'demo.emergency.diagnosis.item3': '出入国管理法違反相談',
         'demo.emergency.diagnosis.cta': '相談を受ける',
     // === biz.* (사업이민 섹션 14) ===
-    // [TRANSLATION_PENDING: biz.hero.headline, ja, cloned from en at 2026-04-20]
-    'biz.hero.headline': 'Integrated legal services for launching a business and emigrating to Korea',
-    // [TRANSLATION_PENDING: biz.hero.subhead, ja, cloned from en at 2026-04-20]
-    'biz.hero.subhead': 'For foreigners considering relocation to Korea from abroad, we sequentially perform project exploration, regulatory advice, and visa acquisition.',
-    // [TRANSLATION_PENDING: biz.hero.cta, ja, cloned from en at 2026-04-20]
-    'biz.hero.cta': 'Request Business Immigration\nPre-Consultation',
-    // [TRANSLATION_PENDING: biz.badge.description, ja, cloned from en at 2026-04-20]
-    'biz.badge.description': 'Law Firm Lawyeon Immigration Support Center provides business immigration legal services for foreigners relocating to Korea.',
-    // [TRANSLATION_PENDING: biz.step1.title, ja, cloned from en at 2026-04-20]
-    'biz.step1.title': 'Pre-Consultation',
-    // [TRANSLATION_PENDING: biz.step1.body, ja, cloned from en at 2026-04-20]
-    'biz.step1.body': 'Through a thread we confirm your nationality, funding method, target relocation date, and family composition, then outline the Korean business immigration paths.',
-    // [TRANSLATION_PENDING: biz.step2.title, ja, cloned from en at 2026-04-20]
-    'biz.step2.title': 'Detailed Consultation',
-    // [TRANSLATION_PENDING: biz.step2.body, ja, cloned from en at 2026-04-20]
-    'biz.step2.body': 'We provide detailed advice on immigration paths, structure the business launch procedure and budget allocation, outline key risks, and guide immigration administration including visa issuance.',
-    // [TRANSLATION_PENDING: biz.step3.title, ja, cloned from en at 2026-04-20]
-    'biz.step3.title': 'Stage 1 Engagement',
-    // [TRANSLATION_PENDING: biz.step3.body, ja, cloned from en at 2026-04-20]
-    'biz.step3.body': 'We conduct project design, operations design, site visit coordination, and the final review meeting.',
-    // [TRANSLATION_PENDING: biz.step4.title, ja, cloned from en at 2026-04-20]
-    'biz.step4.title': 'Settlement',
-    // [TRANSLATION_PENDING: biz.step4.body, ja, cloned from en at 2026-04-20]
-    'biz.step4.body': 'Contract execution support, foreign investment procedures, administrative registration oversight, visa acquisition, and accompanying family visa issuance.',
-    // [TRANSLATION_PENDING: biz.step5.title, ja, cloned from en at 2026-04-20]
-    'biz.step5.title': 'Aftercare',
-    // [TRANSLATION_PENDING: biz.step5.body, ja, cloned from en at 2026-04-20]
-    'biz.step5.body': 'Residential lease review, franchise dispute mediation, employment contract advice, stay extension, and permanent residency transition advice are provided under separate agreements.',
-    // [TRANSLATION_PENDING: biz.news.heading, ja, cloned from en at 2026-04-20]
-    'biz.news.heading': 'News & Insights',
-    // [TRANSLATION_PENDING: biz.dashboard.heading, ja, cloned from en at 2026-04-20]
-    'biz.dashboard.heading': 'My Project Progress',
-    // [TRANSLATION_PENDING: biz.dashboard.guest, ja, cloned from en at 2026-04-20]
-    'biz.dashboard.guest': 'Sign in to view your project progress, consultation history, and threads.',
-    // [TRANSLATION_PENDING: biz.dashboard.progress.stage1, ja, cloned from en at 2026-04-20]
-    'biz.dashboard.progress.stage1': 'Pre-Consultation',
-    // [TRANSLATION_PENDING: biz.dashboard.progress.stage2, ja, cloned from en at 2026-04-20]
-    'biz.dashboard.progress.stage2': 'Detailed Consultation',
-    // [TRANSLATION_PENDING: biz.dashboard.progress.stage3, ja, cloned from en at 2026-04-20]
-    'biz.dashboard.progress.stage3': 'Stage 1 Engagement',
-    // [TRANSLATION_PENDING: biz.dashboard.progress.stage4, ja, cloned from en at 2026-04-20]
-    'biz.dashboard.progress.stage4': 'Settlement',
-    // [TRANSLATION_PENDING: biz.dashboard.progress.stage5, ja, cloned from en at 2026-04-20]
-    'biz.dashboard.progress.stage5': 'Aftercare',
-    // [TRANSLATION_PENDING: biz.form.title, ja, cloned from en at 2026-04-20]
-    'biz.form.title': 'Business Immigration Pre-Consultation Request',
-    // [TRANSLATION_PENDING: biz.form.nationality, ja, cloned from en at 2026-04-20]
-    'biz.form.nationality': 'Nationality',
-    // [TRANSLATION_PENDING: biz.form.residence_country, ja, cloned from en at 2026-04-20]
-    'biz.form.residence_country': 'Current Country of Residence',
-    // [TRANSLATION_PENDING: biz.form.visa_type, ja, cloned from en at 2026-04-20]
-    'biz.form.visa_type': 'Visa Type of Interest',
-    // [TRANSLATION_PENDING: biz.form.family, ja, cloned from en at 2026-04-20]
-    'biz.form.family': 'Family Members (besides yourself)',
-    // [TRANSLATION_PENDING: biz.form.children_count, ja, cloned from en at 2026-04-20]
-    'biz.form.children_count': 'Number of Children',
-    // [TRANSLATION_PENDING: biz.form.timeline, ja, cloned from en at 2026-04-20]
-    'biz.form.timeline': 'Expected Relocation Timeline',
-    // [TRANSLATION_PENDING: biz.form.message, ja, cloned from en at 2026-04-20]
-    'biz.form.message': 'Free Message',
-    // [TRANSLATION_PENDING: biz.form.contact_method, ja, cloned from en at 2026-04-20]
-    'biz.form.contact_method': 'Preferred Contact Method',
-    // [TRANSLATION_PENDING: biz.form.submit, ja, cloned from en at 2026-04-20]
-    'biz.form.submit': 'Submit Consultation Request',
-    // [TRANSLATION_PENDING: biz.form.auto_reply, ja, cloned from en at 2026-04-20]
-    'biz.form.auto_reply': 'Your consultation request has been received. Our representative will reply via the thread.',
-    // [TRANSLATION_PENDING: biz.banner.title, ja, cloned from en at 2026-04-20]
-    'biz.banner.title': 'Profile Required',
-    // [TRANSLATION_PENDING: biz.banner.description, ja, cloned from en at 2026-04-20]
-    'biz.banner.description': 'Please provide your basic information to enable a smooth consultation.',
-    // [TRANSLATION_PENDING: biz.banner.cta, ja, cloned from en at 2026-04-20]
-    'biz.banner.cta': 'Complete Profile',
-    // [TRANSLATION_PENDING: biz.welcome.greeting, ja, cloned from en at 2026-04-20]
-    'biz.welcome.greeting': 'Thank you for requesting a business immigration pre-consultation.',
-    // [TRANSLATION_PENDING: biz.welcome.step1, ja, cloned from en at 2026-04-20]
-    'biz.welcome.step1': 'Please provide your profile information first so that our representative can guide you on a tailored path.',
-    // [TRANSLATION_PENDING: biz.welcome.step2, ja, cloned from en at 2026-04-20]
-    'biz.welcome.step2': 'Our representative will propose a detailed consultation schedule in this thread.',
-    // [TRANSLATION_PENDING: biz.welcome.step3, ja, cloned from en at 2026-04-20]
-    'biz.welcome.step3': 'If additional documents are required, we will request uploads.',
-    // [TRANSLATION_PENDING: biz.welcome.closing, ja, cloned from en at 2026-04-20]
-    'biz.welcome.closing': 'If you have any questions, feel free to post in this thread.',
-    // [TRANSLATION_PENDING: biz.error.thread_creation, ja, cloned from en at 2026-04-20]
-    'biz.error.thread_creation': 'Failed to create the thread. Please try again. If the problem persists, contact support.',
-    // [TRANSLATION_PENDING: biz.error.thread_creation_after_payment, ja, cloned from en at 2026-04-20]
-    'biz.error.thread_creation_after_payment': 'Your payment was successfully approved. Our representative will open the thread manually. We apologize for the inconvenience.',
-    // [TRANSLATION_PENDING: biz.form.last_name_en, ja, cloned from en at 2026-04-20]
-    'biz.form.last_name_en': 'Last Name (English)',
-    // [TRANSLATION_PENDING: biz.form.first_name_en, ja, cloned from en at 2026-04-20]
-    'biz.form.first_name_en': 'First Name (English)',
-    // [TRANSLATION_PENDING: biz.form.full_name_native, ja, cloned from en at 2026-04-20]
-    'biz.form.full_name_native': 'Full Name (Native Script)',
-    // [TRANSLATION_PENDING: biz.form.passport_number, ja, cloned from en at 2026-04-20]
-    'biz.form.passport_number': 'Passport Number',
-    // [TRANSLATION_PENDING: biz.form.passport_expiry, ja, cloned from en at 2026-04-20]
-    'biz.form.passport_expiry': 'Passport Expiry Date',
-    // [TRANSLATION_PENDING: biz.form.birth_date, ja, cloned from en at 2026-04-20]
-    'biz.form.birth_date': 'Date of Birth',
-    // [TRANSLATION_PENDING: biz.form.gender, ja, cloned from en at 2026-04-20]
-    'biz.form.gender': 'Gender',
-    // [TRANSLATION_PENDING: biz.form.home_address, ja, cloned from en at 2026-04-20]
-    'biz.form.home_address': 'Home Address',
-    // [TRANSLATION_PENDING: biz.form.home_phone, ja, cloned from en at 2026-04-20]
-    'biz.form.home_phone': 'Home Phone',
-    // [TRANSLATION_PENDING: biz.form.email, ja, cloned from en at 2026-04-20]
-    'biz.form.email': 'Email',
-    // [TRANSLATION_PENDING: biz.form.native_language, ja, cloned from en at 2026-04-20]
-    'biz.form.native_language': 'Native Language',
-    // [TRANSLATION_PENDING: biz.form.preferred_contact_method, ja, cloned from en at 2026-04-20]
-    'biz.form.preferred_contact_method': 'Preferred Contact Method',
-    // [TRANSLATION_PENDING: biz.form.preferred_industry, ja, cloned from en at 2026-04-20]
-    'biz.form.preferred_industry': 'Preferred Industry',
-    // [TRANSLATION_PENDING: biz.form.preferred_location, ja, cloned from en at 2026-04-20]
-    'biz.form.preferred_location': 'Preferred Location',
-    // [TRANSLATION_PENDING: biz.form.funding_source, ja, cloned from en at 2026-04-20]
-    'biz.form.funding_source': 'Funding Source',
-    // [TRANSLATION_PENDING: biz.form.education_background, ja, cloned from en at 2026-04-20]
-    'biz.form.education_background': 'Education Background',
-    // [TRANSLATION_PENDING: biz.form.work_experience, ja, cloned from en at 2026-04-20]
-    'biz.form.work_experience': 'Work Experience',
-    // [TRANSLATION_PENDING: biz.form.korea_visit_history, ja, cloned from en at 2026-04-20]
-    'biz.form.korea_visit_history': 'Korea Visit History',
-    // [TRANSLATION_PENDING: biz.form.korean_language_proficiency, ja, cloned from en at 2026-04-20]
-    'biz.form.korean_language_proficiency': 'Korean Language Proficiency',
-    // [TRANSLATION_PENDING: biz.form.criminal_record, ja, cloned from en at 2026-04-20]
-    'biz.form.criminal_record': 'Criminal Record',
-    // [TRANSLATION_PENDING: common.retry, ja, cloned from en at 2026-04-20]
-    'common.retry': 'Retry',
-    // [TRANSLATION_PENDING: admin.nav.system_errors, ja, cloned from en at 2026-04-20]
-    'admin.nav.system_errors': 'System Errors',
+    'biz.hero.headline': '韓国で事業を開始し移住するための統合法務サービス',
+    'biz.hero.subhead': '海外から韓国への移住を検討する外国人を対象に、プロジェクト探索・規制助言・ビザ取得を順次実施します。',
+    'biz.hero.cta': '事業移民の事前相談\nを申し込む',
+    'biz.badge.description': 'ローヨン法律事務所出入国移民支援センターは、韓国に移住する外国人向けに事業移民法務サービスを提供します。',
+    'biz.step1.title': '事前相談',
+    'biz.step1.body': 'スレッドを通じて国籍、資金調達方法、目標移住時期、家族構成を確認し、韓国の事業移民経路の概要をご案内します。',
+    'biz.step2.title': '本相談',
+    'biz.step2.body': '移住経路の詳細助言、事業開始手続きと予算配分の構造化、主要リスクの整理、ビザ発給を含む出入国行政の案内を提供します。',
+    'biz.step3.title': '着手',
+    'biz.step3.body': 'プロジェクト設計、オペレーション設計、実査訪問のコーディネーション、最終点検会議を実施します。',
+    'biz.step4.title': '定着',
+    'biz.step4.body': '契約締結支援、外国人投資手続き、行政登録の監督、ビザ取得、同伴家族ビザ発給。',
+    'biz.step5.title': '継続支援',
+    'biz.step5.body': '住居賃貸借レビュー、フランチャイズ紛争調停、雇用契約助言、在留期間延長、永住権移行助言を別途契約で提供します。',
+    'biz.news.heading': 'ニュースとインサイト',
+    'biz.dashboard.heading': '私のプロジェクト進捗',
+    'biz.dashboard.guest': 'ログインすると、プロジェクトの進捗、相談履歴、スレッドを確認できます。',
+    'biz.dashboard.progress.stage1': '事前相談',
+    'biz.dashboard.progress.stage2': '本相談',
+    'biz.dashboard.progress.stage3': '着手',
+    'biz.dashboard.progress.stage4': '定着',
+    'biz.dashboard.progress.stage5': '継続支援',
+    'biz.form.title': '事業移民の事前相談リクエスト',
+    'biz.form.nationality': '国籍',
+    'biz.form.residence_country': '現在の居住国',
+    'biz.form.visa_type': '関心のあるビザ種別',
+    'biz.form.family': '家族構成 (本人を除く)',
+    'biz.form.children_count': '子の人数',
+    'biz.form.timeline': '想定移住時期',
+    'biz.form.message': '自由記述',
+    'biz.form.contact_method': 'ご希望の連絡手段',
+    'biz.form.submit': '相談リクエストを送信',
+    'biz.form.auto_reply': '相談リクエストを受け付けました。担当者がスレッドで返信いたします。',
+    'biz.banner.title': 'プロフィールが必要です',
+    'biz.banner.description': 'スムーズな相談のため、基本情報を入力してください。',
+    'biz.banner.cta': 'プロフィールを入力',
+    'biz.welcome.greeting': '事業移民の事前相談をご依頼いただきありがとうございます。',
+    'biz.welcome.step1': 'まずプロフィール情報をご入力いただければ、担当者がお客様に合った経路をご案内いたします。',
+    'biz.welcome.step2': '担当者が本相談の日程をこのスレッドでご提案いたします。',
+    'biz.welcome.step3': '追加書類が必要な場合、アップロードのご依頼を差し上げます。',
+    'biz.welcome.closing': 'ご質問がございましたら、このスレッドにお気軽にご投稿ください。',
+    'biz.error.thread_creation': 'スレッドの作成に失敗しました。再度お試しください。問題が続く場合はサポートまでご連絡ください。',
+    'biz.error.thread_creation_after_payment': '決済は正常に承認されました。担当者が手動でスレッドを開設いたします。ご不便をおかけして申し訳ございません。',
+    'biz.form.last_name_en': '姓 (英字)',
+    'biz.form.first_name_en': '名 (英字)',
+    'biz.form.full_name_native': '氏名 (現地表記)',
+    'biz.form.passport_number': 'パスポート番号',
+    'biz.form.passport_expiry': 'パスポート有効期限',
+    'biz.form.birth_date': '生年月日',
+    'biz.form.gender': '性別',
+    'biz.form.home_address': '本国住所',
+    'biz.form.home_phone': '本国連絡先',
+    'biz.form.email': 'メールアドレス',
+    'biz.form.native_language': '母国語',
+    'biz.form.preferred_contact_method': 'ご希望の連絡手段',
+    'biz.form.preferred_industry': '希望業種',
+    'biz.form.preferred_location': '希望地域',
+    'biz.form.funding_source': '資金調達方法',
+    'biz.form.education_background': '学歴',
+    'biz.form.work_experience': '職歴',
+    'biz.form.korea_visit_history': '韓国訪問履歴',
+    'biz.form.korean_language_proficiency': '韓国語レベル',
+    'biz.form.criminal_record': '犯罪歴の有無',
+    'common.retry': '再試行',
+    'admin.nav.system_errors': 'システムエラー',
     // === biz.* (사업이민 섹션 14) ===
-    // [TRANSLATION_PENDING: biz.request.hero.headline, ja, cloned from en at 2026-04-20]
-    'biz.request.hero.headline': 'Integrated legal services for launching a business and emigrating to Korea',
-    // [TRANSLATION_PENDING: biz.request.hero.subhead, ja, cloned from en at 2026-04-20]
-    'biz.request.hero.subhead': 'A dedicated consultation path for immigration clients considering business relocation to Korea.',
-    'biz.request.loginGate.title': 'Sign in required',
-    'biz.request.loginGate.desc': 'Business Immigration consultations are conducted through your dedicated thread, so a Google sign-in is required before you can view the details and submit your request.',
-    'biz.request.loginGate.cta': 'Continue with Google',
-    'biz.request.loginGate.note': 'By continuing you agree to our Terms of Service and Privacy Policy.',
-    // [TRANSLATION_PENDING: biz.request.overview.para1, ja, cloned from en at 2026-04-20]
-    'biz.request.overview.para1': 'Law Firm Lawyeon Immigration Support Center provides integrated legal services for foreigners residing abroad who wish to start a business and settle in Korea.',
-    // [TRANSLATION_PENDING: biz.request.overview.para2, ja, cloned from en at 2026-04-20]
-    'biz.request.overview.para2': 'Project exploration, regulatory advice, visa acquisition, settlement in Korea, and accompanying family support are all handled within a single legal retainer.',
-    // [TRANSLATION_PENDING: biz.request.overview.para3, ja, cloned from en at 2026-04-20]
-    'biz.request.overview.para3': 'The pre-consultation is free of charge and can be requested on this page.',
-    // [TRANSLATION_PENDING: biz.request.steps.heading, ja, cloned from en at 2026-04-20]
-    'biz.request.steps.heading': 'Five-Stage Project Structure',
-    // [TRANSLATION_PENDING: biz.request.prepare.heading, ja, cloned from en at 2026-04-20]
-    'biz.request.prepare.heading': 'What to Prepare',
-    // [TRANSLATION_PENDING: biz.request.prepare.intro, ja, cloned from en at 2026-04-20]
-    'biz.request.prepare.intro': 'Organizing the following points before submitting will help the pre-consultation proceed smoothly.',
-    // [TRANSLATION_PENDING: biz.request.prepare.item1, ja, cloned from en at 2026-04-20]
-    'biz.request.prepare.item1': 'Target relocation timeline (short-term / mid-term / undecided)',
-    // [TRANSLATION_PENDING: biz.request.prepare.item2, ja, cloned from en at 2026-04-20]
-    'biz.request.prepare.item2': 'Accompanying family plan (spouse / children / parents)',
-    // [TRANSLATION_PENDING: biz.request.prepare.item3, ja, cloned from en at 2026-04-20]
-    'biz.request.prepare.item3': 'Business or employment history in your home country',
-    // [TRANSLATION_PENDING: biz.request.prepare.item4, ja, cloned from en at 2026-04-20]
-    'biz.request.prepare.item4': 'Previous residence or visit history in Korea',
-    // [TRANSLATION_PENDING: biz.request.prepare.item5, ja, cloned from en at 2026-04-20]
-    'biz.request.prepare.item5': 'Korean language proficiency',
-    // [TRANSLATION_PENDING: biz.request.prepare.disclaimer, ja, cloned from en at 2026-04-20]
-    'biz.request.prepare.disclaimer': 'Details on funding scale and investment structure will be reviewed in the detailed consultation stage.',
-    // [TRANSLATION_PENDING: home.urgent.headline, ja, cloned from en at 2026-04-20]
-    'home.urgent.headline': 'Facing an urgent legal matter?',
-    // [TRANSLATION_PENDING: home.urgent.subhead, ja, cloned from en at 2026-04-20]
-    'home.urgent.subhead': 'We handle time-sensitive immigration and criminal cases such as deportation orders, visa denials, and related proceedings.',
-    // [TRANSLATION_PENDING: home.urgent.cta, ja, cloned from en at 2026-04-20]
-    'home.urgent.cta': 'Request Urgent Consultation',
+    'biz.request.hero.headline': '韓国で事業を開始し移住するための統合法務サービス',
+    'biz.request.hero.subhead': '韓国への事業移住を検討される移民のお客様のための専用相談経路です。',
+    'biz.request.loginGate.title': 'ログインが必要です',
+    'biz.request.loginGate.desc': '事業移民相談はお客様専用のスレッドで進行するため、Google アカウントでのログインが必要です。ログイン後、詳細をご確認のうえ相談をリクエストできます。',
+    'biz.request.loginGate.cta': 'Google で続ける',
+    'biz.request.loginGate.note': '続行することで、利用規約および個人情報保護方針に同意したものとみなされます。',
+    'biz.request.overview.para1': 'ローヨン法律事務所出入国移民支援センターは、海外にお住まいの外国人が韓国で事業を始め定着するまでに必要な法務サービスを統合的に提供しております。',
+    'biz.request.overview.para2': 'プロジェクト探索から規制助言、ビザ取得、韓国での定着、同伴家族支援まで、すべての段階が一つの法務契約のもとで進行します。',
+    'biz.request.overview.para3': '事前相談は無料で、本ページからお申し込みいただけます。',
+    'biz.request.steps.heading': 'プロジェクト 5 段階',
+    'biz.request.prepare.heading': 'お客様にご準備いただく事項',
+    'biz.request.prepare.intro': '申請前に以下の事項を整理しておくと、事前相談がスムーズに進みます。',
+    'biz.request.prepare.item1': '韓国移住の検討時期 (短期 / 中期 / 未定)',
+    'biz.request.prepare.item2': '家族同伴の計画 (配偶者・子・両親)',
+    'biz.request.prepare.item3': '本国の事業または職務経歴',
+    'biz.request.prepare.item4': '韓国での居住・訪問経験',
+    'biz.request.prepare.item5': '韓国語のレベル',
+    'biz.request.prepare.disclaimer': '資金規模や投資構造の詳細は本相談の段階で検討いたします。',
+    'home.urgent.headline': '緊急の法的事案にお困りですか?',
+    'home.urgent.subhead': '退去命令、ビザ拒否、関連訴訟など、時間的制約のある出入国・刑事事件に対応します。',
+    'home.urgent.cta': '緊急相談をリクエスト',
     // === biz.* (사업이민 섹션 14) ===
-    // [TRANSLATION_PENDING: biz.card.summary1, ja, cloned from en at 2026-04-20]
-    'biz.card.summary1': 'Immigration Project Design',
-    // [TRANSLATION_PENDING: biz.card.summary2, ja, cloned from en at 2026-04-20]
-    'biz.card.summary2': 'Contracts & Regulatory Management',
-    // [TRANSLATION_PENDING: biz.card.summary3, ja, cloned from en at 2026-04-20]
-    'biz.card.summary3': 'Settlement & Ongoing Support',
+    'biz.card.summary1': '移民プロジェクト設計',
+    'biz.card.summary2': '契約・規制管理',
+    'biz.card.summary3': '定着・継続支援',
     // === biz.* (사업이민 섹션 14) ===
-    // [TRANSLATION_PENDING: biz.request.threadPreview.title, ja, cloned from en at 2026-04-20]
-    'biz.request.threadPreview.title': 'Business Immigration Thread',
-    // [TRANSLATION_PENDING: biz.request.threadPreview.subtitle, ja, cloned from en at 2026-04-20]
-    'biz.request.threadPreview.subtitle': 'Real-time communication with our specialist',
-    // [TRANSLATION_PENDING: biz.request.threadPreview.caption, ja, cloned from en at 2026-04-20]
-    'biz.request.threadPreview.caption': 'Consultation progress, document requests, and stage transitions are handled within the thread.',
-    // [TRANSLATION_PENDING: biz.sidebar.heading, ja, cloned from en at 2026-04-20]
-    'biz.sidebar.heading': 'Project Progress',
+    'biz.request.threadPreview.title': '事業移民スレッド',
+    'biz.request.threadPreview.subtitle': '担当スペシャリストとリアルタイムでやり取り',
+    'biz.request.threadPreview.caption': '相談の進捗、書類のリクエスト、段階の移行はスレッド内で扱われます。',
+    'biz.sidebar.heading': 'プロジェクト進捗',
     // === biz.* (사업이민 섹션 14) ===
-    // [TRANSLATION_PENDING: biz.thread.title, ja, cloned from en at 2026-04-20]
-    'biz.thread.title': 'Business Immigration Consultation',
+    'biz.thread.title': '事業移民相談',
 
     // === consult.consent.* (사업이민 신청 약관 동의) ===
     'consult.consent.text': '利用規約および個人情報保護方針に同意します。相談目的での個人情報の収集・利用に同意します。',

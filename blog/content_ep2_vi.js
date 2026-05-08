@@ -21,6 +21,7 @@ window.POST = {
     zh: "外国人在韩国开加盟店-行业品牌指南-2026",
     vi: "kinh-doanh-nhuong-quyen-tai-han-quoc-cho-nguoi-nuoc-ngoai-2026",
     th: "ธุรกิจแฟรนไชส์ในเกาหลีสำหรับผู้ประกอบการต่างชาติ-2026",
+    ja: "韓国フランチャイズビジネス-外国人起業家向け業種ブランドガイド-2026",
   },
   disclaimer: "Tập 2 trình bày cách doanh nhân hộ kinh doanh cá thể nước ngoài quyết định nên kinh doanh gì tại Hàn Quốc. Tập 1 đã giới thiệu hệ thống visa D-9-4 và D-9-5; toàn bộ quy trình di trú và khởi nghiệp được trình bày ở Tập 3, và cuộc sống sau khi định cư ở Tập 4.",
   metaDescription: "Lựa chọn đúng loại hình kinh doanh là quyết định khó nhất với doanh nhân nước ngoài tại Hàn Quốc. Hướng dẫn 2026 này giải thích vì sao kinh nghiệm lưu trú trước đây quyết định lựa chọn, vì sao kinh doanh ít tương tác (cửa hàng tiện lợi, cửa hàng không người) thường phù hợp với người mới đến hơn F&B, và Tài liệu công khai thông tin nhượng quyền theo luật bảo vệ bạn ra sao khi chọn thương hiệu.",

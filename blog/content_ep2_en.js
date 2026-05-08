@@ -23,7 +23,7 @@ window.POST = {
     zh: "外国人在韩国开加盟店-行业品牌指南-2026",
     vi: "kinh-doanh-nhuong-quyen-tai-han-quoc-cho-nguoi-nuoc-ngoai-2026",
     th: "ธุรกิจแฟรนไชส์ในเกาหลีสำหรับผู้ประกอบการต่างชาติ-2026",
-    // ja added in a subsequent PR alongside its translation
+    ja: "韓国フランチャイズビジネス-外国人起業家向け業種ブランドガイド-2026",
   },
   disclaimer: "This second installment covers how foreign sole-proprietor entrepreneurs decide what business to start in Korea. Episode 1 introduced the D-9-4 and D-9-5 visa system; the full relocation and launch process is covered in Episode 3, and life after settlement in Episode 4.",
   metaDescription: "Choosing the right business is the hardest decision for foreign entrepreneurs in Korea. This 2026 guide explains why prior residency drives the choice, why low-interaction businesses (convenience stores, unmanned shops) often work better than F&B for newcomers, and how the legally mandated Franchise Disclosure Document protects you when selecting a brand.",

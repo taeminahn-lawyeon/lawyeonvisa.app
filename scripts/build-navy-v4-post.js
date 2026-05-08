@@ -158,8 +158,32 @@ const UI = {
     closingRelated: 'ที่เกี่ยวข้อง · ชุดการย้ายถิ่นเพื่อธุรกิจ',
     closingRead: '[อ่าน →]',
   },
-  // ja is populated in a subsequent PR alongside its content translation.
-  // Until then, ja posts fall back to English UI strings via `uiFor()` below.
+  ja: {
+    topbarCta: '相談',
+    topbarDocId: '文書番号',
+    topbarStatus: 'ステータス',
+    topbarStatusBadge: '公開済',
+    headerSeries: 'シリーズ',
+    headerCategory: 'カテゴリ',
+    publishedLabel: '公開日',
+    readSuffix: ' 分',
+    disclaimerLabel: '[ 免責事項 ]',
+    railContents: '目次',
+    railSeries: 'シリーズ',
+    railAction: 'アクション',
+    railCta: '[ 無料事前相談 → ]',
+    midCtaTitle: '無料事前相談',
+    midCtaText: '相談スレッドからお客様のプロフィールをお伝えください。<br>実現可能な経路と予算規模を整理してご案内します。',
+    midCtaBtn: '[ 申し込む → ]',
+    midCtaActionLabel: 'アクション · 01',
+    tocCtaPrefix: 'アクション ·',
+    closingEnd: '文書終了',
+    closingNext: '次のアクション',
+    closingAction1: '無料事前相談',
+    closingAction2: '事業移民ページ',
+    closingRelated: '関連 · 事業移民シリーズ',
+    closingRead: '[読む →]',
+  },
 };
 
 function uiFor(lang) {
@@ -376,6 +400,12 @@ const SLUG_BY_EP = {
     '02': 'ธุรกิจแฟรนไชส์ในเกาหลีสำหรับผู้ประกอบการต่างชาติ-2026',
     '03': 'ขั้นตอนการเปิดร้านในเกาหลีสำหรับชาวต่างชาติ-2026',
     '04': 'สิทธิการพำนักถาวรในเกาหลีสำหรับผู้ประกอบการต่างชาติ-2026',
+  },
+  ja: {
+    '01': '韓国で起業する方法-外国人個人事業主向けD-9-4-D-9-5ビザガイド-2026',
+    '02': '韓国フランチャイズビジネス-外国人起業家向け業種ブランドガイド-2026',
+    '03': '韓国で店舗を開く方法-外国人向け5段階プロセス-2026',
+    '04': '韓国永住権-外国人事業主向けF-2-99からF-5ガイド-2026',
   },
 };
 

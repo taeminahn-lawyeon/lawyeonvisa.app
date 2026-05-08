@@ -21,6 +21,7 @@ window.POST = {
     zh: "外国人在韩国创业-D-9-4-D-9-5签证完全指南-2026",
     vi: "cach-bat-dau-kinh-doanh-tai-han-quoc-cho-nguoi-nuoc-ngoai-2026",
     th: "วิธีเริ่มต้นธุรกิจในเกาหลีสำหรับชาวต่างชาติ-2026",
+    ja: "韓国で起業する方法-外国人個人事業主向けD-9-4-D-9-5ビザガイド-2026",
   },
   disclaimer: "Đây là phần đầu tiên của loạt bài cho người nước ngoài đang xem xét Định cư Kinh doanh tại Hàn Quốc. Logic lựa chọn ngành và nhượng quyền chi tiết được trình bày ở Tập 2, toàn bộ quy trình di trú và khởi nghiệp ở Tập 3, và cuộc sống sau khi định cư ở Tập 4.",
   metaDescription: "Hướng dẫn toàn diện 2026 về Định cư Kinh doanh tại Hàn Quốc cho hộ kinh doanh cá thể nước ngoài. Vì sao D-9-4 và D-9-5 — không phải D-8 — phù hợp với chủ doanh nghiệp nhỏ, cũng như cách thức đầu tư, chuyển đổi tư cách lưu trú, gia hạn lưu trú và visa thân nhân hoạt động trong thực tế.",
