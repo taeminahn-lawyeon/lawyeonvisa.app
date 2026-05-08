@@ -3856,8 +3856,7 @@ const translations = {
     // [TRANSLATION_PENDING: biz.hero.subhead, zh, cloned from en at 2026-04-20]
     'biz.hero.subhead': 'For foreigners considering relocation to Korea from abroad, we sequentially perform project exploration, regulatory advice, and visa acquisition.',
     // [TRANSLATION_PENDING: biz.hero.cta, zh, cloned from en at 2026-04-20]
-    'biz.hero.cta': '申请商业移民
-预先咨询',
+    'biz.hero.cta': '申请商业移民\n预先咨询',
     // [TRANSLATION_PENDING: biz.badge.description, zh, cloned from en at 2026-04-20]
     'biz.badge.description': 'Law Firm Lawyeon Immigration Support Center provides business immigration legal services for foreigners relocating to Korea.',
     // [TRANSLATION_PENDING: biz.step1.title, zh, cloned from en at 2026-04-20]
@@ -5236,8 +5235,7 @@ const translations = {
     // [TRANSLATION_PENDING: biz.hero.subhead, vi, cloned from en at 2026-04-20]
     'biz.hero.subhead': 'For foreigners considering relocation to Korea from abroad, we sequentially perform project exploration, regulatory advice, and visa acquisition.',
     // [TRANSLATION_PENDING: biz.hero.cta, vi, cloned from en at 2026-04-20]
-    'biz.hero.cta': 'Đăng ký tư vấn sơ bộ
-Định cư Kinh doanh',
+    'biz.hero.cta': 'Đăng ký tư vấn sơ bộ\nĐịnh cư Kinh doanh',
     // [TRANSLATION_PENDING: biz.badge.description, vi, cloned from en at 2026-04-20]
     'biz.badge.description': 'Law Firm Lawyeon Immigration Support Center provides business immigration legal services for foreigners relocating to Korea.',
     // [TRANSLATION_PENDING: biz.step1.title, vi, cloned from en at 2026-04-20]
