@@ -20,6 +20,7 @@ window.POST = {
     en: "permanent-residency-korea-foreign-business-owner-2026",
     zh: "外国企业主韩国永久居留-F-2-99到F-5指南-2026",
     vi: "thuong-tru-tai-han-quoc-cho-chu-doanh-nghiep-nuoc-ngoai-2026",
+    th: "สิทธิการพำนักถาวรในเกาหลีสำหรับผู้ประกอบการต่างชาติ-2026",
   },
   disclaimer: "Tập 4, cũng là tập cuối, trong loạt Định cư Kinh doanh. Tập 1 đến 3 đã trình bày hệ thống visa D-9-4 và D-9-5, logic lựa chọn ngành và nhượng quyền, và quy trình di trú và khởi nghiệp thực tế. Tập này đề cập đến viễn cảnh dài hạn sau khi định cư tại Hàn Quốc.",
   metaDescription: "Sau khi visa D-9-4 hoặc D-9-5 được cấp, định cư mới bắt đầu — và đó là một khung thời gian dài. Gia hạn thời hạn lưu trú, chuyển đổi sang Lưu trú Dài hạn F-2-99, gia đình trên F-3, tuyển sinh đại học cho con, mua bất động sản, Đạo luật Bảo vệ Thuê Tòa nhà Thương mại, chăm sóc sức khỏe công cộng, và hỗ trợ doanh nghiệp nhỏ Hàn Quốc áp dụng cho hộ kinh doanh cá thể nước ngoài trên cùng điều khoản (2026).",

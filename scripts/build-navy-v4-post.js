@@ -132,9 +132,34 @@ const UI = {
     closingRelated: 'LIÊN QUAN · Chuỗi Định cư Kinh doanh',
     closingRead: '[Đọc →]',
   },
-  // th, ja are populated in subsequent PRs alongside their content
-  // translations. Until then, posts in those languages fall back to English
-  // UI strings via `uiFor()` below.
+  th: {
+    topbarCta: 'ปรึกษา',
+    topbarDocId: 'รหัสเอกสาร',
+    topbarStatus: 'สถานะ',
+    topbarStatusBadge: 'เผยแพร่แล้ว',
+    headerSeries: 'ชุด',
+    headerCategory: 'หมวดหมู่',
+    publishedLabel: 'เผยแพร่',
+    readSuffix: ' นาที',
+    disclaimerLabel: '[ ข้อจำกัดความรับผิด ]',
+    railContents: 'สารบัญ',
+    railSeries: 'ชุด',
+    railAction: 'การดำเนินการ',
+    railCta: '[ ปรึกษาเบื้องต้นฟรี → ]',
+    midCtaTitle: 'ปรึกษาเบื้องต้นฟรี',
+    midCtaText: 'แบ่งปันข้อมูลของท่านผ่านเธรดให้คำปรึกษา<br>เราจะร่างเส้นทางที่เป็นไปได้และช่วงงบประมาณให้ท่าน',
+    midCtaBtn: '[ สมัคร → ]',
+    midCtaActionLabel: 'การดำเนินการ · 01',
+    tocCtaPrefix: 'การดำเนินการ ·',
+    closingEnd: 'สิ้นสุดเอกสาร',
+    closingNext: 'ขั้นตอนถัดไป',
+    closingAction1: 'ปรึกษาเบื้องต้นฟรี',
+    closingAction2: 'หน้าการย้ายถิ่นเพื่อธุรกิจ',
+    closingRelated: 'ที่เกี่ยวข้อง · ชุดการย้ายถิ่นเพื่อธุรกิจ',
+    closingRead: '[อ่าน →]',
+  },
+  // ja is populated in a subsequent PR alongside its content translation.
+  // Until then, ja posts fall back to English UI strings via `uiFor()` below.
 };
 
 function uiFor(lang) {
@@ -345,6 +370,12 @@ const SLUG_BY_EP = {
     '02': 'kinh-doanh-nhuong-quyen-tai-han-quoc-cho-nguoi-nuoc-ngoai-2026',
     '03': 'quy-trinh-mo-cua-hang-tai-han-quoc-cho-nguoi-nuoc-ngoai-2026',
     '04': 'thuong-tru-tai-han-quoc-cho-chu-doanh-nghiep-nuoc-ngoai-2026',
+  },
+  th: {
+    '01': 'วิธีเริ่มต้นธุรกิจในเกาหลีสำหรับชาวต่างชาติ-2026',
+    '02': 'ธุรกิจแฟรนไชส์ในเกาหลีสำหรับผู้ประกอบการต่างชาติ-2026',
+    '03': 'ขั้นตอนการเปิดร้านในเกาหลีสำหรับชาวต่างชาติ-2026',
+    '04': 'สิทธิการพำนักถาวรในเกาหลีสำหรับผู้ประกอบการต่างชาติ-2026',
   },
 };
 
