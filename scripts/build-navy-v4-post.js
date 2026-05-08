@@ -145,9 +145,25 @@ function uiFor(lang) {
 // destination page (business-immigration-request.html) auto-switches its
 // language to match the blog the user came from. The ?lang= handler is in
 // js/i18n.js init().
+//
+// Posts can override the CTA target by setting `post.cta = { href: '/...' }`
+// — e.g. D-10-1 Job Seeker visa article links to the D-10 service apply page.
 function ctaHref(post) {
+  if (post && post.cta && post.cta.href) {
+    return post.cta.href;
+  }
   const lang = post.__lang || post.lang || 'en';
   return `/business-immigration-request.html?lang=${encodeURIComponent(lang)}`;
+}
+
+// Returns the UI label for a given key, allowing per-post override via
+// post.cta = { topbarCta, railCta, midCtaTitle, midCtaText, midCtaBtn,
+//   closingAction1, closingAction2, closingRelated }.
+// Falls back to UI[lang] dictionary value if no override is set.
+function ctaLabel(post, key) {
+  if (post && post.cta && post.cta[key]) return post.cta[key];
+  const ui = uiFor(post.__lang || post.lang || 'en');
+  return ui[key];
 }
 
 function loadPost(contentFile) {
@@ -342,16 +358,21 @@ function slugFromTag(tag, lang) {
 function renderClosing(post) {
   const lang = post.__lang;
   const ui = uiFor(lang);
+  const epLabel = post.episodeNo ? ` · EP${post.episodeNo}` : '';
   const labels = {
-    end: `${ui.closingEnd} · EP${post.episodeNo || '01'}`,
+    end: `${ui.closingEnd}${epLabel}`,
     next: ui.closingNext,
-    action1: ui.closingAction1,
-    action2: ui.closingAction2,
+    action1: ctaLabel(post, 'closingAction1'),
+    action2: ctaLabel(post, 'closingAction2'),
     related: ui.closingRelated,
     read: ui.closingRead,
   };
+  // Per-post action2 link override (default = home "/")
+  const action2Href = (post && post.cta && post.cta.action2Href) || '/';
   const relatedRows = (post.related || []).map(r => {
-    const slug = slugFromTag(r.tag, lang);
+    // r.url, if provided, takes priority (used by D-10 / non-series posts that
+    // don't fit SLUG_BY_EP's biz-immigration-only mapping).
+    const slug = r.url || slugFromTag(r.tag, lang);
     const hrefAttr = slug ? ` onclick="location.href='/blog/${slug}.html'"` : '';
     return `<tr${hrefAttr}><td class="C-related-tag">${esc(r.tag)}</td><td>${esc(r.title)}</td><td>${labels.read}</td></tr>`;
   }).join('');
@@ -363,7 +384,7 @@ function renderClosing(post) {
     <div class="C-closing-cta-label">${labels.next}</div>
     <div class="C-closing-cta-list">
       <a href="${ctaHref(post)}"><span class="C-mono">→</span> ${labels.action1}</a>
-      <a href="/"><span class="C-mono">→</span> ${labels.action2}</a>
+      <a href="${action2Href}"><span class="C-mono">→</span> ${labels.action2}</a>
     </div>
   </div>
   ${relatedRows ? `<div class="C-related">
@@ -397,11 +418,27 @@ function buildHtml(post, slug) {
   const url = `${SITE}/blog/${slug}.html`;
   const totalSections = post.sections.length;
   const sections = post.sections.map((s, i) => renderSection(s, i, totalSections, lang)).join('\n');
-  const titleTag = `${esc(post.title)} | ${isEn ? 'Law Firm Lawyeon' : '법무법인 로연'}`;
+  // post.titleTag fully overrides the default `${title} | ${firmName}` for cases
+  // where exact SEO continuity matters (e.g. D-10-1 article preserving its
+  // original full <title> verbatim across the design migration).
+  const titleTag = post.titleTag ? esc(post.titleTag) :
+    `${esc(post.title)} | ${isEn ? 'Law Firm Lawyeon' : '법무법인 로연'}`;
   // Prefer explicit metaDescription; fall back to disclaimer for legacy posts.
-  // ogTitle can be a shorter, click-optimized variant of the long SEO title.
-  const description = esc(post.metaDescription || post.disclaimer || '').slice(0, 280);
-  const ogTitleTag = `${esc(post.ogTitle || post.title)} | ${isEn ? 'Law Firm Lawyeon' : '법무법인 로연'}`;
+  // metaDescriptionExact bypasses truncation/escaping for full preservation.
+  const description = post.metaDescriptionExact ? esc(post.metaDescriptionExact) :
+    esc(post.metaDescription || post.disclaimer || '').slice(0, 280);
+  // ogTitleTag = full <meta og:title>. ogTitle (legacy) appends firm name.
+  const ogTitleTag = post.ogTitleTag ? esc(post.ogTitleTag) :
+    `${esc(post.ogTitle || post.title)} | ${isEn ? 'Law Firm Lawyeon' : '법무법인 로연'}`;
+  // Schema.org dates: prefer ISO timestamps if explicitly provided (preserves
+  // original article:published_time/article:modified_time for SEO continuity).
+  const datePublished = esc(post.publishedAtISO || post.publishedAt || '');
+  const dateModified = esc(post.updatedAtISO || post.updatedAt || post.publishedAtISO || post.publishedAt || '');
+  const ogImage = post.ogImage || `${SITE}/images/og-default.png`;
+  const articlePublishedTime = post.publishedAtISO || '';
+  const articleModifiedTime = post.updatedAtISO || '';
+  const metaKeywords = post.metaKeywords || '';
+  const ogSiteName = post.ogSiteName || (lang === 'ko' ? '법무법인 로연 출입국이민지원센터' : 'Law Firm Lawyeon Immigration Center');
   // hreflang alternates: every other-language version of the same article,
   // plus self as canonical. Helps Google show the right language to each user.
   const altLinks = (post.translations || {});
@@ -421,6 +458,7 @@ function buildHtml(post, slug) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${titleTag}</title>
 <meta name="description" content="${description}">
+${metaKeywords ? `<meta name="keywords" content="${esc(metaKeywords)}">` : ''}
 <meta name="author" content="${lang === 'ko' ? '법무법인 로연 출입국이민지원센터' : 'Law Firm Lawyeon Immigration Center'}">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="${url}">
@@ -430,10 +468,19 @@ ${xDefault}
 <meta property="og:title" content="${ogTitleTag}">
 <meta property="og:description" content="${description}">
 <meta property="og:url" content="${url}">
+<meta property="og:site_name" content="${esc(ogSiteName)}">
 <meta property="og:locale" content="${localeMap.og}">
-<meta property="og:image" content="${SITE}/images/og-default.png">
+<meta property="og:image" content="${ogImage}">
+<meta property="article:author" content="${lang === 'ko' ? '법무법인 로연' : 'Law Firm Lawyeon'}">
+<meta property="article:publisher" content="${SITE}">
+${articlePublishedTime ? `<meta property="article:published_time" content="${articlePublishedTime}">` : ''}
+${articleModifiedTime ? `<meta property="article:modified_time" content="${articleModifiedTime}">` : ''}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${ogTitleTag}">
+<meta name="twitter:description" content="${description}">
+<meta name="twitter:image" content="${ogImage}">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Article","headline":"${esc(post.title)}","description":"${description}","inLanguage":"${localeMap.html}","author":{"@type":"Organization","name":"${lang === 'ko' ? '법무법인 로연 출입국이민지원센터' : 'Law Firm Lawyeon Immigration Center'}","url":"${SITE}"},"publisher":{"@type":"Organization","name":"${lang === 'ko' ? '법무법인 로연' : 'Law Firm Lawyeon'}","logo":{"@type":"ImageObject","url":"${SITE}/images/logo.png"}},"datePublished":"${esc(post.publishedAt || '')}","dateModified":"${esc(post.updatedAt || post.publishedAt || '')}","mainEntityOfPage":{"@type":"WebPage","@id":"${url}"}}
+{"@context":"https://schema.org","@type":"Article","headline":"${esc(post.title)}","description":"${description}","image":"${ogImage}","inLanguage":"${localeMap.html}","author":{"@type":"Organization","name":"${lang === 'ko' ? '법무법인 로연 출입국이민지원센터' : 'Law Firm Lawyeon Immigration Center'}","url":"${SITE}"},"publisher":{"@type":"Organization","name":"${lang === 'ko' ? '법무법인 로연' : 'Law Firm Lawyeon'}","logo":{"@type":"ImageObject","url":"${SITE}/images/logo.png"}},"datePublished":"${datePublished}","dateModified":"${dateModified}","mainEntityOfPage":{"@type":"WebPage","@id":"${url}"}}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

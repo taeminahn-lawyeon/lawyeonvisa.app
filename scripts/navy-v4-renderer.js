@@ -76,6 +76,13 @@ function renderBlock(b) {
     const bar = '═'.repeat(80);
     return `<div class="C-midcta"><div class="C-midcta-bar">${bar}</div><div class="C-midcta-grid"><div class="C-midcta-label">ACTION · 01</div><div class="C-midcta-body"><div class="C-midcta-title">${title}</div><div class="C-midcta-text">${text}</div></div><a class="C-midcta-btn" href="/consultation-request.html">${cta}</a></div><div class="C-midcta-bar">${bar}</div></div>`;
   }
+  if (b.type === 'list' || b.type === 'ul') {
+    const items = (b.items || []).map(it => `<li>${typeof it === 'string' ? it : (it.text || it.html || '')}</li>`).join('');
+    return `<ul class="C-ul">${items}</ul>`;
+  }
+  if (b.type === 'h3') {
+    return `<h3 class="C-h3">${esc(b.text || '')}</h3>`;
+  }
   return '';
 }
 
@@ -134,6 +141,9 @@ body{font-family:"Noto Sans KR",-apple-system,sans-serif;background:#ededea;colo
 .designC .C-hr{font-family:"IBM Plex Mono",monospace;color:var(--c-ink-3);font-size:10px;letter-spacing:0;overflow:hidden;white-space:nowrap;line-height:1;}
 .designC .C-p{margin:0 0 18px;font-size:15px;line-height:1.8;color:var(--c-ink-2);text-wrap:pretty;}
 .designC .C-p b{font-weight:700;color:var(--c-ink);background:var(--c-yellow);padding:0 4px;}
+.designC .C-h3{font-family:"Noto Sans KR",sans-serif;font-weight:700;font-size:18px;margin:24px 0 8px;letter-spacing:-0.01em;line-height:1.4;color:var(--c-ink);}
+.designC .C-ul{margin:12px 0 16px;padding-left:20px;line-height:1.7;}
+.designC .C-ul li{margin:4px 0;}
 .designC .C-callout{padding:14px 18px;border:2px solid var(--c-accent);background:#fff;margin:20px 0;font-size:14px;line-height:1.7;}
 .designC .C-callout-head{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:700;letter-spacing:0.12em;color:var(--c-accent);margin-bottom:6px;}
 .designC .C-callout b{font-weight:700;color:var(--c-ink);background:var(--c-yellow);padding:0 4px;}
