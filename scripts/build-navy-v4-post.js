@@ -106,7 +106,33 @@ const UI = {
     closingRelated: '相关 · 商业移民系列',
     closingRead: '[阅读 →]',
   },
-  // vi, th, ja are populated in subsequent PRs alongside their content
+  vi: {
+    topbarCta: 'Tư vấn',
+    topbarDocId: 'MÃ-TÀI-LIỆU',
+    topbarStatus: 'TRẠNG THÁI',
+    topbarStatusBadge: 'ĐÃ XUẤT BẢN',
+    headerSeries: 'CHUỖI',
+    headerCategory: 'DANH MỤC',
+    publishedLabel: 'XUẤT BẢN',
+    readSuffix: ' PHÚT',
+    disclaimerLabel: '[ TUYÊN BỐ MIỄN TRỪ ]',
+    railContents: 'MỤC LỤC',
+    railSeries: 'CHUỖI',
+    railAction: 'HÀNH ĐỘNG',
+    railCta: '[ Tư vấn sơ bộ miễn phí → ]',
+    midCtaTitle: 'Tư vấn sơ bộ miễn phí',
+    midCtaText: 'Hãy chia sẻ hồ sơ của bạn qua luồng tư vấn,<br>chúng tôi sẽ phác thảo các lộ trình khả thi và phạm vi ngân sách.',
+    midCtaBtn: '[ Đăng ký → ]',
+    midCtaActionLabel: 'HÀNH ĐỘNG · 01',
+    tocCtaPrefix: 'HÀNH ĐỘNG ·',
+    closingEnd: 'KẾT THÚC TÀI LIỆU',
+    closingNext: 'BƯỚC TIẾP THEO',
+    closingAction1: 'Tư vấn sơ bộ miễn phí',
+    closingAction2: 'Trang Định cư Kinh doanh',
+    closingRelated: 'LIÊN QUAN · Chuỗi Định cư Kinh doanh',
+    closingRead: '[Đọc →]',
+  },
+  // th, ja are populated in subsequent PRs alongside their content
   // translations. Until then, posts in those languages fall back to English
   // UI strings via `uiFor()` below.
 };
@@ -297,6 +323,12 @@ const SLUG_BY_EP = {
     '02': '外国人在韩国开加盟店-行业品牌指南-2026',
     '03': '外国人在韩国开店流程-五阶段完整指南-2026',
     '04': '外国企业主韩国永久居留-F-2-99到F-5指南-2026',
+  },
+  vi: {
+    '01': 'cach-bat-dau-kinh-doanh-tai-han-quoc-cho-nguoi-nuoc-ngoai-2026',
+    '02': 'kinh-doanh-nhuong-quyen-tai-han-quoc-cho-nguoi-nuoc-ngoai-2026',
+    '03': 'quy-trinh-mo-cua-hang-tai-han-quoc-cho-nguoi-nuoc-ngoai-2026',
+    '04': 'thuong-tru-tai-han-quoc-cho-chu-doanh-nghiep-nuoc-ngoai-2026',
   },
 };
 

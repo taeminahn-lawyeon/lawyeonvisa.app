@@ -21,6 +21,7 @@ window.POST = {
   translations: {
     en: "korea-franchise-business-foreign-entrepreneur-2026",
     zh: "外国人在韩国开加盟店-行业品牌指南-2026",
+    vi: "kinh-doanh-nhuong-quyen-tai-han-quoc-cho-nguoi-nuoc-ngoai-2026",
     // vi, th, ja added in subsequent PRs alongside their translations
   },
   disclaimer: "This second installment covers how foreign sole-proprietor entrepreneurs decide what business to start in Korea. Episode 1 introduced the D-9-4 and D-9-5 visa system; the full relocation and launch process is covered in Episode 3, and life after settlement in Episode 4.",

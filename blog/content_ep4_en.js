@@ -21,6 +21,7 @@ window.POST = {
   translations: {
     en: "permanent-residency-korea-foreign-business-owner-2026",
     zh: "外国企业主韩国永久居留-F-2-99到F-5指南-2026",
+    vi: "thuong-tru-tai-han-quoc-cho-chu-doanh-nghiep-nuoc-ngoai-2026",
     // vi, th, ja added in subsequent PRs alongside their translations
   },
   disclaimer: "This is the fourth and final installment of our Business Immigration series. Episodes 1 through 3 covered the D-9-4 and D-9-5 visa system, the industry and franchise selection logic, and the actual relocation and launch process. This episode addresses the long-term perspective after settling in Korea.",

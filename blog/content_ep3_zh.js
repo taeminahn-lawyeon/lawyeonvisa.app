@@ -19,6 +19,7 @@ window.POST = {
   translations: {
     en: "how-to-open-a-store-in-korea-as-a-foreigner-2026",
     zh: "外国人在韩国开店流程-五阶段完整指南-2026",
+    vi: "quy-trinh-mo-cua-hang-tai-han-quoc-cho-nguoi-nuoc-ngoai-2026",
   },
   disclaimer: "本系列第 3 集。第 1 集介绍了 D-9-4 与 D-9-5 签证体系，第 2 集介绍了行业选择与加盟。本集逐阶段介绍实际的移居与开业流程。定居后的事项在第 4 集中讨论。本文中的案例为咨询中常见条件的假设组合，并非真实案例。",
   metaDescription: "外国人在韩国开店的实际五阶段流程 —— 预先咨询、正式咨询、启动、定居、后续支持。包含行业选择案例、从外汇汇款到签证取得的逐步程序、常见问题以及需要避免的错误（2026）。",
