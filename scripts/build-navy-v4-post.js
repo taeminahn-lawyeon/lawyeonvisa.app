@@ -228,11 +228,13 @@ function renderTopbar(post) {
   const epLabel = post.episodeNo ? `EP${post.episodeNo}` : '';
   const rev = post.rev ? ` · REV.${post.rev}` : '';
   const ui = uiFor(post.__lang);
+  const lang = post.__lang || post.lang || 'en';
+  const homeHref = `/?lang=${encodeURIComponent(lang)}`;
   return `<header class="C-topbar">
-  <div class="C-topbar-left">
+  <a class="C-topbar-home" href="${homeHref}">
     <span class="C-mono">LAWYEON /</span>
     <span class="C-topbar-title">Law Firm Lawyeon</span>
-  </div>
+  </a>
   <div class="C-topbar-right">
     <span class="C-mono">${ui.topbarDocId}</span><span>${esc(epLabel)}${esc(rev)}</span>
     <span class="C-mono">${ui.topbarStatus}</span><span class="C-badge-pub">${ui.topbarStatusBadge}</span>
