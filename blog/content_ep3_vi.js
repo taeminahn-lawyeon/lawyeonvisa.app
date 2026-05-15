@@ -21,6 +21,7 @@ window.POST = {
     zh: "外国人在韩国开店流程-五阶段完整指南-2026",
     vi: "quy-trinh-mo-cua-hang-tai-han-quoc-cho-nguoi-nuoc-ngoai-2026",
     th: "ขั้นตอนการเปิดร้านในเกาหลีสำหรับชาวต่างชาติ-2026",
+    ja: "韓国で店舗を開く方法-外国人向け5段階プロセス-2026",
   },
   disclaimer: "Tập 3 trong loạt Định cư Kinh doanh. Tập 1 đã trình bày hệ thống visa D-9-4 và D-9-5, Tập 2 đã trình bày lựa chọn ngành và nhượng quyền. Tập này giải thích, theo từng giai đoạn, quá trình di trú và khởi nghiệp thực tế diễn ra như thế nào. Các vấn đề sau định cư được trình bày ở Tập 4. Các ví dụ trong bài viết này là tổ hợp giả định của các điều kiện thường gặp trong tư vấn, không phải các trường hợp thực.",
   metaDescription: "Quy trình thực tế 5 giai đoạn để mở doanh nghiệp tại Hàn Quốc cho người nước ngoài — tư vấn sơ bộ, tư vấn chính thức, khởi động, định cư, và hỗ trợ tiếp nối. Bao gồm các ví dụ lựa chọn ngành, thủ tục từng bước từ chuyển tiền ngoại hối đến nhận visa, FAQ, và những sai lầm phổ biến cần tránh (2026).",
