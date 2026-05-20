@@ -2989,11 +2989,11 @@
 
             try {
                 // 직접 .update() — createMessage()를 거치지 않으므로 고객 알림 메일 발송 안 됨
+                // messages 테이블에 updated_at 컬럼이 없으므로 content 만 갱신
                 const { error } = await supabaseClient
                     .from('messages')
                     .update({
-                        content: content,
-                        updated_at: new Date().toISOString()
+                        content: content
                     })
                     .eq('id', messageId);
 
