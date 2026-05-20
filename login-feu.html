@@ -11,8 +11,8 @@
             try {
                 var hash = window.location.hash || '';
                 var isOAuthCallback = hash.indexOf('access_token') !== -1;
-                var pending = sessionStorage.getItem('kdu_pending_login') === 'true';
-                var code = sessionStorage.getItem('kdu_lecture_code');
+                var pending = sessionStorage.getItem('feu_pending_login') === 'true';
+                var code = sessionStorage.getItem('feu_lecture_code');
 
                 // Only hide if we just returned from OAuth AND have pending login + code
                 if (isOAuthCallback && pending && code) {
@@ -28,7 +28,7 @@
         })();
     </script>
 
-    <title data-i18n="kdu.page.title">Immigration & Visa Service - Far East University</title>
+    <title data-i18n="feu.page.title">Immigration & Visa Service - Far East University</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/ui-components.css">
@@ -406,16 +406,16 @@
         <div class="card">
             <div class="card-header">
                 <div class="logo-container">
-                    <img src="KDU_LOGO_blue.png" alt="Far East University Logo">
+                    <img src="FEU_LOGO_blue.png" alt="Far East University Logo">
                 </div>
                 <div class="university-name">Far East University</div>
-                <div class="service-title" data-i18n="kdu.header.subtitle">Immigration & Visa Service</div>
+                <div class="service-title" data-i18n="feu.header.subtitle">Immigration & Visa Service</div>
             </div>
 
             <div class="card-body">
                 <div class="welcome-text">
-                    <h2 data-i18n="kdu.login.welcome">Welcome</h2>
-                    <p data-i18n="kdu.login.desc">Visa changes, legal advice, work permits, and more — apply for immigration services here.</p>
+                    <h2 data-i18n="feu.login.welcome">Welcome</h2>
+                    <p data-i18n="feu.login.desc">Visa changes, legal advice, work permits, and more — apply for immigration services here.</p>
                 </div>
 
                 <div class="error-message" id="errorMessage"></div>
@@ -434,7 +434,7 @@
                 <form id="applicationForm">
                     <div class="form-group">
                         <label class="form-label">
-                            <span data-i18n="kdu.login.lectureCode">Lecture Code</span> <span class="required">*</span>
+                            <span data-i18n="feu.login.lectureCode">Lecture Code</span> <span class="required">*</span>
                         </label>
                         <input type="text" class="form-input" id="lectureCode" required>
                     </div>
@@ -453,36 +453,36 @@
                     <div class="login-form" id="loginForm">
                         <div class="divider">
                             <div class="divider-line"></div>
-                            <div class="divider-text" data-i18n="kdu.login.signin">Sign in with</div>
+                            <div class="divider-text" data-i18n="feu.login.signin">Sign in with</div>
                             <div class="divider-line"></div>
                         </div>
 
                         <button type="button" class="btn-google" id="googleLoginBtn">
                             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
-                            <span data-i18n="kdu.login.google">Continue with Google</span>
+                            <span data-i18n="feu.login.google">Continue with Google</span>
                         </button>
                     </div>
 
                     <div id="submitSection" style="display: none;">
                         <button type="submit" class="btn-submit" id="submitBtn">
                             <i class="fas fa-paper-plane"></i>
-                            <span data-i18n="kdu.login.submit">Start Application</span>
+                            <span data-i18n="feu.login.submit">Start Application</span>
                         </button>
-                        <button type="button" onclick="handleSwitchAccount()" style="width: 100%; margin-top: 10px; padding: 12px; background: transparent; border: 1px solid #E5E7EB; border-radius: 12px; font-size: 13px; font-weight: 600; color: #6B7280; cursor: pointer;" data-i18n="kdu.login.switchAccount">Sign in with a different account</button>
+                        <button type="button" onclick="handleSwitchAccount()" style="width: 100%; margin-top: 10px; padding: 12px; background: transparent; border: 1px solid #E5E7EB; border-radius: 12px; font-size: 13px; font-weight: 600; color: #6B7280; cursor: pointer;" data-i18n="feu.login.switchAccount">Sign in with a different account</button>
                     </div>
                 </form>
 
                 <div class="info-box">
                     <div class="info-box-title">
                         <i class="fas fa-info-circle"></i>
-                        <span data-i18n="kdu.login.info.title">Service Information</span>
+                        <span data-i18n="feu.login.info.title">Service Information</span>
                     </div>
-                    <div class="info-box-content" data-i18n="kdu.login.info.content">
+                    <div class="info-box-content" data-i18n="feu.login.info.content">
                         After signing in, you will be connected with a dedicated specialist through your personal thread.
                     </div>
                 </div>
 
-                <a href="https://pf.kakao.com/_jACnn" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; margin-top: 16px; padding: 14px; background: #FEE500; color: #191919; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none; transition: all 0.2s;" data-i18n="kdu.login.kakao">KakaoTalk으로 문의하기</a>
+                <a href="https://pf.kakao.com/_jACnn" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; margin-top: 16px; padding: 14px; background: #FEE500; color: #191919; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none; transition: all 0.2s;" data-i18n="feu.login.kakao">KakaoTalk으로 문의하기</a>
             </div>
         </div>
 
@@ -503,19 +503,19 @@
         let currentUser = null;
 
         // Valid lecture codes for Far East University
-        const validLectureCodes = ['KDU0526'];
+        const validLectureCodes = ['FEU0526'];
 
         // Handles the post-login redirect logic (called from both
         // initial session check AND onAuthStateChange)
         let _redirectHandled = false;
         async function handlePostLoginRedirect(user) {
             if (_redirectHandled) return;
-            const pendingLogin = sessionStorage.getItem('kdu_pending_login');
-            const savedLectureCode = sessionStorage.getItem('kdu_lecture_code');
+            const pendingLogin = sessionStorage.getItem('feu_pending_login');
+            const savedLectureCode = sessionStorage.getItem('feu_lecture_code');
 
             if (pendingLogin === 'true' && savedLectureCode) {
                 _redirectHandled = true;
-                sessionStorage.removeItem('kdu_pending_login');
+                sessionStorage.removeItem('feu_pending_login');
                 try {
                     const profileResult = await getUserProfile(user.id);
                     if (!profileResult.success || !profileResult.data) {
@@ -523,13 +523,13 @@
                             name: user.user_metadata?.full_name || '',
                             email: user.email || '',
                             phone: '',
-                            organization: 'kdu'
+                            organization: 'feu'
                         });
                     } else if (!profileResult.data.organization) {
-                        await updateUserProfile(user.id, { organization: 'kdu' });
+                        await updateUserProfile(user.id, { organization: 'feu' });
                     }
                 } catch (e) { console.error('Profile check error:', e); }
-                window.location.replace(`service-kdu.html?lectureCode=${encodeURIComponent(savedLectureCode)}`);
+                window.location.replace(`service-feu.html?lectureCode=${encodeURIComponent(savedLectureCode)}`);
                 return true;
             }
             return false;
@@ -584,13 +584,13 @@
 
             // Validate inputs
             if (!lectureCode) {
-                showError(typeof i18n !== 'undefined' ? i18n.translate('kdu.login.error.lectureCode') : 'Please enter the lecture code.');
+                showError(typeof i18n !== 'undefined' ? i18n.translate('feu.login.error.lectureCode') : 'Please enter the lecture code.');
                 return;
             }
 
             // Validate lecture code
             if (!validLectureCodes.includes(lectureCode.toUpperCase())) {
-                showError(typeof i18n !== 'undefined' ? i18n.translate('kdu.login.error.invalidCode') : 'Invalid lecture code. Please check and try again.');
+                showError(typeof i18n !== 'undefined' ? i18n.translate('feu.login.error.invalidCode') : 'Invalid lecture code. Please check and try again.');
                 return;
             }
 
@@ -598,8 +598,8 @@
 
             // Save lecture code + pending flag BEFORE OAuth redirect
             // (sessionStorage survives the Google OAuth redirect within the same tab)
-            sessionStorage.setItem('kdu_lecture_code', lectureCode);
-            sessionStorage.setItem('kdu_pending_login', 'true');
+            sessionStorage.setItem('feu_lecture_code', lectureCode);
+            sessionStorage.setItem('feu_pending_login', 'true');
 
             const btn = document.getElementById('googleLoginBtn');
             btn.disabled = true;
@@ -642,13 +642,13 @@
             const lectureCode = document.getElementById('lectureCode').value.trim();
 
             if (!lectureCode) {
-                showError(typeof i18n !== 'undefined' ? i18n.translate('kdu.login.error.lectureCode') : 'Please enter the lecture code.');
+                showError(typeof i18n !== 'undefined' ? i18n.translate('feu.login.error.lectureCode') : 'Please enter the lecture code.');
                 return;
             }
 
             // Validate lecture code again
             if (!validLectureCodes.includes(lectureCode.toUpperCase())) {
-                showError(typeof i18n !== 'undefined' ? i18n.translate('kdu.login.error.invalidCode') : 'Invalid lecture code.');
+                showError(typeof i18n !== 'undefined' ? i18n.translate('feu.login.error.invalidCode') : 'Invalid lecture code.');
                 return;
             }
 
@@ -667,17 +667,17 @@
                         name: currentUser.user_metadata?.full_name || '',
                         email: currentUser.email || '',
                         phone: '',
-                        organization: 'kdu'
+                        organization: 'feu'
                     });
                 } else if (!profileResult.data.organization) {
-                    await updateUserProfile(currentUser.id, { organization: 'kdu' });
+                    await updateUserProfile(currentUser.id, { organization: 'feu' });
                 }
 
                 // Store lecture code for later use
-                sessionStorage.setItem('kdu_lecture_code', lectureCode);
+                sessionStorage.setItem('feu_lecture_code', lectureCode);
 
-                // Redirect to KDU service selection page
-                window.location.href = `service-kdu.html?lectureCode=${encodeURIComponent(lectureCode)}`;
+                // Redirect to FEU service selection page
+                window.location.href = `service-feu.html?lectureCode=${encodeURIComponent(lectureCode)}`;
             } catch (error) {
                 console.error('Submit error:', error);
                 showError('Failed to proceed. Please try again.');
@@ -689,7 +689,7 @@
 
         async function handleSwitchAccount() {
             await signOut();
-            sessionStorage.removeItem('kdu_lecture_code');
+            sessionStorage.removeItem('feu_lecture_code');
             window.location.reload();
         }
 
