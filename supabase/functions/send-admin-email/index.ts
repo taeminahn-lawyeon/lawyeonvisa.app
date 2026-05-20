@@ -93,39 +93,9 @@ serve(async (req) => {
       subject = `[Lawyeon] ${customerName}의 ${serviceName} 쓰레드 신규 생성`
       messageText = `${customerName}의 ${serviceName} 쓰레드 신청이 신규 생성 되었습니다.`
     } else {
-      // new_message:
-      // - 쓰레드 생성 직후 (30초 이내) 발생한 첫 user 메시지만 new_thread 이벤트와 중복으로 보고 skip
-      //   (예: 서비스 신청 폼이 쓰레드 생성과 동시에 user 메시지를 등록하는 경우)
-      // - 그 외 모든 user 메시지는 "답글"로 보고 항상 메일 발송 (어드민이 welcome 메시지 보낸 후 고객이 처음 답글 다는 경우 포함)
-      const { data: latestMsg } = await supabase
-        .from('messages')
-        .select('created_at')
-        .eq('thread_id', threadId)
-        .eq('sender_type', 'user')
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single()
-
-      if (latestMsg && thread.created_at) {
-        const threadCreatedMs = new Date(thread.created_at).getTime()
-        const msgCreatedMs = new Date(latestMsg.created_at).getTime()
-        const diffSec = (msgCreatedMs - threadCreatedMs) / 1000
-
-        const { count } = await supabase
-          .from('messages')
-          .select('*', { count: 'exact', head: true })
-          .eq('thread_id', threadId)
-          .eq('sender_type', 'user')
-
-        if (typeof count === 'number' && count <= 1 && diffSec >= 0 && diffSec < 30) {
-          console.log(`📧 First user message within 30s of thread creation (diff=${diffSec}s) — skipping admin email (covered by new_thread)`)
-          return new Response(
-            JSON.stringify({ success: true, skipped: true, reason: 'First user message within 30s of new_thread' }),
-            { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-          )
-        }
-      }
-
+      // new_message 이벤트는 createMessage() 에서 sender_type='user' 일 때만 호출됨
+      // (자동 폼 제출 — D-10 신청서, 결제 메시지 등 — 은 직접 .insert() 하므로 이 이벤트를 트리거하지 않음)
+      // 따라서 모든 new_message 는 고객이 답글 폼에서 직접 댓글 등록한 것 → 무조건 메일 발송
       subject = `[Lawyeon] ${customerName}의 ${serviceName} 쓰레드 답글 등록`
       messageText = `${customerName}님이 ${serviceName} 쓰레드에 답글을 등록하셨습니다.`
     }
