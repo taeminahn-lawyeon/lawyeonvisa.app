@@ -94,6 +94,7 @@ serve(async (req) => {
       messageText = `${customerName}의 ${serviceName} 쓰레드 신청이 신규 생성 되었습니다.`
     } else {
       // new_message: 첫 고객 메시지는 new_thread 이벤트와 중복되므로 skip
+      // 두 번째 이상의 고객 메시지는 "답글"로 분류하여 별도 표현 사용
       const { count } = await supabase
         .from('messages')
         .select('*', { count: 'exact', head: true })
@@ -108,8 +109,8 @@ serve(async (req) => {
         )
       }
 
-      subject = `[Lawyeon] ${customerName}의 ${serviceName} 건 문의 등록`
-      messageText = `${customerName}의 ${serviceName} 건 문의가 등록 되었습니다.`
+      subject = `[Lawyeon] ${customerName}의 ${serviceName} 쓰레드 답글 등록`
+      messageText = `${customerName}님이 ${serviceName} 쓰레드에 답글을 등록하셨습니다.`
     }
 
     const html = buildHtml(messageText, threadUrl)
