@@ -68,7 +68,7 @@ serve(async (req) => {
 
     const { data: thread, error: threadErr } = await supabase
       .from('threads')
-      .select('id, user_id, service_name')
+      .select('id, user_id, service_name, created_at')
       .eq('id', threadId)
       .single()
 
@@ -93,20 +93,37 @@ serve(async (req) => {
       subject = `[Lawyeon] ${customerName}의 ${serviceName} 쓰레드 신규 생성`
       messageText = `${customerName}의 ${serviceName} 쓰레드 신청이 신규 생성 되었습니다.`
     } else {
-      // new_message: 첫 고객 메시지는 new_thread 이벤트와 중복되므로 skip
-      // 두 번째 이상의 고객 메시지는 "답글"로 분류하여 별도 표현 사용
-      const { count } = await supabase
+      // new_message:
+      // - 쓰레드 생성 직후 (30초 이내) 발생한 첫 user 메시지만 new_thread 이벤트와 중복으로 보고 skip
+      //   (예: 서비스 신청 폼이 쓰레드 생성과 동시에 user 메시지를 등록하는 경우)
+      // - 그 외 모든 user 메시지는 "답글"로 보고 항상 메일 발송 (어드민이 welcome 메시지 보낸 후 고객이 처음 답글 다는 경우 포함)
+      const { data: latestMsg } = await supabase
         .from('messages')
-        .select('*', { count: 'exact', head: true })
+        .select('created_at')
         .eq('thread_id', threadId)
         .eq('sender_type', 'user')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single()
 
-      if (typeof count === 'number' && count <= 1) {
-        console.log(`📧 First user message — skipping admin email (count=${count})`)
-        return new Response(
-          JSON.stringify({ success: true, skipped: true, reason: 'First user message covered by new_thread event' }),
-          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        )
+      if (latestMsg && thread.created_at) {
+        const threadCreatedMs = new Date(thread.created_at).getTime()
+        const msgCreatedMs = new Date(latestMsg.created_at).getTime()
+        const diffSec = (msgCreatedMs - threadCreatedMs) / 1000
+
+        const { count } = await supabase
+          .from('messages')
+          .select('*', { count: 'exact', head: true })
+          .eq('thread_id', threadId)
+          .eq('sender_type', 'user')
+
+        if (typeof count === 'number' && count <= 1 && diffSec >= 0 && diffSec < 30) {
+          console.log(`📧 First user message within 30s of thread creation (diff=${diffSec}s) — skipping admin email (covered by new_thread)`)
+          return new Response(
+            JSON.stringify({ success: true, skipped: true, reason: 'First user message within 30s of new_thread' }),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          )
+        }
       }
 
       subject = `[Lawyeon] ${customerName}의 ${serviceName} 쓰레드 답글 등록`
