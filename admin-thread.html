@@ -1233,6 +1233,65 @@
             .header-actions {
                 display: none;
             }
+
+            /* 모바일에서 Quill 툴바(B/I/U/색상/링크/이미지/리스트/인용/clean)와 파일 업로드 영역 컴팩트화 */
+            .ql-toolbar {
+                padding: 6px !important;
+            }
+            .ql-toolbar .ql-formats {
+                margin-right: 8px !important;
+            }
+            .ql-snow.ql-toolbar button,
+            .ql-snow .ql-toolbar button {
+                width: 26px !important;
+                height: 26px !important;
+                padding: 2px !important;
+            }
+            .ql-snow.ql-toolbar button svg,
+            .ql-snow .ql-toolbar button svg {
+                width: 16px;
+                height: 16px;
+            }
+            .ql-snow .ql-picker {
+                height: 26px !important;
+            }
+            .ql-snow .ql-picker-label {
+                padding: 2px 4px !important;
+            }
+            .ql-editor {
+                min-height: 100px;
+                font-size: 14px;
+                padding: 12px;
+            }
+            /* 어드민 템플릿 툴바 (기본사항 요청/결제 요청/링크 첨부/회색 박스 등) */
+            .admin-template-toolbar {
+                padding: 8px;
+                gap: 6px;
+            }
+            .template-btn {
+                padding: 5px 10px;
+                font-size: 11px;
+            }
+            /* 파일 업로드 영역 */
+            .file-upload-area {
+                padding: 12px;
+                margin-top: 12px;
+            }
+            .file-upload-area i {
+                font-size: 18px;
+                margin-bottom: 4px;
+            }
+            .file-upload-area p {
+                font-size: 12px;
+                margin: 0;
+            }
+            .pending-file {
+                padding: 8px 10px;
+                gap: 8px;
+            }
+            .pending-file-name {
+                font-size: 12px;
+            }
         }
     </style>
 </head>
