@@ -30,6 +30,8 @@ const processedPayments = new Set<string>()
 // (servicePricing 의 partial 미러: 번들/특수 가격이 있는 항목 위주로 등록)
 type PriceEntry = { agencyFee: number; govFee: number; bundledTotal?: number }
 const SERVER_PRICE_TABLE: Record<string, PriceEntry> = {
+  // 일반 D-10-1 변경 + 외국인등록증 재발급 번들
+  'd10-1-change': { agencyFee: 220000, govFee: 100000, bundledTotal: 34000 },
   // FEU - D-10-1 변경 + 외국인등록증 재발급 번들
   'd10-1-feu': { agencyFee: 55000, govFee: 100000, bundledTotal: 34000 },
   // FEU - 기타

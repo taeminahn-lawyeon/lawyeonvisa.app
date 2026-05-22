@@ -51,7 +51,15 @@ const servicePricing = {
         category: '교육·구직',
         price: { general: 220000, partner: 55000 },
         govFee: 100000,
-        description: 'General job seeking visa'
+        description: 'General job seeking visa',
+        bundledItems: [
+            {
+                key: 'arc-reissue',
+                name: 'Alien Registration Card Reissue',
+                nameKo: '외국인등록증 재발급',
+                amount: 34000
+            }
+        ]
     },
     'd10-1-chosun': {
         id: 'd10-1-chosun',
