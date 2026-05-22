@@ -1233,6 +1233,7 @@
                         <span class="price-label" data-i18n="serviceApply.govtFee">Immigration Fee</span>
                         <span class="price-value" id="govt-fee">₩50,000</span>
                     </div>
+                    <div id="bundled-items-rows"></div>
                     <div class="price-total">
                         <span class="label" data-i18n="serviceApply.total">Total</span>
                         <span class="value" id="total-price">₩600,000</span>
@@ -1610,7 +1611,7 @@
             'd10-t-change': { name: 'D-10-T Top Talent Job Seeker', price: 330000, govFee: 100000, desc: 'Elite university graduate visa', icon: '🏆' },
             'd10-t-chosun': { name: 'D-10-T Top Talent Job Seeker (Chosun)', price: 55000, govFee: 100000, desc: 'Chosun University special rate', icon: '🏆', organization: 'chosun' },
             'd2-qualification-change-chosun': { name: 'D-2 Qualification Change (Chosun)', price: 55000, govFee: 100000, desc: 'D-4, D-2 sub-status change', icon: '🔄', organization: 'chosun' },
-            'd10-1-feu': { name: 'D-10-1 General Job Seeker Visa (FEU)', price: 55000, govFee: 100000, desc: 'Far East University special rate', icon: '🎓', organization: 'feu' },
+            'd10-1-feu': { name: 'D-10-1 General Job Seeker Visa (FEU)', nameKo: 'D-10-1 일반구직 비자 변경 (극동대)', price: 55000, govFee: 100000, desc: 'Far East University special rate', icon: '🎓', organization: 'feu', bundledItems: [{ key: 'arc-reissue', name: 'Alien Registration Card Reissue', nameKo: '외국인등록증 재발급', amount: 34000 }] },
             'd10-2-feu': { name: 'D-10-2 Tech Startup Job Seeker (FEU)', price: 55000, govFee: 100000, desc: 'Far East University special rate', icon: '💡', organization: 'feu' },
             'd10-3-feu': { name: 'D-10-3 High-tech Intern Visa (FEU)', price: 55000, govFee: 100000, desc: 'Far East University special rate', icon: '🔬', organization: 'feu' },
             'd10-t-feu': { name: 'D-10-T Top Talent Job Seeker (FEU)', price: 55000, govFee: 100000, desc: 'Far East University special rate', icon: '🏆', organization: 'feu' },
@@ -1700,8 +1701,14 @@
             'cert-nationality': { name: 'Nationality Certificate', price: 22000, govFee: 2000, desc: 'Nationality status proof', icon: '📜' }
         };
 
-        // 가격 위변조 방지: servicePricing 객체를 완전히 동결
-        Object.values(servicePricing).forEach(v => Object.freeze(v));
+        // 가격 위변조 방지: servicePricing 객체를 완전히 동결 (번들 항목 포함)
+        Object.values(servicePricing).forEach(v => {
+            if (Array.isArray(v.bundledItems)) {
+                v.bundledItems.forEach(b => Object.freeze(b));
+                Object.freeze(v.bundledItems);
+            }
+            Object.freeze(v);
+        });
         Object.freeze(servicePricing);
 
         let selectedService = null;
@@ -1710,11 +1717,46 @@
         function getVerifiedPrice(serviceId) {
             const original = servicePricing[serviceId];
             if (!original) return null;
+            const bundledTotal = Array.isArray(original.bundledItems)
+                ? original.bundledItems.reduce((sum, b) => sum + (b.amount || 0), 0)
+                : 0;
             return {
                 price: original.price,
                 govFee: original.govFee || 0,
-                totalPrice: original.price + (original.govFee || 0)
+                bundledTotal: bundledTotal,
+                totalPrice: original.price + (original.govFee || 0) + bundledTotal
             };
+        }
+
+        // 번들 항목을 가격 카드에 렌더링하고 합계 반환
+        function renderBundledItems(bundledItems, isKorean) {
+            const container = document.getElementById('bundled-items-rows');
+            if (!container) return 0;
+            container.innerHTML = '';
+            if (!Array.isArray(bundledItems) || bundledItems.length === 0) return 0;
+            let total = 0;
+            bundledItems.forEach(item => {
+                const amount = Number(item.amount) || 0;
+                total += amount;
+                const label = (isKorean && item.nameKo) ? item.nameKo : item.name;
+                const row = document.createElement('div');
+                row.className = 'price-row';
+                row.innerHTML = `<span class="price-label">${label}</span><span class="price-value">₩${amount.toLocaleString()}</span>`;
+                container.appendChild(row);
+            });
+            return total;
+        }
+
+        // 번들 포함 주문명 생성 (토스 결제 / thread.service_name 용)
+        function buildOrderName(service, isKorean) {
+            const baseName = (isKorean && service.nameKo) ? service.nameKo : service.name;
+            if (!Array.isArray(service.bundledItems) || service.bundledItems.length === 0) {
+                return baseName;
+            }
+            const bundleLabels = service.bundledItems
+                .map(b => (isKorean && b.nameKo) ? b.nameKo : b.name)
+                .join(', ');
+            return baseName + ' + ' + bundleLabels;
         }
 
         function goBack() {
@@ -1887,7 +1929,8 @@
                 // Deferred payment mode - show price but open thread instead of payment
                 const agencyFee = selectedService.price;
                 const govtFee = selectedService.govFee || 0;
-                const totalPrice = agencyFee + govtFee;
+                const bundledTotal = renderBundledItems(selectedService.bundledItems, isKorean);
+                const totalPrice = agencyFee + govtFee + bundledTotal;
 
                 document.getElementById('agency-fee').textContent = '₩' + agencyFee.toLocaleString();
 
@@ -1912,11 +1955,13 @@
                 selectedService.totalPrice = totalPrice;
                 selectedService.agencyFee = agencyFee;
                 selectedService.govtFee = govtFee;
+                selectedService.bundledTotal = bundledTotal;
             } else {
                 // Payment mode
                 const agencyFee = selectedService.price;
                 const govtFee = selectedService.govFee || 0;
-                const totalPrice = agencyFee + govtFee;
+                const bundledTotal = renderBundledItems(selectedService.bundledItems, isKorean);
+                const totalPrice = agencyFee + govtFee + bundledTotal;
 
                 document.getElementById('agency-fee').textContent = '₩' + agencyFee.toLocaleString();
 
@@ -1931,6 +1976,7 @@
                 selectedService.totalPrice = totalPrice;
                 selectedService.agencyFee = agencyFee;
                 selectedService.govtFee = govtFee;
+                selectedService.bundledTotal = bundledTotal;
             }
 
             // D-10-1 form is now submitted within the thread, not on payment page
@@ -2114,12 +2160,16 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                     return;
                 }
 
+                const isKoreanLang = typeof i18n !== 'undefined' && i18n.currentLanguage === 'ko';
+                const composedOrderName = buildOrderName(selectedService, isKoreanLang);
+
                 const orderInfo = {
                     orderId: 'ORD' + Date.now(),
-                    orderName: selectedService.name,
+                    orderName: composedOrderName,
                     amount: verified.totalPrice,
                     agencyFee: verified.price,
                     govtFee: verified.govFee,
+                    bundledTotal: verified.bundledTotal || 0,
                     customerName: profile.name || session.user.email,
                     customerEmail: profile.email || session.user.email,
                     customerPhone: profile.phone || '',
@@ -2134,10 +2184,15 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
 
                 sessionStorage.setItem('pendingPayment', JSON.stringify({
                     orderId: orderInfo.orderId,
+                    serviceId: payServiceId,
                     serviceName: orderInfo.orderName,
                     amount: orderInfo.amount,
                     agencyFee: orderInfo.agencyFee,
                     govtFee: orderInfo.govtFee,
+                    bundledTotal: orderInfo.bundledTotal,
+                    bundledItems: Array.isArray(selectedService.bundledItems)
+                        ? selectedService.bundledItems.map(b => ({ key: b.key, name: b.name, nameKo: b.nameKo, amount: b.amount }))
+                        : [],
                     paymentMethod: orderInfo.paymentMethod,
                     customerName: orderInfo.customerName,
                     customerEmail: orderInfo.customerEmail,
@@ -2215,8 +2270,10 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                 const organization = urlParams.get('org') || 'general';
 
                 // 쓰레드 생성 (결제 완료 상태로)
+                const adminTestIsKorean = typeof i18n !== 'undefined' && i18n.currentLanguage === 'ko';
+                const adminTestOrderName = buildOrderName(selectedService, adminTestIsKorean);
                 const threadResult = await createThread({
-                    service_name: selectedService.name,
+                    service_name: adminTestOrderName,
                     status: 'payment',
                     amount: selectedService.totalPrice,
                     government_fee: selectedService.govtFee || 0,
@@ -2232,7 +2289,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
 
                 // 환영 메시지 전송 (실패해도 쓰레드 이동은 계속)
                 try {
-                    await createWelcomeMessage(threadId, selectedService.name);
+                    await createWelcomeMessage(threadId, adminTestOrderName);
                 } catch (msgErr) {
                     console.error('Welcome message failed (non-blocking):', msgErr);
                 }
@@ -3132,8 +3189,10 @@ ${window.location.origin}/profile-submit.html?thread=${threadId}`;
                     // console.log('Using existing thread:', threadId);
                 } else {
                     // Create new thread
+                    const deferredIsKorean = typeof i18n !== 'undefined' && i18n.currentLanguage === 'ko';
+                    const deferredOrderName = buildOrderName(selectedService, deferredIsKorean);
                     const threadResult = await createThread({
-                        service_name: selectedService.name,
+                        service_name: deferredOrderName,
                         status: 'received',
                         amount: selectedService.totalPrice,
                         order_id: 'DEFERRED-' + Date.now(),

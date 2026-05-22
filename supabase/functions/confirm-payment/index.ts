@@ -25,6 +25,32 @@ function getCorsHeaders(origin: string | null) {
 // 처리된 결제 키를 저장 (중복 방지)
 const processedPayments = new Set<string>()
 
+// 서버사이드 가격 미러본 — 클라이언트에서 위변조된 amount 차단용
+// agencyFee + govFee + bundledItems 합산이 결제 amount 와 일치해야 함
+// (servicePricing 의 partial 미러: 번들/특수 가격이 있는 항목 위주로 등록)
+type PriceEntry = { agencyFee: number; govFee: number; bundledTotal?: number }
+const SERVER_PRICE_TABLE: Record<string, PriceEntry> = {
+  // FEU - D-10-1 변경 + 외국인등록증 재발급 번들
+  'd10-1-feu': { agencyFee: 55000, govFee: 100000, bundledTotal: 34000 },
+  // FEU - 기타
+  'd10-2-feu': { agencyFee: 55000, govFee: 100000 },
+  'd10-3-feu': { agencyFee: 55000, govFee: 100000 },
+  'd10-t-feu': { agencyFee: 55000, govFee: 100000 },
+  'd2-qualification-change-feu': { agencyFee: 55000, govFee: 100000 },
+  // Chosun
+  'd10-1-chosun': { agencyFee: 55000, govFee: 100000 },
+  'd10-2-chosun': { agencyFee: 55000, govFee: 100000 },
+  'd10-3-chosun': { agencyFee: 55000, govFee: 100000 },
+  'd10-t-chosun': { agencyFee: 55000, govFee: 100000 },
+  'd2-qualification-change-chosun': { agencyFee: 55000, govFee: 100000 },
+}
+
+function getExpectedTotal(serviceId: string): number | null {
+  const entry = SERVER_PRICE_TABLE[serviceId]
+  if (!entry) return null
+  return entry.agencyFee + entry.govFee + (entry.bundledTotal || 0)
+}
+
 serve(async (req) => {
   const origin = req.headers.get('origin')
   const corsHeaders = getCorsHeaders(origin)
@@ -80,7 +106,7 @@ serve(async (req) => {
 
     // 2. 요청 본문 파싱
     const requestBody = await req.json()
-    const { paymentKey, orderId, amount, threadData } = requestBody
+    const { paymentKey, orderId, amount, threadData, serviceId } = requestBody
 
     // 3. 필수 파라미터 검증
     if (!paymentKey || !orderId || !amount) {
@@ -111,6 +137,39 @@ serve(async (req) => {
         JSON.stringify({ success: false, error: 'INVALID_AMOUNT', message: '금액이 올바르지 않습니다.' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
+    }
+
+    // 4-1. serviceId 가 제공된 경우 서버사이드 가격 미러본과 대조 (위변조 차단)
+    if (typeof serviceId === 'string' && SERVER_PRICE_TABLE[serviceId]) {
+      const expectedTotal = getExpectedTotal(serviceId)
+      if (expectedTotal !== null && expectedTotal !== numericAmount) {
+        console.error('🚨 금액 위변조 의심:', {
+          serviceId,
+          expected: expectedTotal,
+          received: numericAmount,
+          userId: user.id,
+          orderId
+        })
+        // 위변조 시도 로깅 (service role 키가 있을 때)
+        const logRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+        if (logRoleKey) {
+          try {
+            const adminLog = createClient(supabaseUrl, logRoleKey)
+            await adminLog.from('payment_logs').insert({
+              user_id: user.id,
+              order_id: orderId,
+              amount: numericAmount,
+              status: 'rejected_amount_mismatch',
+              toss_response: { serviceId, expected: expectedTotal, received: numericAmount },
+              created_at: new Date().toISOString()
+            })
+          } catch (_) { /* 로깅 실패는 무시 */ }
+        }
+        return new Response(
+          JSON.stringify({ success: false, error: 'AMOUNT_MISMATCH', message: '결제 금액이 서비스 정가와 일치하지 않습니다.' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
     }
 
     // 5. 중복 결제 승인 방지 (Idempotency)

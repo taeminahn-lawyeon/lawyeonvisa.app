@@ -138,7 +138,15 @@ const servicePricing = {
         price: { general: 55000, partner: 55000 },
         govFee: 100000,
         description: 'Far East University special rate',
-        organization: 'feu'
+        organization: 'feu',
+        bundledItems: [
+            {
+                key: 'arc-reissue',
+                name: 'Alien Registration Card Reissue',
+                nameKo: '외국인등록증 재발급',
+                amount: 34000
+            }
+        ]
     },
     'd10-2-feu': {
         id: 'd10-2-feu',

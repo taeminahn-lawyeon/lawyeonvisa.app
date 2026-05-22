@@ -251,7 +251,7 @@
 
         .premium-service-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 14px;
         }
 
@@ -364,6 +364,111 @@
             word-break: keep-all;
         }
 
+        /* Law Firm Introduction Section - 2 Column Layout (copied from index.html, sized for 720px container) */
+        .lawfirm-intro-section {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 32px 24px;
+            margin: 24px 0 0;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+            border: 1px solid #E2E8F0;
+            overflow: hidden;
+        }
+        .lawfirm-intro-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+        }
+        .lawfirm-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 0 0 auto;
+            max-width: 320px;
+        }
+        .lawfirm-headline {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1E293B;
+            line-height: 1.5;
+            margin-bottom: 16px;
+            letter-spacing: -0.3px;
+        }
+        .registration-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding: 10px 0;
+            border-top: 1px solid #E2E8F0;
+            border-bottom: 1px solid #E2E8F0;
+        }
+        .moj-logo { height: 56px; width: auto; }
+        .registration-text {
+            font-size: 10px;
+            font-weight: 600;
+            color: #64748B;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            line-height: 1.5;
+        }
+        .lawfirm-subtext {
+            font-size: 13px;
+            color: #64748B;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+        .lawfirm-right { position: relative; flex: 1; display: flex; justify-content: center; }
+        .attorneys-carousel {
+            position: relative;
+            background: linear-gradient(135deg, #4A4A4A 0%, #2D2D2D 100%);
+            border-radius: 14px;
+            overflow: hidden;
+            width: 100%;
+        }
+        .attorneys-track {
+            display: flex;
+            animation: scroll-attorneys 25s linear infinite;
+            width: fit-content;
+        }
+        .attorneys-track:hover { animation-play-state: paused; }
+        @keyframes scroll-attorneys {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .attorney-card { flex-shrink: 0; width: 140px; position: relative; overflow: hidden; }
+        .attorney-photo {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+        }
+        .attorney-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px 8px;
+            background: rgba(0, 0, 0, 0.8);
+        }
+        .attorney-name { font-size: 12px; font-weight: 600; color: white; text-align: center; }
+
+        @media (max-width: 600px) {
+            .lawfirm-intro-section { padding: 20px 16px; }
+            .lawfirm-intro-content { flex-direction: column; gap: 20px; }
+            .lawfirm-left { text-align: center; max-width: 100%; }
+            .registration-badge { justify-content: center; }
+            .lawfirm-headline { font-size: 15px; }
+            .lawfirm-subtext { font-size: 13px; }
+            .moj-logo { height: 48px; }
+            .lawfirm-right { width: 100%; }
+            .attorney-card { width: 120px; }
+            .attorney-photo { height: 170px; }
+            .attorney-name { font-size: 11px; }
+        }
+
         /* Footer */
         .footer {
             text-align: center;
@@ -454,7 +559,7 @@
                 <!-- My Applications (dynamically shown if threads exist) -->
                 <div id="myThreadsSection" style="display: none;"></div>
 
-                <!-- Quick Service Cards (사전 상담 · 비자 진단 · 사업 이민) -->
+                <!-- Quick Service Cards (사전 상담 + D-10 비자 변경) -->
                 <div class="premium-service-banner">
                     <h3 data-i18n="emergency.title">Immigration Legal Services</h3>
                     <div class="premium-service-grid">
@@ -466,23 +571,13 @@
                             </div>
                             <button class="cta-btn" onclick="event.stopPropagation(); goToService('pre-consultation')"><span data-i18n="feu.preconsult.cta">사전 상담 신청</span> <span class="arrow">→</span></button>
                         </div>
-                        <div class="premium-service-card" onclick="goToService('visa-prediagnosis')">
-                            <div class="title" data-i18n="emergency.diagnosis.title">Visa Diagnosis & Consultation</div>
+                        <div class="premium-service-card" onclick="goToService('d10-1-feu')">
+                            <div class="title" data-i18n="feu.d10change.title">D-10 비자 변경 신청</div>
                             <div class="desc">
-                                <div class="desc-item" data-i18n="emergency.diagnosis.item1">Visa change planning advice</div>
-                                <div class="desc-item" data-i18n="emergency.diagnosis.item2">Immigration law violation consultation</div>
-                                <div class="desc-item" data-i18n="emergency.diagnosis.item3">Overstay risk assessment</div>
+                                <div class="desc-item" data-i18n="feu.d10change.item1">D-10-1 일반구직 비자 변경</div>
+                                <div class="desc-item" data-i18n="feu.d10change.item2">외국인등록증 재발급 포함</div>
                             </div>
-                            <button class="cta-btn" onclick="event.stopPropagation(); goToService('visa-prediagnosis')"><span data-i18n="emergency.diagnosis.cta">Request Diagnosis</span> <span class="arrow">→</span></button>
-                        </div>
-                        <div class="premium-service-card" id="businessImmigrationCard" onclick="location.href='business-immigration-request.html'">
-                            <div class="title" data-i18n="biz.hero.cta">사업이민 사전 상담 신청</div>
-                            <div class="desc">
-                                <div class="desc-item" data-i18n="biz.card.summary1">이민 프로젝트 설계</div>
-                                <div class="desc-item" data-i18n="biz.card.summary2">계약 및 규제 관리</div>
-                                <div class="desc-item" data-i18n="biz.card.summary3">정착 및 사후 지원</div>
-                            </div>
-                            <button class="cta-btn" onclick="event.stopPropagation(); location.href='business-immigration-request.html'"><span data-i18n="biz.hero.cta">사업이민 사전 상담 신청</span> <span class="arrow">→</span></button>
+                            <button class="cta-btn" onclick="event.stopPropagation(); goToService('d10-1-feu')"><span data-i18n="feu.d10change.cta">D-10 비자 변경 신청</span> <span class="arrow">→</span></button>
                         </div>
                     </div>
                 </div>
@@ -498,83 +593,42 @@
                     </div>
                 </div>
 
-                <!-- Service Grid -->
-                <div class="service-grid">
-                    <a class="service-item" data-service="d10-1-feu">
-                        <div class="title" data-i18n="feu.svc.d101.title">D-10-1 비자 변경</div>
-                        <div class="desc" data-i18n="feu.svc.d101.desc">구직 비자 변경</div>
-                    </a>
-                    <a class="service-item" data-service="d10-2-feu">
-                        <div class="title" data-i18n="feu.svc.d102.title">D-10-2 비자 변경</div>
-                        <div class="desc" data-i18n="feu.svc.d102.desc">기술창업 구직 비자</div>
-                    </a>
-                    <a class="service-item" data-service="d10-3-feu">
-                        <div class="title" data-i18n="feu.svc.d103.title">D-10-3 비자 변경</div>
-                        <div class="desc" data-i18n="feu.svc.d103.desc">첨단기술 인턴 비자</div>
-                    </a>
-                    <a class="service-item" data-service="d10-t-feu">
-                        <div class="title" data-i18n="feu.svc.d10t.title">D-10-T 비자 변경</div>
-                        <div class="desc" data-i18n="feu.svc.d10t.desc">우수인재 구직 비자</div>
-                    </a>
-                    <a class="service-item" data-service="d8-4-change">
-                        <div class="title" data-i18n="feu.svc.d84.title">D-8-4 비자 변경</div>
-                        <div class="desc" data-i18n="feu.svc.d84.desc">기술창업 비자</div>
-                    </a>
-                    <a class="service-item" data-service="d9-5-change">
-                        <div class="title" data-i18n="feu.svc.d95.title">D-9-5 비자 변경</div>
-                        <div class="desc" data-i18n="feu.svc.d95.desc">졸업생 창업 비자</div>
-                    </a>
-                    <a class="service-item" data-service="f2-7-change">
-                        <div class="title" data-i18n="feu.svc.f27.title">F-2-7 비자 변경</div>
-                        <div class="desc" data-i18n="feu.svc.f27.desc">점수제 우수인재 거주비자</div>
-                    </a>
-                    <a class="service-item" data-service="d2-qualification-change-feu">
-                        <div class="title" data-i18n="feu.svc.d2chg.title">D-2 자격 변경</div>
-                        <div class="desc" data-i18n="feu.svc.d2chg.desc">D-4, D-2 세부자격 변경</div>
-                    </a>
-                    <a class="service-item" data-service="d2-d4-extension">
-                        <div class="title" data-i18n="feu.svc.d2ext.title">D-2 비자 연장</div>
-                        <div class="desc" data-i18n="feu.svc.d2ext.desc">유학 비자 연장</div>
-                    </a>
-                    <a class="service-item" data-service="d10-extension">
-                        <div class="title" data-i18n="feu.svc.d10ext.title">D-10 비자 연장</div>
-                        <div class="desc" data-i18n="feu.svc.d10ext.desc">구직 비자 갱신</div>
-                    </a>
-                    <a class="service-item" data-service="parttime-permit">
-                        <div class="title" data-i18n="feu.svc.parttime.title">시간제취업허가</div>
-                        <div class="desc" data-i18n="feu.svc.parttime.desc">D-2, D-4 시간제취업</div>
-                    </a>
-                    <a class="service-item" data-service="parttime-change">
-                        <div class="title" data-i18n="feu.svc.parttimeChg.title">시간제취업변경 신고</div>
-                        <div class="desc" data-i18n="feu.svc.parttimeChg.desc">취업처 변경 신고</div>
-                    </a>
-                    <a class="service-item" data-service="d10-parttime-permit">
-                        <div class="title" data-i18n="feu.svc.d10parttime.title">D-10 시간제취업허가</div>
-                        <div class="desc" data-i18n="feu.svc.d10parttime.desc">D-10 시간제취업</div>
-                    </a>
-                    <a class="service-item" data-service="intern-report">
-                        <div class="title" data-i18n="feu.svc.intern.title">D-10 인턴십 신고</div>
-                        <div class="desc" data-i18n="feu.svc.intern.desc">인턴십 시작·변경</div>
-                    </a>
-                    <a class="service-item" data-service="arc-reissue">
-                        <div class="title" data-i18n="feu.svc.arc.title">외국인등록증 재발급</div>
-                        <div class="desc" data-i18n="feu.svc.arc.desc">분실·훼손 재발급</div>
-                    </a>
-                    <a class="service-item" data-service="address-change">
-                        <div class="title" data-i18n="feu.svc.address.title">주소 변경 신고</div>
-                        <div class="desc" data-i18n="feu.svc.address.desc">거소 이전 신고</div>
-                    </a>
-                    <a class="service-item" data-service="passport-change">
-                        <div class="title" data-i18n="feu.svc.passport.title">여권 변경 신고</div>
-                        <div class="desc" data-i18n="feu.svc.passport.desc">여권·인적사항 변경</div>
-                    </a>
-                    <a class="service-item" data-service="parent-invite">
-                        <div class="title" data-i18n="feu.svc.parent.title">유학생 가족 초청</div>
-                        <div class="desc" data-i18n="feu.svc.parent.desc">유학생 가족 초청 비자</div>
-                    </a>
+                <!-- Law Firm Introduction Section -->
+                <div class="lawfirm-intro-section">
+                    <div class="lawfirm-intro-content">
+                        <div class="lawfirm-left">
+                            <p class="lawfirm-headline">Law Firm Lawyeon's Visa &amp; Immigration Center specializes in legal support for foreigners in Korea.</p>
+                            <div class="registration-badge">
+                                <img src="images/moj-badge.jpg" alt="Ministry of Justice" class="moj-logo">
+                                <span class="registration-text">Registered Immigration Agency<br>#25-SM-RG-063</span>
+                            </div>
+                            <p class="lawfirm-subtext">Practicing in immigration office services and legal matters for foreigners and immigrants.</p>
+                        </div>
+                        <div class="lawfirm-right">
+                            <div class="attorneys-carousel">
+                                <div class="attorneys-track">
+                                    <div class="attorney-card"><img src="images/attorneys/S.H. BONG.png" alt="S.H. Bong" class="attorney-photo"><div class="attorney-info"><div class="attorney-name">Atty. S.H. Bong</div></div></div>
+                                    <div class="attorney-card"><img src="images/attorneys/J.W. MIN.png" alt="J.W. Min" class="attorney-photo"><div class="attorney-info"><div class="attorney-name">Atty. J.W. Min</div></div></div>
+                                    <div class="attorney-card"><img src="images/attorneys/D.H. NAM.png" alt="D.H. Nam" class="attorney-photo"><div class="attorney-info"><div class="attorney-name">Atty. D.H. Nam</div></div></div>
+                                    <div class="attorney-card"><img src="images/attorneys/S.C. KIM.png" alt="S.C. Kim" class="attorney-photo"><div class="attorney-info"><div class="attorney-name">Atty. S.C. Kim</div></div></div>
+                                    <div class="attorney-card"><img src="images/attorneys/Y.H. HWANG.jpg" alt="Y.H. Hwang" class="attorney-photo"><div class="attorney-info"><div class="attorney-name">Atty. Y.H. Hwang</div></div></div>
+                                    <div class="attorney-card"><img src="images/attorneys/D.G. SHIN.jpg" alt="D.G. Shin" class="attorney-photo"><div class="attorney-info"><div class="attorney-name">Atty. D.G. Shin</div></div></div>
+                                    <div class="attorney-card"><img src="images/attorneys/S.H. BONG.png" alt="S.H. Bong" class="attorney-photo"><div class="attorney-info"><div class="attorney-name">Atty. S.H. Bong</div></div></div>
+                                    <div class="attorney-card"><img src="images/attorneys/J.W. MIN.png" alt="J.W. Min" class="attorney-photo"><div class="attorney-info"><div class="attorney-name">Atty. J.W. Min</div></div></div>
+                                    <div class="attorney-card"><img src="images/attorneys/D.H. NAM.png" alt="D.H. Nam" class="attorney-photo"><div class="attorney-info"><div class="attorney-name">Atty. D.H. Nam</div></div></div>
+                                    <div class="attorney-card"><img src="images/attorneys/S.C. KIM.png" alt="S.C. Kim" class="attorney-photo"><div class="attorney-info"><div class="attorney-name">Atty. S.C. Kim</div></div></div>
+                                    <div class="attorney-card"><img src="images/attorneys/Y.H. HWANG.jpg" alt="Y.H. Hwang" class="attorney-photo"><div class="attorney-info"><div class="attorney-name">Atty. Y.H. Hwang</div></div></div>
+                                    <div class="attorney-card"><img src="images/attorneys/D.G. SHIN.jpg" alt="D.G. Shin" class="attorney-photo"><div class="attorney-info"><div class="attorney-name">Atty. D.G. Shin</div></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <a href="https://pf.kakao.com/_jACnn" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; margin-top: 20px; padding: 14px; background: #FEE500; color: #191919; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none;" data-i18n="feu.login.kakao">KakaoTalk으로 문의하기</a>
+                <div style="display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap;">
+                    <a href="https://wa.me/821087624285" target="_blank" rel="noopener noreferrer" style="flex: 1; min-width: 140px; padding: 14px; background: #25D366; color: #FFFFFF; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none;" data-i18n="feu.login.whatsapp">WhatsApp으로 문의하기</a>
+                    <a href="https://pf.kakao.com/_jACnn" target="_blank" rel="noopener noreferrer" style="flex: 1; min-width: 140px; padding: 14px; background: #FEE500; color: #191919; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none;" data-i18n="feu.login.kakao">KakaoTalk으로 문의하기</a>
+                </div>
             </div>
         </div>
 
@@ -649,14 +703,6 @@
 
             // Load existing threads
             await loadMyThreads(user.id);
-
-            // Bind service item clicks
-            document.querySelectorAll('.service-item').forEach(function(item) {
-                item.addEventListener('click', function() {
-                    const serviceId = this.getAttribute('data-service');
-                    if (serviceId) goToService(serviceId);
-                });
-            });
         });
 
         async function loadMyThreads(userId) {
