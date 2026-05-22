@@ -1723,32 +1723,11 @@
 
                 const consentData = getConsentData();
 
-                const profileSummary = `
-**Basic Information Submitted**
-
-**Personal Info:**
-- Name: ${formData.get('lastName')} ${formData.get('firstName')}
-- Date of Birth: ${formData.get('birthDate')}
-- Phone: ${formData.get('phone')}
-- Nationality: ${formData.get('nationality')}
-- Messenger: ${formData.get('preferredMessenger')} - ${formData.get('messengerId')}
-
-**Residence Info:**
-- Visa Type: ${formData.get('visaType')}
-- Visa Expiry: ${formData.get('stayExpiry')}
-- ARC Number: ${formData.get('foreignerNumber')}
-- Address: ${formData.get('address')} ${formData.get('detailAddress')}
-
-**Uploaded Documents:**
-${uploadedFiles.map(f => `- ${f.name}`).join('\n')}
-
-**Consent (v${consentData.consent_version}):**
-- Personal Info Collection: ${consentData.privacy_collection ? 'Agreed' : 'Not agreed'}
-- Third Party Provision: ${consentData.third_party_provision ? 'Agreed' : 'Not agreed'}
-- Immigration Delegation: ${consentData.delegation ? 'Agreed' : 'Not agreed'}
-- Terms & Privacy Policy: ${consentData.terms_and_privacy_policy ? 'Agreed' : 'Not agreed'}
-- Consented at: ${consentData.consented_at}
-                `.trim();
+                // 마크다운 렌더링이 없는 사용자 thread 화면에서 `**` 등 리터럴이 노출되는 문제 해결.
+                // 상세 개인정보·체류정보·동의기록은 profiles / consent_records 테이블과 좌측 사이드바에 그대로 보존됨.
+                const profileSummary = (typeof i18n !== 'undefined' && typeof i18n.translate === 'function')
+                    ? i18n.translate('thread.message.basicInfoSubmitted')
+                    : '개인정보 제출 완료';
 
                 // 1. Create summary message
                 await createMessage({

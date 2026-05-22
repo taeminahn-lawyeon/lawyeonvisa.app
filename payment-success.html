@@ -544,6 +544,7 @@
                         paymentKey,
                         orderId,
                         amount: Number(amount),
+                        serviceId: paymentInfo?.serviceId || null,
                         threadData: {
                             service_name: serviceName,
                             organization: paymentInfo?.organization || 'general',
