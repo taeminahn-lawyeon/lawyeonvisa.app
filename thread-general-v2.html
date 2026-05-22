@@ -2827,7 +2827,15 @@
                     }
                 });
 
-                container.innerHTML = result.data.map(msg => renderMessageCard(msg)).join('');
+                // profile-submit.html이 첨부파일마다 생성한 file-only 메시지 (content === file_name)는
+                // 좌측/우측 사이드바의 첨부파일 영역에서 별도로 표시되므로 본문 메시지 흐름에서는 숨김
+                const visibleMessages = result.data.filter(msg => {
+                    const content = (msg.content || '').trim();
+                    const isFileOnlyMessage = msg.file_url && content === (msg.file_name || '').trim();
+                    return !isFileOnlyMessage;
+                });
+
+                container.innerHTML = visibleMessages.map(msg => renderMessageCard(msg)).join('');
 
                 // Scroll to bottom
                 window.scrollTo(0, document.body.scrollHeight);
