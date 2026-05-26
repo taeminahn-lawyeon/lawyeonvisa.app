@@ -2806,6 +2806,15 @@ Cam on.`,
                     mn: 'Үндсэн мэдээллээ илгээнэ үү.',
                     th: 'กรุณาส่งข้อมูลพื้นฐาน'
                 },
+                consultationStarted: {
+                    ko: '상담이 시작되었습니다.\n\n전문가가 내용을 확인한 후 안내해 드립니다.',
+                    en: 'Your consultation has started.\n\nA specialist will review and guide you.',
+                    zh: '咨询已开始。\n\n专员将查看后为您提供指导。',
+                    vi: 'Buổi tư vấn đã bắt đầu.\n\nChuyên viên sẽ xem xét và hướng dẫn bạn.',
+                    ja: '相談が開始されました。\n\n専門家が内容を確認のうえご案内いたします。',
+                    mn: 'Зөвлөгөө эхэллээ.\n\nМэргэжилтэн агуулгыг хянаад танд зөвлөнө.',
+                    th: 'การปรึกษาได้เริ่มขึ้นแล้ว\n\nผู้เชี่ยวชาญจะตรวจสอบและให้คำแนะนำแก่คุณ'
+                },
                 quoteSubmitted: {
                     ko: '견적 요청이 제출되었습니다!\n\n담당자가 곧 전용 쓰레드를 통해 연락드리겠습니다.',
                     en: 'Quote request submitted!\n\nOur specialist will contact you shortly through your dedicated thread.',
@@ -3242,7 +3251,11 @@ ${window.location.origin}/profile-submit.html?thread=${threadId}`;
                     let welcomeMessage;
                     const profileUrl = `${window.location.origin}/profile-submit.html?thread=${threadId}`;
                     const universityOrgs = { 'chosun': 'Chosun University', 'feu': 'Far East University' };
-                    if (universityOrgs[organization] && lectureCode) {
+                    const deferredServiceId = urlParams.get('service');
+                    if (deferredServiceId === 'pre-consultation') {
+                        // 사전 상담: D-10 신청 안내가 아니라 상담 시작 메시지만 노출
+                        welcomeMessage = `💬 ${getUIMessage('consultationStarted', 'Your consultation has started.')}`;
+                    } else if (universityOrgs[organization] && lectureCode) {
                         welcomeMessage = `📋 **${getUIMessage('d10Started', 'D-10-1 Visa Application Started')}**
 
 **University:** ${universityOrgs[organization]}
