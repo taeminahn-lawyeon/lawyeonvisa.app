@@ -2861,8 +2861,16 @@
             }
         }
 
-        // 해외 송금(Wise) 범용 링크 — 고객이 직접 금액 입력해 송금
-        const WISE_PAY_URL = 'https://wise.com/pay/me/lawyeonvisa';
+        // 법무법인 로연 Wise USD 계좌
+        const WISE_ACCOUNT = {
+            name: '법무법인 로연',
+            accountType: 'Checking',
+            routingNumber: '101019628',
+            accountNumber: '219983695040',
+            bankName: 'Wise US Inc',
+            bankAddress: '108 W 13th St, Wilmington, DE, 19801, United States',
+            swift: 'TRWIUS35XXX'
+        };
 
         function formatQuoteAmount(amount, currency) {
             const n = Number(amount) || 0;
@@ -2898,16 +2906,43 @@
             window.location.href = `${window.location.origin}/payment-quote.html?quote=${quoteId}&thread=${threadId}`;
         }
 
-        // Wise(해외) 송금 — 범용 링크로 이동, 고객이 직접 금액 입력
+        // Wise(해외) 송금 — 계좌 정보 모달 표시
         function payQuoteWise(quoteId) {
             const quote = threadQuotesMap[quoteId];
-            if (!quote) { window.open(WISE_PAY_URL, '_blank'); return; }
-            const amount = formatQuoteAmount(quote.total_amount, quote.currency);
-            const ref = quote.toss_order_id || quoteId;
-            alert(tt('thread.quote.wiseGuide',
-                'Please transfer the amount below via Wise and include the reference number.') +
-                `\n\n${tt('thread.quote.wiseAmount', 'Amount')}: ${amount}\n${tt('thread.quote.wiseRef', 'Reference')}: ${ref}`);
-            window.open(WISE_PAY_URL, '_blank');
+            const amount = quote ? formatQuoteAmount(quote.total_amount, quote.currency) : '';
+            const ref = quote ? (quote.toss_order_id || quoteId) : quoteId;
+            const a = WISE_ACCOUNT;
+
+            const existing = document.getElementById('wiseInfoModal');
+            if (existing) existing.remove();
+
+            const modalHtml = `
+                <div id="wiseInfoModal" onclick="this.remove()" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:10000;padding:20px;">
+                    <div onclick="event.stopPropagation()" style="background:#fff;border-radius:16px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.3);overflow:hidden;">
+                        <div style="padding:20px 24px;border-bottom:1px solid #E5E7EB;font-weight:700;font-size:17px;color:#191F28;">
+                            Wise 해외 송금 안내
+                        </div>
+                        <div style="padding:20px 24px;font-size:14px;color:#374151;line-height:1.8;">
+                            ${amount ? `<div style="background:#EFF6FF;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-weight:700;color:#1D4ED8;font-size:15px;">송금 금액: ${amount}</div>` : ''}
+                            <div style="background:#F9FAFB;border-radius:10px;padding:14px 16px;margin-bottom:16px;">
+                                <div style="margin-bottom:8px;"><span style="color:#6B7684;">수취인</span><br><strong>${a.name}</strong></div>
+                                <div style="margin-bottom:8px;"><span style="color:#6B7684;">계좌 유형</span><br><strong>${a.accountType}</strong></div>
+                                <div style="margin-bottom:8px;"><span style="color:#6B7684;">Routing Number</span><br><strong>${a.routingNumber}</strong></div>
+                                <div style="margin-bottom:8px;"><span style="color:#6B7684;">Account Number</span><br><strong>${a.accountNumber}</strong></div>
+                                <div style="margin-bottom:8px;"><span style="color:#6B7684;">은행</span><br><strong>${a.bankName}</strong><br><span style="font-size:12px;color:#9CA3AF;">${a.bankAddress}</span></div>
+                                <div><span style="color:#6B7684;">Swift/BIC (미국 외)</span><br><strong>${a.swift}</strong></div>
+                            </div>
+                            <div style="background:#FFFBEB;border-radius:10px;padding:12px 16px;font-size:13px;color:#92400E;">
+                                송금 시 참조번호(Reference)에 <strong>${ref}</strong>를 입력해 주세요.<br>
+                                송금 완료 후 담당자가 확인 후 결제 처리를 완료합니다.
+                            </div>
+                        </div>
+                        <div style="padding:16px 24px;border-top:1px solid #E5E7EB;text-align:right;">
+                            <button onclick="document.getElementById('wiseInfoModal').remove()" style="padding:10px 20px;background:#3182F6;color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer;">확인</button>
+                        </div>
+                    </div>
+                </div>`;
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
         }
 
         function renderMessageCard(msg) {
