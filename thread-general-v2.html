@@ -2075,7 +2075,7 @@
 
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-client.js?v=20250126"></script>
+    <script src="js/supabase-client.js?v=20260527"></script>
     <script src="js/notification-service.js?v=20260506"></script>
     <script src="js/business-immigration.js?v=20260423"></script>
     <script src="js/ui-components.js?v=20260206"></script>
@@ -2790,8 +2790,24 @@
         let submittedSurveys = new Set();
         let latestSurveyRequestMsgId = {};
 
+        // 견적 상태 맵 (quoteId -> quote) — 카드 렌더 시 버튼/배지 결정
+        let threadQuotesMap = {};
+
+        async function loadThreadQuotesMap() {
+            try {
+                const result = await getThreadQuotes(threadId);
+                threadQuotesMap = {};
+                if (result.success) {
+                    (result.data || []).forEach(q => { threadQuotesMap[q.id] = q; });
+                }
+            } catch (e) {
+                console.error('견적 로딩 실패:', e);
+            }
+        }
+
         async function loadMessages() {
             try {
+                await loadThreadQuotesMap();
                 const result = await getMessages(threadId);
 
                 if (!result.success) {
@@ -2843,6 +2859,55 @@
             } catch (error) {
                 console.error('Error loading messages:', error);
             }
+        }
+
+        // 해외 송금(Wise) 범용 링크 — 고객이 직접 금액 입력해 송금
+        const WISE_PAY_URL = 'https://wise.com/pay/me/lawyeonvisa';
+
+        function formatQuoteAmount(amount, currency) {
+            const n = Number(amount) || 0;
+            if (currency === 'KRW') return '₩' + n.toLocaleString('ko-KR');
+            return n.toLocaleString() + ' ' + (currency || 'KRW');
+        }
+
+        // 견적 마커를 고객 화면용 결제 버튼/완료 배지로 치환
+        function renderQuoteMarker(content) {
+            return content.replace(
+                /<span class="quote-action-marker"[^>]*data-quote-id="([^"]+)"[^>]*>[^<]*<\/span>/g,
+                (match, quoteId) => {
+                    const quote = threadQuotesMap[quoteId];
+                    const status = quote ? quote.status : 'sent';
+                    if (status === 'paid') {
+                        return `<span class="survey-completed-badge">${tt('thread.quote.paid', '✓ Payment Completed')}</span>`;
+                    }
+                    if (status === 'expired' || status === 'cancelled') {
+                        return `<span style="display: inline-block; background: #F3F4F6; color: #9CA3AF; padding: 8px 16px; border-radius: 8px; font-size: 14px;">${tt('thread.quote.expired', 'This quote has expired.')}</span>`;
+                    }
+                    const tossLabel = tt('thread.quote.payToss', 'Pay (Domestic Card)');
+                    const wiseLabel = tt('thread.quote.payWise', 'Pay from Overseas (Wise)');
+                    return `<div style="display: flex; flex-wrap: wrap; gap: 8px;">
+<button class="survey-cta-btn" onclick="payQuoteToss('${quoteId}')">${tossLabel}</button>
+<button onclick="payQuoteWise('${quoteId}')" style="background: #fff; color: #3182F6; border: 1px solid #3182F6; padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer;">${wiseLabel}</button>
+</div>`;
+                }
+            );
+        }
+
+        // Toss(국내) 결제 — 견적 기반 결제 페이지로 이동
+        function payQuoteToss(quoteId) {
+            window.location.href = `${window.location.origin}/payment-quote.html?quote=${quoteId}&thread=${threadId}`;
+        }
+
+        // Wise(해외) 송금 — 범용 링크로 이동, 고객이 직접 금액 입력
+        function payQuoteWise(quoteId) {
+            const quote = threadQuotesMap[quoteId];
+            if (!quote) { window.open(WISE_PAY_URL, '_blank'); return; }
+            const amount = formatQuoteAmount(quote.total_amount, quote.currency);
+            const ref = quote.toss_order_id || quoteId;
+            alert(tt('thread.quote.wiseGuide',
+                'Please transfer the amount below via Wise and include the reference number.') +
+                `\n\n${tt('thread.quote.wiseAmount', 'Amount')}: ${amount}\n${tt('thread.quote.wiseRef', 'Reference')}: ${ref}`);
+            window.open(WISE_PAY_URL, '_blank');
         }
 
         function renderMessageCard(msg) {
@@ -2927,6 +2992,11 @@
                         );
                     }
                 }
+            }
+
+            // 견적 카드: 마커를 결제 버튼/완료 배지로 치환 (고객 화면)
+            if (content.includes('quote-action-marker')) {
+                content = renderQuoteMarker(content);
             }
 
             // Handle file attachments - check both attachments JSONB and individual file columns

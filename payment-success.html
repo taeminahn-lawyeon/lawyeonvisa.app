@@ -518,6 +518,13 @@
                     return;
                 }
 
+                // 견적(quote) 기반 결제: 기존 스레드에 귀속 — 신규 스레드 생성 안 함
+                const quoteId = urlParams.get('quote');
+                if (quoteId) {
+                    await handleQuotePaymentSuccess({ quoteId, orderId, paymentKey, amount });
+                    return;
+                }
+
                 // sessionStorage에서 결제 정보 가져오기
                 const pendingPayment = sessionStorage.getItem('pendingPayment');
                 let paymentInfo = null;
@@ -644,6 +651,49 @@
                 displayError(t('payment.success.error.processing', '결제 처리 중 오류가 발생했습니다.\n\n고객센터로 문의해주세요.'));
             }
         });
+
+        // 견적 기반 결제 승인 — confirm-payment 가 quoteId 로 금액/소유권/상태 검증 후 quote 를 paid 처리
+        async function handleQuotePaymentSuccess({ quoteId, orderId, paymentKey, amount }) {
+            try {
+                const supabaseUrl = 'https://gqistzsergddnpcvuzba.supabase.co';
+                const confirmResponse = await fetch(`${supabaseUrl}/functions/v1/confirm-payment`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${(await supabaseClient.auth.getSession()).data.session?.access_token}`
+                    },
+                    body: JSON.stringify({
+                        paymentKey,
+                        orderId,
+                        amount: Number(amount),
+                        quoteId
+                    })
+                });
+
+                const confirmResult = await confirmResponse.json();
+                if (!confirmResult.success) {
+                    console.error('❌ 견적 결제 승인 실패:', confirmResult);
+                    displayError(`${t('payment.success.error.confirmFailed', '결제 승인 실패')}: ${confirmResult.message || t('common.unknownError', '알 수 없는 오류')}`);
+                    return;
+                }
+
+                const tossPaymentData = confirmResult.data;
+                const threadId = confirmResult.threadId || (confirmResult.quote && confirmResult.quote.thread_id) || null;
+                if (threadId) createdThreadId = threadId;
+
+                const paymentData = {
+                    order_id: orderId,
+                    service_name: tossPaymentData.orderName || t('payment.success.quoteService', '견적 결제'),
+                    amount: tossPaymentData.totalAmount || Number(amount),
+                    payment_method: tossPaymentData.method || 'card'
+                };
+
+                displaySuccess(paymentData, threadId ? { id: threadId } : null);
+            } catch (error) {
+                console.error('❌ 견적 결제 처리 오류:', error);
+                displayError(t('payment.success.error.processing', '결제 처리 중 오류가 발생했습니다.\n\n고객센터로 문의해주세요.'));
+            }
+        }
 
         // Supabase에 쓰레드 생성
         async function createThreadFromPayment(paymentData) {

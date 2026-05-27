@@ -614,6 +614,102 @@ async function updatePaymentStatus(paymentId, status, paymentKey = null) {
 }
 
 // ============================================
+// 견적(quote) 관련 함수
+// ============================================
+
+// 견적 생성 (관리자) — 스레드 내 결제 링크 발송용
+async function createQuote(quoteData) {
+    try {
+        const user = await getCurrentUser();
+        if (!user) throw new Error('로그인이 필요합니다');
+
+        const agencyFee = Number(quoteData.agency_fee) || 0;
+        const govtFee = Number(quoteData.govt_fee) || 0;
+        const totalAmount = Number(quoteData.total_amount) || (agencyFee + govtFee);
+
+        const insertData = {
+            thread_id: quoteData.thread_id,
+            created_by: user.id,
+            agency_fee: agencyFee,
+            govt_fee: govtFee,
+            total_amount: totalAmount,
+            currency: quoteData.currency || 'KRW',
+            toss_order_id: 'QUO' + Date.now(),
+            status: 'sent'
+        };
+        if (quoteData.expires_at) insertData.expires_at = quoteData.expires_at;
+
+        const { data, error } = await supabaseClient
+            .from('quotes')
+            .insert(insertData)
+            .select()
+            .single();
+
+        if (error) throw error;
+        return { success: true, data };
+    } catch (error) {
+        console.error('견적 생성 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// 견적 단건 조회 (RLS: 본인 스레드 또는 관리자만)
+async function getQuote(quoteId) {
+    try {
+        const { data, error } = await supabaseClient
+            .from('quotes')
+            .select('*')
+            .eq('id', quoteId)
+            .single();
+
+        if (error) throw error;
+        return { success: true, data };
+    } catch (error) {
+        console.error('견적 조회 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// 스레드의 모든 견적 조회 (카드 렌더용 상태 맵)
+async function getThreadQuotes(threadId) {
+    try {
+        const { data, error } = await supabaseClient
+            .from('quotes')
+            .select('*')
+            .eq('thread_id', threadId)
+            .order('created_at', { ascending: true });
+
+        if (error) throw error;
+        return { success: true, data };
+    } catch (error) {
+        console.error('스레드 견적 조회 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// 견적 수동 결제 완료 처리 (관리자) — 주로 Wise 해외 송금 확인 후
+async function markQuotePaid(quoteId, paidVia = 'wise') {
+    try {
+        const { data, error } = await supabaseClient
+            .from('quotes')
+            .update({
+                status: 'paid',
+                paid_via: paidVia,
+                paid_at: new Date().toISOString()
+            })
+            .eq('id', quoteId)
+            .select()
+            .single();
+
+        if (error) throw error;
+        return { success: true, data };
+    } catch (error) {
+        console.error('견적 결제 완료 처리 오류:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// ============================================
 // 쓰레드 관련 추가 함수
 // ============================================
 

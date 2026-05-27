@@ -108,7 +108,7 @@ serve(async (req) => {
 
     // 2. 요청 본문 파싱
     const requestBody = await req.json()
-    const { paymentKey, orderId, amount, threadData, serviceId } = requestBody
+    const { paymentKey, orderId, amount, threadData, serviceId, quoteId } = requestBody
 
     // 3. 필수 파라미터 검증
     if (!paymentKey || !orderId || !amount) {
@@ -172,6 +172,66 @@ serve(async (req) => {
           { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         )
       }
+    }
+
+    // 4-2. 견적(quote) 기반 결제: 저장된 견적과 대조 (위변조/소유권/상태 검증)
+    let quoteRecord: Record<string, unknown> | null = null
+    if (quoteId) {
+      const quoteRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+      if (!quoteRoleKey) {
+        console.error('❌ SERVICE_ROLE_KEY 미설정 - 견적 검증 불가')
+        return new Response(
+          JSON.stringify({ success: false, error: 'SERVER_CONFIG_ERROR', message: '서버 설정 오류입니다.' }),
+          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+      const adminClient = createClient(supabaseUrl, quoteRoleKey)
+      const { data: quote, error: quoteError } = await adminClient
+        .from('quotes')
+        .select('*, threads!inner(user_id)')
+        .eq('id', quoteId)
+        .single()
+
+      if (quoteError || !quote) {
+        return new Response(
+          JSON.stringify({ success: false, error: 'QUOTE_NOT_FOUND', message: '견적을 찾을 수 없습니다.' }),
+          { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
+      // 소유권 검증: 견적이 속한 스레드 소유자 == 인증 사용자
+      if (quote.threads?.user_id !== user.id) {
+        console.error('🚨 견적 소유권 불일치:', { quoteId, owner: quote.threads?.user_id, userId: user.id })
+        return new Response(
+          JSON.stringify({ success: false, error: 'FORBIDDEN', message: '이 견적에 대한 결제 권한이 없습니다.' }),
+          { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
+      // 상태/만료 검증
+      if (quote.status !== 'sent') {
+        return new Response(
+          JSON.stringify({ success: false, error: 'QUOTE_NOT_PAYABLE', message: '이미 결제되었거나 결제할 수 없는 견적입니다.' }),
+          { status: 409, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+      if (quote.expires_at && new Date(quote.expires_at as string) < new Date()) {
+        return new Response(
+          JSON.stringify({ success: false, error: 'QUOTE_EXPIRED', message: '만료된 견적입니다.' }),
+          { status: 410, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
+      // 금액 위변조 검증
+      if (Number(quote.total_amount) !== numericAmount) {
+        console.error('🚨 견적 금액 위변조 의심:', { quoteId, expected: quote.total_amount, received: numericAmount, userId: user.id })
+        return new Response(
+          JSON.stringify({ success: false, error: 'AMOUNT_MISMATCH', message: '결제 금액이 견적 금액과 일치하지 않습니다.' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
+      quoteRecord = quote
     }
 
     // 5. 중복 결제 승인 방지 (Idempotency)
@@ -250,6 +310,7 @@ serve(async (req) => {
 
     // 9. 결제 정보 DB 저장 + 쓰레드 생성 (서버사이드)
     let createdThread = null
+    let paidQuoteThreadId: string | null = null
     const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
 
     if (serviceRoleKey) {
@@ -270,8 +331,36 @@ serve(async (req) => {
         console.log('결제 로그 저장 실패 (무시):', logError)
       }
 
-      // 10. 쓰레드 생성 (threadData가 전달된 경우)
-      if (threadData && threadData.service_name) {
+      // 9-1. 견적 결제: quote 를 paid 처리하고 기존 스레드 금액 갱신 (신규 스레드 생성 X)
+      if (quoteRecord) {
+        const quoteThreadId = quoteRecord.thread_id as string
+        paidQuoteThreadId = quoteThreadId
+        try {
+          await adminSupabase
+            .from('quotes')
+            .update({
+              status: 'paid',
+              paid_via: 'toss',
+              payment_key: paymentKey,
+              paid_at: new Date().toISOString()
+            })
+            .eq('id', quoteRecord.id as string)
+            .eq('status', 'sent')  // 동시성: 이미 paid 면 갱신 안 됨
+
+          await adminSupabase
+            .from('threads')
+            .update({
+              amount: Number(quoteRecord.total_amount) || numericAmount,
+              government_fee: Number(quoteRecord.govt_fee) || 0,
+              updated_at: new Date().toISOString()
+            })
+            .eq('id', quoteThreadId)
+        } catch (quoteErr) {
+          console.error('❌ 견적 결제 반영 오류 (결제는 성공):', quoteErr)
+        }
+      }
+      // 10. 쓰레드 생성 (threadData가 전달된 경우 — 카탈로그 결제 흐름)
+      else if (threadData && threadData.service_name) {
         try {
           console.log('🔄 쓰레드 생성 시작 (서버사이드):', {
             userId: user.id,
@@ -351,7 +440,9 @@ serve(async (req) => {
           customerName: result.customerName || null,
           customerEmail: result.customerEmail || null
         },
-        thread: createdThread
+        thread: createdThread,
+        threadId: paidQuoteThreadId,
+        quote: quoteRecord ? { id: quoteRecord.id, thread_id: paidQuoteThreadId } : null
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
