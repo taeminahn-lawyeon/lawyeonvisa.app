@@ -623,17 +623,16 @@ async function createQuote(quoteData) {
         const user = await getCurrentUser();
         if (!user) throw new Error('로그인이 필요합니다');
 
-        const agencyFee = Number(quoteData.agency_fee) || 0;
-        const govtFee = Number(quoteData.govt_fee) || 0;
-        const totalAmount = Number(quoteData.total_amount) || (agencyFee + govtFee);
+        const totalAmount = Number(quoteData.total_amount) || 0;
 
         const insertData = {
             thread_id: quoteData.thread_id,
             created_by: user.id,
-            agency_fee: agencyFee,
-            govt_fee: govtFee,
+            agency_fee: 0,
+            govt_fee: 0,
             total_amount: totalAmount,
             currency: quoteData.currency || 'KRW',
+            payment_method: quoteData.payment_method || 'toss',
             toss_order_id: 'QUO' + Date.now(),
             status: 'sent'
         };

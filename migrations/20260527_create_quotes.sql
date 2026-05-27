@@ -16,6 +16,9 @@ CREATE TABLE IF NOT EXISTS public.quotes (
   status        text    NOT NULL DEFAULT 'sent'
                   CHECK (status IN ('sent','paid','expired','cancelled')),
 
+  payment_method text   NOT NULL DEFAULT 'toss'
+                  CHECK (payment_method IN ('toss','wise')),
+
   toss_order_id text,
   payment_key   text,
   paid_via      text CHECK (paid_via IS NULL OR paid_via IN ('toss','wise')),
@@ -36,29 +39,41 @@ ALTER TABLE public.quotes ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS quotes_owner_select ON public.quotes;
 CREATE POLICY quotes_owner_select
   ON public.quotes
-  FOR SELECT TO authenticated
-  USING (EXISTS (
-    SELECT 1 FROM public.threads
-    WHERE threads.id = quotes.thread_id
-      AND threads.user_id = auth.uid()
-  ));
+  FOR SELECT
+  USING (
+    thread_id IN (SELECT id FROM public.threads WHERE user_id = auth.uid())
+  );
 
 -- 관리자(super_admin/admin/staff): 전체 작업
--- threads/payments 와 동일하게 public.admins 테이블 기반 검증
+-- admins 테이블 또는 profiles.role 기준으로 폭넓게 허용
 DROP POLICY IF EXISTS quotes_admin_all ON public.quotes;
 CREATE POLICY quotes_admin_all
   ON public.quotes
-  FOR ALL TO authenticated
-  USING (EXISTS (
-    SELECT 1 FROM public.admins
-    WHERE email = (SELECT email FROM auth.users WHERE id = auth.uid())
-      AND role IN ('super_admin','admin','staff')
-  ))
-  WITH CHECK (EXISTS (
-    SELECT 1 FROM public.admins
-    WHERE email = (SELECT email FROM auth.users WHERE id = auth.uid())
-      AND role IN ('super_admin','admin','staff')
-  ));
+  FOR ALL
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.admins
+      WHERE email = (SELECT email FROM auth.users WHERE id = auth.uid())
+        AND role IN ('super_admin','admin','staff')
+    )
+    OR EXISTS (
+      SELECT 1 FROM public.profiles
+      WHERE id = auth.uid()
+        AND role::text IN ('super_admin','admin','staff')
+    )
+  )
+  WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM public.admins
+      WHERE email = (SELECT email FROM auth.users WHERE id = auth.uid())
+        AND role IN ('super_admin','admin','staff')
+    )
+    OR EXISTS (
+      SELECT 1 FROM public.profiles
+      WHERE id = auth.uid()
+        AND role::text IN ('super_admin','admin','staff')
+    )
+  );
 
 DO $$
 BEGIN

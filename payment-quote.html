@@ -49,8 +49,6 @@
         <div id="loading" class="state">불러오는 중...</div>
         <div id="error" class="state error" style="display:none;"></div>
         <div id="quoteBody" style="display:none;">
-            <div class="row"><span>대행 보수 / Agency Fee</span><span id="agencyFee">-</span></div>
-            <div class="row"><span>관납료 / Gov. Fee</span><span id="govtFee">-</span></div>
             <div class="row total"><span>합계 / Total</span><span id="totalAmount">-</span></div>
             <button id="payBtn" class="pay-btn" onclick="payNow()">카드로 결제하기 / Pay with Card</button>
         </div>
@@ -58,7 +56,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-client.js?v=20260527"></script>
+    <script src="js/supabase-client.js?v=20260527b"></script>
     <script>
         const clientKey = window.__PAYMENT_CONFIG__?.tossClientKey;
         let tossPayments = null;
@@ -111,8 +109,6 @@
                 return;
             }
 
-            document.getElementById('agencyFee').textContent = fmt(currentQuote.agency_fee, currentQuote.currency);
-            document.getElementById('govtFee').textContent = fmt(currentQuote.govt_fee, currentQuote.currency);
             document.getElementById('totalAmount').textContent = fmt(currentQuote.total_amount, currentQuote.currency);
 
             try { tossPayments = TossPayments(clientKey); }
