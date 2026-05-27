@@ -2073,6 +2073,12 @@
         </div>
     </div>
 
+    <!-- Toss Payments SDK -->
+    <script>
+        window.__PAYMENT_CONFIG__ = { tossClientKey: 'live_ck_mBZ1gQ4YVX55PNLM1vkarl2KPoqN' };
+    </script>
+    <script src="https://js.tosspayments.com/v1/payment"></script>
+
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=20260527b"></script>
@@ -2374,6 +2380,8 @@
         let isAdmin = false;
         let quillEditor = null;
         let pendingFiles = [];
+        let tossPaymentsInstance = null;
+        try { tossPaymentsInstance = TossPayments(window.__PAYMENT_CONFIG__.tossClientKey); } catch(e) { console.warn('Toss SDK init failed:', e); }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', async function() {
@@ -2895,9 +2903,41 @@
             );
         }
 
-        // Toss(국내) 결제 — 견적 기반 결제 페이지로 이동
-        function payQuoteToss(quoteId) {
-            window.location.href = `${window.location.origin}/payment-quote.html?quote=${quoteId}&thread=${threadId}`;
+        // Toss(국내) 결제 — 스레드에서 바로 Toss 결제창 실행
+        async function payQuoteToss(quoteId) {
+            if (!tossPaymentsInstance) {
+                alert('결제 모듈을 불러오지 못했습니다. 페이지를 새로고침 후 다시 시도해 주세요.');
+                return;
+            }
+            const quote = threadQuotesMap[quoteId];
+            if (!quote) { alert('견적 정보를 찾을 수 없습니다.'); return; }
+
+            const session = await checkSession();
+            const profileResult = session?.user ? await getUserProfile(session.user.id) : null;
+            const profile = (profileResult && profileResult.success) ? profileResult.data : null;
+
+            const origin = window.location.origin;
+            const paymentRequest = {
+                amount: quote.total_amount,
+                orderId: quote.toss_order_id,
+                orderName: 'Visa Service Quote',
+                successUrl: `${origin}/payment-success.html?quote=${quoteId}`,
+                failUrl: `${origin}/payment-fail.html`,
+                customerEmail: profile?.email || session?.user?.email || '',
+                customerName: profile?.name || session?.user?.email || ''
+            };
+            if (profile?.phone && profile.phone.trim()) {
+                paymentRequest.customerMobilePhone = profile.phone.replace(/-/g, '');
+            }
+
+            try {
+                await tossPaymentsInstance.requestPayment('카드', paymentRequest);
+            } catch (error) {
+                if (error.code !== 'PAY_PROCESS_CANCELED') {
+                    console.error('Toss payment error:', error);
+                    alert('결제 처리 중 오류가 발생했습니다.');
+                }
+            }
         }
 
         // Wise(해외) 송금 — Wise 결제 링크로 바로 이동, 고객이 금액 입력해 송금
