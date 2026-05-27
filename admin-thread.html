@@ -1524,7 +1524,7 @@
 
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-client.js?v=20260527"></script>
+    <script src="js/supabase-client.js?v=20260527b"></script>
     <script src="js/notification-service.js?v=20260506"></script>
     <script src="js/business-immigration.js?v=20260423"></script>
     <script src="js/ui-components.js?v=20260206"></script>
@@ -1750,10 +1750,11 @@
         // status 별 버튼/배지 치환은 고객/관리자 렌더 단계에서 수행
         function buildQuoteCardHtml(quote) {
             const total = formatQuoteAmount(quote.total_amount, quote.currency);
+            const method = quote.payment_method || 'toss';
             return `<div class="quote-card" data-quote-id="${quote.id}" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
 <div class="quote-card-title" style="font-weight: 700; color: #191F28; margin-bottom: 12px;">결제 안내</div>
 <div style="display: flex; justify-content: space-between; font-weight: 700; color: #191F28; font-size: 18px; margin-bottom: 14px;"><span>합계</span><span>${total}</span></div>
-<span class="quote-action-marker" data-action="quote-pay" data-quote-id="${quote.id}" data-total="${quote.total_amount}" data-currency="${quote.currency}">결제하기</span>
+<span class="quote-action-marker" data-action="quote-pay" data-quote-id="${quote.id}" data-total="${quote.total_amount}" data-currency="${quote.currency}" data-method="${method}">결제하기</span>
 </div>`;
         }
 
@@ -1766,17 +1767,24 @@
                     <div style="background: white; border-radius: 16px; width: 90%; max-width: 460px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden;">
                         <div style="padding: 20px 24px; border-bottom: 1px solid #E5E7EB; font-weight: 700; font-size: 18px; color: #191F28;">견적 보내기</div>
                         <div style="padding: 24px;">
+                            <label style="display: block; font-size: 14px; color: #374151; margin-bottom: 6px;">결제 수단</label>
+                            <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+                                <label style="flex: 1; display: flex; align-items: center; gap: 8px; padding: 12px; border: 1px solid #D1D5DB; border-radius: 8px; cursor: pointer;">
+                                    <input type="radio" name="quoteMethod" value="toss" checked> 국내 카드 (Toss)
+                                </label>
+                                <label style="flex: 1; display: flex; align-items: center; gap: 8px; padding: 12px; border: 1px solid #D1D5DB; border-radius: 8px; cursor: pointer;">
+                                    <input type="radio" name="quoteMethod" value="wise"> 해외 송금 (Wise)
+                                </label>
+                            </div>
                             <label style="display: block; font-size: 14px; color: #374151; margin-bottom: 6px;">통화</label>
                             <select id="quoteCurrency" onchange="updateQuoteTotal()" style="width: 100%; padding: 10px 12px; border: 1px solid #D1D5DB; border-radius: 8px; margin-bottom: 16px;">
                                 <option value="KRW">KRW (₩)</option>
                                 <option value="USD">USD ($)</option>
                             </select>
-                            <label style="display: block; font-size: 14px; color: #374151; margin-bottom: 6px;">대행 보수</label>
-                            <input type="number" id="quoteAgencyFee" min="0" value="0" oninput="updateQuoteTotal()" style="width: 100%; padding: 10px 12px; border: 1px solid #D1D5DB; border-radius: 8px; margin-bottom: 16px;">
-                            <label style="display: block; font-size: 14px; color: #374151; margin-bottom: 6px;">관납료</label>
-                            <input type="number" id="quoteGovtFee" min="0" value="0" oninput="updateQuoteTotal()" style="width: 100%; padding: 10px 12px; border: 1px solid #D1D5DB; border-radius: 8px; margin-bottom: 16px;">
+                            <label style="display: block; font-size: 14px; color: #374151; margin-bottom: 6px;">합계 금액</label>
+                            <input type="number" id="quoteTotal" min="0" value="0" oninput="updateQuoteTotal()" style="width: 100%; padding: 10px 12px; border: 1px solid #D1D5DB; border-radius: 8px; margin-bottom: 16px;">
                             <div style="display: flex; justify-content: space-between; font-weight: 700; color: #191F28; background: #F3F4F6; padding: 12px 14px; border-radius: 8px;">
-                                <span>합계</span><span id="quoteTotalDisplay">₩0</span>
+                                <span>고객 청구 금액</span><span id="quoteTotalDisplay">₩0</span>
                             </div>
                         </div>
                         <div style="padding: 16px 24px; border-top: 1px solid #E5E7EB; display: flex; gap: 8px; justify-content: flex-end;">
@@ -1794,10 +1802,11 @@
         }
 
         function getQuoteFormValues() {
-            const agency = Number(document.getElementById('quoteAgencyFee').value) || 0;
-            const govt = Number(document.getElementById('quoteGovtFee').value) || 0;
+            const total = Number(document.getElementById('quoteTotal').value) || 0;
             const currency = document.getElementById('quoteCurrency').value || 'KRW';
-            return { agency, govt, currency, total: agency + govt };
+            const methodEl = document.querySelector('input[name="quoteMethod"]:checked');
+            const method = methodEl ? methodEl.value : 'toss';
+            return { total, currency, method };
         }
 
         function updateQuoteTotal() {
@@ -1806,9 +1815,9 @@
         }
 
         async function sendQuote() {
-            const { agency, govt, currency, total } = getQuoteFormValues();
+            const { total, currency, method } = getQuoteFormValues();
             if (total <= 0) {
-                alert('대행 보수 또는 관납료를 입력해 주세요.');
+                alert('합계 금액을 입력해 주세요.');
                 return;
             }
 
@@ -1819,10 +1828,9 @@
             try {
                 const quoteResult = await createQuote({
                     thread_id: threadId,
-                    agency_fee: agency,
-                    govt_fee: govt,
                     total_amount: total,
-                    currency: currency
+                    currency: currency,
+                    payment_method: method
                 });
                 if (!quoteResult.success) throw new Error(quoteResult.error);
 
@@ -2611,8 +2619,14 @@
                     if (status === 'expired' || status === 'cancelled') {
                         return `<span style="display: inline-block; background: #F3F4F6; color: #6B7684; padding: 8px 16px; border-radius: 8px; font-size: 14px;">만료/취소된 견적</span>`;
                     }
-                    // sent: 고객 결제 대기 — 해외 송금 수동 완료 처리 버튼 제공
-                    return `<button onclick="adminMarkQuotePaid('${quoteId}')" style="background: #3182F6; color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer;">해외 송금 결제완료 처리</button>`;
+                    // sent: 결제 대기
+                    // - Wise(해외 송금): 자동 승인 없음 → 관리자 수동 완료 처리 버튼
+                    // - Toss(국내 카드): 고객 결제 시 자동 승인 → 대기 표시만
+                    const method = quote ? quote.payment_method : 'toss';
+                    if (method === 'wise') {
+                        return `<button onclick="adminMarkQuotePaid('${quoteId}')" style="background: #3182F6; color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer;">해외 송금 결제완료 처리</button>`;
+                    }
+                    return `<span style="display: inline-block; background: #FEF3C7; color: #92400E; padding: 8px 16px; border-radius: 8px; font-size: 14px;">고객 카드 결제 대기 중</span>`;
                 }
             );
         }
