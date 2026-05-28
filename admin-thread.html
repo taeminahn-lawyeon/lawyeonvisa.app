@@ -2692,13 +2692,16 @@
                 let attachments = [];
                 for (let file of pendingFiles) {
                     const uploadResult = await uploadFile(file);
-                    if (uploadResult.success) {
-                        attachments.push({
-                            name: file.name,
-                            size: file.size,
-                            url: uploadResult.url
-                        });
+                    if (!uploadResult.success) {
+                        throw new Error(`파일 업로드 실패: ${file.name}${uploadResult.error ? ' — ' + uploadResult.error : ''}`);
                     }
+                    attachments.push({
+                        name: uploadResult.fileName || file.name,
+                        size: file.size,
+                        url: uploadResult.url,
+                        path: uploadResult.path,
+                        type: uploadResult.fileType || file.type
+                    });
                 }
 
                 // Create message
@@ -2725,7 +2728,7 @@
 
             } catch (error) {
                 console.error('Error submitting reply:', error);
-                alert('메시지 전송 중 오류가 발생했습니다.');
+                alert(error?.message ? `메시지 전송 중 오류가 발생했습니다.\n${error.message}` : '메시지 전송 중 오류가 발생했습니다.');
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '전송';
@@ -2734,21 +2737,20 @@
 
         async function uploadFile(file) {
             try {
-                const fileName = `${threadId}/${Date.now()}_${file.name}`;
-                const { data, error } = await supabaseClient.storage
-                    .from('thread-files')
-                    .upload(fileName, file);
-
-                if (error) throw error;
-
-                const { data: urlData } = supabaseClient.storage
-                    .from('thread-files')
-                    .getPublicUrl(fileName);
-
-                return { success: true, url: urlData.publicUrl };
+                const result = await uploadThreadDocument(threadId, file);
+                if (!result.success) {
+                    throw new Error(result.error || 'Upload failed');
+                }
+                return {
+                    success: true,
+                    url: result.data.signedUrl,
+                    path: result.data.path,
+                    fileName: result.data.fileName,
+                    fileType: result.data.fileType
+                };
             } catch (error) {
                 console.error('File upload error:', error);
-                return { success: false };
+                return { success: false, error: error.message };
             }
         }
 
