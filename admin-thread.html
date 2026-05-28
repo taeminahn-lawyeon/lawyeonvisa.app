@@ -490,6 +490,22 @@
             background: #F3F4F6;
         }
 
+        .attachment-image {
+            margin-bottom: 8px;
+            cursor: pointer;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #F9FAFB;
+        }
+
+        .attachment-image img {
+            display: block;
+            max-width: 100%;
+            max-height: 480px;
+            height: auto;
+            border-radius: 10px;
+        }
+
         .attachment-icon {
             width: 40px;
             height: 40px;
@@ -2467,10 +2483,12 @@
             if (!listEl || !countEl) return;
 
             // 모든 메시지에서 첨부파일 수집 (attachments JSONB + 개별 file_url 컬럼 모두 지원)
+            // 이미지는 메시지 본문에 인라인으로 표시되므로 사이드바에서 제외
             const allFiles = [];
             (messages || []).forEach(msg => {
                 if (msg.attachments && msg.attachments.length > 0) {
                     msg.attachments.forEach(att => {
+                        if (isImageAttachment(att)) return;
                         allFiles.push({
                             url: att.url,
                             name: att.name || 'File',
@@ -2480,6 +2498,8 @@
                         });
                     });
                 } else if (msg.file_url) {
+                    const fileLike = { url: msg.file_url, name: msg.file_name || 'File', type: msg.file_type || '' };
+                    if (isImageAttachment(fileLike)) return;
                     allFiles.push({
                         url: msg.file_url,
                         name: msg.file_name || 'File',
@@ -2535,6 +2555,13 @@
             return 'fa-file';
         }
 
+        function isImageAttachment(att) {
+            const type = (att.type || '').toLowerCase();
+            if (type.startsWith('image/')) return true;
+            const name = (att.name || '').toLowerCase();
+            return /\.(jpg|jpeg|png|gif|webp|svg|bmp|heic|heif)$/.test(name);
+        }
+
         function renderMessageCard(msg) {
             const isAdminMessage = msg.sender_type === 'admin' || msg.sender_type === 'staff' || msg.sender_type === 'system' || !msg.sender_id || (msg.sender_id && msg.sender_id !== threadData.user_id);
             const badgeClass = isAdminMessage ? 'admin' : 'client';
@@ -2569,6 +2596,12 @@
                         ${fileAttachments.map(att => {
                             const safeUrl = typeof sanitizeUrl === 'function' ? sanitizeUrl(att.url) : encodeURI(att.url);
                             const safeName = typeof escapeHtml === 'function' ? escapeHtml(att.name) : att.name;
+                            if (isImageAttachment(att)) {
+                                return `
+                            <div class="attachment-image" onclick="downloadFile('${safeUrl}', '${safeName}')">
+                                <img src="${safeUrl}" alt="${safeName}" loading="lazy">
+                            </div>`;
+                            }
                             return `
                             <div class="attachment-item" onclick="downloadFile('${safeUrl}', '${safeName}')">
                                 <div class="attachment-info">
