@@ -69,7 +69,15 @@ const servicePricing = {
         price: { general: 55000, partner: 55000 },
         govFee: 100000,
         description: 'Chosun University special rate',
-        organization: 'chosun'
+        organization: 'chosun',
+        bundledItems: [
+            {
+                key: 'arc-reissue',
+                name: 'Alien Registration Card Reissue',
+                nameKo: '외국인등록증 재발급',
+                amount: 34000
+            }
+        ]
     },
     'd10-2-change': {
         id: 'd10-2-change',
