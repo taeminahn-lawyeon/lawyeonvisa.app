@@ -12,10 +12,9 @@
                 var hash = window.location.hash || '';
                 var isOAuthCallback = hash.indexOf('access_token') !== -1;
                 var pending = sessionStorage.getItem('chosun_pending_login') === 'true';
-                var code = sessionStorage.getItem('chosun_lecture_code');
 
-                // Only hide if we just returned from OAuth AND have pending login + code
-                if (isOAuthCallback && pending && code) {
+                // Only hide if we just returned from OAuth AND have pending login
+                if (isOAuthCallback && pending) {
                     document.documentElement.style.visibility = 'hidden';
                     document.documentElement.style.background = '#0078D4';
                     // Safety: auto-unhide after 5 seconds if redirect fails
@@ -430,13 +429,6 @@
                 </div>
 
                 <form id="applicationForm">
-                    <div class="form-group">
-                        <label class="form-label">
-                            <span data-i18n="chosun.login.lectureCode">Lecture Code</span> <span class="required">*</span>
-                        </label>
-                        <input type="text" class="form-input" id="lectureCode" required>
-                    </div>
-
                     <!-- Language Selector -->
                     <div class="form-group" style="position: relative;">
                         <div class="language-selector" style="width: 100%;">
@@ -480,7 +472,10 @@
                     </div>
                 </div>
 
-                <a href="https://pf.kakao.com/_jACnn" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; margin-top: 16px; padding: 14px; background: #FEE500; color: #191919; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none; transition: all 0.2s;" data-i18n="chosun.login.kakao">KakaoTalk으로 문의하기</a>
+                <div style="display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap;">
+                    <a href="https://wa.me/821087624285" target="_blank" rel="noopener noreferrer" style="flex: 1; min-width: 140px; padding: 14px; background: #25D366; color: #FFFFFF; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none; transition: all 0.2s;" data-i18n="chosun.login.whatsapp">WhatsApp으로 문의하기</a>
+                    <a href="https://pf.kakao.com/_jACnn" target="_blank" rel="noopener noreferrer" style="flex: 1; min-width: 140px; padding: 14px; background: #FEE500; color: #191919; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none; transition: all 0.2s;" data-i18n="chosun.login.kakao">KakaoTalk으로 문의하기</a>
+                </div>
             </div>
         </div>
 
@@ -500,18 +495,14 @@
     <script>
         let currentUser = null;
 
-        // Valid lecture codes for Chosun University
-        const validLectureCodes = ['CHOSUN0410'];
-
         // Handles the post-login redirect logic (called from both
         // initial session check AND onAuthStateChange)
         let _redirectHandled = false;
         async function handlePostLoginRedirect(user) {
             if (_redirectHandled) return;
             const pendingLogin = sessionStorage.getItem('chosun_pending_login');
-            const savedLectureCode = sessionStorage.getItem('chosun_lecture_code');
 
-            if (pendingLogin === 'true' && savedLectureCode) {
+            if (pendingLogin === 'true') {
                 _redirectHandled = true;
                 sessionStorage.removeItem('chosun_pending_login');
                 try {
@@ -527,7 +518,7 @@
                         await updateUserProfile(user.id, { organization: 'chosun' });
                     }
                 } catch (e) { console.error('Profile check error:', e); }
-                window.location.replace(`service-chosun.html?lectureCode=${encodeURIComponent(savedLectureCode)}`);
+                window.location.replace('service-chosun.html');
                 return true;
             }
             return false;
@@ -578,25 +569,10 @@
         });
 
         async function handleGoogleLogin() {
-            const lectureCode = document.getElementById('lectureCode').value.trim();
-
-            // Validate inputs
-            if (!lectureCode) {
-                showError(typeof i18n !== 'undefined' ? i18n.translate('chosun.login.error.lectureCode') : 'Please enter the lecture code.');
-                return;
-            }
-
-            // Validate lecture code
-            if (!validLectureCodes.includes(lectureCode.toUpperCase())) {
-                showError(typeof i18n !== 'undefined' ? i18n.translate('chosun.login.error.invalidCode') : 'Invalid lecture code. Please check and try again.');
-                return;
-            }
-
             hideError();
 
-            // Save lecture code + pending flag BEFORE OAuth redirect
+            // Set pending flag BEFORE OAuth redirect
             // (sessionStorage survives the Google OAuth redirect within the same tab)
-            sessionStorage.setItem('chosun_lecture_code', lectureCode);
             sessionStorage.setItem('chosun_pending_login', 'true');
 
             const btn = document.getElementById('googleLoginBtn');
@@ -637,19 +613,6 @@
                 return;
             }
 
-            const lectureCode = document.getElementById('lectureCode').value.trim();
-
-            if (!lectureCode) {
-                showError(typeof i18n !== 'undefined' ? i18n.translate('chosun.login.error.lectureCode') : 'Please enter the lecture code.');
-                return;
-            }
-
-            // Validate lecture code again
-            if (!validLectureCodes.includes(lectureCode.toUpperCase())) {
-                showError(typeof i18n !== 'undefined' ? i18n.translate('chosun.login.error.invalidCode') : 'Invalid lecture code.');
-                return;
-            }
-
             hideError();
 
             const btn = document.getElementById('submitBtn');
@@ -671,11 +634,8 @@
                     await updateUserProfile(currentUser.id, { organization: 'chosun' });
                 }
 
-                // Store lecture code for later use
-                sessionStorage.setItem('chosun_lecture_code', lectureCode);
-
-                // Redirect to Chosun University service selection page
-                window.location.href = `service-chosun.html?lectureCode=${encodeURIComponent(lectureCode)}`;
+                // Redirect to Chosun service selection page
+                window.location.href = 'service-chosun.html';
             } catch (error) {
                 console.error('Submit error:', error);
                 showError('Failed to proceed. Please try again.');
@@ -687,7 +647,6 @@
 
         async function handleSwitchAccount() {
             await signOut();
-            sessionStorage.removeItem('chosun_lecture_code');
             window.location.reload();
         }
 
