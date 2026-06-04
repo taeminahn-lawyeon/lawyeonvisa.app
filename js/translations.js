@@ -78,6 +78,8 @@ const translations = {
         
         // === 신속 서비스 신청 섹션 (Quick Service Application Section) ===
         'emergency.title': '신속 서비스 신청',
+        'emergency.lead': '어떤 도움이 필요하세요? 상황에 맞는 상담을 선택하세요.',
+        'emergency.freeBadge': '무료',
         'emergency.subtitle': '출입국 전문 변호사가 직접 대응합니다',
         'emergency.legal.title': '출입국 분쟁 해결',
         'emergency.legal.item1': '사범심사 동행 등 출입국사범 구제',
@@ -1354,6 +1356,8 @@ const translations = {
         
         // === Quick Service Application Section ===
         'emergency.title': 'Quick Service Application',
+        'emergency.lead': 'What kind of help do you need? Choose the consultation that fits your situation.',
+        'emergency.freeBadge': 'FREE',
         'emergency.subtitle': 'Expert immigration attorneys at your service',
         'emergency.legal.title': 'Immigration Dispute Resolution',
         'emergency.legal.item1': 'Immigration investigation accompaniment and offender relief',
@@ -2744,6 +2748,8 @@ const translations = {
 
         // === Quick Service Application Section ===
         'emergency.title': '快速服务申请',
+        'emergency.lead': '您需要什么帮助？请选择适合您情况的咨询。',
+        'emergency.freeBadge': '免费',
         'emergency.subtitle': '出入境专业律师亲自应对',
         'emergency.legal.title': '出入境纠纷解决',
         'emergency.legal.item1': '司法审查陪同等出入境违法者救济',
@@ -4151,6 +4157,8 @@ const translations = {
 
         // === Quick Service Application Section ===
         'emergency.title': 'Đăng Ký Dịch Vụ Nhanh',
+        'emergency.lead': 'Bạn cần hỗ trợ gì? Hãy chọn hình thức tư vấn phù hợp với tình huống của bạn.',
+        'emergency.freeBadge': 'MIỄN PHÍ',
         'emergency.subtitle': 'Luật sư chuyên xuất nhập cảnh trực tiếp hỗ trợ',
         'emergency.legal.title': 'Giải Quyết Tranh Chấp Xuất Nhập Cảnh',
         'emergency.legal.item1': 'Hỗ trợ điều tra và cứu trợ vi phạm xuất nhập cảnh',
@@ -5558,6 +5566,8 @@ const translations = {
 
         // === Quick Service Application Section ===
         'emergency.title': 'クイックサービス申請',
+        'emergency.lead': 'どのようなサポートが必要ですか？状況に合ったご相談をお選びください。',
+        'emergency.freeBadge': '無料',
         'emergency.subtitle': '出入国専門弁護士が直接対応します',
         'emergency.legal.title': '出入国紛争解決',
         'emergency.legal.item1': '司法審査同行など出入国犯罪者救済',
@@ -6873,6 +6883,8 @@ const translations = {
 
         // === Quick Service Application Section ===
         'emergency.title': 'Хурдан үйлчилгээний хүсэлт',
+        'emergency.lead': 'Танд ямар тусламж хэрэгтэй вэ? Нөхцөл байдалд тань тохирох зөвлөгөөг сонгоно уу.',
+        'emergency.freeBadge': 'ҮНЭГҮЙ',
         'emergency.subtitle': 'Цагаачлалын мэргэжлийн өмгөөлөгч шууд хариуцна',
         'emergency.legal.title': 'Цагаачлалын маргаан шийдвэрлэх',
         'emergency.legal.item1': 'Мөрдөн байцаалт, цагаачлалын гэмт хэрэгтэн аврах',
@@ -8278,6 +8290,8 @@ const translations = {
 
         // === Quick Service Application Section ===
         'emergency.title': 'สมัครบริการด่วน',
+        'emergency.lead': 'คุณต้องการความช่วยเหลือแบบใด? เลือกการปรึกษาที่เหมาะกับสถานการณ์ของคุณ',
+        'emergency.freeBadge': 'ฟรี',
         'emergency.subtitle': 'ทนายความผู้เชี่ยวชาญด้านตรวจคนเข้าเมืองรับผิดชอบโดยตรง',
         'emergency.legal.title': 'แก้ไขข้อพิพาทตรวจคนเข้าเมือง',
         'emergency.legal.item1': 'สอบสวนร่วมและช่วยเหลือผู้กระทำผิดตรวจคนเข้าเมือง',
