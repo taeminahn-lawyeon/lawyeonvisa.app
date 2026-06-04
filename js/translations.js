@@ -31,7 +31,7 @@ const translations = {
     // ========================================
     ko: {
         // === 방문 상담 예약 (Visit Consultation Booking) ===
-        'home.urgent.cta2': '방문 상담 예약하기',
+        'home.urgent.cta2': '방문 상담 신청',
         // === 공통 요소 (Common Elements) ===
         'common.loading': '로딩 중...',
         'common.error': '오류가 발생했습니다',
@@ -78,22 +78,26 @@ const translations = {
         
         // === 신속 서비스 신청 섹션 (Quick Service Application Section) ===
         'emergency.title': '신속 서비스 신청',
+        'emergency.lead': '어떤 도움이 필요하세요? 상황에 맞는 상담을 선택하세요.',
+        'emergency.freeBadge': '무료',
         'emergency.subtitle': '출입국 전문 변호사가 직접 대응합니다',
         'emergency.legal.title': '출입국 분쟁 해결',
         'emergency.legal.item1': '사범심사 동행 등 출입국사범 구제',
         'emergency.legal.item2': '처분 취소소송 등 국적·체류 관련 불복절차 대리',
         'emergency.legal.item3': '외국인 형사 사건 변호',
         'emergency.legal.cta': '상담 신청',
-        'emergency.diagnosis.title': '비자 법률 자문',
+        'emergency.diagnosis.title': '법률 자문',
         'emergency.diagnosis.item1': '비자 거부·재신청 가능성 검토',
         'emergency.diagnosis.item2': '출입국법 위반·오버스테이 리스크 평가',
         'emergency.diagnosis.item3': '비자 변경 경로 안내',
-        'emergency.diagnosis.cta': '법률 자문 요청',
+        'emergency.diagnosis.cta': '신청하기',
+        'emergency.business.title': '사업이민 자문',
+        'emergency.business.cta': '신청하기',
         'emergency.navigator.title': '서비스 네비게이터',
         'emergency.navigator.item1': '내게 맞는 서비스 찾기',
         'emergency.navigator.item2': '맞춤형 서비스 상담',
         'emergency.navigator.cta': '네비게이터 시작',
-        'emergency.freeConsult.title': '출입국 민원 상담',
+        'emergency.freeConsult.title': '출입국 민원 업무',
         'emergency.freeConsult.item1': '필요한 민원 서비스 확인 (비자 변경·연장·등록·증명서 등)',
         'emergency.freeConsult.item2': '제출 서류·수수료·예상 기간 안내',
         'emergency.freeConsult.item3': '본 신청·대행 의뢰 전 사전 검토',
@@ -1283,7 +1287,7 @@ const translations = {
     'biz.request.prepare.disclaimer': '자금 규모 및 투자 구조에 관한 상세는 본 상담 단계에서 확인합니다.',
     'home.urgent.headline': '긴급 법률 구제가 필요하십니까?',
     'home.urgent.subhead': '사무실에 방문하여 출국 명령·체류 거부 등 긴급하고 시간에 민감한 출입국·형사 사건 상담을 예약하세요.',
-    'home.urgent.cta': '긴급 상담 요청',
+    'home.urgent.cta': '온라인 상담 신청',
     // === biz.* (사업이민 섹션 14) ===
     'biz.card.summary1': '이민 프로젝트 설계',
     'biz.card.summary2': '계약 및 규제 관리',
@@ -1307,7 +1311,7 @@ const translations = {
     // ========================================
     en: {
         // === Visit Consultation Booking ===
-        'home.urgent.cta2': 'Book a Visit Consultation',
+        'home.urgent.cta2': 'Request Visit Consultation',
         // === Common Elements ===
         'common.loading': 'Loading...',
         'common.error': 'An error occurred',
@@ -1354,22 +1358,26 @@ const translations = {
         
         // === Quick Service Application Section ===
         'emergency.title': 'Quick Service Application',
+        'emergency.lead': 'What kind of help do you need? Choose the consultation that fits your situation.',
+        'emergency.freeBadge': 'FREE',
         'emergency.subtitle': 'Expert immigration attorneys at your service',
         'emergency.legal.title': 'Immigration Dispute Resolution',
         'emergency.legal.item1': 'Immigration investigation accompaniment and offender relief',
         'emergency.legal.item2': 'Appeal procedures for nationality and residency matters',
         'emergency.legal.item3': 'Criminal defense for foreign nationals',
         'emergency.legal.cta': 'Request Consultation',
-        'emergency.diagnosis.title': 'Visa Legal Consultation',
+        'emergency.diagnosis.title': 'Legal Advisory',
         'emergency.diagnosis.item1': 'Visa denial and reapplication review',
         'emergency.diagnosis.item2': 'Immigration law violation and overstay risk assessment',
         'emergency.diagnosis.item3': 'Visa change path guidance',
-        'emergency.diagnosis.cta': 'Request Legal Review',
+        'emergency.diagnosis.cta': 'Request',
+        'emergency.business.title': 'Business Immigration Advisory',
+        'emergency.business.cta': 'Request',
         'emergency.navigator.title': 'Service Navigator',
         'emergency.navigator.item1': 'Find the right service for your case',
         'emergency.navigator.item2': 'Guided service consultation',
         'emergency.navigator.cta': 'Start Navigator',
-        'emergency.freeConsult.title': 'Immigration Office Services Consultation',
+        'emergency.freeConsult.title': 'Immigration Office Task',
         'emergency.freeConsult.item1': 'Identify which immigration services you need (visa change, extension, registration, certificates)',
         'emergency.freeConsult.item2': 'Guidance on required documents, fees, and expected timelines',
         'emergency.freeConsult.item3': 'Review before formal application or engagement',
@@ -2704,7 +2712,7 @@ const translations = {
     'biz.request.prepare.disclaimer': 'Details on funding scale and investment structure will be reviewed in the detailed consultation stage.',
     'home.urgent.headline': 'Facing an urgent legal matter?',
     'home.urgent.subhead': 'Visit our office to book a consultation for urgent, time-sensitive immigration and criminal cases such as deportation orders, visa denials, and related matters.',
-    'home.urgent.cta': 'Request Urgent Consultation',
+    'home.urgent.cta': 'Request Online Consultation',
     // === biz.* (사업이민 섹션 14) ===
     'biz.card.summary1': 'Immigration Project Design',
     'biz.card.summary2': 'Contracts & Regulatory Management',
@@ -2744,26 +2752,30 @@ const translations = {
 
         // === Quick Service Application Section ===
         'emergency.title': '快速服务申请',
+        'emergency.lead': '您需要什么帮助？请选择适合您情况的咨询。',
+        'emergency.freeBadge': '免费',
         'emergency.subtitle': '出入境专业律师亲自应对',
         'emergency.legal.title': '出入境纠纷解决',
         'emergency.legal.item1': '司法审查陪同等出入境违法者救济',
         'emergency.legal.item2': '处分撤销诉讼等国籍·居留相关不服程序代理',
         'emergency.legal.item3': '外国人刑事案件辩护',
         'emergency.legal.cta': '申请咨询',
-        'emergency.diagnosis.title': '签证法律咨询',
+        'emergency.diagnosis.title': '法律咨询',
         'emergency.diagnosis.item1': '签证变更咨询',
         'emergency.diagnosis.item2': '非法滞留风险咨询',
         'emergency.diagnosis.item3': '出入境管理法违反咨询',
-        'emergency.diagnosis.cta': '获取咨询',
+        'emergency.diagnosis.cta': '申请',
+        'emergency.business.title': '商业移民咨询',
+        'emergency.business.cta': '申请',
         'emergency.navigator.title': '服务导航',
         'emergency.navigator.item1': '找到适合您情况的服务',
         'emergency.navigator.item2': '定制服务咨询',
         'emergency.navigator.cta': '开始导航',
-        'emergency.freeConsult.title': '免费预咨询',
+        'emergency.freeConsult.title': '出入境事务办理',
         'emergency.freeConsult.item1': '出入境专家免费案例评估',
         'emergency.freeConsult.item2': '付款前获取费用估算',
         'emergency.freeConsult.item3': '无需付款即可开始',
-        'emergency.freeConsult.cta': '开始免费咨询',
+        'emergency.freeConsult.cta': '开始咨询',
 
         // === Services Section ===
         'services.title': '出入境事务代理',
@@ -4103,7 +4115,7 @@ const translations = {
     // [TRANSLATION_PENDING: home.urgent.subhead, zh, cloned from en at 2026-04-20]
     'home.urgent.subhead': '亲临本所预约面谈，处理出境命令、签证拒签等紧急且时间敏感的出入境及刑事案件。',
     // [TRANSLATION_PENDING: home.urgent.cta, zh, cloned from en at 2026-04-20]
-    'home.urgent.cta': '申请紧急咨询',
+    'home.urgent.cta': '在线咨询申请',
     // === biz.* (사업이민 섹션 14) ===
     // [TRANSLATION_PENDING: biz.card.summary1, zh, cloned from en at 2026-04-20]
     'biz.card.summary1': '移民项目设计',
@@ -4135,7 +4147,7 @@ const translations = {
     // ========================================
     vi: {
         // === Đặt lịch Tư vấn Trực tiếp (Visit Consultation Booking) ===
-        'home.urgent.cta2': 'Đặt lịch Tư vấn Trực tiếp',
+        'home.urgent.cta2': 'Đăng ký tư vấn trực tiếp',
         'common.loading': 'Đang tải...',
         'common.error': 'Đã xảy ra lỗi',
         'common.success': 'Thành công',
@@ -4151,26 +4163,30 @@ const translations = {
 
         // === Quick Service Application Section ===
         'emergency.title': 'Đăng Ký Dịch Vụ Nhanh',
+        'emergency.lead': 'Bạn cần hỗ trợ gì? Hãy chọn hình thức tư vấn phù hợp với tình huống của bạn.',
+        'emergency.freeBadge': 'MIỄN PHÍ',
         'emergency.subtitle': 'Luật sư chuyên xuất nhập cảnh trực tiếp hỗ trợ',
         'emergency.legal.title': 'Giải Quyết Tranh Chấp Xuất Nhập Cảnh',
         'emergency.legal.item1': 'Hỗ trợ điều tra và cứu trợ vi phạm xuất nhập cảnh',
         'emergency.legal.item2': 'Thủ tục khiếu nại về quốc tịch và cư trú',
         'emergency.legal.item3': 'Bào chữa hình sự cho người nước ngoài',
         'emergency.legal.cta': 'Yêu cầu tư vấn',
-        'emergency.diagnosis.title': 'Tư Vấn Pháp Lý Visa',
+        'emergency.diagnosis.title': 'Tư vấn pháp lý',
         'emergency.diagnosis.item1': 'Tư vấn thay đổi visa',
         'emergency.diagnosis.item2': 'Tư vấn rủi ro cư trú bất hợp pháp',
         'emergency.diagnosis.item3': 'Tư vấn vi phạm luật xuất nhập cảnh',
-        'emergency.diagnosis.cta': 'Nhận tư vấn',
+        'emergency.diagnosis.cta': 'Yêu cầu',
+        'emergency.business.title': 'Tư vấn Định cư Kinh doanh',
+        'emergency.business.cta': 'Yêu cầu',
         'emergency.navigator.title': 'Điều Hướng Dịch Vụ',
         'emergency.navigator.item1': 'Tìm dịch vụ phù hợp với trường hợp của bạn',
         'emergency.navigator.item2': 'Tư vấn dịch vụ có hướng dẫn',
         'emergency.navigator.cta': 'Bắt Đầu',
-        'emergency.freeConsult.title': 'Tư Vấn Miễn Phí',
+        'emergency.freeConsult.title': 'Thủ tục Cục Xuất nhập cảnh',
         'emergency.freeConsult.item1': 'Đánh giá miễn phí bởi chuyên gia nhập cư',
         'emergency.freeConsult.item2': 'Nhận báo giá trước khi thanh toán',
         'emergency.freeConsult.item3': 'Không cần thanh toán để bắt đầu',
-        'emergency.freeConsult.cta': 'Bắt Đầu Tư Vấn Miễn Phí',
+        'emergency.freeConsult.cta': 'Bắt đầu tư vấn',
 
         // === Services Section ===
         'services.title': 'Dịch Vụ Xuất Nhập Cảnh',
@@ -5510,7 +5526,7 @@ const translations = {
     // [TRANSLATION_PENDING: home.urgent.subhead, vi, cloned from en at 2026-04-20]
     'home.urgent.subhead': 'Hãy đến văn phòng của chúng tôi để đặt lịch tư vấn cho các vụ việc xuất nhập cảnh và hình sự khẩn cấp, nhạy cảm về thời gian như lệnh trục xuất, từ chối visa và các vấn đề liên quan.',
     // [TRANSLATION_PENDING: home.urgent.cta, vi, cloned from en at 2026-04-20]
-    'home.urgent.cta': 'Yêu cầu tư vấn khẩn cấp',
+    'home.urgent.cta': 'Đăng ký tư vấn trực tuyến',
     // === biz.* (사업이민 섹션 14) ===
     // [TRANSLATION_PENDING: biz.card.summary1, vi, cloned from en at 2026-04-20]
     'biz.card.summary1': 'Thiết kế Dự án Di trú',
@@ -5542,7 +5558,7 @@ const translations = {
     // ========================================
     ja: {
         // === 訪問相談予約 (Visit Consultation Booking) ===
-        'home.urgent.cta2': '訪問相談を予約する',
+        'home.urgent.cta2': '来所相談を申し込む',
         'common.loading': '読み込み中...',
         'common.error': 'エラーが発生しました',
         'common.success': '成功',
@@ -5558,26 +5574,30 @@ const translations = {
 
         // === Quick Service Application Section ===
         'emergency.title': 'クイックサービス申請',
+        'emergency.lead': 'どのようなサポートが必要ですか？状況に合ったご相談をお選びください。',
+        'emergency.freeBadge': '無料',
         'emergency.subtitle': '出入国専門弁護士が直接対応します',
         'emergency.legal.title': '出入国紛争解決',
         'emergency.legal.item1': '司法審査同行など出入国犯罪者救済',
         'emergency.legal.item2': '処分取消訴訟など国籍・滞在関連不服手続代理',
         'emergency.legal.item3': '外国人刑事事件弁護',
         'emergency.legal.cta': '相談申請',
-        'emergency.diagnosis.title': 'ビザ法律相談',
+        'emergency.diagnosis.title': '法律顧問',
         'emergency.diagnosis.item1': 'ビザ変更諮問',
         'emergency.diagnosis.item2': '不法滞在リスク諮問',
         'emergency.diagnosis.item3': '出入国管理法違反諮問',
-        'emergency.diagnosis.cta': '相談を受ける',
+        'emergency.diagnosis.cta': '申し込む',
+        'emergency.business.title': 'ビジネス移民顧問',
+        'emergency.business.cta': '申し込む',
         'emergency.navigator.title': 'サービスナビゲーター',
         'emergency.navigator.item1': 'お客様のケースに適したサービスを探す',
         'emergency.navigator.item2': 'ガイド付きサービス相談',
         'emergency.navigator.cta': 'ナビ開始',
-        'emergency.freeConsult.title': '無料事前相談',
+        'emergency.freeConsult.title': '出入国在留手続き',
         'emergency.freeConsult.item1': '出入国専門家による無料ケースレビュー',
         'emergency.freeConsult.item2': 'お支払い前に費用見積もりを取得',
         'emergency.freeConsult.item3': 'お支払い不要で開始',
-        'emergency.freeConsult.cta': '無料相談を開始',
+        'emergency.freeConsult.cta': '相談する',
 
         // === Services Section ===
         'services.title': '出入国民願代行',
@@ -6833,7 +6853,7 @@ const translations = {
     'biz.request.prepare.disclaimer': '資金規模や投資構造の詳細は本相談の段階で検討いたします。',
     'home.urgent.headline': '緊急の法的事案にお困りですか?',
     'home.urgent.subhead': '事務所にご来訪のうえ、出国命令・ビザ拒否など緊急かつ時間的制約のある出入国・刑事事件のご相談をご予約ください。',
-    'home.urgent.cta': '緊急相談をリクエスト',
+    'home.urgent.cta': 'オンライン相談を申し込む',
     // === biz.* (사업이민 섹션 14) ===
     'biz.card.summary1': '移民プロジェクト設計',
     'biz.card.summary2': '契約・規制管理',
@@ -6857,7 +6877,7 @@ const translations = {
     // ========================================
     mn: {
         // === Visit Consultation Booking (cloned from en) ===
-        'home.urgent.cta2': 'Book a Visit Consultation',
+        'home.urgent.cta2': 'Биечлэн зөвлөгөө авах',
         'common.loading': 'Ачаалж байна...',
         'common.error': 'Алдаа гарлаа',
         'common.success': 'Амжилттай',
@@ -6873,26 +6893,30 @@ const translations = {
 
         // === Quick Service Application Section ===
         'emergency.title': 'Хурдан үйлчилгээний хүсэлт',
+        'emergency.lead': 'Танд ямар тусламж хэрэгтэй вэ? Нөхцөл байдалд тань тохирох зөвлөгөөг сонгоно уу.',
+        'emergency.freeBadge': 'ҮНЭГҮЙ',
         'emergency.subtitle': 'Цагаачлалын мэргэжлийн өмгөөлөгч шууд хариуцна',
         'emergency.legal.title': 'Цагаачлалын маргаан шийдвэрлэх',
         'emergency.legal.item1': 'Мөрдөн байцаалт, цагаачлалын гэмт хэрэгтэн аврах',
         'emergency.legal.item2': 'Иргэншил, оршин суух холбогдох гомдлын журам төлөөлөх',
         'emergency.legal.item3': 'Гадаадын иргэний эрүүгийн хэргийн өмгөөлөл',
         'emergency.legal.cta': 'Зөвлөгөө авах',
-        'emergency.diagnosis.title': 'Визийн хууль зүйн зөвлөгөө',
+        'emergency.diagnosis.title': 'Хууль зүйн зөвлөгөө',
         'emergency.diagnosis.item1': 'Виз өөрчлөх зөвлөгөө',
         'emergency.diagnosis.item2': 'Хууль бус оршин суух эрсдлийн зөвлөгөө',
         'emergency.diagnosis.item3': 'Цагаачлалын хууль зөрчсөн зөвлөгөө',
-        'emergency.diagnosis.cta': 'Зөвлөгөө авах',
+        'emergency.diagnosis.cta': 'Хүсэлт гаргах',
+        'emergency.business.title': 'Бизнес цагаачлалын зөвлөгөө',
+        'emergency.business.cta': 'Хүсэлт гаргах',
         'emergency.navigator.title': 'Үйлчилгээний навигатор',
         'emergency.navigator.item1': 'Танд тохирох үйлчилгээг олоорой',
         'emergency.navigator.item2': 'Удирдамжтай үйлчилгээний зөвлөгөө',
         'emergency.navigator.cta': 'Навигатор эхлүүлэх',
-        'emergency.freeConsult.title': 'Үнэгүй урьдчилсан зөвлөгөө',
+        'emergency.freeConsult.title': 'Цагаачлалын албаны ажил',
         'emergency.freeConsult.item1': 'Цагаачлалын мэргэжилтний үнэгүй хэрэг шалгалт',
         'emergency.freeConsult.item2': 'Төлбөр төлөхөөс өмнө зардлын тооцоо авах',
         'emergency.freeConsult.item3': 'Төлбөргүйгээр эхлэх',
-        'emergency.freeConsult.cta': 'Үнэгүй зөвлөгөө эхлүүлэх',
+        'emergency.freeConsult.cta': 'Зөвлөгөө авах',
 
         // === Services Section ===
         'services.title': 'Цагаачлалын үйлчилгээ',
@@ -8230,7 +8254,7 @@ const translations = {
     // [TRANSLATION_PENDING: home.urgent.subhead, mn, cloned from en at 2026-04-20]
     'home.urgent.subhead': 'Visit our office to book a consultation for urgent, time-sensitive immigration and criminal cases such as deportation orders, visa denials, and related matters.',
     // [TRANSLATION_PENDING: home.urgent.cta, mn, cloned from en at 2026-04-20]
-    'home.urgent.cta': 'Request Urgent Consultation',
+    'home.urgent.cta': 'Онлайн зөвлөгөө авах',
     // === biz.* (사업이민 섹션 14) ===
     // [TRANSLATION_PENDING: biz.card.summary1, mn, cloned from en at 2026-04-20]
     'biz.card.summary1': 'Immigration Project Design',
@@ -8262,7 +8286,7 @@ const translations = {
     // ========================================
     th: {
         // === ปุ่มจองคำปรึกษาแบบพบตัว (Visit Consultation Booking — KakaoTalk link) ===
-        'home.urgent.cta2': 'จองคำปรึกษาแบบพบตัว',
+        'home.urgent.cta2': 'นัดปรึกษาที่สำนักงาน',
         'common.loading': 'กำลังโหลด...',
         'common.error': 'เกิดข้อผิดพลาด',
         'common.success': 'สำเร็จ',
@@ -8278,26 +8302,30 @@ const translations = {
 
         // === Quick Service Application Section ===
         'emergency.title': 'สมัครบริการด่วน',
+        'emergency.lead': 'คุณต้องการความช่วยเหลือแบบใด? เลือกการปรึกษาที่เหมาะกับสถานการณ์ของคุณ',
+        'emergency.freeBadge': 'ฟรี',
         'emergency.subtitle': 'ทนายความผู้เชี่ยวชาญด้านตรวจคนเข้าเมืองรับผิดชอบโดยตรง',
         'emergency.legal.title': 'แก้ไขข้อพิพาทตรวจคนเข้าเมือง',
         'emergency.legal.item1': 'สอบสวนร่วมและช่วยเหลือผู้กระทำผิดตรวจคนเข้าเมือง',
         'emergency.legal.item2': 'ขั้นตอนอุทธรณ์เรื่องสัญชาติและการพำนัก',
         'emergency.legal.item3': 'การป้องกันคดีอาญาสำหรับชาวต่างชาติ',
         'emergency.legal.cta': 'ขอคำปรึกษา',
-        'emergency.diagnosis.title': 'คำปรึกษากฎหมายวีซ่า',
+        'emergency.diagnosis.title': 'ที่ปรึกษากฎหมาย',
         'emergency.diagnosis.item1': 'คำปรึกษาเปลี่ยนวีซ่า',
         'emergency.diagnosis.item2': 'คำปรึกษาความเสี่ยงพำนักผิดกฎหมาย',
         'emergency.diagnosis.item3': 'คำปรึกษาการละเมิดกฎหมายตรวจคนเข้าเมือง',
-        'emergency.diagnosis.cta': 'รับคำปรึกษา',
+        'emergency.diagnosis.cta': 'ขอรับบริการ',
+        'emergency.business.title': 'ที่ปรึกษาการย้ายถิ่นเพื่อธุรกิจ',
+        'emergency.business.cta': 'ขอรับบริการ',
         'emergency.navigator.title': 'ตัวนำทางบริการ',
         'emergency.navigator.item1': 'ค้นหาบริการที่เหมาะสมกับกรณีของคุณ',
         'emergency.navigator.item2': 'ปรึกษาบริการแบบมีแนะนำ',
         'emergency.navigator.cta': 'เริ่มต้น',
-        'emergency.freeConsult.title': 'ปรึกษาฟรี',
+        'emergency.freeConsult.title': 'งานสำนักงานตรวจคนเข้าเมือง',
         'emergency.freeConsult.item1': 'ตรวจสอบกรณีฟรีโดยผู้เชี่ยวชาญ',
         'emergency.freeConsult.item2': 'รับใบเสนอราคาก่อนชำระเงิน',
         'emergency.freeConsult.item3': 'ไม่ต้องชำระเงินเพื่อเริ่มต้น',
-        'emergency.freeConsult.cta': 'เริ่มปรึกษาฟรี',
+        'emergency.freeConsult.cta': 'เริ่มปรึกษา',
 
         // === Services Section ===
         'services.title': 'บริการตรวจคนเข้าเมือง',
@@ -9553,7 +9581,7 @@ const translations = {
     'biz.request.prepare.disclaimer': 'รายละเอียดเกี่ยวกับขนาดเงินทุนและโครงสร้างการลงทุนจะได้รับการพิจารณาในระยะการปรึกษาหลัก',
     'home.urgent.headline': 'มีเรื่องด่วนทางกฎหมายอยู่หรือไม่?',
     'home.urgent.subhead': 'เข้ามาที่สำนักงานของเราเพื่อจองคำปรึกษาสำหรับคดีตรวจคนเข้าเมืองและคดีอาญาที่เร่งด่วนและไวต่อเวลา เช่น คำสั่งเนรเทศ การปฏิเสธวีซ่า และเรื่องที่เกี่ยวข้อง',
-    'home.urgent.cta': 'ขอปรึกษาด่วน',
+    'home.urgent.cta': 'ขอปรึกษาออนไลน์',
     // === biz.* (사업이민 섹션 14) ===
     'biz.card.summary1': 'การออกแบบโครงการตรวจคนเข้าเมือง',
     'biz.card.summary2': 'การจัดการสัญญาและกฎระเบียบ',
