@@ -1111,7 +1111,11 @@
                 padding: 15px;
             }
 
-            .premium-service-grid,
+            /* Quick Service 카드: 태블릿/모바일(및 줌아웃 렌더)에서 1열로 — 텍스트 가독성 확보 */
+            .premium-service-grid {
+                grid-template-columns: 1fr;
+            }
+
             .service-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
