@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="format-detection" content="telephone=no">
+    <!-- HTML 문서는 항상 최신 버전을 받도록 재검증 유도 (모바일 캐시로 인한 구버전 렌더 방지) -->
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
 
     <!-- 🔁 University dedicated login redirect (runs BEFORE any rendering) -->
     <script>
@@ -116,6 +119,12 @@
             font-family: 'Noto Sans KR', sans-serif;
             background: #f8f9fa;
             min-height: 100vh;
+            overflow-x: hidden; /* 모바일 가로 스크롤/줌아웃 방지 */
+        }
+
+        /* 이미지가 컨테이너를 넘지 않도록(가로 오버플로우 방지) */
+        img {
+            max-width: 100%;
         }
 
         /* 헤더 */
@@ -636,29 +645,47 @@
 
         @media (max-width: 968px) {
             .lawfirm-intro-section {
-                padding: 32px 24px;
+                padding: 28px 20px;
             }
 
+            /* 좌측 문구 + 우측 캐러셀 2단 유지 (웹사이트형 레이아웃) */
             .lawfirm-intro-content {
-                flex-direction: column;
-                gap: 32px;
+                flex-direction: row;
+                align-items: center;
+                gap: 20px;
             }
 
             .lawfirm-left {
-                text-align: center;
-                max-width: 100%;
+                text-align: left;
+                flex: 1 1 0;
+                min-width: 0;
+                max-width: none;
             }
 
             .registration-badge {
-                justify-content: center;
+                justify-content: flex-start;
             }
 
             .lawfirm-headline {
-                font-size: 18px;
+                font-size: 16px;
+            }
+
+            .lawfirm-subtext {
+                font-size: 13px;
+            }
+
+            .registration-text {
+                font-size: 10px;
+            }
+
+            .moj-logo {
+                height: 56px;
             }
 
             .lawfirm-right {
-                width: 100%;
+                flex: 1 1 0;
+                min-width: 0;
+                width: auto;
                 display: flex;
                 justify-content: center;
             }
@@ -668,49 +695,61 @@
             }
 
             .attorney-card {
-                width: 140px;
+                width: 130px;
             }
 
             .attorney-photo {
-                height: 220px;
+                height: 190px;
             }
 
             .attorney-info {
-                padding: 12px 10px;
+                padding: 10px 8px;
             }
 
             .attorney-name {
-                font-size: 13px;
+                font-size: 12px;
             }
         }
 
         @media (max-width: 480px) {
             .lawfirm-intro-section {
-                padding: 20px 16px;
+                padding: 18px 14px;
+            }
+
+            /* 좁은 화면에서도 좌(문구)·우(캐러셀) 2단 유지, 간격 축소 */
+            .lawfirm-intro-content {
+                gap: 12px;
             }
 
             .lawfirm-headline {
-                font-size: 16px;
+                font-size: 13px;
+                line-height: 1.45;
+                margin-bottom: 12px;
             }
 
             .lawfirm-subtext {
-                font-size: 14px;
+                font-size: 12px;
+            }
+
+            .registration-badge {
+                gap: 8px;
+                padding: 8px 0;
             }
 
             .moj-logo {
-                height: 56px;
+                height: 40px;
             }
 
             .registration-text {
-                font-size: 10px;
+                font-size: 9px;
             }
 
             .attorney-card {
-                width: 120px;
+                width: 108px;
             }
 
             .attorney-photo {
-                height: 160px;
+                height: 150px;
             }
 
             .attorney-name {
@@ -718,7 +757,7 @@
             }
 
             .attorney-info {
-                padding: 10px 8px;
+                padding: 8px 6px;
             }
         }
 
