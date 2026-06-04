@@ -30,6 +30,8 @@ const translations = {
     // 🇰🇷 한국어 (Korean) - 기본 언어
     // ========================================
     ko: {
+        // === 방문 상담 예약 (Visit Consultation Booking) ===
+        'home.urgent.cta2': '방문 상담 예약하기',
         // === 공통 요소 (Common Elements) ===
         'common.loading': '로딩 중...',
         'common.error': '오류가 발생했습니다',
@@ -1280,7 +1282,7 @@ const translations = {
     'biz.request.prepare.item5': '한국어 사용 수준',
     'biz.request.prepare.disclaimer': '자금 규모 및 투자 구조에 관한 상세는 본 상담 단계에서 확인합니다.',
     'home.urgent.headline': '긴급 법률 구제가 필요하십니까?',
-    'home.urgent.subhead': '출국 명령·체류 거부·형사 사건 등 시간 민감 사안을 전담합니다.',
+    'home.urgent.subhead': '사무실에 방문하여 출국 명령·체류 거부 등 긴급하고 시간에 민감한 출입국·형사 사건 상담을 예약하세요.',
     'home.urgent.cta': '긴급 상담 요청',
     // === biz.* (사업이민 섹션 14) ===
     'biz.card.summary1': '이민 프로젝트 설계',
@@ -1304,6 +1306,8 @@ const translations = {
     // 🇺🇸 영어 (English)
     // ========================================
     en: {
+        // === Visit Consultation Booking ===
+        'home.urgent.cta2': 'Book a Visit Consultation',
         // === Common Elements ===
         'common.loading': 'Loading...',
         'common.error': 'An error occurred',
@@ -2699,7 +2703,7 @@ const translations = {
     'biz.request.prepare.item5': 'Korean language proficiency',
     'biz.request.prepare.disclaimer': 'Details on funding scale and investment structure will be reviewed in the detailed consultation stage.',
     'home.urgent.headline': 'Facing an urgent legal matter?',
-    'home.urgent.subhead': 'We handle time-sensitive immigration and criminal cases such as deportation orders, visa denials, and related proceedings.',
+    'home.urgent.subhead': 'Visit our office to book a consultation for urgent, time-sensitive immigration and criminal cases such as deportation orders, visa denials, and related matters.',
     'home.urgent.cta': 'Request Urgent Consultation',
     // === biz.* (사업이민 섹션 14) ===
     'biz.card.summary1': 'Immigration Project Design',
@@ -2723,6 +2727,8 @@ const translations = {
     // 🇨🇳 중국어 간체 (Chinese Simplified)
     // ========================================
     zh: {
+        // === 预约面谈咨询 (Visit Consultation Booking) ===
+        'home.urgent.cta2': '预约面谈咨询',
         'common.loading': '加载中...',
         'common.error': '发生错误',
         'common.success': '成功',
@@ -4095,7 +4101,7 @@ const translations = {
     // [TRANSLATION_PENDING: home.urgent.headline, zh, cloned from en at 2026-04-20]
     'home.urgent.headline': '面临紧急法律事务？',
     // [TRANSLATION_PENDING: home.urgent.subhead, zh, cloned from en at 2026-04-20]
-    'home.urgent.subhead': '我们处理时间紧迫的出入境与刑事案件，例如出境命令、签证拒签及相关程序。',
+    'home.urgent.subhead': '亲临本所预约面谈，处理出境命令、签证拒签等紧急且时间敏感的出入境及刑事案件。',
     // [TRANSLATION_PENDING: home.urgent.cta, zh, cloned from en at 2026-04-20]
     'home.urgent.cta': '申请紧急咨询',
     // === biz.* (사업이민 섹션 14) ===
@@ -4128,6 +4134,8 @@ const translations = {
     // 🇻🇳 베트남어 (Vietnamese)
     // ========================================
     vi: {
+        // === Đặt lịch Tư vấn Trực tiếp (Visit Consultation Booking) ===
+        'home.urgent.cta2': 'Đặt lịch Tư vấn Trực tiếp',
         'common.loading': 'Đang tải...',
         'common.error': 'Đã xảy ra lỗi',
         'common.success': 'Thành công',
@@ -5500,7 +5508,7 @@ const translations = {
     // [TRANSLATION_PENDING: home.urgent.headline, vi, cloned from en at 2026-04-20]
     'home.urgent.headline': 'Đối mặt với vấn đề pháp lý khẩn cấp?',
     // [TRANSLATION_PENDING: home.urgent.subhead, vi, cloned from en at 2026-04-20]
-    'home.urgent.subhead': 'Chúng tôi xử lý các vụ việc xuất nhập cảnh và hình sự nhạy cảm về thời gian như lệnh trục xuất, từ chối visa và các thủ tục liên quan.',
+    'home.urgent.subhead': 'Hãy đến văn phòng của chúng tôi để đặt lịch tư vấn cho các vụ việc xuất nhập cảnh và hình sự khẩn cấp, nhạy cảm về thời gian như lệnh trục xuất, từ chối visa và các vấn đề liên quan.',
     // [TRANSLATION_PENDING: home.urgent.cta, vi, cloned from en at 2026-04-20]
     'home.urgent.cta': 'Yêu cầu tư vấn khẩn cấp',
     // === biz.* (사업이민 섹션 14) ===
@@ -5533,6 +5541,8 @@ const translations = {
     // 🇯🇵 일본어 (Japanese)
     // ========================================
     ja: {
+        // === 訪問相談予約 (Visit Consultation Booking) ===
+        'home.urgent.cta2': '訪問相談を予約する',
         'common.loading': '読み込み中...',
         'common.error': 'エラーが発生しました',
         'common.success': '成功',
@@ -6822,7 +6832,7 @@ const translations = {
     'biz.request.prepare.item5': '韓国語のレベル',
     'biz.request.prepare.disclaimer': '資金規模や投資構造の詳細は本相談の段階で検討いたします。',
     'home.urgent.headline': '緊急の法的事案にお困りですか?',
-    'home.urgent.subhead': '退去命令、ビザ拒否、関連訴訟など、時間的制約のある出入国・刑事事件に対応します。',
+    'home.urgent.subhead': '事務所にご来訪のうえ、出国命令・ビザ拒否など緊急かつ時間的制約のある出入国・刑事事件のご相談をご予約ください。',
     'home.urgent.cta': '緊急相談をリクエスト',
     // === biz.* (사업이민 섹션 14) ===
     'biz.card.summary1': '移民プロジェクト設計',
@@ -6846,6 +6856,8 @@ const translations = {
     // 🇲🇳 몽골어 (Mongolian)
     // ========================================
     mn: {
+        // === Visit Consultation Booking (cloned from en) ===
+        'home.urgent.cta2': 'Book a Visit Consultation',
         'common.loading': 'Ачаалж байна...',
         'common.error': 'Алдаа гарлаа',
         'common.success': 'Амжилттай',
@@ -8216,7 +8228,7 @@ const translations = {
     // [TRANSLATION_PENDING: home.urgent.headline, mn, cloned from en at 2026-04-20]
     'home.urgent.headline': 'Facing an urgent legal matter?',
     // [TRANSLATION_PENDING: home.urgent.subhead, mn, cloned from en at 2026-04-20]
-    'home.urgent.subhead': 'We handle time-sensitive immigration and criminal cases such as deportation orders, visa denials, and related proceedings.',
+    'home.urgent.subhead': 'Visit our office to book a consultation for urgent, time-sensitive immigration and criminal cases such as deportation orders, visa denials, and related matters.',
     // [TRANSLATION_PENDING: home.urgent.cta, mn, cloned from en at 2026-04-20]
     'home.urgent.cta': 'Request Urgent Consultation',
     // === biz.* (사업이민 섹션 14) ===
@@ -8249,6 +8261,8 @@ const translations = {
     // 🇹🇭 태국어 (Thai)
     // ========================================
     th: {
+        // === ปุ่มจองคำปรึกษาแบบพบตัว (Visit Consultation Booking — KakaoTalk link) ===
+        'home.urgent.cta2': 'จองคำปรึกษาแบบพบตัว',
         'common.loading': 'กำลังโหลด...',
         'common.error': 'เกิดข้อผิดพลาด',
         'common.success': 'สำเร็จ',
@@ -9538,7 +9552,7 @@ const translations = {
     'biz.request.prepare.item5': 'ความสามารถทางภาษาเกาหลี',
     'biz.request.prepare.disclaimer': 'รายละเอียดเกี่ยวกับขนาดเงินทุนและโครงสร้างการลงทุนจะได้รับการพิจารณาในระยะการปรึกษาหลัก',
     'home.urgent.headline': 'มีเรื่องด่วนทางกฎหมายอยู่หรือไม่?',
-    'home.urgent.subhead': 'เราจัดการคดีตรวจคนเข้าเมืองและคดีอาญาที่มีกำหนดเวลาเร่งด่วน เช่น คำสั่งเนรเทศ การปฏิเสธวีซ่า และกระบวนการที่เกี่ยวข้อง',
+    'home.urgent.subhead': 'เข้ามาที่สำนักงานของเราเพื่อจองคำปรึกษาสำหรับคดีตรวจคนเข้าเมืองและคดีอาญาที่เร่งด่วนและไวต่อเวลา เช่น คำสั่งเนรเทศ การปฏิเสธวีซ่า และเรื่องที่เกี่ยวข้อง',
     'home.urgent.cta': 'ขอปรึกษาด่วน',
     // === biz.* (사업이민 섹션 14) ===
     'biz.card.summary1': 'การออกแบบโครงการตรวจคนเข้าเมือง',

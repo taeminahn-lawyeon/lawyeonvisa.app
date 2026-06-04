@@ -1482,6 +1482,18 @@
         }
         .urgent-fullwidth-cta:hover { background: #1B64DA; }
         .urgent-fullwidth-cta .arrow { margin-left: 2px; }
+        .urgent-fullwidth-cta-group {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .urgent-fullwidth-cta.secondary {
+            background: #FFFFFF;
+            color: #3182F6;
+            border: 1px solid #3182F6;
+        }
+        .urgent-fullwidth-cta.secondary:hover { background: #EFF6FF; }
 
         @media (max-width: 900px) {
             .urgent-fullwidth-inner {
@@ -1490,7 +1502,15 @@
                 padding: 24px 20px;
                 gap: 16px;
             }
-            .urgent-fullwidth-cta { width: 100%; }
+            .urgent-fullwidth-cta-group {
+                width: 100%;
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .urgent-fullwidth-cta {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -1598,7 +1618,10 @@
                     <h3 class="urgent-fullwidth-headline" data-i18n="home.urgent.headline">긴급 법률 구제가 필요하십니까?</h3>
                     <p class="urgent-fullwidth-subhead" data-i18n="home.urgent.subhead">출국 명령·체류 거부·형사 사건 등 시간 민감 사안을 전담합니다.</p>
                 </div>
-                <button class="cta-btn urgent-fullwidth-cta" onclick="location.href='urgent-consultation-request.html'"><span data-i18n="home.urgent.cta">긴급 상담 요청</span> <span class="arrow">→</span></button>
+                <div class="urgent-fullwidth-cta-group">
+                    <button class="cta-btn urgent-fullwidth-cta secondary" onclick="window.open('https://booking.kakao.com/short/eWN7L-_J-9', '_blank')"><span data-i18n="home.urgent.cta2">방문 상담 예약하기</span> <span class="arrow">→</span></button>
+                    <button class="cta-btn urgent-fullwidth-cta" onclick="location.href='urgent-consultation-request.html'"><span data-i18n="home.urgent.cta">긴급 상담 요청</span> <span class="arrow">→</span></button>
+                </div>
             </div>
         </div>
 
