@@ -1533,9 +1533,9 @@
 
         /* === 풀폭 긴급 법률 구제 배너 (무색·무아이콘) === */
         .urgent-fullwidth-banner {
-            background: #F8FAFC;
-            border-top: 1px solid #E5E8EB;
-            border-bottom: 1px solid #E5E8EB;
+            background: #FFF5F5;
+            border-top: 1px solid #FECACA;
+            border-bottom: 1px solid #FECACA;
             margin: 24px 0 32px;
         }
         .urgent-fullwidth-inner {
@@ -1549,25 +1549,40 @@
         }
         .urgent-fullwidth-text { flex: 1; }
         .urgent-fullwidth-headline {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             font-size: 20px;
             font-weight: 800;
             color: #0F172A;
-            margin: 0 0 6px;
+            margin: 0 0 8px;
             line-height: 1.4;
+        }
+        .urgent-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 11px;
+            background: #FEE2E2;
+            color: #DC2626;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            flex-shrink: 0;
         }
         .urgent-fullwidth-subhead {
             font-size: 14px;
-            color: #4E5968;
+            color: #64748B;
             margin: 0;
-            line-height: 1.5;
+            line-height: 1.55;
         }
         .urgent-fullwidth-cta {
             flex-shrink: 0;
-            background: #3182F6;
+            background: #DC2626;
             color: #FFFFFF;
             padding: 12px 24px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
@@ -1578,7 +1593,7 @@
             transition: background 0.2s;
             white-space: nowrap;
         }
-        .urgent-fullwidth-cta:hover { background: #1B64DA; }
+        .urgent-fullwidth-cta:hover { background: #B91C1C; }
         .urgent-fullwidth-cta .arrow { margin-left: 2px; }
         .urgent-fullwidth-cta-group {
             flex-shrink: 0;
@@ -1588,10 +1603,10 @@
         }
         .urgent-fullwidth-cta.secondary {
             background: #FFFFFF;
-            color: #3182F6;
-            border: 1px solid #3182F6;
+            color: #DC2626;
+            border: 1px solid #DC2626;
         }
-        .urgent-fullwidth-cta.secondary:hover { background: #EFF6FF; }
+        .urgent-fullwidth-cta.secondary:hover { background: #FEF2F2; }
 
         @media (max-width: 900px) {
             .urgent-fullwidth-inner {
@@ -1621,6 +1636,18 @@
 
             /* 주요 버튼: 손가락으로 누르기 쉬운 최소 탭 영역 확보 */
             .cta-btn { min-height: 44px; }
+
+            /* --- 긴급 법률 구제 배너: 모바일 정렬 --- */
+            .urgent-fullwidth-headline {
+                align-items: flex-start;
+                font-size: 18px;
+                gap: 10px;
+            }
+            .urgent-icon {
+                width: 34px;
+                height: 34px;
+                font-size: 15px;
+            }
 
             /* --- Quick Service Application(긴급 대응 배너) 카드: 텍스트 밀도 완화 --- */
             .premium-service-banner { padding: 24px 18px; }
@@ -1782,12 +1809,15 @@
         <div class="urgent-fullwidth-banner">
             <div class="urgent-fullwidth-inner">
                 <div class="urgent-fullwidth-text">
-                    <h3 class="urgent-fullwidth-headline" data-i18n="home.urgent.headline">긴급 법률 구제가 필요하십니까?</h3>
+                    <h3 class="urgent-fullwidth-headline">
+                        <span class="urgent-icon"><i class="fas fa-triangle-exclamation"></i></span>
+                        <span data-i18n="home.urgent.headline">긴급 법률 구제가 필요하십니까?</span>
+                    </h3>
                     <p class="urgent-fullwidth-subhead" data-i18n="home.urgent.subhead">출국 명령·체류 거부·형사 사건 등 시간 민감 사안을 전담합니다.</p>
                 </div>
                 <div class="urgent-fullwidth-cta-group">
-                    <button class="cta-btn urgent-fullwidth-cta secondary" onclick="window.open('https://booking.kakao.com/short/eWN7L-_J-9', '_blank')"><span data-i18n="home.urgent.cta2">방문 상담 예약하기</span> <span class="arrow">→</span></button>
-                    <button class="cta-btn urgent-fullwidth-cta" onclick="location.href='urgent-consultation-request.html'"><span data-i18n="home.urgent.cta">긴급 상담 요청</span> <span class="arrow">→</span></button>
+                    <button class="cta-btn urgent-fullwidth-cta secondary" onclick="window.open('https://booking.kakao.com/short/eWN7L-_J-9', '_blank')"><i class="fas fa-calendar-check"></i> <span data-i18n="home.urgent.cta2">방문 상담 예약하기</span> <span class="arrow">→</span></button>
+                    <button class="cta-btn urgent-fullwidth-cta" onclick="location.href='urgent-consultation-request.html'"><i class="fas fa-bolt"></i> <span data-i18n="home.urgent.cta">긴급 상담 요청</span> <span class="arrow">→</span></button>
                 </div>
             </div>
         </div>
