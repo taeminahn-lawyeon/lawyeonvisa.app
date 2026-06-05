@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>법무법인 로연 출입국이민지원센터 — 리뉴얼 시안</title>
+<meta name="description" content="법무법인 로연 출입국이민지원센터. 이민·체류 인사이트와 실제 해결 사례. 온라인 쓰레드 상담 또는 사무소 방문 상담 예약.">
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root{
+        --bg:#F7F4EE;
+        --paper:#FFFFFF;
+        --paper-2:#FBF8F1;
+        --ink:#23201A;
+        --ink-2:#5C544733;
+        --muted:#6E655A;
+        --gold:#B8975A;
+        --gold-deep:#9A7C3F;
+        --brown:#564636;
+        --rule:#E4DDCF;
+        --rule-strong:#D6CCB8;
+        --navy:#17161C;
+        --navy-2:#201F27;
+        --serif:'Noto Serif KR',serif;
+        --sans:'Noto Sans KR',sans-serif;
+        --wrap:1160px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{-webkit-text-size-adjust:100%}
+    body{
+        font-family:var(--sans);
+        background:var(--bg);
+        color:var(--ink);
+        line-height:1.6;
+        font-weight:400;
+        -webkit-font-smoothing:antialiased;
+        overflow-x:hidden;
+    }
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+
+    .wrap{max-width:var(--wrap);margin:0 auto;padding:0 32px}
+
+    /* small editorial label */
+    .eyebrow{
+        font-size:12px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;
+        color:var(--gold-deep);
+    }
+    .idx{
+        font-family:var(--serif);font-weight:600;color:var(--gold);
+        font-size:13px;letter-spacing:.04em;
+    }
+
+    /* ---------- Header ---------- */
+    .site-header{
+        border-bottom:1px solid var(--rule);
+        background:var(--bg);
+        position:sticky;top:0;z-index:40;
+    }
+    .header-inner{
+        display:flex;align-items:center;justify-content:space-between;
+        height:82px;
+    }
+    .brand{display:flex;align-items:center;gap:14px}
+    .brand img{height:42px;width:auto}
+    .brand .name{font-family:var(--serif);font-weight:700;font-size:19px;color:var(--ink);letter-spacing:-.01em;line-height:1.1}
+    .brand .sub{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+    .nav{display:flex;align-items:center;gap:30px}
+    .nav a{font-size:14px;color:var(--brown);font-weight:500;transition:color .15s}
+    .nav a:hover{color:var(--gold-deep)}
+    .nav .divider{width:1px;height:16px;background:var(--rule-strong)}
+    .lang{font-size:13px;color:var(--muted);letter-spacing:.04em}
+    .nav-cta{
+        font-size:13.5px;font-weight:500;color:var(--ink);
+        border:1px solid var(--ink);padding:9px 18px;border-radius:2px;
+        transition:background .15s,color .15s;
+    }
+    .nav-cta:hover{background:var(--ink);color:var(--bg)}
+    .menu-toggle{display:none}
+
+    /* ---------- Hero ---------- */
+    .hero{position:relative;border-bottom:1px solid var(--rule);overflow:hidden}
+    .hero-inner{
+        display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;
+        padding:96px 0 104px;position:relative;z-index:2;
+    }
+    .hero h1{
+        font-family:var(--serif);font-weight:700;
+        font-size:clamp(34px,5vw,56px);line-height:1.22;letter-spacing:-.02em;
+        color:var(--ink);margin:22px 0 26px;
+    }
+    .hero h1 em{font-style:normal;color:var(--gold-deep)}
+    .hero p.lead{font-size:17px;color:var(--muted);line-height:1.85;max-width:540px}
+    .cta-row{display:flex;gap:14px;margin-top:38px;flex-wrap:wrap}
+    .btn{
+        font-family:var(--sans);font-size:15px;font-weight:500;letter-spacing:.01em;
+        padding:15px 28px;border-radius:2px;cursor:pointer;border:1px solid transparent;
+        transition:background .16s,color .16s,border-color .16s;display:inline-block;
+    }
+    .btn-solid{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+    .btn-solid:hover{background:#000}
+    .btn-outline{background:transparent;color:var(--ink);border-color:var(--rule-strong)}
+    .btn-outline:hover{border-color:var(--ink)}
+
+    /* radiating line motif (from brochure cover) */
+    .hero-motif{
+        position:relative;aspect-ratio:1/1;width:100%;max-width:430px;justify-self:end;
+    }
+    .hero-motif::before{
+        content:"";position:absolute;inset:0;border-radius:50%;
+        background:repeating-conic-gradient(from 0deg,var(--gold) 0deg .18deg,transparent .18deg 2.4deg);
+        opacity:.5;
+        -webkit-mask:radial-gradient(circle at center,transparent 33%,#000 34%,#000 70%,transparent 72%);
+                mask:radial-gradient(circle at center,transparent 33%,#000 34%,#000 70%,transparent 72%);
+    }
+    .hero-motif::after{
+        content:"";position:absolute;inset:18%;border-radius:50%;
+        background:repeating-conic-gradient(from 1.2deg,var(--gold-deep) 0deg .14deg,transparent .14deg 4deg);
+        opacity:.32;
+        -webkit-mask:radial-gradient(circle at center,transparent 52%,#000 53%);
+                mask:radial-gradient(circle at center,transparent 52%,#000 53%);
+    }
+    .hero-seal{
+        position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    }
+    .hero-seal img{width:34%;opacity:.92}
+
+    /* ---------- Section frame ---------- */
+    section{padding:90px 0}
+    .sec-head{
+        display:flex;align-items:flex-end;justify-content:space-between;gap:24px;
+        padding-bottom:22px;border-bottom:1px solid var(--rule-strong);margin-bottom:0;
+    }
+    .sec-head h2{
+        font-family:var(--serif);font-weight:600;font-size:clamp(26px,3vw,34px);
+        letter-spacing:-.01em;color:var(--ink);margin-top:8px;
+    }
+    .sec-head .sec-desc{font-size:14.5px;color:var(--muted);max-width:360px;text-align:right;line-height:1.7}
+    .more-link{font-size:14px;color:var(--brown);font-weight:500;border-bottom:1px solid var(--gold);padding-bottom:2px;white-space:nowrap}
+    .more-link:hover{color:var(--gold-deep)}
+
+    /* ---------- Articles (editorial index list) ---------- */
+    .article-list{margin-top:8px}
+    .article-row{
+        display:grid;grid-template-columns:84px 1fr auto;gap:28px;align-items:baseline;
+        padding:30px 0;border-bottom:1px solid var(--rule);transition:padding-left .18s;
+    }
+    .article-row:hover{padding-left:10px}
+    .article-row .ep{font-family:var(--serif);font-size:14px;color:var(--gold);letter-spacing:.06em;padding-top:4px}
+    .article-row h3{
+        font-family:var(--serif);font-weight:500;font-size:clamp(19px,2vw,23px);
+        line-height:1.42;color:var(--ink);letter-spacing:-.01em;
+    }
+    .article-row:hover h3{color:var(--gold-deep)}
+    .article-row .dek{font-size:14.5px;color:var(--muted);margin-top:9px;line-height:1.7;max-width:640px}
+    .article-row .meta{font-size:12.5px;color:var(--muted);letter-spacing:.03em;white-space:nowrap;text-align:right;padding-top:6px}
+    .article-row .meta span{display:block}
+    .article-row .meta .cat{color:var(--gold-deep);font-weight:500;margin-bottom:4px;letter-spacing:.1em;text-transform:uppercase;font-size:11px}
+
+    /* ---------- Cases ---------- */
+    .cases{background:var(--paper-2);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+    .case-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;margin-top:8px;border-top:1px solid var(--rule)}
+    .case{
+        padding:38px 40px 38px 0;border-bottom:1px solid var(--rule);
+    }
+    .case:nth-child(odd){padding-right:48px;border-right:1px solid var(--rule)}
+    .case:nth-child(even){padding-left:48px}
+    .case .tag{
+        display:inline-block;font-size:11.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+        color:var(--gold-deep);border:1px solid var(--rule-strong);padding:5px 11px;border-radius:2px;margin-bottom:18px;
+    }
+    .case h3{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--ink);line-height:1.4;margin-bottom:18px}
+    .case dl{display:grid;grid-template-columns:64px 1fr;gap:7px 16px;font-size:14.5px}
+    .case dt{color:var(--gold-deep);font-weight:500;letter-spacing:.02em}
+    .case dd{color:var(--brown);line-height:1.65}
+    .case-note{font-size:12.5px;color:var(--muted);margin-top:26px;letter-spacing:.01em}
+
+    /* ---------- Conversion ---------- */
+    .convert{padding-bottom:100px}
+    .convert-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--rule-strong);border-radius:2px;margin-top:10px}
+    .channel{padding:48px}
+    .channel:first-child{border-right:1px solid var(--rule-strong)}
+    .channel .ch-no{font-family:var(--serif);font-size:13px;color:var(--gold);letter-spacing:.08em}
+    .channel h3{font-family:var(--serif);font-weight:600;font-size:26px;color:var(--ink);margin:10px 0 16px;letter-spacing:-.01em}
+    .channel p{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:14px}
+    .channel .ch-meta{font-size:13.5px;color:var(--brown);line-height:1.9;margin-bottom:26px}
+    .channel .ch-meta b{font-weight:500;color:var(--ink)}
+    .channel .btn{margin-top:4px}
+
+    /* ---------- Footer ---------- */
+    .site-footer{background:var(--navy);color:#CFC8BC}
+    .footer-inner{padding:72px 0 56px}
+    .footer-top{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.1)}
+    .footer-brand{display:flex;align-items:center;gap:14px}
+    .footer-brand img{height:46px;width:auto}
+    .footer-brand .fb-name{font-family:var(--serif);font-weight:700;font-size:18px;color:#F2E4C4}
+    .footer-brand .fb-sub{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#9A9288;margin-top:4px}
+    .footer-contact{font-size:13.5px;line-height:1.9;text-align:right;color:#B7AFA2}
+    .footer-contact b{color:#EBDFC6;font-weight:500}
+    .footer-info{padding-top:30px;font-size:12.5px;line-height:2;color:#8E867B}
+    .footer-info .row b{color:#B7AFA2;font-weight:500;margin-right:6px}
+    .footer-links{margin-top:24px;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+    .footer-links a{font-size:12.5px;color:#9A9288}
+    .footer-links a:hover{color:#F2E4C4}
+    .footer-links .sep{color:#4A4640}
+    .copyright{margin-top:26px;font-size:11.5px;color:#6E665C;letter-spacing:.02em}
+
+    /* preview ribbon note (page-level, not part of design) */
+    .preview-flag{
+        background:var(--navy-2);color:#C9BC9E;text-align:center;font-size:12px;
+        letter-spacing:.06em;padding:8px 16px;font-family:var(--sans);
+    }
+    .preview-flag b{color:#F2E4C4;font-weight:500}
+
+    /* ---------- Responsive ---------- */
+    @media (max-width:900px){
+        .hero-inner{grid-template-columns:1fr;gap:48px;padding:64px 0 72px}
+        .hero-motif{order:-1;max-width:300px;justify-self:start}
+        .case-grid{grid-template-columns:1fr}
+        .case:nth-child(odd){padding-right:0;border-right:none}
+        .case:nth-child(even){padding-left:0}
+        .convert-grid{grid-template-columns:1fr}
+        .channel:first-child{border-right:none;border-bottom:1px solid var(--rule-strong)}
+    }
+    @media (max-width:680px){
+        .wrap{padding:0 20px}
+        .header-inner{height:64px}
+        .brand img{height:34px}
+        .brand .name{font-size:16px}
+        .brand .sub{display:none}
+        .nav{gap:0}
+        .nav a:not(.nav-cta),.nav .divider,.lang{display:none}
+        section{padding:60px 0}
+        .sec-head{flex-direction:column;align-items:flex-start;gap:10px}
+        .sec-head .sec-desc{text-align:left}
+        .article-row{grid-template-columns:1fr;gap:6px;padding:24px 0}
+        .article-row .ep{padding-top:0}
+        .article-row .meta{text-align:left;padding-top:10px}
+        .article-row .meta span{display:inline}
+        .article-row .meta .cat{display:inline;margin-right:10px}
+        .channel{padding:34px 26px}
+        .footer-top{flex-direction:column;gap:28px}
+        .footer-contact{text-align:left}
+    }
+</style>
+</head>
+<body>
+
+<div class="preview-flag">리뉴얼 시안 · <b>renewal-preview.html</b> — 현재 운영 사이트(index.html)는 변경되지 않았습니다</div>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+    <div class="wrap header-inner">
+        <a href="renewal-preview.html" class="brand">
+            <img src="images/logo-lawyeon.png" alt="법무법인 로연">
+            <div>
+                <div class="name">법무법인 로연</div>
+                <div class="sub">Lawyeon · Visa &amp; Immigration</div>
+            </div>
+        </a>
+        <nav class="nav">
+            <a href="#insights">인사이트</a>
+            <a href="#cases">해결 사례</a>
+            <a href="#consult">상담</a>
+            <span class="divider"></span>
+            <span class="lang">KO ▾</span>
+            <a href="#consult" class="nav-cta">상담 신청</a>
+        </nav>
+    </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+    <div class="wrap hero-inner">
+        <div class="hero-copy">
+            <span class="eyebrow">법무법인 로연 출입국이민지원센터</span>
+            <h1>복잡한 체류·이민 문제,<br>먼저 <em>사례</em>로 확인하세요.</h1>
+            <p class="lead">변호사가 직접 다룬 이민·체류 인사이트와 실제 해결 사례를 공개합니다. 궁금한 점은 온라인 쓰레드로 질문하고, 깊은 상담이 필요하면 서울·광주 사무소 방문을 예약하세요.</p>
+            <div class="cta-row">
+                <a href="consultation-request.html" class="btn btn-solid">온라인 쓰레드 열기</a>
+                <a href="https://booking.kakao.com/short/eWN7L-_J-9" target="_blank" rel="noopener" class="btn btn-outline">방문 상담 예약</a>
+            </div>
+        </div>
+        <div class="hero-motif" aria-hidden="true">
+            <div class="hero-seal"><img src="images/logo-lawyeon.png" alt=""></div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= ARTICLES / INSIGHTS ================= -->
+<section id="insights">
+    <div class="wrap">
+        <div class="sec-head">
+            <div>
+                <span class="idx">01</span>
+                <h2>인사이트</h2>
+            </div>
+            <p class="sec-desc">검색으로 찾아온 분들이 가장 먼저 읽는 글. 제도의 구조부터 실제 절차까지 변호사가 정리합니다.</p>
+        </div>
+
+        <div class="article-list">
+            <a class="article-row" href="blog/ep1.html">
+                <span class="ep">EP. 01</span>
+                <div>
+                    <h3>한국 사업이민 비자 개괄 — D-9-4와 D-9-5, 그리고 프랜차이즈라는 선택지</h3>
+                    <p class="dek">사업이민의 출발점. 어떤 비자 트랙이 있고, 프랜차이즈가 왜 현실적인 선택지가 되는지 짚습니다.</p>
+                </div>
+                <div class="meta"><span class="cat">사업이민</span><span>시리즈 1편 · 약 9분</span></div>
+            </a>
+            <a class="article-row" href="blog/ep2.html">
+                <span class="ep">EP. 02</span>
+                <div>
+                    <h3>한국 사업이민 비자 제도의 구조 — 투자금·체류·연장·동반가족</h3>
+                    <p class="dek">투자금 요건과 체류·연장 조건, 동반가족까지. 제도가 실제로 어떻게 적용되는지 살펴봅니다.</p>
+                </div>
+                <div class="meta"><span class="cat">사업이민</span><span>시리즈 2편 · 약 11분</span></div>
+            </a>
+            <a class="article-row" href="blog/ep3.html">
+                <span class="ep">EP. 03</span>
+                <div>
+                    <h3>한국에서 사업을 시작하기까지, 실제로 무엇이 진행되는가</h3>
+                    <p class="dek">5단계 프로젝트의 실제 내용과 자주 묻는 질문, 그리고 흔히 저지르는 실수를 정리했습니다.</p>
+                </div>
+                <div class="meta"><span class="cat">실무 가이드</span><span>시리즈 3편 · 약 12분</span></div>
+            </a>
+            <a class="article-row" href="blog/ep4.html">
+                <span class="ep">EP. 04</span>
+                <div>
+                    <h3>한국 사업이민 이후 — 장기 거주·가족·부동산·사회보험</h3>
+                    <p class="dek">비자 취득은 끝이 아니라 긴 시간의 출발점. 거주·가족·자산·보험까지의 흐름을 짚습니다.</p>
+                </div>
+                <div class="meta"><span class="cat">정착</span><span>시리즈 4편 · 약 10분</span></div>
+            </a>
+        </div>
+
+        <div style="margin-top:34px;text-align:right">
+            <a href="blog.html" class="more-link">모든 글 보기 →</a>
+        </div>
+    </div>
+</section>
+
+<!-- ================= CASES ================= -->
+<section id="cases" class="cases">
+    <div class="wrap">
+        <div class="sec-head">
+            <div>
+                <span class="idx">02</span>
+                <h2>해결 사례</h2>
+            </div>
+            <p class="sec-desc">실제로 진행한 사건의 흐름을 익명화해 공개합니다. 본인의 상황과 가까운 사례를 먼저 확인해 보세요.</p>
+        </div>
+
+        <div class="case-grid">
+            <div class="case">
+                <span class="tag">D-2 → D-8-4 기술창업</span>
+                <h3>유학생에서 기술창업 법인 대표로</h3>
+                <dl>
+                    <dt>상황</dt><dd>국내 대학 졸업(D-2) 후 IT 서비스 창업을 준비하던 외국인 청년.</dd>
+                    <dt>진행</dt><dd>OASIS 요건·지식재산권 확보 점검, 창업 법인 설립, D-8-4 변경 신청 대리.</dd>
+                    <dt>결과</dt><dd>기술창업(D-8-4) 비자 취득, 매출·고용 기반 연장 로드맵 수립.</dd>
+                </dl>
+            </div>
+            <div class="case">
+                <span class="tag">D-9-4 영리 개인사업</span>
+                <h3>개인사업자 등록부터 거주 경로까지</h3>
+                <dl>
+                    <dt>상황</dt><dd>국내에서 요식업 개인사업을 운영하려는 외국인 신청인.</dd>
+                    <dt>진행</dt><dd>사업체 등록·요건 정비, D-9-4 변경 자문, 거주(F-2) 단계별 경로 설계.</dd>
+                    <dt>결과</dt><dd>영리 개인사업(D-9-4) 비자 취득 및 중장기 체류 계획 확정.</dd>
+                </dl>
+            </div>
+            <div class="case">
+                <span class="tag">외국인투자기업 · D-8-1</span>
+                <h3>해외 법인의 한국 자회사 설립</h3>
+                <dl>
+                    <dt>상황</dt><dd>본국 법인이 한국 진출을 위해 자회사 설립과 임원 파견을 검토.</dd>
+                    <dt>진행</dt><dd>외국인투자신고·투자금 송금 절차 자문, 외국인투자기업 등록, 법인투자(D-8-1) 비자 대리.</dd>
+                    <dt>결과</dt><dd>법인 설립·등록 완료, 파견 임원 비자 발급.</dd>
+                </dl>
+            </div>
+            <div class="case">
+                <span class="tag">장기체류 → F-5 영주</span>
+                <h3>누적 체류 요건을 갖춘 영주 전환</h3>
+                <dl>
+                    <dt>상황</dt><dd>장기 체류 중 영주(F-5) 전환 가능 여부가 불확실했던 신청인.</dd>
+                    <dt>진행</dt><dd>체류·소득·납세 요건 진단, 부족 요건 보완 후 영주 신청 대리.</dd>
+                    <dt>결과</dt><dd>영주(F-5) 자격 취득, 체류 안정성 확보.</dd>
+                </dl>
+            </div>
+        </div>
+        <p class="case-note">※ 위 사례는 이해를 돕기 위한 예시이며, 개별 사건의 결과는 사실관계에 따라 달라질 수 있습니다.</p>
+    </div>
+</section>
+
+<!-- ================= CONVERSION ================= -->
+<section id="consult" class="convert">
+    <div class="wrap">
+        <div class="sec-head">
+            <div>
+                <span class="idx">03</span>
+                <h2>상담 신청</h2>
+            </div>
+            <p class="sec-desc">두 가지 방법으로 시작할 수 있습니다. 사안에 맞는 경로를 선택하세요.</p>
+        </div>
+
+        <div class="convert-grid">
+            <div class="channel">
+                <span class="ch-no">A.</span>
+                <h3>온라인 쓰레드</h3>
+                <p>로그인 후 비공개 쓰레드를 열어 상황과 자료를 남기면, 담당자가 검토 후 답변합니다. 시간과 장소에 구애받지 않고 진행할 수 있습니다.</p>
+                <div class="ch-meta"><b>접수</b> 24시간 · <b>대상</b> 비자/체류 전반, 사업이민 통합 상담</div>
+                <a href="consultation-request.html" class="btn btn-solid">쓰레드 열기</a>
+            </div>
+            <div class="channel">
+                <span class="ch-no">B.</span>
+                <h3>방문 상담</h3>
+                <p>심층 검토가 필요한 사안은 사무소 방문 상담을 예약하세요. 변호사와 직접 마주 앉아 서류와 전략을 검토합니다.</p>
+                <div class="ch-meta">
+                    <b>서울</b> 강서구 공항대로 164, 류마타워 503호<br>
+                    <b>광주</b> 동구 준법로 1, 초석빌딩 3층<br>
+                    <b>대표번호</b> 02-2039-0544
+                </div>
+                <a href="https://booking.kakao.com/short/eWN7L-_J-9" target="_blank" rel="noopener" class="btn btn-outline">방문 예약하기</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+    <div class="wrap footer-inner">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <img src="images/logo-lawyeon.png" alt="법무법인 로연">
+                <div>
+                    <div class="fb-name">법무법인 로연</div>
+                    <div class="fb-sub">출입국이민지원센터</div>
+                </div>
+            </div>
+            <div class="footer-contact">
+                <b>02-2039-0544</b> · 팩스 070-8230-0545<br>
+                서울 · 광주 사무소 운영
+            </div>
+        </div>
+
+        <div class="footer-info">
+            <div class="row"><b>법인명</b>법무법인 로연</div>
+            <div class="row"><b>서울사무소</b>서울특별시 강서구 공항대로 164, 5층 503호 (마곡동, 류마타워) · 대표 민준우</div>
+            <div class="row"><b>광주사무소</b>광주광역시 동구 준법로 1, 3층 (지산동, 초석빌딩) · 대표 봉세환</div>
+            <div class="row"><b>사업자등록번호</b>391-85-03007 (서울사무소)</div>
+            <div class="row"><b>통신판매업 신고</b>제 2025-서울강서-3193호</div>
+            <div class="row"><b>광고책임변호사</b>남도현, 민준우</div>
+
+            <div class="footer-links">
+                <a href="privacy-policy.html?v=2">개인정보 처리방침</a><span class="sep">·</span>
+                <a href="terms-of-service.html?v=2">서비스 이용약관</a><span class="sep">·</span>
+                <a href="price-list.html">서비스 가격표</a><span class="sep">·</span>
+                <a href="refund-policy.html">환불 규정</a><span class="sep">·</span>
+                <a href="https://lawyeon.com/" target="_blank" rel="noopener">법무법인 로연</a>
+            </div>
+            <p class="copyright">본 사이트에서 제공되는 모든 법률 서비스는 법무법인 로연에서 제공합니다. © 법무법인 로연 출입국이민지원센터</p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
