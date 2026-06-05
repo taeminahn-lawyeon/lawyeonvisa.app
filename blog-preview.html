@@ -1,516 +1,188 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="favicon.png?v=3">
-    <title>뉴스 & 인사이트 | 비자·출입국 정보 | 법무법인 로연</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insights — 법무법인 로연 출입국이민지원센터</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root{
+        --bg:#FFFFFF;--card:#FFFFFF;--card-2:#F6F5F2;--beige:#F0EBE1;
+        --ink:#211C15;--muted:#6E665B;--brown:#4A3C2B;--brown-d:#332920;
+        --btn:#887668;--btn-d:#6F6053;--rule:#E9E6DF;--rule-d:#D8D2C6;--gold:#B0883F;
+        --sans:'Manrope','IBM Plex Sans KR','Apple SD Gothic Neo',sans-serif;--wrap:1080px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
 
-    <!-- SEO 메타 태그 -->
-    <meta name="description" content="외국인 비자, 체류자격 변경, 영주권, 귀화 등 출입국 관련 최신 정보와 실무 가이드를 제공합니다. 법무법인 로연 출입국이민지원센터의 전문 콘텐츠입니다.">
-    <meta name="keywords" content="비자, 체류자격, 영주권, 귀화, 외국인등록, 출입국, 이민법, E-7, D-2, F-4, F-5, 법무법인 로연">
-    <meta name="author" content="법무법인 로연 출입국이민지원센터">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://www.lawyeonvisa.app/blog.html">
+    .preview-flag{background:#EDEAE3;color:#7A7162;text-align:center;font-size:12px;letter-spacing:.04em;padding:7px 16px;border-bottom:1px solid var(--rule)}
+    .preview-flag b{color:#4A3C2B;font-weight:600}
 
-    <!-- Open Graph (Facebook, LinkedIn 등) -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="뉴스 & 인사이트 | 비자·출입국 정보 | 법무법인 로연">
-    <meta property="og:description" content="외국인 비자, 체류자격 변경, 영주권, 귀화 등 출입국 관련 최신 정보와 실무 가이드를 제공합니다.">
-    <meta property="og:url" content="https://www.lawyeonvisa.app/blog.html">
-    <meta property="og:site_name" content="법무법인 로연 출입국이민지원센터">
-    <meta property="og:locale" content="ko_KR">
-    <meta property="og:image" content="https://www.lawyeonvisa.app/images/og-image.png">
+    .header{background:#fff;border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:40}
+    .header-inner{max-width:var(--wrap);margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between}
+    .brand .name{font-weight:700;font-size:18px;color:var(--brown-d);letter-spacing:-.01em}
+    .brand .sub{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+    .header-actions{display:flex;align-items:center;gap:18px}
+    .header-actions a{font-size:14px;color:var(--brown);font-weight:500}
+    .header-actions a:hover{color:var(--btn)}
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="뉴스 & 인사이트 | 법무법인 로연">
-    <meta name="twitter:description" content="외국인 비자, 체류자격 변경, 영주권, 귀화 등 출입국 관련 최신 정보와 실무 가이드">
+    .page-head{padding:56px 0 26px}
+    .page-head h1{font-size:clamp(28px,3.4vw,38px);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+    .page-head p{font-size:15px;color:var(--muted);margin-top:12px;max-width:620px;line-height:1.7}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    .bar{display:flex;justify-content:flex-start;align-items:center;gap:14px;flex-wrap:wrap;padding-bottom:16px;border-bottom:2px solid var(--ink)}
+    .ct{background:none;border:none;cursor:pointer;font-family:var(--sans);font-size:14px;font-weight:500;color:var(--muted);padding:2px 0;transition:color .14s}
+    .ct:hover{color:var(--ink)}
+    .ct.active{color:var(--ink);font-weight:700}
+    .ct-div{color:var(--rule-d);font-size:12px}
 
-        body {
-            font-family: 'Manrope','IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #F7F6F3;
-            color: #191f28;
-            line-height: 1.6;
-        }
+    .doc-list{padding-bottom:8px}
+    .doc-row{display:flex;justify-content:space-between;align-items:center;gap:30px;padding:26px 4px;border-bottom:1px solid var(--rule);transition:background .14s}
+    .doc-row:hover{background:var(--card-2)}
+    .doc-row.hidden{display:none}
+    .doc-main{min-width:0}
+    .doc-title{font-size:clamp(17px,1.7vw,20px);font-weight:600;color:var(--ink);letter-spacing:-.01em;line-height:1.45}
+    .doc-row:hover .doc-title{color:var(--btn)}
+    .doc-tags{margin-top:11px;display:flex;flex-wrap:wrap;gap:6px 13px}
+    .doc-tags span{font-size:13px;color:#9D968B}
+    .doc-date{font-size:13.5px;color:#9D968B;white-space:nowrap;flex-shrink:0}
 
-        /* 헤더 */
-        .header {
-            background: linear-gradient(135deg, #241F18 0%, #332920 100%);
-            color: white;
-            padding: 20px 24px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+    .more-row{text-align:center;padding:32px 0 80px}
+    .more-plus{font-size:15px;font-weight:600;color:var(--ink);letter-spacing:.02em}
+    .more-plus i{color:var(--btn);font-style:normal;margin-left:6px}
 
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    footer{background:#161410;color:#9A8F78;padding:34px 0;font-size:12.5px}
+    footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    footer b{color:#C9BEA8;font-weight:600}
 
-        .header h1 {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .header h1 a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .header-nav {
-            display: flex;
-            gap: 24px;
-        }
-
-        .header-nav a {
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.2s;
-        }
-
-        .header-nav a:hover {
-            color: white;
-        }
-
-        /* 히어로 섹션 */
-        .hero {
-            background: linear-gradient(135deg, #241F18 0%, #332920 100%);
-            color: white;
-            padding: 48px 24px 64px;
-            text-align: center;
-        }
-
-        .hero h2 {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .hero p {
-            font-size: 16px;
-            opacity: 0.8;
-        }
-
-        /* 컨테이너 */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* 카테고리 탭 */
-        .category-tabs {
-            display: flex;
-            gap: 8px;
-            padding: 24px 0;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .category-tab {
-            padding: 10px 20px;
-            background: white;
-            border: 1px solid #e5e8eb;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: 500;
-            color: #4e5968;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.2s;
-        }
-
-        .category-tab:hover {
-            border-color: #887668;
-            color: #887668;
-        }
-
-        .category-tab.active {
-            background: #887668;
-            border-color: #887668;
-            color: white;
-        }
-
-        /* 블로그 그리드 */
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            padding-bottom: 64px;
-        }
-
-        @media (max-width: 900px) {
-            .blog-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 600px) {
-            .blog-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* 블로그 카드 */
-        .blog-card {
-            background: white;
-            border-radius: 4px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .blog-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.08);
-        }
-
-        .blog-card-thumbnail {
-            width: 100%;
-            height: 180px;
-            background: linear-gradient(135deg, #F1ECE2 0%, #E6DECE 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-        }
-
-        .blog-card-thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .blog-card-content {
-            padding: 20px;
-        }
-
-        .blog-card-category {
-            display: inline-block;
-            padding: 4px 10px;
-            background: #f2f4f6;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 500;
-            color: #887668;
-            margin-bottom: 12px;
-        }
-
-        .blog-card-title {
-            font-size: 17px;
-            font-weight: 600;
-            color: #191f28;
-            margin-bottom: 8px;
-            line-height: 1.4;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .blog-card-excerpt {
-            font-size: 14px;
-            color: #6b7684;
-            line-height: 1.6;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            margin-bottom: 16px;
-        }
-
-        .blog-card-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-            color: #8b95a1;
-        }
-
-        /* 로딩 */
-        .loading {
-            text-align: center;
-            padding: 48px;
-            color: #8b95a1;
-        }
-
-        .loading-spinner {
-            width: 32px;
-            height: 32px;
-            border: 3px solid #e5e8eb;
-            border-top-color: #887668;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 16px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* 빈 상태 */
-        .empty-state {
-            text-align: center;
-            padding: 64px 24px;
-            color: #8b95a1;
-        }
-
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-        }
-
-        /* 푸터 */
-        .footer {
-            background: #F7F6F3;
-            border-top: 1px solid #e5e8eb;
-            padding: 32px 24px;
-            text-align: center;
-            color: #8b95a1;
-            font-size: 14px;
-        }
-
-        .footer a {
-            color: #4e5968;
-            text-decoration: none;
-        }
-    </style>
+    @media(max-width:680px){.wrap{padding:0 18px}.header-inner{padding:14px 18px}.brand .sub{display:none}.bar{overflow-x:auto;flex-wrap:nowrap}.doc-row{gap:14px}.doc-date{font-size:12px}}
+</style>
 </head>
 <body>
-    <header class="header">
-        <div class="header-content">
-            <h1><a href="index.html" data-i18n="common.lawFirm">법무법인 로연</a></h1>
-            <nav class="header-nav">
-                <a href="index.html" data-i18n="blog.nav.services">서비스</a>
-                <a href="blog.html" style="color: white; font-weight: 600;" data-i18n="blog.nav.newsInsights">뉴스 & 인사이트</a>
-            </nav>
+<div class="preview-flag">리뉴얼 시안 · <b>blog-preview.html</b> — 블로그(인사이트) 리스트, index와 동일 디자인 형식</div>
+
+<header class="header">
+    <div class="header-inner">
+        <a href="renewal-preview.html" class="brand">
+            <div class="name">Law Firm Lawyeon</div>
+            <div class="sub">Visa &amp; Immigration Center</div>
+        </a>
+        <div class="header-actions">
+            <a href="renewal-preview.html">← 홈</a>
+            <a href="booking-preview.html">상담 예약</a>
         </div>
-    </header>
+    </div>
+</header>
 
-    <section class="hero">
-        <h2 data-i18n="blog.title">뉴스 & 인사이트</h2>
-        <p data-i18n="blog.subtitle">출입국·비자에 관한 유용한 정보를 제공합니다</p>
-    </section>
+<section class="page-head">
+    <div class="wrap">
+        <h1>Insights</h1>
+        <p>외국인의 체류·이민·형사·행정 실무에 관해 변호사가 직접 정리한 글입니다.</p>
+    </div>
+</section>
 
-    <main class="container">
-        <div class="category-tabs" id="categoryTabs">
-            <button class="category-tab active" data-category="all" data-i18n="blog.category.all">전체</button>
-            <button class="category-tab" data-category="citizenship" data-i18n="blog.category.citizenship">국적·귀화·난민</button>
-            <button class="category-tab" data-category="admin" data-i18n="blog.category.admin">공통 행정 신고</button>
-            <button class="category-tab" data-category="work" data-i18n="blog.category.work">취업·워크</button>
-            <button class="category-tab" data-category="education" data-i18n="blog.category.education">교육·구직</button>
-            <button class="category-tab" data-category="business" data-i18n="blog.category.business">사업·투자</button>
-            <button class="category-tab" data-category="family" data-i18n="blog.category.family">동포·가족·결혼</button>
-            <button class="category-tab" data-category="residence" data-i18n="blog.category.residence">거주·영주</button>
-        </div>
+<div class="wrap">
+    <div class="bar" id="bar">
+        <button class="ct active" data-cat="all">전체</button>
+        <span class="ct-div">|</span>
+        <button class="ct" data-cat="biz">사업·투자</button>
+        <span class="ct-div">|</span>
+        <button class="ct" data-cat="citizenship">국적·귀화·난민</button>
+        <span class="ct-div">|</span>
+        <button class="ct" data-cat="residence">거주·영주</button>
+        <span class="ct-div">|</span>
+        <button class="ct" data-cat="work">취업·워크</button>
+        <span class="ct-div">|</span>
+        <button class="ct" data-cat="admin">행정 신고</button>
+        <span class="ct-div">|</span>
+        <button class="ct" data-cat="education">교육·구직</button>
+        <span class="ct-div">|</span>
+        <button class="ct" data-cat="family">동포·가족·결혼</button>
+    </div>
 
-        <div id="blogList" class="blog-grid">
-            <div class="loading">
-                <div class="loading-spinner"></div>
-                <p>글을 불러오는 중...</p>
-            </div>
-        </div>
-    </main>
+    <div class="doc-list" id="list">
+        <a class="doc-row" data-cat="biz" href="article-preview.html">
+            <div class="doc-main"><div class="doc-title">한국 사업이민 비자 개괄 — D-9-4와 D-9-5, 그리고 프랜차이즈라는 선택지</div>
+            <div class="doc-tags"><span>#사업이민</span><span>#D-9-4</span><span>#D-9-5</span><span>#프랜차이즈</span></div></div>
+            <div class="doc-date">2026.04.10</div>
+        </a>
+        <a class="doc-row" data-cat="biz" href="article-preview.html">
+            <div class="doc-main"><div class="doc-title">한국 사업이민 비자 제도의 구조 — 투자금·체류·연장·동반가족</div>
+            <div class="doc-tags"><span>#사업이민</span><span>#투자금</span><span>#체류연장</span><span>#동반가족</span></div></div>
+            <div class="doc-date">2026.04.17</div>
+        </a>
+        <a class="doc-row" data-cat="biz" href="article-preview.html">
+            <div class="doc-main"><div class="doc-title">한국에서 사업을 시작하기까지, 실제로 무엇이 진행되는가</div>
+            <div class="doc-tags"><span>#사업이민</span><span>#창업절차</span><span>#5단계</span></div></div>
+            <div class="doc-date">2026.04.24</div>
+        </a>
+        <a class="doc-row" data-cat="biz" href="article-preview.html">
+            <div class="doc-main"><div class="doc-title">한국 사업이민 이후 — 장기 거주·가족·부동산·사회보험</div>
+            <div class="doc-tags"><span>#정착</span><span>#영주</span><span>#사회보험</span></div></div>
+            <div class="doc-date">2026.05.01</div>
+        </a>
+        <a class="doc-row" data-cat="residence" href="article-preview.html">
+            <div class="doc-main"><div class="doc-title">F-2 거주에서 F-5 영주로 — 요건과 순서</div>
+            <div class="doc-tags"><span>#F-2</span><span>#F-5</span><span>#영주</span></div></div>
+            <div class="doc-date">2026.05.05</div>
+        </a>
+        <a class="doc-row" data-cat="citizenship" href="article-preview.html">
+            <div class="doc-main"><div class="doc-title">귀화 신청 전에 확인할 체류·소득·납세 요건</div>
+            <div class="doc-tags"><span>#귀화</span><span>#체류</span><span>#납세</span></div></div>
+            <div class="doc-date">2026.04.21</div>
+        </a>
+        <a class="doc-row" data-cat="work" href="article-preview.html">
+            <div class="doc-main"><div class="doc-title">E-7 전문인력 비자, 고용주·근로자가 함께 보는 체크리스트</div>
+            <div class="doc-tags"><span>#E-7</span><span>#고용</span><span>#전문인력</span></div></div>
+            <div class="doc-date">2026.05.03</div>
+        </a>
+        <a class="doc-row" data-cat="admin" href="article-preview.html">
+            <div class="doc-main"><div class="doc-title">외국인등록·체류기간 연장, 자주 틀리는 신청 실무</div>
+            <div class="doc-tags"><span>#외국인등록</span><span>#체류연장</span><span>#신청실무</span></div></div>
+            <div class="doc-date">2026.05.09</div>
+        </a>
+        <a class="doc-row" data-cat="education" href="article-preview.html">
+            <div class="doc-main"><div class="doc-title">D-2 유학생의 졸업 후 체류 전환 경로</div>
+            <div class="doc-tags"><span>#D-2</span><span>#유학</span><span>#D-10</span></div></div>
+            <div class="doc-date">2026.04.28</div>
+        </a>
+        <a class="doc-row" data-cat="family" href="article-preview.html">
+            <div class="doc-main"><div class="doc-title">결혼이민(F-6) 체류와 국적 취득의 흐름</div>
+            <div class="doc-tags"><span>#F-6</span><span>#결혼이민</span><span>#국적</span></div></div>
+            <div class="doc-date">2026.05.07</div>
+        </a>
+    </div>
 
-    <footer class="footer">
-        <p data-i18n="blog.footer.copyright">© 2025 법무법인 로연. All rights reserved.</p>
-        <p style="margin-top: 8px;">
-            <a href="privacy-policy.html" data-i18n="blog.footer.privacy">개인정보처리방침</a> ·
-            <a href="terms-of-service.html" data-i18n="blog.footer.terms">이용약관</a>
-        </p>
-    </footer>
+    <div class="more-row"><a href="#" class="more-plus">더 보기 <i>+</i></a></div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- 다국어 시스템 -->
-    <script src="js/translations.js?v=20260605"></script>
-    <script src="js/i18n.js?v=20260605"></script>
-    <script>
-        // Supabase 초기화
-        const SUPABASE_URL = 'https://gqistzsergddnpcvuzba.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxaXN0enNlcmdkZG5wY3Z1emJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNTEyMjEsImV4cCI6MjA4MDcyNzIyMX0.X_GgShObq9OJ6z7aEKdUCoyHYo-OJL-I5hcIDt4komg';
-        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+<footer>
+    <div class="wrap">
+        <div><b>법무법인 로연 출입국이민지원센터</b> · 02-2039-0544</div>
+        <div>© Law Firm Lawyeon · Visa &amp; Immigration Center</div>
+    </div>
+</footer>
 
-        let currentCategory = 'all';
-
-        // i18n 헬퍼 함수
-        function t(key, fallback) {
-            if (typeof i18n !== 'undefined' && i18n.translate) {
-                const result = i18n.translate(key);
-                return result !== key ? result : (fallback || key);
-            }
-            return fallback || key;
-        }
-
-        // 카테고리 매핑 (동적 번역)
-        function getCategoryName(cat) {
-            const map = {
-                'all': t('blog.category.all', '전체'),
-                'citizenship': t('blog.category.citizenship', '국적·귀화·난민'),
-                'admin': t('blog.category.admin', '공통 행정 신고'),
-                'work': t('blog.category.work', '취업·워크'),
-                'education': t('blog.category.education', '교육·구직'),
-                'business': t('blog.category.business', '사업·투자'),
-                'family': t('blog.category.family', '동포·가족·결혼'),
-                'residence': t('blog.category.residence', '거주·영주')
-            };
-            return map[cat] || cat;
-        }
-        // 하위 호환성을 위한 카테고리 매핑 객체
-        const categoryNames = {
-            'all': '전체',
-            'citizenship': '국적·귀화·난민',
-            'admin': '공통 행정 신고',
-            'work': '취업·워크',
-            'education': '교육·구직',
-            'business': '사업·투자',
-            'family': '동포·가족·결혼',
-            'residence': '거주·영주'
-        };
-
-        // 블로그 글 로드
-        async function loadPosts(category = 'all') {
-            const blogList = document.getElementById('blogList');
-            blogList.innerHTML = `<div class="loading"><div class="loading-spinner"></div><p>${t('blog.loading', '글을 불러오는 중...')}</p></div>`;
-
-            try {
-                // console.log('Loading posts, category:', category);
-
-                let query = supabaseClient
-                    .from('blog_posts')
-                    .select('*')
-                    .eq('is_published', true)
-                    .order('created_at', { ascending: false });
-
-                if (category !== 'all') {
-                    query = query.eq('category', category);
-                }
-
-                // console.log('Executing query...');
-                const { data: allPosts, error } = await query;
-                // console.log('Query result:', { allPosts, error });
-
-                // Multilingual filter: prefer user's i18n language; fall back
-                // to English per translation_group. Posts without
-                // translation_group are treated as standalone.
-                const userLang = (typeof localStorage !== 'undefined'
-                    && localStorage.getItem('i18n_language')) || 'en';
-                const byGroup = {};
-                (allPosts || []).forEach(p => {
-                    const key = p.translation_group || `__solo_${p.id}`;
-                    if (!byGroup[key]) byGroup[key] = {};
-                    byGroup[key][p.language || 'en'] = p;
-                });
-                const posts = Object.values(byGroup).map(versions =>
-                    versions[userLang] || versions['en'] || Object.values(versions)[0]
-                ).filter(Boolean).sort((a, b) =>
-                    new Date(b.created_at) - new Date(a.created_at)
-                );
-
-                // 테이블이 없거나 에러인 경우
-                if (error) {
-                    console.error('Supabase error:', error);
-                    // 테이블이 없는 경우 빈 상태로 표시
-                    if (error.code === '42P01' || error.message?.includes('does not exist')) {
-                        blogList.innerHTML = `
-                            <div class="empty-state" style="grid-column: 1 / -1;">
-                                <div class="empty-state-icon">📝</div>
-                                <p>${t('blog.empty', '아직 작성된 글이 없습니다.')}</p>
-                            </div>
-                        `;
-                        return;
-                    }
-                    throw error;
-                }
-
-                if (!posts || posts.length === 0) {
-                    blogList.innerHTML = `
-                        <div class="empty-state" style="grid-column: 1 / -1;">
-                            <div class="empty-state-icon">📝</div>
-                            <p>${t('blog.empty', '아직 작성된 글이 없습니다.')}</p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                blogList.innerHTML = posts.map(post => `
-                    <article class="blog-card" onclick="location.href='${post.template === 'navy_v4' ? `blog/${post.slug}.html` : `blog-post-preview.html?slug=${post.slug}`}'">
-                        <div class="blog-card-thumbnail">
-                            ${post.thumbnail_url
-                                ? `<img src="${post.thumbnail_url}" alt="${post.title}">`
-                                : getDefaultEmoji(post.category)
-                            }
-                        </div>
-                        <div class="blog-card-content">
-                            <span class="blog-card-category">${getCategoryName(post.category)}</span>
-                            <h3 class="blog-card-title">${post.title}</h3>
-                            <p class="blog-card-excerpt">${post.excerpt || ''}</p>
-                            <div class="blog-card-meta">
-                                <span>${formatDate(post.created_at)}</span>
-                            </div>
-                        </div>
-                    </article>
-                `).join('');
-
-            } catch (error) {
-                console.error('Error loading posts:', error);
-                blogList.innerHTML = `
-                    <div class="empty-state" style="grid-column: 1 / -1;">
-                        <div class="empty-state-icon">⚠️</div>
-                        <p>${t('blog.error', '글을 불러오는 중 오류가 발생했습니다.')}</p>
-                    </div>
-                `;
-            }
-        }
-
-        // 카테고리별 기본 이모지
-        function getDefaultEmoji(category) {
-            const emojis = {
-                'citizenship': '🛂',
-                'admin': '📋',
-                'work': '💼',
-                'education': '🎓',
-                'business': '🏢',
-                'family': '👨‍👩‍👧',
-                'residence': '🏠'
-            };
-            return emojis[category] || '📄';
-        }
-
-        // 날짜 포맷
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
-        }
-
-        // 카테고리 탭 이벤트
-        document.getElementById('categoryTabs').addEventListener('click', (e) => {
-            if (e.target.classList.contains('category-tab')) {
-                document.querySelectorAll('.category-tab').forEach(tab => tab.classList.remove('active'));
-                e.target.classList.add('active');
-                currentCategory = e.target.dataset.category;
-                loadPosts(currentCategory);
-            }
+<script>
+(function(){
+    var tabs=document.querySelectorAll('#bar .ct');
+    var rows=document.querySelectorAll('#list .doc-row');
+    tabs.forEach(function(tab){
+        tab.addEventListener('click',function(){
+            tabs.forEach(function(t){t.classList.remove('active');});
+            tab.classList.add('active');
+            var c=tab.getAttribute('data-cat');
+            rows.forEach(function(r){
+                r.classList.toggle('hidden', c!=='all' && r.getAttribute('data-cat')!==c);
+            });
         });
-
-        // 초기 로드
-        loadPosts();
-    </script>
+    });
+})();
+</script>
 </body>
 </html>
