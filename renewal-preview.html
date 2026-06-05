@@ -8,7 +8,7 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
     :root{
         --bg:#FFFFFF;
@@ -27,7 +27,7 @@
         --btn-d:#6F6053;
         --rule:#E9E6DF;
         --rule-d:#D8D2C6;
-        --sans:'IBM Plex Sans','IBM Plex Sans KR','Apple SD Gothic Neo',sans-serif;
+        --sans:'Manrope','IBM Plex Sans KR','Apple SD Gothic Neo',sans-serif;
         --wrap:1200px;
     }
     *{margin:0;padding:0;box-sizing:border-box}
@@ -47,6 +47,8 @@
     .btn:active{transform:translateY(1px)}
     .btn-primary{background:var(--btn);color:#fff;border-color:var(--btn)}
     .btn-primary:hover{background:var(--btn-d);border-color:var(--btn-d)}
+    .btn-line{background:#F4F2EE;color:var(--ink);border:1.5px solid transparent;font-weight:600}
+    .btn-line:hover{border-color:var(--btn);color:var(--btn)}
     .btn-ghost{background:transparent;color:var(--brown);border-color:var(--rule-d)}
     .btn-ghost:hover{background:var(--brown);color:var(--beige);border-color:var(--brown)}
     .btn-gold{background:var(--gold);color:#fff;border-color:var(--gold)}
@@ -87,6 +89,7 @@
     .reg-badge img{height:60px;width:auto}
     .reg-text{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.04em;line-height:1.6}
     .intro-cta{display:flex;gap:12px;flex-wrap:wrap}
+    .intro-cta-sub{margin-top:12px}
 
     .intro-right{display:flex;flex-direction:column;gap:14px;min-width:0}
     /* carousel (reused) */
@@ -250,15 +253,19 @@
 <section class="intro">
     <div class="wrap intro-grid">
         <div class="intro-left">
-            <h1>Get a Korean Lawyer to fully represent you</h1>
-            <p class="intro-desc">The firm handles criminal cases, contracts, and immigration office affairs in Korea.</p>
+            <h1>Leading Law Firm in Immigration Practice Area</h1>
+            <p class="intro-desc">The Firm provide legal representative services regarding criminal cases, contracts, immigration office affairs for expat and migrants in Korea.</p>
             <div class="reg-badge">
                 <img src="images/moj-badge.jpg" alt="Ministry of Justice">
                 <span class="reg-text">Registered Immigration Agency<br>#25-SM-RG-063</span>
             </div>
             <div class="intro-cta">
-                <a href="consultation-request.html" class="btn btn-primary">Online Consultation</a>
-                <a href="https://booking.kakao.com/short/eWN7L-_J-9" target="_blank" rel="noopener" class="btn btn-primary">Visit Consultation</a>
+                <a href="thread-preview.html" class="btn btn-primary">Online Consultation</a>
+                <a href="booking-preview.html" class="btn btn-primary">Visit Consultation</a>
+            </div>
+            <div class="intro-cta intro-cta-sub">
+                <a href="consultation-request.html" class="btn btn-line">Pension Refund</a>
+                <a href="consultation-request.html" class="btn btn-line">Corporate Advisory</a>
             </div>
         </div>
 
