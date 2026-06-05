@@ -49,21 +49,20 @@
     .btn-gold:hover{background:#A37F3E;border-color:#A37F3E}
 
     /* ---------- Preview note ---------- */
-    .preview-flag{background:var(--brown-d);color:#D8CDB6;text-align:center;font-size:12px;letter-spacing:.04em;padding:7px 16px}
-    .preview-flag b{color:#EBDFC6;font-weight:600}
+    .preview-flag{background:#EDEAE3;color:#7A7162;text-align:center;font-size:12px;letter-spacing:.04em;padding:7px 16px;border-bottom:1px solid var(--rule)}
+    .preview-flag b{color:#4A3C2B;font-weight:600}
 
-    /* ---------- Header (existing structure, recolored) ---------- */
-    .header{background:var(--brown-d);color:#EFE7D6;border-bottom:2px solid var(--gold);position:sticky;top:0;z-index:50}
-    .header-content{max-width:var(--wrap);margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    /* ---------- Header: light, editorial (text wordmark, no logo mark) ---------- */
+    .header{background:#FFFFFF;color:var(--ink);border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:50}
+    .header-content{max-width:var(--wrap);margin:0 auto;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px}
     .brand{display:flex;align-items:center;gap:14px}
-    .brand img{height:44px;width:auto}
-    .brand .name{font-weight:800;font-size:19px;color:#F3E9D2;letter-spacing:-.01em;line-height:1.15}
-    .brand .sub{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#B7AB92;margin-top:3px}
+    .brand .name{font-weight:800;font-size:19px;color:var(--brown-d);letter-spacing:-.01em;line-height:1.15}
+    .brand .sub{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:4px}
     .header-actions{display:flex;align-items:center;gap:12px}
     .nav-links{display:flex;gap:24px;margin-right:8px}
-    .nav-links a{font-size:14px;color:#D8CDB6;font-weight:500}
-    .nav-links a:hover{color:#fff}
-    .lang{font-size:13px;color:#B7AB92;letter-spacing:.03em;cursor:pointer}
+    .nav-links a{font-size:14px;color:var(--brown);font-weight:500}
+    .nav-links a:hover{color:var(--brown-d)}
+    .lang{font-size:13px;color:var(--muted);letter-spacing:.03em;cursor:pointer}
     .header .btn{padding:10px 18px;font-size:14px}
 
     /* ---------- Section base ---------- */
@@ -95,7 +94,7 @@
     .attorney-photo{width:100%;height:210px;object-fit:cover;object-position:top center;display:block}
     .attorney-info{position:absolute;bottom:0;left:0;right:0;padding:12px;background:linear-gradient(transparent,rgba(40,33,22,.9))}
     .attorney-name{font-size:13px;font-weight:600;color:#F3E9D2;text-align:center}
-    .office-photo{position:relative;width:100%;height:210px;border-radius:8px;overflow:hidden;background:var(--beige) center/cover no-repeat;border:1px solid var(--rule)}
+    .office-photo{position:relative;width:100%;height:232px;border-radius:8px;overflow:hidden;background:var(--beige) 50% 12%/cover no-repeat;border:1px solid var(--rule)}
     .office-photo .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#A99B82;font-size:13px;font-weight:600;letter-spacing:.04em}
 
     /* ---------- Insights (category tabs + cards) ---------- */
@@ -108,8 +107,9 @@
     .card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
     .card{display:block;background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:24px;transition:border-color .15s,transform .15s,box-shadow .15s;cursor:pointer}
     .card:hover{border-color:var(--brown)}
-    .card .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--brown);background:var(--beige);padding:5px 10px;border-radius:3px;margin-bottom:14px}
-    .card .card-title{font-weight:700;font-size:17px;line-height:1.45;color:var(--ink);letter-spacing:-.01em}
+    .card .card-rule{display:block;width:26px;height:2px;background:var(--gold);margin-bottom:16px}
+    .card:hover .card-rule{width:40px;transition:width .18s}
+    .card .card-title{font-weight:700;font-size:18px;line-height:1.45;color:var(--ink);letter-spacing:-.01em}
     .card:hover .card-title{color:var(--brown)}
     .card .card-dek{font-size:14px;color:var(--muted);line-height:1.6;margin-top:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
     .card .card-meta{font-size:12.5px;color:var(--muted);margin-top:16px;padding-top:14px;border-top:1px solid var(--rule)}
@@ -147,7 +147,7 @@
     .channel .ch-meta b{color:var(--ink);font-weight:600}
 
     /* ---------- Footer ---------- */
-    .footer{background:var(--brown-d);color:#C9BEA8}
+    .footer{background:#161410;color:#C9BEA8}
     .footer-inner{padding:60px 0 50px}
     .footer-top{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;align-items:center;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,.1)}
     .footer-brand{display:flex;align-items:center;gap:14px}
@@ -193,9 +193,8 @@
 <header class="header">
     <div class="header-content">
         <a href="renewal-preview.html" class="brand">
-            <img src="images/logo-lawyeon.png" alt="법무법인 로연">
             <div>
-                <div class="name">법무법인 로연</div>
+                <div class="name">Law Firm Lawyeon</div>
                 <div class="sub">Visa &amp; Immigration Center</div>
             </div>
         </a>
@@ -206,7 +205,7 @@
                 <a href="#consult">Consultation</a>
             </nav>
             <span class="lang">KO ▾</span>
-            <a href="consultation-request.html" class="btn btn-gold">Login</a>
+            <a href="consultation-request.html" class="btn btn-primary">Login</a>
         </div>
     </div>
 </header>
@@ -273,7 +272,7 @@
             <!-- Visa & Immigration -->
             <a class="card lead" data-cat="visa" href="blog/ep1.html">
                 <div class="lead-main">
-                    <span class="tag">Visa &amp; Immigration</span>
+                    <span class="card-rule"></span>
                     <div class="card-title">한국 사업이민 비자 개괄 — D-9-4와 D-9-5, 그리고 프랜차이즈라는 선택지</div>
                     <div class="card-dek">사업이민의 출발점. 어떤 비자 트랙이 있고, 프랜차이즈가 왜 현실적 선택지가 되는지 짚는 시리즈 도입부입니다.</div>
                 </div>
@@ -283,19 +282,19 @@
                 </div>
             </a>
             <a class="card" data-cat="visa" href="blog/ep2.html">
-                <span class="tag">Visa &amp; Immigration</span>
+                <span class="card-rule"></span>
                 <div class="card-title">한국 사업이민 비자 제도의 구조 — 투자금·체류·연장·동반가족</div>
                 <div class="card-dek">투자금 요건과 체류·연장 조건, 동반가족까지. 제도가 실제로 어떻게 적용되는지.</div>
                 <div class="card-meta">시리즈 2편 · 약 11분</div>
             </a>
             <a class="card" data-cat="visa" href="blog/ep3.html">
-                <span class="tag">Visa &amp; Immigration</span>
+                <span class="card-rule"></span>
                 <div class="card-title">한국에서 사업을 시작하기까지, 실제로 무엇이 진행되는가</div>
                 <div class="card-dek">5단계 프로젝트의 실제 내용과 자주 묻는 질문, 흔한 실수를 정리했습니다.</div>
                 <div class="card-meta">시리즈 3편 · 약 12분</div>
             </a>
             <a class="card" data-cat="visa" href="blog/ep4.html">
-                <span class="tag">Visa &amp; Immigration</span>
+                <span class="card-rule"></span>
                 <div class="card-title">한국 사업이민 이후 — 장기 거주·가족·부동산·사회보험</div>
                 <div class="card-dek">비자 취득은 끝이 아니라 긴 시간의 출발점. 정착 단계의 흐름을 짚습니다.</div>
                 <div class="card-meta">시리즈 4편 · 약 10분</div>
@@ -303,13 +302,13 @@
 
             <!-- Criminal Defense -->
             <a class="card hidden" data-cat="criminal" href="blog.html">
-                <span class="tag">Criminal Defense</span>
+                <span class="card-rule"></span>
                 <div class="card-title">외국인 형사사건, 수사 단계에서 변호인의 역할</div>
                 <div class="card-dek">체포·조사 단계부터의 대응이 결과를 가릅니다. 통역·진술·구속 대응을 정리합니다.</div>
                 <div class="card-meta">실무 가이드 · 약 8분</div>
             </a>
             <a class="card hidden" data-cat="criminal" href="blog.html">
-                <span class="tag">Criminal Defense</span>
+                <span class="card-rule"></span>
                 <div class="card-title">체류자격과 형사처벌 — 출국명령·강제퇴거로 이어지지 않으려면</div>
                 <div class="card-dek">형사처벌이 체류·이민에 미치는 영향과, 사전에 관리해야 할 요소를 살펴봅니다.</div>
                 <div class="card-meta">실무 가이드 · 약 9분</div>
@@ -317,13 +316,13 @@
 
             <!-- Residence & Nationality -->
             <a class="card hidden" data-cat="residence" href="blog.html">
-                <span class="tag">Residence &amp; Nationality</span>
+                <span class="card-rule"></span>
                 <div class="card-title">F-2 거주에서 F-5 영주로 — 요건과 순서</div>
                 <div class="card-dek">거주에서 영주로 넘어가는 조건과 준비 순서를 단계별로 정리했습니다.</div>
                 <div class="card-meta">실무 가이드 · 약 10분</div>
             </a>
             <a class="card hidden" data-cat="residence" href="blog.html">
-                <span class="tag">Residence &amp; Nationality</span>
+                <span class="card-rule"></span>
                 <div class="card-title">귀화 신청 전에 확인할 체류·소득·납세 요건</div>
                 <div class="card-dek">귀화 심사에서 자주 문제되는 요건을 미리 점검하는 체크리스트.</div>
                 <div class="card-meta">실무 가이드 · 약 8분</div>
@@ -331,13 +330,13 @@
 
             <!-- Administrative Affairs -->
             <a class="card hidden" data-cat="admin" href="blog.html">
-                <span class="tag">Administrative Affairs</span>
+                <span class="card-rule"></span>
                 <div class="card-title">외국인등록·체류기간 연장, 자주 틀리는 신청 실무</div>
                 <div class="card-dek">민원 처리 지연과 반려를 부르는 흔한 실수를 사례 중심으로 정리합니다.</div>
                 <div class="card-meta">실무 가이드 · 약 7분</div>
             </a>
             <a class="card hidden" data-cat="admin" href="blog.html">
-                <span class="tag">Administrative Affairs</span>
+                <span class="card-rule"></span>
                 <div class="card-title">출입국 민원 처분에 대한 이의신청과 행정심판</div>
                 <div class="card-dek">불허·반려 처분을 받았을 때의 구제 절차와 대응 전략을 살펴봅니다.</div>
                 <div class="card-meta">실무 가이드 · 약 11분</div>
@@ -425,10 +424,9 @@
     <div class="wrap footer-inner">
         <div class="footer-top">
             <div class="footer-brand">
-                <img src="images/logo-lawyeon.png" alt="법무법인 로연">
                 <div>
-                    <div class="fb-name">법무법인 로연</div>
-                    <div class="fb-sub">출입국이민지원센터</div>
+                    <div class="fb-name">Law Firm Lawyeon</div>
+                    <div class="fb-sub">Visa &amp; Immigration Center</div>
                 </div>
             </div>
             <div class="footer-tel">
