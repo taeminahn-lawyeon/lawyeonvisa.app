@@ -6,7 +6,7 @@
 <title>법무법인 로연 출입국이민지원센터 — 리뉴얼 시안</title>
 <meta name="description" content="법무법인 로연 출입국이민지원센터. 외국인 형사·계약·출입국 민원 및 이민 법률 대리. 온라인 상담 또는 사무소 방문 상담.">
 <meta name="robots" content="noindex">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
     :root{
         --bg:#FFFFFF;
@@ -23,7 +23,7 @@
         --gold:#B0883F;
         --rule:#E9E6DF;
         --rule-d:#D8D2C6;
-        --sans:'Inter','Noto Sans KR',sans-serif;
+        --sans:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo',sans-serif;
         --wrap:1200px;
     }
     *{margin:0;padding:0;box-sizing:border-box}
@@ -107,21 +107,35 @@
 
     .card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
     .card{display:block;background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:24px;transition:border-color .15s,transform .15s,box-shadow .15s;cursor:pointer}
-    .card:hover{border-color:var(--brown);transform:translateY(-3px);box-shadow:0 10px 26px rgba(62,51,38,.1)}
+    .card:hover{border-color:var(--brown)}
     .card .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--brown);background:var(--beige);padding:5px 10px;border-radius:3px;margin-bottom:14px}
     .card .card-title{font-weight:700;font-size:17px;line-height:1.45;color:var(--ink);letter-spacing:-.01em}
     .card:hover .card-title{color:var(--brown)}
     .card .card-dek{font-size:14px;color:var(--muted);line-height:1.6;margin-top:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
     .card .card-meta{font-size:12.5px;color:var(--muted);margin-top:16px;padding-top:14px;border-top:1px solid var(--rule)}
     .card.hidden{display:none}
+    /* featured lead article (hierarchy, breaks the equal-card grid) */
+    #insightGrid .card.lead{grid-column:1 / -1;display:grid;grid-template-columns:1.55fr 1fr;gap:36px;align-items:center;padding:30px 34px;background:var(--card)}
+    #insightGrid .card.lead .lead-main{min-width:0}
+    #insightGrid .card.lead .card-title{font-size:clamp(20px,2vw,25px);line-height:1.38}
+    #insightGrid .card.lead .card-dek{-webkit-line-clamp:2;font-size:14.5px}
+    #insightGrid .card.lead .lead-aside{border-left:1px solid var(--rule);padding-left:34px}
+    #insightGrid .card.lead .lead-aside .la-cat{font-weight:700;font-size:14px;color:var(--brown)}
+    #insightGrid .card.lead .lead-aside .la-meta{font-size:13px;color:var(--muted);margin-top:8px}
+    @media(max-width:680px){#insightGrid .card.lead{grid-template-columns:1fr;gap:16px}#insightGrid .card.lead .lead-aside{border-left:none;padding-left:0;border-top:1px solid var(--rule);padding-top:14px}}
 
-    /* ---------- Cases & News (no category) ---------- */
-    .cards-news .card .tag.case{color:#fff;background:var(--taupe)}
-    .cards-news .card .tag.news{color:var(--brown-d);background:var(--gold)}
-    .case-dl{margin-top:12px;font-size:13.5px;line-height:1.55}
-    .case-dl div{margin-bottom:5px}
-    .case-dl b{color:var(--brown);font-weight:600;margin-right:8px}
+    /* ---------- Cases & News: record-style rows (distinct from Insights) ---------- */
+    .case-list{border-top:1px solid var(--rule-d);margin-top:4px}
+    .case-row{display:grid;grid-template-columns:148px 1fr auto;gap:30px;align-items:center;padding:22px 6px;border-bottom:1px solid var(--rule);transition:background .14s}
+    .case-row:hover{background:var(--card-2)}
+    .case-code{font-weight:800;font-size:19px;color:var(--brown);letter-spacing:-.01em;line-height:1.15}
+    .case-code .ct{display:block;font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+    .case-row .cr-title{font-weight:700;font-size:17px;color:var(--ink);letter-spacing:-.01em}
+    .case-row .cr-sum{font-size:13.5px;color:var(--muted);margin-top:6px;line-height:1.55}
+    .case-row .cr-go{font-size:13px;color:var(--brown);font-weight:600;white-space:nowrap}
+    .case-row:hover .cr-go{color:var(--brown-d)}
     .note{font-size:12.5px;color:var(--muted);margin-top:22px}
+    @media(max-width:680px){.case-row{grid-template-columns:1fr;gap:8px;padding:18px 4px}.case-row .cr-go{display:none}.case-code{font-size:17px}}
 
     /* ---------- Consultation ---------- */
     .consult{background:var(--card-2)}
@@ -244,7 +258,6 @@
         <div class="sec-head-row">
             <div>
                 <div class="sec-title">Insights</div>
-                <p class="sec-sub">변호사가 직접 정리한 분야별 실무 인사이트입니다.</p>
             </div>
             <a href="blog.html" class="more-link">View all →</a>
         </div>
@@ -258,11 +271,16 @@
 
         <div class="card-grid" id="insightGrid">
             <!-- Visa & Immigration -->
-            <a class="card" data-cat="visa" href="blog/ep1.html">
-                <span class="tag">Visa &amp; Immigration</span>
-                <div class="card-title">한국 사업이민 비자 개괄 — D-9-4와 D-9-5, 그리고 프랜차이즈라는 선택지</div>
-                <div class="card-dek">사업이민의 출발점. 어떤 비자 트랙이 있고 프랜차이즈가 왜 현실적 선택지가 되는지.</div>
-                <div class="card-meta">시리즈 1편 · 약 9분</div>
+            <a class="card lead" data-cat="visa" href="blog/ep1.html">
+                <div class="lead-main">
+                    <span class="tag">Visa &amp; Immigration</span>
+                    <div class="card-title">한국 사업이민 비자 개괄 — D-9-4와 D-9-5, 그리고 프랜차이즈라는 선택지</div>
+                    <div class="card-dek">사업이민의 출발점. 어떤 비자 트랙이 있고, 프랜차이즈가 왜 현실적 선택지가 되는지 짚는 시리즈 도입부입니다.</div>
+                </div>
+                <div class="lead-aside">
+                    <div class="la-cat">사업이민 시리즈</div>
+                    <div class="la-meta">전 4편 · 1편 약 9분<br>D-9-4 · D-9-5 · 프랜차이즈</div>
+                </div>
             </a>
             <a class="card" data-cat="visa" href="blog/ep2.html">
                 <span class="tag">Visa &amp; Immigration</span>
@@ -334,59 +352,39 @@
         <div class="sec-head-row">
             <div>
                 <div class="sec-title">Our Cases &amp; News</div>
-                <p class="sec-sub">실제로 진행한 사건과 센터 소식입니다.</p>
             </div>
-            <a href="blog.html" class="more-link">View all →</a>
         </div>
 
-        <div class="card-grid">
-            <a class="card" href="consultation-request.html">
-                <span class="tag case">Case · D-8-4</span>
-                <div class="card-title">유학생에서 기술창업 법인 대표로</div>
-                <div class="case-dl">
-                    <div><b>상황</b>국내 대학 졸업(D-2) 후 IT 창업 준비</div>
-                    <div><b>진행</b>법인 설립 · D-8-4 변경 신청 대리</div>
-                    <div><b>결과</b>기술창업 비자 취득, 연장 로드맵 수립</div>
-                </div>
+        <div class="case-list">
+            <a class="case-row" href="consultation-request.html">
+                <div class="case-code"><span class="ct">Case</span>D-8-4</div>
+                <div><div class="cr-title">유학생에서 기술창업 법인 대표로</div><div class="cr-sum">유학(D-2) 졸업 후 창업 준비 — 법인 설립과 D-8-4 변경으로 기술창업 비자 취득, 연장 로드맵까지 수립.</div></div>
+                <div class="cr-go">자세히 →</div>
             </a>
-            <a class="card" href="consultation-request.html">
-                <span class="tag case">Case · D-9-4</span>
-                <div class="card-title">개인사업자 등록부터 거주 경로까지</div>
-                <div class="case-dl">
-                    <div><b>상황</b>국내 요식업 개인사업 운영 희망</div>
-                    <div><b>진행</b>사업체 등록 · D-9-4 변경 · F-2 경로 설계</div>
-                    <div><b>결과</b>영리 개인사업 비자 취득, 중장기 체류 확정</div>
-                </div>
+            <a class="case-row" href="consultation-request.html">
+                <div class="case-code"><span class="ct">Case</span>D-9-4</div>
+                <div><div class="cr-title">개인사업자 등록부터 거주 경로까지</div><div class="cr-sum">국내 요식업 개인사업 — 사업체 등록과 D-9-4 변경, 거주(F-2) 경로 설계로 중장기 체류 확정.</div></div>
+                <div class="cr-go">자세히 →</div>
             </a>
-            <a class="card" href="consultation-request.html">
-                <span class="tag case">Case · D-8-1</span>
-                <div class="card-title">해외 법인의 한국 자회사 설립</div>
-                <div class="case-dl">
-                    <div><b>상황</b>본국 법인의 한국 진출·임원 파견 검토</div>
-                    <div><b>진행</b>외국인투자신고 · 법인 설립 · 임원 비자 대리</div>
-                    <div><b>결과</b>법인 등록 완료, 파견 임원 비자 발급</div>
-                </div>
+            <a class="case-row" href="consultation-request.html">
+                <div class="case-code"><span class="ct">Case</span>D-8-1</div>
+                <div><div class="cr-title">해외 법인의 한국 자회사 설립</div><div class="cr-sum">본국 법인의 한국 진출 — 외국인투자신고와 법인 설립, 파견 임원 비자 발급까지 대리.</div></div>
+                <div class="cr-go">자세히 →</div>
             </a>
-            <a class="card" href="blog.html">
-                <span class="tag news">News</span>
-                <div class="card-title">2026 상반기 출입국·체류 정책 변경 안내</div>
-                <div class="card-dek">사업·투자 비자 및 체류자격 변경 실무에 영향을 주는 변경 사항을 정리했습니다.</div>
-                <div class="card-meta">2026 · 센터 소식</div>
+            <a class="case-row" href="consultation-request.html">
+                <div class="case-code"><span class="ct">Case</span>F-5</div>
+                <div><div class="cr-title">누적 체류 요건을 갖춘 영주 전환</div><div class="cr-sum">영주 전환 가능 여부가 불확실했던 사안 — 요건 진단·보완 후 영주(F-5) 자격 취득.</div></div>
+                <div class="cr-go">자세히 →</div>
             </a>
-            <a class="card" href="blog.html">
-                <span class="tag news">News</span>
-                <div class="card-title">사업이민 통합 자문, 사례 가이드 시리즈 공개</div>
-                <div class="card-dek">상담부터 정착까지의 단계별 자문 흐름을 사례 중심으로 공개합니다.</div>
-                <div class="card-meta">2026 · 센터 소식</div>
+            <a class="case-row" href="blog.html">
+                <div class="case-code"><span class="ct">News</span>2026</div>
+                <div><div class="cr-title">2026 상반기 출입국·체류 정책 변경 안내</div><div class="cr-sum">사업·투자 비자 및 체류자격 변경 실무에 영향을 주는 변경 사항을 정리했습니다.</div></div>
+                <div class="cr-go">읽기 →</div>
             </a>
-            <a class="card" href="consultation-request.html">
-                <span class="tag case">Case · F-5</span>
-                <div class="card-title">누적 체류 요건을 갖춘 영주 전환</div>
-                <div class="case-dl">
-                    <div><b>상황</b>영주(F-5) 전환 가능 여부가 불확실</div>
-                    <div><b>진행</b>요건 진단 · 보완 후 영주 신청 대리</div>
-                    <div><b>결과</b>영주 자격 취득, 체류 안정성 확보</div>
-                </div>
+            <a class="case-row" href="blog.html">
+                <div class="case-code"><span class="ct">News</span>2026</div>
+                <div><div class="cr-title">사업이민 통합 자문, 사례 가이드 시리즈 공개</div><div class="cr-sum">상담부터 정착까지 단계별 자문 흐름을 사례 중심으로 공개합니다.</div></div>
+                <div class="cr-go">읽기 →</div>
             </a>
         </div>
         <p class="note">※ 위 사례는 이해를 돕기 위한 예시이며, 개별 사건의 결과는 사실관계에 따라 달라질 수 있습니다.</p>
@@ -399,7 +397,6 @@
         <div class="sec-head-row">
             <div>
                 <div class="sec-title">상담 신청</div>
-                <p class="sec-sub">사안에 맞는 방법으로 시작하세요.</p>
             </div>
         </div>
         <div class="consult-grid">
@@ -475,11 +472,14 @@
         });
     })();
 
-    // Office photo placeholder: hide background image if it fails to load (keeps label visible)
+    // Office photo: hide the placeholder label once the real photo loads;
+    // if it fails, drop the background and keep the label.
     (function(){
         var box = document.querySelector('.office-photo');
         if(!box) return;
+        var ph = box.querySelector('.ph');
         var test = new Image();
+        test.onload = function(){ if(ph) ph.style.display = 'none'; };
         test.onerror = function(){ box.style.backgroundImage = 'none'; };
         test.src = 'images/office.jpg';
     })();
