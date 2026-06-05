@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>방문 상담 예약 — 법무법인 로연 출입국이민지원센터</title>
+<meta name="description" content="법무법인 로연 출입국이민지원센터 방문 상담 예약. 평일 09:00–17:00, 1시간 단위(점심 12:00–13:00 제외).">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="방문 상담 예약 — 법무법인 로연">
+<meta property="og:description" content="서울·광주 사무소 방문 상담 예약. 평일 09:00–17:00 (점심시간 제외).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root{
+        --bg:#FFFFFF;--card:#FFFFFF;--card-2:#F6F5F2;--beige:#F0EBE1;
+        --ink:#211C15;--muted:#6E665B;--brown:#4A3C2B;--brown-d:#332920;
+        --btn:#887668;--btn-d:#6F6053;--rule:#E9E6DF;--rule-d:#D8D2C6;--gold:#B0883F;
+        --sans:'Manrope','IBM Plex Sans KR','Apple SD Gothic Neo',sans-serif;--wrap:1080px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
+
+    .preview-flag{background:#EDEAE3;color:#7A7162;text-align:center;font-size:12px;letter-spacing:.04em;padding:7px 16px;border-bottom:1px solid var(--rule)}
+    .preview-flag b{color:#4A3C2B;font-weight:600}
+
+    .header{background:#fff;border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:40}
+    .header-inner{max-width:var(--wrap);margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between}
+    .brand .name{font-weight:700;font-size:18px;color:var(--brown-d);letter-spacing:-.01em}
+    .brand .sub{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+    .back{font-size:13.5px;color:var(--brown);font-weight:600}
+    .back:hover{color:var(--btn)}
+
+    .page-head{padding:56px 0 30px;border-bottom:1px solid var(--rule)}
+    h1{font-size:clamp(28px,3.4vw,38px);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+    .page-head .lead{font-size:15.5px;color:var(--muted);margin-top:14px;max-width:640px;line-height:1.8}
+    .hours{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+    .hours .pill{font-size:13px;color:var(--brown);background:var(--card-2);border:1px solid var(--rule);border-radius:2px;padding:8px 14px}
+    .hours .pill b{color:var(--ink);font-weight:600}
+
+    .booking{display:grid;grid-template-columns:1fr 360px;gap:40px;padding:44px 0 80px;align-items:start}
+    .step{margin-bottom:38px}
+    .step-label{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--btn);margin-bottom:14px}
+    .step-label span{display:inline-block;min-width:22px;color:var(--gold)}
+
+    /* dates */
+    .date-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:10px}
+    .date-chip{background:#fff;border:1.5px solid var(--rule-d);border-radius:3px;padding:12px 8px;text-align:center;cursor:pointer;transition:border-color .12s,background .12s}
+    .date-chip:hover{border-color:var(--btn)}
+    .date-chip.sel{background:var(--btn);border-color:var(--btn);color:#fff}
+    .date-chip .dow{font-size:11.5px;color:var(--muted);letter-spacing:.04em}
+    .date-chip.sel .dow{color:#EDE7DC}
+    .date-chip .dnum{font-size:18px;font-weight:700;margin-top:3px}
+    .date-chip .mon{font-size:11px;color:var(--muted);margin-top:2px}
+    .date-chip.sel .mon{color:#EDE7DC}
+
+    /* times */
+    .time-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
+    .time-slot{background:#fff;border:1.5px solid var(--rule-d);border-radius:3px;padding:13px 8px;text-align:center;font-size:15px;font-weight:600;color:var(--ink);cursor:pointer;transition:border-color .12s,background .12s}
+    .time-slot:hover:not(.disabled){border-color:var(--btn)}
+    .time-slot.sel{background:var(--btn);border-color:var(--btn);color:#fff}
+    .time-slot.disabled{background:var(--card-2);color:#BDB6AA;cursor:not-allowed;border-color:var(--rule)}
+    .time-slot .tag{display:block;font-size:10.5px;font-weight:500;color:#BDB6AA;margin-top:2px}
+    .lunch-note{font-size:12.5px;color:var(--muted);margin-top:12px}
+
+    .field{margin-bottom:16px}
+    .field label{display:block;font-size:13px;font-weight:600;color:var(--brown);margin-bottom:7px}
+    .field label .req{color:#C0392B}
+    .field input,.field select,.field textarea{width:100%;font-family:var(--sans);font-size:15px;color:var(--ink);background:#fff;border:1.5px solid var(--rule-d);border-radius:3px;padding:12px 14px;transition:border-color .12s}
+    .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--btn)}
+    .field textarea{min-height:84px;resize:vertical}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+    /* summary panel */
+    .summary{position:sticky;top:96px;background:var(--card-2);border:1px solid var(--rule);border-radius:4px;padding:28px}
+    .summary h2{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:18px}
+    .sum-row{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--rule);font-size:14px}
+    .sum-row:last-of-type{border-bottom:none}
+    .sum-row .k{color:var(--muted)}
+    .sum-row .v{color:var(--ink);font-weight:600;text-align:right}
+    .sum-row .v.empty{color:#BDB6AA;font-weight:400}
+    .btn-book{width:100%;margin-top:20px;background:var(--btn);color:#fff;border:none;border-radius:3px;padding:15px;font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;transition:background .14s}
+    .btn-book:hover:not(:disabled){background:var(--btn-d)}
+    .btn-book:disabled{background:#CFC8BC;cursor:not-allowed}
+    .summary .note{font-size:12px;color:var(--muted);margin-top:14px;line-height:1.6}
+
+    .confirm{display:none;background:#fff;border:1.5px solid var(--btn);border-radius:4px;padding:22px;margin-top:16px}
+    .confirm.show{display:block}
+    .confirm .ttl{font-weight:700;color:var(--ink);margin-bottom:8px}
+    .confirm p{font-size:13.5px;color:var(--muted);line-height:1.7}
+
+    .office-note{margin-top:8px;font-size:12.5px;color:var(--muted);line-height:1.7}
+
+    footer{background:#161410;color:#9A8F78;padding:34px 0;font-size:12.5px}
+    footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    footer b{color:#C9BEA8;font-weight:600}
+
+    @media(max-width:880px){.booking{grid-template-columns:1fr;gap:8px}.summary{position:static;margin-top:10px}}
+    @media(max-width:680px){.wrap{padding:0 18px}.header-inner{padding:14px 18px}.two{grid-template-columns:1fr}.brand .sub{display:none}}
+</style>
+</head>
+<body>
+<div class="preview-flag">리뉴얼 시안 · <b>booking-preview.html</b> — 공유용 예약 페이지 (목업, 실제 예약 저장 없음)</div>
+
+<header class="header">
+    <div class="header-inner">
+        <a href="renewal-preview.html" class="brand">
+            <div class="name">Law Firm Lawyeon</div>
+            <div class="sub">Visa &amp; Immigration Center</div>
+        </a>
+        <a href="renewal-preview.html" class="back">← 홈으로</a>
+    </div>
+</header>
+
+<section class="page-head">
+    <div class="wrap">
+        <h1>방문 상담 예약</h1>
+        <p class="lead">서울·광주 사무소 방문 상담을 예약합니다. 날짜와 시간을 선택하고 정보를 입력해 주세요. 예약 확정은 담당자 확인 후 안내됩니다.</p>
+        <div class="hours">
+            <span class="pill"><b>운영</b> 평일(월–금) 09:00–18:00</span>
+            <span class="pill"><b>상담</b> 09:00–17:00 · 1시간 단위</span>
+            <span class="pill"><b>점심</b> 12:00–13:00 제외</span>
+        </div>
+    </div>
+</section>
+
+<div class="wrap">
+    <div class="booking">
+        <div class="booking-form">
+            <div class="step">
+                <div class="step-label"><span>01</span> 날짜 선택</div>
+                <div class="date-grid" id="dateGrid"></div>
+            </div>
+
+            <div class="step">
+                <div class="step-label"><span>02</span> 시간 선택</div>
+                <div class="time-grid" id="timeGrid"></div>
+                <p class="lunch-note">· 12:00–13:00은 점심시간으로 예약을 받지 않습니다. 마지막 상담은 17:00에 시작합니다.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-label"><span>03</span> 정보 입력</div>
+                <div class="two">
+                    <div class="field">
+                        <label>이름 <span class="req">*</span></label>
+                        <input type="text" id="fName" placeholder="홍길동" autocomplete="name">
+                    </div>
+                    <div class="field">
+                        <label>연락처 <span class="req">*</span></label>
+                        <input type="tel" id="fTel" placeholder="010-0000-0000" autocomplete="tel">
+                    </div>
+                </div>
+                <div class="two">
+                    <div class="field">
+                        <label>방문 사무소</label>
+                        <select id="fOffice">
+                            <option value="서울사무소">서울사무소 (강서구 마곡)</option>
+                            <option value="광주사무소">광주사무소 (동구 지산동)</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>상담 분야</label>
+                        <select id="fTopic">
+                            <option>Visa &amp; Immigration</option>
+                            <option>Criminal Defense</option>
+                            <option>Residence &amp; Nationality</option>
+                            <option>Administrative Affairs</option>
+                            <option>Pension Refund</option>
+                            <option>Corporate Advisory</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>상담 내용 (선택)</label>
+                    <textarea id="fMemo" placeholder="상담하실 내용을 간단히 적어 주세요."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <aside class="summary">
+            <h2>예약 내용</h2>
+            <div class="sum-row"><span class="k">날짜</span><span class="v empty" id="sDate">선택 안 됨</span></div>
+            <div class="sum-row"><span class="k">시간</span><span class="v empty" id="sTime">선택 안 됨</span></div>
+            <div class="sum-row"><span class="k">사무소</span><span class="v" id="sOffice">서울사무소</span></div>
+            <div class="sum-row"><span class="k">분야</span><span class="v" id="sTopic">Visa &amp; Immigration</span></div>
+            <button class="btn-book" id="bookBtn" disabled>예약 신청하기</button>
+            <p class="note">버튼을 누르면 예약 요청이 접수되며, 담당자가 연락처로 확정을 안내합니다. (본 페이지는 시안으로 실제 저장되지 않습니다.)</p>
+            <div class="confirm" id="confirm">
+                <div class="ttl">예약 요청이 접수되었습니다 ✓</div>
+                <p id="confirmText"></p>
+            </div>
+            <p class="office-note"><b style="color:var(--brown)">서울</b> 강서구 공항대로 164, 류마타워 503호<br><b style="color:var(--brown)">광주</b> 동구 준법로 1, 초석빌딩 3층<br>대표번호 02-2039-0544</p>
+        </aside>
+    </div>
+</div>
+
+<footer>
+    <div class="wrap">
+        <div><b>법무법인 로연 출입국이민지원센터</b> · 02-2039-0544</div>
+        <div>© Law Firm Lawyeon · Visa &amp; Immigration Center</div>
+    </div>
+</footer>
+
+<script>
+(function(){
+    var SLOTS = ['09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00']; // 12:00 lunch excluded, last at 17:00
+    var DOW = ['일','월','화','수','목','금','토'];
+    var state = { date:null, time:null };
+
+    // build next ~3 weeks of weekdays (skip Sat/Sun)
+    var dateGrid = document.getElementById('dateGrid');
+    var d = new Date(); d.setHours(0,0,0,0);
+    var added = 0;
+    while(added < 12){
+        d.setDate(d.getDate()+1); // start from tomorrow
+        var day = d.getDay();
+        if(day===0 || day===6) continue; // skip weekend
+        var chip = document.createElement('div');
+        chip.className = 'date-chip';
+        var iso = d.toISOString().slice(0,10);
+        chip.dataset.date = iso;
+        chip.dataset.label = (d.getMonth()+1)+'월 '+d.getDate()+'일 ('+DOW[day]+')';
+        chip.innerHTML = '<div class="dow">'+DOW[day]+'</div><div class="dnum">'+d.getDate()+'</div><div class="mon">'+(d.getMonth()+1)+'월</div>';
+        chip.addEventListener('click', function(){ selectDate(this); });
+        dateGrid.appendChild(chip);
+        added++;
+    }
+
+    var timeGrid = document.getElementById('timeGrid');
+    function renderTimes(){
+        timeGrid.innerHTML = '';
+        SLOTS.forEach(function(t){
+            var el = document.createElement('div');
+            el.className = 'time-slot';
+            // deterministic "already booked" pattern per date, just for realism
+            var booked = state.date ? ((hashCode(state.date + t) % 7) === 0) : false;
+            if(booked){ el.className += ' disabled'; el.innerHTML = t + '<span class="tag">마감</span>'; }
+            else {
+                el.textContent = t;
+                el.addEventListener('click', function(){ selectTime(this, t); });
+            }
+            if(state.time===t && !booked) el.classList.add('sel');
+            timeGrid.appendChild(el);
+        });
+    }
+    function hashCode(s){ var h=0; for(var i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i))|0; } return Math.abs(h); }
+
+    function selectDate(chip){
+        Array.prototype.forEach.call(dateGrid.children, function(c){ c.classList.remove('sel'); });
+        chip.classList.add('sel');
+        state.date = chip.dataset.date; state.dateLabel = chip.dataset.label;
+        state.time = null;
+        document.getElementById('sDate').textContent = chip.dataset.label;
+        document.getElementById('sDate').classList.remove('empty');
+        renderTimes(); sync();
+    }
+    function selectTime(el, t){
+        Array.prototype.forEach.call(timeGrid.children, function(c){ c.classList.remove('sel'); });
+        el.classList.add('sel');
+        state.time = t;
+        document.getElementById('sTime').textContent = t;
+        document.getElementById('sTime').classList.remove('empty');
+        sync();
+    }
+
+    var office = document.getElementById('fOffice'), topic = document.getElementById('fTopic');
+    var name = document.getElementById('fName'), tel = document.getElementById('fTel');
+    office.addEventListener('change', function(){ document.getElementById('sOffice').textContent = office.value; });
+    topic.addEventListener('change', function(){ document.getElementById('sTopic').textContent = topic.value; });
+    [name,tel].forEach(function(i){ i.addEventListener('input', sync); });
+
+    var bookBtn = document.getElementById('bookBtn');
+    function sync(){
+        var ok = state.date && state.time && name.value.trim() && tel.value.trim();
+        bookBtn.disabled = !ok;
+    }
+    bookBtn.addEventListener('click', function(){
+        var c = document.getElementById('confirm');
+        document.getElementById('confirmText').innerHTML =
+            name.value.trim()+'님, <b>'+state.dateLabel+' '+state.time+'</b> '+office.value+' 방문 상담이 요청되었습니다. 담당자가 '+tel.value.trim()+'로 확정을 안내드립니다.';
+        c.classList.add('show');
+        bookBtn.textContent = '예약 요청 완료';
+        bookBtn.disabled = true;
+    });
+
+    renderTimes();
+})();
+</script>
+</body>
+</html>
