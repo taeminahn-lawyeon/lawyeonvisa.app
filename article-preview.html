@@ -39,7 +39,7 @@
     .art-head h1{font-size:clamp(27px,3.4vw,40px);font-weight:700;line-height:1.3;letter-spacing:-.02em;color:var(--ink);margin:16px 0 18px;max-width:880px}
     .art-meta{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13.5px;color:var(--muted)}
     .art-meta b{color:var(--brown);font-weight:600}
-    .disclaimer{margin-top:24px;background:var(--card-2);border:1px solid var(--rule);border-radius:4px;padding:16px 20px;font-size:13.5px;color:var(--muted);line-height:1.7}
+    .disclaimer{margin-top:22px;font-size:13.5px;color:var(--muted);line-height:1.7;padding-left:16px;border-left:2px solid var(--rule-d)}
 
     /* layout: toc + body */
     .art-layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:54px;padding:44px 0 80px;align-items:start}
@@ -53,11 +53,11 @@
     .body h2:first-child{margin-top:0}
     .body p{font-size:16.5px;line-height:1.95;color:#3A332A;margin-bottom:18px}
     .body p b{color:var(--ink);font-weight:700}
-    .body .callout{background:var(--card-2);border-left:3px solid var(--btn);border-radius:0 4px 4px 0;padding:18px 22px;margin:22px 0;font-size:15.5px;line-height:1.85;color:#43392D}
+    .body .callout{border-left:3px solid var(--btn);padding:2px 0 2px 22px;margin:24px 0;font-size:16px;line-height:1.92;color:#43392D}
     .body .callout b{color:var(--ink)}
 
-    .tbl{margin:24px 0;border:1px solid var(--rule-d);border-radius:4px;overflow:hidden}
-    .tbl .tbl-title{background:var(--brown-d);color:#EDE3CC;font-size:13px;font-weight:600;letter-spacing:.02em;padding:11px 16px}
+    .tbl-cap{font-size:13px;font-weight:600;color:var(--muted);margin:26px 0 8px}
+    .tbl{margin:0 0 6px;border:1px solid var(--rule-d);border-radius:4px;overflow:hidden}
     table{width:100%;border-collapse:collapse;font-size:14px}
     thead th{background:var(--card-2);color:var(--brown);font-weight:700;text-align:left;padding:11px 16px;border-bottom:1px solid var(--rule-d);font-size:13px}
     tbody td{padding:12px 16px;border-bottom:1px solid var(--rule);color:#43392D;line-height:1.6;vertical-align:top}
@@ -70,12 +70,6 @@
     .num-n{width:30px;height:30px;border:1.5px solid var(--btn);color:var(--btn);border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
     .num-item .ni-title{font-weight:700;color:var(--ink);font-size:15.5px;line-height:1.45;margin-bottom:5px}
     .num-item .ni-text{font-size:15px;color:#43392D;line-height:1.8}
-
-    .mid-cta{margin:36px 0;border:1px solid var(--rule-d);border-radius:4px;padding:28px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;background:var(--card-2)}
-    .mid-cta .mc-t{font-weight:700;font-size:17px;color:var(--ink)}
-    .mid-cta .mc-d{font-size:13.5px;color:var(--muted);margin-top:5px}
-    .btn{display:inline-flex;align-items:center;justify-content:center;font-weight:600;font-size:14.5px;padding:13px 24px;border-radius:3px;border:1.5px solid var(--btn);background:var(--btn);color:#fff;cursor:pointer;white-space:nowrap;transition:background .14s}
-    .btn:hover{background:var(--btn-d);border-color:var(--btn-d)}
 
     .related{border-top:1px solid var(--rule);padding-top:26px;margin-top:40px}
     .related h4{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
@@ -93,7 +87,6 @@
 </style>
 </head>
 <body>
-<div class="preview-flag">리뉴얼 시안 · <b>article-preview.html</b> — 개별 아티클 디자인 (실제 ep1 콘텐츠)</div>
 
 <header class="header">
     <div class="header-inner">
@@ -138,8 +131,8 @@
 
             <h2 id="s2">D-9-4와 D-9-5 — 개인사업자 외국인을 위한 비자</h2>
             <p>한국은 <b>개인사업자 외국인</b>을 위한 사업 비자를 따로 두고 있습니다. <b>D-9-4</b>와 <b>D-9-5</b>입니다.</p>
+            <div class="tbl-cap">D-9-4 · D-9-5 개관</div>
             <div class="tbl">
-                <div class="tbl-title">D-9-4 · D-9-5 개관</div>
                 <table>
                     <thead><tr><th>비자</th><th>대상</th><th>투자금</th></tr></thead>
                     <tbody>
@@ -163,11 +156,6 @@
             <p>D-9-4와 D-9-5로 한국에 이주하셔서 개인사업자로 사업을 시작하신다고 할 때, 다음으로 떠오르는 질문은 "어떤 사업을 어떻게 시작하시겠느냐"입니다.</p>
             <p>이주하시는 분 입장에서 한국은 낯선 시장입니다. 상권 특성, 소비자 행동, 원재료 공급 구조, 인허가 절차가 본국과 다릅니다. 더구나 한국에 이주하시기 전, 본국에서 이 모든 결정을 내리셔야 비자 신청이 가능합니다. 사업자등록과 임대차계약이 있어야 비자가 나오기 때문입니다.</p>
             <p>이 상황에서 이민자의 현실적 선택지는 <b>이미 구조화되어 있는 사업</b>으로 진입하시는 것입니다. 운영 매뉴얼이 표준화되어 있고, 공급처와 발주 시스템이 본부 단위로 정비되어 있는 사업 — <b>프랜차이즈 사업</b>이 이 조건을 가장 잘 만족합니다.</p>
-
-            <div class="mid-cta">
-                <div><div class="mc-t">한국 사업이민, 어디서부터 시작할지 막막하신가요?</div><div class="mc-d">사전 상담은 무상이며, 온라인 쓰레드로 본국에서 바로 신청하실 수 있습니다.</div></div>
-                <a href="thread-preview.html" class="btn">무료 사전 상담</a>
-            </div>
 
             <h2 id="s5">한국 프랜차이즈 사업이 사업이민에 적합한 이유</h2>
             <p>한국의 프랜차이즈 시장은 전 세계 주요 시장 중에서도 사업 구조의 표준화 수준이 높은 시장에 속합니다.</p>
