@@ -45,16 +45,32 @@
     .step-label{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--btn);margin-bottom:14px}
     .step-label span{display:inline-block;min-width:22px;color:var(--gold)}
 
-    /* dates */
-    .date-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:10px}
-    .date-chip{background:#fff;border:1.5px solid var(--rule-d);border-radius:3px;padding:12px 8px;text-align:center;cursor:pointer;transition:border-color .12s,background .12s}
-    .date-chip:hover{border-color:var(--btn)}
-    .date-chip.sel{background:var(--btn);border-color:var(--btn);color:#fff}
-    .date-chip .dow{font-size:11.5px;color:var(--muted);letter-spacing:.04em}
-    .date-chip.sel .dow{color:#EDE7DC}
-    .date-chip .dnum{font-size:18px;font-weight:700;margin-top:3px}
-    .date-chip .mon{font-size:11px;color:var(--muted);margin-top:2px}
-    .date-chip.sel .mon{color:#EDE7DC}
+    /* calendar (current month + next month) */
+    .cal-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+    .cal-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:12px}
+    .cal-dows{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:6px}
+    .cal-dows span{text-align:center;font-size:11.5px;color:var(--muted);padding:4px 0}
+    .cal-dows span.sun{color:#C0392B}
+    .cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+    .cal-day{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;font-size:14px;border:1.5px solid transparent;border-radius:3px;transition:border-color .12s,background .12s}
+    .cal-day.pick{cursor:pointer}
+    .cal-day.pick:hover{border-color:var(--btn)}
+    .cal-day.sel{background:var(--btn);color:#fff;border-color:var(--btn);font-weight:700}
+    .cal-day.disabled{color:#CFC8BC}
+    .cal-day.empty{visibility:hidden}
+    @media(max-width:560px){.cal-grid{grid-template-columns:1fr}}
+
+    /* maps */
+    .maps-sec{padding:6px 0 72px}
+    .maps-sec h2{font-size:20px;font-weight:700;color:var(--ink)}
+    .maps-sec .sub{font-size:13.5px;color:var(--muted);margin:6px 0 22px}
+    .maps{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .map-card{border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:#fff}
+    .map-card iframe{width:100%;height:300px;border:0;display:block;filter:grayscale(.18)}
+    .map-card .mc-body{padding:16px 18px}
+    .map-card .mc-name{font-weight:700;color:var(--ink);font-size:15px}
+    .map-card .mc-addr{font-size:13px;color:var(--muted);margin-top:5px;line-height:1.6}
+    @media(max-width:760px){.maps{grid-template-columns:1fr}}
 
     /* times */
     .time-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
@@ -131,7 +147,7 @@
         <div class="booking-form">
             <div class="step">
                 <div class="step-label"><span>01</span> 날짜 선택</div>
-                <div class="date-grid" id="dateGrid"></div>
+                <div class="cal-grid" id="calWrap"></div>
             </div>
 
             <div class="step">
@@ -196,6 +212,23 @@
     </div>
 </div>
 
+<section class="maps-sec">
+    <div class="wrap">
+        <h2>오시는 길</h2>
+        <p class="sub">서울·광주 사무소 위치입니다.</p>
+        <div class="maps">
+            <div class="map-card">
+                <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://maps.google.com/maps?q=%EC%84%9C%EC%9A%B8%20%EA%B0%95%EC%84%9C%EA%B5%AC%20%EA%B3%B5%ED%95%AD%EB%8C%80%EB%A1%9C%20164%20%EB%A5%98%EB%A7%88%ED%83%80%EC%9B%8C&t=&z=16&ie=UTF8&iwloc=&output=embed" title="서울사무소 지도"></iframe>
+                <div class="mc-body"><div class="mc-name">서울사무소</div><div class="mc-addr">서울특별시 강서구 공항대로 164, 5층 503호 (마곡동, 류마타워)</div></div>
+            </div>
+            <div class="map-card">
+                <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://maps.google.com/maps?q=%EA%B4%91%EC%A3%BC%20%EB%8F%99%EA%B5%AC%20%EC%A4%80%EB%B2%95%EB%A1%9C%201%20%EC%B4%88%EC%84%9D%EB%B9%8C%EB%94%A9&t=&z=16&ie=UTF8&iwloc=&output=embed" title="광주사무소 지도"></iframe>
+                <div class="mc-body"><div class="mc-name">광주사무소</div><div class="mc-addr">광주광역시 동구 준법로 1, 3층 (지산동, 초석빌딩)</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <footer>
     <div class="wrap">
         <div><b>법무법인 로연 출입국이민지원센터</b> · 02-2039-0544</div>
@@ -209,24 +242,38 @@
     var DOW = ['일','월','화','수','목','금','토'];
     var state = { date:null, time:null };
 
-    // build next ~3 weeks of weekdays (skip Sat/Sun)
-    var dateGrid = document.getElementById('dateGrid');
-    var d = new Date(); d.setHours(0,0,0,0);
-    var added = 0;
-    while(added < 12){
-        d.setDate(d.getDate()+1); // start from tomorrow
-        var day = d.getDay();
-        if(day===0 || day===6) continue; // skip weekend
-        var chip = document.createElement('div');
-        chip.className = 'date-chip';
-        var iso = d.toISOString().slice(0,10);
-        chip.dataset.date = iso;
-        chip.dataset.label = (d.getMonth()+1)+'월 '+d.getDate()+'일 ('+DOW[day]+')';
-        chip.innerHTML = '<div class="dow">'+DOW[day]+'</div><div class="dnum">'+d.getDate()+'</div><div class="mon">'+(d.getMonth()+1)+'월</div>';
-        chip.addEventListener('click', function(){ selectDate(this); });
-        dateGrid.appendChild(chip);
-        added++;
+    // build calendar: current month through end of NEXT month (weekdays only)
+    var calWrap = document.getElementById('calWrap');
+    var today = new Date(); today.setHours(0,0,0,0);
+    var maxDate = new Date(today.getFullYear(), today.getMonth()+2, 0); // last day of next month
+    function pad(n){ return (n<10?'0':'')+n; }
+    function buildMonth(year, month){
+        var first = new Date(year, month, 1);
+        var startDow = first.getDay();
+        var daysIn = new Date(year, month+1, 0).getDate();
+        var html = '<div class="cal"><div class="cal-title">'+first.getFullYear()+'년 '+(first.getMonth()+1)+'월</div>'
+                 + '<div class="cal-dows"><span class="sun">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>'
+                 + '<div class="cal-days">';
+        for(var i=0;i<startDow;i++) html += '<div class="cal-day empty"></div>';
+        for(var dd=1; dd<=daysIn; dd++){
+            var cur = new Date(first.getFullYear(), first.getMonth(), dd);
+            var dow = cur.getDay();
+            var iso = cur.getFullYear()+'-'+pad(cur.getMonth()+1)+'-'+pad(dd);
+            var weekend = (dow===0||dow===6);
+            var inRange = (cur>=today && cur<=maxDate);
+            if(weekend || !inRange){
+                html += '<div class="cal-day disabled">'+dd+'</div>';
+            } else {
+                html += '<div class="cal-day pick" data-date="'+iso+'" data-label="'+(cur.getMonth()+1)+'월 '+dd+'일 ('+DOW[dow]+')">'+dd+'</div>';
+            }
+        }
+        return html + '</div></div>';
     }
+    calWrap.innerHTML = buildMonth(today.getFullYear(), today.getMonth())
+                      + buildMonth(today.getFullYear(), today.getMonth()+1);
+    Array.prototype.forEach.call(calWrap.querySelectorAll('.cal-day.pick'), function(cell){
+        cell.addEventListener('click', function(){ selectDate(this); });
+    });
 
     var timeGrid = document.getElementById('timeGrid');
     function renderTimes(){
@@ -247,12 +294,12 @@
     }
     function hashCode(s){ var h=0; for(var i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i))|0; } return Math.abs(h); }
 
-    function selectDate(chip){
-        Array.prototype.forEach.call(dateGrid.children, function(c){ c.classList.remove('sel'); });
-        chip.classList.add('sel');
-        state.date = chip.dataset.date; state.dateLabel = chip.dataset.label;
+    function selectDate(cell){
+        Array.prototype.forEach.call(calWrap.querySelectorAll('.cal-day'), function(c){ c.classList.remove('sel'); });
+        cell.classList.add('sel');
+        state.date = cell.dataset.date; state.dateLabel = cell.dataset.label;
         state.time = null;
-        document.getElementById('sDate').textContent = chip.dataset.label;
+        document.getElementById('sDate').textContent = cell.dataset.label;
         document.getElementById('sDate').classList.remove('empty');
         renderTimes(); sync();
     }
