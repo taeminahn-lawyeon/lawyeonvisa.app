@@ -338,9 +338,46 @@ async function createReservation(reservationData) {
         }
 
         debugLog('방문 예약 생성 성공:', data);
+
+        // 📧 신규 예약 시 어드민 이메일 알림 (실패는 무시 — 저장 성공이 우선)
+        notifyAdminOnNewReservation(data.id)
+            .then(res => debugLog('📧 [createReservation] 어드민 알림 결과:', res))
+            .catch(err => debugLog('Reservation notification error (ignored):', err));
+
         return { success: true, data };
     } catch (error) {
         console.error('방문 예약 생성 실패:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// 신규 예약 어드민 이메일 알림 (send-admin-email Edge Function 호출)
+// 예약은 비로그인 방문자도 가능하므로, 세션이 있으면 access_token, 없으면 anon key 로 호출.
+async function notifyAdminOnNewReservation(reservationId) {
+    try {
+        let token = SUPABASE_ANON_KEY;
+        try {
+            const { data } = await supabaseClient.auth.getSession();
+            if (data && data.session && data.session.access_token) {
+                token = data.session.access_token;
+            }
+        } catch (_) { /* 비로그인 — anon key 사용 */ }
+
+        const res = await fetch(SUPABASE_URL + '/functions/v1/send-admin-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+                'apikey': SUPABASE_ANON_KEY
+            },
+            body: JSON.stringify({ type: 'reservation', reservationId })
+        });
+        if (!res.ok) {
+            return { success: false, error: await res.text() };
+        }
+        return { success: true, data: await res.json() };
+    } catch (error) {
+        console.error('예약 어드민 알림 실패(무시):', error);
         return { success: false, error: error.message };
     }
 }
