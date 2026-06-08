@@ -156,11 +156,6 @@
                         <a href="privacy-policy?v=2" target="_blank" rel="noopener">Privacy Policy</a>
                     </div>
                 </div>
-                <div class="login-gate" id="loginGate" style="display:none">
-                    <div class="lg-title">Sign in to continue your booking</div>
-                    <p class="lg-desc">Before entering your details, please agree above and sign in with your Google account to verify your identity. Your selected date and time are kept after sign-in.</p>
-                    <button type="button" class="btn-login-g" id="loginBtn">Continue with Google</button>
-                </div>
                 <div id="infoFields">
                 <div class="two">
                     <div class="field">
@@ -207,7 +202,7 @@
             <div class="sum-row"><span class="k">Office</span><span class="v" id="sOffice">Seoul Office</span></div>
             <div class="sum-row"><span class="k">Topic</span><span class="v" id="sTopic">Visa &amp; Immigration</span></div>
             <button class="btn-book" id="bookBtn" disabled>Request booking</button>
-            <p class="note">To verify your identity, bookings are received after you sign in with your Google account. When you submit, your booking request is received and our team confirms it by phone.</p>
+            <p class="note">When you submit, your booking request is received and our team confirms it by phone. No account sign-up is required.</p>
             <div class="confirm" id="confirm">
                 <div class="ttl">Booking request received ✓</div>
                 <p id="confirmText"></p>
@@ -326,13 +321,9 @@
 
     var bookBtn = document.getElementById('bookBtn');
     var consentChk = document.getElementById('consentChk');
-    var loginGate = document.getElementById('loginGate');
-    var infoFields = document.getElementById('infoFields');
-    var loginBtn = document.getElementById('loginBtn');
-    var bookNote = document.querySelector('.summary .note');
-    var submitting = false, loggedIn = false;
+    var submitting = false;
     function sync(){
-        var ok = loggedIn && state.date && state.time && name.value.trim() && tel.value.trim() && consentChk.checked && !submitting;
+        var ok = state.date && state.time && name.value.trim() && tel.value.trim() && consentChk.checked && !submitting;
         bookBtn.disabled = !ok;
     }
     consentChk.addEventListener('change', sync);
@@ -345,65 +336,9 @@
         bookBtn.textContent = STR.done;
     }
 
-    async function saveReservation(payload, whenLabel){
-        var res = await createReservation(payload);
-        if(!res || !res.success){ throw new Error(res && res.error || 'save failed'); }
-        showConfirm(payload, whenLabel);
-    }
-
-    // Toggle the details form vs. the sign-in gate by auth state
-    function applyAuth(user){
-        loggedIn = !!(user && user.id);
-        if(loggedIn){
-            loginGate.style.display = 'none';
-            infoFields.style.display = '';
-            bookBtn.style.display = ''; if(bookNote) bookNote.style.display = '';
-            var m = user.user_metadata || {};
-            if(name && !name.value){ name.value = m.name || m.full_name || ''; }
-            restoreSel();
-        } else {
-            loginGate.style.display = '';
-            infoFields.style.display = 'none';
-            bookBtn.style.display = 'none'; if(bookNote) bookNote.style.display = 'none';
-        }
-        sync();
-    }
-
-    // Restore the date/time/consent chosen before sign-in
-    function restoreSel(){
-        var raw = localStorage.getItem(SEL_KEY); if(!raw) return;
-        localStorage.removeItem(SEL_KEY);
-        try{
-            var d = JSON.parse(raw); if(!d || (d.ts && Date.now()-d.ts > 600000)) return;
-            if(d.consent){ consentChk.checked = true; }
-            if(d.office){ office.value = d.office; document.getElementById('sOffice').textContent = d.office; }
-            if(d.topic){ topic.value = d.topic; document.getElementById('sTopic').textContent = d.topic; }
-            if(d.date && d.time && d.dateLabel){
-                state.date = d.date; state.time = d.time; state.dateLabel = d.dateLabel;
-                var cell = calWrap.querySelector('.cal-day.pick[data-date="'+d.date+'"]'); if(cell) cell.classList.add('sel');
-                var sd = document.getElementById('sDate'); sd.textContent = d.dateLabel; sd.classList.remove('empty');
-                renderTimes();
-                Array.prototype.forEach.call(timeGrid.children, function(c){ if(c.textContent===d.time) c.classList.add('sel'); });
-                var stm = document.getElementById('sTime'); stm.textContent = d.time; stm.classList.remove('empty');
-            }
-        }catch(_){ }
-    }
-
-    // Sign-in button — guide to Google before any personal details are entered
-    loginBtn.addEventListener('click', async function(){
-        if(!consentChk.checked){ alert(STR.agree); return; }
-        if(typeof signInWithGoogle !== 'function'){ applyAuth({ id:'_local' }); return; } // backend unavailable — show form
-        try{
-            localStorage.setItem(SEL_KEY, JSON.stringify({ date:state.date, time:state.time, dateLabel:state.dateLabel, office:office.value, topic:topic.value, consent:consentChk.checked, ts:Date.now() }));
-        }catch(_){}
-        loginBtn.disabled = true; loginBtn.textContent = STR.login;
-        try{ var r = await signInWithGoogle(); if(!r || !r.success){ throw new Error('login'); } }
-        catch(e){ console.error(e); alert(STR.err); loginBtn.disabled = false; loginBtn.textContent = STR.loginCta; localStorage.removeItem(SEL_KEY); }
-    });
-
+    // Visit bookings are accepted without sign-in.
     bookBtn.addEventListener('click', async function(){
         if(submitting) return;
-        if(!loggedIn){ loginBtn.click(); return; }
         if(!consentChk.checked){ alert(STR.agree); return; }
         submitting = true; bookBtn.disabled = true; bookBtn.textContent = STR.submitting;
         var payload = {
@@ -413,19 +348,13 @@
         };
         try{
             if(typeof createReservation !== 'function'){ throw new Error('backend not ready'); }
-            await saveReservation(payload, state.dateLabel+' '+state.time);
+            var res = await createReservation(payload);
+            if(!res || !res.success){ throw new Error(res && res.error || 'save failed'); }
+            showConfirm(payload, state.dateLabel+' '+state.time);
         }catch(e){
             console.error(e); alert(STR.err);
             submitting = false; bookBtn.textContent = STR.submit; sync();
         }
-    });
-
-    // Default to the sign-in gate; reveal the form once a session is confirmed
-    applyAuth(null);
-    document.addEventListener('DOMContentLoaded', async function(){
-        if(typeof checkSession !== 'function'){ applyAuth({ id:'_local' }); return; } // backend unavailable — allow anonymous
-        try{ var s = await checkSession(); applyAuth(s && (s.user || s)); }
-        catch(e){ applyAuth(null); }
     });
 
     renderTimes();
@@ -466,7 +395,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/supabase-client.js?v=20260608"></script>
-<script src="js/site.js?v=1"></script>
+<script src="js/supabase-client.js?v=20260609"></script>
+<script src="js/site.js?v=2"></script>
 </body>
 </html>

@@ -383,6 +383,86 @@ async function notifyAdminOnNewReservation(reservationId) {
 }
 
 // ============================================
+// 기업 자문 문의 (로그인 불필요 — anon INSERT 허용 테이블)
+// ============================================
+async function createCorporateInquiry(inquiryData) {
+    try {
+        if (!supabaseClient) {
+            throw new Error('Supabase 클라이언트가 준비되지 않았습니다');
+        }
+        // 로그인 상태라면 user_id 기록(선택). 비로그인 문의는 NULL.
+        let userId = null;
+        try {
+            const u = await getCurrentUser();
+            if (u && u.id) userId = u.id;
+        } catch (_) { /* 비로그인 방문자 — 무시 */ }
+
+        const record = {
+            user_id: userId,
+            name: (inquiryData.name || '').trim(),
+            company: ((inquiryData.company || '').trim()) || null,
+            phone: (inquiryData.phone || '').trim(),
+            email: ((inquiryData.email || '').trim()) || null,
+            message: ((inquiryData.message || '').trim()) || null,
+            lang: inquiryData.lang || 'ko'
+        };
+
+        const { data, error } = await supabaseClient
+            .from('corporate_inquiries')
+            .insert(record)
+            .select()
+            .single();
+
+        if (error) {
+            console.error('기업 자문 문의 생성 오류:', error);
+            throw error;
+        }
+
+        debugLog('기업 자문 문의 생성 성공:', data);
+
+        // 📧 어드민 이메일 알림 (실패는 무시 — 저장 성공이 우선)
+        notifyAdminOnNewInquiry(data.id)
+            .then(res => debugLog('📧 [createCorporateInquiry] 어드민 알림 결과:', res))
+            .catch(err => debugLog('Inquiry notification error (ignored):', err));
+
+        return { success: true, data };
+    } catch (error) {
+        console.error('기업 자문 문의 생성 실패:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// 신규 기업 자문 문의 어드민 이메일 알림 (send-admin-email Edge Function 호출)
+async function notifyAdminOnNewInquiry(inquiryId) {
+    try {
+        let token = SUPABASE_ANON_KEY;
+        try {
+            const { data } = await supabaseClient.auth.getSession();
+            if (data && data.session && data.session.access_token) {
+                token = data.session.access_token;
+            }
+        } catch (_) { /* 비로그인 — anon key 사용 */ }
+
+        const res = await fetch(SUPABASE_URL + '/functions/v1/send-admin-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+                'apikey': SUPABASE_ANON_KEY
+            },
+            body: JSON.stringify({ type: 'corporate_inquiry', inquiryId })
+        });
+        if (!res.ok) {
+            return { success: false, error: await res.text() };
+        }
+        return { success: true, data: await res.json() };
+    } catch (error) {
+        console.error('기업 자문 어드민 알림 실패(무시):', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// ============================================
 // 쓰레드 관련 함수
 // ============================================
 

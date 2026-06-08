@@ -22,8 +22,8 @@ const HEADER = read('partials/header.html');
 const FOOTER = { en: read('partials/footer.en.html'), ko: read('partials/footer.ko.html') };
 const SCRIPTS = [
   '<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>',
-  '<script src="__BASE__js/supabase-client.js?v=20260608"></script>',
-  '<script src="__BASE__js/site.js?v=1"></script>',
+  '<script src="__BASE__js/supabase-client.js?v=20260609"></script>',
+  '<script src="__BASE__js/site.js?v=2"></script>',
 ].join('\n');
 
 // ---- per-language UI strings (header chrome) ----
@@ -54,6 +54,12 @@ const PAGES = [
     title: { en: 'Book a Visit Consultation — Law Firm Lawyeon', ko: '방문 상담 예약 — 법무법인 로연' },
     desc:  { en: 'Book an in-person consultation at the Seoul or Gwangju office of Law Firm Lawyeon. Weekdays 09:00–17:00, 1-hour slots.',
              ko: '법무법인 로연 서울·광주 사무소 방문 상담 예약. 평일 09:00–17:00, 1시간 단위(점심 12:00–13:00 제외).' },
+  },
+  {
+    id: 'corporate-advisory', content: 'corporate-advisory',
+    title: { en: 'Corporate Advisory Inquiry — Law Firm Lawyeon', ko: '기업 자문 문의 — 법무법인 로연' },
+    desc:  { en: 'Corporate advisory for foreign-employee visas, immigration compliance and employment matters. Send an inquiry — no sign-up required.',
+             ko: '외국인 임직원 비자·출입국 규정 준수·고용 사안에 대한 기업 자문. 회원가입 없이 문의를 남겨 주세요.' },
   },
   {
     id: 'insights', content: 'insights',

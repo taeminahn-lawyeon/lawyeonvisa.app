@@ -130,6 +130,79 @@ serve(async (req) => {
       )
     }
 
+    // ===== 기업 자문(Corporate Advisory) 신규 문의 알림 분기 =====
+    // 문의는 비로그인(anon) 방문자도 접수하므로 service role 로 조회해 메일 발송.
+    if (body && (body.type === 'corporate_inquiry' || body.inquiryId)) {
+      const inquiryId = body.inquiryId
+      if (!inquiryId) {
+        throw new Error('Missing required field: inquiryId')
+      }
+
+      const supabaseUrl = Deno.env.get('SUPABASE_URL')!
+      const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+      const supabase = createClient(supabaseUrl, serviceKey)
+
+      const { data: q, error: qErr } = await supabase
+        .from('corporate_inquiries')
+        .select('id, name, company, phone, email, message, lang, created_at')
+        .eq('id', inquiryId)
+        .single()
+
+      if (qErr || !q) {
+        throw new Error(`Corporate inquiry not found: ${qErr?.message || 'no data'}`)
+      }
+
+      const adminUrl = `${SITE_URL}/admin-dashboard.html#corporate-inquiries`
+      const subject = `[Lawyeon] 기업 자문 문의 신규 — ${q.name}${q.company ? ' (' + q.company + ')' : ''}`
+      const lines = [
+        `${q.name}님이 기업 자문을 문의하셨습니다.`,
+        ``,
+        `· 회사/기관: ${q.company || '-'}`,
+        `· 연락처: ${q.phone || '-'}`,
+        `· 이메일: ${q.email || '-'}`,
+      ]
+      if (q.message) lines.push(`· 내용: ${q.message}`)
+      const messageText = lines.join('\n')
+      const html = buildHtml(messageText.replace(/\n/g, '<br>'), adminUrl)
+      const text = buildText(messageText, adminUrl)
+
+      const resendRes = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ from: FROM_EMAIL, to: ADMIN_EMAIL, subject, html, text }),
+      })
+      const resendBody = await resendRes.json()
+
+      try {
+        await supabase.from('notification_logs').insert({
+          messenger: 'email',
+          recipient: ADMIN_EMAIL,
+          template_type: 'admin_new_corporate_inquiry',
+          status: resendRes.ok ? 'sent' : 'failed',
+          sent_at: new Date().toISOString()
+        })
+      } catch (err) {
+        console.log('notification_logs insert error:', err)
+      }
+
+      if (!resendRes.ok) {
+        console.error('📧 Resend error (corporate_inquiry):', resendBody)
+        return new Response(
+          JSON.stringify({ success: false, error: resendBody }),
+          { status: resendRes.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
+      console.log('📧 Admin email sent (corporate_inquiry):', resendBody.id)
+      return new Response(
+        JSON.stringify({ success: true, id: resendBody.id }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
     // ===== 기존: 쓰레드 신규/답글 알림 =====
     const { threadId, eventType } = body
     if (!threadId || !eventType) {

@@ -31,6 +31,16 @@
     <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/booking"/>
   </url>
   <url>
+    <loc>https://www.lawyeonvisa.app/corporate-advisory</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/corporate-advisory"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/corporate-advisory"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeonvisa.app/ko/corporate-advisory</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/corporate-advisory"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/corporate-advisory"/>
+  </url>
+  <url>
     <loc>https://www.lawyeonvisa.app/insights</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/insights"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/insights"/>
