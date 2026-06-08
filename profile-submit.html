@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="profile.title">Basic Information Submission - Lawyeon Visa Center</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -16,7 +16,7 @@
         }
 
         body {
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Manrope','IBM Plex Sans KR', sans-serif;
             background: #F9FAFB;
             min-height: 100vh;
             padding: 20px;
@@ -29,13 +29,13 @@
 
         /* Header */
         .header {
-            background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
+            background: linear-gradient(135deg, #000000 0%, #241F18 100%);
             border-radius: 24px;
             padding: 40px;
             margin-bottom: 24px;
             text-align: center;
             box-shadow: 0 4px 24px rgba(0,0,0,0.15);
-            border-bottom: 3px solid #3182F6;
+            border-bottom: 3px solid #887668;
         }
 
         .header h1 {
@@ -55,7 +55,7 @@
 
         .thread-badge {
             display: inline-block;
-            background: #3182F6;
+            background: #887668;
             color: white;
             padding: 6px 16px;
             border-radius: 20px;
@@ -96,7 +96,7 @@
             top: 20px;
             left: 0;
             height: 4px;
-            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            background: linear-gradient(135deg, #887668 0%, #6F6053 100%);
             transition: width 0.3s ease;
             z-index: 2;
         }
@@ -126,13 +126,13 @@
         }
 
         .step.active .step-circle {
-            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            background: linear-gradient(135deg, #887668 0%, #6F6053 100%);
             color: white;
-            box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
+            box-shadow: 0 4px 12px rgba(136, 118, 104, 0.3);
         }
 
         .step.completed .step-circle {
-            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            background: linear-gradient(135deg, #887668 0%, #6F6053 100%);
             color: white;
         }
 
@@ -144,11 +144,11 @@
         }
 
         .step.active .step-label {
-            color: #3182F6;
+            color: #887668;
         }
 
         .step.completed .step-label {
-            color: #3182F6;
+            color: #887668;
         }
 
         /* Form Card */
@@ -212,9 +212,9 @@
             width: 100%;
             padding: 16px;
             border: 2px solid #E5E7EB;
-            border-radius: 12px;
+            border-radius: 4px;
             font-size: 15px;
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Manrope','IBM Plex Sans KR', sans-serif;
             transition: all 0.2s;
             font-weight: 500;
         }
@@ -222,8 +222,8 @@
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #3182F6;
-            background: #EFF6FF;
+            border-color: #887668;
+            background: #F4F2EE;
         }
 
         .form-group select {
@@ -259,7 +259,7 @@
             gap: 16px;
             padding: 20px;
             background: #F9FAFB;
-            border-radius: 16px;
+            border-radius: 4px;
             border: 1px solid #E5E7EB;
         }
 
@@ -268,7 +268,7 @@
             height: 52px;
             min-width: 52px;
             border-radius: 14px;
-            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            background: linear-gradient(135deg, #887668 0%, #6F6053 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -295,11 +295,11 @@
             gap: 8px;
             margin-top: 20px;
             padding: 14px 20px;
-            background: #EFF6FF;
-            border-radius: 12px;
+            background: #F4F2EE;
+            border-radius: 4px;
             font-size: 14px;
             font-weight: 600;
-            color: #3182F6;
+            color: #887668;
         }
 
         .prepare-time i {
@@ -308,9 +308,9 @@
 
         /* Consent Area */
         .consent-all-box {
-            background: #EFF6FF;
-            border: 2px solid #3182F6;
-            border-radius: 12px;
+            background: #F4F2EE;
+            border: 2px solid #887668;
+            border-radius: 4px;
             padding: 16px 20px;
             margin-bottom: 20px;
         }
@@ -318,12 +318,12 @@
         .consent-all-label .consent-text-main {
             font-size: 16px;
             font-weight: 700;
-            color: #1B64DA;
+            color: #6F6053;
         }
 
         .consent-item {
             border: 1px solid #E5E7EB;
-            border-radius: 12px;
+            border-radius: 4px;
             padding: 16px 20px;
             margin-bottom: 12px;
             background: #FAFAFA;
@@ -331,7 +331,7 @@
         }
 
         .consent-item:hover {
-            border-color: #3182F6;
+            border-color: #887668;
         }
 
         .consent-header {
@@ -378,8 +378,8 @@
         }
 
         .consent-checkbox-label input[type="checkbox"]:checked + .checkmark {
-            background: #3182F6;
-            border-color: #3182F6;
+            background: #887668;
+            border-color: #887668;
         }
 
         .consent-checkbox-label input[type="checkbox"]:checked + .checkmark::after {
@@ -468,7 +468,7 @@
 
         .consent-links a {
             font-size: 13px;
-            color: #3182F6;
+            color: #887668;
             text-decoration: none;
             font-weight: 500;
         }
@@ -509,10 +509,10 @@
 
         .address-search button {
             padding: 16px 24px;
-            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            background: linear-gradient(135deg, #887668 0%, #6F6053 100%);
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 4px;
             font-weight: 700;
             font-size: 15px;
             cursor: pointer;
@@ -522,13 +522,13 @@
 
         .address-search button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
+            box-shadow: 0 4px 12px rgba(136, 118, 104, 0.3);
         }
 
         /* File Upload */
         .file-upload-area {
             border: 3px dashed #E5E7EB;
-            border-radius: 16px;
+            border-radius: 4px;
             padding: 40px;
             text-align: center;
             cursor: pointer;
@@ -537,13 +537,13 @@
         }
 
         .file-upload-area:hover {
-            border-color: #3182F6;
-            background: #EFF6FF;
+            border-color: #887668;
+            background: #F4F2EE;
         }
 
         .file-upload-area.dragover {
-            border-color: #3182F6;
-            background: #DBEAFE;
+            border-color: #887668;
+            background: #F0EBE1;
         }
 
         .file-upload-area .icon {
@@ -580,7 +580,7 @@
             width: 120px;
             height: 120px;
             object-fit: cover;
-            border-radius: 12px;
+            border-radius: 4px;
             border: 2px solid #E5E7EB;
         }
 
@@ -605,7 +605,7 @@
         /* Signature Pad */
         .signature-pad {
             border: 3px solid #E5E7EB;
-            border-radius: 16px;
+            border-radius: 4px;
             background: white;
             cursor: crosshair;
             display: block !important;
@@ -626,7 +626,7 @@
             padding: 12px 20px;
             background: white;
             border: 2px solid #E5E7EB;
-            border-radius: 10px;
+            border-radius: 3px;
             font-weight: 600;
             font-size: 14px;
             cursor: pointer;
@@ -634,8 +634,8 @@
         }
 
         .signature-controls button:hover {
-            border-color: #3182F6;
-            color: #3182F6;
+            border-color: #887668;
+            color: #887668;
         }
 
         /* Buttons */
@@ -648,7 +648,7 @@
             width: 100%;
             max-width: 400px;
             padding: 20px;
-            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            background: linear-gradient(135deg, #887668 0%, #6F6053 100%);
             color: white;
             border: none;
             border-radius: 14px;
@@ -656,12 +656,12 @@
             font-weight: 800;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 8px 24px rgba(49, 130, 246, 0.3);
+            box-shadow: 0 8px 24px rgba(136, 118, 104, 0.3);
         }
 
         .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(49, 130, 246, 0.4);
+            box-shadow: 0 12px 32px rgba(136, 118, 104, 0.4);
         }
 
         .submit-btn:disabled {
@@ -1172,8 +1172,8 @@
                                 <i class="fas fa-search"></i> <span data-i18n="profile.residence.searchAddress">Search</span>
                             </button>
                         </div>
-                        <input type="text" id="address" name="address" data-i18n-placeholder="profile.residence.addressField" placeholder="Address" readonly required style="margin-bottom: 12px; width: 100%; padding: 16px; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 15px; font-family: 'Noto Sans KR', sans-serif; font-weight: 500;">
-                        <input type="text" name="detailAddress" data-i18n-placeholder="profile.residence.detailAddress" placeholder="Detail Address (Apt/Room)" required style="width: 100%; padding: 16px; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 15px; font-family: 'Noto Sans KR', sans-serif; font-weight: 500;">
+                        <input type="text" id="address" name="address" data-i18n-placeholder="profile.residence.addressField" placeholder="Address" readonly required style="margin-bottom: 12px; width: 100%; padding: 16px; border: 2px solid #E5E7EB; border-radius: 4px; font-size: 15px; font-family: 'Manrope','IBM Plex Sans KR', sans-serif; font-weight: 500;">
+                        <input type="text" name="detailAddress" data-i18n-placeholder="profile.residence.detailAddress" placeholder="Detail Address (Apt/Room)" required style="width: 100%; padding: 16px; border: 2px solid #E5E7EB; border-radius: 4px; font-size: 15px; font-family: 'Manrope','IBM Plex Sans KR', sans-serif; font-weight: 500;">
                     </div>
                 </div>
 
