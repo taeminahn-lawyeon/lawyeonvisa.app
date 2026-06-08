@@ -51,7 +51,7 @@
     // 0) Insert consultation CTAs (top / middle / bottom) into article-design pages.
     (function injectCtas() {
       var body = document.querySelector('.art-layout article.body') || document.querySelector('article.body');
-      if (!body) return;
+      if (!body || body.hasAttribute('data-no-cta')) return;
       body.appendChild(ctaBand()); // bottom
       var h2s = body.querySelectorAll(':scope > h2');
       if (h2s.length >= 3) {
