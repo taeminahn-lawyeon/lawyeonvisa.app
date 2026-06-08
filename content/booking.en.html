@@ -1,0 +1,296 @@
+<style>
+.booking-page .hours{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.booking-page .hours .pill{font-size:13px;color:var(--brown);background:var(--card-2);border:1px solid var(--rule);border-radius:2px;padding:8px 14px}
+.booking-page .hours .pill b{color:var(--ink);font-weight:600}
+
+.booking-page .booking{display:grid;grid-template-columns:1fr 360px;gap:40px;padding:44px 0 80px;align-items:start}
+.booking-page .bk-step{margin-bottom:38px}
+.booking-page .step-label{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--btn);margin-bottom:14px}
+.booking-page .step-label span{display:inline-block;min-width:22px;color:#B0883F}
+
+.booking-page .cal-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.booking-page .cal-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:12px}
+.booking-page .cal-dows{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:6px}
+.booking-page .cal-dows span{text-align:center;font-size:11.5px;color:var(--muted);padding:4px 0}
+.booking-page .cal-dows span.sun{color:#C0392B}
+.booking-page .cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.booking-page .cal-day{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;font-size:14px;border:1.5px solid transparent;border-radius:3px;transition:border-color .12s,background .12s}
+.booking-page .cal-day.pick{cursor:pointer}
+.booking-page .cal-day.pick:hover{border-color:var(--btn)}
+.booking-page .cal-day.sel{background:var(--btn);color:#fff;border-color:var(--btn);font-weight:700}
+.booking-page .cal-day.disabled{color:#CFC8BC}
+.booking-page .cal-day.empty{visibility:hidden}
+@media(max-width:560px){.booking-page .cal-grid{grid-template-columns:1fr}}
+
+.booking-page .time-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
+.booking-page .time-slot{background:#fff;border:1.5px solid var(--rule-d);border-radius:3px;padding:13px 8px;text-align:center;font-size:15px;font-weight:600;color:var(--ink);cursor:pointer;transition:border-color .12s,background .12s}
+.booking-page .time-slot:hover:not(.disabled){border-color:var(--btn)}
+.booking-page .time-slot.sel{background:var(--btn);border-color:var(--btn);color:#fff}
+.booking-page .time-slot.disabled{background:var(--card-2);color:#BDB6AA;cursor:not-allowed;border-color:var(--rule)}
+.booking-page .time-slot .tag{display:block;font-size:10.5px;font-weight:500;color:#BDB6AA;margin-top:2px}
+.booking-page .lunch-note{font-size:12.5px;color:var(--muted);margin-top:12px}
+
+.booking-page .field{margin-bottom:16px}
+.booking-page .field label{display:block;font-size:13px;font-weight:600;color:var(--brown);margin-bottom:7px}
+.booking-page .field label .req{color:#C0392B}
+.booking-page .field input,.booking-page .field select,.booking-page .field textarea{width:100%;font-family:var(--sans);font-size:15px;color:var(--ink);background:#fff;border:1.5px solid var(--rule-d);border-radius:3px;padding:12px 14px;transition:border-color .12s}
+.booking-page .field input:focus,.booking-page .field select:focus,.booking-page .field textarea:focus{outline:none;border-color:var(--btn)}
+.booking-page .field textarea{min-height:84px;resize:vertical}
+.booking-page .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+.booking-page .summary{position:sticky;top:96px;background:var(--card-2);border:1px solid var(--rule);border-radius:4px;padding:28px}
+.booking-page .summary h2{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:18px}
+.booking-page .sum-row{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--rule);font-size:14px}
+.booking-page .sum-row:last-of-type{border-bottom:none}
+.booking-page .sum-row .k{color:var(--muted)}
+.booking-page .sum-row .v{color:var(--ink);font-weight:600;text-align:right}
+.booking-page .sum-row .v.empty{color:#BDB6AA;font-weight:400}
+.booking-page .btn-book{width:100%;margin-top:20px;background:var(--btn);color:#fff;border:none;border-radius:3px;padding:15px;font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;transition:background .14s}
+.booking-page .btn-book:hover:not(:disabled){background:var(--btn-d)}
+.booking-page .btn-book:disabled{background:#CFC8BC;cursor:not-allowed}
+.booking-page .summary .note{font-size:12px;color:var(--muted);margin-top:14px;line-height:1.6}
+.booking-page .confirm{display:none;background:#fff;border:1.5px solid var(--btn);border-radius:4px;padding:22px;margin-top:16px}
+.booking-page .confirm.show{display:block}
+.booking-page .confirm .ttl{font-weight:700;color:var(--ink);margin-bottom:8px}
+.booking-page .confirm p{font-size:13.5px;color:var(--muted);line-height:1.7}
+.booking-page .office-note{margin-top:8px;font-size:12.5px;color:var(--muted);line-height:1.7}
+
+.booking-page .maps-sec{padding:6px 0 72px}
+.booking-page .maps-sec h2{font-size:20px;font-weight:700;color:var(--ink)}
+.booking-page .maps-sec .sub{font-size:13.5px;color:var(--muted);margin:6px 0 22px}
+.booking-page .maps{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.booking-page .map-card{border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:#fff}
+.booking-page .map-card iframe{width:100%;height:300px;border:0;display:block;filter:grayscale(.18)}
+.booking-page .map-card .mc-body{padding:16px 18px}
+.booking-page .map-card .mc-name{font-weight:700;color:var(--ink);font-size:15px}
+.booking-page .map-card .mc-addr{font-size:13px;color:var(--muted);margin-top:5px;line-height:1.6}
+@media(max-width:760px){.booking-page .maps{grid-template-columns:1fr}}
+@media(max-width:880px){.booking-page .booking{grid-template-columns:1fr;gap:8px}.booking-page .summary{position:static;margin-top:10px}}
+@media(max-width:680px){.booking-page .two{grid-template-columns:1fr}}
+</style>
+
+<div class="booking-page">
+<section class="page-head">
+    <div class="wrap">
+        <h1>Book a Visit Consultation</h1>
+        <p class="lead">Book an in-person consultation at our Seoul or Gwangju office. Choose a date and time and enter your details — your booking is confirmed by our team after review.</p>
+        <div class="hours">
+            <span class="pill"><b>Hours</b> Weekdays (Mon–Fri) 09:00–18:00</span>
+            <span class="pill"><b>Consultations</b> 09:00–17:00 · 1-hour slots</span>
+            <span class="pill"><b>Lunch</b> 12:00–13:00 excluded</span>
+        </div>
+    </div>
+</section>
+
+<div class="wrap">
+    <div class="booking">
+        <div class="booking-form">
+            <div class="bk-step">
+                <div class="step-label"><span>01</span> Select a date</div>
+                <div class="cal-grid" id="calWrap"></div>
+            </div>
+
+            <div class="bk-step">
+                <div class="step-label"><span>02</span> Select a time</div>
+                <div class="time-grid" id="timeGrid"></div>
+                <p class="lunch-note">· 12:00–13:00 is reserved for lunch. The last consultation starts at 17:00.</p>
+            </div>
+
+            <div class="bk-step">
+                <div class="step-label"><span>03</span> Your details</div>
+                <div class="two">
+                    <div class="field">
+                        <label>Name <span class="req">*</span></label>
+                        <input type="text" id="fName" placeholder="Your name" autocomplete="name">
+                    </div>
+                    <div class="field">
+                        <label>Phone <span class="req">*</span></label>
+                        <input type="tel" id="fTel" placeholder="010-0000-0000" autocomplete="tel">
+                    </div>
+                </div>
+                <div class="two">
+                    <div class="field">
+                        <label>Office</label>
+                        <select id="fOffice">
+                            <option value="Seoul Office">Seoul Office (Gangseo-gu, Magok)</option>
+                            <option value="Gwangju Office">Gwangju Office (Dong-gu, Jisan-dong)</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Topic</label>
+                        <select id="fTopic">
+                            <option>Visa &amp; Immigration</option>
+                            <option>Criminal Defense</option>
+                            <option>Residence &amp; Nationality</option>
+                            <option>Administrative Affairs</option>
+                            <option>Pension Refund</option>
+                            <option>Corporate Advisory</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Message (optional)</label>
+                    <textarea id="fMemo" placeholder="Briefly describe what you'd like to discuss."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <aside class="summary">
+            <h2>Your booking</h2>
+            <div class="sum-row"><span class="k">Date</span><span class="v empty" id="sDate">Not selected</span></div>
+            <div class="sum-row"><span class="k">Time</span><span class="v empty" id="sTime">Not selected</span></div>
+            <div class="sum-row"><span class="k">Office</span><span class="v" id="sOffice">Seoul Office</span></div>
+            <div class="sum-row"><span class="k">Topic</span><span class="v" id="sTopic">Visa &amp; Immigration</span></div>
+            <button class="btn-book" id="bookBtn" disabled>Request booking</button>
+            <p class="note">When you submit, your booking request is received and our team confirms it by phone.</p>
+            <div class="confirm" id="confirm">
+                <div class="ttl">Booking request received ✓</div>
+                <p id="confirmText"></p>
+            </div>
+            <p class="office-note"><b style="color:var(--brown)">Seoul</b> 164 Gonghang-daero, Gangseo-gu (Ryuma Tower #503)<br><b style="color:var(--brown)">Gwangju</b> 1 Junbeop-ro, Dong-gu (Choseok Bldg, 3F)<br>Main line +82-2-2039-0544</p>
+        </aside>
+    </div>
+</div>
+
+<section class="maps-sec">
+    <div class="wrap">
+        <h2>Getting here</h2>
+        <p class="sub">Our Seoul and Gwangju office locations.</p>
+        <div class="maps">
+            <div class="map-card">
+                <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://maps.google.com/maps?q=%EC%84%9C%EC%9A%B8%20%EA%B0%95%EC%84%9C%EA%B5%AC%20%EA%B3%B5%ED%95%AD%EB%8C%80%EB%A1%9C%20164%20%EB%A5%98%EB%A7%88%ED%83%80%EC%9B%8C&t=&z=16&ie=UTF8&iwloc=&output=embed" title="Seoul Office map"></iframe>
+                <div class="mc-body"><div class="mc-name">Seoul Office</div><div class="mc-addr">164 Gonghang-daero, Gangseo-gu, Seoul · 5F #503 (Magok-dong, Ryuma Tower)</div></div>
+            </div>
+            <div class="map-card">
+                <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://maps.google.com/maps?q=%EA%B4%91%EC%A3%BC%20%EB%8F%99%EA%B5%AC%20%EC%A4%80%EB%B2%95%EB%A1%9C%201%20%EC%B4%88%EC%84%9D%EB%B9%8C%EB%94%A9&t=&z=16&ie=UTF8&iwloc=&output=embed" title="Gwangju Office map"></iframe>
+                <div class="mc-body"><div class="mc-name">Gwangju Office</div><div class="mc-addr">1 Junbeop-ro, Dong-gu, Gwangju · 3F (Jisan-dong, Choseok Bldg)</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+
+<script>
+(function(){
+    var LANG = 'en';
+    var STR = {
+        notSel:'Not selected', booked:'Full', submit:'Request booking',
+        submitting:'Submitting…', done:'Booking requested',
+        confirmTtl:'Booking request received ✓',
+        err:'We could not save your booking. Please try again or call +82-2-2039-0544.',
+        confirm:function(name,when,office,phone){
+            return name+', your visit consultation for <b>'+when+'</b> at the '+office+' has been requested. Our team will confirm by calling '+phone+'.';
+        },
+        dateLabel:function(m,d,dow){ return DOW_FULL[dow]+', '+MON[m]+' '+d; }
+    };
+    var SLOTS = ['09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00']; // 12:00 lunch excluded
+    var DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    var DOW_FULL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var state = { date:null, time:null, dateLabel:null };
+
+    var calWrap = document.getElementById('calWrap');
+    var today = new Date(); today.setHours(0,0,0,0);
+    var maxDate = new Date(today.getFullYear(), today.getMonth()+2, 0);
+    function pad(n){ return (n<10?'0':'')+n; }
+    function buildMonth(year, month){
+        var first = new Date(year, month, 1);
+        var startDow = first.getDay();
+        var daysIn = new Date(year, month+1, 0).getDate();
+        var html = '<div class="cal"><div class="cal-title">'+MON[first.getMonth()]+' '+first.getFullYear()+'</div>'
+                 + '<div class="cal-dows"><span class="sun">Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>'
+                 + '<div class="cal-days">';
+        for(var i=0;i<startDow;i++) html += '<div class="cal-day empty"></div>';
+        for(var dd=1; dd<=daysIn; dd++){
+            var cur = new Date(first.getFullYear(), first.getMonth(), dd);
+            var dow = cur.getDay();
+            var iso = cur.getFullYear()+'-'+pad(cur.getMonth()+1)+'-'+pad(dd);
+            var weekend = (dow===0||dow===6);
+            var inRange = (cur>=today && cur<=maxDate);
+            if(weekend || !inRange){
+                html += '<div class="cal-day disabled">'+dd+'</div>';
+            } else {
+                html += '<div class="cal-day pick" data-date="'+iso+'" data-label="'+STR.dateLabel(cur.getMonth(),dd,dow)+'">'+dd+'</div>';
+            }
+        }
+        return html + '</div></div>';
+    }
+    calWrap.innerHTML = buildMonth(today.getFullYear(), today.getMonth())
+                      + buildMonth(today.getFullYear(), today.getMonth()+1);
+    Array.prototype.forEach.call(calWrap.querySelectorAll('.cal-day.pick'), function(cell){
+        cell.addEventListener('click', function(){ selectDate(this); });
+    });
+
+    var timeGrid = document.getElementById('timeGrid');
+    function renderTimes(){
+        timeGrid.innerHTML = '';
+        SLOTS.forEach(function(t){
+            var el = document.createElement('div');
+            el.className = 'time-slot';
+            var booked = state.date ? ((hashCode(state.date + t) % 7) === 0) : false;
+            if(booked){ el.className += ' disabled'; el.innerHTML = t + '<span class="tag">'+STR.booked+'</span>'; }
+            else {
+                el.textContent = t;
+                el.addEventListener('click', function(){ selectTime(this, t); });
+            }
+            if(state.time===t && !booked) el.classList.add('sel');
+            timeGrid.appendChild(el);
+        });
+    }
+    function hashCode(s){ var h=0; for(var i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i))|0; } return Math.abs(h); }
+
+    function selectDate(cell){
+        Array.prototype.forEach.call(calWrap.querySelectorAll('.cal-day'), function(c){ c.classList.remove('sel'); });
+        cell.classList.add('sel');
+        state.date = cell.dataset.date; state.dateLabel = cell.dataset.label;
+        state.time = null;
+        var sd = document.getElementById('sDate'); sd.textContent = cell.dataset.label; sd.classList.remove('empty');
+        renderTimes(); sync();
+    }
+    function selectTime(el, t){
+        Array.prototype.forEach.call(timeGrid.children, function(c){ c.classList.remove('sel'); });
+        el.classList.add('sel');
+        state.time = t;
+        var stm = document.getElementById('sTime'); stm.textContent = t; stm.classList.remove('empty');
+        sync();
+    }
+
+    var office = document.getElementById('fOffice'), topic = document.getElementById('fTopic');
+    var name = document.getElementById('fName'), tel = document.getElementById('fTel'), memo = document.getElementById('fMemo');
+    office.addEventListener('change', function(){ document.getElementById('sOffice').textContent = office.value; });
+    topic.addEventListener('change', function(){ document.getElementById('sTopic').textContent = topic.value; });
+    [name,tel].forEach(function(i){ i.addEventListener('input', sync); });
+
+    var bookBtn = document.getElementById('bookBtn');
+    function sync(){
+        var ok = state.date && state.time && name.value.trim() && tel.value.trim() && !submitting;
+        bookBtn.disabled = !ok;
+    }
+    var submitting = false;
+    bookBtn.addEventListener('click', async function(){
+        if(submitting) return;
+        submitting = true; bookBtn.disabled = true; bookBtn.textContent = STR.submitting;
+        var payload = {
+            name:name.value.trim(), phone:tel.value.trim(), office:office.value,
+            topic:topic.value, reserve_date:state.date, reserve_time:state.time,
+            memo:memo.value, lang:LANG
+        };
+        try{
+            if(typeof createReservation !== 'function'){ throw new Error('backend not ready'); }
+            var res = await createReservation(payload);
+            if(!res || !res.success){ throw new Error(res && res.error || 'save failed'); }
+            var c = document.getElementById('confirm');
+            document.getElementById('confirmText').innerHTML =
+                STR.confirm(payload.name, state.dateLabel+' '+state.time, office.value, payload.phone);
+            c.classList.add('show');
+            bookBtn.textContent = STR.done;
+            // keep disabled after success
+        }catch(e){
+            console.error(e); alert(STR.err);
+            submitting = false; bookBtn.textContent = STR.submit; sync();
+        }
+    });
+
+    renderTimes();
+})();
+</script>

@@ -297,6 +297,55 @@ async function createOrUpdateProfile(userId, profileData) {
 }
 
 // ============================================
+// 방문 예약 (reservations)
+// ============================================
+
+// 방문 상담 예약 생성 (로그인 불필요 — anon insert 허용)
+async function createReservation(reservationData) {
+    try {
+        if (!supabaseClient) {
+            throw new Error('Supabase 클라이언트가 준비되지 않았습니다');
+        }
+
+        // 로그인한 사용자라면 user_id 를 함께 기록 (선택)
+        let userId = null;
+        try {
+            const u = await getCurrentUser();
+            if (u && u.id) userId = u.id;
+        } catch (_) { /* 비로그인 방문자 — 무시 */ }
+
+        const record = {
+            user_id: userId,
+            name: (reservationData.name || '').trim(),
+            phone: (reservationData.phone || '').trim(),
+            office: reservationData.office || null,
+            topic: reservationData.topic || null,
+            reserve_date: reservationData.reserve_date, // 'YYYY-MM-DD'
+            reserve_time: reservationData.reserve_time, // 'HH:MM'
+            memo: ((reservationData.memo || '').trim()) || null,
+            lang: reservationData.lang || 'ko'
+        };
+
+        const { data, error } = await supabaseClient
+            .from('reservations')
+            .insert(record)
+            .select()
+            .single();
+
+        if (error) {
+            console.error('Supabase 예약 생성 오류:', error);
+            throw error;
+        }
+
+        debugLog('방문 예약 생성 성공:', data);
+        return { success: true, data };
+    } catch (error) {
+        console.error('방문 예약 생성 실패:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// ============================================
 // 쓰레드 관련 함수
 // ============================================
 

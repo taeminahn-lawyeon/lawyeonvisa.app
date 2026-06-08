@@ -51,6 +51,24 @@
         })();
     </script>
 
+    <!-- 🚪 진입점 전환: 일반 방문자는 새 홈(/main)으로 보낸다.
+         대학 전용 로그인/OAuth 콜백(access_token 해시·lectureCode 쿼리)은 위에서 처리하므로 제외한다. -->
+    <script>
+        (function() {
+            try {
+                var hash = window.location.hash || '';
+                var search = window.location.search || '';
+                // OAuth 콜백(세션 해시)·대학 강의코드 흐름은 이 페이지가 직접 처리해야 하므로 리다이렉트하지 않음
+                if (hash.indexOf('access_token') !== -1) return;
+                if (search.indexOf('lectureCode') !== -1) return;
+                if (sessionStorage.getItem('chosun_pending_login') === 'true') return;
+                if (sessionStorage.getItem('feu_pending_login') === 'true') return;
+                // 새 디자인 홈으로 이동 (GitHub Pages가 /main → main.html 서빙)
+                window.location.replace('/main');
+            } catch (e) { /* 리다이렉트 실패 시 기존 index 렌더 */ }
+        })();
+    </script>
+
     <title data-i18n="site.title">법무법인 로연 출입국이민지원센터</title>
 
     <!-- SEO 메타 태그 -->
