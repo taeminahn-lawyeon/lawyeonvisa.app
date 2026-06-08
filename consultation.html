@@ -117,7 +117,7 @@
             if(!tr||!tr.success){ throw new Error('thread'); }
             try{ await createWelcomeMessage(tr.data.id, svc.name); }catch(_){}
             localStorage.removeItem('pendingConsult');
-            window.location.href='thread-preview.html?id='+tr.data.id;
+            window.location.href='thread-general-v2.html?id='+tr.data.id;
         }catch(e){ console.error(e); alert(STR.err); reset(); }
     }
 

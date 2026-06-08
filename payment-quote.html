@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="favicon.png?v=3">
     <title>견적 결제 - Lawyeon Visa Center</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- 결제 키 설정 (SDK 로드 전에 선언) -->
     <script>
@@ -18,13 +18,13 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #F8FAFC; color: #191F28;
+            font-family: 'Manrope','IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F7F6F3; color: #191F28;
             display: flex; align-items: center; justify-content: center;
             min-height: 100vh; padding: 20px;
         }
         .card {
-            background: #fff; border-radius: 16px; width: 100%; max-width: 420px;
+            background: #fff; border-radius: 4px; width: 100%; max-width: 420px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.08); padding: 32px 28px;
         }
         .title { font-size: 20px; font-weight: 700; margin-bottom: 24px; }
@@ -34,10 +34,10 @@
             border-top: 1px solid #E5E7EB; padding-top: 14px; margin-top: 14px;
         }
         .pay-btn {
-            width: 100%; margin-top: 28px; padding: 16px; border: none; border-radius: 12px;
-            background: #3182F6; color: #fff; font-size: 16px; font-weight: 700; cursor: pointer;
+            width: 100%; margin-top: 28px; padding: 16px; border: none; border-radius: 4px;
+            background: #887668; color: #fff; font-size: 16px; font-weight: 700; cursor: pointer;
         }
-        .pay-btn:disabled { background: #C9D6E5; cursor: not-allowed; }
+        .pay-btn:disabled { background: #E3DBCC; cursor: not-allowed; }
         .state { text-align: center; color: #6B7684; padding: 20px 0; }
         .state.error { color: #DC2626; }
         .back { display: block; text-align: center; margin-top: 16px; color: #6B7684; text-decoration: none; font-size: 14px; }
