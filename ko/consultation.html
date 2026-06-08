@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>상담 신청 — 법무법인 로연</title>
+<meta name="description" content="법무법인 로연 무료 사전 상담. 비자·출입국·형사 사안에 대해 비공개 쓰레드로 상담을 시작하세요.">
+<link rel="canonical" href="https://www.lawyeonvisa.app/ko/consultation">
+<link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/consultation">
+<link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/consultation">
+<link rel="alternate" hreflang="x-default" href="https://www.lawyeonvisa.app/consultation">
+<meta property="og:type" content="website">
+<meta property="og:title" content="상담 신청 — 법무법인 로연">
+<meta property="og:description" content="법무법인 로연 무료 사전 상담. 비자·출입국·형사 사안에 대해 비공개 쓰레드로 상담을 시작하세요.">
+<meta property="og:url" content="https://www.lawyeonvisa.app/ko/consultation">
+<meta property="og:image" content="https://www.lawyeonvisa.app/images/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="header-content">
+        <a href="main" class="brand">
+            <div>
+                <div class="name">법무법인 로연</div>
+                <div class="sub">출입국이민지원센터</div>
+            </div>
+        </a>
+        <div class="header-actions">
+            <nav class="nav-links">
+                <a href="main#insights">인사이트</a>
+                <a href="main#cases">사례·소식</a>
+                <a href="main#consult">상담</a>
+            </nav>
+            <span class="lang"><a href="../consultation">EN</a><span class="sep">·</span><a href="consultation" class="active">한국어</a></span>
+            <a href="consultation" class="btn btn-primary">로그인</a>
+        </div>
+    </div>
+</header>
+
+<section class="page-head">
+    <div class="wrap">
+        <h1>상담 신청</h1>
+        <p class="lead">무료 사전 상담입니다. 사건별 비공개 쓰레드가 생성되어, 상황과 자료를 남기시면 담당자가 검토 후 답변합니다. 비용이 발생하는 경우 검토 후에만 견적으로 안내드립니다.</p>
+    </div>
+</section>
+
+<div class="wrap">
+    <div class="form-grid">
+        <div>
+            <div class="panel">
+                <h2>진행 방식</h2>
+                <div class="steps">
+                    <div class="step"><div class="n">1</div><div><h3>상담 신청</h3><p>사건별 전용 쓰레드가 생성됩니다.</p></div></div>
+                    <div class="step"><div class="n">2</div><div><h3>사실관계 검토</h3><p>담당자가 상황과 서류를 확인합니다.</p></div></div>
+                    <div class="step"><div class="n">3</div><div><h3>절차 안내</h3><p>사안에 맞는 구체적 절차를 안내드립니다.</p></div></div>
+                    <div class="step"><div class="n">4</div><div><h3>비용 견적</h3><p>대행 수수료·정부 수수료를 명확히 안내합니다.</p></div></div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="consent">
+                    <label><input type="checkbox" id="consentChk"><span>서비스 이용약관 및 개인정보 처리방침에 동의하며, 상담 목적의 개인정보 수집·이용에 동의합니다.</span></label>
+                    <div class="links">
+                        <a href="../terms-of-service?v=2" target="_blank" rel="noopener">이용약관</a>
+                        <a href="../privacy-policy?v=2" target="_blank" rel="noopener">개인정보 처리방침</a>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block" id="consultBtn" disabled>상담 신청하기</button>
+                <div class="free-badge">100% 무료 — 시작에 결제가 필요 없습니다. 비용은 상담 후에만 견적으로 안내됩니다.</div>
+            </div>
+        </div>
+
+        <aside class="aside-card">
+            <div class="ac-head"><h3>전용 쓰레드</h3><p>담당자와 실시간으로 소통합니다</p></div>
+            <img src="../images/thread-preview.png" alt="쓰레드 미리보기">
+            <div class="ac-cap">비공개 전용 쓰레드에서 진행 상황을 실시간으로 확인하세요.</div>
+        </aside>
+    </div>
+</div>
+
+<script>
+(function(){
+    var STR={ agree:'서비스 이용약관 및 개인정보 처리방침에 동의해 주세요.', proc:'처리 중…', creating:'쓰레드 생성 중…', cta:'상담 신청하기', err:'오류가 발생했습니다. 다시 시도해 주세요.' };
+    var chk=document.getElementById('consentChk'), btn=document.getElementById('consultBtn');
+    var svc={ id:'general-consultation', name:'무료 사전 상담' };
+    if(chk&&btn){ chk.addEventListener('change',function(){ btn.disabled=!chk.checked; }); btn.addEventListener('click',apply); }
+    function reset(){ btn.disabled=false; btn.textContent=STR.cta; }
+
+    async function apply(){
+        if(!chk.checked){ alert(STR.agree); return; }
+        btn.disabled=true; btn.textContent=STR.proc;
+        try{
+            if(typeof checkSession!=='function'){ throw new Error('not ready'); }
+            var session=await checkSession();
+            if(!session||!session.user){
+                localStorage.setItem('pendingConsult', JSON.stringify({id:svc.id,name:svc.name,ts:Date.now()}));
+                var r=await signInWithGoogle();
+                if(!r||!r.success){ throw new Error('login'); }
+                return;
+            }
+            await createThreadFlow(session);
+        }catch(e){ console.error(e); alert(STR.err); reset(); }
+    }
+
+    async function createThreadFlow(session){
+        btn.disabled=true; btn.textContent=STR.creating;
+        try{
+            var prof=await getUserProfile(session.user.id);
+            if(!prof||!prof.success||!prof.data){
+                var m=session.user.user_metadata||{};
+                await createOrUpdateProfile(session.user.id,{ name:m.full_name||m.name||((session.user.email||'').split('@')[0]), email:session.user.email||'' });
+            }
+            var tr=await createThread({ service_name: svc.name+' (Consultation)', status:'document', amount:0, order_id:'CONSULT-'+Date.now(), is_consulting:true, organization:'general' });
+            if(!tr||!tr.success){ throw new Error('thread'); }
+            try{ await createWelcomeMessage(tr.data.id, svc.name); }catch(_){}
+            localStorage.removeItem('pendingConsult');
+            window.location.href='../thread-preview.html?id='+tr.data.id;
+        }catch(e){ console.error(e); alert(STR.err); reset(); }
+    }
+
+    document.addEventListener('DOMContentLoaded', async function(){
+        var p=localStorage.getItem('pendingConsult'); if(!p) return;
+        try{ var d=JSON.parse(p); if(Date.now()-d.ts>600000){ localStorage.removeItem('pendingConsult'); return; }
+            if(typeof checkSession!=='function') return;
+            var s=await checkSession(); if(!s||!s.user) return;
+            svc={id:d.id,name:d.name}; await createThreadFlow(s);
+        }catch(e){ localStorage.removeItem('pendingConsult'); }
+    });
+})();
+</script>
+
+<footer class="footer">
+    <div class="wrap footer-inner">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <div>
+                    <div class="fb-name">법무법인 로연</div>
+                    <div class="fb-sub">출입국이민지원센터</div>
+                </div>
+            </div>
+            <div class="footer-tel">
+                <b>02-2039-0544</b> · 팩스 070-8230-0545<br>
+                서울 · 광주 사무소 운영
+            </div>
+        </div>
+        <div class="footer-info">
+            <div class="row"><b>법인명</b>법무법인 로연</div>
+            <div class="row"><b>서울사무소</b>서울특별시 강서구 공항대로 164, 5층 503호 (마곡동, 류마타워) · 대표 민준우</div>
+            <div class="row"><b>광주사무소</b>광주광역시 동구 준법로 1, 3층 (지산동, 초석빌딩) · 대표 봉세환</div>
+            <div class="row"><b>사업자등록번호</b>391-85-03007 (서울사무소)</div>
+            <div class="row"><b>통신판매업 신고</b>제 2025-서울강서-3193호</div>
+            <div class="row"><b>광고책임변호사</b>남도현, 민준우</div>
+            <div class="footer-links">
+                <a href="../privacy-policy?v=2">개인정보 처리방침</a><span class="sep">·</span>
+                <a href="../terms-of-service?v=2">서비스 이용약관</a><span class="sep">·</span>
+                <a href="../price-list">서비스 가격표</a><span class="sep">·</span>
+                <a href="../refund-policy">환불 규정</a><span class="sep">·</span>
+                <a href="https://lawyeon.com/" target="_blank" rel="noopener">법무법인 로연</a>
+            </div>
+            <p class="copyright">본 사이트에서 제공되는 모든 법률 서비스는 법무법인 로연에서 제공합니다. © 법무법인 로연 출입국이민지원센터</p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js?v=20260527b"></script>
+<script src="../js/site.js?v=1"></script>
+</body>
+</html>

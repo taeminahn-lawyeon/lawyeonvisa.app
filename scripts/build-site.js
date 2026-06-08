@@ -43,6 +43,12 @@ const PAGES = [
     desc:  { en: 'Law Firm Lawyeon, Visa & Immigration Center. Legal representation for criminal cases, contracts and immigration office affairs for expats and migrants in Korea.',
              ko: '법무법인 로연 출입국이민지원센터. 외국인·이주민을 위한 형사사건, 계약, 출입국 민원 등 법률 대리 서비스.' },
   },
+  {
+    id: 'consultation', content: 'consultation',
+    title: { en: 'Request Consultation — Law Firm Lawyeon', ko: '상담 신청 — 법무법인 로연' },
+    desc:  { en: 'Free pre-consultation with Law Firm Lawyeon. Open a private thread for your visa, immigration, or criminal matter in Korea.',
+             ko: '법무법인 로연 무료 사전 상담. 비자·출입국·형사 사안에 대해 비공개 쓰레드로 상담을 시작하세요.' },
+  },
 ];
 
 function langToggle(lang, id) {

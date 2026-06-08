@@ -10,4 +10,14 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/main"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/main"/>
   </url>
+  <url>
+    <loc>https://www.lawyeonvisa.app/consultation</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/consultation"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/consultation"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeonvisa.app/ko/consultation</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/consultation"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/consultation"/>
+  </url>
 </urlset>

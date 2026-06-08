@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Request Consultation — Law Firm Lawyeon</title>
+<meta name="description" content="Free pre-consultation with Law Firm Lawyeon. Open a private thread for your visa, immigration, or criminal matter in Korea.">
+<link rel="canonical" href="https://www.lawyeonvisa.app/consultation">
+<link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/consultation">
+<link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/consultation">
+<link rel="alternate" hreflang="x-default" href="https://www.lawyeonvisa.app/consultation">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Request Consultation — Law Firm Lawyeon">
+<meta property="og:description" content="Free pre-consultation with Law Firm Lawyeon. Open a private thread for your visa, immigration, or criminal matter in Korea.">
+<meta property="og:url" content="https://www.lawyeonvisa.app/consultation">
+<meta property="og:image" content="https://www.lawyeonvisa.app/images/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="header-content">
+        <a href="main" class="brand">
+            <div>
+                <div class="name">Law Firm Lawyeon</div>
+                <div class="sub">Visa & Immigration Center</div>
+            </div>
+        </a>
+        <div class="header-actions">
+            <nav class="nav-links">
+                <a href="main#insights">Insights</a>
+                <a href="main#cases">Cases & News</a>
+                <a href="main#consult">Consultation</a>
+            </nav>
+            <span class="lang"><a href="consultation" class="active">EN</a><span class="sep">·</span><a href="ko/consultation">한국어</a></span>
+            <a href="consultation" class="btn btn-primary">Login</a>
+        </div>
+    </div>
+</header>
+
+<section class="page-head">
+    <div class="wrap">
+        <h1>Request Consultation</h1>
+        <p class="lead">Free pre-consultation. A dedicated private thread is created for your case — share your situation and documents, and our team reviews and replies. Fees, if any, are quoted only after the review.</p>
+    </div>
+</section>
+
+<div class="wrap">
+    <div class="form-grid">
+        <div>
+            <div class="panel">
+                <h2>How it works</h2>
+                <div class="steps">
+                    <div class="step"><div class="n">1</div><div><h3>Submit request</h3><p>A dedicated thread is created for your case.</p></div></div>
+                    <div class="step"><div class="n">2</div><div><h3>Fact-finding review</h3><p>Our specialist verifies your situation and documents.</p></div></div>
+                    <div class="step"><div class="n">3</div><div><h3>Procedure guidance</h3><p>You receive the concrete steps for your matter.</p></div></div>
+                    <div class="step"><div class="n">4</div><div><h3>Cost estimate</h3><p>A clear breakdown of agency and government fees.</p></div></div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="consent">
+                    <label><input type="checkbox" id="consentChk"><span>I agree to the Terms of Service and Privacy Policy, and consent to the collection and use of my personal information for consultation purposes.</span></label>
+                    <div class="links">
+                        <a href="terms-of-service?v=2" target="_blank" rel="noopener">Terms of Service</a>
+                        <a href="privacy-policy?v=2" target="_blank" rel="noopener">Privacy Policy</a>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block" id="consultBtn" disabled>Request Consultation</button>
+                <div class="free-badge">100% free — no payment required to start. Fees are quoted only after the consultation.</div>
+            </div>
+        </div>
+
+        <aside class="aside-card">
+            <div class="ac-head"><h3>Your dedicated thread</h3><p>Real-time communication with our team</p></div>
+            <img src="images/thread-preview.png" alt="Thread preview">
+            <div class="ac-cap">Track your case in real time through your private thread.</div>
+        </aside>
+    </div>
+</div>
+
+<script>
+(function(){
+    var STR={ agree:'Please agree to the Terms of Service and Privacy Policy.', proc:'Processing…', creating:'Creating thread…', cta:'Request Consultation', err:'An error occurred. Please try again.' };
+    var chk=document.getElementById('consentChk'), btn=document.getElementById('consultBtn');
+    var svc={ id:'general-consultation', name:'Free Pre-Consultation' };
+    if(chk&&btn){ chk.addEventListener('change',function(){ btn.disabled=!chk.checked; }); btn.addEventListener('click',apply); }
+    function reset(){ btn.disabled=false; btn.textContent=STR.cta; }
+
+    async function apply(){
+        if(!chk.checked){ alert(STR.agree); return; }
+        btn.disabled=true; btn.textContent=STR.proc;
+        try{
+            if(typeof checkSession!=='function'){ throw new Error('not ready'); }
+            var session=await checkSession();
+            if(!session||!session.user){
+                localStorage.setItem('pendingConsult', JSON.stringify({id:svc.id,name:svc.name,ts:Date.now()}));
+                var r=await signInWithGoogle();
+                if(!r||!r.success){ throw new Error('login'); }
+                return; // browser redirects to Google
+            }
+            await createThreadFlow(session);
+        }catch(e){ console.error(e); alert(STR.err); reset(); }
+    }
+
+    async function createThreadFlow(session){
+        btn.disabled=true; btn.textContent=STR.creating;
+        try{
+            var prof=await getUserProfile(session.user.id);
+            if(!prof||!prof.success||!prof.data){
+                var m=session.user.user_metadata||{};
+                await createOrUpdateProfile(session.user.id,{ name:m.full_name||m.name||((session.user.email||'').split('@')[0]), email:session.user.email||'' });
+            }
+            var tr=await createThread({ service_name: svc.name+' (Consultation)', status:'document', amount:0, order_id:'CONSULT-'+Date.now(), is_consulting:true, organization:'general' });
+            if(!tr||!tr.success){ throw new Error('thread'); }
+            try{ await createWelcomeMessage(tr.data.id, svc.name); }catch(_){}
+            localStorage.removeItem('pendingConsult');
+            window.location.href='thread-preview.html?id='+tr.data.id;
+        }catch(e){ console.error(e); alert(STR.err); reset(); }
+    }
+
+    document.addEventListener('DOMContentLoaded', async function(){
+        var p=localStorage.getItem('pendingConsult'); if(!p) return;
+        try{ var d=JSON.parse(p); if(Date.now()-d.ts>600000){ localStorage.removeItem('pendingConsult'); return; }
+            if(typeof checkSession!=='function') return;
+            var s=await checkSession(); if(!s||!s.user) return;
+            svc={id:d.id,name:d.name}; await createThreadFlow(s);
+        }catch(e){ localStorage.removeItem('pendingConsult'); }
+    });
+})();
+</script>
+
+<footer class="footer">
+    <div class="wrap footer-inner">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <div>
+                    <div class="fb-name">Law Firm Lawyeon</div>
+                    <div class="fb-sub">Visa &amp; Immigration Center</div>
+                </div>
+            </div>
+            <div class="footer-tel">
+                <b>+82-2-2039-0544</b> · Fax 070-8230-0545<br>
+                Seoul · Gwangju offices
+            </div>
+        </div>
+        <div class="footer-info">
+            <div class="row"><b>Entity</b>Law Firm Lawyeon</div>
+            <div class="row"><b>Seoul Office</b>164 Gonghang-daero, Gangseo-gu, Seoul, 5F #503 (Magok-dong, Ryuma Tower) · Rep. J.W. Min</div>
+            <div class="row"><b>Gwangju Office</b>1 Junbeop-ro, Dong-gu, Gwangju, 3F (Jisan-dong, Choseok Bldg) · Rep. S.H. Bong</div>
+            <div class="row"><b>Business Reg. No.</b>391-85-03007 (Seoul Office)</div>
+            <div class="row"><b>E-commerce Reg.</b>2025-Seoul Gangseo-3193</div>
+            <div class="row"><b>Advertising Attorneys</b>D.H. Nam, J.W. Min</div>
+            <div class="footer-links">
+                <a href="privacy-policy?v=2">Privacy Policy</a><span class="sep">·</span>
+                <a href="terms-of-service?v=2">Terms of Service</a><span class="sep">·</span>
+                <a href="price-list">Price List</a><span class="sep">·</span>
+                <a href="refund-policy">Refund Policy</a><span class="sep">·</span>
+                <a href="https://lawyeon.com/" target="_blank" rel="noopener">Law Firm Lawyeon</a>
+            </div>
+            <p class="copyright">All legal services on this site are provided by Law Firm Lawyeon. © Law Firm Lawyeon, Visa &amp; Immigration Center</p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js?v=20260527b"></script>
+<script src="js/site.js?v=1"></script>
+</body>
+</html>
