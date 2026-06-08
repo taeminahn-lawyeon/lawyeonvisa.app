@@ -50,4 +50,14 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/article"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/article"/>
   </url>
+  <url>
+    <loc>https://www.lawyeonvisa.app/chosun-university-student-legal-mou-2026</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/chosun-university-student-legal-mou-2026"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/chosun-university-student-legal-mou-2026"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeonvisa.app/ko/chosun-university-student-legal-mou-2026</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/chosun-university-student-legal-mou-2026"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/chosun-university-student-legal-mou-2026"/>
+  </url>
 </urlset>
