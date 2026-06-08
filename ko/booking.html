@@ -185,8 +185,15 @@
             <div class="sum-row"><span class="k">시간</span><span class="v empty" id="sTime">선택 안 됨</span></div>
             <div class="sum-row"><span class="k">사무소</span><span class="v" id="sOffice">서울사무소</span></div>
             <div class="sum-row"><span class="k">분야</span><span class="v" id="sTopic">Visa &amp; Immigration</span></div>
+            <div class="consent" id="bkConsent" style="margin-top:18px">
+                <label><input type="checkbox" id="consentChk"><span>서비스 이용약관 및 개인정보 처리방침에 동의하며, 상담 예약 목적의 개인정보 수집·이용 및 제공에 동의합니다.</span></label>
+                <div class="links">
+                    <a href="../terms-of-service?v=2" target="_blank" rel="noopener">이용약관</a>
+                    <a href="../privacy-policy?v=2" target="_blank" rel="noopener">개인정보 처리방침</a>
+                </div>
+            </div>
             <button class="btn-book" id="bookBtn" disabled>예약 신청하기</button>
-            <p class="note">버튼을 누르면 예약 요청이 접수되며, 담당자가 연락처로 확정을 안내합니다.</p>
+            <p class="note">예약은 본인 확인을 위해 Google 계정 로그인 후 접수됩니다. 버튼을 누르면 예약 요청이 접수되며, 담당자가 연락처로 확정을 안내합니다.</p>
             <div class="confirm" id="confirm">
                 <div class="ttl">예약 요청이 접수되었습니다 ✓</div>
                 <p id="confirmText"></p>
@@ -219,11 +226,14 @@
     var LANG = 'ko';
     var STR = {
         submit:'예약 신청하기', submitting:'접수 중…', done:'예약 요청 완료',
+        login:'Google 계정으로 이동 중…',
+        agree:'개인정보 수집·이용 및 제공에 동의해 주세요.',
         err:'예약 저장에 실패했습니다. 다시 시도하시거나 02-2039-0544로 연락해 주세요.',
         confirm:function(name,when,office,phone){
             return name+'님, <b>'+when+'</b> '+office+' 방문 상담이 요청되었습니다. 담당자가 '+phone+'로 확정을 안내드립니다.';
         }
     };
+    var PENDING_KEY = 'pendingReservation';
     var SLOTS = ['09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00']; // 12:00 점심 제외
     var DOW = ['일','월','화','수','목','금','토'];
     var state = { date:null, time:null, dateLabel:null };
@@ -296,32 +306,76 @@
     [name,tel].forEach(function(i){ i.addEventListener('input', sync); });
 
     var bookBtn = document.getElementById('bookBtn');
+    var consentChk = document.getElementById('consentChk');
     var submitting = false;
     function sync(){
-        var ok = state.date && state.time && name.value.trim() && tel.value.trim() && !submitting;
+        var ok = state.date && state.time && name.value.trim() && tel.value.trim() && consentChk.checked && !submitting;
         bookBtn.disabled = !ok;
     }
+    consentChk.addEventListener('change', sync);
+
+    function showConfirm(payload, whenLabel){
+        var c = document.getElementById('confirm');
+        document.getElementById('confirmText').innerHTML =
+            STR.confirm(payload.name, whenLabel, payload.office, payload.phone);
+        c.classList.add('show');
+        bookBtn.textContent = STR.done;
+    }
+
+    async function saveReservation(payload, whenLabel){
+        var res = await createReservation(payload);
+        if(!res || !res.success){ throw new Error(res && res.error || 'save failed'); }
+        showConfirm(payload, whenLabel);
+    }
+
     bookBtn.addEventListener('click', async function(){
         if(submitting) return;
+        if(!consentChk.checked){ alert(STR.agree); return; }
         submitting = true; bookBtn.disabled = true; bookBtn.textContent = STR.submitting;
         var payload = {
             name:name.value.trim(), phone:tel.value.trim(), office:office.value,
             topic:topic.value, reserve_date:state.date, reserve_time:state.time,
             memo:memo.value, lang:LANG
         };
+        var whenLabel = state.dateLabel+' '+state.time;
         try{
-            if(typeof createReservation !== 'function'){ throw new Error('backend not ready'); }
-            var res = await createReservation(payload);
-            if(!res || !res.success){ throw new Error(res && res.error || 'save failed'); }
-            var c = document.getElementById('confirm');
-            document.getElementById('confirmText').innerHTML =
-                STR.confirm(payload.name, state.dateLabel+' '+state.time, office.value, payload.phone);
-            c.classList.add('show');
-            bookBtn.textContent = STR.done;
+            if(typeof checkSession !== 'function' || typeof createReservation !== 'function'){ throw new Error('backend not ready'); }
+            var session = await checkSession();
+            if(!session || !session.user){
+                // 비로그인 — 예약 내용을 보관하고 Google 회원가입/로그인으로 유도
+                localStorage.setItem(PENDING_KEY, JSON.stringify({ payload:payload, whenLabel:whenLabel, ts:Date.now() }));
+                bookBtn.textContent = STR.login;
+                var r = await signInWithGoogle();
+                if(!r || !r.success){ localStorage.removeItem(PENDING_KEY); throw new Error('login'); }
+                return; // 리디렉션 진행
+            }
+            await saveReservation(payload, whenLabel);
         }catch(e){
             console.error(e); alert(STR.err);
             submitting = false; bookBtn.textContent = STR.submit; sync();
         }
+    });
+
+    // Google 로그인 후 복귀 시, 보관해 둔 예약을 이어서 접수
+    document.addEventListener('DOMContentLoaded', async function(){
+        var p = localStorage.getItem(PENDING_KEY); if(!p) return;
+        try{
+            var d = JSON.parse(p);
+            if(!d || !d.payload || Date.now()-d.ts > 600000){ localStorage.removeItem(PENDING_KEY); return; }
+            if(typeof checkSession !== 'function') return;
+            var s = await checkSession();
+            if(!s || !s.user) return; // 아직 로그인 전 — 보관 유지
+            localStorage.removeItem(PENDING_KEY);
+            submitting = true; bookBtn.disabled = true; bookBtn.textContent = STR.submitting;
+            // 요약 영역에 보관된 예약 내용 반영
+            var sd=document.getElementById('sDate'), stm=document.getElementById('sTime');
+            sd.textContent=d.whenLabel.replace(/\s\d{2}:\d{2}$/,''); sd.classList.remove('empty');
+            stm.textContent=d.payload.reserve_time; stm.classList.remove('empty');
+            document.getElementById('sOffice').textContent=d.payload.office;
+            document.getElementById('sTopic').textContent=d.payload.topic;
+            try{ await saveReservation(d.payload, d.whenLabel); }
+            catch(e){ console.error(e); alert(STR.err); submitting=false; bookBtn.textContent=STR.submit; }
+        }catch(e){ localStorage.removeItem(PENDING_KEY); }
     });
 
     renderTimes();

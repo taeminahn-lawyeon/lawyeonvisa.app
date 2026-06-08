@@ -141,8 +141,15 @@
             <div class="sum-row"><span class="k">Time</span><span class="v empty" id="sTime">Not selected</span></div>
             <div class="sum-row"><span class="k">Office</span><span class="v" id="sOffice">Seoul Office</span></div>
             <div class="sum-row"><span class="k">Topic</span><span class="v" id="sTopic">Visa &amp; Immigration</span></div>
+            <div class="consent" id="bkConsent" style="margin-top:18px">
+                <label><input type="checkbox" id="consentChk"><span>I agree to the Terms of Service and Privacy Policy, and consent to the collection, use and provision of my personal data for the purpose of this booking.</span></label>
+                <div class="links">
+                    <a href="__BASE__terms-of-service?v=2" target="_blank" rel="noopener">Terms of Service</a>
+                    <a href="__BASE__privacy-policy?v=2" target="_blank" rel="noopener">Privacy Policy</a>
+                </div>
+            </div>
             <button class="btn-book" id="bookBtn" disabled>Request booking</button>
-            <p class="note">When you submit, your booking request is received and our team confirms it by phone.</p>
+            <p class="note">To verify your identity, bookings are received after you sign in with your Google account. When you submit, your booking request is received and our team confirms it by phone.</p>
             <div class="confirm" id="confirm">
                 <div class="ttl">Booking request received ✓</div>
                 <p id="confirmText"></p>
@@ -176,6 +183,8 @@
     var STR = {
         notSel:'Not selected', submit:'Request booking',
         submitting:'Submitting…', done:'Booking requested',
+        login:'Redirecting to Google…',
+        agree:'Please agree to the collection, use and provision of your personal data.',
         confirmTtl:'Booking request received ✓',
         err:'We could not save your booking. Please try again or call +82-2-2039-0544.',
         confirm:function(name,when,office,phone){
@@ -188,6 +197,7 @@
     var DOW_FULL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     var state = { date:null, time:null, dateLabel:null };
+    var PENDING_KEY = 'pendingReservation';
 
     var calWrap = document.getElementById('calWrap');
     var today = new Date(); today.setHours(0,0,0,0);
@@ -257,33 +267,75 @@
     [name,tel].forEach(function(i){ i.addEventListener('input', sync); });
 
     var bookBtn = document.getElementById('bookBtn');
+    var consentChk = document.getElementById('consentChk');
+    var submitting = false;
     function sync(){
-        var ok = state.date && state.time && name.value.trim() && tel.value.trim() && !submitting;
+        var ok = state.date && state.time && name.value.trim() && tel.value.trim() && consentChk.checked && !submitting;
         bookBtn.disabled = !ok;
     }
-    var submitting = false;
+    consentChk.addEventListener('change', sync);
+
+    function showConfirm(payload, whenLabel){
+        var c = document.getElementById('confirm');
+        document.getElementById('confirmText').innerHTML =
+            STR.confirm(payload.name, whenLabel, payload.office, payload.phone);
+        c.classList.add('show');
+        bookBtn.textContent = STR.done;
+    }
+
+    async function saveReservation(payload, whenLabel){
+        var res = await createReservation(payload);
+        if(!res || !res.success){ throw new Error(res && res.error || 'save failed'); }
+        showConfirm(payload, whenLabel);
+    }
+
     bookBtn.addEventListener('click', async function(){
         if(submitting) return;
+        if(!consentChk.checked){ alert(STR.agree); return; }
         submitting = true; bookBtn.disabled = true; bookBtn.textContent = STR.submitting;
         var payload = {
             name:name.value.trim(), phone:tel.value.trim(), office:office.value,
             topic:topic.value, reserve_date:state.date, reserve_time:state.time,
             memo:memo.value, lang:LANG
         };
+        var whenLabel = state.dateLabel+' '+state.time;
         try{
-            if(typeof createReservation !== 'function'){ throw new Error('backend not ready'); }
-            var res = await createReservation(payload);
-            if(!res || !res.success){ throw new Error(res && res.error || 'save failed'); }
-            var c = document.getElementById('confirm');
-            document.getElementById('confirmText').innerHTML =
-                STR.confirm(payload.name, state.dateLabel+' '+state.time, office.value, payload.phone);
-            c.classList.add('show');
-            bookBtn.textContent = STR.done;
-            // keep disabled after success
+            if(typeof checkSession !== 'function' || typeof createReservation !== 'function'){ throw new Error('backend not ready'); }
+            var session = await checkSession();
+            if(!session || !session.user){
+                // Not signed in — keep the booking and guide to Google sign-up / sign-in
+                localStorage.setItem(PENDING_KEY, JSON.stringify({ payload:payload, whenLabel:whenLabel, ts:Date.now() }));
+                bookBtn.textContent = STR.login;
+                var r = await signInWithGoogle();
+                if(!r || !r.success){ localStorage.removeItem(PENDING_KEY); throw new Error('login'); }
+                return; // redirecting
+            }
+            await saveReservation(payload, whenLabel);
         }catch(e){
             console.error(e); alert(STR.err);
             submitting = false; bookBtn.textContent = STR.submit; sync();
         }
+    });
+
+    // After returning from Google sign-in, resume the saved booking
+    document.addEventListener('DOMContentLoaded', async function(){
+        var p = localStorage.getItem(PENDING_KEY); if(!p) return;
+        try{
+            var d = JSON.parse(p);
+            if(!d || !d.payload || Date.now()-d.ts > 600000){ localStorage.removeItem(PENDING_KEY); return; }
+            if(typeof checkSession !== 'function') return;
+            var s = await checkSession();
+            if(!s || !s.user) return; // not signed in yet — keep pending
+            localStorage.removeItem(PENDING_KEY);
+            submitting = true; bookBtn.disabled = true; bookBtn.textContent = STR.submitting;
+            var sd=document.getElementById('sDate'), stm=document.getElementById('sTime');
+            sd.textContent=d.whenLabel.replace(/\s\d{2}:\d{2}$/,''); sd.classList.remove('empty');
+            stm.textContent=d.payload.reserve_time; stm.classList.remove('empty');
+            document.getElementById('sOffice').textContent=d.payload.office;
+            document.getElementById('sTopic').textContent=d.payload.topic;
+            try{ await saveReservation(d.payload, d.whenLabel); }
+            catch(e){ console.error(e); alert(STR.err); submitting=false; bookBtn.textContent=STR.submit; }
+        }catch(e){ localStorage.removeItem(PENDING_KEY); }
     });
 
     renderTimes();
