@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="favicon.png?v=3">
     <title>Apply for Service - Lawyeon Visa Center</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
 
     <!-- 결제 키 설정 (SDK 로드 전에 선언) -->
@@ -25,17 +25,17 @@
         }
 
         body {
-            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #F8FAFC;
+            font-family: 'Manrope','IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F7F6F3;
             -webkit-font-smoothing: antialiased;
             min-height: 100vh;
         }
 
         /* Header */
         .header {
-            background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
+            background: linear-gradient(135deg, #241F18 0%, #332920 100%);
             padding: 20px 0;
-            border-bottom: 3px solid #3182F6;
+            border-bottom: 3px solid #887668;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -104,8 +104,8 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: #EBF4FF;
-            color: #3182F6;
+            background: #F4F2EE;
+            color: #887668;
             padding: 6px 12px;
             border-radius: 20px;
             font-size: 13px;
@@ -151,7 +151,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 14px 0;
-            border-bottom: 1px solid #F1F5F9;
+            border-bottom: 1px solid #F7F6F3;
         }
 
         .price-row:last-of-type {
@@ -187,7 +187,7 @@
 
         .price-total .value {
             font-size: 32px;
-            color: #3182F6;
+            color: #887668;
             font-weight: 900;
             letter-spacing: -1px;
         }
@@ -199,7 +199,7 @@
             align-items: flex-start;
             background: #FEF9C3;
             border: 1px solid #FDE047;
-            border-radius: 12px;
+            border-radius: 4px;
             padding: 14px 16px;
             margin-top: 16px;
         }
@@ -236,14 +236,14 @@
         }
 
         .process-steps h2 i {
-            color: #3182F6;
+            color: #887668;
         }
 
         .step-item {
             display: flex;
             gap: 16px;
             padding: 16px 0;
-            border-bottom: 1px solid #F1F5F9;
+            border-bottom: 1px solid #F7F6F3;
         }
 
         .step-item:last-child {
@@ -254,7 +254,7 @@
         .step-number {
             width: 32px;
             height: 32px;
-            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            background: linear-gradient(135deg, #887668 0%, #6F6053 100%);
             color: white;
             border-radius: 50%;
             display: flex;
@@ -291,7 +291,7 @@
         .btn-primary {
             width: 100%;
             height: 56px;
-            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
+            background: linear-gradient(135deg, #887668 0%, #6F6053 100%);
             color: white;
             border: none;
             border-radius: 14px;
@@ -299,7 +299,7 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 4px 16px rgba(49, 130, 246, 0.3);
+            box-shadow: 0 4px 16px rgba(136, 118, 104, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -308,7 +308,7 @@
 
         .btn-primary:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(49, 130, 246, 0.4);
+            box-shadow: 0 8px 24px rgba(136, 118, 104, 0.4);
         }
 
         .btn-primary:disabled {
@@ -356,9 +356,9 @@
 
         /* Toss Card Button */
         .btn-toss {
-            background: #3182F6;
+            background: #887668;
             color: white;
-            box-shadow: 0 2px 12px rgba(49, 130, 246, 0.3);
+            box-shadow: 0 2px 12px rgba(136, 118, 104, 0.3);
         }
 
         .btn-toss .btn-logo-area img {
@@ -370,7 +370,7 @@
         .btn-toss:hover:not(:disabled) {
             background: #1B6DE0;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(49, 130, 246, 0.4);
+            box-shadow: 0 6px 20px rgba(136, 118, 104, 0.4);
         }
 
         .btn-toss:active:not(:disabled) {
@@ -461,27 +461,27 @@
             justify-content: center;
             gap: 8px;
             padding: 10px 16px;
-            border-radius: 10px;
+            border-radius: 3px;
             font-size: 12px;
             font-weight: 500;
         }
 
         .toss-badge {
             background: #F0F6FF;
-            color: #3182F6;
+            color: #887668;
         }
 
         .toss-badge i {
-            color: #3182F6;
+            color: #887668;
         }
 
         .wise-security-badge {
             background: #F0F6FF;
-            color: #3182F6;
+            color: #887668;
         }
 
         .wise-security-badge i {
-            color: #3182F6;
+            color: #887668;
         }
 
         /* Right Column - Thread Preview */
@@ -504,14 +504,14 @@
             gap: 12px;
             margin-bottom: 20px;
             padding-bottom: 16px;
-            border-bottom: 1px solid #F1F5F9;
+            border-bottom: 1px solid #F7F6F3;
         }
 
         .thread-preview-icon {
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, #3182F6 0%, #2563EB 100%);
-            border-radius: 12px;
+            background: linear-gradient(135deg, #887668 0%, #6F6053 100%);
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -538,9 +538,9 @@
 
         .thread-preview-image {
             width: 100%;
-            border-radius: 12px;
+            border-radius: 4px;
             overflow: hidden;
-            background: #F8FAFC;
+            background: #F7F6F3;
             border: 1px solid #E2E8F0;
         }
 
@@ -552,22 +552,22 @@
 
         /* Thread mockup placeholder */
         .thread-mockup {
-            background: linear-gradient(180deg, #F8FAFC 0%, #EFF6FF 100%);
+            background: linear-gradient(180deg, #F7F6F3 0%, #F4F2EE 100%);
             padding: 20px;
             min-height: 400px;
         }
 
         .mockup-message {
             background: white;
-            border-radius: 12px;
+            border-radius: 4px;
             padding: 16px;
             margin-bottom: 12px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
         .mockup-message.admin {
-            background: #EBF4FF;
-            border-left: 3px solid #3182F6;
+            background: #F4F2EE;
+            border-left: 3px solid #887668;
         }
 
         .mockup-message-header {
@@ -580,7 +580,7 @@
         .mockup-avatar {
             width: 28px;
             height: 28px;
-            background: #3182F6;
+            background: #887668;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -621,7 +621,7 @@
         }
 
         .thread-preview-caption strong {
-            color: #3182F6;
+            color: #887668;
             font-weight: 700;
         }
 
@@ -632,7 +632,7 @@
             gap: 10px;
             background: #F0FDF4;
             border: 1px solid #86EFAC;
-            border-radius: 12px;
+            border-radius: 4px;
             padding: 12px 16px;
             margin-top: 16px;
         }
@@ -661,7 +661,7 @@
             width: 48px;
             height: 48px;
             border: 4px solid #E5E7EB;
-            border-top-color: #3182F6;
+            border-top-color: #887668;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin-bottom: 16px;
@@ -697,7 +697,7 @@
             .price-card,
             .process-steps {
                 padding: 24px 20px;
-                border-radius: 16px;
+                border-radius: 4px;
             }
 
             .service-header h1 {
@@ -728,7 +728,7 @@
         .consulting-notice {
             background: linear-gradient(135deg, #FEF3C7 0%, #FFFBEB 100%);
             border: 1px solid #FCD34D;
-            border-radius: 16px;
+            border-radius: 4px;
             padding: 20px 24px;
             display: flex;
             gap: 14px;
@@ -774,7 +774,7 @@
         }
 
         .service-form h2 i {
-            color: #3182F6;
+            color: #887668;
         }
 
         .form-group {
@@ -800,9 +800,9 @@
             width: 100%;
             padding: 12px 16px;
             border: 2px solid #E5E7EB;
-            border-radius: 10px;
+            border-radius: 3px;
             font-size: 15px;
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Manrope','IBM Plex Sans KR', sans-serif;
             transition: border-color 0.2s, box-shadow 0.2s;
         }
 
@@ -810,8 +810,8 @@
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #3182F6;
-            box-shadow: 0 0 0 3px rgba(49, 130, 246, 0.1);
+            border-color: #887668;
+            box-shadow: 0 0 0 3px rgba(136, 118, 104, 0.1);
         }
 
         .form-group textarea {
@@ -841,10 +841,10 @@
         .form-section-title {
             font-size: 15px;
             font-weight: 700;
-            color: #3182F6;
+            color: #887668;
             margin: 24px 0 16px 0;
             padding-bottom: 8px;
-            border-bottom: 2px solid #EBF4FF;
+            border-bottom: 2px solid #F4F2EE;
         }
 
         .radio-group {
@@ -863,7 +863,7 @@
         .radio-option input[type="radio"] {
             width: 18px;
             height: 18px;
-            accent-color: #3182F6;
+            accent-color: #887668;
         }
 
         .radio-option span {
@@ -888,7 +888,7 @@
             width: 18px;
             height: 18px;
             margin-top: 2px;
-            accent-color: #3182F6;
+            accent-color: #887668;
             flex-shrink: 0;
         }
 
@@ -899,16 +899,16 @@
         }
 
         .info-box {
-            background: #EBF4FF;
-            border: 1px solid #BFDBFE;
-            border-radius: 10px;
+            background: #F4F2EE;
+            border: 1px solid #E3DBCC;
+            border-radius: 3px;
             padding: 14px 16px;
             margin-top: 16px;
         }
 
         .info-box p {
             font-size: 13px;
-            color: #1E40AF;
+            color: #4A3C2B;
             line-height: 1.6;
             margin: 0;
         }
@@ -919,9 +919,9 @@
 
         /* Deferred Payment Notice */
         .deferred-notice {
-            background: linear-gradient(135deg, #EBF4FF 0%, #DBEAFE 100%);
+            background: linear-gradient(135deg, #F4F2EE 0%, #F0EBE1 100%);
             border: 1px solid #93C5FD;
-            border-radius: 12px;
+            border-radius: 4px;
             padding: 14px 16px;
             margin-top: 16px;
             display: flex;
@@ -930,14 +930,14 @@
         }
 
         .deferred-notice i {
-            color: #3182F6;
+            color: #887668;
             font-size: 18px;
             margin-top: 2px;
         }
 
         .deferred-notice-text {
             font-size: 14px;
-            color: #1E40AF;
+            color: #4A3C2B;
             font-weight: 600;
             line-height: 1.5;
         }
@@ -948,7 +948,7 @@
             padding: 16px 20px;
             background: #F9FAFB;
             border: 1px solid #E5E7EB;
-            border-radius: 12px;
+            border-radius: 4px;
         }
 
         .service-consent-label {
@@ -988,8 +988,8 @@
         }
 
         .service-consent-label input[type="checkbox"]:checked + .consent-mark {
-            background: #3182F6;
-            border-color: #3182F6;
+            background: #887668;
+            border-color: #887668;
         }
 
         .service-consent-label input[type="checkbox"]:checked + .consent-mark::after {
@@ -1013,7 +1013,7 @@
 
         .service-consent-links a {
             font-size: 12px;
-            color: #3182F6;
+            color: #887668;
             text-decoration: none;
             font-weight: 500;
         }
@@ -1081,8 +1081,8 @@
         }
 
         .wise-modal-info {
-            background: #F8FAFC;
-            border-radius: 12px;
+            background: #F7F6F3;
+            border-radius: 4px;
             padding: 16px;
             margin: 20px 0;
             text-align: left;
@@ -1125,13 +1125,13 @@
         .wise-modal-info-row.total .wise-modal-info-value {
             font-size: 18px;
             font-weight: 800;
-            color: #3182F6;
+            color: #887668;
         }
 
         .wise-modal-notice {
             background: #F0FDF4;
             border: 1px solid #86EFAC;
-            border-radius: 12px;
+            border-radius: 4px;
             padding: 14px 16px;
             margin-bottom: 20px;
             text-align: left;
@@ -1156,7 +1156,7 @@
             width: 100%;
             height: 52px;
             border: none;
-            border-radius: 12px;
+            border-radius: 4px;
             font-size: 16px;
             font-weight: 700;
             cursor: pointer;
@@ -2436,7 +2436,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                             width: 64px;
                             height: 64px;
                             background: linear-gradient(135deg, #9FE870 0%, #7DD957 100%);
-                            border-radius: 16px;
+                            border-radius: 4px;
                             display: flex;
                             align-items: center;
                             justify-content: center;
@@ -2448,8 +2448,8 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                     </div>
 
                     <div style="
-                        background: #F8FAFC;
-                        border-radius: 12px;
+                        background: #F7F6F3;
+                        border-radius: 4px;
                         padding: 20px;
                         margin-bottom: 24px;
                     ">
@@ -2468,18 +2468,18 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                             border-top: 1px solid #E5E7EB;
                         ">
                             <span style="color: #1A1A1A; font-weight: 700;">${getUIMessage('wiseAmountLabel')}</span>
-                            <span style="font-weight: 800; color: #059669; font-size: 20px;">₩${orderInfo.amount.toLocaleString()}</span>
+                            <span style="font-weight: 800; color: #887668; font-size: 20px;">₩${orderInfo.amount.toLocaleString()}</span>
                         </div>
                     </div>
 
                     <div style="
                         background: #ECFDF5;
                         border: 1px solid #A7F3D0;
-                        border-radius: 12px;
+                        border-radius: 4px;
                         padding: 16px;
                         margin-bottom: 24px;
                     ">
-                        <p style="color: #065F46; font-size: 14px; margin: 0; line-height: 1.6;">
+                        <p style="color: #4A3C2B; font-size: 14px; margin: 0; line-height: 1.6;">
                             <strong>${getUIMessage('wiseInstructions')}:</strong><br>
                             ${getUIMessage('wiseInstruction1')}<br><br>
                             ${getUIMessage('wiseInstruction2')}
@@ -2511,7 +2511,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                         background: transparent;
                         color: #6B7280;
                         border: 1px solid #E5E7EB;
-                        border-radius: 12px;
+                        border-radius: 4px;
                         font-size: 15px;
                         font-weight: 600;
                         cursor: pointer;
@@ -2543,7 +2543,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
 정확한 자문을 위해 아래 정보를 제출해 주세요.
 
 ■ 기본사항 제출
-<a href="profile-submit.html" target="_blank" style="color: #3182F6; font-weight: 600;">기본사항 입력하기</a>
+<a href="profile-submit.html" target="_blank" style="color: #887668; font-weight: 600;">기본사항 입력하기</a>
 
 ■ 자문 요청 사항
 현재 상황과 궁금하신 점을 자유롭게 작성해 주세요.
@@ -2564,7 +2564,7 @@ Your visa consultation request has been received.
 Please submit the following information for accurate consultation.
 
 ■ Basic Information
-<a href="profile-submit.html" target="_blank" style="color: #3182F6; font-weight: 600;">Enter Basic Information</a>
+<a href="profile-submit.html" target="_blank" style="color: #887668; font-weight: 600;">Enter Basic Information</a>
 
 ■ Consultation Request
 Please describe your current situation and any questions you have.
@@ -2585,7 +2585,7 @@ Thank you.`,
 为了准确咨询，请提交以下信息。
 
 ■ 基本信息提交
-<a href="profile-submit.html" target="_blank" style="color: #3182F6; font-weight: 600;">填写基本信息</a>
+<a href="profile-submit.html" target="_blank" style="color: #887668; font-weight: 600;">填写基本信息</a>
 
 ■ 咨询内容
 请自由描述您的当前情况和疑问。
@@ -2606,7 +2606,7 @@ Yeu cau tu van visa cua ban da duoc tiep nhan.
 Vui long cung cap thong tin sau de duoc tu van chinh xac.
 
 ■ Thong tin co ban
-<a href="profile-submit.html" target="_blank" style="color: #3182F6; font-weight: 600;">Nhap thong tin co ban</a>
+<a href="profile-submit.html" target="_blank" style="color: #887668; font-weight: 600;">Nhap thong tin co ban</a>
 
 ■ Noi dung tu van
 Vui long mo ta tinh huong hien tai va cac thac mac cua ban.
@@ -2627,7 +2627,7 @@ Cam on.`,
 正確な相談のため、以下の情報をご提出ください。
 
 ■ 基本情報の提出
-<a href="profile-submit.html" target="_blank" style="color: #3182F6; font-weight: 600;">基本情報を入力する</a>
+<a href="profile-submit.html" target="_blank" style="color: #887668; font-weight: 600;">基本情報を入力する</a>
 
 ■ 相談内容
 現在の状況とご質問を自由にお書きください。
@@ -2648,7 +2648,7 @@ Cam on.`,
 Зөв зөвлөгөө авахын тулд дараах мэдээллийг илгээнэ үү.
 
 ■ Үндсэн мэдээлэл
-<a href="profile-submit.html" target="_blank" style="color: #3182F6; font-weight: 600;">Үндсэн мэдээлэл оруулах</a>
+<a href="profile-submit.html" target="_blank" style="color: #887668; font-weight: 600;">Үндсэн мэдээлэл оруулах</a>
 
 ■ Зөвлөгөөний агуулга
 Одоогийн нөхцөл байдал, асуултаа чөлөөтэй бичнэ үү.
@@ -2669,7 +2669,7 @@ Cam on.`,
 กรุณาส่งข้อมูลต่อไปนี้เพื่อการปรึกษาที่ถูกต้อง
 
 ■ ข้อมูลพื้นฐาน
-<a href="profile-submit.html" target="_blank" style="color: #3182F6; font-weight: 600;">กรอกข้อมูลพื้นฐาน</a>
+<a href="profile-submit.html" target="_blank" style="color: #887668; font-weight: 600;">กรอกข้อมูลพื้นฐาน</a>
 
 ■ เนื้อหาการปรึกษา
 กรุณาอธิบายสถานการณ์ปัจจุบันและคำถามของคุณ

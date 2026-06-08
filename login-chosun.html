@@ -16,7 +16,7 @@
                 // Only hide if we just returned from OAuth AND have pending login
                 if (isOAuthCallback && pending) {
                     document.documentElement.style.visibility = 'hidden';
-                    document.documentElement.style.background = '#0078D4';
+                    document.documentElement.style.background = '#887668';
                     // Safety: auto-unhide after 5 seconds if redirect fails
                     setTimeout(function() {
                         document.documentElement.style.visibility = '';
@@ -28,7 +28,7 @@
     </script>
 
     <title data-i18n="chosun.page.title">Immigration & Visa Service - Chosun University</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/ui-components.css">
 
@@ -40,9 +40,9 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
-            background: linear-gradient(135deg, #0078D4 0%, #003A70 50%, #1A1A3E 100%);
+            background: linear-gradient(135deg, #887668 0%, #6F6053 50%, #241F18 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -63,7 +63,7 @@
         }
 
         .card-header {
-            background: linear-gradient(135deg, #0078D4 0%, #003A70 100%);
+            background: linear-gradient(135deg, #887668 0%, #6F6053 100%);
             padding: 32px 24px;
             text-align: center;
         }
@@ -112,7 +112,7 @@
         .welcome-text h2 {
             font-size: 22px;
             font-weight: 800;
-            color: #1a1a2e;
+            color: #241F18;
             margin-bottom: 8px;
             letter-spacing: -0.5px;
         }
@@ -145,17 +145,17 @@
             height: 52px;
             padding: 0 16px;
             border: 2px solid #E5E7EB;
-            border-radius: 12px;
+            border-radius: 4px;
             font-size: 15px;
             font-weight: 500;
-            color: #1a1a2e;
+            color: #241F18;
             transition: all 0.2s;
             background: #F9FAFB;
         }
 
         .form-input:focus {
             outline: none;
-            border-color: #0078D4;
+            border-color: #887668;
             background: white;
             box-shadow: 0 0 0 4px rgba(0, 120, 212, 0.1);
         }
@@ -188,7 +188,7 @@
             height: 56px;
             background: white;
             border: 2px solid #E5E7EB;
-            border-radius: 12px;
+            border-radius: 4px;
             font-size: 15px;
             font-weight: 600;
             color: #374151;
@@ -218,9 +218,9 @@
         .btn-submit {
             width: 100%;
             height: 56px;
-            background: linear-gradient(135deg, #0078D4 0%, #003A70 100%);
+            background: linear-gradient(135deg, #887668 0%, #6F6053 100%);
             border: none;
-            border-radius: 12px;
+            border-radius: 4px;
             font-size: 16px;
             font-weight: 700;
             color: white;
@@ -257,9 +257,9 @@
         }
 
         .info-box {
-            background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+            background: linear-gradient(135deg, #F4F2EE 0%, #F0EBE1 100%);
             border: 1px solid #93C5FD;
-            border-radius: 12px;
+            border-radius: 4px;
             padding: 16px;
             margin-top: 24px;
         }
@@ -276,7 +276,7 @@
 
         .info-box-content {
             font-size: 13px;
-            color: #2563EB;
+            color: #6F6053;
             line-height: 1.6;
         }
 
@@ -296,9 +296,9 @@
         /* Login state */
         .user-info {
             display: none;
-            background: #EFF6FF;
-            border: 1px solid #BFDBFE;
-            border-radius: 12px;
+            background: #F4F2EE;
+            border: 1px solid #E3DBCC;
+            border-radius: 4px;
             padding: 16px;
             margin-bottom: 20px;
         }
@@ -317,7 +317,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: #0078D4;
+            background: #887668;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -333,16 +333,16 @@
         .user-name {
             font-size: 14px;
             font-weight: 700;
-            color: #1E40AF;
+            color: #4A3C2B;
         }
 
         .user-email {
             font-size: 12px;
-            color: #2563EB;
+            color: #6F6053;
         }
 
         .check-icon {
-            color: #2563EB;
+            color: #6F6053;
             font-size: 20px;
         }
 
@@ -432,7 +432,7 @@
                     <!-- Language Selector -->
                     <div class="form-group" style="position: relative;">
                         <div class="language-selector" style="width: 100%;">
-                            <button id="language-selector-btn" type="button" style="width: 100%; height: 48px; padding: 0 16px; font-size: 14px; font-weight: 500; background: #F9FAFB; border: 2px solid #E5E7EB; border-radius: 12px; color: #374151; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s;">
+                            <button id="language-selector-btn" type="button" style="width: 100%; height: 48px; padding: 0 16px; font-size: 14px; font-weight: 500; background: #F9FAFB; border: 2px solid #E5E7EB; border-radius: 4px; color: #374151; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s;">
                                 <span class="language-btn-content"><span class="language-name">한국어</span></span>
                                 <span style="font-size: 12px; color: #9CA3AF;">▼</span>
                             </button>
@@ -458,7 +458,7 @@
                             <i class="fas fa-paper-plane"></i>
                             <span data-i18n="chosun.login.submit">Start Application</span>
                         </button>
-                        <button type="button" onclick="handleSwitchAccount()" style="width: 100%; margin-top: 10px; padding: 12px; background: transparent; border: 1px solid #E5E7EB; border-radius: 12px; font-size: 13px; font-weight: 600; color: #6B7280; cursor: pointer;" data-i18n="chosun.login.switchAccount">Sign in with a different account</button>
+                        <button type="button" onclick="handleSwitchAccount()" style="width: 100%; margin-top: 10px; padding: 12px; background: transparent; border: 1px solid #E5E7EB; border-radius: 4px; font-size: 13px; font-weight: 600; color: #6B7280; cursor: pointer;" data-i18n="chosun.login.switchAccount">Sign in with a different account</button>
                     </div>
                 </form>
 
@@ -473,8 +473,8 @@
                 </div>
 
                 <div style="display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap;">
-                    <a href="https://wa.me/821087624285" target="_blank" rel="noopener noreferrer" style="flex: 1; min-width: 140px; padding: 14px; background: #25D366; color: #FFFFFF; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none; transition: all 0.2s;" data-i18n="chosun.login.whatsapp">WhatsApp으로 문의하기</a>
-                    <a href="https://pf.kakao.com/_jACnn" target="_blank" rel="noopener noreferrer" style="flex: 1; min-width: 140px; padding: 14px; background: #FEE500; color: #191919; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none; transition: all 0.2s;" data-i18n="chosun.login.kakao">KakaoTalk으로 문의하기</a>
+                    <a href="https://wa.me/821087624285" target="_blank" rel="noopener noreferrer" style="flex: 1; min-width: 140px; padding: 14px; background: #25D366; color: #FFFFFF; border: none; border-radius: 4px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none; transition: all 0.2s;" data-i18n="chosun.login.whatsapp">WhatsApp으로 문의하기</a>
+                    <a href="https://pf.kakao.com/_jACnn" target="_blank" rel="noopener noreferrer" style="flex: 1; min-width: 140px; padding: 14px; background: #FEE500; color: #191919; border: none; border-radius: 4px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none; transition: all 0.2s;" data-i18n="chosun.login.kakao">KakaoTalk으로 문의하기</a>
                 </div>
             </div>
         </div>
