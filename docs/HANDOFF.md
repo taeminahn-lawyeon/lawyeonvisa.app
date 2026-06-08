@@ -17,6 +17,14 @@
 
 ---
 
+## 1.5 구조 결정 (확정) — 공개=새 빌드 / 앱 레이어 분리
+- **공개 사이트 구조(내비·sitemap·EN/KO 라우트)는 100% 새 빌드 페이지로만 구성.**
+- **기능 앱 페이지(thread, payment, profile, admin)** = 로그인/상담 경계 **이후에만 도달하는 별도 앱 레이어**. 데이터 기반 SPA라 정적 per-language 재작성하지 않음. **삭제하지 않고**(리톤본 유지) 기능 그대로 사용하되, **공개 내비/sitemap에는 포함하지 않음.** (정적 마케팅 + 동적 앱 분리)
+- **콘텐츠성 페이지(price-list, 404, 약관 privacy/terms/refund, partnership(+success), login 입구, service 소개)** = **새 빌드 시스템으로 재작성**해 공개 구조에 포함. 기존 in-place 리톤본은 남겨두되 새 구조에서는 미사용.
+- 즉, in-place 리톤본(특히 앱 레이어)은 **참조/폴백으로 보존**, 새 구조에는 빌드 산출물만.
+
+---
+
 ## 2. 백엔드 (그대로 사용, 손대지 말 것)
 - Supabase 프로젝트: `https://gqistzsergddnpcvuzba.supabase.co` (URL/anon key는 `js/supabase-client.js`에 하드코딩).
 - 인증: **Google OAuth만**. 전역 함수: `signInWithGoogle()`, `checkSession()`, `signOut()`, `getCurrentUser()` (supabase-client.js, classic script라 전역).
