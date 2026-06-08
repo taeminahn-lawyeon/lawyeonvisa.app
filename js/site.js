@@ -26,7 +26,40 @@
       .split(/[?#]/)[0].replace(/\.html$/, '');
   }
 
+  // Build a consultation CTA band (online + in-person) for article pages.
+  function ctaBand() {
+    var w = document.createElement('div');
+    w.className = 'cta-band';
+    var t = document.createElement('div');
+    t.className = 'cta-text';
+    t.textContent = isKo ? '상담이 필요하신가요? 온라인 또는 방문으로 신청하세요.'
+                         : 'Need advice? Request a consultation — online or in person.';
+    var a1 = document.createElement('a');
+    a1.className = 'btn btn-primary';
+    a1.href = 'consultation';
+    a1.setAttribute('data-login-go', 'consultation'); // online thread requires sign-in
+    a1.textContent = isKo ? '온라인 상담 신청' : 'Online consultation';
+    var a2 = document.createElement('a');
+    a2.className = 'btn btn-line';
+    a2.href = 'booking'; // visit booking — no sign-in required
+    a2.textContent = isKo ? '방문 상담 예약' : 'Book a visit';
+    w.appendChild(t); w.appendChild(a1); w.appendChild(a2);
+    return w;
+  }
+
   ready(function () {
+    // 0) Insert consultation CTAs (top / middle / bottom) into article-design pages.
+    (function injectCtas() {
+      var body = document.querySelector('.art-layout article.body') || document.querySelector('article.body');
+      if (!body || body.hasAttribute('data-no-cta')) return;
+      body.appendChild(ctaBand()); // bottom
+      var h2s = body.querySelectorAll(':scope > h2');
+      if (h2s.length >= 3) {
+        body.insertBefore(ctaBand(), h2s[Math.floor(h2s.length / 2)]); // middle
+      }
+      body.insertBefore(ctaBand(), body.firstChild); // top (just under the title)
+    })();
+
     var hasAuth = (typeof checkSession === 'function' && typeof signInWithGoogle === 'function');
 
     // 1) Login-first gating for consultation/booking entry buttons.
