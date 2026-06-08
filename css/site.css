@@ -245,6 +245,11 @@ tbody tr:last-child td{border-bottom:none}
 .num-n{width:30px;height:30px;border:1.5px solid var(--btn);color:var(--btn);border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
 .num-item .ni-title{font-weight:700;color:var(--ink);font-size:15.5px;line-height:1.45;margin-bottom:5px}
 .num-item .ni-text{font-size:15px;color:#43392D;line-height:1.8}
+.cta-band{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:var(--card-2);border:1px solid var(--rule-d);border-radius:8px;padding:18px 20px;margin:30px 0}
+.cta-band .cta-text{font-weight:700;color:var(--ink);font-size:15px;line-height:1.5;margin-right:auto;flex:1 1 200px}
+.cta-band .btn{white-space:nowrap}
+.body > .cta-band:first-child{margin-top:0}
+@media(max-width:600px){.cta-band .btn{flex:1 1 auto;text-align:center}}
 .related{border-top:1px solid var(--rule);padding-top:26px;margin-top:40px}
 .related h4{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .related a{display:flex;justify-content:space-between;gap:18px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--rule)}
