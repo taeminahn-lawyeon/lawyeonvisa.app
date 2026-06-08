@@ -76,6 +76,13 @@ const PAGES = [
              ko: '법무법인 로연이 조선대학교 대외협력처와 외국인 유학생 법률 지원 업무 협약을 체결하고, 출입국관리법과 졸업 후 비자 경로를 포함한 한국 법령 특강을 진행했습니다.' },
   },
   {
+    id: 'd10-job-seeker-visa-korea-2026', content: 'd10-job-seeker-visa-korea-2026',
+    title: { en: 'D-10 Job Seeker Visa Korea 2026 — New-Graduate Points Exemption Guide — Law Firm Lawyeon',
+             ko: 'D-10 구직 비자 2026 — 신규 졸업자 점수제 면제 가이드 — 법무법인 로연' },
+    desc:  { en: 'A complete guide to the D-10 Job Seeker Visa in Korea for new graduates: the points-system exemption, required documents, internship and part-time rules, stay periods, and extensions.',
+             ko: '한국 D-10 구직 비자 신규 졸업자 완전 가이드 — 점수제 면제, 필요 서류, 인턴·아르바이트 규정, 체류 기간, 연장까지.' },
+  },
+  {
     id: 'far-east-university-student-job-fair-mou-2026', content: 'far-east-university-student-job-fair-mou-2026',
     title: { en: 'MOU with Far East University — Visa-Roadmap Lecture & Legal Clinic at the International Student Job Fair — Law Firm Lawyeon',
              ko: '극동대학교 외국인 유학생 취업 박람회 업무 협약 및 비자 로드맵 특강·리걸 클리닉 — 법무법인 로연' },

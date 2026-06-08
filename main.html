@@ -130,9 +130,25 @@
     <div class="wrap">
         <div class="list-head">
             <div class="sec-title">Insights</div>
+            <div class="cat-toggle" id="insightCats">
+                <button class="ct active" data-cat="visa">Visa &amp; Immigration</button>
+                <span class="ct-div">|</span>
+                <button class="ct" data-cat="criminal">Criminal Defense</button>
+                <span class="ct-div">|</span>
+                <button class="ct" data-cat="residence">Residence &amp; Nationality</button>
+                <span class="ct-div">|</span>
+                <button class="ct" data-cat="admin">Administrative Affairs</button>
+            </div>
         </div>
 
         <div class="doc-list" id="insightList">
+            <a class="doc-row" data-cat="visa" href="d10-job-seeker-visa-korea-2026">
+                <div class="doc-main">
+                    <div class="doc-title">D-10 Job Seeker Visa 2026 — The New-Graduate Points Exemption, Explained</div>
+                    <div class="doc-tags"><span>#VisaImmigration</span><span>#D-10</span><span>#JobSeeker</span><span>#NewGraduate</span></div>
+                </div>
+                <div class="doc-date">2026.01.16</div>
+            </a>
             <a class="doc-row" data-cat="visa" href="article">
                 <div class="doc-main">
                     <div class="doc-title">An Overview of Korea's Business-Immigration Visas — D-9-4, D-9-5, and Franchising as an Option</div>
@@ -162,7 +178,8 @@
                 <div class="doc-date">2026.04.23</div>
             </a>
         </div>
-        <div class="more-row"><a href="insights" class="more-plus">View all <i>+</i></a></div>
+        <div class="doc-empty" id="insightEmpty" style="display:none">Articles in this category are coming soon.</div>
+        <div class="more-row"><a href="insights?cat=visa" class="more-plus">View all <i>+</i></a></div>
     </div>
 </section>
 
@@ -220,14 +237,24 @@
     (function(){
         var tabs = document.querySelectorAll('.cat-toggle .ct');
         var rows = document.querySelectorAll('#insightList .doc-row');
-        tabs.forEach(function(tab){
-            tab.addEventListener('click', function(){
-                tabs.forEach(function(t){ t.classList.remove('active'); });
-                tab.classList.add('active');
-                var cat = tab.getAttribute('data-cat');
-                rows.forEach(function(row){ row.classList.toggle('hidden', row.getAttribute('data-cat') !== cat); });
+        var emptyEl = document.getElementById('insightEmpty');
+        var moreLink = document.querySelector('.insights .more-plus');
+        if(!tabs.length) return;
+        function applyCat(cat){
+            var shown = 0;
+            tabs.forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-cat') === cat); });
+            rows.forEach(function(row){
+                var match = row.getAttribute('data-cat') === cat;
+                row.classList.toggle('hidden', !match);
+                if(match) shown++;
             });
+            if(emptyEl) emptyEl.style.display = shown ? 'none' : '';
+            if(moreLink) moreLink.setAttribute('href', 'insights?cat=' + cat);
+        }
+        tabs.forEach(function(tab){
+            tab.addEventListener('click', function(){ applyCat(tab.getAttribute('data-cat')); });
         });
+        applyCat('visa');
     })();
     (function(){
         var box = document.querySelector('.office-photo');

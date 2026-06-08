@@ -98,6 +98,12 @@
 .booking-page .confirm .ttl{font-weight:700;color:var(--ink);margin-bottom:8px}
 .booking-page .confirm p{font-size:13.5px;color:var(--muted);line-height:1.7}
 .booking-page .office-note{margin-top:8px;font-size:12.5px;color:var(--muted);line-height:1.7}
+.booking-page .login-gate{background:var(--card-2);border:1px solid var(--rule);border-radius:6px;padding:24px}
+.booking-page .login-gate .lg-title{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.booking-page .login-gate .lg-desc{font-size:13.5px;color:var(--muted);line-height:1.7;margin:0 0 16px}
+.booking-page .btn-login-g{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--ink);border:1.5px solid var(--rule-d);border-radius:3px;padding:12px 18px;font-family:var(--sans);font-size:14.5px;font-weight:700;cursor:pointer;transition:border-color .14s,background .14s}
+.booking-page .btn-login-g:hover{border-color:var(--btn);background:#fff}
+.booking-page .btn-login-g:disabled{opacity:.6;cursor:not-allowed}
 
 .booking-page .maps-sec{padding:6px 0 72px}
 .booking-page .maps-sec h2{font-size:20px;font-weight:700;color:var(--ink)}
@@ -142,6 +148,19 @@
 
             <div class="bk-step">
                 <div class="step-label"><span>03</span> Your details</div>
+                <div class="consent" id="bkConsent" style="margin:0 0 18px">
+                    <label><input type="checkbox" id="consentChk"><span>I agree to the Terms of Service and Privacy Policy, and consent to the collection, use and provision of my personal data for the purpose of this booking.</span></label>
+                    <div class="links">
+                        <a href="terms-of-service?v=2" target="_blank" rel="noopener">Terms of Service</a>
+                        <a href="privacy-policy?v=2" target="_blank" rel="noopener">Privacy Policy</a>
+                    </div>
+                </div>
+                <div class="login-gate" id="loginGate" style="display:none">
+                    <div class="lg-title">Sign in to continue your booking</div>
+                    <p class="lg-desc">Before entering your details, please agree above and sign in with your Google account to verify your identity. Your selected date and time are kept after sign-in.</p>
+                    <button type="button" class="btn-login-g" id="loginBtn">Continue with Google</button>
+                </div>
+                <div id="infoFields">
                 <div class="two">
                     <div class="field">
                         <label>Name <span class="req">*</span></label>
@@ -176,6 +195,7 @@
                     <label>Message (optional)</label>
                     <textarea id="fMemo" placeholder="Briefly describe what you'd like to discuss."></textarea>
                 </div>
+                </div><!-- /#infoFields -->
             </div>
         </div>
 
@@ -185,13 +205,6 @@
             <div class="sum-row"><span class="k">Time</span><span class="v empty" id="sTime">Not selected</span></div>
             <div class="sum-row"><span class="k">Office</span><span class="v" id="sOffice">Seoul Office</span></div>
             <div class="sum-row"><span class="k">Topic</span><span class="v" id="sTopic">Visa &amp; Immigration</span></div>
-            <div class="consent" id="bkConsent" style="margin-top:18px">
-                <label><input type="checkbox" id="consentChk"><span>I agree to the Terms of Service and Privacy Policy, and consent to the collection, use and provision of my personal data for the purpose of this booking.</span></label>
-                <div class="links">
-                    <a href="terms-of-service?v=2" target="_blank" rel="noopener">Terms of Service</a>
-                    <a href="privacy-policy?v=2" target="_blank" rel="noopener">Privacy Policy</a>
-                </div>
-            </div>
             <button class="btn-book" id="bookBtn" disabled>Request booking</button>
             <p class="note">To verify your identity, bookings are received after you sign in with your Google account. When you submit, your booking request is received and our team confirms it by phone.</p>
             <div class="confirm" id="confirm">
@@ -227,7 +240,7 @@
     var STR = {
         notSel:'Not selected', submit:'Request booking',
         submitting:'Submitting…', done:'Booking requested',
-        login:'Redirecting to Google…',
+        loginCta:'Continue with Google', login:'Redirecting to Google…',
         agree:'Please agree to the collection, use and provision of your personal data.',
         confirmTtl:'Booking request received ✓',
         err:'We could not save your booking. Please try again or call +82-2-2039-0544.',
@@ -241,7 +254,7 @@
     var DOW_FULL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     var state = { date:null, time:null, dateLabel:null };
-    var PENDING_KEY = 'pendingReservation';
+    var SEL_KEY = 'bookingLoginSel';
 
     var calWrap = document.getElementById('calWrap');
     var today = new Date(); today.setHours(0,0,0,0);
@@ -312,9 +325,13 @@
 
     var bookBtn = document.getElementById('bookBtn');
     var consentChk = document.getElementById('consentChk');
-    var submitting = false;
+    var loginGate = document.getElementById('loginGate');
+    var infoFields = document.getElementById('infoFields');
+    var loginBtn = document.getElementById('loginBtn');
+    var bookNote = document.querySelector('.summary .note');
+    var submitting = false, loggedIn = false;
     function sync(){
-        var ok = state.date && state.time && name.value.trim() && tel.value.trim() && consentChk.checked && !submitting;
+        var ok = loggedIn && state.date && state.time && name.value.trim() && tel.value.trim() && consentChk.checked && !submitting;
         bookBtn.disabled = !ok;
     }
     consentChk.addEventListener('change', sync);
@@ -333,8 +350,59 @@
         showConfirm(payload, whenLabel);
     }
 
+    // Toggle the details form vs. the sign-in gate by auth state
+    function applyAuth(user){
+        loggedIn = !!(user && user.id);
+        if(loggedIn){
+            loginGate.style.display = 'none';
+            infoFields.style.display = '';
+            bookBtn.style.display = ''; if(bookNote) bookNote.style.display = '';
+            var m = user.user_metadata || {};
+            if(name && !name.value){ name.value = m.name || m.full_name || ''; }
+            restoreSel();
+        } else {
+            loginGate.style.display = '';
+            infoFields.style.display = 'none';
+            bookBtn.style.display = 'none'; if(bookNote) bookNote.style.display = 'none';
+        }
+        sync();
+    }
+
+    // Restore the date/time/consent chosen before sign-in
+    function restoreSel(){
+        var raw = localStorage.getItem(SEL_KEY); if(!raw) return;
+        localStorage.removeItem(SEL_KEY);
+        try{
+            var d = JSON.parse(raw); if(!d || (d.ts && Date.now()-d.ts > 600000)) return;
+            if(d.consent){ consentChk.checked = true; }
+            if(d.office){ office.value = d.office; document.getElementById('sOffice').textContent = d.office; }
+            if(d.topic){ topic.value = d.topic; document.getElementById('sTopic').textContent = d.topic; }
+            if(d.date && d.time && d.dateLabel){
+                state.date = d.date; state.time = d.time; state.dateLabel = d.dateLabel;
+                var cell = calWrap.querySelector('.cal-day.pick[data-date="'+d.date+'"]'); if(cell) cell.classList.add('sel');
+                var sd = document.getElementById('sDate'); sd.textContent = d.dateLabel; sd.classList.remove('empty');
+                renderTimes();
+                Array.prototype.forEach.call(timeGrid.children, function(c){ if(c.textContent===d.time) c.classList.add('sel'); });
+                var stm = document.getElementById('sTime'); stm.textContent = d.time; stm.classList.remove('empty');
+            }
+        }catch(_){ }
+    }
+
+    // Sign-in button — guide to Google before any personal details are entered
+    loginBtn.addEventListener('click', async function(){
+        if(!consentChk.checked){ alert(STR.agree); return; }
+        if(typeof signInWithGoogle !== 'function'){ applyAuth({ id:'_local' }); return; } // backend unavailable — show form
+        try{
+            localStorage.setItem(SEL_KEY, JSON.stringify({ date:state.date, time:state.time, dateLabel:state.dateLabel, office:office.value, topic:topic.value, consent:consentChk.checked, ts:Date.now() }));
+        }catch(_){}
+        loginBtn.disabled = true; loginBtn.textContent = STR.login;
+        try{ var r = await signInWithGoogle(); if(!r || !r.success){ throw new Error('login'); } }
+        catch(e){ console.error(e); alert(STR.err); loginBtn.disabled = false; loginBtn.textContent = STR.loginCta; localStorage.removeItem(SEL_KEY); }
+    });
+
     bookBtn.addEventListener('click', async function(){
         if(submitting) return;
+        if(!loggedIn){ loginBtn.click(); return; }
         if(!consentChk.checked){ alert(STR.agree); return; }
         submitting = true; bookBtn.disabled = true; bookBtn.textContent = STR.submitting;
         var payload = {
@@ -342,44 +410,21 @@
             topic:topic.value, reserve_date:state.date, reserve_time:state.time,
             memo:memo.value, lang:LANG
         };
-        var whenLabel = state.dateLabel+' '+state.time;
         try{
-            if(typeof checkSession !== 'function' || typeof createReservation !== 'function'){ throw new Error('backend not ready'); }
-            var session = await checkSession();
-            if(!session || !session.user){
-                // Not signed in — keep the booking and guide to Google sign-up / sign-in
-                localStorage.setItem(PENDING_KEY, JSON.stringify({ payload:payload, whenLabel:whenLabel, ts:Date.now() }));
-                bookBtn.textContent = STR.login;
-                var r = await signInWithGoogle();
-                if(!r || !r.success){ localStorage.removeItem(PENDING_KEY); throw new Error('login'); }
-                return; // redirecting
-            }
-            await saveReservation(payload, whenLabel);
+            if(typeof createReservation !== 'function'){ throw new Error('backend not ready'); }
+            await saveReservation(payload, state.dateLabel+' '+state.time);
         }catch(e){
             console.error(e); alert(STR.err);
             submitting = false; bookBtn.textContent = STR.submit; sync();
         }
     });
 
-    // After returning from Google sign-in, resume the saved booking
+    // Default to the sign-in gate; reveal the form once a session is confirmed
+    applyAuth(null);
     document.addEventListener('DOMContentLoaded', async function(){
-        var p = localStorage.getItem(PENDING_KEY); if(!p) return;
-        try{
-            var d = JSON.parse(p);
-            if(!d || !d.payload || Date.now()-d.ts > 600000){ localStorage.removeItem(PENDING_KEY); return; }
-            if(typeof checkSession !== 'function') return;
-            var s = await checkSession();
-            if(!s || !s.user) return; // not signed in yet — keep pending
-            localStorage.removeItem(PENDING_KEY);
-            submitting = true; bookBtn.disabled = true; bookBtn.textContent = STR.submitting;
-            var sd=document.getElementById('sDate'), stm=document.getElementById('sTime');
-            sd.textContent=d.whenLabel.replace(/\s\d{2}:\d{2}$/,''); sd.classList.remove('empty');
-            stm.textContent=d.payload.reserve_time; stm.classList.remove('empty');
-            document.getElementById('sOffice').textContent=d.payload.office;
-            document.getElementById('sTopic').textContent=d.payload.topic;
-            try{ await saveReservation(d.payload, d.whenLabel); }
-            catch(e){ console.error(e); alert(STR.err); submitting=false; bookBtn.textContent=STR.submit; }
-        }catch(e){ localStorage.removeItem(PENDING_KEY); }
+        if(typeof checkSession !== 'function'){ applyAuth({ id:'_local' }); return; } // backend unavailable — allow anonymous
+        try{ var s = await checkSession(); applyAuth(s && (s.user || s)); }
+        catch(e){ applyAuth(null); }
     });
 
     renderTimes();

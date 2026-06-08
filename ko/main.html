@@ -130,9 +130,25 @@
     <div class="wrap">
         <div class="list-head">
             <div class="sec-title">인사이트</div>
+            <div class="cat-toggle" id="insightCats">
+                <button class="ct active" data-cat="visa">비자·이민</button>
+                <span class="ct-div">|</span>
+                <button class="ct" data-cat="criminal">형사</button>
+                <span class="ct-div">|</span>
+                <button class="ct" data-cat="residence">거주·국적</button>
+                <span class="ct-div">|</span>
+                <button class="ct" data-cat="admin">행정</button>
+            </div>
         </div>
 
         <div class="doc-list" id="insightList">
+            <a class="doc-row" data-cat="visa" href="d10-job-seeker-visa-korea-2026">
+                <div class="doc-main">
+                    <div class="doc-title">D-10 구직 비자 2026 — 신규 졸업자 점수제 면제, 핵심 정리</div>
+                    <div class="doc-tags"><span>#비자이민</span><span>#D-10</span><span>#구직비자</span><span>#졸업생</span></div>
+                </div>
+                <div class="doc-date">2026.01.16</div>
+            </a>
             <a class="doc-row" data-cat="visa" href="article">
                 <div class="doc-main">
                     <div class="doc-title">한국 사업이민 비자 개괄 — D-9-4와 D-9-5, 그리고 프랜차이즈라는 선택지</div>
@@ -162,7 +178,8 @@
                 <div class="doc-date">2026.04.23</div>
             </a>
         </div>
-        <div class="more-row"><a href="insights" class="more-plus">더 보기 <i>+</i></a></div>
+        <div class="doc-empty" id="insightEmpty" style="display:none">해당 카테고리의 글은 준비 중입니다.</div>
+        <div class="more-row"><a href="insights?cat=visa" class="more-plus">더 보기 <i>+</i></a></div>
     </div>
 </section>
 
@@ -220,14 +237,24 @@
     (function(){
         var tabs = document.querySelectorAll('.cat-toggle .ct');
         var rows = document.querySelectorAll('#insightList .doc-row');
-        tabs.forEach(function(tab){
-            tab.addEventListener('click', function(){
-                tabs.forEach(function(t){ t.classList.remove('active'); });
-                tab.classList.add('active');
-                var cat = tab.getAttribute('data-cat');
-                rows.forEach(function(row){ row.classList.toggle('hidden', row.getAttribute('data-cat') !== cat); });
+        var emptyEl = document.getElementById('insightEmpty');
+        var moreLink = document.querySelector('.insights .more-plus');
+        if(!tabs.length) return;
+        function applyCat(cat){
+            var shown = 0;
+            tabs.forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-cat') === cat); });
+            rows.forEach(function(row){
+                var match = row.getAttribute('data-cat') === cat;
+                row.classList.toggle('hidden', !match);
+                if(match) shown++;
             });
+            if(emptyEl) emptyEl.style.display = shown ? 'none' : '';
+            if(moreLink) moreLink.setAttribute('href', 'insights?cat=' + cat);
+        }
+        tabs.forEach(function(tab){
+            tab.addEventListener('click', function(){ applyCat(tab.getAttribute('data-cat')); });
         });
+        applyCat('visa');
     })();
     (function(){
         var box = document.querySelector('.office-photo');
