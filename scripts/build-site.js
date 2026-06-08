@@ -68,6 +68,13 @@ const PAGES = [
     desc:  { en: "D-9-4, D-9-5 and franchising as a realistic route for foreign sole proprietors immigrating to Korea.",
              ko: '외국인 개인사업자의 한국 사업이민 — D-9-4·D-9-5와 프랜차이즈라는 현실적 경로.' },
   },
+  {
+    id: 'chosun-university-student-legal-mou-2026', content: 'chosun-university-student-legal-mou-2026',
+    title: { en: 'MOU on Legal Support for International Students at Chosun University — Law Firm Lawyeon',
+             ko: '조선대학교 외국인 유학생 법률 지원 업무 협약 및 한국 법령 특강 — 법무법인 로연' },
+    desc:  { en: 'Law Firm Lawyeon signed an MOU with Chosun University on legal support for international students and delivered a special lecture on Korean law, including the Immigration Control Act and post-graduation visa pathways.',
+             ko: '법무법인 로연이 조선대학교 대외협력처와 외국인 유학생 법률 지원 업무 협약을 체결하고, 출입국관리법과 졸업 후 비자 경로를 포함한 한국 법령 특강을 진행했습니다.' },
+  },
 ];
 
 // LegalService structured data (JSON-LD) for the homepage.
