@@ -31,7 +31,7 @@ const STRINGS = {
   en: { brandName: 'Law Firm Lawyeon', brandSub: 'Visa & Immigration Center',
         navAbout: 'About Lawyeon', navInsights: 'Insights', navCases: 'Cases & News', navConsult: 'Consultation', login: 'Login' },
   ko: { brandName: '법무법인 로연', brandSub: '출입국이민지원센터',
-        navAbout: '회사 소개', navInsights: '인사이트', navCases: '사례·소식', navConsult: '상담', login: '로그인' },
+        navAbout: '로연 소개', navInsights: '인사이트', navCases: '사례·소식', navConsult: '상담', login: '로그인' },
 };
 
 // ---- page registry (add pages here as they are migrated) ----
