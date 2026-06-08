@@ -29,9 +29,9 @@ const SCRIPTS = [
 // ---- per-language UI strings (header chrome) ----
 const STRINGS = {
   en: { brandName: 'Law Firm Lawyeon', brandSub: 'Visa & Immigration Center',
-        navInsights: 'Insights', navCases: 'Cases & News', navConsult: 'Consultation', login: 'Login' },
+        navAbout: 'About Lawyeon', navInsights: 'Insights', navCases: 'Cases & News', navConsult: 'Consultation', login: 'Login' },
   ko: { brandName: '법무법인 로연', brandSub: '출입국이민지원센터',
-        navInsights: '인사이트', navCases: '사례·소식', navConsult: '상담', login: '로그인' },
+        navAbout: '로연 소개', navInsights: '인사이트', navCases: '사례·소식', navConsult: '상담', login: '로그인' },
 };
 
 // ---- page registry (add pages here as they are migrated) ----
@@ -144,6 +144,7 @@ function build() {
         '__ALT_KO__': `${SITE}/ko/${page.id}`,
         '__BRAND_NAME__': S.brandName,
         '__BRAND_SUB__': S.brandSub,
+        '__NAV_ABOUT__': S.navAbout,
         '__NAV_INSIGHTS__': S.navInsights,
         '__NAV_CASES__': S.navCases,
         '__NAV_CONSULT__': S.navConsult,
