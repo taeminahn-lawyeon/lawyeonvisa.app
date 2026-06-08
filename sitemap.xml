@@ -30,4 +30,24 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/booking"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/booking"/>
   </url>
+  <url>
+    <loc>https://www.lawyeonvisa.app/insights</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/insights"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/insights"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeonvisa.app/ko/insights</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/insights"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/insights"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeonvisa.app/article</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/article"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/article"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeonvisa.app/ko/article</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/article"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/article"/>
+  </url>
 </urlset>

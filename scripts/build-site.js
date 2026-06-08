@@ -55,6 +55,19 @@ const PAGES = [
     desc:  { en: 'Book an in-person consultation at the Seoul or Gwangju office of Law Firm Lawyeon. Weekdays 09:00–17:00, 1-hour slots.',
              ko: '법무법인 로연 서울·광주 사무소 방문 상담 예약. 평일 09:00–17:00, 1시간 단위(점심 12:00–13:00 제외).' },
   },
+  {
+    id: 'insights', content: 'insights',
+    title: { en: 'Insights — Law Firm Lawyeon', ko: '인사이트 — 법무법인 로연' },
+    desc:  { en: 'Practical notes on visa, immigration and business-immigration practice in Korea by Law Firm Lawyeon attorneys.',
+             ko: '비자·출입국·사업이민 실무에 관한 법무법인 로연 변호사의 인사이트.' },
+  },
+  {
+    id: 'article', content: 'article',
+    title: { en: "An Overview of Korea's Business-Immigration Visas (D-9-4·D-9-5) — Law Firm Lawyeon",
+             ko: '한국 사업이민 비자 개괄 (D-9-4·D-9-5) — 법무법인 로연' },
+    desc:  { en: "D-9-4, D-9-5 and franchising as a realistic route for foreign sole proprietors immigrating to Korea.",
+             ko: '외국인 개인사업자의 한국 사업이민 — D-9-4·D-9-5와 프랜차이즈라는 현실적 경로.' },
+  },
 ];
 
 // LegalService structured data (JSON-LD) for the homepage.
