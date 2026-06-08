@@ -55,6 +55,10 @@ async function signInWithGoogle() {
             // 사업이민 신청 페이지: 로그인 후 같은 페이지로 돌아와 제출 이어가기
             localStorage.removeItem('universityCode');
             redirectUrl = window.location.href;
+        } else if (currentPage.indexOf('.') === -1) {
+            // Renewal build pages use clean (extensionless) URLs — return to the current page
+            localStorage.removeItem('universityCode');
+            redirectUrl = window.location.href;
         } else {
             localStorage.removeItem('universityCode');
             redirectUrl = window.location.origin + '/index.html';
