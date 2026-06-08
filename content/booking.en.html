@@ -174,7 +174,7 @@
 (function(){
     var LANG = 'en';
     var STR = {
-        notSel:'Not selected', booked:'Full', submit:'Request booking',
+        notSel:'Not selected', submit:'Request booking',
         submitting:'Submitting…', done:'Booking requested',
         confirmTtl:'Booking request received ✓',
         err:'We could not save your booking. Please try again or call +82-2-2039-0544.',
@@ -227,17 +227,12 @@
         SLOTS.forEach(function(t){
             var el = document.createElement('div');
             el.className = 'time-slot';
-            var booked = state.date ? ((hashCode(state.date + t) % 7) === 0) : false;
-            if(booked){ el.className += ' disabled'; el.innerHTML = t + '<span class="tag">'+STR.booked+'</span>'; }
-            else {
-                el.textContent = t;
-                el.addEventListener('click', function(){ selectTime(this, t); });
-            }
-            if(state.time===t && !booked) el.classList.add('sel');
+            el.textContent = t;
+            el.addEventListener('click', function(){ selectTime(this, t); });
+            if(state.time===t) el.classList.add('sel');
             timeGrid.appendChild(el);
         });
     }
-    function hashCode(s){ var h=0; for(var i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i))|0; } return Math.abs(h); }
 
     function selectDate(cell){
         Array.prototype.forEach.call(calWrap.querySelectorAll('.cal-day'), function(c){ c.classList.remove('sel'); });
