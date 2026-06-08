@@ -54,7 +54,84 @@ serve(async (req) => {
       throw new Error('RESEND_API_KEY not configured')
     }
 
-    const { threadId, eventType } = await req.json()
+    const body = await req.json()
+
+    // ===== 방문 예약(booking) 신규 알림 분기 =====
+    // 예약은 비로그인(anon) 방문자도 접수하므로 service role 로 조회해 메일 발송.
+    if (body && (body.type === 'reservation' || body.reservationId)) {
+      const reservationId = body.reservationId
+      if (!reservationId) {
+        throw new Error('Missing required field: reservationId')
+      }
+
+      const supabaseUrl = Deno.env.get('SUPABASE_URL')!
+      const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+      const supabase = createClient(supabaseUrl, serviceKey)
+
+      const { data: r, error: rErr } = await supabase
+        .from('reservations')
+        .select('id, name, phone, office, topic, reserve_date, reserve_time, memo, lang, created_at')
+        .eq('id', reservationId)
+        .single()
+
+      if (rErr || !r) {
+        throw new Error(`Reservation not found: ${rErr?.message || 'no data'}`)
+      }
+
+      const adminUrl = `${SITE_URL}/admin-dashboard.html#reservations`
+      const subject = `[Lawyeon] 방문 예약 신규 — ${r.name} (${r.reserve_date} ${r.reserve_time})`
+      const lines = [
+        `${r.name}님이 방문 상담을 예약하셨습니다.`,
+        ``,
+        `· 날짜/시간: ${r.reserve_date} ${r.reserve_time}`,
+        `· 사무소: ${r.office || '-'}`,
+        `· 분야: ${r.topic || '-'}`,
+        `· 연락처: ${r.phone || '-'}`,
+      ]
+      if (r.memo) lines.push(`· 내용: ${r.memo}`)
+      const messageText = lines.join('\n')
+      const html = buildHtml(messageText.replace(/\n/g, '<br>'), adminUrl)
+      const text = buildText(messageText, adminUrl)
+
+      const resendRes = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ from: FROM_EMAIL, to: ADMIN_EMAIL, subject, html, text }),
+      })
+      const resendBody = await resendRes.json()
+
+      try {
+        await supabase.from('notification_logs').insert({
+          messenger: 'email',
+          recipient: ADMIN_EMAIL,
+          template_type: 'admin_new_reservation',
+          status: resendRes.ok ? 'sent' : 'failed',
+          sent_at: new Date().toISOString()
+        })
+      } catch (err) {
+        console.log('notification_logs insert error:', err)
+      }
+
+      if (!resendRes.ok) {
+        console.error('📧 Resend error (reservation):', resendBody)
+        return new Response(
+          JSON.stringify({ success: false, error: resendBody }),
+          { status: resendRes.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
+      console.log('📧 Admin email sent (reservation):', resendBody.id)
+      return new Response(
+        JSON.stringify({ success: true, id: resendBody.id }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    // ===== 기존: 쓰레드 신규/답글 알림 =====
+    const { threadId, eventType } = body
     if (!threadId || !eventType) {
       throw new Error('Missing required fields: threadId, eventType')
     }

@@ -43,7 +43,7 @@
         // Swap login button -> account
         var clone = loginBtn.cloneNode(false); // drop the OAuth click listener
         clone.textContent = name;
-        clone.setAttribute('href', 'consultation-request'); // TODO: account dashboard
+        clone.setAttribute('href', 'consultation'); // TODO: dedicated account dashboard
         loginBtn.parentNode.replaceChild(clone, loginBtn);
 
         // Add a logout action

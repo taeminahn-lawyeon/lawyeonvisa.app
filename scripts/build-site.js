@@ -37,7 +37,7 @@ const STRINGS = {
 // ---- page registry (add pages here as they are migrated) ----
 const PAGES = [
   {
-    id: 'main', content: 'home',
+    id: 'main', content: 'home', jsonld: true,
     title: { en: 'Law Firm Lawyeon — Visa & Immigration Center',
              ko: '법무법인 로연 — 출입국이민지원센터' },
     desc:  { en: 'Law Firm Lawyeon, Visa & Immigration Center. Legal representation for criminal cases, contracts and immigration office affairs for expats and migrants in Korea.',
@@ -48,6 +48,12 @@ const PAGES = [
     title: { en: 'Request Consultation — Law Firm Lawyeon', ko: '상담 신청 — 법무법인 로연' },
     desc:  { en: 'Free pre-consultation with Law Firm Lawyeon. Open a private thread for your visa, immigration, or criminal matter in Korea.',
              ko: '법무법인 로연 무료 사전 상담. 비자·출입국·형사 사안에 대해 비공개 쓰레드로 상담을 시작하세요.' },
+  },
+  {
+    id: 'booking', content: 'booking',
+    title: { en: 'Book a Visit Consultation — Law Firm Lawyeon', ko: '방문 상담 예약 — 법무법인 로연' },
+    desc:  { en: 'Book an in-person consultation at the Seoul or Gwangju office of Law Firm Lawyeon. Weekdays 09:00–17:00, 1-hour slots.',
+             ko: '법무법인 로연 서울·광주 사무소 방문 상담 예약. 평일 09:00–17:00, 1시간 단위(점심 12:00–13:00 제외).' },
   },
   {
     id: 'insights', content: 'insights',
@@ -63,6 +69,34 @@ const PAGES = [
              ko: '외국인 개인사업자의 한국 사업이민 — D-9-4·D-9-5와 프랜차이즈라는 현실적 경로.' },
   },
 ];
+
+// LegalService structured data (JSON-LD) for the homepage.
+function legalServiceJsonLd(lang) {
+  const S = STRINGS[lang];
+  const obj = {
+    '@context': 'https://schema.org',
+    '@type': 'LegalService',
+    name: S.brandName + ' ' + S.brandSub,
+    url: SITE + (lang === 'en' ? '/main' : '/ko/main'),
+    telephone: '+82-2-2039-0544',
+    image: SITE + '/images/og-image.png',
+    areaServed: { '@type': 'Country', name: lang === 'en' ? 'South Korea' : '대한민국' },
+    address: [
+      { '@type': 'PostalAddress', streetAddress: lang === 'en' ? '164 Gonghang-daero, Gangseo-gu, 5F #503' : '강서구 공항대로 164, 5층 503호',
+        addressLocality: lang === 'en' ? 'Seoul' : '서울', addressCountry: 'KR' },
+      { '@type': 'PostalAddress', streetAddress: lang === 'en' ? '1 Junbeop-ro, Dong-gu, 3F' : '동구 준법로 1, 3층',
+        addressLocality: lang === 'en' ? 'Gwangju' : '광주', addressCountry: 'KR' },
+    ],
+    openingHoursSpecification: {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '09:00', closes: '18:00',
+    },
+    priceRange: '₩₩',
+    sameAs: ['https://lawyeon.com/'],
+  };
+  return '<script type="application/ld+json">\n' + JSON.stringify(obj, null, 2) + '\n</' + 'script>';
+}
 
 function langToggle(lang, id) {
   if (lang === 'en') return `<a href="${id}" class="active">EN</a><span class="sep">·</span><a href="ko/${id}">한국어</a>`;
@@ -94,6 +128,7 @@ function build() {
         '__NAV_CONSULT__': S.navConsult,
         '__LOGIN__': S.login,
         '__LANGTOGGLE__': langToggle(lang, page.id),
+        '__JSONLD__': page.jsonld ? legalServiceJsonLd(lang) : '',
       };
       for (const [k, v] of Object.entries(subs)) doc = replaceAll(doc, k, v);
       doc = replaceAll(doc, '__BASE__', base); // last: appears in head/footer/body

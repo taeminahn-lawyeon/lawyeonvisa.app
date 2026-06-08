@@ -866,6 +866,9 @@
                 <button class="tab" onclick="switchTab('newMembers')">
                     <i class="fas fa-user-plus"></i> 신규 회원 <span id="newMemberBadge" class="badge" style="display: none;">0</span>
                 </button>
+                <button class="tab" onclick="switchTab('reservations')">
+                    <i class="fas fa-calendar-check"></i> 방문 예약 <span id="reservationBadge" class="badge" style="display: none;">0</span>
+                </button>
             </div>
         </div>
 
@@ -966,6 +969,25 @@
             </div>
             
             <div id="newMembersTableContainer">
+                <!-- 테이블이 여기에 동적으로 생성됨 -->
+            </div>
+        </div>
+
+        <!-- 방문 예약 탭 -->
+        <div id="reservationsTab" class="tab-content threads-section">
+            <h2>
+                <span><i class="fas fa-calendar-check"></i> 방문 예약</span>
+                <span class="thread-count" id="reservationCount">총 0건</span>
+            </h2>
+
+            <div style="margin-bottom: 20px; padding: 16px; background: #F4F2EE; border-radius: 8px; border: 1px solid #E3DBCC;">
+                <p style="font-size: 14px; color: #4A3C2B; margin: 0;">
+                    <i class="fas fa-info-circle"></i>
+                    방문 상담 예약 신청 목록입니다. 상태를 변경하면 즉시 저장됩니다. (요청 → 확정 → 완료 / 취소)
+                </p>
+            </div>
+
+            <div id="reservationsTableContainer">
                 <!-- 테이블이 여기에 동적으로 생성됨 -->
             </div>
         </div>
@@ -1108,6 +1130,16 @@
                 const el = document.getElementById('systemErrorsCount');
                 if (el) el.textContent = String(count || 0);
             } catch (_) { /* 실패 시 0 유지 */ }
+
+            // 예약 알림 메일의 #reservations 딥링크 → 방문 예약 탭 자동 활성화
+            if ((window.location.hash || '') === '#reservations') {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                const tabBtn = document.querySelector('.tab[onclick*="reservations"]');
+                if (tabBtn) tabBtn.classList.add('active');
+                document.getElementById('reservationsTab').classList.add('active');
+                loadReservationsData();
+            }
         });
 
         // 관리자 권한 확인 (Supabase 세션 기반 + DB role 검증)
@@ -1896,6 +1928,140 @@
             } else if (tabName === 'newMembers') {
                 document.getElementById('newMembersTab').classList.add('active');
                 loadNewMembersData();
+            } else if (tabName === 'reservations') {
+                document.getElementById('reservationsTab').classList.add('active');
+                loadReservationsData();
+            }
+        }
+
+        // ========================================
+        // 방문 예약 탭 함수
+        // ========================================
+        let reservations = [];
+
+        function escapeReservationHtml(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        async function loadReservationsData() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('reservations')
+                    .select('*')
+                    .order('reserve_date', { ascending: false })
+                    .order('reserve_time', { ascending: false });
+
+                if (error) {
+                    console.error('❌ 예약 로드 오류:', error);
+                    reservations = [];
+                } else {
+                    reservations = data || [];
+                }
+
+                // 배지: '요청' 상태 건수
+                const pending = reservations.filter(r => (r.status || 'requested') === 'requested').length;
+                const badge = document.getElementById('reservationBadge');
+                if (pending > 0) { badge.textContent = pending; badge.style.display = 'inline-block'; }
+                else { badge.style.display = 'none'; }
+
+                renderReservationsTable();
+            } catch (error) {
+                console.error('예약 데이터 로드 오류:', error);
+            }
+        }
+
+        const RESERVATION_STATUS = {
+            requested: { label: '요청', bg: '#B0883F' },
+            confirmed: { label: '확정', bg: '#2F855A' },
+            done:      { label: '완료', bg: '#6E665B' },
+            cancelled: { label: '취소', bg: '#C0392B' }
+        };
+
+        function renderReservationsTable() {
+            const container = document.getElementById('reservationsTableContainer');
+            document.getElementById('reservationCount').textContent = `총 ${reservations.length}건`;
+
+            if (reservations.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="text-align: center; padding: 60px 20px; color: #6B7684;">
+                        <i class="fas fa-calendar-times" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                        <p style="font-size: 16px;">접수된 방문 예약이 없습니다.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let tableHTML = `
+                <table class="customers-table">
+                    <thead>
+                        <tr>
+                            <th>방문일</th>
+                            <th>시간</th>
+                            <th>이름</th>
+                            <th>연락처</th>
+                            <th>사무소</th>
+                            <th>분야</th>
+                            <th>내용</th>
+                            <th>상태</th>
+                            <th>접수일</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            reservations.forEach(r => {
+                const st = RESERVATION_STATUS[r.status] || RESERVATION_STATUS.requested;
+                const memo = r.memo ? escapeReservationHtml(r.memo) : '<span style="color:#9CA3AF;">-</span>';
+                const options = Object.keys(RESERVATION_STATUS).map(k =>
+                    `<option value="${k}"${(r.status || 'requested') === k ? ' selected' : ''}>${RESERVATION_STATUS[k].label}</option>`
+                ).join('');
+
+                tableHTML += `
+                    <tr>
+                        <td><strong>${escapeReservationHtml(r.reserve_date)}</strong></td>
+                        <td>${escapeReservationHtml(r.reserve_time)}</td>
+                        <td><strong>${escapeReservationHtml(r.name)}</strong></td>
+                        <td>${escapeReservationHtml(r.phone)}</td>
+                        <td>${escapeReservationHtml(r.office || '-')}</td>
+                        <td>${escapeReservationHtml(r.topic || '-')}</td>
+                        <td style="max-width:240px; white-space:normal;">${memo}</td>
+                        <td>
+                            <span class="status-badge" style="background:${st.bg}; color:#fff; padding:3px 9px; border-radius:6px; font-size:12px; font-weight:600; display:inline-block; margin-bottom:6px;">${st.label}</span><br>
+                            <select onchange="updateReservationStatus('${r.id}', this.value)" style="font-size:12px; padding:4px 6px; border:1px solid #D8D2C6; border-radius:4px;">
+                                ${options}
+                            </select>
+                        </td>
+                        <td>${new Date(r.created_at).toLocaleDateString('ko-KR')}</td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += `
+                    </tbody>
+                </table>
+            `;
+            container.innerHTML = tableHTML;
+        }
+
+        async function updateReservationStatus(id, status) {
+            try {
+                const { error } = await supabaseClient
+                    .from('reservations')
+                    .update({ status })
+                    .eq('id', id);
+                if (error) {
+                    console.error('❌ 예약 상태 변경 오류:', error);
+                    alert('상태 변경에 실패했습니다: ' + error.message);
+                    return;
+                }
+                const r = reservations.find(x => x.id === id);
+                if (r) r.status = status;
+                renderReservationsTable();
+            } catch (e) {
+                console.error('예약 상태 변경 오류:', e);
+                alert('상태 변경 중 오류가 발생했습니다.');
             }
         }
 
