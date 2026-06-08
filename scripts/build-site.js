@@ -20,6 +20,11 @@ const replaceAll = (s, find, val) => s.split(find).join(val == null ? '' : val);
 const HEAD = read('partials/head.html');
 const HEADER = read('partials/header.html');
 const FOOTER = { en: read('partials/footer.en.html'), ko: read('partials/footer.ko.html') };
+const SCRIPTS = [
+  '<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>',
+  '<script src="__BASE__js/supabase-client.js?v=20260527b"></script>',
+  '<script src="__BASE__js/site.js?v=1"></script>',
+].join('\n');
 
 // ---- per-language UI strings (header chrome) ----
 const STRINGS = {
@@ -55,7 +60,7 @@ function build() {
       const S = STRINGS[lang];
       const bodyHtml = read(`content/${page.content}.${lang}.html`);
 
-      let doc = HEAD + '\n' + HEADER + '\n' + bodyHtml + '\n' + FOOTER[lang] + '\n</body>\n</html>\n';
+      let doc = HEAD + '\n' + HEADER + '\n' + bodyHtml + '\n' + FOOTER[lang] + '\n' + SCRIPTS + '\n</body>\n</html>\n';
       const subs = {
         '__LANG__': lang,
         '__TITLE__': page.title[lang],
@@ -81,6 +86,24 @@ function build() {
       count++;
     }
   }
+  // ---- sitemap.xml + robots.txt ----
+  const urls = [];
+  for (const page of PAGES) { urls.push(`${SITE}/${page.id}`); urls.push(`${SITE}/ko/${page.id}`); }
+  const sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' +
+    PAGES.map(p => (
+      [['en', `${SITE}/${p.id}`], ['ko', `${SITE}/ko/${p.id}`]].map(([lang, loc]) =>
+        `  <url>\n    <loc>${loc}</loc>\n` +
+        `    <xhtml:link rel="alternate" hreflang="en" href="${SITE}/${p.id}"/>\n` +
+        `    <xhtml:link rel="alternate" hreflang="ko" href="${SITE}/ko/${p.id}"/>\n` +
+        `  </url>`
+      ).join('\n')
+    )).join('\n') + '\n</urlset>\n';
+  fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap, 'utf8');
+  fs.writeFileSync(path.join(ROOT, 'robots.txt'),
+    'User-agent: *\nAllow: /\n\nSitemap: ' + SITE + '/sitemap.xml\n', 'utf8');
+  console.log('built sitemap.xml, robots.txt');
+
   console.log(`\nDone. ${count} page(s) generated.`);
 }
 
