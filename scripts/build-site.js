@@ -123,19 +123,17 @@ const PAGES = [
   },
   {
     id: 'foreigner-criminal-fine-deportation-reentry-ban-korea-2026', content: 'foreigner-criminal-fine-deportation-reentry-ban-korea-2026',
-    langs: ['ko'],
     title: { ko: '외국인 벌금형, 강제출국·재입국 금지 기준 (2026) — 법무법인 로연',
-             en: '외국인 벌금형, 강제출국·재입국 금지 기준 (2026) — 법무법인 로연' },
+             en: 'Criminal Fines & Deportation of Foreigners in Korea — Removal & Re-Entry Ban Criteria (2026) — Law Firm Lawyeon' },
     desc:  { ko: '외국인이 형사처벌로 벌금형을 받으면 강제출국되나요? 초범 300만원·합산 500만원 등 출국 기준, 영구 입국금지 중대범죄, 출국명령과 강제퇴거의 차이, 처분서를 받았을 때 7일 안에 할 일, 재입국 금지 기간까지.',
-             en: '외국인 벌금형, 강제출국·재입국 금지 기준 (2026).' },
+             en: 'Can a foreigner be deported after a criminal fine in Korea? Removal thresholds (₩3M first offence, ₩5M cumulative), serious crimes carrying a permanent entry ban, departure order vs. compulsory deportation, the 7-day deadline after a disposition, and re-entry bans.' },
   },
   {
     id: 'foreigner-immigration-penalty-fine-deportation-korea-2026', content: 'foreigner-immigration-penalty-fine-deportation-korea-2026',
-    langs: ['ko'],
     title: { ko: '외국인 출입국 범칙금, 강제출국·체류 제한 기준 (2026) — 법무법인 로연',
-             en: '외국인 출입국 범칙금, 강제출국·체류 제한 기준 (2026) — 법무법인 로연' },
+             en: 'Immigration Penalties (Beomchikgeum) & Deportation of Foreigners in Korea — 2026 Criteria — Law Firm Lawyeon' },
     desc:  { ko: '외국인이 출입국 범칙금 처분을 받으면 강제출국되나요? 초범 500만원·합산 700만원·3년 3회 등 출국 기준, 체류허가가 유지되는 예외기준(F-2·F-4·F-6, 국익·인도적 사유), 통고서를 받으면 할 일, 재입국까지.',
-             en: '외국인 출입국 범칙금, 강제출국·체류 제한 기준 (2026).' },
+             en: 'Can a foreigner be deported over immigration administrative penalties (beomchikgeum)? Removal thresholds (₩5M first, ₩7M cumulative, three-strikes), exceptions that preserve your stay (F-2/F-4/F-6, national-interest and humanitarian grounds), what to do on a penalty notice, and re-entry.' },
   },
   {
     id: 'far-east-university-student-job-fair-mou-2026', content: 'far-east-university-student-job-fair-mou-2026',
