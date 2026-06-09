@@ -22,8 +22,8 @@ const HEADER = read('partials/header.html');
 const FOOTER = { en: read('partials/footer.en.html'), ko: read('partials/footer.ko.html') };
 const SCRIPTS = [
   '<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>',
-  '<script src="__BASE__js/supabase-client.js?v=20260611"></script>',
-  '<script src="__BASE__js/site.js?v=4"></script>',
+  '<script src="__BASE__js/supabase-client.js?v=20260612"></script>',
+  '<script src="__BASE__js/site.js?v=5"></script>',
 ].join('\n');
 
 // ---- per-language UI strings (header chrome) ----
@@ -80,7 +80,7 @@ const PAGES = [
              ko: '비자·출입국·사업이민 실무에 관한 법무법인 로연 변호사의 인사이트.' },
   },
   {
-    id: 'article', content: 'article',
+    id: 'korea-business-immigration-part-1-2026', content: 'article',
     title: { en: "An Overview of Korea's Business-Immigration Visas (D-9-4·D-9-5) — Law Firm Lawyeon",
              ko: '한국 사업이민 비자 개괄 (D-9-4·D-9-5) — 법무법인 로연' },
     desc:  { en: "D-9-4, D-9-5 and franchising as a realistic route for foreign sole proprietors immigrating to Korea.",

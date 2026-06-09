@@ -8,7 +8,7 @@ const fs = require('fs');
 const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 
-const SLUG = { 1: 'article', 2: 'korea-business-immigration-part-2-2026',
+const SLUG = { 1: 'korea-business-immigration-part-1-2026', 2: 'korea-business-immigration-part-2-2026',
                3: 'korea-business-immigration-part-3-2026', 4: 'korea-business-immigration-part-4-2026' };
 
 const SRC = {
