@@ -1223,7 +1223,8 @@ async function createWelcomeMessage(threadId, serviceName) {
         // 관리자 모드일 때 URL에 mode=admin 추가 (새 탭에서도 인식 가능)
         const isAdminMode = typeof sessionStorage !== 'undefined' && sessionStorage.getItem('adminLoggedIn') === 'true';
         const formUrl = `${window.location.origin}/profile-submit.html?thread=${threadId}${isAdminMode ? '&mode=admin' : ''}`;
-        const lang = (typeof localStorage !== 'undefined' && localStorage.getItem('i18n_language')) || 'en';
+        const lang = (typeof localStorage !== 'undefined' && localStorage.getItem('i18n_language'))
+            || ((typeof document !== 'undefined' && (document.documentElement.getAttribute('lang') || '').toLowerCase().indexOf('ko') === 0) ? 'ko' : 'en');
 
         // 다국어 번역 헬퍼 - translations.js가 로드된 경우 사용, 아니면 폴백
         function tw(key, fallback) {
@@ -1268,9 +1269,8 @@ async function createWelcomeMessage(threadId, serviceName) {
                 <p>${tw('thread.welcome.d10.footer', 'If you have additional questions, please leave a reply in this thread.')}</p>
             `;
         } else {
-            // ===== 일반 상담 안내문 =====
-            // 프로필 존재 여부 확인 (첫 번째 쓰레드에서만 기본사항 제출)
-            // 관리자 모드에서는 항상 기본사항 입력 링크 표시 (테스트용 덮어쓰기 허용)
+            // ===== 일반(온라인) 상담 안내문 — 다국어 인라인 =====
+            // 응대 주체(변호사/스태프/전문가)나 응답 시간은 표기하지 않고, "로연"이 답한다고만 안내.
             const isAdmin = isAdminMode;
             let hasProfile = false;
             if (!isAdmin) {
@@ -1287,38 +1287,38 @@ async function createWelcomeMessage(threadId, serviceName) {
                 }
             }
 
-            // 기본사항 제출 단계 (프로필 없을 때만 표시)
-            const step1Html = hasProfile ? '' : `
-                <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
-                    <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">1. ${tw('thread.welcome.step1Title', '1. Submit Basic Information').replace(/^\d+\.\s*/, '')}</div>
-                    <div style="color: #374151; line-height: 1.6;">${tw('thread.welcome.step1Desc', 'Please enter the basic information required for consultation.')} <a href="${formUrl}" target="_blank" style="color: #3182F6; font-weight: 600;">${tw('thread.welcome.step1Link', 'Enter Basic Info')}</a></div>
+            const isKoLang = (lang === 'ko');
+            const W = isKoLang ? {
+                title: '상담 신청이 접수되었습니다',
+                greeting: `안녕하세요. <strong>${serviceName}</strong> 신청이 접수되어 전용 쓰레드가 열렸습니다.`,
+                lead: '상담받고 싶은 내용을 이 쓰레드에 자유롭게 남겨 주세요. 관련 서류나 사진이 있다면 함께 올려 주시면 검토에 도움이 됩니다. 남겨 주신 내용은 <strong>로연</strong>에서 확인한 뒤 이 쓰레드로 답변드립니다.',
+                infoTitle: '기본 정보 입력',
+                infoDesc: '원활한 검토를 위해 기본 정보를 먼저 남겨 주세요.',
+                infoLink: '기본 정보 입력하기',
+                footer: '추가로 궁금하신 점도 이 쓰레드에 남겨 주세요.'
+            } : {
+                title: 'Your consultation request has been received',
+                greeting: `Hello. Your request for <strong>${serviceName}</strong> has been received and a private thread has been opened.`,
+                lead: 'Please share here what you would like to consult about. If you have any related documents or photos, feel free to attach them — it helps us review. <strong>Lawyeon</strong> will review what you share and reply in this thread.',
+                infoTitle: 'Submit basic information',
+                infoDesc: 'Please share your basic information first so we can review smoothly.',
+                infoLink: 'Enter basic info',
+                footer: 'For any further questions, just leave them in this thread.'
+            };
+
+            const infoBox = hasProfile ? '' : `
+                <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 12px 0;">
+                    <div style="font-weight: 700; color: #191F28; margin-bottom: 6px;">${W.infoTitle}</div>
+                    <div style="color: #374151; line-height: 1.6;">${W.infoDesc} <a href="${formUrl}" target="_blank" style="color: #3182F6; font-weight: 600;">${W.infoLink}</a></div>
                 </div>
             `;
 
-            // 프로필 있으면 단계 번호 조정
-            const step2Num = hasProfile ? '1' : '2';
-            const step3Num = hasProfile ? '2' : '3';
-
             welcomeContent = `
-                <h4>${tw('thread.welcome.title', 'Consultation Request Confirmed')}</h4>
-                <p>${tw('thread.welcome.greeting', 'Hello! Your consultation request for <strong>{serviceName}</strong> has been received.').replace('{serviceName}', serviceName)}</p>
-
-                <h4>${tw('thread.welcome.procedureTitle', 'Procedure Guide')}</h4>
-                <p>${tw('thread.welcome.procedureDesc', 'Please follow the steps below for a smooth consultation process.')}</p>
-
-                ${step1Html}
-
-                <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
-                    <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">${step2Num}. ${tw('thread.welcome.step2Title', '2. Staff Review').replace(/^\d+\.\s*/, '')}</div>
-                    <div style="color: #374151; line-height: 1.6;">${tw('thread.welcome.step2Desc', 'A specialist will review your request and contact you through this thread.')}</div>
-                </div>
-
-                <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-left: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
-                    <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">${step3Num}. ${tw('thread.welcome.step3Title', '3. Consultation').replace(/^\d+\.\s*/, '')}</div>
-                    <div style="color: #374151; line-height: 1.6;">${tw('thread.welcome.step3Desc', 'After reviewing your case, we will provide exact costs and required documents.')}</div>
-                </div>
-
-                <p>${tw('thread.welcome.footer', 'If you have additional questions, please leave a reply in this thread.')}</p>
+                <h4>${W.title}</h4>
+                <p>${W.greeting}</p>
+                <p>${W.lead}</p>
+                ${infoBox}
+                <p>${W.footer}</p>
             `;
         }
 
@@ -1329,7 +1329,7 @@ async function createWelcomeMessage(threadId, serviceName) {
                 thread_id: threadId,
                 sender_id: null, // 시스템 메시지는 sender_id가 없음
                 sender_type: 'admin',
-                sender_name: tw('thread.welcome.senderName', 'Lawyeon Law Firm'),
+                sender_name: (lang === 'ko' ? '법무법인 로연' : 'Law Firm Lawyeon'),
                 content: welcomeContent
             })
             .select()
