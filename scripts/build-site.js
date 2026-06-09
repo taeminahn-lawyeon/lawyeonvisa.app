@@ -122,6 +122,22 @@ const PAGES = [
              ko: '한국 D-10 구직 비자 신규 졸업자 완전 가이드 — 점수제 면제, 필요 서류, 인턴·아르바이트 규정, 체류 기간, 연장까지.' },
   },
   {
+    id: 'foreigner-criminal-fine-deportation-reentry-ban-korea-2026', content: 'foreigner-criminal-fine-deportation-reentry-ban-korea-2026',
+    langs: ['ko'],
+    title: { ko: '외국인 벌금형, 강제출국·재입국 금지 기준 (2026) — 법무법인 로연',
+             en: '외국인 벌금형, 강제출국·재입국 금지 기준 (2026) — 법무법인 로연' },
+    desc:  { ko: '외국인이 형사처벌로 벌금형을 받으면 강제출국되나요? 초범 300만원·합산 500만원 등 출국 기준, 영구 입국금지 중대범죄, 출국명령과 강제퇴거의 차이, 처분서를 받았을 때 7일 안에 할 일, 재입국 금지 기간까지.',
+             en: '외국인 벌금형, 강제출국·재입국 금지 기준 (2026).' },
+  },
+  {
+    id: 'foreigner-immigration-penalty-fine-deportation-korea-2026', content: 'foreigner-immigration-penalty-fine-deportation-korea-2026',
+    langs: ['ko'],
+    title: { ko: '외국인 출입국 범칙금, 강제출국·체류 제한 기준 (2026) — 법무법인 로연',
+             en: '외국인 출입국 범칙금, 강제출국·체류 제한 기준 (2026) — 법무법인 로연' },
+    desc:  { ko: '외국인이 출입국 범칙금 처분을 받으면 강제출국되나요? 초범 500만원·합산 700만원·3년 3회 등 출국 기준, 체류허가가 유지되는 예외기준(F-2·F-4·F-6, 국익·인도적 사유), 통고서를 받으면 할 일, 재입국까지.',
+             en: '외국인 출입국 범칙금, 강제출국·체류 제한 기준 (2026).' },
+  },
+  {
     id: 'far-east-university-student-job-fair-mou-2026', content: 'far-east-university-student-job-fair-mou-2026',
     title: { en: 'MOU with Far East University — Visa-Roadmap Lecture & Legal Clinic at the International Student Job Fair — Law Firm Lawyeon',
              ko: '극동대학교 외국인 유학생 취업 박람회 업무 협약 및 비자 로드맵 특강·리걸 클리닉 — 법무법인 로연' },
@@ -158,15 +174,29 @@ function legalServiceJsonLd(lang) {
   return '<script type="application/ld+json">\n' + JSON.stringify(obj, null, 2) + '\n</' + 'script>';
 }
 
-function langToggle(lang, id) {
-  if (lang === 'en') return `<a href="${id}" class="active">EN</a><span class="sep">·</span><a href="ko/${id}">한국어</a>`;
-  return `<a href="../${id}">EN</a><span class="sep">·</span><a href="${id}" class="active">한국어</a>`;
+function langToggle(lang, id, langs) {
+  langs = langs || LANGS;
+  const hasEn = langs.indexOf('en') >= 0, hasKo = langs.indexOf('ko') >= 0;
+  const muted = (t) => `<span style="color:var(--rule-d)">${t}</span>`;
+  if (lang === 'en') {
+    const en = `<a href="${id}" class="active">EN</a>`;
+    const ko = hasKo ? `<a href="ko/${id}">한국어</a>` : muted('한국어');
+    return `${en}<span class="sep">·</span>${ko}`;
+  }
+  const en = hasEn ? `<a href="../${id}">EN</a>` : muted('EN');
+  const ko = `<a href="${id}" class="active">한국어</a>`;
+  return `${en}<span class="sep">·</span>${ko}`;
 }
 
 function build() {
   let count = 0;
   for (const page of PAGES) {
-    for (const lang of LANGS) {
+    const langs = page.langs || LANGS;
+    const hasEn = langs.indexOf('en') >= 0;
+    const hasKo = langs.indexOf('ko') >= 0;
+    const altEn = hasEn ? `${SITE}/${page.id}` : `${SITE}/ko/${page.id}`;
+    const altKo = hasKo ? `${SITE}/ko/${page.id}` : `${SITE}/${page.id}`;
+    for (const lang of langs) {
       const base = lang === 'en' ? '' : '../';
       const out = lang === 'en' ? `${page.id}.html` : `ko/${page.id}.html`;
       const canonical = `${SITE}/${lang === 'en' ? '' : 'ko/'}${page.id}`;
@@ -179,8 +209,8 @@ function build() {
         '__TITLE__': page.title[lang],
         '__DESC__': page.desc[lang],
         '__CANONICAL__': canonical,
-        '__ALT_EN__': `${SITE}/${page.id}`,
-        '__ALT_KO__': `${SITE}/ko/${page.id}`,
+        '__ALT_EN__': altEn,
+        '__ALT_KO__': altKo,
         '__BRAND_NAME__': S.brandName,
         '__BRAND_SUB__': S.brandSub,
         '__NAV_ABOUT__': S.navAbout,
@@ -189,7 +219,7 @@ function build() {
         '__NAV_CONSULT__': S.navConsult,
         '__NAV_MYPAGE__': S.navMypage,
         '__LOGIN__': S.login,
-        '__LANGTOGGLE__': langToggle(lang, page.id),
+        '__LANGTOGGLE__': langToggle(lang, page.id, langs),
         '__JSONLD__': page.jsonld ? legalServiceJsonLd(lang) : '',
       };
       for (const [k, v] of Object.entries(subs)) doc = replaceAll(doc, k, v);
@@ -203,18 +233,20 @@ function build() {
     }
   }
   // ---- sitemap.xml + robots.txt ----
-  const urls = [];
-  for (const page of PAGES) { urls.push(`${SITE}/${page.id}`); urls.push(`${SITE}/ko/${page.id}`); }
   const sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n' +
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' +
-    PAGES.map(p => (
-      [['en', `${SITE}/${p.id}`], ['ko', `${SITE}/ko/${p.id}`]].map(([lang, loc]) =>
-        `  <url>\n    <loc>${loc}</loc>\n` +
-        `    <xhtml:link rel="alternate" hreflang="en" href="${SITE}/${p.id}"/>\n` +
-        `    <xhtml:link rel="alternate" hreflang="ko" href="${SITE}/ko/${p.id}"/>\n` +
-        `  </url>`
-      ).join('\n')
-    )).join('\n') + '\n</urlset>\n';
+    PAGES.map(p => {
+      const langs = p.langs || LANGS;
+      const locs = [];
+      if (langs.indexOf('en') >= 0) locs.push([`${SITE}/${p.id}`]);
+      if (langs.indexOf('ko') >= 0) locs.push([`${SITE}/ko/${p.id}`]);
+      return locs.map(([loc]) => {
+        let alts = '';
+        if (langs.indexOf('en') >= 0) alts += `    <xhtml:link rel="alternate" hreflang="en" href="${SITE}/${p.id}"/>\n`;
+        if (langs.indexOf('ko') >= 0) alts += `    <xhtml:link rel="alternate" hreflang="ko" href="${SITE}/ko/${p.id}"/>\n`;
+        return `  <url>\n    <loc>${loc}</loc>\n` + alts + `  </url>`;
+      }).join('\n');
+    }).join('\n') + '\n</urlset>\n';
   fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap, 'utf8');
   fs.writeFileSync(path.join(ROOT, 'robots.txt'),
     'User-agent: *\nAllow: /\n\nSitemap: ' + SITE + '/sitemap.xml\n', 'utf8');
