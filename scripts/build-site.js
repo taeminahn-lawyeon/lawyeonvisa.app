@@ -136,6 +136,20 @@ const PAGES = [
              en: 'Can a foreigner be deported over immigration administrative penalties (beomchikgeum)? Removal thresholds (₩5M first, ₩7M cumulative, three-strikes), exceptions that preserve your stay (F-2/F-4/F-6, national-interest and humanitarian grounds), what to do on a penalty notice, and re-entry.' },
   },
   {
+    id: 'foreigner-unlawful-stay-voluntary-departure-korea-2026', content: 'foreigner-unlawful-stay-voluntary-departure-korea-2026',
+    title: { ko: '불법체류 사전 신고 후 자진출국 — 범칙금·입국금지는 어떻게 되나 (2026) — 법무법인 로연',
+             en: 'Voluntary Departure After Self-Reporting Unlawful Stay in Korea (2026) — Law Firm Lawyeon' },
+    desc:  { ko: '불법체류 상태에서 단속 전에 사전 신고하고 자진출국하면 어떻게 되나요? 단속 적발과의 차이, 범칙금·입국금지에서 받을 수 있는 차이, 신고 전에 확인할 것, 재입국 가능성까지.',
+             en: 'What happens if you self-report unlawful stay and depart voluntarily before a crackdown in Korea? The difference from being caught, lighter penalty and entry-ban outcomes, what to check before reporting, and re-entry prospects.' },
+  },
+  {
+    id: 'foreigner-immigration-detention-temporary-release-korea-2026', content: 'foreigner-immigration-detention-temporary-release-korea-2026',
+    title: { ko: '외국인 보호조치와 보호일시해제 — 보호소에서 나오는 법 (2026) — 법무법인 로연',
+             en: 'Immigration Detention &amp; Temporary Release in Korea — How to Get Out of the Center (2026) — Law Firm Lawyeon' },
+    desc:  { ko: '외국인보호소에 보호(구금)되면 어떻게 되나요? 보호조치의 성격, 보호일시해제 청구 방법과 인용 요건, 누가 청구할 수 있는지, 조건부 허가와 보증금까지. 강제퇴거 절차 중 신체 자유를 되찾는 법.',
+             en: 'What happens if you are held in an immigration detention center in Korea? The nature of detention, how to apply for temporary release and what is required, who may apply, conditional grants and the deposit — regaining liberty during the deportation process.' },
+  },
+  {
     id: 'far-east-university-student-job-fair-mou-2026', content: 'far-east-university-student-job-fair-mou-2026',
     title: { en: 'MOU with Far East University — Visa-Roadmap Lecture & Legal Clinic at the International Student Job Fair — Law Firm Lawyeon',
              ko: '극동대학교 외국인 유학생 취업 박람회 업무 협약 및 비자 로드맵 특강·리걸 클리닉 — 법무법인 로연' },
