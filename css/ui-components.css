@@ -19,12 +19,16 @@ h1, h2, h3, h4, h5, h6 {
     word-break: keep-all;
     overflow-wrap: break-word;
     line-height: 1.4;
+    text-wrap: balance; /* 제목의 한 단어만 남는 줄 방지 (지원 브라우저) */
 }
 
 /* 단락 및 텍스트 */
 p, span, div, li, td, th, label, a {
     word-break: keep-all;
     overflow-wrap: break-word;
+}
+p, li {
+    text-wrap: pretty; /* 본문 끝줄의 외톨이 단어(orphan) 방지 */
 }
 
 /* 버튼 텍스트 */

@@ -23,10 +23,15 @@
     --wrap:1200px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+    /* 한글은 단어 단위로 줄바꿈하고, 긴 영문/URL만 강제 분리 — 부자연스러운 줄바꿈 방지 */
+    word-break:keep-all;overflow-wrap:break-word}
 img{max-width:100%}
 a{color:inherit;text-decoration:none}
+/* 제목/본문 줄바꿈을 자연스럽게 (지원 브라우저에서 한 단어만 남는 줄·들쭉날쭉 방지) */
+h1,h2,h3,h4,.sec-title,.doc-title,.cc-title{text-wrap:balance}
+p,li,.intro-desc,.lead,.doc-tags{text-wrap:pretty}
 .wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
 
 /* ---------- Buttons ---------- */
@@ -55,6 +60,26 @@ a{color:inherit;text-decoration:none}
 .lang a.active{color:var(--ink);font-weight:700}
 .lang .sep{color:var(--rule-d);margin:0 6px}
 .header .btn{padding:10px 18px;font-size:14px}
+
+/* ---------- Mobile nav (hamburger + slide-down menu, injected by site.js) ---------- */
+.nav-toggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;margin:-6px -8px -6px 0;border:none;background:none;cursor:pointer;color:var(--brown-d);-webkit-tap-highlight-color:transparent}
+.nav-toggle span{position:relative;display:block;width:22px;height:2px;background:currentColor;border-radius:2px;transition:transform .2s,opacity .2s}
+.nav-toggle span::before,.nav-toggle span::after{content:"";position:absolute;left:0;width:22px;height:2px;background:currentColor;border-radius:2px;transition:transform .2s,opacity .2s}
+.nav-toggle span::before{top:-7px}
+.nav-toggle span::after{top:7px}
+.nav-toggle[aria-expanded="true"] span{background:transparent}
+.nav-toggle[aria-expanded="true"] span::before{transform:translateY(7px) rotate(45deg)}
+.nav-toggle[aria-expanded="true"] span::after{transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;border-top:1px solid var(--rule);background:#fff;max-height:0;overflow:hidden;transition:max-height .28s ease}
+.mobile-menu.open{max-height:80vh;overflow:auto;-webkit-overflow-scrolling:touch}
+.mobile-menu .mm-inner{padding:6px 22px 22px}
+.mobile-menu a{display:block;font-size:17px;font-weight:600;color:var(--brown);padding:15px 2px;border-bottom:1px solid var(--rule)}
+.mobile-menu a:active{color:var(--brown-d)}
+.mobile-menu .mm-lang{display:flex;align-items:center;gap:10px;padding:16px 2px 4px;font-size:15px}
+.mobile-menu .mm-lang a{display:inline;border:none;padding:0;color:var(--muted);font-weight:600}
+.mobile-menu .mm-lang a.active{color:var(--ink)}
+.mobile-menu .mm-lang .sep{color:var(--rule-d)}
+.mobile-menu .btn{display:flex;width:100%;margin-top:16px;padding:15px;font-size:16px;border-bottom:none}
 
 /* ---------- Section base ---------- */
 section{padding:74px 0}
@@ -147,20 +172,102 @@ section{padding:74px 0}
 .copyright{margin-top:22px;font-size:11.5px;color:#6E6655}
 
 /* ---------- Responsive ---------- */
-@media (max-width:980px){.intro-grid{grid-template-columns:1fr;gap:36px}.case-grid2{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:680px){
+/* Tablet */
+@media (max-width:1024px){
+    .wrap{padding:0 24px}
+    section{padding:60px 0}
+    .case-grid2{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:980px){
+    .intro-grid{grid-template-columns:1fr;gap:34px}
+    .intro-left h1,.intro-left .intro-desc{max-width:none}
+}
+/* Below this width the inline nav cramps — switch to a hamburger menu */
+@media (max-width:860px){
+    .nav-links,.nav-mypage,.lang,.header-actions>.btn{display:none}
+    .nav-toggle{display:inline-flex}
+    .mobile-menu{display:block}
+    .header-content{padding:14px 20px}
+}
+/* Phone — scale typography up for comfortable reading (news-app style) */
+@media (max-width:640px){
     .wrap{padding:0 18px}
-    .header-content{padding:14px 18px;flex-wrap:wrap;gap:12px}
-    .brand .sub{display:none}
-    .nav-links{display:none}
-    section{padding:52px 0}
-    .sec-head-row{flex-direction:column;align-items:flex-start;gap:12px}
-    .list-head{align-items:flex-start;flex-direction:column;gap:12px}
-    .doc-row{gap:14px}.doc-date{font-size:12.5px}
-    .case-grid2{grid-template-columns:1fr}.ccard{min-height:0}
-    .consult-grid{grid-template-columns:1fr}
-    .footer-top{flex-direction:column;align-items:flex-start}
+    section{padding:44px 0}
+
+    .intro{padding:32px 0 38px}
+    .intro-left h1{font-size:30px;line-height:1.28}
+    .intro-left .intro-desc{font-size:16.5px;line-height:1.75;margin-top:14px}
+    .reg-badge{margin:22px 0}
+    .intro-cta .btn{flex:1 1 auto}
+
+    .sec-title{font-size:26px}
+    .sec-head-row{flex-direction:column;align-items:flex-start;gap:10px;margin-bottom:22px}
+
+    /* Insights list: bigger, bolder titles; date sits below as a quiet caption */
+    .list-head{align-items:flex-start;flex-direction:column;gap:14px}
+    .cat-toggle{flex-wrap:nowrap;overflow-x:auto;width:100%;gap:18px;padding-bottom:12px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .cat-toggle::-webkit-scrollbar{display:none}
+    .cat-toggle .ct{font-size:15px;white-space:nowrap;flex-shrink:0}
+    .cat-toggle .ct-div{display:none}
+    .doc-row{flex-direction:column;align-items:flex-start;gap:9px;padding:18px 2px}
+    .doc-title{font-size:19px;font-weight:700;line-height:1.4}
+    .doc-tags{margin-top:2px;gap:5px 12px}
+    .doc-tags span{font-size:13px}
+    .doc-date{font-size:13px}
+
+    /* Cases & News */
+    .case-grid2{grid-template-columns:1fr;gap:16px}
+    .ccard{min-height:0;padding:24px 22px}
+    .ccard .cc-title{font-size:20px}
+    .ccard .cc-excerpt{font-size:15px;margin-top:14px}
+    .ccard .cc-foot{padding-top:18px}
+
+    /* Consultation */
+    .consult-grid{grid-template-columns:1fr;gap:16px}
+    .channel{padding:24px 22px}
+    .channel h3{font-size:20px}
+    .channel p{font-size:15px}
+    .channel .ch-meta{font-size:14px}
+
+    /* Sub-page head */
+    .page-head{padding:32px 0 22px}
+    .page-head .lead{font-size:16px}
+
+    /* Article (insights detail) — comfortable long-form reading */
+    .art-head{padding:30px 0 24px}
+    .art-head h1{line-height:1.32}
+    .art-meta{font-size:13px}
+    .disclaimer{font-size:14px}
+    .art-layout{padding:30px 0 60px}
+    .body{max-width:none}
+    .body h2{margin:34px 0 14px}
+    .body p,.body .callout{font-size:17px;line-height:1.85;margin-bottom:16px}
+    .body ul li,.body ol li{font-size:16.5px;line-height:1.8}
+    .body h3{font-size:18px}
+    .num-item .ni-text,.body .qa .a{font-size:15.5px;line-height:1.8}
+
+    /* Tables scroll sideways instead of overflowing the viewport */
+    .tbl{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    table{font-size:14.5px}
+    thead th,tbody td{padding:10px 12px}
+    tbody td:first-child{white-space:normal}
+    .related a{flex-direction:column;gap:6px}
+    .related .rt{font-size:16px}
+
+    /* Forms */
+    .panel{padding:22px 18px}
+    .btn{font-size:15px}
+
+    /* Footer */
+    .footer-inner{padding:44px 0 40px}
+    .footer-top{flex-direction:column;align-items:flex-start;gap:18px}
     .footer-tel{text-align:left}
+}
+@media (max-width:400px){
+    .intro-left h1{font-size:27px}
+    .sec-title{font-size:23px}
+    .doc-title,.ccard .cc-title{font-size:18px}
+    .body p,.body .callout{font-size:16.5px}
 }
 
 /* ---------- Sub-page head ---------- */

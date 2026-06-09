@@ -60,6 +60,56 @@
       body.insertBefore(ctaBand(), body.firstChild); // top (just under the title)
     })();
 
+    // 0.5) Mobile hamburger menu. Cloned nav items keep their attributes
+    //      (incl. data-login-go), so the gating loop below binds them too.
+    (function buildMobileNav() {
+      var header = document.querySelector('.header');
+      var content = header && header.querySelector('.header-content');
+      var actions = content && content.querySelector('.header-actions');
+      if (!header || !content || !actions || content.querySelector('.nav-toggle')) return;
+
+      var toggle = document.createElement('button');
+      toggle.className = 'nav-toggle';
+      toggle.type = 'button';
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', isKo ? '메뉴' : 'Menu');
+      toggle.innerHTML = '<span></span>';
+      content.appendChild(toggle);
+
+      var menu = document.createElement('nav');
+      menu.className = 'mobile-menu';
+      var inner = document.createElement('div');
+      inner.className = 'mm-inner';
+      menu.appendChild(inner);
+
+      actions.querySelectorAll('.nav-links a').forEach(function (a) {
+        inner.appendChild(a.cloneNode(true));
+      });
+      var mp = actions.querySelector('.nav-mypage');
+      if (mp) inner.appendChild(mp.cloneNode(true));
+      var lang = actions.querySelector('.lang');
+      if (lang) { var l = lang.cloneNode(true); l.className = 'mm-lang'; inner.appendChild(l); }
+      var btn = actions.querySelector('.btn-primary');
+      if (btn) {
+        var bclone = btn.cloneNode(true);
+        bclone.addEventListener('click', function (e) {
+          if (typeof signInWithGoogle === 'function') {
+            e.preventDefault();
+            try { signInWithGoogle(); } catch (_) {}
+          }
+        });
+        inner.appendChild(bclone);
+      }
+      header.appendChild(menu);
+
+      function setOpen(open) {
+        menu.classList.toggle('open', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+      toggle.addEventListener('click', function () { setOpen(!menu.classList.contains('open')); });
+      inner.addEventListener('click', function (e) { if (e.target.closest('a')) setOpen(false); });
+    })();
+
     var hasAuth = (typeof checkSession === 'function' && typeof signInWithGoogle === 'function');
 
     // 1) Login-first gating for consultation/booking entry buttons.
