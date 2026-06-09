@@ -31,13 +31,18 @@ if (window.supabase) {
 // ============================================
 
 // Google 로그인
-async function signInWithGoogle() {
+async function signInWithGoogle(redirectToOverride) {
     try {
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 
         // 현재 페이지로 리디렉션
         let redirectUrl = window.location.href;
 
+        // 명시적 목적지가 전달되면 그대로 사용(예: 마이페이지 진입 시 로그인 후 마이페이지로 직행)
+        if (redirectToOverride) {
+            try { redirectUrl = new URL(redirectToOverride, window.location.href).href; }
+            catch (_) { redirectUrl = redirectToOverride; }
+        } else
         // 페이지별 리디렉션 URL 및 universityCode 설정
         if (currentPage === 'service-apply-general.html') {
             localStorage.removeItem('universityCode');

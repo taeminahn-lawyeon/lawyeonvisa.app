@@ -73,8 +73,11 @@
           Promise.resolve(checkSession()).then(function (s) {
             var u = s && (s.user || s);
             if (u && u.id) { window.location.href = target; return; }
+            // 로그인 후 목적지로 직행하도록 절대 URL을 redirectTo 로 전달(+ 폴백용 저장).
+            var abs = target;
+            try { abs = new URL(target, window.location.href).href; } catch (_) {}
             try { localStorage.setItem('postLoginRedirect', target); } catch (_) {}
-            try { signInWithGoogle(); } catch (_) { window.location.href = target; }
+            try { signInWithGoogle(abs); } catch (_) { window.location.href = target; }
           }).catch(function () { window.location.href = target; });
         });
       });

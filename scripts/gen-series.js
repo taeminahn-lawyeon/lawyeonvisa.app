@@ -8,8 +8,8 @@ const fs = require('fs');
 const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 
-const SLUG = { 1: 'article', 2: 'korea-business-immigration-part-2-2026',
-               3: 'korea-business-immigration-part-3-2026', 4: 'korea-business-immigration-part-4-2026' };
+const SLUG = { 1: 'korea-business-immigration-visa-guide-d9-4-d9-5-2026', 2: 'foreigner-franchise-business-korea-2026',
+               3: 'how-to-open-a-business-in-korea-as-a-foreigner-2026', 4: 'korea-permanent-residency-foreign-business-owner-2026' };
 
 const SRC = {
   ko: { 2: 'content_ep2.js', 3: 'content_ep3.js', 4: 'content_ep4.js' },

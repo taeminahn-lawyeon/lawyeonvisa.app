@@ -22,8 +22,8 @@ const HEADER = read('partials/header.html');
 const FOOTER = { en: read('partials/footer.en.html'), ko: read('partials/footer.ko.html') };
 const SCRIPTS = [
   '<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>',
-  '<script src="__BASE__js/supabase-client.js?v=20260611"></script>',
-  '<script src="__BASE__js/site.js?v=4"></script>',
+  '<script src="__BASE__js/supabase-client.js?v=20260612"></script>',
+  '<script src="__BASE__js/site.js?v=5"></script>',
 ].join('\n');
 
 // ---- per-language UI strings (header chrome) ----
@@ -80,28 +80,28 @@ const PAGES = [
              ko: '비자·출입국·사업이민 실무에 관한 법무법인 로연 변호사의 인사이트.' },
   },
   {
-    id: 'article', content: 'article',
+    id: 'korea-business-immigration-visa-guide-d9-4-d9-5-2026', content: 'article',
     title: { en: "An Overview of Korea's Business-Immigration Visas (D-9-4·D-9-5) — Law Firm Lawyeon",
              ko: '한국 사업이민 비자 개괄 (D-9-4·D-9-5) — 법무법인 로연' },
     desc:  { en: "D-9-4, D-9-5 and franchising as a realistic route for foreign sole proprietors immigrating to Korea.",
              ko: '외국인 개인사업자의 한국 사업이민 — D-9-4·D-9-5와 프랜차이즈라는 현실적 경로.' },
   },
   {
-    id: 'korea-business-immigration-part-2-2026', content: 'korea-business-immigration-part-2-2026',
+    id: 'foreigner-franchise-business-korea-2026', content: 'foreigner-franchise-business-korea-2026',
     title: { en: 'What Franchise Business Should a Foreigner Open in Korea? — Law Firm Lawyeon',
              ko: '한국 사업이민 비자 제도의 구조 — 투자금·체류·연장·동반가족 — 법무법인 로연' },
     desc:  { en: 'Industries, brands and the legally mandated Franchise Disclosure Document — how foreign sole proprietors choose a business and headquarters in Korea.',
              ko: 'D-9-4·D-9-5 투자금 인정, 집행, 업종·인허가, 체류자격 변경, 연장 심사, 동반가족 초청까지 — 한국 사업이민 비자 제도의 실제 구조.' },
   },
   {
-    id: 'korea-business-immigration-part-3-2026', content: 'korea-business-immigration-part-3-2026',
+    id: 'how-to-open-a-business-in-korea-as-a-foreigner-2026', content: 'how-to-open-a-business-in-korea-as-a-foreigner-2026',
     title: { en: 'How to Open a Store in Korea as a Foreigner (2026) — Law Firm Lawyeon',
              ko: '한국에서 사업을 시작하기까지, 실제로 무엇이 진행되는가 — 법무법인 로연' },
     desc:  { en: 'The five-stage process from the first pre-consultation back home to opening day in Korea, with FAQs and common mistakes.',
              ko: '본국 사전 상담부터 한국 매장 개업까지 — 사업이민 5단계 프로젝트의 실제 진행, 자주 묻는 질문과 흔한 실수.' },
   },
   {
-    id: 'korea-business-immigration-part-4-2026', content: 'korea-business-immigration-part-4-2026',
+    id: 'korea-permanent-residency-foreign-business-owner-2026', content: 'korea-permanent-residency-foreign-business-owner-2026',
     title: { en: 'Permanent Residency in Korea for Foreign Business Owners — Law Firm Lawyeon',
              ko: '한국 사업이민 이후 — 장기 거주·가족·부동산·사회보험 — 법무법인 로연' },
     desc:  { en: 'Long-term residence, the F-2-99 to F-5 path, family settlement, real estate and social insurance after the visa is issued.',

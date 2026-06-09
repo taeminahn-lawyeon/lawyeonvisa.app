@@ -1,175 +1,143 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://www.lawyeonvisa.app/</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <loc>https://www.lawyeonvisa.app/main</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/main"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/main"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog.html</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <loc>https://www.lawyeonvisa.app/ko/main</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/main"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/main"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/price-list.html</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/consultation</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/consultation"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/consultation"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/partnership-apply.html</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://www.lawyeonvisa.app/ko/consultation</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/consultation"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/consultation"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/terms-of-service.html</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://www.lawyeonvisa.app/booking</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/booking"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/booking"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/privacy-policy.html</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://www.lawyeonvisa.app/ko/booking</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/booking"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/booking"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/refund-policy.html</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
-  <url>
-    <loc>https://www.lawyeonvisa.app/blog/韓国で起業する方法-外国人個人事業主向けD-9-4-D-9-5ビザガイド-2026.html</loc>
-    <lastmod>2026-05-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/mypage</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/mypage"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/mypage"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog/韓国永住権-外国人事業主向けF-2-99からF-5ガイド-2026.html</loc>
-    <lastmod>2026-05-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/ko/mypage</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/mypage"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/mypage"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog/韓国で店舗を開く方法-外国人向け5段階プロセス-2026.html</loc>
-    <lastmod>2026-05-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/visa-info</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/visa-info"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/visa-info"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog/韓国フランチャイズビジネス-外国人起業家向け業種ブランドガイド-2026.html</loc>
-    <lastmod>2026-05-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/ko/visa-info</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/visa-info"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/visa-info"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog/ธุรกิจแฟรนไชส์ในเกาหลีสำหรับผู้ประกอบการต่างชาติ-2026.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/corporate-advisory</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/corporate-advisory"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/corporate-advisory"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog/สิทธิการพำนักถาวรในเกาหลีสำหรับผู้ประกอบการต่างชาติ-2026.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/ko/corporate-advisory</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/corporate-advisory"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/corporate-advisory"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog/ขั้นตอนการเปิดร้านในเกาหลีสำหรับชาวต่างชาติ-2026.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/insights</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/insights"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/insights"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog/วิธีเริ่มต้นธุรกิจในเกาหลีสำหรับชาวต่างชาติ-2026.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/ko/insights</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/insights"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/insights"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog/kinh-doanh-nhuong-quyen-tai-han-quoc-cho-nguoi-nuoc-ngoai-2026.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/korea-business-immigration-visa-guide-d9-4-d9-5-2026</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/korea-business-immigration-visa-guide-d9-4-d9-5-2026"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/korea-business-immigration-visa-guide-d9-4-d9-5-2026"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog/cach-bat-dau-kinh-doanh-tai-han-quoc-cho-nguoi-nuoc-ngoai-2026.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/ko/korea-business-immigration-visa-guide-d9-4-d9-5-2026</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/korea-business-immigration-visa-guide-d9-4-d9-5-2026"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/korea-business-immigration-visa-guide-d9-4-d9-5-2026"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog/quy-trinh-mo-cua-hang-tai-han-quoc-cho-nguoi-nuoc-ngoai-2026.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/foreigner-franchise-business-korea-2026</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/foreigner-franchise-business-korea-2026"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/foreigner-franchise-business-korea-2026"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog/thuong-tru-tai-han-quoc-cho-chu-doanh-nghiep-nuoc-ngoai-2026.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/ko/foreigner-franchise-business-korea-2026</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/foreigner-franchise-business-korea-2026"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/foreigner-franchise-business-korea-2026"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog/外国人在韩国创业-D-9-4-D-9-5签证完全指南-2026.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/how-to-open-a-business-in-korea-as-a-foreigner-2026</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/how-to-open-a-business-in-korea-as-a-foreigner-2026"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/how-to-open-a-business-in-korea-as-a-foreigner-2026"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog/外国企业主韩国永久居留-F-2-99到F-5指南-2026.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/ko/how-to-open-a-business-in-korea-as-a-foreigner-2026</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/how-to-open-a-business-in-korea-as-a-foreigner-2026"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/how-to-open-a-business-in-korea-as-a-foreigner-2026"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog/外国人在韩国开店流程-五阶段完整指南-2026.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/korea-permanent-residency-foreign-business-owner-2026</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/korea-permanent-residency-foreign-business-owner-2026"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/korea-permanent-residency-foreign-business-owner-2026"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog/外国人在韩国开加盟店-行业品牌指南-2026.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/ko/korea-permanent-residency-foreign-business-owner-2026</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/korea-permanent-residency-foreign-business-owner-2026"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/korea-permanent-residency-foreign-business-owner-2026"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog/korea-franchise-business-foreign-entrepreneur-2026.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/chosun-university-student-legal-mou-2026</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/chosun-university-student-legal-mou-2026"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/chosun-university-student-legal-mou-2026"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog/how-to-open-a-store-in-korea-as-a-foreigner-2026.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/ko/chosun-university-student-legal-mou-2026</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/chosun-university-student-legal-mou-2026"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/chosun-university-student-legal-mou-2026"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog/permanent-residency-korea-foreign-business-owner-2026.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/d10-job-seeker-visa-korea-2026</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/d10-job-seeker-visa-korea-2026"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/d10-job-seeker-visa-korea-2026"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog/start-a-business-in-korea-as-a-foreigner-2026.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/ko/d10-job-seeker-visa-korea-2026</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/d10-job-seeker-visa-korea-2026"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/d10-job-seeker-visa-korea-2026"/>
   </url>
   <url>
-    <loc>https://www.lawyeonvisa.app/blog/d10-visa-korea-new-graduate-points-exemption-guide-2026.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.lawyeonvisa.app/far-east-university-student-job-fair-mou-2026</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/far-east-university-student-job-fair-mou-2026"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/far-east-university-student-job-fair-mou-2026"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeonvisa.app/ko/far-east-university-student-job-fair-mou-2026</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/far-east-university-student-job-fair-mou-2026"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/far-east-university-student-job-fair-mou-2026"/>
   </url>
 </urlset>
