@@ -735,17 +735,79 @@
             }
         }
     </style>
-    <!-- Lawyeon 디자인 톤 오버라이드 -->
+    <!-- ============ Lawyeon 디자인 시스템 리빌드 (관리자) ============ -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap');
-        body { font-family: 'Manrope','IBM Plex Sans KR','Pretendard',-apple-system,BlinkMacSystemFont,sans-serif !important; background: #F4F2EE !important; color: #211C15 !important; }
-        .header { background: #FFFFFF !important; border-bottom: 1px solid #E9E6DF !important; box-shadow: none !important; }
-        .tabs .tab { color: #6E665B !important; }
-        .tabs .tab.active { color: #4A3C2B !important; }
-        .stat-card, .filter-section, .threads-section, .tab-content, .modal-content { border-color: #E9E6DF !important; }
-        .btn-open-thread { background: #887668; color: #fff; border: none; border-radius: 4px; padding: 7px 12px; font-size: 12.5px; font-weight: 600; cursor: pointer; white-space: nowrap; display:inline-flex; align-items:center; gap:6px; }
-        .btn-open-thread:hover { background: #6F6053; }
-        .badge { background: #887668 !important; }
+        :root{
+            --a-bg:#EFEDE7; --a-card:#FFFFFF; --a-card2:#F6F5F2; --a-ink:#211C15; --a-muted:#6E665B;
+            --a-brown:#4A3C2B; --a-brown-d:#332920; --a-btn:#887668; --a-btn-d:#6F6053;
+            --a-rule:#E9E6DF; --a-rule-d:#D8D2C6;
+        }
+        body { font-family:'Manrope','IBM Plex Sans KR','Pretendard',-apple-system,BlinkMacSystemFont,sans-serif !important; background:var(--a-bg) !important; color:var(--a-ink) !important; }
+
+        /* 헤더 */
+        .header { background:var(--a-card) !important; border-bottom:1px solid var(--a-rule) !important; box-shadow:none !important; padding:18px 24px !important; }
+        .header h1 { font-size:20px !important; font-weight:800 !important; letter-spacing:-.02em !important; color:var(--a-brown-d) !important; }
+        .header-btn { border-radius:6px !important; border:1.5px solid var(--a-rule-d) !important; background:var(--a-card) !important; color:var(--a-brown) !important; font-weight:600 !important; box-shadow:none !important; }
+        .header-btn:hover { border-color:var(--a-btn) !important; color:var(--a-btn) !important; }
+        .header-btn.primary, .logout-btn { background:var(--a-btn) !important; border-color:var(--a-btn) !important; color:#fff !important; }
+        .header-btn.primary:hover, .logout-btn:hover { background:var(--a-btn-d) !important; }
+
+        /* 통계 카드 */
+        .stats-grid { display:grid !important; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)) !important; gap:16px !important; }
+        .stat-card { background:var(--a-card) !important; border:1px solid var(--a-rule) !important; border-radius:12px !important; box-shadow:none !important; padding:22px !important; }
+        .stat-card:hover { border-color:var(--a-rule-d) !important; transform:none !important; }
+        .stat-card * { color:inherit; }
+
+        /* 탭 */
+        .tabs-container { background:transparent !important; box-shadow:none !important; border:none !important; padding:0 !important; }
+        .tabs { gap:4px !important; border-bottom:1px solid var(--a-rule) !important; }
+        .tab { background:transparent !important; border:none !important; border-bottom:2px solid transparent !important; border-radius:0 !important; color:var(--a-muted) !important; font-weight:600 !important; font-size:14.5px !important; padding:12px 16px !important; box-shadow:none !important; }
+        .tab:hover { color:var(--a-brown) !important; }
+        .tab.active { color:var(--a-brown-d) !important; border-bottom-color:var(--a-btn) !important; background:transparent !important; }
+
+        /* 섹션 카드 */
+        .threads-section, .tab-content, .filter-section { background:var(--a-card) !important; border:1px solid var(--a-rule) !important; border-radius:12px !important; box-shadow:none !important; }
+        .threads-section h2 { color:var(--a-brown-d) !important; font-weight:800 !important; letter-spacing:-.01em !important; }
+        .thread-count { color:var(--a-muted) !important; background:var(--a-card2) !important; border-radius:20px !important; font-weight:600 !important; }
+
+        /* 필터 */
+        .filter-section { padding:18px 20px !important; }
+        .filter-item input, .filter-item select, .form-group input, .form-group select, .modal input, .modal select, .modal textarea {
+            border:1.5px solid var(--a-rule-d) !important; border-radius:6px !important; font-family:inherit !important; color:var(--a-ink) !important; background:#fff !important;
+        }
+        .filter-item input:focus, .filter-item select:focus, .form-group input:focus, .form-group select:focus { outline:none !important; border-color:var(--a-btn) !important; }
+        .filter-btn, .action-btn, .bulk-btn, .modal-btn, .primary, button.primary { background:var(--a-btn) !important; color:#fff !important; border:1.5px solid var(--a-btn) !important; border-radius:6px !important; font-weight:600 !important; }
+        .filter-btn:hover, .action-btn:hover, .bulk-btn:hover, .modal-btn:hover, .primary:hover { background:var(--a-btn-d) !important; border-color:var(--a-btn-d) !important; }
+        .secondary, button.secondary, .modal-btn.secondary { background:#fff !important; color:var(--a-brown) !important; border:1.5px solid var(--a-rule-d) !important; }
+        .secondary:hover { border-color:var(--a-btn) !important; color:var(--a-btn) !important; }
+
+        /* 테이블 */
+        .customers-table, .threads-table, table { border-collapse:collapse !important; }
+        .customers-table th, .threads-table th, table thead th {
+            background:var(--a-card2) !important; color:var(--a-muted) !important; font-weight:700 !important; font-size:12.5px !important;
+            text-transform:none !important; letter-spacing:0 !important; border-bottom:1px solid var(--a-rule) !important; padding:12px 14px !important; text-align:left !important;
+        }
+        .customers-table td, .threads-table td, table tbody td { border-bottom:1px solid #F0EEE8 !important; padding:12px 14px !important; color:var(--a-ink) !important; font-size:13.5px !important; }
+        .customers-table tbody tr:hover, .threads-table tbody tr:hover { background:var(--a-card2) !important; }
+
+        /* 배지 */
+        .badge, .nav-badge { background:var(--a-btn) !important; color:#fff !important; }
+        .visa-badge { background:var(--a-card2) !important; color:var(--a-brown) !important; border:1px solid var(--a-rule-d) !important; border-radius:6px !important; font-weight:600 !important; }
+        .status-badge, .org-badge { border-radius:6px !important; }
+
+        /* 모달 */
+        .modal-content { background:var(--a-card) !important; border:1px solid var(--a-rule) !important; border-radius:14px !important; box-shadow:0 20px 50px rgba(0,0,0,.18) !important; }
+        .modal-header { border-bottom:1px solid var(--a-rule) !important; }
+        .modal-header h3, .modal-header h2 { color:var(--a-brown-d) !important; font-weight:800 !important; }
+        .modal-footer { border-top:1px solid var(--a-rule) !important; }
+
+        .empty-state { color:#9b9384 !important; }
+        .empty-state i { color:var(--a-rule-d) !important; }
+
+        /* 회원 쓰레드 열기 버튼 */
+        .btn-open-thread { background:var(--a-btn); color:#fff; border:none; border-radius:6px; padding:7px 12px; font-size:12.5px; font-weight:600; cursor:pointer; white-space:nowrap; display:inline-flex; align-items:center; gap:6px; }
+        .btn-open-thread:hover { background:var(--a-btn-d); }
     </style>
 </head>
 <body>
