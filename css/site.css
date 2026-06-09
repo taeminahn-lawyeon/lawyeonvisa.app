@@ -29,6 +29,13 @@ img{max-width:100%}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
 
+/* ---------- Global readability / line-break tuning ---------- */
+h1,h2,h3,h4,.sec-title,.doc-title,.cc-title,.intro-left h1,.art-head h1,.page-head h1{overflow-wrap:break-word;text-wrap:balance}
+p,li{overflow-wrap:break-word}
+.body p,.body li,.intro-desc,.page-head .lead,.channel p{text-wrap:pretty}
+/* Korean keeps words intact (no mid-word breaks); English wraps naturally */
+html[lang="ko"] body{word-break:keep-all}
+
 /* ---------- Buttons ---------- */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--sans);font-weight:600;font-size:15px;letter-spacing:.01em;padding:14px 26px;border-radius:3px;border:1.5px solid transparent;cursor:pointer;transition:background .15s,color .15s,border-color .15s,transform .05s;white-space:nowrap}
 .btn:active{transform:translateY(1px)}
@@ -39,8 +46,8 @@ a{color:inherit;text-decoration:none}
 
 /* ---------- Header ---------- */
 .header{background:#FFFFFF;color:var(--ink);border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:50}
-.header-content{max-width:var(--wrap);margin:0 auto;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.brand{display:flex;align-items:center;gap:14px}
+.header-content{max-width:var(--wrap);margin:0 auto;padding:18px 28px;display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:14px 16px}
+.brand{display:flex;align-items:center;gap:14px;margin-right:auto}
 .brand .name{font-weight:700;font-size:19px;color:var(--brown-d);letter-spacing:-.01em;line-height:1.15}
 .brand .sub{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:4px}
 .header-actions{display:flex;align-items:center;gap:12px}
@@ -147,20 +154,105 @@ section{padding:74px 0}
 .copyright{margin-top:22px;font-size:11.5px;color:#6E6655}
 
 /* ---------- Responsive ---------- */
-@media (max-width:980px){.intro-grid{grid-template-columns:1fr;gap:36px}.case-grid2{grid-template-columns:repeat(2,1fr)}}
+/* Tablet */
+@media (max-width:1024px){
+    :root{--wrap:980px}
+    section{padding:62px 0}
+    .intro-grid{gap:40px}
+    .form-grid{gap:32px}
+    .art-layout{grid-template-columns:200px minmax(0,1fr);gap:40px}
+}
+@media (max-width:980px){
+    .intro-grid{grid-template-columns:1fr;gap:36px}
+    .intro-left h1{max-width:none}
+    .intro-left .intro-desc{max-width:none}
+    .case-grid2{grid-template-columns:repeat(2,1fr)}
+    .attorneys-track{animation-duration:36s}
+}
+
+/* Phone */
 @media (max-width:680px){
-    .wrap{padding:0 18px}
-    .header-content{padding:14px 18px;flex-wrap:wrap;gap:12px}
+    .wrap{padding:0 20px}
+
+    /* Header — compact top row + full-width scrollable nav strip */
+    .header-content{padding:13px 20px;gap:11px 14px}
     .brand .sub{display:none}
-    .nav-links{display:none}
-    section{padding:52px 0}
-    .sec-head-row{flex-direction:column;align-items:flex-start;gap:12px}
-    .list-head{align-items:flex-start;flex-direction:column;gap:12px}
-    .doc-row{gap:14px}.doc-date{font-size:12.5px}
-    .case-grid2{grid-template-columns:1fr}.ccard{min-height:0}
-    .consult-grid{grid-template-columns:1fr}
+    .brand .name{font-size:18px}
+    .header-actions{order:2}
+    .nav-links{order:3;flex-basis:100%;width:100%;gap:22px;margin-top:1px;padding-top:11px;border-top:1px solid var(--rule);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .nav-links::-webkit-scrollbar{display:none}
+    .nav-links a{font-size:14.5px;white-space:nowrap}
+    .nav-mypage{font-size:14px;margin-right:2px}
+    .header .btn{padding:9px 15px;font-size:13.5px}
+
+    section{padding:46px 0}
+    .sec-title{font-size:clamp(22px,6.6vw,27px)}
+    .sec-head-row{flex-direction:column;align-items:flex-start;gap:12px;margin-bottom:22px}
+    .list-head{align-items:flex-start;flex-direction:column;gap:14px}
+
+    /* Intro */
+    .intro{padding:36px 0 44px}
+    .intro-left h1{font-size:clamp(27px,7.6vw,34px);line-height:1.28}
+    .intro-left .intro-desc{font-size:16px;line-height:1.72;margin-top:16px}
+    .reg-badge{margin:24px 0}
+    .intro-cta{gap:10px}
+    .intro-cta .btn{flex:1 1 auto}
+
+    /* Attorney carousel — larger, more legible */
+    .attorney-card{width:44vw;max-width:200px}
+    .attorney-photo{height:56vw;max-height:250px}
+    .attorney-name{font-size:14px}
+
+    /* Insights / document list */
+    .cat-toggle{gap:10px}
+    .cat-toggle .ct{font-size:15px}
+    .doc-row{flex-direction:column;align-items:flex-start;gap:8px;padding:21px 2px}
+    .doc-title{font-size:18px;line-height:1.5}
+    .doc-tags{margin-top:9px}
+    .doc-tags span{font-size:13px}
+    .doc-date{font-size:13px;order:-1}
+
+    /* Cases & News */
+    .case-grid2{grid-template-columns:1fr;gap:16px}
+    .ccard{min-height:0;padding:24px 22px}
+    .ccard .cc-title{font-size:18px}
+    .ccard .cc-excerpt{font-size:14.5px;-webkit-line-clamp:4}
+
+    /* Consultation */
+    .consult-grid{grid-template-columns:1fr;gap:16px}
+    .channel{padding:26px 22px}
+    .channel h3{font-size:20px}
+    .channel p{font-size:15px}
+
+    /* Footer */
+    .footer-inner{padding:46px 0 40px}
     .footer-top{flex-direction:column;align-items:flex-start}
     .footer-tel{text-align:left}
+
+    /* Sub-page head + forms */
+    .page-head{padding:40px 0 24px}
+    .page-head .lead{font-size:15.5px}
+    .panel{padding:24px 20px}
+    .field input,.field select,.field textarea{font-size:16px!important}
+
+    /* Article body — readable, scrollable tables */
+    .art-head{padding:34px 0 26px}
+    .art-head h1{font-size:clamp(25px,7vw,32px);line-height:1.32}
+    .art-layout{padding:30px 0 64px}
+    .body h2{font-size:clamp(20px,5.6vw,24px)}
+    .body p,.body .callout{font-size:16.5px;line-height:1.85}
+    .body ul li,.body ol li{font-size:16px}
+    .tbl{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    table{min-width:520px}
+    .cta-band{padding:16px}
+    .related a{flex-direction:column;gap:5px}
+    .related .rtag{order:-1}
+}
+
+@media (max-width:430px){
+    .attorney-card{width:46vw}
+    .attorney-photo{height:60vw}
+    .intro-cta .btn{padding:13px 16px}
 }
 
 /* ---------- Sub-page head ---------- */

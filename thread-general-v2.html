@@ -1366,7 +1366,34 @@
             }
 
             .thread-title {
-                font-size: 18px;
+                font-size: 19px;
+            }
+
+            .thread-meta {
+                flex-wrap: wrap;
+                gap: 6px 14px;
+                font-size: 13px;
+            }
+
+            .header-title {
+                font-size: 15px;
+            }
+
+            /* Readable message body + scrollable wide tables on mobile */
+            .message-body {
+                font-size: 16px;
+                line-height: 1.85;
+            }
+
+            .message-card {
+                padding: 18px 16px;
+            }
+
+            .message-body table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                white-space: nowrap;
             }
 
             .admin-buttons {
