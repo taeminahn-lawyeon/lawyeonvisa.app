@@ -2355,8 +2355,8 @@
             `;
             
             filteredCustomers.forEach(customer => {
-                const stayExpiry = customer.stay_expiry 
-                    ? new Date(customer.stay_expiry)
+                const stayExpiry = (customer.visa_expiry_date || customer.stay_expiry)
+                    ? new Date(customer.visa_expiry_date || customer.stay_expiry)
                     : null;
                 
                 let expiryDisplay = '-';
@@ -2428,8 +2428,8 @@
                 if (visaFilter && customer.visa_type !== visaFilter) return false;
                 if (nationalityFilter && customer.nationality !== nationalityFilter) return false;
                 
-                if (expiryFilter && customer.stay_expiry) {
-                    const stayExpiry = new Date(customer.stay_expiry);
+                if (expiryFilter && (customer.visa_expiry_date || customer.stay_expiry)) {
+                    const stayExpiry = new Date(customer.visa_expiry_date || customer.stay_expiry);
                     const now = new Date();
                     const diffDays = Math.floor((stayExpiry - now) / (1000 * 60 * 60 * 24));
                     

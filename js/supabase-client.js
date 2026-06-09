@@ -1288,28 +1288,30 @@ async function createWelcomeMessage(threadId, serviceName) {
             }
 
             const isKoLang = (lang === 'ko');
+            const visaInfoUrl = (isKoLang ? '/ko/' : '/') + 'visa-info';
             const W = isKoLang ? {
                 title: '상담 신청이 접수되었습니다',
                 greeting: `안녕하세요. <strong>${serviceName}</strong> 신청이 접수되어 전용 쓰레드가 열렸습니다.`,
                 lead: '상담받고 싶은 내용을 이 쓰레드에 자유롭게 남겨 주세요. 관련 서류나 사진이 있다면 함께 올려 주시면 검토에 도움이 됩니다. 남겨 주신 내용은 <strong>로연</strong>에서 확인한 뒤 이 쓰레드로 답변드립니다.',
-                infoTitle: '기본 정보 입력',
-                infoDesc: '원활한 검토를 위해 기본 정보를 먼저 남겨 주세요.',
-                infoLink: '기본 정보 입력하기',
+                infoTitle: '체류·비자 정보',
+                infoDesc: '체류 상태(비자·만료일 등)를 입력하거나 수정하시려면 아래에서 진행해 주세요.',
+                infoLink: '정보 입력·수정',
                 footer: '추가로 궁금하신 점도 이 쓰레드에 남겨 주세요.'
             } : {
                 title: 'Your consultation request has been received',
                 greeting: `Hello. Your request for <strong>${serviceName}</strong> has been received and a private thread has been opened.`,
                 lead: 'Please share here what you would like to consult about. If you have any related documents or photos, feel free to attach them — it helps us review. <strong>Lawyeon</strong> will review what you share and reply in this thread.',
-                infoTitle: 'Submit basic information',
-                infoDesc: 'Please share your basic information first so we can review smoothly.',
-                infoLink: 'Enter basic info',
+                infoTitle: 'Your residence information',
+                infoDesc: 'To enter or update your residence status (visa, expiry, etc.), use the link below.',
+                infoLink: 'Enter / update info',
                 footer: 'For any further questions, just leave them in this thread.'
             };
 
-            const infoBox = hasProfile ? '' : `
+            // 정보는 언제든 입력·수정할 수 있도록 항상 안내(쓰레드에서 다시 받을 수 있음).
+            const infoBox = `
                 <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 12px 0;">
                     <div style="font-weight: 700; color: #191F28; margin-bottom: 6px;">${W.infoTitle}</div>
-                    <div style="color: #374151; line-height: 1.6;">${W.infoDesc} <a href="${formUrl}" target="_blank" style="color: #3182F6; font-weight: 600;">${W.infoLink}</a></div>
+                    <div style="color: #374151; line-height: 1.6;">${W.infoDesc} <a href="${visaInfoUrl}" target="_blank" style="color: #887668; font-weight: 600;">${W.infoLink}</a></div>
                 </div>
             `;
 
