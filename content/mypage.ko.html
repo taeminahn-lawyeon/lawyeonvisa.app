@@ -1,0 +1,146 @@
+<style>
+.mypage .mp-grid{display:grid;grid-template-columns:1fr;gap:22px;padding:8px 0 80px}
+.mypage .card{background:#fff;border:1px solid var(--rule);border-radius:10px;padding:24px}
+.mypage .card-2{background:var(--card-2)}
+.mypage h2.sec{font-size:18px;font-weight:700;color:var(--ink);margin:8px 0 14px;letter-spacing:-.01em}
+.mypage .status-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.mypage .status-name{font-size:20px;font-weight:700;color:var(--ink)}
+.mypage .status-sub{font-size:13.5px;color:var(--muted);margin-top:4px}
+.mypage .res-row{display:flex;gap:26px;flex-wrap:wrap;margin-top:16px}
+.mypage .res-item .k{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.04em}
+.mypage .res-item .v{font-size:17px;color:var(--ink);font-weight:700;margin-top:3px}
+.mypage .dday{display:inline-block;margin-left:8px;font-size:12.5px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--card-2);color:var(--brown)}
+.mypage .dday.warn{background:#FBF1EF;color:#C0392B}
+.mypage .case{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 4px;border-bottom:1px solid var(--rule)}
+.mypage .case:last-child{border-bottom:none}
+.mypage .case .ct{font-weight:600;color:var(--ink);font-size:15px}
+.mypage .case .cs{font-size:12.5px;color:var(--muted);margin-top:3px}
+.mypage .badge{font-size:12px;font-weight:700;padding:4px 10px;border-radius:20px;background:var(--card-2);color:var(--brown);white-space:nowrap}
+.mypage .empty{color:var(--muted);font-size:14px;padding:18px 4px;line-height:1.7}
+.mypage .desk-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.mypage .deskcard h3{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.mypage .deskcard .dc-count{font-size:12px;color:var(--muted);margin-bottom:12px}
+.mypage .svc{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 0;border-top:1px dashed var(--rule);font-size:13.5px}
+.mypage .svc .st{color:var(--ink)}
+.mypage .svc .sf{color:var(--btn);font-weight:600;white-space:nowrap}
+.mypage .gate{text-align:center;padding:30px}
+.mypage .gate .btn{margin-top:14px}
+@media(max-width:760px){.mypage .desk-grid{grid-template-columns:1fr}}
+</style>
+
+<section class="page-head">
+    <div class="wrap">
+        <h1>마이 페이지</h1>
+        <p class="lead">내 사건 진행 상황, 체류 상태, 출입국 업무를 한 곳에서 확인하세요.</p>
+    </div>
+</section>
+
+<div class="wrap mypage">
+    <div class="card gate" id="loginGate" style="display:none">
+        <div style="font-weight:700;color:var(--ink);font-size:17px;margin-bottom:6px">로그인이 필요합니다</div>
+        <p style="color:var(--muted);font-size:14px;line-height:1.7">마이 페이지를 이용하려면 먼저 로그인(회원가입)해 주세요.</p>
+        <button class="btn btn-primary" id="gateLogin">Google 계정으로 계속하기</button>
+    </div>
+
+    <div class="mp-grid" id="content" style="display:none">
+        <div class="card card-2" id="resCard">
+            <div class="status-head">
+                <div>
+                    <div class="status-name" id="resName">—</div>
+                    <div class="status-sub">내 체류 상태</div>
+                </div>
+                <a href="visa-info" class="btn btn-line" id="resEdit" style="display:none">정보 수정</a>
+            </div>
+            <div id="resBody"></div>
+        </div>
+
+        <div class="card">
+            <h2 class="sec">내 사건</h2>
+            <div id="caseList"><div class="empty">불러오는 중…</div></div>
+        </div>
+
+        <div class="card">
+            <h2 class="sec">출입국 업무 데스크</h2>
+            <div class="desk-grid" id="deskGrid"><div class="empty">불러오는 중…</div></div>
+        </div>
+    </div>
+</div>
+
+<script>
+(function(){
+    var LANG='ko';
+    var loginGate=document.getElementById('loginGate'), content=document.getElementById('content');
+    var STAT={ received:'접수', document:'서류 준비', in_progress:'진행 중', review:'검토', waiting:'대기', completed:'완료', done:'완료', cancelled:'취소', paid:'결제완료' };
+
+    document.getElementById('gateLogin').addEventListener('click', function(){ if(typeof signInWithGoogle==='function') signInWithGoogle(); });
+
+    function fmtDate(s){ if(!s) return ''; var d=new Date(s); return d.getFullYear()+'.'+('0'+(d.getMonth()+1)).slice(-2)+'.'+('0'+d.getDate()).slice(-2); }
+    function dday(s){ if(!s) return null; var t=new Date(s); var n=new Date(); t.setHours(0,0,0,0); n.setHours(0,0,0,0); return Math.round((t-n)/86400000); }
+    function esc(s){ return String(s==null?'':s).replace(/[&<>]/g, function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
+
+    function renderResidence(p){
+        var nm = (p && p.name) ? p.name : (window.__MP_EMAIL__||'');
+        document.getElementById('resName').textContent = nm ? (nm+'님') : '환영합니다';
+        var body=document.getElementById('resBody'); var edit=document.getElementById('resEdit');
+        var hasVisa = p && (p.visa_type || p.visa_expiry_date);
+        var hasCountry = p && p.is_in_korea===false && p.country;
+        if(!hasVisa && !hasCountry){
+            body.innerHTML='<p class="empty" style="padding:14px 0">아직 체류 정보가 없습니다. 비자 정보를 제출하시면 체류 상태와 만료일을 한눈에 확인하실 수 있습니다.</p>'+
+                '<a href="visa-info" class="btn btn-primary">비자 정보 제출</a>';
+            return;
+        }
+        edit.style.display='';
+        if(p.is_in_korea===false && p.country){
+            var c=(window.COUNTRIES||[]).filter(function(x){return x.c===p.country||x.en===p.country||x.ko===p.country;})[0];
+            body.innerHTML='<div class="res-row"><div class="res-item"><div class="k">현재 체류</div><div class="v">국외 체류</div></div>'+
+                '<div class="res-item"><div class="k">체류 국가</div><div class="v">'+esc(c?c.ko:p.country)+'</div></div></div>';
+            return;
+        }
+        var dd=dday(p.visa_expiry_date);
+        var ddHtml = (dd!==null) ? ('<span class="dday'+(dd<=30?' warn':'')+'">'+(dd>=0?('D-'+dd):('D+'+(-dd)))+'</span>') : '';
+        body.innerHTML='<div class="res-row">'+
+            '<div class="res-item"><div class="k">체류 자격</div><div class="v">'+esc(p.visa_type||'미입력')+'</div></div>'+
+            '<div class="res-item"><div class="k">체류 만료일</div><div class="v">'+(p.visa_expiry_date?esc(fmtDate(p.visa_expiry_date)):'미입력')+ddHtml+'</div></div>'+
+            (p.nationality?'<div class="res-item"><div class="k">국적</div><div class="v">'+esc(p.nationality)+'</div></div>':'')+
+            '</div>';
+    }
+
+    function renderCases(threads){
+        var el=document.getElementById('caseList');
+        if(!threads||!threads.length){ el.innerHTML='<div class="empty">아직 진행 중인 사건이 없습니다. <a href="consultation" style="color:var(--btn);font-weight:600">상담 신청하기</a></div>'; return; }
+        el.innerHTML=threads.map(function(t){
+            var st=STAT[t.status]||t.status||'';
+            return '<a class="case" href="__BASE__thread-general-v2.html?id='+t.id+'">'+
+                '<div><div class="ct">'+esc(t.service_name||'상담')+'</div><div class="cs">'+fmtDate(t.created_at)+'</div></div>'+
+                '<span class="badge">'+esc(st)+'</span></a>';
+        }).join('');
+    }
+
+    function renderDesk(data){
+        var el=document.getElementById('deskGrid');
+        if(!data||!data.categories){ el.innerHTML='<div class="empty">불러오지 못했습니다.</div>'; return; }
+        el.innerHTML=data.categories.map(function(cat){
+            var svcs=(cat.services||[]).map(function(s){
+                return '<a class="svc" href="__BASE__service-apply-general.html?service='+esc(s.id)+'"><span class="st">'+esc(s.title)+'</span><span class="sf">신청 →</span></a>';
+            }).join('');
+            return '<div class="card deskcard"><h3>'+esc(cat.name)+'</h3><div class="dc-count">'+(cat.services?cat.services.length:0)+'개 업무</div>'+svcs+'</div>';
+        }).join('');
+    }
+
+    async function loadDesk(){
+        try{ var r=await fetch('__BASE__data/services.json',{cache:'no-cache'}); var d=await r.json(); renderDesk(d); }
+        catch(e){ document.getElementById('deskGrid').innerHTML='<div class="empty">불러오지 못했습니다.</div>'; }
+    }
+
+    document.addEventListener('DOMContentLoaded', async function(){
+        if(typeof checkSession!=='function'){ loginGate.style.display=''; return; }
+        var s=await checkSession();
+        if(!s||!s.user){ loginGate.style.display=''; content.style.display='none'; return; }
+        window.__MP_EMAIL__=s.user.email||'';
+        loginGate.style.display='none'; content.style.display='';
+        try{ var pr=await getUserProfile(s.user.id); renderResidence(pr&&pr.success?pr.data:null); }catch(e){ renderResidence(null); }
+        try{ var tr=await getUserThreads(s.user.id); renderCases(tr&&tr.success?tr.data:[]); }catch(e){ renderCases([]); }
+        loadDesk();
+    });
+})();
+</script>

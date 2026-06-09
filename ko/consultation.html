@@ -37,33 +37,112 @@
                 <a href="main#cases">사례·소식</a>
                 <a href="main#consult">상담</a>
             </nav>
+            <a href="mypage" data-login-go="mypage" class="nav-mypage">마이 페이지</a>
             <span class="lang"><a href="../consultation">EN</a><span class="sep">·</span><a href="consultation" class="active">한국어</a></span>
             <a href="consultation" class="btn btn-primary">로그인</a>
         </div>
     </div>
 </header>
 
+<style>
+.consult-intake .field{margin-bottom:16px}
+.consult-intake .field label{display:block;font-size:13px;font-weight:600;color:var(--brown);margin-bottom:7px}
+.consult-intake .field label .req{color:#C0392B}
+.consult-intake .field input,.consult-intake .field select,.consult-intake .field textarea{width:100%;font-family:var(--sans);font-size:15px;color:var(--ink);background:#fff;border:1.5px solid var(--rule-d);border-radius:3px;padding:12px 14px;transition:border-color .12s}
+.consult-intake .field input:focus,.consult-intake .field select:focus,.consult-intake .field textarea:focus{outline:none;border-color:var(--btn)}
+.consult-intake .field textarea{min-height:96px;resize:vertical}
+.consult-intake .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.consult-intake .seg{display:flex;gap:10px}
+.consult-intake .seg label{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--rule-d);border-radius:3px;padding:11px;cursor:pointer;font-size:14.5px;color:var(--ink);font-weight:500}
+.consult-intake .seg label.on{border-color:var(--btn);background:var(--card-2);font-weight:700}
+.consult-intake .seg input{display:none}
+@media(max-width:680px){.consult-intake .two{grid-template-columns:1fr}}
+</style>
+
 <section class="page-head">
     <div class="wrap">
-        <h1>상담 신청</h1>
-        <p class="lead">무료 사전 상담입니다. 사건별 비공개 쓰레드가 생성되어, 상황과 자료를 남기시면 담당자가 검토 후 답변합니다. 비용이 발생하는 경우 검토 후에만 견적으로 안내드립니다.</p>
+        <h1>온라인 상담 신청</h1>
+        <p class="lead">무료 사전 상담입니다. 아래 정보를 남겨 주시면 사건별 비공개 쓰레드가 열리고, 상담받고 싶은 내용을 이어서 남기시면 로연이 검토 후 답변드립니다. 비용이 발생하는 경우 검토 후에만 견적으로 안내드립니다.</p>
     </div>
 </section>
 
 <div class="wrap">
     <div class="form-grid">
-        <div>
+        <div class="consult-intake">
             <div class="panel">
-                <h2>진행 방식</h2>
-                <div class="steps">
-                    <div class="step"><div class="n">1</div><div><h3>상담 신청</h3><p>사건별 전용 쓰레드가 생성됩니다.</p></div></div>
-                    <div class="step"><div class="n">2</div><div><h3>사실관계 검토</h3><p>담당자가 상황과 서류를 확인합니다.</p></div></div>
-                    <div class="step"><div class="n">3</div><div><h3>절차 안내</h3><p>사안에 맞는 구체적 절차를 안내드립니다.</p></div></div>
-                    <div class="step"><div class="n">4</div><div><h3>비용 견적</h3><p>대행 수수료·정부 수수료를 명확히 안내합니다.</p></div></div>
+                <h2>상담 정보 입력</h2>
+                <div class="two">
+                    <div class="field">
+                        <label>이름 <span class="req">*</span></label>
+                        <input type="text" id="cName" placeholder="John Smith" autocomplete="name">
+                    </div>
+                    <div class="field">
+                        <label>연락처 <span class="req">*</span></label>
+                        <input type="tel" id="cPhone" placeholder="010-0000-0000" autocomplete="tel">
+                    </div>
                 </div>
-            </div>
-            <div class="panel">
-                <div class="consent">
+
+                <div class="field">
+                    <label>상담 사안 분야 <span class="req">*</span></label>
+                    <select id="cCategory">
+                        <option value="" disabled selected>분야를 선택하세요</option>
+                        <option>비자·체류</option>
+                        <option>출입국 행정·민원</option>
+                        <option>형사</option>
+                        <option>거주·국적</option>
+                        <option>사업·투자</option>
+                        <option>기타</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>현재 한국에 체류 중이신가요? <span class="req">*</span></label>
+                    <div class="seg" id="inKoreaSeg">
+                        <label data-v="yes"><input type="radio" name="inKorea" value="yes">예, 국내 체류 중</label>
+                        <label data-v="no"><input type="radio" name="inKorea" value="no">아니오, 국외 체류</label>
+                    </div>
+                </div>
+
+                <div id="visaFields" style="display:none">
+                    <div class="two">
+                        <div class="field">
+                            <label>체류 자격(비자)</label>
+                            <select id="cVisa">
+                                <option value="" selected>선택 안 함 / 모름</option>
+                                <option>C-3 단기방문</option>
+                                <option>D-2 유학</option>
+                                <option>D-4 일반연수</option>
+                                <option>D-8 기업투자</option>
+                                <option>D-9 무역경영</option>
+                                <option>D-10 구직</option>
+                                <option>E-7 특정활동</option>
+                                <option>E-9 비전문취업</option>
+                                <option>F-2 거주</option>
+                                <option>F-4 재외동포</option>
+                                <option>F-5 영주</option>
+                                <option>F-6 결혼이민</option>
+                                <option>H-2 방문취업</option>
+                                <option>기타</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>체류 만료일</label>
+                            <input type="date" id="cExpiry">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="countryField" class="field" style="display:none">
+                    <label>현재 체류 국가</label>
+                    <select id="cCountry"><option value="" selected>국가를 선택하세요</option></select>
+                </div>
+
+                <div class="field">
+                    <label>상담 내용 (선택)</label>
+                    <textarea id="cMemo" placeholder="상담받고 싶은 내용을 간단히 적어 주세요. 쓰레드에서 자세히 이어 남기실 수 있습니다."></textarea>
+                </div>
+
+                <div class="consent" style="margin:6px 0 16px">
                     <label><input type="checkbox" id="consentChk"><span>서비스 이용약관 및 개인정보 처리방침에 동의하며, 상담 목적의 개인정보 수집·이용 및 제공에 동의합니다.</span></label>
                     <div class="links">
                         <a href="../terms-of-service?v=2" target="_blank" rel="noopener">이용약관</a>
@@ -76,61 +155,133 @@
         </div>
 
         <aside class="aside-card">
-            <div class="ac-head"><h3>전용 쓰레드</h3><p>담당자와 실시간으로 소통합니다</p></div>
-            <img src="../images/thread-preview.png" alt="쓰레드 미리보기">
-            <div class="ac-cap">비공개 전용 쓰레드에서 진행 상황을 실시간으로 확인하세요.</div>
+            <div class="ac-head"><h3>전용 쓰레드</h3><p>로연과 비공개로 소통합니다</p></div>
+            <img src="../images/thread-preview-renewal.png" alt="쓰레드 미리보기">
+            <div class="ac-cap">비공개 전용 쓰레드에서 진행 상황을 확인하세요.</div>
         </aside>
     </div>
 </div>
 
+<script src="../js/countries.js?v=1"></script>
 <script>
 (function(){
-    var STR={ agree:'서비스 이용약관 및 개인정보 처리방침에 동의해 주세요.', proc:'처리 중…', creating:'쓰레드 생성 중…', cta:'상담 신청하기', err:'오류가 발생했습니다. 다시 시도해 주세요.' };
-    var chk=document.getElementById('consentChk'), btn=document.getElementById('consultBtn');
-    var svc={ id:'general-consultation', name:'무료 사전 상담' };
-    if(chk&&btn){ chk.addEventListener('change',function(){ btn.disabled=!chk.checked; }); btn.addEventListener('click',apply); }
-    function reset(){ btn.disabled=false; btn.textContent=STR.cta; }
+    var LANG='ko';
+    var STR={ agree:'개인정보 수집·이용 및 제공에 동의해 주세요.', need:'이름·연락처·사안 분야·체류 여부를 입력해 주세요.',
+        proc:'처리 중…', creating:'쓰레드 생성 중…', cta:'상담 신청하기',
+        err:'오류가 발생했습니다. 다시 시도해 주세요.' };
+    var PENDING='pendingConsultIntake';
+
+    var name=document.getElementById('cName'), phone=document.getElementById('cPhone'),
+        category=document.getElementById('cCategory'), visa=document.getElementById('cVisa'),
+        expiry=document.getElementById('cExpiry'), country=document.getElementById('cCountry'),
+        memo=document.getElementById('cMemo'), chk=document.getElementById('consentChk'),
+        btn=document.getElementById('consultBtn');
+    var visaFields=document.getElementById('visaFields'), countryField=document.getElementById('countryField');
+    var seg=document.getElementById('inKoreaSeg');
+    var inKorea=null, submitting=false;
+
+    if(window.countryOptions){ country.innerHTML='<option value="" selected>국가를 선택하세요</option>'+window.countryOptions(LANG); }
+
+    Array.prototype.forEach.call(seg.querySelectorAll('label'), function(l){
+        l.addEventListener('click', function(){
+            inKorea = l.getAttribute('data-v')==='yes';
+            Array.prototype.forEach.call(seg.querySelectorAll('label'), function(x){ x.classList.remove('on'); });
+            l.classList.add('on');
+            l.querySelector('input').checked=true;
+            visaFields.style.display = inKorea ? '' : 'none';
+            countryField.style.display = inKorea ? 'none' : '';
+            sync();
+        });
+    });
+
+    function sync(){
+        var ok = name.value.trim() && phone.value.trim() && category.value && inKorea!==null && chk.checked && !submitting;
+        btn.disabled = !ok;
+    }
+    [name,phone].forEach(function(i){ i.addEventListener('input', sync); });
+    category.addEventListener('change', sync);
+    chk.addEventListener('change', sync);
+    btn.addEventListener('click', apply);
+
+    function payload(){
+        return {
+            name:name.value.trim(), phone:phone.value.trim(), category:category.value,
+            in_korea: inKorea,
+            visa: inKorea ? (visa.value||'') : '',
+            expiry: inKorea ? (expiry.value||'') : '',
+            country: inKorea ? '' : (country.value||''),
+            memo: memo.value.trim(), ts:Date.now()
+        };
+    }
 
     async function apply(){
+        if(submitting) return;
+        if(!name.value.trim()||!phone.value.trim()||!category.value||inKorea===null){ alert(STR.need); return; }
         if(!chk.checked){ alert(STR.agree); return; }
-        btn.disabled=true; btn.textContent=STR.proc;
+        submitting=true; btn.disabled=true; btn.textContent=STR.proc;
         try{
             if(typeof checkSession!=='function'){ throw new Error('not ready'); }
             var session=await checkSession();
             if(!session||!session.user){
-                localStorage.setItem('pendingConsult', JSON.stringify({id:svc.id,name:svc.name,ts:Date.now()}));
+                localStorage.setItem(PENDING, JSON.stringify(payload()));
                 var r=await signInWithGoogle();
                 if(!r||!r.success){ throw new Error('login'); }
-                return;
+                return; // 로그인 리디렉션
             }
-            await createThreadFlow(session);
-        }catch(e){ console.error(e); alert(STR.err); reset(); }
+            await createFlow(session, payload());
+        }catch(e){ console.error(e); alert(STR.err); submitting=false; btn.textContent=STR.cta; sync(); }
     }
 
-    async function createThreadFlow(session){
+    async function createFlow(session, d){
         btn.disabled=true; btn.textContent=STR.creating;
         try{
-            var prof=await getUserProfile(session.user.id);
-            if(!prof||!prof.success||!prof.data){
-                var m=session.user.user_metadata||{};
-                await createOrUpdateProfile(session.user.id,{ name:m.full_name||m.name||((session.user.email||'').split('@')[0]), email:session.user.email||'' });
-            }
-            var tr=await createThread({ service_name: svc.name+' (Consultation)', status:'document', amount:0, order_id:'CONSULT-'+Date.now(), is_consulting:true, organization:'general' });
+            var uid=session.user.id;
+            // 프로필/체류정보 저장(최선노력). 기존 컬럼과 신규 컬럼을 분리 저장하여
+            // 마이그레이션 전이라도 기본 정보는 저장되도록 함.
+            var m=session.user.user_metadata||{};
+            try{ await createUserProfile(uid, {
+                name: d.name || m.full_name || m.name || '', email: session.user.email || '',
+                phone: d.phone, visa_type: d.visa || null, visa_expiry_date: d.expiry || null
+            }); }catch(_){}
+            try{ await createUserProfile(uid, {
+                is_in_korea: d.in_korea, country: d.country || null, matter_category: d.category || null
+            }); }catch(_){}
+
+            var svcName = d.category + ' 상담';
+            var tr=await createThread({ service_name: svcName+' (Consultation)', status:'document', amount:0, order_id:'CONSULT-'+Date.now(), is_consulting:true, organization:'general' });
             if(!tr||!tr.success){ throw new Error('thread'); }
-            try{ await createWelcomeMessage(tr.data.id, svc.name); }catch(_){}
-            localStorage.removeItem('pendingConsult');
+            try{ await createWelcomeMessage(tr.data.id, svcName); }catch(_){}
+            // 입력한 사안 정보를 첫 메시지로 남김(선택 내용 포함)
+            try{
+                var lines=['<b>[상담 신청 정보]</b>','· 분야: '+d.category,'· 체류: '+(d.in_korea?('국내 체류'+(d.visa?(' / '+d.visa):'')+(d.expiry?(' / 만료 '+d.expiry):'')):('국외 체류'+(d.country?(' / '+d.country):'')))];
+                if(d.memo) lines.push('· 내용: '+d.memo);
+                if(typeof createMessage==='function'){ await createMessage({ thread_id: tr.data.id, content: lines.join('<br>'), sender_type:'user' }); }
+            }catch(_){}
+            localStorage.removeItem(PENDING);
             window.location.href='../thread-general-v2.html?id='+tr.data.id;
-        }catch(e){ console.error(e); alert(STR.err); reset(); }
+        }catch(e){ console.error(e); alert(STR.err); submitting=false; btn.textContent=STR.cta; sync(); }
     }
 
+    // 로그인 복귀 후 이어서 접수
     document.addEventListener('DOMContentLoaded', async function(){
-        var p=localStorage.getItem('pendingConsult'); if(!p) return;
-        try{ var d=JSON.parse(p); if(Date.now()-d.ts>600000){ localStorage.removeItem('pendingConsult'); return; }
+        var p=localStorage.getItem(PENDING); if(!p) return;
+        try{
+            var d=JSON.parse(p); if(!d || Date.now()-d.ts>600000){ localStorage.removeItem(PENDING); return; }
             if(typeof checkSession!=='function') return;
             var s=await checkSession(); if(!s||!s.user) return;
-            svc={id:d.id,name:d.name}; await createThreadFlow(s);
-        }catch(e){ localStorage.removeItem('pendingConsult'); }
+            // 폼 복원(표시용)
+            name.value=d.name||''; phone.value=d.phone||''; if(d.category) category.value=d.category;
+            inKorea=!!d.in_korea;
+            Array.prototype.forEach.call(seg.querySelectorAll('label'), function(x){ x.classList.toggle('on', x.getAttribute('data-v')===(d.in_korea?'yes':'no')); });
+            visaFields.style.display=d.in_korea?'':'none'; countryField.style.display=d.in_korea?'none':'';
+            if(d.visa) visa.value=d.visa; if(d.expiry) expiry.value=d.expiry; if(d.country) country.value=d.country;
+            if(d.memo) memo.value=d.memo; chk.checked=true;
+            submitting=true;
+            await createFlow(s, d);
+        }catch(e){ localStorage.removeItem(PENDING); }
     });
+
+    sync();
 })();
 </script>
 
@@ -168,7 +319,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../js/supabase-client.js?v=20260609"></script>
-<script src="../js/site.js?v=3"></script>
+<script src="../js/supabase-client.js?v=20260611"></script>
+<script src="../js/site.js?v=4"></script>
 </body>
 </html>

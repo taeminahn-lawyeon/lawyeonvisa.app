@@ -22,16 +22,16 @@ const HEADER = read('partials/header.html');
 const FOOTER = { en: read('partials/footer.en.html'), ko: read('partials/footer.ko.html') };
 const SCRIPTS = [
   '<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>',
-  '<script src="__BASE__js/supabase-client.js?v=20260609"></script>',
-  '<script src="__BASE__js/site.js?v=3"></script>',
+  '<script src="__BASE__js/supabase-client.js?v=20260611"></script>',
+  '<script src="__BASE__js/site.js?v=4"></script>',
 ].join('\n');
 
 // ---- per-language UI strings (header chrome) ----
 const STRINGS = {
   en: { brandName: 'Law Firm Lawyeon', brandSub: 'Visa & Immigration Center',
-        navAbout: 'About Lawyeon', navInsights: 'Insights', navCases: 'Cases & News', navConsult: 'Consultation', login: 'Login' },
+        navAbout: 'About Lawyeon', navInsights: 'Insights', navCases: 'Cases & News', navConsult: 'Consultation', navMypage: 'My Page', login: 'Login' },
   ko: { brandName: '법무법인 로연', brandSub: '출입국이민지원센터',
-        navAbout: '로연 소개', navInsights: '인사이트', navCases: '사례·소식', navConsult: '상담', login: '로그인' },
+        navAbout: '로연 소개', navInsights: '인사이트', navCases: '사례·소식', navConsult: '상담', navMypage: '마이 페이지', login: '로그인' },
 };
 
 // ---- page registry (add pages here as they are migrated) ----
@@ -54,6 +54,18 @@ const PAGES = [
     title: { en: 'Book a Visit Consultation — Law Firm Lawyeon', ko: '방문 상담 예약 — 법무법인 로연' },
     desc:  { en: 'Book an in-person consultation at the Seoul or Gwangju office of Law Firm Lawyeon. Weekdays 09:00–17:00, 1-hour slots.',
              ko: '법무법인 로연 서울·광주 사무소 방문 상담 예약. 평일 09:00–17:00, 1시간 단위(점심 12:00–13:00 제외).' },
+  },
+  {
+    id: 'mypage', content: 'mypage',
+    title: { en: 'My Page — Law Firm Lawyeon', ko: '마이 페이지 — 법무법인 로연' },
+    desc:  { en: 'Your cases, residence status and immigration service desk in one place.',
+             ko: '내 사건, 체류 상태, 출입국 업무 데스크를 한 곳에서.' },
+  },
+  {
+    id: 'visa-info', content: 'visa-info',
+    title: { en: 'Submit Visa Information — Law Firm Lawyeon', ko: '비자 정보 제출 — 법무법인 로연' },
+    desc:  { en: 'Submit your residence and visa information to view your status on My Page.',
+             ko: '체류·비자 정보를 제출하고 마이 페이지에서 상태를 확인하세요.' },
   },
   {
     id: 'corporate-advisory', content: 'corporate-advisory',
@@ -175,6 +187,7 @@ function build() {
         '__NAV_INSIGHTS__': S.navInsights,
         '__NAV_CASES__': S.navCases,
         '__NAV_CONSULT__': S.navConsult,
+        '__NAV_MYPAGE__': S.navMypage,
         '__LOGIN__': S.login,
         '__LANGTOGGLE__': langToggle(lang, page.id),
         '__JSONLD__': page.jsonld ? legalServiceJsonLd(lang) : '',
