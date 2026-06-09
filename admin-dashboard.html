@@ -194,12 +194,12 @@
         }
 
         .filter-btn.primary {
-            background: #3182F6;
+            background: #887668;
             color: white;
         }
 
         .filter-btn.primary:hover {
-            background: #1B64DA;
+            background: #6F6053;
         }
 
         .filter-btn.secondary {
@@ -278,7 +278,7 @@
 
         .status-badge.payment {
             background: #E8F3FF;
-            color: #1B64DA;
+            color: #6F6053;
         }
 
         .status-badge.document {
@@ -288,7 +288,7 @@
 
         .status-badge.processing {
             background: #F0F4FF;
-            color: #3182F6;
+            color: #887668;
         }
 
         .status-badge.completed {
@@ -303,7 +303,7 @@
 
         .status-badge.received {
             background: #E8F3FF;
-            color: #1B64DA;
+            color: #6F6053;
         }
 
         .priority-badge {
@@ -343,12 +343,12 @@
         }
 
         .action-btn.view {
-            background: #3182F6;
+            background: #887668;
             color: white;
         }
 
         .action-btn.view:hover {
-            background: #1B64DA;
+            background: #6F6053;
         }
 
         .action-btn.edit {
@@ -374,7 +374,7 @@
             width: 18px;
             height: 18px;
             cursor: pointer;
-            accent-color: #3182F6;
+            accent-color: #887668;
         }
 
         .threads-table th:first-child,
@@ -420,12 +420,12 @@
         }
 
         .bulk-action-bar .bulk-btn.primary {
-            background: #3182F6;
+            background: #887668;
             color: white;
         }
 
         .bulk-action-bar .bulk-btn.primary:hover {
-            background: #1B64DA;
+            background: #6F6053;
         }
 
         .bulk-action-bar .bulk-btn.secondary {
@@ -607,8 +607,8 @@
         }
 
         .tab.active {
-            color: #3182F6;
-            border-bottom-color: #3182F6;
+            color: #887668;
+            border-bottom-color: #887668;
             background: white;
         }
 
@@ -670,7 +670,7 @@
             font-size: 13px;
             font-weight: 600;
             background: #E8F3FF;
-            color: #1B64DA;
+            color: #6F6053;
         }
 
         .expiry-warning {
@@ -734,6 +734,18 @@
                 grid-template-columns: 1fr;
             }
         }
+    </style>
+    <!-- Lawyeon 디자인 톤 오버라이드 -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap');
+        body { font-family: 'Manrope','IBM Plex Sans KR','Pretendard',-apple-system,BlinkMacSystemFont,sans-serif !important; background: #F4F2EE !important; color: #211C15 !important; }
+        .header { background: #FFFFFF !important; border-bottom: 1px solid #E9E6DF !important; box-shadow: none !important; }
+        .tabs .tab { color: #6E665B !important; }
+        .tabs .tab.active { color: #4A3C2B !important; }
+        .stat-card, .filter-section, .threads-section, .tab-content, .modal-content { border-color: #E9E6DF !important; }
+        .btn-open-thread { background: #887668; color: #fff; border: none; border-radius: 4px; padding: 7px 12px; font-size: 12.5px; font-weight: 600; cursor: pointer; white-space: nowrap; display:inline-flex; align-items:center; gap:6px; }
+        .btn-open-thread:hover { background: #6F6053; }
+        .badge { background: #887668 !important; }
     </style>
 </head>
 <body>
@@ -869,6 +881,9 @@
                 <button class="tab" onclick="switchTab('reservations')">
                     <i class="fas fa-calendar-check"></i> 방문 예약 <span id="reservationBadge" class="badge" style="display: none;">0</span>
                 </button>
+                <button class="tab" onclick="switchTab('corporate')">
+                    <i class="fas fa-building"></i> 기업 자문 <span id="corporateBadge" class="badge" style="display: none;">0</span>
+                </button>
             </div>
         </div>
 
@@ -961,7 +976,7 @@
                 <span class="thread-count" id="newMemberCount">총 0명</span>
             </h2>
             
-            <div style="margin-bottom: 20px; padding: 16px; background: #EBF4FF; border-radius: 12px; border: 1px solid #3182F6;">
+            <div style="margin-bottom: 20px; padding: 16px; background: #EBF4FF; border-radius: 12px; border: 1px solid #887668;">
                 <p style="font-size: 14px; color: #1E40AF; margin: 0;">
                     <i class="fas fa-info-circle"></i> 
                     최근 7일 이내 기본사항을 제출한 회원 목록입니다. 첨부파일(외국인등록증, 여권, 전자서명)은 쓰레드에서 확인할 수 있습니다.
@@ -990,6 +1005,21 @@
             <div id="reservationsTableContainer">
                 <!-- 테이블이 여기에 동적으로 생성됨 -->
             </div>
+        </div>
+
+        <!-- 기업 자문 탭 -->
+        <div id="corporateTab" class="tab-content threads-section">
+            <h2>
+                <span><i class="fas fa-building"></i> 기업 자문 문의</span>
+                <span class="thread-count" id="corporateCount">총 0건</span>
+            </h2>
+            <div style="margin-bottom: 20px; padding: 16px; background: #F4F2EE; border-radius: 8px; border: 1px solid #E3DBCC;">
+                <p style="font-size: 14px; color: #4A3C2B; margin: 0;">
+                    <i class="fas fa-info-circle"></i>
+                    회원가입 없이 접수된 기업 자문 문의 목록입니다.
+                </p>
+            </div>
+            <div id="corporateTableContainer"></div>
         </div>
     </div>
 
@@ -1439,7 +1469,7 @@
                 // 연락처 포맷팅
                 const phone = thread.customer_phone || '-';
                 const phoneDisplay = phone !== '-'
-                    ? `<a href="tel:${phone}" style="color: #3182F6; text-decoration: none;">${phone}</a>`
+                    ? `<a href="tel:${phone}" style="color: #887668; text-decoration: none;">${phone}</a>`
                     : '-';
 
                 // 주문번호 표시 (order_id 또는 payment_id)
@@ -1468,7 +1498,7 @@
                 // 서비스 타입별 색상
                 const typeColors = {
                     'consulting': { bg: '#FEF3C7', color: '#D97706' },
-                    'civil': { bg: '#EBF4FF', color: '#1B64DA' },
+                    'civil': { bg: '#EBF4FF', color: '#6F6053' },
                     'litigation': { bg: '#FCE7F3', color: '#BE185D' }
                 };
                 const typeColor = typeColors[serviceType] || typeColors.civil;
@@ -1931,6 +1961,90 @@
             } else if (tabName === 'reservations') {
                 document.getElementById('reservationsTab').classList.add('active');
                 loadReservationsData();
+            } else if (tabName === 'corporate') {
+                document.getElementById('corporateTab').classList.add('active');
+                loadCorporateInquiries();
+            }
+        }
+
+        // ========================================
+        // 기업 자문 문의 탭
+        // ========================================
+        let corporateInquiries = [];
+        const CORP_STATUS = {
+            requested: { label: '접수', bg: '#B0883F' },
+            contacted: { label: '연락 완료', bg: '#2F855A' },
+            closed:    { label: '종료', bg: '#6E665B' }
+        };
+        function escCorp(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
+        async function loadCorporateInquiries() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('corporate_inquiries')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                if (error) { console.error('기업 자문 로드 오류:', error); corporateInquiries = []; }
+                else { corporateInquiries = data || []; }
+                const pending = corporateInquiries.filter(r => (r.status || 'requested') === 'requested').length;
+                const badge = document.getElementById('corporateBadge');
+                if (badge) { if (pending > 0) { badge.textContent = pending; badge.style.display = 'inline-block'; } else { badge.style.display = 'none'; } }
+                renderCorporateTable();
+            } catch (e) { console.error('기업 자문 로드 오류:', e); }
+        }
+
+        function renderCorporateTable() {
+            const container = document.getElementById('corporateTableContainer');
+            document.getElementById('corporateCount').textContent = `총 ${corporateInquiries.length}건`;
+            if (!corporateInquiries.length) {
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-building"></i><p>접수된 기업 자문 문의가 없습니다.</p></div>';
+                return;
+            }
+            let html = '<table class="customers-table"><thead><tr><th>이름</th><th>회사/기관</th><th>연락처</th><th>이메일</th><th>문의 내용</th><th>접수일</th><th>상태</th></tr></thead><tbody>';
+            corporateInquiries.forEach(q => {
+                const st = CORP_STATUS[q.status || 'requested'] || CORP_STATUS.requested;
+                const phone = q.phone ? `<a href="tel:${escCorp(q.phone)}" style="color:#887668;text-decoration:none;">${escCorp(q.phone)}</a>` : '-';
+                const email = q.email ? `<a href="mailto:${escCorp(q.email)}" style="color:#887668;text-decoration:none;">${escCorp(q.email)}</a>` : '-';
+                html += `<tr>
+                    <td><strong>${escCorp(q.name)}</strong></td>
+                    <td>${escCorp(q.company) || '-'}</td>
+                    <td>${phone}</td>
+                    <td>${email}</td>
+                    <td style="max-width:320px;white-space:pre-wrap;color:#4A3C2B;">${escCorp(q.message) || '-'}</td>
+                    <td>${new Date(q.created_at).toLocaleDateString('ko-KR')}</td>
+                    <td><span class="org-badge" style="background:${st.bg};color:#fff;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:600;">${st.label}</span></td>
+                </tr>`;
+            });
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        // ========================================
+        // 관리자가 회원에게 직접 쓰레드 열기 (자동 안내 멘트 없음)
+        // ========================================
+        async function adminOpenThread(customerId, customerName) {
+            if (!customerId) { alert('대상 회원을 확인할 수 없습니다.'); return; }
+            const svcName = prompt(`${customerName || '회원'} 님에게 새 쓰레드를 엽니다.\n쓰레드 제목(서비스명)을 입력하세요. (자동 안내 메시지는 생성되지 않습니다)`, '상담');
+            if (svcName === null) return;
+            try {
+                const { data, error } = await supabaseClient
+                    .from('threads')
+                    .insert({
+                        user_id: customerId,
+                        service_name: (svcName || '상담').trim() || '상담',
+                        status: 'received',
+                        amount: 0,
+                        is_consulting: true,
+                        organization: 'general'
+                    })
+                    .select()
+                    .single();
+                if (error) throw error;
+                alert('쓰레드를 열었습니다. 관리자 쓰레드 화면을 새 탭에서 엽니다.');
+                window.open('admin-thread.html?id=' + data.id, '_blank');
+            } catch (e) {
+                console.error('쓰레드 생성 실패:', e);
+                alert('쓰레드 생성에 실패했습니다: ' + (e.message || e) + '\n(threads 테이블에 super_admin INSERT 권한이 필요할 수 있습니다.)');
             }
         }
 
@@ -2148,7 +2262,7 @@
                 const hasSignature = member.signature_url;
 
                 const attachments = [];
-                if (hasArc) attachments.push('<span title="외국인등록증"><i class="fas fa-id-card" style="color: #3182F6;"></i></span>');
+                if (hasArc) attachments.push('<span title="외국인등록증"><i class="fas fa-id-card" style="color: #887668;"></i></span>');
                 if (hasPassport) attachments.push('<span title="여권"><i class="fas fa-passport" style="color: #10B981;"></i></span>');
                 if (hasSignature) attachments.push('<span title="전자서명"><i class="fas fa-signature" style="color: #8B5CF6;"></i></span>');
 
@@ -2234,6 +2348,7 @@
                             <th>국적</th>
                             <th>체류 만료일</th>
                             <th>등록일</th>
+                            <th>작업</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -2264,7 +2379,7 @@
                 
                 const phoneDisplay = customer.phone || '-';
                 const phoneLink = customer.phone
-                    ? `<a href="tel:${customer.phone}" style="color: #3182F6; text-decoration: none;">${customer.phone}</a>`
+                    ? `<a href="tel:${customer.phone}" style="color: #887668; text-decoration: none;">${customer.phone}</a>`
                     : '-';
 
                 const customerOrgLabels = {
@@ -2286,6 +2401,7 @@
                         <td>${customer.nationality || '-'}</td>
                         <td class="${expiryClass}">${expiryDisplay}</td>
                         <td>${new Date(customer.created_at).toLocaleDateString('ko-KR')}</td>
+                        <td><button class="btn-open-thread" onclick="adminOpenThread('${customer.id}', '${(customer.name || '').replace(/'/g, '')}')"><i class="fas fa-comment-dots"></i> 쓰레드 열기</button></td>
                     </tr>
                 `;
             });
