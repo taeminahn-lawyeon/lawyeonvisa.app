@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Submit Visa Information — Law Firm Lawyeon</title>
+<meta name="description" content="Submit your residence and visa information to view your status on My Page.">
+<link rel="canonical" href="https://www.lawyeonvisa.app/visa-info">
+<link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/visa-info">
+<link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/visa-info">
+<link rel="alternate" hreflang="x-default" href="https://www.lawyeonvisa.app/visa-info">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Submit Visa Information — Law Firm Lawyeon">
+<meta property="og:description" content="Submit your residence and visa information to view your status on My Page.">
+<meta property="og:url" content="https://www.lawyeonvisa.app/visa-info">
+<meta property="og:image" content="https://www.lawyeonvisa.app/images/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+
+</head>
+<body>
+
+<header class="header">
+    <div class="header-content">
+        <a href="main" class="brand">
+            <div>
+                <div class="name">Law Firm Lawyeon</div>
+                <div class="sub">Visa & Immigration Center</div>
+            </div>
+        </a>
+        <div class="header-actions">
+            <nav class="nav-links">
+                <a href="https://drive.google.com/file/d/1_3Es2JwAtoHfpzKBo7Qh2wkBasXKIDeA/view?usp=drive_link" target="_blank" rel="noopener">About Lawyeon</a>
+                <a href="main#insights">Insights</a>
+                <a href="main#cases">Cases & News</a>
+                <a href="main#consult">Consultation</a>
+                <a href="mypage" data-login-go="mypage">My Page</a>
+            </nav>
+            <span class="lang"><a href="visa-info" class="active">EN</a><span class="sep">·</span><a href="ko/visa-info">한국어</a></span>
+            <a href="consultation" class="btn btn-primary">Login</a>
+        </div>
+    </div>
+</header>
+
+<style>
+.vinfo .field{margin-bottom:16px}
+.vinfo .field label{display:block;font-size:13px;font-weight:600;color:var(--brown);margin-bottom:7px}
+.vinfo .field label .req{color:#C0392B}
+.vinfo .field .opt{color:var(--muted);font-weight:500}
+.vinfo .field input,.vinfo .field select{width:100%;font-family:var(--sans);font-size:15px;color:var(--ink);background:#fff;border:1.5px solid var(--rule-d);border-radius:3px;padding:12px 14px;transition:border-color .12s}
+.vinfo .field input:focus,.vinfo .field select:focus{outline:none;border-color:var(--btn)}
+.vinfo .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.vinfo .seg{display:flex;gap:10px}
+.vinfo .seg label{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--rule-d);border-radius:3px;padding:11px;cursor:pointer;font-size:14.5px;color:var(--ink);font-weight:500}
+.vinfo .seg label.on{border-color:var(--btn);background:var(--card-2);font-weight:700}
+.vinfo .seg input{display:none}
+.vinfo .btn-block{width:100%;margin-top:6px;background:var(--btn);color:#fff;border:none;border-radius:3px;padding:15px;font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer}
+.vinfo .btn-block:disabled{background:#CFC8BC;cursor:not-allowed}
+.vinfo .gate{background:var(--card-2);border:1px solid var(--rule);border-radius:8px;padding:24px;text-align:center}
+.vinfo .gate .btn{margin-top:14px}
+@media(max-width:680px){.vinfo .two{grid-template-columns:1fr}}
+</style>
+
+<section class="page-head">
+    <div class="wrap">
+        <h1>Submit your visa information</h1>
+        <p class="lead">Share your basic information so we can confirm your residence status and handle your matters. You can view and edit it later on My Page.</p>
+    </div>
+</section>
+
+<div class="wrap" style="padding:8px 0 80px;max-width:760px">
+    <div class="vinfo">
+        <div class="gate" id="loginGate" style="display:none">
+            <div style="font-weight:700;color:var(--ink);font-size:16px;margin-bottom:6px">Sign in required</div>
+            <p style="color:var(--muted);font-size:14px;line-height:1.7">Please sign in (or sign up) to submit your visa information.</p>
+            <button class="btn btn-primary" id="gateLogin">Continue with Google</button>
+        </div>
+
+        <div class="panel" id="form" style="display:none">
+            <div class="two">
+                <div class="field">
+                    <label>Last name <span class="req">*</span></label>
+                    <input type="text" id="lastName" placeholder="Smith" autocomplete="family-name">
+                </div>
+                <div class="field">
+                    <label>First name <span class="req">*</span></label>
+                    <input type="text" id="firstName" placeholder="John" autocomplete="given-name">
+                </div>
+            </div>
+            <div class="two">
+                <div class="field">
+                    <label>Date of birth <span class="req">*</span></label>
+                    <input type="date" id="birthDate">
+                </div>
+                <div class="field">
+                    <label>Phone <span class="req">*</span></label>
+                    <input type="tel" id="phone" placeholder="010-0000-0000" autocomplete="tel">
+                </div>
+            </div>
+            <div class="field">
+                <label>Nationality <span class="req">*</span></label>
+                <select id="nationality"><option value="" selected>Select a country</option></select>
+            </div>
+
+            <div class="field">
+                <label>Are you currently in Korea? <span class="req">*</span></label>
+                <div class="seg" id="inKoreaSeg">
+                    <label data-v="yes"><input type="radio" name="inKorea" value="yes">Yes, in Korea</label>
+                    <label data-v="no"><input type="radio" name="inKorea" value="no">No, abroad</label>
+                </div>
+            </div>
+
+            <div id="visaFields" style="display:none">
+                <div class="two">
+                    <div class="field">
+                        <label>Status of stay (visa) <span class="req">*</span></label>
+                        <select id="visaType">
+                            <option value="" selected>Select</option>
+                            <option>C-3 Short-term Visit</option><option>D-2 Student</option><option>D-4 Training</option>
+                            <option>D-8 Corporate Investment</option><option>D-9 Trade/Management</option><option>D-10 Job Seeker</option>
+                            <option>E-7 Specific Activity</option><option>E-9 Non-professional</option><option>F-2 Residence</option>
+                            <option>F-4 Overseas Korean</option><option>F-5 Permanent</option><option>F-6 Marriage</option>
+                            <option>H-2 Working Visit</option><option>Other</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Stay expiry date <span class="req">*</span></label>
+                        <input type="date" id="visaExpiry">
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Alien Registration No. <span class="opt">(optional)</span></label>
+                    <input type="text" id="foreignerNumber" placeholder="000000-0000000">
+                </div>
+                <div class="field">
+                    <label>Address <span class="opt">(optional)</span></label>
+                    <input type="text" id="address" placeholder="Street address">
+                </div>
+            </div>
+
+            <div id="countryField" class="field" style="display:none">
+                <label>Current country of residence <span class="req">*</span></label>
+                <select id="country"><option value="" selected>Select a country</option></select>
+            </div>
+
+            <div class="consent" style="margin:6px 0 16px">
+                <label><input type="checkbox" id="consentChk"><span>I consent to the collection, use and provision of my personal information.</span></label>
+                <div class="links">
+                    <a href="terms-of-service?v=2" target="_blank" rel="noopener">Terms of Service</a>
+                    <a href="privacy-policy?v=2" target="_blank" rel="noopener">Privacy Policy</a>
+                </div>
+            </div>
+            <button class="btn-block" id="saveBtn" disabled>Save</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/countries.js?v=1"></script>
+<script>
+(function(){
+    var LANG='en';
+    var loginGate=document.getElementById('loginGate'), form=document.getElementById('form');
+    var lastName=document.getElementById('lastName'), firstName=document.getElementById('firstName'),
+        birthDate=document.getElementById('birthDate'), phone=document.getElementById('phone'),
+        nationality=document.getElementById('nationality'), visaType=document.getElementById('visaType'),
+        visaExpiry=document.getElementById('visaExpiry'), foreignerNumber=document.getElementById('foreignerNumber'),
+        address=document.getElementById('address'), country=document.getElementById('country'),
+        chk=document.getElementById('consentChk'), saveBtn=document.getElementById('saveBtn');
+    var visaFields=document.getElementById('visaFields'), countryField=document.getElementById('countryField'),
+        seg=document.getElementById('inKoreaSeg');
+    var inKorea=null, user=null, saving=false;
+
+    if(window.countryOptions){
+        nationality.innerHTML='<option value="" selected>Select a country</option>'+window.countryOptions(LANG);
+        country.innerHTML='<option value="" selected>Select a country</option>'+window.countryOptions(LANG);
+    }
+
+    Array.prototype.forEach.call(seg.querySelectorAll('label'), function(l){
+        l.addEventListener('click', function(){
+            inKorea=l.getAttribute('data-v')==='yes';
+            Array.prototype.forEach.call(seg.querySelectorAll('label'), function(x){ x.classList.remove('on'); });
+            l.classList.add('on'); l.querySelector('input').checked=true;
+            visaFields.style.display=inKorea?'':'none'; countryField.style.display=inKorea?'none':'';
+            sync();
+        });
+    });
+
+    function sync(){
+        var base = lastName.value.trim() && firstName.value.trim() && birthDate.value && phone.value.trim() && nationality.value && inKorea!==null && chk.checked && !saving;
+        var detail = inKorea===null ? false : (inKorea ? (visaType.value && visaExpiry.value) : !!country.value);
+        saveBtn.disabled = !(base && detail);
+    }
+    [lastName,firstName,phone].forEach(function(i){ i.addEventListener('input', sync); });
+    [birthDate,nationality,visaType,visaExpiry,country].forEach(function(i){ i.addEventListener('change', sync); });
+    chk.addEventListener('change', sync);
+
+    document.getElementById('gateLogin').addEventListener('click', function(){ if(typeof signInWithGoogle==='function') signInWithGoogle(); });
+
+    saveBtn.addEventListener('click', async function(){
+        if(saving) return; saving=true; saveBtn.disabled=true; saveBtn.textContent='Saving…';
+        try{
+            var uid=user.id;
+            try{ await createUserProfile(uid, {
+                name: lastName.value.trim()+' '+firstName.value.trim(),
+                email: user.email||'', phone: phone.value.trim(),
+                nationality: nationality.value, birth_date: birthDate.value,
+                visa_type: inKorea ? (visaType.value||null) : null,
+                visa_expiry_date: inKorea ? (visaExpiry.value||null) : null,
+                passport_number: inKorea ? (foreignerNumber.value.trim()||null) : null,
+                address: inKorea ? (address.value.trim()||null) : null
+            }); }catch(_){}
+            try{ await createUserProfile(uid, { is_in_korea: inKorea, country: inKorea ? null : (country.value||null) }); }catch(_){}
+            window.location.href='mypage';
+        }catch(e){ console.error(e); alert('Could not save. Please try again.'); saving=false; saveBtn.textContent='Save'; sync(); }
+    });
+
+    function prefill(p){
+        if(!p) return;
+        if(p.name){ var parts=String(p.name).trim().split(' '); if(parts.length>1){ lastName.value=parts[0]; firstName.value=parts.slice(1).join(' '); } else { firstName.value=p.name; } }
+        if(p.phone) phone.value=p.phone;
+        if(p.birth_date) birthDate.value=p.birth_date;
+        if(p.nationality) nationality.value=p.nationality;
+        if(p.visa_type) visaType.value=p.visa_type;
+        if(p.visa_expiry_date) visaExpiry.value=p.visa_expiry_date;
+        if(p.passport_number) foreignerNumber.value=p.passport_number;
+        if(p.address) address.value=p.address;
+        if(p.country) country.value=p.country;
+        if(p.is_in_korea===true || p.is_in_korea===false){
+            inKorea=p.is_in_korea;
+            Array.prototype.forEach.call(seg.querySelectorAll('label'), function(x){ x.classList.toggle('on', x.getAttribute('data-v')===(inKorea?'yes':'no')); });
+            visaFields.style.display=inKorea?'':'none'; countryField.style.display=inKorea?'none':'';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', async function(){
+        if(typeof checkSession!=='function'){ loginGate.style.display=''; return; }
+        var s=await checkSession();
+        if(!s||!s.user){ loginGate.style.display=''; form.style.display='none'; return; }
+        user=s.user; loginGate.style.display='none'; form.style.display='';
+        try{ var pr=await getUserProfile(user.id); if(pr&&pr.success) prefill(pr.data); }catch(_){}
+        sync();
+    });
+})();
+</script>
+
+<footer class="footer">
+    <div class="wrap footer-inner">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <div>
+                    <div class="fb-name">Law Firm Lawyeon</div>
+                    <div class="fb-sub">Visa &amp; Immigration Center</div>
+                </div>
+            </div>
+            <div class="footer-tel">
+                <b>+82-2-2039-0544</b> · Fax 070-8230-0545<br>
+                Seoul · Gwangju offices
+            </div>
+        </div>
+        <div class="footer-info">
+            <div class="row"><b>Entity</b>Law Firm Lawyeon</div>
+            <div class="row"><b>Seoul Office</b>164 Gonghang-daero, Gangseo-gu, Seoul, 5F #503 (Magok-dong, Ryuma Tower) · Rep. J.W. Min</div>
+            <div class="row"><b>Gwangju Office</b>1 Junbeop-ro, Dong-gu, Gwangju, 3F (Jisan-dong, Choseok Bldg) · Rep. S.H. Bong</div>
+            <div class="row"><b>Business Reg. No.</b>391-85-03007 (Seoul Office)</div>
+            <div class="row"><b>E-commerce Reg.</b>2025-Seoul Gangseo-3193</div>
+            <div class="row"><b>Advertising Attorneys</b>D.H. Nam, J.W. Min</div>
+            <div class="footer-links">
+                <a href="privacy-policy?v=2">Privacy Policy</a><span class="sep">·</span>
+                <a href="terms-of-service?v=2">Terms of Service</a><span class="sep">·</span>
+                <a href="price-list">Price List</a><span class="sep">·</span>
+                <a href="refund-policy">Refund Policy</a><span class="sep">·</span>
+                <a href="https://lawyeon.com/" target="_blank" rel="noopener">Law Firm Lawyeon</a>
+            </div>
+            <p class="copyright">All legal services on this site are provided by Law Firm Lawyeon. © Law Firm Lawyeon, Visa &amp; Immigration Center</p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js?v=20260610"></script>
+<script src="js/site.js?v=4"></script>
+</body>
+</html>

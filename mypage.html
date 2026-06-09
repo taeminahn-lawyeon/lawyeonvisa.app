@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Page — Law Firm Lawyeon</title>
+<meta name="description" content="Your cases, residence status and immigration service desk in one place.">
+<link rel="canonical" href="https://www.lawyeonvisa.app/mypage">
+<link rel="alternate" hreflang="en" href="https://www.lawyeonvisa.app/mypage">
+<link rel="alternate" hreflang="ko" href="https://www.lawyeonvisa.app/ko/mypage">
+<link rel="alternate" hreflang="x-default" href="https://www.lawyeonvisa.app/mypage">
+<meta property="og:type" content="website">
+<meta property="og:title" content="My Page — Law Firm Lawyeon">
+<meta property="og:description" content="Your cases, residence status and immigration service desk in one place.">
+<meta property="og:url" content="https://www.lawyeonvisa.app/mypage">
+<meta property="og:image" content="https://www.lawyeonvisa.app/images/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+
+</head>
+<body>
+
+<header class="header">
+    <div class="header-content">
+        <a href="main" class="brand">
+            <div>
+                <div class="name">Law Firm Lawyeon</div>
+                <div class="sub">Visa & Immigration Center</div>
+            </div>
+        </a>
+        <div class="header-actions">
+            <nav class="nav-links">
+                <a href="https://drive.google.com/file/d/1_3Es2JwAtoHfpzKBo7Qh2wkBasXKIDeA/view?usp=drive_link" target="_blank" rel="noopener">About Lawyeon</a>
+                <a href="main#insights">Insights</a>
+                <a href="main#cases">Cases & News</a>
+                <a href="main#consult">Consultation</a>
+                <a href="mypage" data-login-go="mypage">My Page</a>
+            </nav>
+            <span class="lang"><a href="mypage" class="active">EN</a><span class="sep">·</span><a href="ko/mypage">한국어</a></span>
+            <a href="consultation" class="btn btn-primary">Login</a>
+        </div>
+    </div>
+</header>
+
+<style>
+.mypage .mp-grid{display:grid;grid-template-columns:1fr;gap:22px;padding:8px 0 80px}
+.mypage .card{background:#fff;border:1px solid var(--rule);border-radius:10px;padding:24px}
+.mypage .card-2{background:var(--card-2)}
+.mypage h2.sec{font-size:18px;font-weight:700;color:var(--ink);margin:8px 0 14px;letter-spacing:-.01em}
+.mypage .status-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.mypage .status-name{font-size:20px;font-weight:700;color:var(--ink)}
+.mypage .status-sub{font-size:13.5px;color:var(--muted);margin-top:4px}
+.mypage .res-row{display:flex;gap:26px;flex-wrap:wrap;margin-top:16px}
+.mypage .res-item .k{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.04em}
+.mypage .res-item .v{font-size:17px;color:var(--ink);font-weight:700;margin-top:3px}
+.mypage .dday{display:inline-block;margin-left:8px;font-size:12.5px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--card-2);color:var(--brown)}
+.mypage .dday.warn{background:#FBF1EF;color:#C0392B}
+.mypage .case{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 4px;border-bottom:1px solid var(--rule)}
+.mypage .case:last-child{border-bottom:none}
+.mypage .case .ct{font-weight:600;color:var(--ink);font-size:15px}
+.mypage .case .cs{font-size:12.5px;color:var(--muted);margin-top:3px}
+.mypage .badge{font-size:12px;font-weight:700;padding:4px 10px;border-radius:20px;background:var(--card-2);color:var(--brown);white-space:nowrap}
+.mypage .empty{color:var(--muted);font-size:14px;padding:18px 4px;line-height:1.7}
+.mypage .desk-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.mypage .deskcard h3{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.mypage .deskcard .dc-count{font-size:12px;color:var(--muted);margin-bottom:12px}
+.mypage .svc{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 0;border-top:1px dashed var(--rule);font-size:13.5px}
+.mypage .svc .st{color:var(--ink)}
+.mypage .svc .sf{color:var(--btn);font-weight:600;white-space:nowrap}
+.mypage .gate{text-align:center;padding:30px}
+.mypage .gate .btn{margin-top:14px}
+@media(max-width:760px){.mypage .desk-grid{grid-template-columns:1fr}}
+</style>
+
+<section class="page-head">
+    <div class="wrap">
+        <h1>My Page</h1>
+        <p class="lead">Your cases, residence status, and immigration services — all in one place.</p>
+    </div>
+</section>
+
+<div class="wrap mypage">
+    <div class="card gate" id="loginGate" style="display:none">
+        <div style="font-weight:700;color:var(--ink);font-size:17px;margin-bottom:6px">Sign in required</div>
+        <p style="color:var(--muted);font-size:14px;line-height:1.7">Please sign in (or sign up) to use My Page.</p>
+        <button class="btn btn-primary" id="gateLogin">Continue with Google</button>
+    </div>
+
+    <div class="mp-grid" id="content" style="display:none">
+        <div class="card card-2" id="resCard">
+            <div class="status-head">
+                <div>
+                    <div class="status-name" id="resName">—</div>
+                    <div class="status-sub">Your residence status</div>
+                </div>
+                <a href="visa-info" class="btn btn-line" id="resEdit" style="display:none">Edit</a>
+            </div>
+            <div id="resBody"></div>
+        </div>
+
+        <div class="card">
+            <h2 class="sec">My cases</h2>
+            <div id="caseList"><div class="empty">Loading…</div></div>
+        </div>
+
+        <div class="card">
+            <h2 class="sec">Immigration service desk</h2>
+            <div class="desk-grid" id="deskGrid"><div class="empty">Loading…</div></div>
+        </div>
+    </div>
+</div>
+
+<script>
+(function(){
+    var LANG='en';
+    var loginGate=document.getElementById('loginGate'), content=document.getElementById('content');
+    var STAT={ received:'Received', document:'Documents', in_progress:'In progress', review:'Review', waiting:'Waiting', completed:'Completed', done:'Completed', cancelled:'Cancelled', paid:'Paid' };
+
+    document.getElementById('gateLogin').addEventListener('click', function(){ if(typeof signInWithGoogle==='function') signInWithGoogle(); });
+
+    function fmtDate(s){ if(!s) return ''; var d=new Date(s); return d.getFullYear()+'.'+('0'+(d.getMonth()+1)).slice(-2)+'.'+('0'+d.getDate()).slice(-2); }
+    function dday(s){ if(!s) return null; var t=new Date(s); var n=new Date(); t.setHours(0,0,0,0); n.setHours(0,0,0,0); return Math.round((t-n)/86400000); }
+    function esc(s){ return String(s==null?'':s).replace(/[&<>]/g, function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
+
+    function renderResidence(p){
+        var nm = (p && p.name) ? p.name : '';
+        document.getElementById('resName').textContent = nm || 'Welcome';
+        var body=document.getElementById('resBody'); var edit=document.getElementById('resEdit');
+        var hasVisa = p && (p.visa_type || p.visa_expiry_date);
+        var hasCountry = p && p.is_in_korea===false && p.country;
+        if(!hasVisa && !hasCountry){
+            body.innerHTML='<p class="empty" style="padding:14px 0">No residence information yet. Submit your visa information to see your status and expiry at a glance.</p>'+
+                '<a href="visa-info" class="btn btn-primary">Submit visa information</a>';
+            return;
+        }
+        edit.style.display='';
+        if(p.is_in_korea===false && p.country){
+            var c=(window.COUNTRIES||[]).filter(function(x){return x.c===p.country||x.en===p.country||x.ko===p.country;})[0];
+            body.innerHTML='<div class="res-row"><div class="res-item"><div class="k">Currently</div><div class="v">Abroad</div></div>'+
+                '<div class="res-item"><div class="k">Country</div><div class="v">'+esc(c?c.en:p.country)+'</div></div></div>';
+            return;
+        }
+        var dd=dday(p.visa_expiry_date);
+        var ddHtml = (dd!==null) ? ('<span class="dday'+(dd<=30?' warn':'')+'">'+(dd>=0?('D-'+dd):('D+'+(-dd)))+'</span>') : '';
+        body.innerHTML='<div class="res-row">'+
+            '<div class="res-item"><div class="k">Status of stay</div><div class="v">'+esc(p.visa_type||'—')+'</div></div>'+
+            '<div class="res-item"><div class="k">Stay expiry</div><div class="v">'+(p.visa_expiry_date?esc(fmtDate(p.visa_expiry_date)):'—')+ddHtml+'</div></div>'+
+            (p.nationality?'<div class="res-item"><div class="k">Nationality</div><div class="v">'+esc(p.nationality)+'</div></div>':'')+
+            '</div>';
+    }
+
+    function renderCases(threads){
+        var el=document.getElementById('caseList');
+        if(!threads||!threads.length){ el.innerHTML='<div class="empty">No cases yet. <a href="consultation" style="color:var(--btn);font-weight:600">Request a consultation</a></div>'; return; }
+        el.innerHTML=threads.map(function(t){
+            var st=STAT[t.status]||t.status||'';
+            return '<a class="case" href="thread-general-v2.html?id='+t.id+'">'+
+                '<div><div class="ct">'+esc(t.service_name||'Consultation')+'</div><div class="cs">'+fmtDate(t.created_at)+'</div></div>'+
+                '<span class="badge">'+esc(st)+'</span></a>';
+        }).join('');
+    }
+
+    function renderDesk(data){
+        var el=document.getElementById('deskGrid');
+        if(!data||!data.categories){ el.innerHTML='<div class="empty">Could not load.</div>'; return; }
+        el.innerHTML=data.categories.map(function(cat){
+            var svcs=(cat.services||[]).map(function(s){
+                return '<a class="svc" href="service-apply-general.html?service='+esc(s.id)+'"><span class="st">'+esc(s.title)+'</span><span class="sf">Apply →</span></a>';
+            }).join('');
+            return '<div class="card deskcard"><h3>'+esc(cat.name)+'</h3><div class="dc-count">'+(cat.services?cat.services.length:0)+' services</div>'+svcs+'</div>';
+        }).join('');
+    }
+
+    async function loadDesk(){
+        try{ var r=await fetch('data/services.json',{cache:'no-cache'}); var d=await r.json(); renderDesk(d); }
+        catch(e){ document.getElementById('deskGrid').innerHTML='<div class="empty">Could not load.</div>'; }
+    }
+
+    document.addEventListener('DOMContentLoaded', async function(){
+        if(typeof checkSession!=='function'){ loginGate.style.display=''; return; }
+        var s=await checkSession();
+        if(!s||!s.user){ loginGate.style.display=''; content.style.display='none'; return; }
+        loginGate.style.display='none'; content.style.display='';
+        try{ var pr=await getUserProfile(s.user.id); renderResidence(pr&&pr.success?pr.data:null); }catch(e){ renderResidence(null); }
+        try{ var tr=await getUserThreads(s.user.id); renderCases(tr&&tr.success?tr.data:[]); }catch(e){ renderCases([]); }
+        loadDesk();
+    });
+})();
+</script>
+
+<footer class="footer">
+    <div class="wrap footer-inner">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <div>
+                    <div class="fb-name">Law Firm Lawyeon</div>
+                    <div class="fb-sub">Visa &amp; Immigration Center</div>
+                </div>
+            </div>
+            <div class="footer-tel">
+                <b>+82-2-2039-0544</b> · Fax 070-8230-0545<br>
+                Seoul · Gwangju offices
+            </div>
+        </div>
+        <div class="footer-info">
+            <div class="row"><b>Entity</b>Law Firm Lawyeon</div>
+            <div class="row"><b>Seoul Office</b>164 Gonghang-daero, Gangseo-gu, Seoul, 5F #503 (Magok-dong, Ryuma Tower) · Rep. J.W. Min</div>
+            <div class="row"><b>Gwangju Office</b>1 Junbeop-ro, Dong-gu, Gwangju, 3F (Jisan-dong, Choseok Bldg) · Rep. S.H. Bong</div>
+            <div class="row"><b>Business Reg. No.</b>391-85-03007 (Seoul Office)</div>
+            <div class="row"><b>E-commerce Reg.</b>2025-Seoul Gangseo-3193</div>
+            <div class="row"><b>Advertising Attorneys</b>D.H. Nam, J.W. Min</div>
+            <div class="footer-links">
+                <a href="privacy-policy?v=2">Privacy Policy</a><span class="sep">·</span>
+                <a href="terms-of-service?v=2">Terms of Service</a><span class="sep">·</span>
+                <a href="price-list">Price List</a><span class="sep">·</span>
+                <a href="refund-policy">Refund Policy</a><span class="sep">·</span>
+                <a href="https://lawyeon.com/" target="_blank" rel="noopener">Law Firm Lawyeon</a>
+            </div>
+            <p class="copyright">All legal services on this site are provided by Law Firm Lawyeon. © Law Firm Lawyeon, Visa &amp; Immigration Center</p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js?v=20260610"></script>
+<script src="js/site.js?v=4"></script>
+</body>
+</html>
