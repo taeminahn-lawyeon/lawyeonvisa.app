@@ -75,10 +75,6 @@ p,li,.intro-desc,.lead,.doc-tags{text-wrap:pretty}
 .mobile-menu .mm-inner{padding:6px 22px 22px}
 .mobile-menu a{display:block;font-size:17px;font-weight:600;color:var(--brown);padding:15px 2px;border-bottom:1px solid var(--rule)}
 .mobile-menu a:active{color:var(--brown-d)}
-.mobile-menu .mm-lang{display:flex;align-items:center;gap:10px;padding:16px 2px 4px;font-size:15px}
-.mobile-menu .mm-lang a{display:inline;border:none;padding:0;color:var(--muted);font-weight:600}
-.mobile-menu .mm-lang a.active{color:var(--ink)}
-.mobile-menu .mm-lang .sep{color:var(--rule-d)}
 .mobile-menu .btn{display:flex;width:100%;margin-top:16px;padding:15px;font-size:16px;border-bottom:none}
 
 /* ---------- Section base ---------- */
@@ -193,9 +189,12 @@ section{padding:74px 0}
     .intro-grid{grid-template-columns:1fr;gap:34px}
     .intro-left h1,.intro-left .intro-desc{max-width:none}
 }
-/* Below this width the inline nav cramps — switch to a hamburger menu */
+/* Below this width the inline nav cramps — switch to a hamburger menu.
+   The EN/한국어 toggle stays visible in the bar, left of the menu icon. */
 @media (max-width:860px){
-    .nav-links,.nav-mypage,.lang,.header-actions>.btn{display:none}
+    .nav-links,.nav-mypage,.header-actions>.btn{display:none}
+    .brand{margin-right:auto}
+    .lang{font-size:14px;white-space:nowrap}
     .nav-toggle{display:inline-flex}
     .mobile-menu{display:block}
     .header-content{padding:14px 20px}
