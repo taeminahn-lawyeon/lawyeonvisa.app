@@ -65,8 +65,10 @@ async function signInWithGoogle(redirectToOverride) {
             localStorage.removeItem('universityCode');
             redirectUrl = window.location.href;
         } else {
+            // 그 외 페이지: 로그인 후 index가 아니라 '현재 페이지'로 복귀시킨다
+            // (예: urgent-consultation-request.html, profile-submit.html 등 — index로 튕기던 버그 수정)
             localStorage.removeItem('universityCode');
-            redirectUrl = window.location.origin + '/index.html';
+            redirectUrl = window.location.href;
         }
 
         const { data, error } = await supabaseClient.auth.signInWithOAuth({
@@ -174,6 +176,35 @@ async function checkSession() {
         console.error('세션 확인 오류:', error);
         return null;
     }
+}
+
+// 세션을 레이스(구글 OAuth 콜백 처리·세션 복원 지연) 내성 있게 확인.
+// 로그인 직후 콜백 URL(#access_token)이 아직 처리되지 않아 getSession()이
+// 잠깐 null을 돌려주는 사이에 index로 튕기던 문제를 방지한다.
+async function getSessionWithRetry(maxRetries = 4, delayMs = 300) {
+    const hasOAuthReturn = /[#&?](access_token|code)=/.test(
+        (window.location.hash || '') + (window.location.search || '')
+    );
+    for (let i = 0; ; i++) {
+        const s = await checkSession();
+        if (s && s.user) return s;
+        if (i >= maxRetries) return null;
+        // OAuth 토큰이 URL에 있으면 Supabase가 처리할 시간을 조금 더 준다
+        await new Promise(r => setTimeout(r, hasOAuthReturn ? Math.max(delayMs, 500) : delayMs));
+    }
+}
+
+// 로그인 필요 시: index로 튕기지 말고 '현재 페이지로 복귀'하도록 구글 로그인을 시작한다.
+// (returnUrl 미지정 시 현재 URL 보존 → 로그인 후 같은 화면으로 돌아옴)
+async function requireLogin(returnUrl) {
+    returnUrl = returnUrl || window.location.href;
+    try { localStorage.setItem('redirectAfterLogin', returnUrl); } catch (_) {}
+    try { localStorage.setItem('postLoginRedirect', returnUrl); } catch (_) {}
+    if (typeof signInWithGoogle === 'function') {
+        try { await signInWithGoogle(returnUrl); return true; } catch (_) {}
+    }
+    window.location.href = 'index.html'; // 최후 폴백
+    return false;
 }
 
 // ============================================

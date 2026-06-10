@@ -1276,7 +1276,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/translations.js"></script>
     <script src="js/i18n.js"></script>
-    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-client.js?v=20260613"></script>
     <script src="js/notification-service.js?v=20260506"></script>
 
     <script>
@@ -1316,12 +1316,11 @@
                 return;
             }
 
-            // Check login
-            const session = await checkSession();
+            // Check login (OAuth 콜백/세션 복원 레이스 내성: 재시도 후에도 세션이
+            // 없으면 index로 튕기지 말고 현재 URL로 복귀하는 로그인을 시작)
+            const session = await getSessionWithRetry();
             if (!session || !session.user) {
-                localStorage.setItem('redirectAfterLogin', window.location.href);
-                alert(pt('profile.alert.loginRequired'));
-                window.location.href = 'index.html';
+                await requireLogin(window.location.href);
                 return;
             }
 
@@ -1657,10 +1656,10 @@
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
 
             try {
-                const session = await checkSession();
+                const session = await getSessionWithRetry(2, 300);
                 if (!session || !session.user) {
                     alert(pt('profile.alert.sessionExpired'));
-                    window.location.href = 'index.html';
+                    await requireLogin(window.location.href);
                     return;
                 }
 
