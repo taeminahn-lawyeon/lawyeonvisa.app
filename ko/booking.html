@@ -165,7 +165,17 @@
                     </div>
                     <div class="field">
                         <label>연락처 <span class="req">*</span></label>
-                        <input type="tel" id="fTel" placeholder="010-0000-0000" autocomplete="tel">
+                        <div style="display:flex;gap:8px"><select id="fTelCode" aria-label="국가 번호" style="flex:0 0 96px"><option value="+82" selected>KR +82</option><option value="+1">US +1</option><option value="+86">CN +86</option><option value="+84">VN +84</option><option value="+81">JP +81</option><option value="+976">MN +976</option><option value="+66">TH +66</option><option value="+63">PH +63</option><option value="+62">ID +62</option><option value="+95">MM +95</option><option value="+880">BD +880</option><option value="+977">NP +977</option><option value="+998">UZ +998</option><option value="+7">KZ +7</option><option value="+91">IN +91</option><option value="+92">PK +92</option><option value="+856">LA +856</option><option value="+855">KH +855</option><option value="+44">GB +44</option><option value="+234">NG +234</option></select><input type="tel" id="fTel" placeholder="10-0000-0000" autocomplete="tel" inputmode="numeric" style="flex:1 1 auto;min-width:0"></div>
+                    </div>
+                </div>
+                <div class="two">
+                    <div class="field">
+                        <label>이메일</label>
+                        <input type="email" id="fEmail" placeholder="you@example.com" autocomplete="email">
+                    </div>
+                    <div class="field">
+                        <label>현재 비자</label>
+                        <select id="fVisa"><option value="" selected>선택 / 모름</option><option>A-1</option><option>A-2</option><option>A-3</option><option>B-1</option><option>B-2</option><option>C-1</option><option>C-3</option><option>C-4</option><option>D-1</option><option>D-2</option><option>D-3</option><option>D-4</option><option>D-5</option><option>D-6</option><option>D-7</option><option>D-8</option><option>D-9</option><option>D-10</option><option>E-1</option><option>E-2</option><option>E-3</option><option>E-4</option><option>E-5</option><option>E-6</option><option>E-7</option><option>E-8</option><option>E-9</option><option>E-10</option><option>F-1</option><option>F-2</option><option>F-3</option><option>F-4</option><option>F-5</option><option>F-6</option><option>G-1</option><option>H-1</option><option>H-2</option></select>
                     </div>
                 </div>
                 <div class="two">
@@ -239,6 +249,7 @@
         loginCta:'Google 계정으로 로그인하고 계속하기', login:'Google 계정으로 이동 중…',
         agree:'개인정보 수집·이용 및 제공에 동의해 주세요.',
         err:'예약 저장에 실패했습니다. 다시 시도하시거나 02-2039-0544로 연락해 주세요.',
+        badPhone:"올바른 전화번호를 입력해 주세요.", badEmail:"올바른 이메일 주소를 입력해 주세요.",
         confirm:function(name,when,office,phone){
             return name+'님, <b>'+when+'</b> '+office+' 방문 상담이 요청되었습니다. 담당자가 '+phone+'로 확정을 안내드립니다.';
         }
@@ -311,6 +322,28 @@
 
     var office = document.getElementById('fOffice'), topic = document.getElementById('fTopic');
     var name = document.getElementById('fName'), tel = document.getElementById('fTel'), memo = document.getElementById('fMemo');
+    var telCode = document.getElementById('fTelCode');
+    var email = document.getElementById('fEmail');
+    var visa = document.getElementById('fVisa');
+    function onlyDigits(s){ return (s||'').replace(/\D/g,''); }
+    function phoneDigits(){ var d = onlyDigits(tel.value); if(telCode && telCode.value==='+82' && d.charAt(0)==='0') d=d.slice(1); return d; }
+    function formatPhone(){
+        var code = telCode ? telCode.value : '+82';
+        var d = onlyDigits(tel.value);
+        if(code==='+82'){
+            if(d.charAt(0)==='0') d=d.slice(1);
+            d=d.slice(0,10);
+            if(d.length>6) tel.value=d.slice(0,2)+'-'+d.slice(2,6)+'-'+d.slice(6);
+            else if(d.length>2) tel.value=d.slice(0,2)+'-'+d.slice(2);
+            else tel.value=d;
+        } else { tel.value=d.slice(0,15); }
+    }
+    function phoneValid(){ var d=phoneDigits(); if(telCode && telCode.value==='+82') return d.length===9||d.length===10; return d.length>=7&&d.length<=15; }
+    function emailValid(){ var v=((email&&email.value)||'').trim(); return v===''||/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+    function composedPhone(){ return (telCode?telCode.value:'')+' '+tel.value.trim(); }
+    if(tel) tel.addEventListener('input', function(){ formatPhone(); sync(); });
+    if(telCode) telCode.addEventListener('change', function(){ formatPhone(); sync(); });
+    if(email) email.addEventListener('input', sync);
     office.addEventListener('change', function(){ document.getElementById('sOffice').textContent = office.value; });
     topic.addEventListener('change', function(){ document.getElementById('sTopic').textContent = topic.value; });
     [name,tel].forEach(function(i){ i.addEventListener('input', sync); });
@@ -319,7 +352,7 @@
     var consentChk = document.getElementById('consentChk');
     var submitting = false;
     function sync(){
-        var ok = state.date && state.time && name.value.trim() && tel.value.trim() && consentChk.checked && !submitting;
+        var ok = state.date && state.time && name.value.trim() && phoneValid() && emailValid() && consentChk.checked && !submitting;
         bookBtn.disabled = !ok;
     }
     consentChk.addEventListener('change', sync);
@@ -336,9 +369,11 @@
     bookBtn.addEventListener('click', async function(){
         if(submitting) return;
         if(!consentChk.checked){ alert(STR.agree); return; }
+        if(!phoneValid()){ alert(STR.badPhone); return; }
+        if(!emailValid()){ alert(STR.badEmail); return; }
         submitting = true; bookBtn.disabled = true; bookBtn.textContent = STR.submitting;
         var payload = {
-            name:name.value.trim(), phone:tel.value.trim(), office:office.value,
+            name:name.value.trim(), phone:composedPhone(), email:(email?email.value.trim():''), visa:(visa?visa.value:''), office:office.value,
             topic:topic.value, reserve_date:state.date, reserve_time:state.time,
             memo:memo.value, lang:LANG
         };
@@ -391,7 +426,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../js/supabase-client.js?v=20260613"></script>
+<script src="../js/supabase-client.js?v=20260614"></script>
 <script src="../js/site.js?v=8"></script>
 </body>
 </html>

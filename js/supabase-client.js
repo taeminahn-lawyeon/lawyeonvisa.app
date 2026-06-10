@@ -337,6 +337,18 @@ async function createOrUpdateProfile(userId, profileData) {
 // ============================================
 
 // 방문 상담 예약 생성 (로그인 불필요 — anon insert 허용)
+// UUID v4 (crypto.randomUUID 우선, 미지원 환경 폴백)
+function uuidv4() {
+    try { if (window.crypto && crypto.randomUUID) return crypto.randomUUID(); } catch (_) {}
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        let r;
+        try { r = (window.crypto && crypto.getRandomValues) ? (crypto.getRandomValues(new Uint8Array(1))[0] & 15) : (Math.random() * 16 | 0); }
+        catch (_) { r = Math.random() * 16 | 0; }
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
 async function createReservation(reservationData) {
     try {
         if (!supabaseClient) {
@@ -350,7 +362,17 @@ async function createReservation(reservationData) {
             if (u && u.id) userId = u.id;
         } catch (_) { /* 비로그인 방문자 — 무시 */ }
 
-        const record = {
+        // 행 id를 클라이언트에서 생성한다.
+        // 이유: anon(비로그인) 방문자는 reservations SELECT 권한이 없어, insert 후
+        // .select() 되읽기가 RLS로 막혀 '저장 실패'로 잘못 표시되던 버그가 있었다.
+        // id를 미리 알면 되읽기 없이도 어드민 알림(id 기반)을 보낼 수 있다.
+        const newId = uuidv4();
+        const email = ((reservationData.email || '').trim()) || null;
+        const visa  = ((reservationData.visa  || '').trim()) || null;
+        const memoRaw = (reservationData.memo || '').trim();
+
+        const base = {
+            id: newId,
             user_id: userId,
             name: (reservationData.name || '').trim(),
             phone: (reservationData.phone || '').trim(),
@@ -358,29 +380,38 @@ async function createReservation(reservationData) {
             topic: reservationData.topic || null,
             reserve_date: reservationData.reserve_date, // 'YYYY-MM-DD'
             reserve_time: reservationData.reserve_time, // 'HH:MM'
-            memo: ((reservationData.memo || '').trim()) || null,
             lang: reservationData.lang || 'ko'
         };
 
-        const { data, error } = await supabaseClient
-            .from('reservations')
-            .insert(record)
-            .select()
-            .single();
+        // 1차: email/visa 전용 컬럼에 저장 시도
+        let record = Object.assign({}, base, { email: email, visa: visa, memo: memoRaw || null });
+        let { error } = await supabaseClient.from('reservations').insert(record);
+
+        // email/visa 컬럼이 아직 없는 환경이면 memo에 합쳐 재시도(데이터 유실 방지)
+        if (error && /column|schema cache|does not exist|PGRST204/i.test(String(error.message || '') + String(error.code || ''))) {
+            const extra = [];
+            if (email) extra.push('Email: ' + email);
+            if (visa)  extra.push('Visa: ' + visa);
+            const mergedMemo = extra.length
+                ? '[' + extra.join(' | ') + ']' + (memoRaw ? '\n' + memoRaw : '')
+                : (memoRaw || null);
+            record = Object.assign({}, base, { memo: mergedMemo });
+            ({ error } = await supabaseClient.from('reservations').insert(record));
+        }
 
         if (error) {
             console.error('Supabase 예약 생성 오류:', error);
             throw error;
         }
 
-        debugLog('방문 예약 생성 성공:', data);
+        debugLog('방문 예약 생성 성공:', newId);
 
         // 📧 신규 예약 시 어드민 이메일 알림 (실패는 무시 — 저장 성공이 우선)
-        notifyAdminOnNewReservation(data.id)
+        notifyAdminOnNewReservation(newId)
             .then(res => debugLog('📧 [createReservation] 어드민 알림 결과:', res))
             .catch(err => debugLog('Reservation notification error (ignored):', err));
 
-        return { success: true, data };
+        return { success: true, data: Object.assign({ id: newId }, base, { email: email, visa: visa, memo: memoRaw }) };
     } catch (error) {
         console.error('방문 예약 생성 실패:', error);
         return { success: false, error: error.message };
