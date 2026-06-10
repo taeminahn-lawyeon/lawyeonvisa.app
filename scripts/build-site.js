@@ -150,6 +150,20 @@ const PAGES = [
              en: 'What happens if you are held in an immigration detention center in Korea? The nature of detention, how to apply for temporary release and what is required, who may apply, conditional grants and the deposit — regaining liberty during the deportation process.' },
   },
   {
+    id: 'visa-extension-change-denial-reapply-appeal-korea-2026', content: 'visa-extension-change-denial-reapply-appeal-korea-2026',
+    title: { ko: '비자 연장·변경 불허 통지를 받았다면 — 재신청과 불복 (2026) — 법무법인 로연',
+             en: 'If Your Visa Extension or Change Is Denied — Reapplying vs. Appealing (2026) — Law Firm Lawyeon' },
+    desc:  { ko: '체류기간 연장·자격 변경이 불허되면 어떻게 해야 하나요? 남은 출국 기한 확인, 불허 사유 확인, 재신청과 불복(행정심판·취소소송)의 갈림, 국내 불허 처분은 소송으로 다툴 수 있다는 점까지.',
+             en: 'What to do when a stay extension or status change is denied: checking your remaining deadline, confirming the reason, choosing between reapplying and appeal (administrative appeal / revocation suit), and the fact that a domestic denial can be litigated.' },
+  },
+  {
+    id: 'foreigner-national-pension-lump-sum-refund-korea-2026', content: 'foreigner-national-pension-lump-sum-refund-korea-2026',
+    title: { ko: 'E-9·H-2 근로자 국민연금 반환일시금 — 출국 후 본국에서 받는 방법 (2026) — 법무법인 로연',
+             en: 'National Pension Lump-Sum Refund for E-9·H-2 Workers — How to Claim It After Leaving Korea (2026) — Law Firm Lawyeon' },
+    desc:  { ko: 'E-9·H-2 외국인 근로자는 국적과 무관하게 한국에서 낸 국민연금을 반환일시금으로 돌려받을 수 있습니다. 월 급여 250만원·4년 10개월 근무 시 예상 환급액, 출국 후 대리 청구와 본국 계좌 송금, 5년 청구 기한까지.',
+             en: 'E-9·H-2 workers can reclaim their Korean National Pension as a lump-sum refund regardless of nationality. Estimated refund for ₩2.5M/month over 4 years 10 months, proxy claims and overseas remittance after departure, and the five-year deadline.' },
+  },
+  {
     id: 'far-east-university-student-job-fair-mou-2026', content: 'far-east-university-student-job-fair-mou-2026',
     title: { en: 'MOU with Far East University — Visa-Roadmap Lecture & Legal Clinic at the International Student Job Fair — Law Firm Lawyeon',
              ko: '극동대학교 외국인 유학생 취업 박람회 업무 협약 및 비자 로드맵 특강·리걸 클리닉 — 법무법인 로연' },
