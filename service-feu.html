@@ -240,15 +240,27 @@
             padding: 28px;
             margin-bottom: 24px;
         }
-        /* Insights 리스트 (어두운 배너 위 흰 카드) */
-        .insights-list { background: #fff; border-radius: 12px; padding: 4px 18px; }
-        .insight-row { display: flex; justify-content: space-between; align-items: center; gap: 16px;
-            padding: 15px 0; border-bottom: 1px solid #E5E8EB; text-decoration: none; }
-        .insight-title { font-size: 15px; font-weight: 600; line-height: 1.45; color: #1E293B; }
-        .insight-row:hover .insight-title { color: #0078D4; }
-        .insight-date { font-size: 13px; color: #94A3B8; white-space: nowrap; }
-        .insight-more { display: block; padding: 14px 0 6px; text-align: right; font-size: 14px;
-            font-weight: 700; color: #0078D4; text-decoration: none; }
+        /* Insights — 공식 웹사이트(main)와 동일한 문서 리스트 모양 */
+        .uni-insights { margin-bottom: 24px; }
+        .uni-insights .ui-list-head { padding-bottom: 14px; border-bottom: 2px solid #211C15; }
+        .uni-insights .ui-sec-title { font-weight: 700; font-size: 24px; letter-spacing: -0.02em; color: #211C15; }
+        .uni-insights .ui-doc-row { display: flex; justify-content: space-between; align-items: center;
+            gap: 24px; padding: 22px 4px; border-bottom: 1px solid #E9E6DF; text-decoration: none; transition: background .14s; }
+        .uni-insights .ui-doc-row:hover { background: #F6F5F2; }
+        .uni-insights .ui-doc-main { min-width: 0; }
+        .uni-insights .ui-doc-title { font-size: 19px; font-weight: 600; color: #211C15; letter-spacing: -0.01em; line-height: 1.45; }
+        .uni-insights .ui-doc-row:hover .ui-doc-title { color: #0078D4; }
+        .uni-insights .ui-doc-tags { margin-top: 11px; display: flex; flex-wrap: wrap; gap: 6px 14px; }
+        .uni-insights .ui-doc-tags span { font-size: 13.5px; color: #9D968B; font-weight: 400; }
+        .uni-insights .ui-doc-date { font-size: 14px; color: #9D968B; white-space: nowrap; flex-shrink: 0; }
+        .uni-insights .ui-more-row { text-align: center; padding-top: 24px; }
+        .uni-insights .ui-more-plus { font-size: 15px; font-weight: 600; color: #211C15; text-decoration: none; }
+        .uni-insights .ui-more-plus i { color: #0078D4; font-style: normal; margin-left: 6px; }
+        @media (max-width: 600px) {
+            .uni-insights .ui-doc-row { flex-direction: column; align-items: flex-start; gap: 9px; padding: 18px 2px; }
+            .uni-insights .ui-doc-title { font-size: 18px; }
+            .uni-insights .ui-doc-tags { margin-top: 2px; }
+        }
 
         .premium-service-banner h3 {
             font-size: 20px;
@@ -591,24 +603,33 @@
                     </div>
                 </div>
 
-                <!-- Insights (main 블로그) -->
-                <div class="premium-service-banner">
-                    <h3>Insights</h3>
-                    <div class="insights-list">
-                        <a class="insight-row" href="d10-job-seeker-visa-korea-2026">
-                            <span class="insight-title">D-10 Job Seeker Visa 2026 — The New-Graduate Points Exemption, Explained</span>
-                            <span class="insight-date">2026.01.16</span>
+                <!-- Insights (main 블로그 — 공식 사이트와 동일한 모양) -->
+                <div class="uni-insights">
+                    <div class="ui-list-head"><div class="ui-sec-title">Insights</div></div>
+                    <div class="ui-doc-list">
+                        <a class="ui-doc-row" href="d10-job-seeker-visa-korea-2026">
+                            <div class="ui-doc-main">
+                                <div class="ui-doc-title">D-10 Job Seeker Visa 2026 — The New-Graduate Points Exemption, Explained</div>
+                                <div class="ui-doc-tags"><span>#VisaImmigration</span><span>#D-10</span><span>#JobSeeker</span><span>#NewGraduate</span></div>
+                            </div>
+                            <div class="ui-doc-date">2026.01.16</div>
                         </a>
-                        <a class="insight-row" href="korea-business-immigration-visa-guide-d9-4-d9-5-2026">
-                            <span class="insight-title">An Overview of Korea's Business-Immigration Visas — D-9-4, D-9-5, and Franchising as an Option</span>
-                            <span class="insight-date">2026.05.14</span>
+                        <a class="ui-doc-row" href="korea-business-immigration-visa-guide-d9-4-d9-5-2026">
+                            <div class="ui-doc-main">
+                                <div class="ui-doc-title">An Overview of Korea's Business-Immigration Visas — D-9-4, D-9-5, and Franchising as an Option</div>
+                                <div class="ui-doc-tags"><span>#BusinessImmigration</span><span>#D-9-4</span><span>#D-9-5</span><span>#Franchise</span></div>
+                            </div>
+                            <div class="ui-doc-date">2026.05.14</div>
                         </a>
-                        <a class="insight-row" href="korea-permanent-residency-foreign-business-owner-2026">
-                            <span class="insight-title">Permanent Residency in Korea for Foreign Business Owners — F-2-99, Family, Real Estate &amp; Settlement</span>
-                            <span class="insight-date">2026.05.01</span>
+                        <a class="ui-doc-row" href="korea-permanent-residency-foreign-business-owner-2026">
+                            <div class="ui-doc-main">
+                                <div class="ui-doc-title">Permanent Residency in Korea for Foreign Business Owners — F-2-99, Family, Real Estate &amp; Settlement</div>
+                                <div class="ui-doc-tags"><span>#PR</span><span>#F-2-99</span><span>#Family</span><span>#RealEstate</span></div>
+                            </div>
+                            <div class="ui-doc-date">2026.05.01</div>
                         </a>
-                        <a class="insight-more" href="insights">View all insights →</a>
                     </div>
+                    <div class="ui-more-row"><a class="ui-more-plus" href="insights">View all <i>+</i></a></div>
                 </div>
 
                 <!-- Law Firm Introduction Section -->
