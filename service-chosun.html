@@ -233,6 +233,15 @@
             padding: 28px;
             margin-bottom: 24px;
         }
+        /* Insights 리스트 (어두운 배너 위 흰 카드) */
+        .insights-list { background: #fff; border-radius: 12px; padding: 4px 18px; }
+        .insight-row { display: flex; justify-content: space-between; align-items: center; gap: 16px;
+            padding: 15px 0; border-bottom: 1px solid #E5E8EB; text-decoration: none; }
+        .insight-title { font-size: 15px; font-weight: 600; line-height: 1.45; color: #1E293B; }
+        .insight-row:hover .insight-title { color: #0078D4; }
+        .insight-date { font-size: 13px; color: #94A3B8; white-space: nowrap; }
+        .insight-more { display: block; padding: 14px 0 6px; text-align: right; font-size: 14px;
+            font-weight: 700; color: #0078D4; text-decoration: none; }
 
         .premium-service-banner h3 {
             font-size: 20px;
@@ -552,37 +561,46 @@
                 <!-- My Applications (dynamically shown if threads exist) -->
                 <div id="myThreadsSection" style="display: none;"></div>
 
-                <!-- Quick Service Cards (사전 상담 + D-10 비자 변경) -->
+                <!-- Consultation (main 상담 채널: 온라인 / 방문) -->
                 <div class="premium-service-banner">
-                    <h3 data-i18n="emergency.title">Immigration Legal Services</h3>
+                    <h3>Consultation</h3>
                     <div class="premium-service-grid">
-                        <div class="premium-service-card" onclick="goToService('pre-consultation')">
-                            <div class="title" data-i18n="chosun.preconsult.title">사전 상담 신청</div>
+                        <div class="premium-service-card" onclick="location.href='consultation.html'">
+                            <div class="title">Online Consultation</div>
                             <div class="desc">
-                                <div class="desc-item" data-i18n="chosun.preconsult.item1">나에게 맞는 서비스 찾기</div>
-                                <div class="desc-item" data-i18n="chosun.preconsult.item2">전문가 상담 안내</div>
+                                <div class="desc-item">Open a private thread with your situation and documents.</div>
+                                <div class="desc-item">Lawyeon reviews and replies in the thread.</div>
                             </div>
-                            <button class="cta-btn" onclick="event.stopPropagation(); goToService('pre-consultation')"><span data-i18n="chosun.preconsult.cta">사전 상담 신청</span> <span class="arrow">→</span></button>
+                            <button class="cta-btn" onclick="event.stopPropagation(); location.href='consultation.html'"><span>Online consultation</span> <span class="arrow">→</span></button>
                         </div>
-                        <div class="premium-service-card" onclick="goToService('d10-1-chosun')">
-                            <div class="title" data-i18n="chosun.d10change.title">D-10 비자 변경 신청</div>
+                        <div class="premium-service-card" onclick="location.href='booking.html'">
+                            <div class="title">Visit Consultation</div>
                             <div class="desc">
-                                <div class="desc-item" data-i18n="chosun.d10change.item1">D-10-1 일반구직 비자 변경</div>
-                                <div class="desc-item" data-i18n="chosun.d10change.item2">외국인등록증 재발급 포함</div>
+                                <div class="desc-item">Book an in-person consultation at the Seoul or Gwangju office.</div>
+                                <div class="desc-item">Review your documents and strategy in person.</div>
                             </div>
-                            <button class="cta-btn" onclick="event.stopPropagation(); goToService('d10-1-chosun')"><span data-i18n="chosun.d10change.cta">D-10 비자 변경 신청</span> <span class="arrow">→</span></button>
+                            <button class="cta-btn" onclick="event.stopPropagation(); location.href='booking.html'"><span>Book a visit</span> <span class="arrow">→</span></button>
                         </div>
                     </div>
                 </div>
 
-                <!-- 풀폭 긴급 법률 구제 배너 -->
-                <div class="urgent-fullwidth-banner">
-                    <div class="urgent-fullwidth-inner">
-                        <div class="urgent-fullwidth-text">
-                            <h3 class="urgent-fullwidth-headline" data-i18n="home.urgent.headline">긴급 법률 구제가 필요하십니까?</h3>
-                            <p class="urgent-fullwidth-subhead" data-i18n="home.urgent.subhead">출국 명령·체류 거부·형사 사건 등 시간 민감 사안을 전담합니다.</p>
-                        </div>
-                        <button class="cta-btn urgent-fullwidth-cta" onclick="location.href='urgent-consultation-request.html'"><span data-i18n="home.urgent.cta">긴급 상담 요청</span> <span class="arrow">→</span></button>
+                <!-- Insights (main 블로그) -->
+                <div class="premium-service-banner">
+                    <h3>Insights</h3>
+                    <div class="insights-list">
+                        <a class="insight-row" href="d10-job-seeker-visa-korea-2026">
+                            <span class="insight-title">D-10 Job Seeker Visa 2026 — The New-Graduate Points Exemption, Explained</span>
+                            <span class="insight-date">2026.01.16</span>
+                        </a>
+                        <a class="insight-row" href="korea-business-immigration-visa-guide-d9-4-d9-5-2026">
+                            <span class="insight-title">An Overview of Korea's Business-Immigration Visas — D-9-4, D-9-5, and Franchising as an Option</span>
+                            <span class="insight-date">2026.05.14</span>
+                        </a>
+                        <a class="insight-row" href="korea-permanent-residency-foreign-business-owner-2026">
+                            <span class="insight-title">Permanent Residency in Korea for Foreign Business Owners — F-2-99, Family, Real Estate &amp; Settlement</span>
+                            <span class="insight-date">2026.05.01</span>
+                        </a>
+                        <a class="insight-more" href="insights">View all insights →</a>
                     </div>
                 </div>
 
@@ -590,12 +608,12 @@
                 <div class="lawfirm-intro-section">
                     <div class="lawfirm-intro-content">
                         <div class="lawfirm-left">
-                            <p class="lawfirm-headline">Law Firm Lawyeon's Visa &amp; Immigration Center specializes in legal support for foreigners in Korea.</p>
+                            <p class="lawfirm-headline">Leading Law Firm in Immigration Practice Area</p>
                             <div class="registration-badge">
                                 <img src="images/moj-badge.jpg" alt="Ministry of Justice" class="moj-logo">
                                 <span class="registration-text">Registered Immigration Agency<br>#25-SM-RG-063</span>
                             </div>
-                            <p class="lawfirm-subtext">Practicing in immigration office services and legal matters for foreigners and immigrants.</p>
+                            <p class="lawfirm-subtext">The Firm provides legal representation for criminal cases, contracts, and immigration office affairs for expats and migrants in Korea.</p>
                         </div>
                         <div class="lawfirm-right">
                             <div class="attorneys-carousel">
