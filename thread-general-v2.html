@@ -1450,6 +1450,81 @@
                 padding: 12px;
             }
         }
+
+        /* ============================================================
+           모바일 메신저형 레이아웃 (카카오톡/왓츠앱 스타일)
+           - 메시지가 화면을 채우고, 입력창은 하단에 고정
+           - 진행 상황·제출 서류는 메시지 아래로 이동(상단 점유 제거)
+           - 메시지는 좌/우 말풍선 (변호사=좌, 본인=우)
+           ============================================================ */
+        @media (max-width: 768px) {
+            html, body { height: 100%; }
+            body { background: #fff; }
+
+            .thread-container { max-width: 100%; margin: 0; padding: 0 0 76px; }
+            .thread-layout { gap: 0; }
+
+            /* 진행상황/제출서류 사이드바를 메시지 아래로 */
+            .thread-sidebar { order: 2; padding: 8px 12px 24px; }
+            .thread-info-card { margin: 0; border-radius: 0; box-shadow: none;
+                border-bottom: 1px solid #ECEAE5; padding: 14px 16px; }
+            .thread-title { font-size: 18px; margin-bottom: 4px; }
+
+            /* 메시지 영역: 좌우 여백 최소화 */
+            .messages-section { margin: 0; padding: 14px 12px 6px; background: #fff; }
+
+            /* 말풍선 */
+            .message-card { background: transparent; box-shadow: none; border: none;
+                padding: 0; margin: 0 0 14px; animation: none; }
+            .message-header { border: none; padding: 0; margin: 0 0 4px; }
+            .message-author .author-badge { font-size: 11px; padding: 1px 0; background: none !important;
+                color: #8A8175 !important; font-weight: 600; }
+            .message-time { font-size: 11px; color: #B3ABA0; gap: 4px; }
+            .message-body { display: inline-block; max-width: 84%; padding: 11px 14px;
+                border-radius: 16px; font-size: 16px; line-height: 1.7; box-shadow: 0 1px 1px rgba(0,0,0,.05);
+                background: #F1EFEA; color: #2B2620; text-align: left; }
+            .message-body table { font-size: 14px; }
+            .message-attachments { margin-top: 6px; }
+
+            /* 변호사(admin) = 좌측 회색 / 본인(client) = 우측 브랜드색 */
+            .message-card:has(.author-badge.admin) { text-align: left; }
+            .message-card:has(.author-badge.admin) .message-body { background: #F1EFEA; color: #2B2620;
+                border-top-left-radius: 4px; }
+            .message-card:has(.author-badge.client) { text-align: right; }
+            .message-card:has(.author-badge.client) .message-header { flex-direction: row-reverse; }
+            .message-card:has(.author-badge.client) .message-body { background: #4A3C2B; color: #FBF8F2;
+                border-top-right-radius: 4px; text-align: left; }
+            .message-card:has(.author-badge.client) .message-body strong { color: #fff; }
+            .message-card:has(.author-badge.client) .message-body a { color: #F0E2C8; }
+
+            /* 입력창: 하단 고정 메신저 바 */
+            .reply-section { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+                margin: 0; border-radius: 0; padding: 8px 10px;
+                padding-bottom: calc(8px + env(safe-area-inset-bottom));
+                box-shadow: 0 -2px 14px rgba(0,0,0,.10); border-top: 1px solid #ECEAE5; }
+            .reply-section-inner { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px; max-width: 100%; }
+            .reply-header { display: none; }
+            .pending-files { order: 0; flex-basis: 100%; margin: 0 0 2px; max-height: 96px; overflow-y: auto; }
+            .pending-file { margin-bottom: 4px; }
+            .reply-section .reply-attach-btn { order: 1; display: flex; }
+            .editor-container { order: 2; flex: 1 1 auto; min-width: 0; border-radius: 20px;
+                border-color: #E0DCD3; }
+            .ql-toolbar { display: none !important; }
+            .ql-container { font-size: 16px; }
+            .ql-editor { min-height: 22px; max-height: 120px; padding: 9px 14px; line-height: 1.5; }
+            .file-upload-area { display: none; }
+            .reply-actions { order: 3; margin: 0; }
+            .submit-btn { padding: 10px 18px; border-radius: 22px; }
+
+            /* 화면을 가리지 않게 관리자 도구 등은 그대로 흐름 유지 */
+            .admin-tools { margin-bottom: 8px; }
+        }
+
+        /* 첨부(📎) 버튼 — 데스크톱에서는 숨김, 모바일 하단바에서만 노출 */
+        .reply-attach-btn { display: none; align-items: center; justify-content: center;
+            width: 42px; height: 42px; flex: 0 0 auto; border: none; background: #F1EFEA;
+            border-radius: 50%; color: #6F6053; font-size: 18px; cursor: pointer; }
+        .reply-attach-btn:active { background: #E6E2D8; }
     </style>
 </head>
 <body>
@@ -1558,6 +1633,7 @@
                                 <p data-i18n="thread.fileUpload">파일을 드래그하거나 클릭하여 업로드하세요</p>
                             </div>
                             <input type="file" id="fileInput" multiple style="display: none;" onchange="handleFileSelect(event)">
+                            <button type="button" class="reply-attach-btn" id="replyAttachBtn" onclick="document.getElementById('fileInput').click()" aria-label="첨부"><i class="fas fa-paperclip"></i></button>
                             <div class="pending-files" id="pendingFiles"></div>
                             <div class="reply-actions" style="display: flex; gap: 12px; justify-content: flex-end; align-items: center;">
                                 <button class="submit-btn" id="submitBtn" onclick="submitReply()" data-i18n="thread.submit">
@@ -2895,8 +2971,18 @@
 
                 container.innerHTML = visibleMessages.map(msg => renderMessageCard(msg)).join('');
 
-                // Scroll to bottom
-                window.scrollTo(0, document.body.scrollHeight);
+                // Scroll to newest message
+                if (window.matchMedia('(max-width: 768px)').matches) {
+                    // 모바일: 하단 고정 입력바 위로 마지막 메시지가 보이도록
+                    const cards = container.querySelectorAll('.message-card');
+                    const last = cards[cards.length - 1];
+                    if (last) {
+                        last.scrollIntoView({ block: 'end' });
+                        window.scrollBy(0, 96); // 고정 입력바 높이만큼 더 내려 가림 방지
+                    }
+                } else {
+                    window.scrollTo(0, document.body.scrollHeight);
+                }
 
             } catch (error) {
                 console.error('Error loading messages:', error);
@@ -3250,7 +3336,7 @@
         }
 
         async function submitReply() {
-            const content = quillEditor.root.innerHTML;
+            let content = quillEditor.root.innerHTML;
             const plainText = quillEditor.getText().trim();
 
             if (!plainText && pendingFiles.length === 0) {
