@@ -48,6 +48,19 @@
   }
 
   ready(function () {
+    // 0.0) 기사(글) 페이지 무단 복사·드래그 방지 (SEO 영향 없음: 텍스트는 DOM에 그대로 존재).
+    //      CSS user-select:none 와 함께 복사/잘라내기/우클릭/드래그를 차단. 입력 요소는 예외.
+    (function protectArticle() {
+      if (!document.querySelector('.art-layout, article.body')) return;
+      ['copy', 'cut', 'contextmenu', 'dragstart', 'selectstart'].forEach(function (ev) {
+        document.addEventListener(ev, function (e) {
+          var t = e.target;
+          if (t && t.closest && t.closest('input, textarea, [contenteditable="true"]')) return;
+          e.preventDefault();
+        });
+      });
+    })();
+
     // 0) Insert consultation CTAs (top / middle / bottom) into article-design pages.
     (function injectCtas() {
       var body = document.querySelector('.art-layout article.body') || document.querySelector('article.body');

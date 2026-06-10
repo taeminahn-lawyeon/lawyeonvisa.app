@@ -329,6 +329,10 @@ section{padding:74px 0}
 @media(max-width:860px){.form-grid{grid-template-columns:1fr;gap:18px}}
 
 /* ---------- Article (insights detail) ---------- */
+/* 본문 무단 복사·드래그 방지. SEO 영향 없음 — 텍스트는 DOM에 그대로 존재하므로
+   검색엔진 크롤러는 정상 수집하며, 사용자 선택/복사/길게누르기 메뉴만 막는다. */
+.art-head,.art-layout{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-touch-callout:none}
+.art-head img,.art-layout img{-webkit-user-drag:none;user-drag:none}
 .art-head{border-bottom:1px solid var(--rule);padding:48px 0 34px}
 .art-kicker{display:flex;align-items:center;gap:10px;font-size:12.5px;font-weight:600;color:var(--btn);letter-spacing:.02em}
 .art-kicker .cat{text-transform:uppercase;letter-spacing:.1em;font-size:11.5px}
