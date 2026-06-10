@@ -87,8 +87,7 @@
       });
       var mp = actions.querySelector('.nav-mypage');
       if (mp) inner.appendChild(mp.cloneNode(true));
-      var lang = actions.querySelector('.lang');
-      if (lang) { var l = lang.cloneNode(true); l.className = 'mm-lang'; inner.appendChild(l); }
+      // (EN/한국어 토글은 모바일에서도 상단 바에 상시 노출되므로 메뉴에 넣지 않음)
       var btn = actions.querySelector('.btn-primary');
       if (btn) {
         var bclone = btn.cloneNode(true);

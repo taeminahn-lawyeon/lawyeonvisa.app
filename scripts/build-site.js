@@ -23,7 +23,7 @@ const FOOTER = { en: read('partials/footer.en.html'), ko: read('partials/footer.
 const SCRIPTS = [
   '<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>',
   '<script src="__BASE__js/supabase-client.js?v=20260612"></script>',
-  '<script src="__BASE__js/site.js?v=6"></script>',
+  '<script src="__BASE__js/site.js?v=7"></script>',
 ].join('\n');
 
 // ---- per-language UI strings (header chrome) ----
