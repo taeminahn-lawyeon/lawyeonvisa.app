@@ -73,6 +73,118 @@
       body.insertBefore(ctaBand(), body.firstChild); // top (just under the title)
     })();
 
+    // 0.6) Article extras: a Share button (in the head) and a "Related
+    //      Attorneys" card row (at the end of the body). Injected once so
+    //      every article-design page gets them consistently.
+    (function articleExtras() {
+      var head = document.querySelector('.art-head');
+      var body = document.querySelector('.art-layout article.body') || document.querySelector('article.body');
+      if (!head && !body) return;
+
+      // --- Share button ---
+      if (head && !head.querySelector('.art-share')) {
+        var canon = document.querySelector('link[rel="canonical"]');
+        var shareUrl = (canon && canon.href) || location.href;
+        var h1 = document.querySelector('.art-head h1');
+        var shareTitle = (h1 && h1.textContent) || document.title;
+
+        var bar = document.createElement('div');
+        bar.className = 'art-share';
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'art-share-btn';
+        btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+          '<path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg>' +
+          '<span>' + (isKo ? '공유하기' : 'Share') + '</span>';
+        bar.appendChild(btn);
+        head.appendChild(bar);
+
+        var toastEl = null;
+        function toast(msg) {
+          if (toastEl) { toastEl.remove(); toastEl = null; }
+          var el = document.createElement('div');
+          el.className = 'share-toast';
+          el.textContent = msg;
+          document.body.appendChild(el);
+          toastEl = el;
+          requestAnimationFrame(function () { el.classList.add('show'); });
+          setTimeout(function () {
+            el.classList.remove('show');
+            setTimeout(function () { if (el.parentNode) el.remove(); }, 250);
+          }, 1800);
+        }
+        function copyLink() {
+          var done = isKo ? '링크가 복사되었습니다' : 'Link copied';
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(shareUrl).then(function () { toast(done); }).catch(function () { toast(shareUrl); });
+          } else {
+            var ta = document.createElement('textarea');
+            ta.value = shareUrl;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand('copy'); toast(done); } catch (_) { toast(shareUrl); }
+            ta.remove();
+          }
+        }
+        btn.addEventListener('click', function () {
+          if (navigator.share) {
+            navigator.share({ title: shareTitle, url: shareUrl }).catch(function () {});
+          } else {
+            copyLink();
+          }
+        });
+      }
+
+      // --- Related attorneys ---
+      if (body && !body.querySelector('.art-members')) {
+        var base = /\/ko\//.test(location.pathname) ? '../' : '';
+        var members = [
+          { name: isKo ? '민준우' : 'J.W. Min', title: isKo ? '대표변호사' : 'Managing Attorney', email: 'jwmin@lawyeon.com', img: 'min.png' },
+          { name: isKo ? '남도현' : 'D.H. Nam', title: isKo ? '변호사' : 'Attorney', email: 'dhnam@lawyeon.com', img: 'nam.png' },
+          { name: isKo ? '김승철' : 'S.C. Kim', title: isKo ? '변호사' : 'Attorney', email: 'schkim@lawyeon.com', img: 'kim.png' }
+        ];
+        var sec = document.createElement('section');
+        sec.className = 'art-members';
+        var h = document.createElement('h4');
+        h.textContent = isKo ? '관련 구성원' : 'Related Attorneys';
+        sec.appendChild(h);
+        var grid = document.createElement('div');
+        grid.className = 'member-grid';
+        members.forEach(function (m) {
+          var card = document.createElement('div');
+          card.className = 'member-card';
+          var ph = document.createElement('img');
+          ph.className = 'member-photo';
+          ph.src = base + 'images/attorneys/' + m.img;
+          ph.alt = m.name;
+          ph.loading = 'lazy';
+          var info = document.createElement('div');
+          info.className = 'member-info';
+          var nm = document.createElement('div');
+          nm.className = 'member-name';
+          var b = document.createElement('b');
+          b.textContent = m.name;
+          var sp = document.createElement('span');
+          sp.textContent = m.title;
+          nm.appendChild(b);
+          nm.appendChild(sp);
+          var mail = document.createElement('a');
+          mail.className = 'member-mail';
+          mail.href = 'mailto:' + m.email;
+          mail.textContent = m.email;
+          info.appendChild(nm);
+          info.appendChild(mail);
+          card.appendChild(ph);
+          card.appendChild(info);
+          grid.appendChild(card);
+        });
+        sec.appendChild(grid);
+        body.appendChild(sec);
+      }
+    })();
+
     // 0.5) Mobile hamburger menu. Cloned nav items keep their attributes
     //      (incl. data-login-go), so the gating loop below binds them too.
     (function buildMobileNav() {
