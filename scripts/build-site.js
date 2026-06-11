@@ -29,8 +29,10 @@ const SCRIPTS = [
 // ---- per-language UI strings (header chrome) ----
 const STRINGS = {
   en: { brandName: 'Law Firm Lawyeon', brandSub: 'Visa & Immigration Center',
+        siteName: 'Law Firm Lawyeon', siteNameAlt: 'Law Firm Lawyeon Immigration Center',
         navAbout: 'About Lawyeon', navInsights: 'Insights', navCases: 'Cases & News', navConsult: 'Consultation', navMypage: 'My Page', login: 'Login' },
   ko: { brandName: '법무법인 로연', brandSub: '출입국이민지원센터',
+        siteName: '법무법인 로연', siteNameAlt: '법무법인 로연 출입국이민지원센터',
         navAbout: '로연 소개', navInsights: '인사이트', navCases: '사례·소식', navConsult: '상담', navMypage: '마이 페이지', login: '로그인' },
 };
 
@@ -200,6 +202,20 @@ function legalServiceJsonLd(lang) {
   return '<script type="application/ld+json">\n' + JSON.stringify(obj, null, 2) + '\n</' + 'script>';
 }
 
+// WebSite structured data — the primary signal Google uses to show a site name
+// (instead of the bare domain) in search results and AI overviews.
+function websiteJsonLd(lang) {
+  const S = STRINGS[lang];
+  const obj = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: S.siteName,
+    alternateName: S.siteNameAlt,
+    url: SITE + '/',
+  };
+  return '<script type="application/ld+json">\n' + JSON.stringify(obj, null, 2) + '\n</' + 'script>';
+}
+
 function langToggle(lang, id, langs) {
   langs = langs || LANGS;
   const hasEn = langs.indexOf('en') >= 0, hasKo = langs.indexOf('ko') >= 0;
@@ -246,7 +262,9 @@ function build() {
         '__NAV_MYPAGE__': S.navMypage,
         '__LOGIN__': S.login,
         '__LANGTOGGLE__': langToggle(lang, page.id, langs),
+        '__OG_SITE_NAME__': S.siteName,
         '__JSONLD__': page.jsonld ? legalServiceJsonLd(lang) : '',
+        '__WEBSITE_JSONLD__': websiteJsonLd(lang),
       };
       for (const [k, v] of Object.entries(subs)) doc = replaceAll(doc, k, v);
       doc = replaceAll(doc, '__BASE__', base); // last: appears in head/footer/body
