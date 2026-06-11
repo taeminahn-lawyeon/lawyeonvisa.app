@@ -137,13 +137,13 @@
         });
       }
 
-      // --- Related attorneys ---
-      if (body && !body.querySelector('.art-members')) {
+      // --- Related attorneys (under the TOC on desktop, end of body on mobile) ---
+      if (body && !document.querySelector('.art-members')) {
         var base = /\/ko\//.test(location.pathname) ? '../' : '';
         var members = [
-          { name: isKo ? '민준우' : 'J.W. Min', title: isKo ? '대표변호사' : 'Managing Attorney', email: 'jwmin@lawyeon.com', img: 'min.png' },
-          { name: isKo ? '남도현' : 'D.H. Nam', title: isKo ? '변호사' : 'Attorney', email: 'dhnam@lawyeon.com', img: 'nam.png' },
-          { name: isKo ? '김승철' : 'S.C. Kim', title: isKo ? '변호사' : 'Attorney', email: 'schkim@lawyeon.com', img: 'kim.png' }
+          { name: isKo ? '민준우' : 'J.W. Min', title: isKo ? '대표변호사' : 'Managing Partner, Lawyer', email: 'jwmin@lawyeon.com', img: 'min.png' },
+          { name: isKo ? '남도현' : 'D.H. Nam', title: isKo ? '파트너 변호사' : 'Partner, Lawyer', email: 'dhnam@lawyeon.com', img: 'nam.png' },
+          { name: isKo ? '김승철' : 'S.C. Kim', title: isKo ? '파트너 변호사' : 'Partner, Lawyer', email: 'schkim@lawyeon.com', img: 'kim.png' }
         ];
         var sec = document.createElement('section');
         sec.className = 'art-members';
@@ -164,24 +164,33 @@
           info.className = 'member-info';
           var nm = document.createElement('div');
           nm.className = 'member-name';
-          var b = document.createElement('b');
-          b.textContent = m.name;
-          var sp = document.createElement('span');
-          sp.textContent = m.title;
-          nm.appendChild(b);
-          nm.appendChild(sp);
+          nm.textContent = m.name;
+          var tt = document.createElement('div');
+          tt.className = 'member-title';
+          tt.textContent = m.title;
           var mail = document.createElement('a');
           mail.className = 'member-mail';
           mail.href = 'mailto:' + m.email;
           mail.textContent = m.email;
           info.appendChild(nm);
+          info.appendChild(tt);
           info.appendChild(mail);
           card.appendChild(ph);
           card.appendChild(info);
           grid.appendChild(card);
         });
         sec.appendChild(grid);
-        body.appendChild(sec);
+
+        // Desktop: place under the TOC in the sidebar. Mobile (TOC hidden): end of body.
+        var toc = document.querySelector('.art-layout .toc');
+        var mq = window.matchMedia('(max-width:900px)');
+        function placeMembers() {
+          var target = (mq.matches || !toc) ? body : toc;
+          if (sec.parentNode !== target) target.appendChild(sec);
+        }
+        placeMembers();
+        try { mq.addEventListener('change', placeMembers); }
+        catch (_) { try { mq.addListener(placeMembers); } catch (__) {} }
       }
     })();
 
