@@ -869,7 +869,7 @@ async function createQuote(quoteData) {
             govt_fee: 0,
             total_amount: totalAmount,
             currency: quoteData.currency || 'KRW',
-            payment_method: quoteData.payment_method || 'toss',
+            payment_method: quoteData.payment_method || 'both',
             toss_order_id: 'QUO' + Date.now(),
             status: 'sent'
         };
