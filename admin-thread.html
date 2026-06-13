@@ -1766,7 +1766,7 @@
         // status 별 버튼/배지 치환은 고객/관리자 렌더 단계에서 수행
         function buildQuoteCardHtml(quote) {
             const total = formatQuoteAmount(quote.total_amount, quote.currency);
-            const method = quote.payment_method || 'toss';
+            const method = quote.payment_method || 'both';
             return `<div class="quote-card" data-quote-id="${quote.id}" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 20px; margin: 8px 0;">
 <div class="quote-card-title" style="font-weight: 700; color: #191F28; margin-bottom: 12px;">Payment Details</div>
 <div style="display: flex; justify-content: space-between; font-weight: 700; color: #191F28; font-size: 18px; margin-bottom: 14px;"><span>Total</span><span>${total}</span></div>
@@ -1783,14 +1783,8 @@
                     <div style="background: white; border-radius: 16px; width: 90%; max-width: 460px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden;">
                         <div style="padding: 20px 24px; border-bottom: 1px solid #E5E7EB; font-weight: 700; font-size: 18px; color: #191F28;">견적 보내기</div>
                         <div style="padding: 24px;">
-                            <label style="display: block; font-size: 14px; color: #374151; margin-bottom: 6px;">결제 수단</label>
-                            <div style="display: flex; gap: 8px; margin-bottom: 16px;">
-                                <label style="flex: 1; display: flex; align-items: center; gap: 8px; padding: 12px; border: 1px solid #D1D5DB; border-radius: 8px; cursor: pointer;">
-                                    <input type="radio" name="quoteMethod" value="toss" checked> 국내 카드 (Toss)
-                                </label>
-                                <label style="flex: 1; display: flex; align-items: center; gap: 8px; padding: 12px; border: 1px solid #D1D5DB; border-radius: 8px; cursor: pointer;">
-                                    <input type="radio" name="quoteMethod" value="wise"> 해외 송금 (Wise)
-                                </label>
+                            <div style="display: flex; align-items: center; gap: 8px; padding: 12px; background: #EEF4FF; border: 1px solid #D6E4FF; border-radius: 8px; margin-bottom: 16px; font-size: 13px; color: #374151;">
+                                💳🌐 견적 발송 시 <strong>국내 카드(Toss)</strong> 와 <strong>해외 송금(Wise)</strong> 링크가 함께 전송됩니다.
                             </div>
                             <label style="display: block; font-size: 14px; color: #374151; margin-bottom: 6px;">통화</label>
                             <select id="quoteCurrency" onchange="updateQuoteTotal()" style="width: 100%; padding: 10px 12px; border: 1px solid #D1D5DB; border-radius: 8px; margin-bottom: 16px;">
@@ -1820,8 +1814,8 @@
         function getQuoteFormValues() {
             const total = Number(document.getElementById('quoteTotal').value) || 0;
             const currency = document.getElementById('quoteCurrency').value || 'KRW';
-            const methodEl = document.querySelector('input[name="quoteMethod"]:checked');
-            const method = methodEl ? methodEl.value : 'toss';
+            // Toss + Wise 결제 링크를 항상 함께 발송
+            const method = 'both';
             return { total, currency, method };
         }
 
@@ -2655,11 +2649,17 @@
                     // sent: 결제 대기
                     // - Wise(해외 송금): 자동 승인 없음 → 관리자 수동 완료 처리 버튼
                     // - Toss(국내 카드): 고객 결제 시 자동 승인 → 대기 표시만
-                    const method = quote ? quote.payment_method : 'toss';
+                    const method = quote ? quote.payment_method : 'both';
+                    const wiseBtn = `<button onclick="adminMarkQuotePaid('${quoteId}')" style="background: #3182F6; color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer;">해외 송금 결제완료 처리</button>`;
+                    const tossWait = `<span style="display: inline-block; background: #FEF3C7; color: #92400E; padding: 8px 16px; border-radius: 8px; font-size: 14px;">고객 카드 결제 대기 중</span>`;
                     if (method === 'wise') {
-                        return `<button onclick="adminMarkQuotePaid('${quoteId}')" style="background: #3182F6; color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer;">해외 송금 결제완료 처리</button>`;
+                        return wiseBtn;
                     }
-                    return `<span style="display: inline-block; background: #FEF3C7; color: #92400E; padding: 8px 16px; border-radius: 8px; font-size: 14px;">고객 카드 결제 대기 중</span>`;
+                    if (method === 'both') {
+                        // Toss/Wise 동시 발송: 카드 결제 대기 + 해외 송금 수동 완료 버튼 함께 표시
+                        return `<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px;">${tossWait}${wiseBtn}</div>`;
+                    }
+                    return tossWait;
                 }
             );
         }

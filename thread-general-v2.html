@@ -3011,14 +3011,22 @@
                     if (status === 'expired' || status === 'cancelled') {
                         return `<span style="display: inline-block; background: #F3F4F6; color: #9CA3AF; padding: 8px 16px; border-radius: 8px; font-size: 14px;">${tt('thread.quote.expired', 'This quote has expired.')}</span>`;
                     }
-                    // 관리자가 견적 발송 시 선택한 결제 수단에 따라 단일 버튼만 표시
-                    const method = quote ? quote.payment_method : 'toss';
-                    if (method === 'wise') {
-                        const wiseLabel = tt('thread.quote.payWise', 'Pay from Overseas (Wise)');
-                        return `<button class="survey-cta-btn" onclick="payQuoteWise('${quoteId}')">${wiseLabel}</button>`;
-                    }
+                    // 견적 발송 시 결제 수단에 따라 버튼 표시
+                    // - both: Toss(국내 카드) + Wise(해외 송금) 버튼 동시 표시
+                    // - toss / wise: 기존 단일 버튼 (구버전 견적 호환)
+                    const method = quote ? quote.payment_method : 'both';
                     const tossLabel = tt('thread.quote.payToss', 'Pay with Card');
-                    return `<button class="survey-cta-btn" onclick="payQuoteToss('${quoteId}')">${tossLabel}</button>`;
+                    const wiseLabel = tt('thread.quote.payWise', 'Pay from Overseas (Wise)');
+                    const tossBtn = `<button class="survey-cta-btn" onclick="payQuoteToss('${quoteId}')">${tossLabel}</button>`;
+                    const wiseBtn = `<button class="survey-cta-btn" onclick="payQuoteWise('${quoteId}')">${wiseLabel}</button>`;
+                    if (method === 'wise') {
+                        return wiseBtn;
+                    }
+                    if (method === 'toss') {
+                        return tossBtn;
+                    }
+                    // both (기본): 두 결제 수단을 함께 제공
+                    return `<div style="display: flex; flex-wrap: wrap; gap: 8px;">${tossBtn}${wiseBtn}</div>`;
                 }
             );
         }
