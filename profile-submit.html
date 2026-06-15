@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <style>
         * {
             margin: 0;
@@ -239,6 +238,74 @@
             font-size: 13px;
             color: #6B7280;
             margin-top: 6px;
+        }
+
+        /* Phone with country code */
+        .phone-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .phone-row select {
+            flex: 0 0 150px;
+            width: 150px;
+        }
+
+        .phone-row input {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        /* Location toggle (In Korea / Overseas) */
+        .location-toggle {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .location-toggle .loc-opt {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            color: #374151;
+            text-align: center;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .location-toggle .loc-opt:hover {
+            border-color: #887668;
+        }
+
+        .location-toggle .loc-opt input[type="radio"] {
+            width: auto;
+            margin: 0;
+            accent-color: #887668;
+        }
+
+        .location-toggle .loc-opt.selected {
+            border-color: #887668;
+            background: #F4F2EE;
+            color: #6F6053;
+        }
+
+        .label-sub {
+            font-weight: 500;
+            color: #6B7280;
+        }
+
+        @media (max-width: 768px) {
+            .phone-row select {
+                flex: 0 0 120px;
+                width: 120px;
+            }
         }
 
         /* Preparation Checklist */
@@ -1039,69 +1106,24 @@
                         </div>
                         <div class="form-group">
                             <label data-i18n="profile.info.phone">Phone Number <span class="required">*</span></label>
-                            <input type="tel" name="phone" required data-i18n-placeholder="profile.info.phone" placeholder="010-0000-0000">
+                            <div class="phone-row">
+                                <select name="phoneCountryCode" id="phoneCountryCode" aria-label="Country code"></select>
+                                <input type="tel" name="phoneNumber" id="phoneNumber" inputmode="numeric" placeholder="10-1234-5678">
+                            </div>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label data-i18n="profile.info.messenger">Preferred Messenger <span class="required">*</span></label>
-                            <select name="preferredMessenger" required>
-                                <option value="" data-i18n="profile.info.messengerSelect">Select messenger</option>
-                                <option value="whatsapp">WhatsApp</option>
-                                <option value="wechat">WeChat</option>
-                                <option value="telegram">Telegram</option>
-                                <option value="line">LINE</option>
-                                <option value="zalo">Zalo</option>
-                            </select>
+                            <label>Passport Number <span class="label-sub">여권번호</span> <span class="required">*</span></label>
+                            <input type="text" name="passportNumber" id="passportNumber" placeholder="e.g. M12345678" autocomplete="off">
                         </div>
                         <div class="form-group">
-                            <label data-i18n="profile.info.messengerId">Messenger ID/Phone <span class="required">*</span></label>
-                            <input type="text" name="messengerId" required data-i18n-placeholder="profile.info.messengerId" placeholder="Your messenger ID or phone">
+                            <label data-i18n="profile.info.nationality">Nationality <span class="required">*</span></label>
+                            <select name="nationality" id="nationality">
+                                <option value="" data-i18n="profile.info.nationalitySelect">Select your nationality</option>
+                            </select>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label data-i18n="profile.info.nationality">Nationality <span class="required">*</span></label>
-                        <select name="nationality" required>
-                            <option value="" data-i18n="profile.info.nationalitySelect">Select your nationality</option>
-                            <optgroup label="Asia">
-                                <option value="CN">China</option>
-                                <option value="VN">Vietnam</option>
-                                <option value="UZ">Uzbekistan</option>
-                                <option value="TH">Thailand</option>
-                                <option value="MN">Mongolia</option>
-                                <option value="ID">Indonesia</option>
-                                <option value="PH">Philippines</option>
-                                <option value="KH">Cambodia</option>
-                                <option value="NP">Nepal</option>
-                                <option value="MM">Myanmar</option>
-                                <option value="PK">Pakistan</option>
-                                <option value="JP">Japan</option>
-                                <option value="BD">Bangladesh</option>
-                                <option value="IN">India</option>
-                                <option value="LK">Sri Lanka</option>
-                            </optgroup>
-                            <optgroup label="North America">
-                                <option value="US">United States</option>
-                                <option value="CA">Canada</option>
-                            </optgroup>
-                            <optgroup label="Europe">
-                                <option value="RU">Russia</option>
-                                <option value="GB">United Kingdom</option>
-                                <option value="FR">France</option>
-                                <option value="DE">Germany</option>
-                                <option value="IT">Italy</option>
-                                <option value="ES">Spain</option>
-                            </optgroup>
-                            <optgroup label="Oceania">
-                                <option value="AU">Australia</option>
-                                <option value="NZ">New Zealand</option>
-                            </optgroup>
-                            <optgroup label="Other">
-                                <option value="OTHER">Other</option>
-                            </optgroup>
-                        </select>
                     </div>
                 </div>
 
@@ -1114,66 +1136,105 @@
                         <span data-i18n="profile.residence.title">Residence Information</span>
                     </div>
 
+                    <!-- Location: in Korea or overseas -->
                     <div class="form-group">
-                        <label data-i18n="profile.residence.visaType">Current Visa Status <span class="required">*</span></label>
-                        <select name="visaType" required>
-                            <option value="" data-i18n="profile.residence.visaSelect">Select your visa type</option>
-                            <optgroup label="Short-term (C)">
-                                <option value="C-3">C-3 Short-term Visit</option>
-                                <option value="C-4">C-4 Short-term Employment</option>
-                            </optgroup>
-                            <optgroup label="Study/Training (D)">
-                                <option value="D-2">D-2 Student</option>
-                                <option value="D-4">D-4 General Training</option>
-                                <option value="D-10">D-10 Job Seeking</option>
-                            </optgroup>
-                            <optgroup label="Employment (E)">
-                                <option value="E-1">E-1 Professor</option>
-                                <option value="E-2">E-2 Foreign Language Instructor</option>
-                                <option value="E-3">E-3 Research</option>
-                                <option value="E-7">E-7 Specially Designated Activities</option>
-                                <option value="E-9">E-9 Non-professional Employment</option>
-                            </optgroup>
-                            <optgroup label="Working Visit (H)">
-                                <option value="H-1">H-1 Working Holiday</option>
-                                <option value="H-2">H-2 Working Visit</option>
-                            </optgroup>
-                            <optgroup label="Overseas Korean/Residence (F)">
-                                <option value="F-1">F-1 Visiting/Joining Family</option>
-                                <option value="F-2">F-2 Resident</option>
-                                <option value="F-4">F-4 Overseas Korean</option>
-                                <option value="F-5">F-5 Permanent Resident</option>
-                                <option value="F-6">F-6 Marriage Migrant</option>
-                            </optgroup>
-                            <optgroup label="Other">
-                                <option value="G-1">G-1 Miscellaneous</option>
-                                <option value="OTHER">Other</option>
-                            </optgroup>
-                        </select>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label data-i18n="profile.residence.visaExpiry">Visa Expiry Date <span class="required">*</span></label>
-                            <input type="date" name="stayExpiry" required>
-                        </div>
-                        <div class="form-group">
-                            <label data-i18n="profile.residence.arcNumber">Alien Registration Number <span class="required">*</span></label>
-                            <input type="text" name="foreignerNumber" required data-i18n-placeholder="profile.residence.arcNumber" placeholder="000000-0000000">
-                            <p class="help-text" data-i18n="profile.residence.arcHelp">Enter the 13-digit number on your ARC (e.g., 000000-0000000)</p>
+                        <label>Are you currently in Korea? <span class="label-sub">현재 한국에 계신가요?</span> <span class="required">*</span></label>
+                        <div class="location-toggle">
+                            <label class="loc-opt" id="locOptKorea">
+                                <input type="radio" name="locationStatus" value="korea" onchange="onLocationChange()">
+                                <span>In Korea<br><span class="label-sub">국내 체류 중</span></span>
+                            </label>
+                            <label class="loc-opt" id="locOptOverseas">
+                                <input type="radio" name="locationStatus" value="overseas" onchange="onLocationChange()">
+                                <span>Overseas<br><span class="label-sub">해외 거주 중</span></span>
+                            </label>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label data-i18n="profile.residence.address">Address in Korea <span class="required">*</span></label>
-                        <div class="address-search">
-                            <input type="text" id="postcode" name="postcode" data-i18n-placeholder="profile.residence.postcode" placeholder="Postal Code" readonly required>
-                            <button type="button" onclick="execDaumPostcode()">
-                                <i class="fas fa-search"></i> <span data-i18n="profile.residence.searchAddress">Search</span>
-                            </button>
+                    <!-- In Korea: visa + expiry + ARC number -->
+                    <div id="koreaBlock" style="display: none;">
+                        <div class="form-group">
+                            <label data-i18n="profile.residence.visaType">Current Visa Status <span class="required">*</span></label>
+                            <select name="visaType" id="visaType">
+                                <option value="" data-i18n="profile.residence.visaSelect">Select your visa type</option>
+                                <optgroup label="Diplomatic / Official (A)">
+                                    <option value="A-1">A-1 Diplomat</option>
+                                    <option value="A-2">A-2 Government Official</option>
+                                    <option value="A-3">A-3 Agreement (SOFA)</option>
+                                </optgroup>
+                                <optgroup label="Visa Exemption / Tourist (B)">
+                                    <option value="B-1">B-1 Visa Exemption</option>
+                                    <option value="B-2">B-2 Tourist / Transit</option>
+                                </optgroup>
+                                <optgroup label="Short-term (C)">
+                                    <option value="C-1">C-1 Temporary News Coverage</option>
+                                    <option value="C-3">C-3 Short-term Visit</option>
+                                    <option value="C-4">C-4 Short-term Employment</option>
+                                </optgroup>
+                                <optgroup label="Study / Training / Investment (D)">
+                                    <option value="D-1">D-1 Culture / Arts</option>
+                                    <option value="D-2">D-2 Student</option>
+                                    <option value="D-3">D-3 Industrial Trainee</option>
+                                    <option value="D-4">D-4 General Training</option>
+                                    <option value="D-5">D-5 Long-term News Coverage</option>
+                                    <option value="D-6">D-6 Religious Worker</option>
+                                    <option value="D-7">D-7 Supervisory Intra-company Transfer</option>
+                                    <option value="D-8">D-8 Corporate Investment</option>
+                                    <option value="D-9">D-9 Trade Management</option>
+                                    <option value="D-10">D-10 Job Seeking</option>
+                                </optgroup>
+                                <optgroup label="Employment (E)">
+                                    <option value="E-1">E-1 Professor</option>
+                                    <option value="E-2">E-2 Foreign Language Instructor</option>
+                                    <option value="E-3">E-3 Research</option>
+                                    <option value="E-4">E-4 Technical Instruction</option>
+                                    <option value="E-5">E-5 Professional Employment</option>
+                                    <option value="E-6">E-6 Arts / Entertainment</option>
+                                    <option value="E-7">E-7 Specially Designated Activities</option>
+                                    <option value="E-8">E-8 Seasonal Worker</option>
+                                    <option value="E-9">E-9 Non-professional Employment</option>
+                                    <option value="E-10">E-10 Vessel Crew</option>
+                                </optgroup>
+                                <optgroup label="Residence / Overseas Korean (F)">
+                                    <option value="F-1">F-1 Visiting / Joining Family</option>
+                                    <option value="F-2">F-2 Resident</option>
+                                    <option value="F-3">F-3 Dependent Family</option>
+                                    <option value="F-4">F-4 Overseas Korean</option>
+                                    <option value="F-5">F-5 Permanent Resident</option>
+                                    <option value="F-6">F-6 Marriage Migrant</option>
+                                </optgroup>
+                                <optgroup label="Other / Working Visit (G, H)">
+                                    <option value="G-1">G-1 Miscellaneous</option>
+                                    <option value="H-1">H-1 Working Holiday</option>
+                                    <option value="H-2">H-2 Working Visit</option>
+                                </optgroup>
+                                <optgroup label="Other">
+                                    <option value="OTHER">Other / Not sure</option>
+                                </optgroup>
+                            </select>
                         </div>
-                        <input type="text" id="address" name="address" data-i18n-placeholder="profile.residence.addressField" placeholder="Address" readonly required style="margin-bottom: 12px; width: 100%; padding: 16px; border: 2px solid #E5E7EB; border-radius: 4px; font-size: 15px; font-family: 'Manrope','IBM Plex Sans KR', sans-serif; font-weight: 500;">
-                        <input type="text" name="detailAddress" data-i18n-placeholder="profile.residence.detailAddress" placeholder="Detail Address (Apt/Room)" required style="width: 100%; padding: 16px; border: 2px solid #E5E7EB; border-radius: 4px; font-size: 15px; font-family: 'Manrope','IBM Plex Sans KR', sans-serif; font-weight: 500;">
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label data-i18n="profile.residence.visaExpiry">Visa Expiry Date <span class="required">*</span></label>
+                                <input type="date" name="stayExpiry" id="stayExpiry">
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="profile.residence.arcNumber">Alien Registration Number <span class="required">*</span></label>
+                                <input type="text" name="foreignerNumber" id="foreignerNumber" data-i18n-placeholder="profile.residence.arcNumber" placeholder="000000-0000000">
+                                <p class="help-text" data-i18n="profile.residence.arcHelp">Enter the 13-digit number on your ARC (e.g., 000000-0000000)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Overseas: country of residence -->
+                    <div id="overseasBlock" style="display: none;">
+                        <div class="form-group">
+                            <label>Country of Residence <span class="label-sub">거주 국가</span> <span class="required">*</span></label>
+                            <select name="residenceCountry" id="residenceCountry">
+                                <option value="">Select country / 국가 선택</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
@@ -1199,34 +1260,39 @@
                         <span data-i18n="profile.documents.title">Required Documents</span>
                     </div>
 
-                    <!-- ARC Front -->
-                    <div class="form-group">
-                        <label data-i18n="profile.documents.arcFront">Alien Registration Card (Front) <span class="required">*</span></label>
-                        <div class="file-upload-area" onclick="document.getElementById('arcFront').click()"
-                             ondrop="handleDrop(event, 'arcFront')"
-                             ondragover="handleDragOver(event)"
-                             ondragleave="handleDragLeave(event)">
-                            <div class="icon"><i class="fas fa-camera"></i></div>
-                            <p data-i18n="profile.documents.fileInstruction">Click to select or drag & drop</p>
-                            <small data-i18n="profile.documents.fileSize">JPG, PNG (max 10MB)</small>
-                        </div>
-                        <input type="file" id="arcFront" name="arcFront" accept="image/*" style="display: none;" onchange="previewFile(this, 'arcFrontPreview')" required>
-                        <div class="file-preview" id="arcFrontPreview"></div>
-                    </div>
+                    <p id="docHint" style="font-size: 14px; color: #6B7280; margin-bottom: 24px;"></p>
 
-                    <!-- ARC Back -->
-                    <div class="form-group">
-                        <label data-i18n="profile.documents.arcBack">Alien Registration Card (Back) <span class="required">*</span></label>
-                        <div class="file-upload-area" onclick="document.getElementById('arcBack').click()"
-                             ondrop="handleDrop(event, 'arcBack')"
-                             ondragover="handleDragOver(event)"
-                             ondragleave="handleDragLeave(event)">
-                            <div class="icon"><i class="fas fa-camera"></i></div>
-                            <p data-i18n="profile.documents.fileInstruction">Click to select or drag & drop</p>
-                            <small data-i18n="profile.documents.fileSize">JPG, PNG (max 10MB)</small>
+                    <!-- ID Card (ARC or Residence Card) — domestic residents only -->
+                    <div id="idCardGroup" style="display: none;">
+                        <!-- ID Card Front -->
+                        <div class="form-group">
+                            <label>ARC or Residence Card (Front) <span class="label-sub">외국인등록증 또는 국내거소신고증 (앞면)</span> <span class="required">*</span></label>
+                            <div class="file-upload-area" onclick="document.getElementById('arcFront').click()"
+                                 ondrop="handleDrop(event, 'arcFront')"
+                                 ondragover="handleDragOver(event)"
+                                 ondragleave="handleDragLeave(event)">
+                                <div class="icon"><i class="fas fa-camera"></i></div>
+                                <p data-i18n="profile.documents.fileInstruction">Click to select or drag & drop</p>
+                                <small data-i18n="profile.documents.fileSize">JPG, PNG (max 10MB)</small>
+                            </div>
+                            <input type="file" id="arcFront" name="arcFront" accept="image/*" style="display: none;" onchange="previewFile(this, 'arcFrontPreview')">
+                            <div class="file-preview" id="arcFrontPreview"></div>
                         </div>
-                        <input type="file" id="arcBack" name="arcBack" accept="image/*" style="display: none;" onchange="previewFile(this, 'arcBackPreview')" required>
-                        <div class="file-preview" id="arcBackPreview"></div>
+
+                        <!-- ID Card Back -->
+                        <div class="form-group">
+                            <label>ARC or Residence Card (Back) <span class="label-sub">외국인등록증 또는 국내거소신고증 (뒷면)</span> <span class="required">*</span></label>
+                            <div class="file-upload-area" onclick="document.getElementById('arcBack').click()"
+                                 ondrop="handleDrop(event, 'arcBack')"
+                                 ondragover="handleDragOver(event)"
+                                 ondragleave="handleDragLeave(event)">
+                                <div class="icon"><i class="fas fa-camera"></i></div>
+                                <p data-i18n="profile.documents.fileInstruction">Click to select or drag & drop</p>
+                                <small data-i18n="profile.documents.fileSize">JPG, PNG (max 10MB)</small>
+                            </div>
+                            <input type="file" id="arcBack" name="arcBack" accept="image/*" style="display: none;" onchange="previewFile(this, 'arcBackPreview')">
+                            <div class="file-preview" id="arcBackPreview"></div>
+                        </div>
                     </div>
 
                     <!-- Passport -->
@@ -1276,6 +1342,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/translations.js"></script>
     <script src="js/i18n.js"></script>
+    <script src="js/countries.js"></script>
     <script src="js/supabase-client.js?v=20260614"></script>
     <script src="js/notification-service.js?v=20260506"></script>
 
@@ -1301,6 +1368,101 @@
         let threadId = null;
         let threadData = null;
         let currentStep = 1;
+
+        // ============================================
+        // Populate dynamic selects (phone code, nationality, country)
+        // ============================================
+        function currentLang() {
+            try {
+                if (typeof i18n !== 'undefined' && i18n.getCurrentLanguage) return i18n.getCurrentLanguage();
+            } catch (e) {}
+            return 'en';
+        }
+
+        function populateSelects() {
+            const lang = currentLang();
+
+            // Phone country code — default to KR (+82)
+            const phoneSel = document.getElementById('phoneCountryCode');
+            if (phoneSel && typeof window.dialCodeOptions === 'function') {
+                const prev = phoneSel.value;
+                phoneSel.innerHTML = window.dialCodeOptions(lang, prev || 'KR');
+            }
+
+            // Nationality — full country list
+            const natSel = document.getElementById('nationality');
+            if (natSel && typeof window.countryOptions === 'function') {
+                const prev = natSel.value;
+                const placeholder = natSel.querySelector('option[value=""]');
+                const phText = placeholder ? placeholder.outerHTML
+                    : '<option value="">Select your nationality</option>';
+                natSel.innerHTML = phText + window.countryOptions(lang, prev);
+            }
+
+            // Country of residence (overseas)
+            const resSel = document.getElementById('residenceCountry');
+            if (resSel && typeof window.countryOptions === 'function') {
+                const prev = resSel.value;
+                resSel.innerHTML = '<option value="">' +
+                    (lang === 'ko' ? '국가 선택' : 'Select country / 국가 선택') + '</option>' +
+                    window.countryOptions(lang, prev);
+            }
+        }
+
+        // Populate as soon as the DOM and countries.js are ready, independent of
+        // the thread/login gating below.
+        document.addEventListener('DOMContentLoaded', function () {
+            populateSelects();
+        });
+        // Re-localize option labels when the user switches language.
+        window.addEventListener('languageChanged', function () {
+            populateSelects();
+        });
+
+        // ============================================
+        // Location toggle (In Korea / Overseas)
+        // ============================================
+        function getLocationStatus() {
+            const checked = document.querySelector('input[name="locationStatus"]:checked');
+            return checked ? checked.value : '';
+        }
+
+        function onLocationChange() {
+            const status = getLocationStatus();
+            const koreaBlock = document.getElementById('koreaBlock');
+            const overseasBlock = document.getElementById('overseasBlock');
+            const koreaOpt = document.getElementById('locOptKorea');
+            const overseasOpt = document.getElementById('locOptOverseas');
+
+            const inKorea = status === 'korea';
+            const overseas = status === 'overseas';
+
+            if (koreaBlock) koreaBlock.style.display = inKorea ? 'block' : 'none';
+            if (overseasBlock) overseasBlock.style.display = overseas ? 'block' : 'none';
+            if (koreaOpt) koreaOpt.classList.toggle('selected', inKorea);
+            if (overseasOpt) overseasOpt.classList.toggle('selected', overseas);
+
+            // Keep the document step in sync if it has already been rendered.
+            updateDocumentVisibility();
+        }
+
+        // ============================================
+        // Document visibility based on location
+        // ============================================
+        function updateDocumentVisibility() {
+            const inKorea = getLocationStatus() === 'korea';
+            const idCardGroup = document.getElementById('idCardGroup');
+            if (idCardGroup) idCardGroup.style.display = inKorea ? 'block' : 'none';
+
+            const hint = document.getElementById('docHint');
+            if (hint) {
+                if (inKorea) {
+                    hint.textContent = 'Domestic residents: please upload your ARC or Residence Card (front & back), passport, and sign below. / 국내 체류자는 외국인등록증 또는 국내거소신고증(앞·뒤), 여권, 전자서명을 제출해 주세요.';
+                } else {
+                    hint.textContent = 'Overseas residents: please upload your passport and sign below. / 해외 거주자는 여권과 전자서명만 제출해 주세요.';
+                }
+            }
+        }
 
         // ============================================
         // Page initialization
@@ -1395,14 +1557,51 @@
                     document.querySelector('input[name="firstName"]').value = profile.name;
                 }
             }
-            if (profile.phone) document.querySelector('input[name="phone"]').value = profile.phone;
-            if (profile.nationality) document.querySelector('select[name="nationality"]').value = profile.nationality;
+            // Phone — split stored value into country code + number when possible
+            if (profile.phone) {
+                const phoneSel = document.getElementById('phoneCountryCode');
+                const phoneNum = document.getElementById('phoneNumber');
+                const raw = String(profile.phone).trim();
+                const m = raw.match(/^(\+\d{1,4})\s*(.*)$/);
+                if (m && phoneSel) {
+                    // Pick the longest matching dial code option.
+                    let best = '';
+                    Array.from(phoneSel.options).forEach(o => {
+                        if (raw.startsWith(o.value) && o.value.length > best.length) best = o.value;
+                    });
+                    if (best) {
+                        phoneSel.value = best;
+                        if (phoneNum) phoneNum.value = raw.slice(best.length).trim();
+                    } else {
+                        phoneSel.value = m[1];
+                        if (phoneNum) phoneNum.value = m[2];
+                    }
+                } else if (phoneNum) {
+                    phoneNum.value = raw;
+                }
+            }
+            if (profile.nationality) document.getElementById('nationality').value = profile.nationality;
             if (profile.birth_date) document.querySelector('input[name="birthDate"]').value = profile.birth_date;
-            if (profile.preferred_messenger) document.querySelector('select[name="preferredMessenger"]').value = profile.preferred_messenger;
-            if (profile.messenger_id) document.querySelector('input[name="messengerId"]').value = profile.messenger_id;
-            if (profile.visa_type) document.querySelector('select[name="visaType"]').value = profile.visa_type;
-            if (profile.visa_expiry_date) document.querySelector('input[name="stayExpiry"]').value = profile.visa_expiry_date;
-            if (profile.passport_number) document.querySelector('input[name="foreignerNumber"]').value = profile.passport_number;
+            if (profile.passport_number) document.getElementById('passportNumber').value = profile.passport_number;
+            if (profile.visa_type) document.getElementById('visaType').value = profile.visa_type;
+            if (profile.visa_expiry_date) document.getElementById('stayExpiry').value = profile.visa_expiry_date;
+            if (profile.arc_number) document.getElementById('foreignerNumber').value = profile.arc_number;
+            if (profile.country) document.getElementById('residenceCountry').value = profile.country;
+
+            // Location toggle — use stored flag, otherwise infer from visa data
+            let inKorea = null;
+            if (profile.is_in_korea === true) inKorea = true;
+            else if (profile.is_in_korea === false) inKorea = false;
+            else if (profile.visa_type || profile.visa_expiry_date || profile.arc_number) inKorea = true;
+            else if (profile.country) inKorea = false;
+
+            if (inKorea === true) {
+                const r = document.querySelector('input[name="locationStatus"][value="korea"]');
+                if (r) { r.checked = true; onLocationChange(); }
+            } else if (inKorea === false) {
+                const r = document.querySelector('input[name="locationStatus"][value="overseas"]');
+                if (r) { r.checked = true; onLocationChange(); }
+            }
         }
 
         // ============================================
@@ -1490,6 +1689,51 @@
         }
 
         // ============================================
+        // Step 2 validation
+        // ============================================
+        function mark(el, ok) {
+            if (el) el.style.borderColor = ok ? '#E5E7EB' : '#EF4444';
+        }
+
+        function validateStep2() {
+            let valid = true;
+            const req = (sel) => {
+                const el = typeof sel === 'string' ? document.querySelector(sel) : sel;
+                const ok = el && el.value && el.value.trim();
+                mark(el, ok);
+                if (!ok) valid = false;
+                return ok;
+            };
+
+            req('input[name="lastName"]');
+            req('input[name="firstName"]');
+            req('input[name="birthDate"]');
+            req('#phoneNumber');
+            req('#passportNumber');
+            req('#nationality');
+
+            const status = getLocationStatus();
+            if (!status) {
+                valid = false;
+                const toggle = document.querySelector('.location-toggle');
+                if (toggle) toggle.style.outline = '2px solid #EF4444';
+            } else {
+                const toggle = document.querySelector('.location-toggle');
+                if (toggle) toggle.style.outline = 'none';
+            }
+
+            if (status === 'korea') {
+                req('#visaType');
+                req('#stayExpiry');
+                req('#foreignerNumber');
+            } else if (status === 'overseas') {
+                req('#residenceCountry');
+            }
+
+            return valid;
+        }
+
+        // ============================================
         // Step navigation
         // ============================================
         function goToStep(step) {
@@ -1505,18 +1749,7 @@
 
                 // Validate Step 2: required form fields
                 if (currentStep === 2 && step > 2) {
-                    const step2Form = document.getElementById('step2');
-                    const inputs = step2Form.querySelectorAll('input[required], select[required]');
-                    let isValid = true;
-                    inputs.forEach(input => {
-                        if (!input.value) {
-                            isValid = false;
-                            input.style.borderColor = '#EF4444';
-                        } else {
-                            input.style.borderColor = '#E5E7EB';
-                        }
-                    });
-                    if (!isValid) {
+                    if (!validateStep2()) {
                         alert(pt('profile.alert.fillRequired'));
                         return;
                     }
@@ -1533,8 +1766,9 @@
             currentStep = step;
 
             // Initialize signature pad when step 3 becomes visible
-            if (step === 3 && !signaturePad) {
-                setTimeout(() => initSignaturePad(), 100);
+            if (step === 3) {
+                updateDocumentVisibility();
+                if (!signaturePad) setTimeout(() => initSignaturePad(), 100);
             }
 
             updateProgress(step);
@@ -1560,20 +1794,6 @@
 
             const progress = ((step - 1) / (steps.length - 1)) * 100;
             progressLine.style.width = progress + '%';
-        }
-
-        // ============================================
-        // Address search (Daum Postcode API)
-        // ============================================
-        function execDaumPostcode() {
-            new daum.Postcode({
-                oncomplete: function(data) {
-                    let addr = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
-                    document.getElementById('postcode').value = data.zonecode;
-                    document.getElementById('address').value = addr;
-                    document.querySelector('input[name="detailAddress"]').focus();
-                }
-            }).open();
         }
 
         // ============================================
@@ -1640,12 +1860,14 @@
                 return;
             }
 
-            // Validate all files
+            // Validate files based on residence status
+            const inKorea = getLocationStatus() === 'korea';
             const arcFrontFile = document.getElementById('arcFront').files[0];
             const arcBackFile = document.getElementById('arcBack').files[0];
             const passportFile = document.getElementById('passport').files[0];
 
-            if (!arcFrontFile || !arcBackFile || !passportFile) {
+            // Passport is always required; ARC/Residence Card only for domestic residents.
+            if (!passportFile || (inKorea && (!arcFrontFile || !arcBackFile))) {
                 alert(pt('profile.alert.fillRequired'));
                 return;
             }
@@ -1671,26 +1893,29 @@
                 // Upload files
                 const uploadedFiles = [];
 
-                // ARC Front
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading ARC (Front)...';
-                const arcFrontResult = await uploadThreadDocument(threadId, arcFrontFile);
-                if (arcFrontResult.success) {
-                    uploadedFiles.push({
-                        name: 'Alien Registration Card (Front)',
-                        url: arcFrontResult.data.signedUrl,
-                        type: arcFrontFile.type
-                    });
+                // ARC / Residence Card (domestic residents only)
+                if (inKorea && arcFrontFile) {
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading ARC/Residence Card (Front)...';
+                    const arcFrontResult = await uploadThreadDocument(threadId, arcFrontFile);
+                    if (arcFrontResult.success) {
+                        uploadedFiles.push({
+                            name: 'ARC / Residence Card (Front)',
+                            url: arcFrontResult.data.signedUrl,
+                            type: arcFrontFile.type
+                        });
+                    }
                 }
 
-                // ARC Back
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading ARC (Back)...';
-                const arcBackResult = await uploadThreadDocument(threadId, arcBackFile);
-                if (arcBackResult.success) {
-                    uploadedFiles.push({
-                        name: 'Alien Registration Card (Back)',
-                        url: arcBackResult.data.signedUrl,
-                        type: arcBackFile.type
-                    });
+                if (inKorea && arcBackFile) {
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading ARC/Residence Card (Back)...';
+                    const arcBackResult = await uploadThreadDocument(threadId, arcBackFile);
+                    if (arcBackResult.success) {
+                        uploadedFiles.push({
+                            name: 'ARC / Residence Card (Back)',
+                            url: arcBackResult.data.signedUrl,
+                            type: arcBackFile.type
+                        });
+                    }
                 }
 
                 // Passport
@@ -1748,21 +1973,37 @@
                 }
 
                 // 3. Save profile data
+                const phoneCode = (formData.get('phoneCountryCode') || '').trim();
+                const phoneNumber = (formData.get('phoneNumber') || '').trim();
+                const fullPhone = phoneNumber ? (phoneCode + ' ' + phoneNumber).trim() : '';
+
                 const profileData = {
                     name: formData.get('lastName') + ' ' + formData.get('firstName'),
                     email: session.user.email,
-                    phone: formData.get('phone'),
+                    phone: fullPhone,
                     nationality: formData.get('nationality'),
                     birth_date: formData.get('birthDate'),
-                    passport_number: formData.get('foreignerNumber'),
-                    visa_type: formData.get('visaType'),
-                    visa_expiry_date: formData.get('stayExpiry'),
-                    address: formData.get('address') + ' ' + formData.get('detailAddress') + ' (' + formData.get('postcode') + ')',
-                    preferred_messenger: formData.get('preferredMessenger'),
-                    messenger_id: formData.get('messengerId')
+                    passport_number: formData.get('passportNumber'),
+                    is_in_korea: inKorea
                 };
 
-                await createUserProfile(userId, profileData);
+                if (inKorea) {
+                    profileData.visa_type = formData.get('visaType');
+                    profileData.visa_expiry_date = formData.get('stayExpiry');
+                    profileData.arc_number = formData.get('foreignerNumber');
+                    profileData.country = 'KR';
+                } else {
+                    profileData.country = formData.get('residenceCountry');
+                    // Clear Korea-specific fields for overseas residents.
+                    profileData.visa_type = null;
+                    profileData.visa_expiry_date = null;
+                    profileData.arc_number = null;
+                }
+
+                const profileSaveResult = await createUserProfile(userId, profileData);
+                if (!profileSaveResult || !profileSaveResult.success) {
+                    throw new Error((profileSaveResult && profileSaveResult.error) || 'Profile save failed');
+                }
 
                 // 4. Save consent record
                 try {
