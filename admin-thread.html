@@ -1643,6 +1643,11 @@
             // Load thread data
             await loadThread();
 
+            // 관리자가 이 쓰레드를 확인한 시각 기록 → 대시보드 미확인(NEW) 배지 해제
+            try {
+                localStorage.setItem('admin_thread_read_' + threadId, new Date().toISOString());
+            } catch (e) { /* localStorage 사용 불가 시 무시 */ }
+
             // Subscribe to realtime updates
             subscribeToMessages();
         });
@@ -2461,6 +2466,11 @@
 
                 // 사이드바 첨부파일 목록 갱신 (필터링 전 전체 messages 사용)
                 renderAttachmentsSidebar(messages);
+
+                // 현재 보고 있는 메시지까지 확인한 것으로 처리 (실시간 수신 메시지 포함)
+                try {
+                    localStorage.setItem('admin_thread_read_' + threadId, new Date().toISOString());
+                } catch (e) { /* localStorage 사용 불가 시 무시 */ }
 
                 // Scroll to bottom
                 window.scrollTo(0, document.body.scrollHeight);
