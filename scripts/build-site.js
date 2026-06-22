@@ -29,7 +29,7 @@ const SCRIPTS = [
 // ---- per-language UI strings (header chrome) ----
 const STRINGS = {
   en: { brandName: 'Law Firm Lawyeon', brandSub: 'Visa & Immigration Center',
-        siteName: 'Law Firm Lawyeon', siteNameAlt: 'Law Firm Lawyeon Immigration Center',
+        siteName: 'Lawyeon Law Firm Immigration Center', siteNameAlt: 'Law Firm Lawyeon',
         navAbout: 'About Lawyeon', navInsights: 'Insights', navCases: 'Cases & News', navConsult: 'Consultation', navMypage: 'My Page', login: 'Login' },
   ko: { brandName: '법무법인 로연', brandSub: '출입국이민지원센터',
         siteName: '법무법인 로연', siteNameAlt: '법무법인 로연 출입국이민지원센터',
