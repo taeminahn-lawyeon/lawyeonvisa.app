@@ -268,6 +268,29 @@
             background: #F9FAFB;
         }
 
+        /* 미확인(고객 답변) 표시 */
+        .unread-badge {
+            display: inline-block;
+            background: #F03E3E;
+            color: #FFFFFF;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1;
+            padding: 3px 7px;
+            border-radius: 999px;
+            vertical-align: middle;
+            letter-spacing: 0.3px;
+        }
+        .threads-table tr.unread-row {
+            background: #FFF5F5;
+        }
+        .threads-table tr.unread-row:hover {
+            background: #FFECEC;
+        }
+        .threads-table tr.unread-row td:first-child {
+            box-shadow: inset 3px 0 0 #F03E3E;
+        }
+
         .status-badge {
             display: inline-block;
             padding: 4px 10px;
@@ -1158,6 +1181,54 @@
         let filteredThreads = [];
         let currentThreadId = null;
         let selectedThreadIds = new Set();
+        // 미확인(고객 답변 후 관리자가 아직 열어보지 않은) 쓰레드 ID 집합
+        let unreadThreadIds = new Set();
+
+        // 관리자가 해당 쓰레드를 마지막으로 확인한 시각 (admin-thread.html 진입 시 기록)
+        function getAdminThreadReadAt(threadId) {
+            try {
+                const v = localStorage.getItem('admin_thread_read_' + threadId);
+                return v ? new Date(v).getTime() : 0;
+            } catch (e) {
+                return 0;
+            }
+        }
+
+        // 각 쓰레드의 "고객 마지막 메시지" 시각과 관리자 확인 시각을 비교해 미확인 여부 계산
+        async function loadUnreadStatus() {
+            try {
+                // 고객(user)이 보낸 메시지만 조회 — 관리자/시스템 메시지는 제외
+                const { data, error } = await supabaseClient
+                    .from('messages')
+                    .select('thread_id, created_at, sender_type')
+                    .eq('sender_type', 'user')
+                    .order('created_at', { ascending: false });
+
+                if (error) {
+                    console.warn('미확인 상태 로드 실패:', error.message);
+                    return;
+                }
+
+                // 쓰레드별 가장 최근 고객 메시지 시각 (내림차순 정렬이라 첫 항목이 최신)
+                const latestUserMsg = {};
+                (data || []).forEach(m => {
+                    if (!m.thread_id) return;
+                    if (latestUserMsg[m.thread_id] === undefined) {
+                        latestUserMsg[m.thread_id] = new Date(m.created_at).getTime();
+                    }
+                });
+
+                unreadThreadIds = new Set();
+                Object.keys(latestUserMsg).forEach(threadId => {
+                    const lastRead = getAdminThreadReadAt(threadId);
+                    if (latestUserMsg[threadId] > lastRead) {
+                        unreadThreadIds.add(threadId);
+                    }
+                });
+            } catch (e) {
+                console.warn('미확인 상태 로드 오류:', e);
+            }
+        }
 
         // 진행 단계 정의
         const STAGES = {
@@ -1400,10 +1471,13 @@
                 }
                 
                 filteredThreads = [...allThreads];
-                
+
+                // 미확인(고객 답변) 쓰레드 계산 후 렌더링
+                await loadUnreadStatus();
+
                 updateStatistics();
                 renderThreadsTable();
-                
+
                 // 신규 회원 배지 업데이트
                 updateNewMemberBadge();
             } catch (error) {
@@ -1477,7 +1551,9 @@
         // 쓰레드 테이블 렌더링
         function renderThreadsTable() {
             const container = document.getElementById('threadsTableContainer');
-            document.getElementById('threadCount').textContent = `총 ${filteredThreads.length}건`;
+            const unreadCount = filteredThreads.filter(t => unreadThreadIds.has(t.id)).length;
+            document.getElementById('threadCount').innerHTML = `총 ${filteredThreads.length}건`
+                + (unreadCount > 0 ? ` <span class="unread-badge">미확인 ${unreadCount}</span>` : '');
 
             // 선택 상태 초기화
             selectedThreadIds.clear();
@@ -1567,11 +1643,18 @@
 
                 const stageDisplay = `<span style="background: ${typeColor.bg}; color: ${typeColor.color}; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 600;">${currentStage}/${totalStages}</span> <span style="color: #6B7684; font-size: 11px;">${serviceTypeLabel}</span>`;
 
+                // 미확인(고객 답변) 표시: NEW 배지 + 행 강조
+                const isUnread = unreadThreadIds.has(thread.id);
+                const unreadBadge = isUnread
+                    ? `<span class="unread-badge" title="확인하지 않은 고객 답변이 있습니다">NEW</span>`
+                    : '';
+                const rowClass = isUnread ? ' class="unread-row"' : '';
+
                 tableHTML += `
-                    <tr data-thread-id="${thread.id}" data-service-type="${serviceType}">
+                    <tr data-thread-id="${thread.id}" data-service-type="${serviceType}"${rowClass}>
                         <td><input type="checkbox" class="row-checkbox" onchange="toggleRowSelect(this, '${thread.id}')"></td>
                         <td>
-                            <div><strong>${thread.customer_name}</strong></div>
+                            <div><strong>${thread.customer_name}</strong> ${unreadBadge}</div>
                             <div style="font-size: 12px; color: #6B7280;">${thread.customer_email}</div>
                         </td>
                         <td>${phoneDisplay}</td>
