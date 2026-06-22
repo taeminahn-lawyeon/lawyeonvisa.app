@@ -501,7 +501,7 @@ function buildHtml(post, slug) {
   const articlePublishedTime = post.publishedAtISO || '';
   const articleModifiedTime = post.updatedAtISO || '';
   const metaKeywords = post.metaKeywords || '';
-  const ogSiteName = post.ogSiteName || (lang === 'ko' ? '법무법인 로연 출입국이민지원센터' : 'Lawyeon Law Firm Immigration Center');
+  const ogSiteName = post.ogSiteName || (lang === 'ko' ? '법무법인 로연 출입국이민지원센터' : 'Law Firm Lawyeon Immigration Center');
   // hreflang alternates: every other-language version of the same article,
   // plus self as canonical. Helps Google show the right language to each user.
   const altLinks = (post.translations || {});

@@ -2259,7 +2259,7 @@ const translations = {
         'thread.alert.selectQ5': 'Please select at least one option for question 5.',
         // === Thread Survey ===
         'thread.survey.title': 'International Student Visa Survey',
-        'thread.survey.disclaimer': 'This survey is for visa assessment by Lawyeon Law Firm Immigration Center. Confidentiality is guaranteed under the Attorney-at-Law Act and is used solely for legal consultation purposes.',
+        'thread.survey.disclaimer': 'This survey is for visa assessment by Law Firm Lawyeon Immigration Center. Confidentiality is guaranteed under the Attorney-at-Law Act and is used solely for legal consultation purposes.',
         'thread.survey.q1': 'Does your current residential address match the address on the back of your Alien Registration Card (ARC)?',
         'thread.survey.q1a': 'Yes, it does.',
         'thread.survey.q1b': 'No, it does not match.',
