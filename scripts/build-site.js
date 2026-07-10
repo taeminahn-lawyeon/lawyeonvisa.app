@@ -183,9 +183,10 @@ const PAGES = [
   },
   {
     id: 'foreigner-dui-deportation-korea-2026', content: 'foreigner-dui-deportation-korea-2026',
-    langs: ['en'],
-    title: { en: 'Will a Foreigner Be Deported for Drunk Driving in Korea? Fine Thresholds & the Immigration Review (2026) — Law Firm Lawyeon' },
-    desc:  { en: 'Does a DUI fine get a foreigner deported from Korea? Criminal penalties by blood alcohol level, the ₩3M and ₩5M fine thresholds, how the criminal case and the immigration review differ, effects by visa type, and how to respond at the investigation stage.' },
+    title: { en: 'Will a Foreigner Be Deported for Drunk Driving in Korea? Fine Thresholds & the Immigration Review (2026) — Law Firm Lawyeon',
+             ko: '외국인이 음주운전으로 강제출국되나요? 벌금 기준과 사범심사 (2026) — 법무법인 로연' },
+    desc:  { en: 'Does a DUI fine get a foreigner deported from Korea? Criminal penalties by blood alcohol level, the ₩3M and ₩5M fine thresholds, how the criminal case and the immigration review differ, effects by visa type, and how to respond at the investigation stage.',
+             ko: '외국인이 음주운전으로 벌금을 받으면 강제출국되나요? 혈중알코올농도별 형사처벌, 초범 300만·합산 500만 원 기준, 형사사건과 사범심사의 차이, 체류자격별 영향, 수사 단계 대응까지.' },
   },
   {
     id: 'foreigner-divorce-f6-visa-stay-korea-2026', content: 'foreigner-divorce-f6-visa-stay-korea-2026',
