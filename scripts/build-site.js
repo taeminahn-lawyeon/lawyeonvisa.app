@@ -19,7 +19,7 @@ const replaceAll = (s, find, val) => s.split(find).join(val == null ? '' : val);
 // ---- shared partials ----
 const HEAD = read('partials/head.html');
 const HEADER = read('partials/header.html');
-const FOOTER = { en: read('partials/footer.en.html'), ko: read('partials/footer.ko.html') };
+const FOOTER = { en: read('partials/footer.en.html'), ko: read('partials/footer.ko.html'), vi: read('partials/footer.vi.html') };
 const SCRIPTS = [
   '<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>',
   '<script src="__BASE__js/supabase-client.js?v=20260614"></script>',
@@ -34,7 +34,16 @@ const STRINGS = {
   ko: { brandName: '법무법인 로연', brandSub: '출입국이민지원센터',
         siteName: '법무법인 로연', siteNameAlt: '법무법인 로연 출입국이민지원센터',
         navAbout: '로연 소개', navInsights: '인사이트', navCases: '사례·소식', navConsult: '상담', navMypage: '마이 페이지', login: '로그인' },
+  vi: { brandName: 'Law Firm Lawyeon', brandSub: 'Trung tâm Xuất nhập cảnh & Di trú',
+        siteName: 'Trung tâm Hỗ trợ Xuất nhập cảnh Lawyeon', siteNameAlt: 'Law Firm Lawyeon',
+        navAbout: 'Giới thiệu', navInsights: 'Thông tin pháp lý', navCases: 'Tin tức', navConsult: 'Tư vấn', navMypage: 'Trang của tôi', login: 'Đăng nhập' },
 };
+
+// Directory prefix each language's built pages live under (en at root).
+const LANG_DIR = { en: '', ko: 'ko/', vi: 'vi/' };
+// Root-absolute nav home per language, so shared header links resolve correctly
+// from any depth (vi pages reuse the English top-level pages).
+const NAV_HOME = { en: '', ko: '/ko/', vi: '/' };
 
 // ---- page registry (add pages here as they are migrated) ----
 const PAGES = [
@@ -48,8 +57,8 @@ const PAGES = [
   {
     id: 'consultation', content: 'consultation',
     title: { en: 'Request Consultation — Law Firm Lawyeon', ko: '상담 신청 — 법무법인 로연' },
-    desc:  { en: 'Free pre-consultation with Law Firm Lawyeon. Open a private thread for your visa, immigration, or criminal matter in Korea.',
-             ko: '법무법인 로연 무료 사전 상담. 비자·출입국·형사 사안에 대해 비공개 쓰레드로 상담을 시작하세요.' },
+    desc:  { en: 'Consultation with Law Firm Lawyeon. Open a private thread for your visa, immigration, or criminal matter in Korea.',
+             ko: '법무법인 로연 상담 신청. 비자·출입국·형사 사안에 대해 비공개 쓰레드로 상담을 시작하세요.' },
   },
   {
     id: 'booking', content: 'booking',
@@ -172,6 +181,22 @@ const PAGES = [
     desc:  { en: 'Law Firm Lawyeon signed an MOU with Far East University and, at the international student job fair held at its SMART-K tech Center, delivered a lecture on the post-graduation visa roadmap and work-visa law and ran a free legal clinic booth.',
              ko: '법무법인 로연이 극동대학교와 업무 협약을 체결하고, SMART-K tech Center에서 열린 외국인 유학생 취업 박람회에서 졸업 후 비자 로드맵·워크 비자 법제도 특강과 무료 리걸 클리닉 부스를 운영했습니다.' },
   },
+  {
+    id: 'foreigner-dui-deportation-korea-2026', content: 'foreigner-dui-deportation-korea-2026',
+    langs: ['en'],
+    title: { en: 'Will a Foreigner Be Deported for Drunk Driving in Korea? Fine Thresholds & the Immigration Review (2026) — Law Firm Lawyeon' },
+    desc:  { en: 'Does a DUI fine get a foreigner deported from Korea? Criminal penalties by blood alcohol level, the ₩3M and ₩5M fine thresholds, how the criminal case and the immigration review differ, effects by visa type, and how to respond at the investigation stage.' },
+  },
+  {
+    id: 'foreigner-divorce-f6-visa-stay-korea-2026', content: 'foreigner-divorce-f6-visa-stay-korea-2026',
+    langs: ['ko', 'en', 'vi'],
+    title: { ko: '한국인 배우자와 이혼 후 체류 — F-6 비자 유지·변경 기준 (2026) — 법무법인 로연',
+             en: 'Can I Stay in Korea After Divorcing My Korean Spouse? F-6 Visa Rules (2026) — Law Firm Lawyeon',
+             vi: 'Ở lại Hàn Quốc sau khi ly hôn với vợ/chồng người Hàn? Tiêu chí giữ và đổi visa F-6 (2026) — Lawyeon' },
+    desc:  { ko: '한국인 배우자와 이혼하면 F-6 비자를 잃나요? 자녀양육(F-6-2)·혼인단절(F-6-3)로 체류를 이어가는 기준, 배우자 귀책사유를 소명하는 방법과 서류, 부양 특칙과 가사정리(F-1-6), 별거·이혼소송 중 체류까지 정리했습니다.',
+             en: "Does divorce end your F-6 visa in Korea? How to keep staying through child-rearing (F-6-2) or marriage dissolution (F-6-3), how to prove your spouse's fault, the support exception, family-affairs status (F-1-6), and staying during separation or a divorce suit.",
+             vi: 'Ly hôn có làm mất visa F-6 không? Cách tiếp tục cư trú qua diện nuôi con (F-6-2) hoặc hôn nhân tan vỡ (F-6-3), cách chứng minh lỗi của vợ/chồng, ngoại lệ phụng dưỡng, diện thu xếp gia sự (F-1-6), và cư trú khi ly thân hoặc đang kiện ly hôn.' },
+  },
 ];
 
 // LegalService structured data (JSON-LD) for the homepage.
@@ -216,18 +241,25 @@ function websiteJsonLd(lang) {
   return '<script type="application/ld+json">\n' + JSON.stringify(obj, null, 2) + '\n</' + 'script>';
 }
 
+// Relative link from a page in `fromLang` to the same page id in `toLang`.
+function relPath(fromLang, toLang, id) {
+  const up = fromLang === 'en' ? '' : '../';
+  return up + LANG_DIR[toLang] + id;
+}
+
 function langToggle(lang, id, langs) {
   langs = langs || LANGS;
-  const hasEn = langs.indexOf('en') >= 0, hasKo = langs.indexOf('ko') >= 0;
+  const labels = { en: 'EN', ko: '한국어', vi: 'Tiếng Việt' };
+  // Always offer EN/KO (muted when a page lacks one); show Vietnamese only
+  // for pages that actually have a Vietnamese version.
+  const display = ['en', 'ko'];
+  if (langs.indexOf('vi') >= 0) display.push('vi');
   const muted = (t) => `<span style="color:var(--rule-d)">${t}</span>`;
-  if (lang === 'en') {
-    const en = `<a href="${id}" class="active">EN</a>`;
-    const ko = hasKo ? `<a href="ko/${id}">한국어</a>` : muted('한국어');
-    return `${en}<span class="sep">·</span>${ko}`;
-  }
-  const en = hasEn ? `<a href="../${id}">EN</a>` : muted('EN');
-  const ko = `<a href="${id}" class="active">한국어</a>`;
-  return `${en}<span class="sep">·</span>${ko}`;
+  return display.map((l) => {
+    if (langs.indexOf(l) < 0) return muted(labels[l]);
+    const href = l === lang ? id : relPath(lang, l, id);
+    return `<a href="${href}"${l === lang ? ' class="active"' : ''}>${labels[l]}</a>`;
+  }).join('<span class="sep">·</span>');
 }
 
 function build() {
@@ -236,12 +268,14 @@ function build() {
     const langs = page.langs || LANGS;
     const hasEn = langs.indexOf('en') >= 0;
     const hasKo = langs.indexOf('ko') >= 0;
+    const hasVi = langs.indexOf('vi') >= 0;
     const altEn = hasEn ? `${SITE}/${page.id}` : `${SITE}/ko/${page.id}`;
     const altKo = hasKo ? `${SITE}/ko/${page.id}` : `${SITE}/${page.id}`;
+    const hreflangVi = hasVi ? `<link rel="alternate" hreflang="vi" href="${SITE}/vi/${page.id}">` : '';
     for (const lang of langs) {
       const base = lang === 'en' ? '' : '../';
-      const out = lang === 'en' ? `${page.id}.html` : `ko/${page.id}.html`;
-      const canonical = `${SITE}/${lang === 'en' ? '' : 'ko/'}${page.id}`;
+      const out = lang === 'en' ? `${page.id}.html` : `${LANG_DIR[lang]}${page.id}.html`;
+      const canonical = `${SITE}/${LANG_DIR[lang]}${page.id}`;
       const S = STRINGS[lang];
       const bodyHtml = read(`content/${page.content}.${lang}.html`);
 
@@ -253,6 +287,8 @@ function build() {
         '__CANONICAL__': canonical,
         '__ALT_EN__': altEn,
         '__ALT_KO__': altKo,
+        '__HREFLANG_VI__': hreflangVi,
+        '__NAV_HOME__': NAV_HOME[lang],
         '__BRAND_NAME__': S.brandName,
         '__BRAND_SUB__': S.brandSub,
         '__NAV_ABOUT__': S.navAbout,
@@ -282,14 +318,14 @@ function build() {
     PAGES.map(p => {
       const langs = p.langs || LANGS;
       const locs = [];
-      if (langs.indexOf('en') >= 0) locs.push([`${SITE}/${p.id}`]);
-      if (langs.indexOf('ko') >= 0) locs.push([`${SITE}/ko/${p.id}`]);
-      return locs.map(([loc]) => {
-        let alts = '';
-        if (langs.indexOf('en') >= 0) alts += `    <xhtml:link rel="alternate" hreflang="en" href="${SITE}/${p.id}"/>\n`;
-        if (langs.indexOf('ko') >= 0) alts += `    <xhtml:link rel="alternate" hreflang="ko" href="${SITE}/ko/${p.id}"/>\n`;
-        return `  <url>\n    <loc>${loc}</loc>\n` + alts + `  </url>`;
-      }).join('\n');
+      if (langs.indexOf('en') >= 0) locs.push(`${SITE}/${p.id}`);
+      if (langs.indexOf('ko') >= 0) locs.push(`${SITE}/ko/${p.id}`);
+      if (langs.indexOf('vi') >= 0) locs.push(`${SITE}/vi/${p.id}`);
+      let alts = '';
+      if (langs.indexOf('en') >= 0) alts += `    <xhtml:link rel="alternate" hreflang="en" href="${SITE}/${p.id}"/>\n`;
+      if (langs.indexOf('ko') >= 0) alts += `    <xhtml:link rel="alternate" hreflang="ko" href="${SITE}/ko/${p.id}"/>\n`;
+      if (langs.indexOf('vi') >= 0) alts += `    <xhtml:link rel="alternate" hreflang="vi" href="${SITE}/vi/${p.id}"/>\n`;
+      return locs.map((loc) => `  <url>\n    <loc>${loc}</loc>\n` + alts + `  </url>`).join('\n');
     }).join('\n') + '\n</urlset>\n';
   fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap, 'utf8');
   fs.writeFileSync(path.join(ROOT, 'robots.txt'),

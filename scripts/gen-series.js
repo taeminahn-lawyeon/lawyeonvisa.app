@@ -18,11 +18,11 @@ const SRC = {
 
 const L = {
   ko: { toc: '목차', pub: '발행', upd: '업데이트', readLabel: '읽는 시간', readVal: n => '약 ' + n + '분',
-        related: '이어지는 글', ctaText: '상담 쓰레드로 상황을 남겨 주시면, 가능한 경로와 일정을 정리해 드립니다. 사전 상담은 무료입니다.',
-        cta: '무료 사전 상담 시작하기 →' },
+        related: '이어지는 글', ctaText: '상담 쓰레드로 상황을 남겨 주시면, 가능한 경로와 일정을 정리해 드립니다.',
+        cta: '상담 시작하기 →' },
   en: { toc: 'Contents', pub: 'Published', upd: 'Updated', readLabel: 'Read', readVal: n => '~' + n + ' min',
-        related: 'Related', ctaText: 'Share your situation through our consultation thread and we will outline the feasible pathway and timeline. The pre-consultation is free of charge.',
-        cta: 'Start a free pre-consultation →' },
+        related: 'Related', ctaText: 'Share your situation through our consultation thread and we will outline the feasible pathway and timeline.',
+        cta: 'Start a consultation →' },
 };
 
 function loadPost(file) {
