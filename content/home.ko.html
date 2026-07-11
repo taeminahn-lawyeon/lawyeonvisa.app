@@ -31,9 +31,7 @@
                     <div class="attorney-card"><img src="__BASE__images/attorneys/D.G. SHIN.jpg" alt="" class="attorney-photo"><div class="attorney-info"><div class="attorney-name">신동근 변호사</div></div></div>
                 </div>
             </div>
-            <div class="office-photo" style="background-image:url('__BASE__images/office.jpg')">
-                <div class="ph">사무소 전경 사진</div>
-            </div>
+            <div class="office-photo"><img src="__BASE__images/office.jpg" alt="법무법인 로연 사무소" loading="lazy"></div>
         </div>
     </div>
 </section>
@@ -224,14 +222,5 @@
             tab.addEventListener('click', function(){ applyCat(tab.getAttribute('data-cat')); });
         });
         applyCat('visa');
-    })();
-    (function(){
-        var box = document.querySelector('.office-photo');
-        if(!box) return;
-        var ph = box.querySelector('.ph');
-        var test = new Image();
-        test.onload = function(){ if(ph) ph.style.display = 'none'; };
-        test.onerror = function(){ box.style.backgroundImage = 'none'; };
-        test.src = '__BASE__images/office.jpg';
     })();
 </script>

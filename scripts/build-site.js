@@ -200,6 +200,112 @@ const PAGES = [
   },
 ];
 
+// Publication dates for blog articles (page id -> ISO date). A page is an
+// "article" iff its id is a key here. Used for article JSON-LD, article:*
+// meta and sitemap <lastmod>.
+const ARTICLE_DATES = {
+  'korea-business-immigration-visa-guide-d9-4-d9-5-2026':'2026-05-14',
+  'foreigner-franchise-business-korea-2026':'2026-05-07',
+  'how-to-open-a-business-in-korea-as-a-foreigner-2026':'2026-04-30',
+  'korea-permanent-residency-foreign-business-owner-2026':'2026-04-23',
+  'chosun-university-student-legal-mou-2026':'2026-04-10',
+  'd10-job-seeker-visa-korea-2026':'2026-01-16',
+  'foreigner-criminal-fine-deportation-reentry-ban-korea-2026':'2026-06-01',
+  'foreigner-immigration-penalty-fine-deportation-korea-2026':'2026-06-01',
+  'foreigner-unlawful-stay-voluntary-departure-korea-2026':'2026-06-01',
+  'foreigner-immigration-detention-temporary-release-korea-2026':'2026-06-01',
+  'visa-extension-change-denial-reapply-appeal-korea-2026':'2026-06-01',
+  'foreigner-national-pension-lump-sum-refund-korea-2026':'2026-06-01',
+  'far-east-university-student-job-fair-mou-2026':'2026-05-26',
+  'foreigner-dui-deportation-korea-2026':'2026-07-01',
+  'foreigner-divorce-f6-visa-stay-korea-2026':'2026-07-01',
+};
+
+// Strip the brand suffix from a page title for use as a bare headline.
+function stripBrand(title) {
+  return title
+    .replace(/ — Law Firm Lawyeon$/, '')
+    .replace(/ — 법무법인 로연$/, '')
+    .replace(/ — Lawyeon$/, '');
+}
+
+// Per-page og:image: first blog image in the body, else the default og image.
+function pageOgImage(bodyHtml) {
+  const m = bodyHtml.match(/__BASE__images\/blog\/([^"']+)/);
+  return m ? SITE + '/images/blog/' + m[1] : SITE + '/images/og-image.png';
+}
+
+// Extract FAQ q/a pairs from an article body. FAQ blocks look like
+// <div class="qa"><div class="q">Q</div><div class="a">A</div></div>.
+function extractFaqs(bodyHtml) {
+  const pairs = [];
+  const re = /<div class="qa"><div class="q">([\s\S]*?)<\/div><div class="a">([\s\S]*?)<\/div><\/div>/g;
+  let m;
+  const clean = (s) => s.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  while ((m = re.exec(bodyHtml)) !== null) {
+    pairs.push({ q: clean(m[1]), a: clean(m[2]) });
+  }
+  return pairs;
+}
+
+// BlogPosting (+ FAQPage when FAQs exist) structured data for an article.
+function articleJsonLd(page, lang, canonical, bodyHtml, ogImage) {
+  const date = ARTICLE_DATES[page.id];
+  const org = lang === 'ko' ? '법무법인 로연' : 'Law Firm Lawyeon';
+  const blogPosting = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: stripBrand(page.title[lang]),
+    description: page.desc[lang],
+    inLanguage: lang,
+    datePublished: date,
+    dateModified: date,
+    image: ogImage,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+    author: { '@type': 'Organization', name: org },
+    publisher: {
+      '@type': 'Organization',
+      name: org,
+      logo: { '@type': 'ImageObject', url: SITE + '/images/og-image.png' },
+    },
+  };
+  const faqs = extractFaqs(bodyHtml);
+  let obj;
+  if (faqs.length >= 1) {
+    const faqPage = {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    };
+    obj = [blogPosting, faqPage];
+  } else {
+    obj = blogPosting;
+  }
+  return '<script type="application/ld+json">\n' + JSON.stringify(obj, null, 2) + '\n</' + 'script>';
+}
+
+// BreadcrumbList structured data: Home > Insights > Article.
+function breadcrumbJsonLd(page, lang, canonical) {
+  const home = SITE + '/' + LANG_DIR[lang] + 'main';
+  const insightsDir = lang === 'vi' ? '' : LANG_DIR[lang];
+  const insights = SITE + '/' + insightsDir + 'insights';
+  const insightsName = lang === 'ko' ? '인사이트' : (lang === 'vi' ? 'Thông tin pháp lý' : 'Insights');
+  const obj = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: home },
+      { '@type': 'ListItem', position: 2, name: insightsName, item: insights },
+      { '@type': 'ListItem', position: 3, name: stripBrand(page.title[lang]), item: canonical },
+    ],
+  };
+  return '<script type="application/ld+json">\n' + JSON.stringify(obj, null, 2) + '\n</' + 'script>';
+}
+
 // LegalService structured data (JSON-LD) for the homepage.
 function legalServiceJsonLd(lang) {
   const S = STRINGS[lang];
@@ -280,10 +386,14 @@ function build() {
       const S = STRINGS[lang];
       const bodyHtml = read(`content/${page.content}.${lang}.html`);
 
+      const isArticle = Object.prototype.hasOwnProperty.call(ARTICLE_DATES, page.id);
+      const date = ARTICLE_DATES[page.id];
+      const ogImage = isArticle ? pageOgImage(bodyHtml) : SITE + '/images/og-image.png';
+
       let doc = HEAD + '\n' + HEADER + '\n' + bodyHtml + '\n' + FOOTER[lang] + '\n' + SCRIPTS + '\n</body>\n</html>\n';
       const subs = {
         '__LANG__': lang,
-        '__TITLE__': page.title[lang],
+        '__TITLE__': isArticle ? stripBrand(page.title[lang]) : page.title[lang],
         '__DESC__': page.desc[lang],
         '__CANONICAL__': canonical,
         '__ALT_EN__': altEn,
@@ -302,6 +412,14 @@ function build() {
         '__OG_SITE_NAME__': S.siteName,
         '__JSONLD__': page.jsonld ? legalServiceJsonLd(lang) : '',
         '__WEBSITE_JSONLD__': websiteJsonLd(lang),
+        '__OG_TYPE__': isArticle ? 'article' : 'website',
+        '__OG_IMAGE__': ogImage,
+        '__ARTICLE_META__': isArticle
+          ? '<meta property="article:published_time" content="' + date + '"><meta property="article:modified_time" content="' + date + '">'
+          : '',
+        '__ARTICLE_JSONLD__': isArticle
+          ? articleJsonLd(page, lang, canonical, bodyHtml, ogImage) + '\n' + breadcrumbJsonLd(page, lang, canonical)
+          : '',
       };
       for (const [k, v] of Object.entries(subs)) doc = replaceAll(doc, k, v);
       doc = replaceAll(doc, '__BASE__', base); // last: appears in head/footer/body
@@ -318,6 +436,7 @@ function build() {
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' +
     PAGES.map(p => {
       const langs = p.langs || LANGS;
+      const lastmod = ARTICLE_DATES[p.id] || '2026-07-01';
       const locs = [];
       if (langs.indexOf('en') >= 0) locs.push(`${SITE}/${p.id}`);
       if (langs.indexOf('ko') >= 0) locs.push(`${SITE}/ko/${p.id}`);
@@ -326,11 +445,11 @@ function build() {
       if (langs.indexOf('en') >= 0) alts += `    <xhtml:link rel="alternate" hreflang="en" href="${SITE}/${p.id}"/>\n`;
       if (langs.indexOf('ko') >= 0) alts += `    <xhtml:link rel="alternate" hreflang="ko" href="${SITE}/ko/${p.id}"/>\n`;
       if (langs.indexOf('vi') >= 0) alts += `    <xhtml:link rel="alternate" hreflang="vi" href="${SITE}/vi/${p.id}"/>\n`;
-      return locs.map((loc) => `  <url>\n    <loc>${loc}</loc>\n` + alts + `  </url>`).join('\n');
+      return locs.map((loc) => `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n` + alts + `  </url>`).join('\n');
     }).join('\n') + '\n</urlset>\n';
   fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap, 'utf8');
   fs.writeFileSync(path.join(ROOT, 'robots.txt'),
-    'User-agent: *\nAllow: /\n\nSitemap: ' + SITE + '/sitemap.xml\n', 'utf8');
+    'User-agent: *\nAllow: /\nDisallow: /preview/\n\nSitemap: ' + SITE + '/sitemap.xml\n', 'utf8');
   console.log('built sitemap.xml, robots.txt');
 
   console.log(`\nDone. ${count} page(s) generated.`);

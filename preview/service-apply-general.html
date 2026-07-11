@@ -1,0 +1,3361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png?v=3">
+    <title>Apply for Service - Lawyeon Visa Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+
+    <!-- 결제 키 설정 (SDK 로드 전에 선언) -->
+    <script>
+        window.__PAYMENT_CONFIG__ = {
+            tossClientKey: 'live_ck_mBZ1gQ4YVX55PNLM1vkarl2KPoqN'
+        };
+    </script>
+    <!-- Toss Payments SDK v1 (API 개별 연동) -->
+    <script src="https://js.tosspayments.com/v1/payment"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Manrope','IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F7F6F3;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #241F18 0%, #332920 100%);
+            padding: 20px 0;
+            border-bottom: 3px solid #887668;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .btn-back {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-back:hover {
+            opacity: 1;
+        }
+
+        /* Main Container - 2 Column Layout */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .two-column-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        /* Left Column - Service Info & Steps */
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Service Header */
+        .service-header {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .service-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #F4F2EE;
+            color: #887668;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .service-header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1E293B;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            line-height: 1.3;
+        }
+
+        .service-header p {
+            font-size: 16px;
+            color: #64748B;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* Price Card */
+        .price-card {
+            background: white;
+            border-radius: 20px;
+            padding: 28px 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .price-card h2 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #64748B;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid #F7F6F3;
+        }
+
+        .price-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .price-label {
+            font-size: 15px;
+            color: #475569;
+            font-weight: 500;
+        }
+
+        .price-value {
+            font-size: 16px;
+            color: #1E293B;
+            font-weight: 700;
+        }
+
+        .price-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            margin-top: 8px;
+            border-top: 2px solid #E2E8F0;
+        }
+
+        .price-total .label {
+            font-size: 17px;
+            color: #1E293B;
+            font-weight: 800;
+        }
+
+        .price-total .value {
+            font-size: 32px;
+            color: #887668;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        /* Government Fee Notice */
+        .govt-notice {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            background: #FEF9C3;
+            border: 1px solid #FDE047;
+            border-radius: 4px;
+            padding: 14px 16px;
+            margin-top: 16px;
+        }
+
+        .govt-notice i {
+            color: #CA8A04;
+            font-size: 16px;
+            margin-top: 2px;
+        }
+
+        .govt-notice-text {
+            font-size: 13px;
+            color: #854D0E;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        /* Process Steps */
+        .process-steps {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .process-steps h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1E293B;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .process-steps h2 i {
+            color: #887668;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid #F7F6F3;
+        }
+
+        .step-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #887668 0%, #6F6053 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1E293B;
+            margin-bottom: 4px;
+        }
+
+        .step-content p {
+            font-size: 14px;
+            color: #64748B;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* CTA Button */
+        .cta-section {
+            margin-top: 8px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            height: 56px;
+            background: linear-gradient(135deg, #887668 0%, #6F6053 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 16px rgba(136, 118, 104, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(136, 118, 104, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #CBD5E1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-primary.loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Payment Buttons */
+        .btn-payment {
+            width: 100%;
+            height: 60px;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 0 20px;
+        }
+
+        .btn-payment .btn-logo-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .btn-payment .btn-text {
+            letter-spacing: 0.2px;
+        }
+
+        /* Toss Card Button */
+        .btn-toss {
+            background: #887668;
+            color: white;
+            box-shadow: 0 2px 12px rgba(136, 118, 104, 0.3);
+        }
+
+        .btn-toss .btn-logo-area img {
+            height: 18px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .btn-toss:hover:not(:disabled) {
+            background: #1B6DE0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(136, 118, 104, 0.4);
+        }
+
+        .btn-toss:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn-toss:disabled {
+            background: #94A3B8;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Wise 로고 크기 보정 (이미지 내 여백이 있어 더 크게) */
+        .btn-wise .btn-logo-area img {
+            height: 52px;
+            width: 52px;
+        }
+
+        /* Wise Transfer Button */
+        .btn-wise {
+            background: #9FE870;
+            color: #163300;
+            box-shadow: 0 2px 12px rgba(159, 232, 112, 0.3);
+            margin-top: 12px;
+        }
+
+        .btn-wise .btn-logo-area img {
+            height: 24px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .btn-wise:hover:not(:disabled) {
+            background: #8AD85E;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(159, 232, 112, 0.4);
+        }
+
+        .btn-wise:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn-wise:disabled {
+            background: #CBD5E1;
+            color: #94A3B8;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Admin Thread Button */
+        .btn-admin-thread {
+            background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
+            color: white;
+            box-shadow: 0 2px 12px rgba(124, 58, 237, 0.3);
+            font-size: 17px;
+            font-weight: 800;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .btn-admin-thread i {
+            font-size: 20px;
+        }
+
+        .btn-admin-thread:hover {
+            background: linear-gradient(135deg, #6D28D9 0%, #5B21B6 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .btn-admin-thread:active {
+            transform: translateY(0);
+        }
+
+        /* Security Badges */
+        .security-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .toss-badge {
+            background: #F0F6FF;
+            color: #887668;
+        }
+
+        .toss-badge i {
+            color: #887668;
+        }
+
+        .wise-security-badge {
+            background: #F0F6FF;
+            color: #887668;
+        }
+
+        .wise-security-badge i {
+            color: #887668;
+        }
+
+        /* Right Column - Thread Preview */
+        .right-column {
+            position: sticky;
+            top: 100px;
+        }
+
+        .thread-preview {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            border: 1px solid #E2E8F0;
+        }
+
+        .thread-preview-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #F7F6F3;
+        }
+
+        .thread-preview-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #887668 0%, #6F6053 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .thread-preview-title {
+            flex: 1;
+        }
+
+        .thread-preview-title h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1E293B;
+            margin-bottom: 2px;
+        }
+
+        .thread-preview-title p {
+            font-size: 13px;
+            color: #64748B;
+            font-weight: 500;
+        }
+
+        .thread-preview-image {
+            width: 100%;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #F7F6F3;
+            border: 1px solid #E2E8F0;
+        }
+
+        .thread-preview-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Thread mockup placeholder */
+        .thread-mockup {
+            background: linear-gradient(180deg, #F7F6F3 0%, #F4F2EE 100%);
+            padding: 20px;
+            min-height: 400px;
+        }
+
+        .mockup-message {
+            background: white;
+            border-radius: 4px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .mockup-message.admin {
+            background: #F4F2EE;
+            border-left: 3px solid #887668;
+        }
+
+        .mockup-message-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .mockup-avatar {
+            width: 28px;
+            height: 28px;
+            background: #887668;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .mockup-avatar.user {
+            background: #10B981;
+        }
+
+        .mockup-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1E293B;
+        }
+
+        .mockup-time {
+            font-size: 11px;
+            color: #94A3B8;
+            margin-left: auto;
+        }
+
+        .mockup-text {
+            font-size: 14px;
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        .thread-preview-caption {
+            text-align: center;
+            padding: 16px;
+            color: #64748B;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .thread-preview-caption strong {
+            color: #887668;
+            font-weight: 700;
+        }
+
+        /* Security Badge */
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #F0FDF4;
+            border: 1px solid #86EFAC;
+            border-radius: 4px;
+            padding: 12px 16px;
+            margin-top: 16px;
+        }
+
+        .security-badge i {
+            color: #22C55E;
+            font-size: 18px;
+        }
+
+        .security-badge-text {
+            font-size: 13px;
+            color: #166534;
+            font-weight: 600;
+        }
+
+        /* Loading State */
+        .loading-container {
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid #E5E7EB;
+            border-top-color: #887668;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        .loading-text {
+            font-size: 15px;
+            color: #6B7280;
+            font-weight: 600;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 968px) {
+            .two-column-layout {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .right-column {
+                position: static;
+                order: -1;
+            }
+
+            .thread-preview {
+                display: none;
+            }
+
+            .main-container {
+                padding: 24px 16px;
+            }
+
+            .service-header,
+            .price-card,
+            .process-steps {
+                padding: 24px 20px;
+                border-radius: 4px;
+            }
+
+            .service-header h1 {
+                font-size: 22px;
+            }
+
+            .price-total .value {
+                font-size: 26px;
+            }
+
+            .step-item {
+                gap: 12px;
+            }
+
+            .step-number {
+                width: 28px;
+                height: 28px;
+                font-size: 13px;
+            }
+        }
+
+        /* Consulting Mode Styles */
+        .consulting-badge {
+            background: #FEF3C7;
+            color: #D97706;
+        }
+
+        .consulting-notice {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FFFBEB 100%);
+            border: 1px solid #FCD34D;
+            border-radius: 4px;
+            padding: 20px 24px;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .consulting-notice i {
+            color: #D97706;
+            font-size: 22px;
+            margin-top: 2px;
+        }
+
+        .consulting-notice-content h3 {
+            font-size: 17px;
+            font-weight: 800;
+            color: #92400E;
+            margin-bottom: 6px;
+        }
+
+        .consulting-notice-content p {
+            font-size: 14px;
+            color: #78350F;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        /* D-10-1 Question Form Styles */
+        .service-form {
+            background: white;
+            border-radius: 20px;
+            padding: 28px 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .service-form h2 {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1E293B;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .service-form h2 i {
+            color: #887668;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-group label .required {
+            color: #EF4444;
+            margin-left: 4px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 3px;
+            font-size: 15px;
+            font-family: 'Manrope','IBM Plex Sans KR', sans-serif;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #887668;
+            box-shadow: 0 0 0 3px rgba(136, 118, 104, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-group .hint {
+            font-size: 13px;
+            color: #6B7280;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-section-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #887668;
+            margin: 24px 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #F4F2EE;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .radio-option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #887668;
+        }
+
+        .radio-option span {
+            font-size: 14px;
+            color: #374151;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .checkbox-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            accent-color: #887668;
+            flex-shrink: 0;
+        }
+
+        .checkbox-option span {
+            font-size: 14px;
+            color: #374151;
+            line-height: 1.5;
+        }
+
+        .info-box {
+            background: #F4F2EE;
+            border: 1px solid #E3DBCC;
+            border-radius: 3px;
+            padding: 14px 16px;
+            margin-top: 16px;
+        }
+
+        .info-box p {
+            font-size: 13px;
+            color: #4A3C2B;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .info-box strong {
+            font-weight: 700;
+        }
+
+        /* Deferred Payment Notice */
+        .deferred-notice {
+            background: linear-gradient(135deg, #F4F2EE 0%, #F0EBE1 100%);
+            border: 1px solid #93C5FD;
+            border-radius: 4px;
+            padding: 14px 16px;
+            margin-top: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .deferred-notice i {
+            color: #887668;
+            font-size: 18px;
+            margin-top: 2px;
+        }
+
+        .deferred-notice-text {
+            font-size: 14px;
+            color: #4A3C2B;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        /* Service Consent Checkbox */
+        .service-consent-area {
+            margin-top: 20px;
+            padding: 16px 20px;
+            background: #F9FAFB;
+            border: 1px solid #E5E7EB;
+            border-radius: 4px;
+        }
+
+        .service-consent-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .service-consent-label input[type="checkbox"] {
+            display: none;
+        }
+
+        .service-consent-label .consent-mark {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            border: 2px solid #D1D5DB;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            margin-top: 1px;
+        }
+
+        .service-consent-label .consent-mark::after {
+            content: '';
+            display: none;
+            width: 5px;
+            height: 9px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            margin-top: -2px;
+        }
+
+        .service-consent-label input[type="checkbox"]:checked + .consent-mark {
+            background: #887668;
+            border-color: #887668;
+        }
+
+        .service-consent-label input[type="checkbox"]:checked + .consent-mark::after {
+            display: block;
+        }
+
+        .service-consent-text {
+            font-size: 13px;
+            color: #374151;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .service-consent-links {
+            margin-top: 6px;
+            margin-left: 30px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .service-consent-links a {
+            font-size: 12px;
+            color: #887668;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .service-consent-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* WISE Modal */
+        .wise-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .wise-modal-overlay.active {
+            display: flex;
+        }
+
+        .wise-modal {
+            background: white;
+            border-radius: 20px;
+            max-width: 420px;
+            width: 100%;
+            padding: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .wise-modal-icon {
+            width: 64px;
+            height: 64px;
+            background: #9FE870;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .wise-modal h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #191F28;
+            margin-bottom: 4px;
+        }
+
+        .wise-modal h2 span {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #6B7280;
+            margin-top: 4px;
+        }
+
+        .wise-modal-info {
+            background: #F7F6F3;
+            border-radius: 4px;
+            padding: 16px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .wise-modal-info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .wise-modal-info-row:last-child {
+            border-bottom: none;
+        }
+
+        .wise-modal-info-row.total {
+            padding-top: 12px;
+            margin-top: 4px;
+            border-top: 2px solid #E5E7EB;
+            border-bottom: none;
+        }
+
+        .wise-modal-info-label {
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        .wise-modal-info-value {
+            color: #191F28;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .wise-modal-info-row.total .wise-modal-info-label {
+            font-weight: 700;
+            color: #191F28;
+        }
+
+        .wise-modal-info-row.total .wise-modal-info-value {
+            font-size: 18px;
+            font-weight: 800;
+            color: #887668;
+        }
+
+        .wise-modal-notice {
+            background: #F0FDF4;
+            border: 1px solid #86EFAC;
+            border-radius: 4px;
+            padding: 14px 16px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .wise-modal-notice strong {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: #166534;
+            margin-bottom: 6px;
+        }
+
+        .wise-modal-notice p {
+            font-size: 13px;
+            color: #166534;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .wise-modal-btn {
+            width: 100%;
+            height: 52px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 10px;
+        }
+
+        .wise-modal-btn.primary {
+            background: linear-gradient(135deg, #9FE870 0%, #7DD956 100%);
+            color: #1F2937;
+        }
+
+        .wise-modal-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(159, 232, 112, 0.4);
+        }
+
+        .wise-modal-btn.secondary {
+            background: white;
+            color: #6B7280;
+            border: 2px solid #E5E7EB;
+        }
+
+        .wise-modal-btn.secondary:hover {
+            background: #F9FAFB;
+        }
+
+        .wise-modal-btn.loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-inner">
+            <div class="header-title" data-i18n="serviceApply.header">Apply for Service</div>
+            <a href="javascript:void(0)" onclick="goBack()" class="btn-back">
+                <i class="fas fa-times"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="main-container">
+        <div id="loading" class="loading-container">
+            <div class="spinner"></div>
+            <div class="loading-text" data-i18n="serviceApply.loading">Loading service information...</div>
+        </div>
+
+        <!-- Main Content -->
+        <div id="main-content" class="two-column-layout" style="display: none;">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- Service Header -->
+                <div class="service-header">
+                    <div class="service-badge" id="service-badge">
+                        <i class="fas fa-file-alt"></i>
+                        <span id="service-badge-text">Visa Service</span>
+                    </div>
+                    <h1 id="service-name">Visa Extension</h1>
+                    <p id="service-desc">Extension of your current residence status</p>
+                </div>
+
+                <!-- Price Card (for payment services) -->
+                <div class="price-card" id="price-card">
+                    <h2 data-i18n="serviceApply.priceDetails">Price Details</h2>
+                    <div class="price-row">
+                        <span class="price-label" data-i18n="serviceApply.agencyFee">Agency Fee</span>
+                        <span class="price-value" id="agency-fee">₩550,000</span>
+                    </div>
+                    <div class="price-row" id="govt-fee-row" style="display: none;">
+                        <span class="price-label" data-i18n="serviceApply.govtFee">Immigration Fee</span>
+                        <span class="price-value" id="govt-fee">₩50,000</span>
+                    </div>
+                    <div id="bundled-items-rows"></div>
+                    <div class="price-total">
+                        <span class="label" data-i18n="serviceApply.total">Total</span>
+                        <span class="value" id="total-price">₩600,000</span>
+                    </div>
+                    <div class="govt-notice" id="govt-notice" style="display: none;">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="govt-notice-text" data-i18n="serviceApply.govtNotice">Immigration fee is included and paid by our center on your behalf.</span>
+                    </div>
+                    <div class="deferred-notice" id="deferred-notice" style="display: none;">
+                        <i class="fas fa-comments"></i>
+                        <span class="deferred-notice-text" data-i18n="serviceApply.deferredNotice">Payment will be requested after consultation with our specialist.</span>
+                    </div>
+
+                </div>
+
+                <!-- Consulting Notice (for consulting services) -->
+                <div class="consulting-notice" id="consulting-notice" style="display: none;">
+                    <i class="fas fa-star"></i>
+                    <div class="consulting-notice-content">
+                        <h3>Get a Custom Quote</h3>
+                        <p>Every case is different. We'll provide an accurate quote after understanding your situation.</p>
+                    </div>
+                </div>
+
+                <!-- D-10-1 Application Form -->
+                <div class="service-form" id="d10-1-form" style="display: none;">
+                    <h2><i class="fas fa-clipboard-list"></i> Application Information</h2>
+                    <p style="font-size: 14px; color: #64748B; margin-bottom: 20px;">Please provide the following information to process your D-10-1 visa application. Our specialist will review and contact you.</p>
+
+                    <div class="form-section-title">📋 Basic Eligibility</div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Current Visa Status <span class="required">*</span></label>
+                            <select id="d10-current-visa" required>
+                                <option value="">Select your current visa</option>
+                                <option value="D-2-1">D-2-1 (Associate Degree)</option>
+                                <option value="D-2-2">D-2-2 (Bachelor's Degree)</option>
+                                <option value="D-2-3">D-2-3 (Master's Degree)</option>
+                                <option value="D-2-4">D-2-4 (Doctoral Degree)</option>
+                                <option value="D-2-5">D-2-5 (Research)</option>
+                                <option value="D-2-6">D-2-6 (Exchange Student)</option>
+                                <option value="D-2-7">D-2-7 (Language + Degree)</option>
+                                <option value="D-2-8">D-2-8 (Short-term Study)</option>
+                                <option value="D-4">D-4 (Language Training)</option>
+                                <option value="Other">Other (Please specify below)</option>
+                            </select>
+                            <p class="hint">D-10-1 is typically available for D-2 visa holders</p>
+                        </div>
+                        <div class="form-group">
+                            <label>Visa Expiry Date <span class="required">*</span></label>
+                            <input type="date" id="d10-visa-expiry" required>
+                            <p class="hint">Must apply before current visa expires</p>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Graduation Date <span class="required">*</span></label>
+                            <input type="date" id="d10-graduation-date" required>
+                            <p class="hint">Points exemption available within 1 year of graduation</p>
+                        </div>
+                        <div class="form-group">
+                            <label>Degree Type <span class="required">*</span></label>
+                            <select id="d10-degree-type" required>
+                                <option value="">Select degree type</option>
+                                <option value="Associate">Associate Degree (2-year)</option>
+                                <option value="Bachelor">Bachelor's Degree (4-year)</option>
+                                <option value="Master">Master's Degree</option>
+                                <option value="Doctoral">Doctoral Degree (PhD)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>University Name (in Korea) <span class="required">*</span></label>
+                        <input type="text" id="d10-university" placeholder="e.g., Seoul National University" required>
+                        <p class="hint">Must be a regular university in South Korea</p>
+                    </div>
+
+                    <div class="form-section-title">🏠 Residence Information</div>
+
+                    <div class="form-group">
+                        <label>Current Address in Korea <span class="required">*</span></label>
+                        <input type="text" id="d10-address" placeholder="e.g., 123 Gangnam-daero, Gangnam-gu, Seoul" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Proof of Residence <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="d10-residence-proof" value="lease" required>
+                                <span>Housing contract (Lease/Jeonse)</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="d10-residence-proof" value="dormitory">
+                                <span>Dormitory residence certificate</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="d10-residence-proof" value="host">
+                                <span>Host invitation (staying with family/friend)</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="d10-residence-proof" value="other">
+                                <span>Other (Please explain below)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-section-title">📝 Korean Language & Work Plans</div>
+
+                    <div class="form-group">
+                        <label>Korean Language Proficiency</label>
+                        <select id="d10-korean-level">
+                            <option value="">Select if applicable</option>
+                            <option value="TOPIK-1">TOPIK Level 1</option>
+                            <option value="TOPIK-2">TOPIK Level 2</option>
+                            <option value="TOPIK-3">TOPIK Level 3</option>
+                            <option value="TOPIK-4">TOPIK Level 4</option>
+                            <option value="TOPIK-5">TOPIK Level 5</option>
+                            <option value="TOPIK-6">TOPIK Level 6</option>
+                            <option value="KIIP-3">KIIP Level 3</option>
+                            <option value="KIIP-4">KIIP Level 4 (Intermediate passed)</option>
+                            <option value="KIIP-5">KIIP Level 5</option>
+                            <option value="None">No certificate</option>
+                        </select>
+                        <p class="hint">TOPIK 4+ or KIIP 4+ required for part-time work permission</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Previous E-series Visa History</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="d10-e-visa-history" value="no" checked>
+                                <span>No previous E-1~E-7 visa</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="d10-e-visa-history" value="yes">
+                                <span>Had E-1~E-7 visa before</span>
+                            </label>
+                        </div>
+                        <p class="hint">Previous E-visa holders are NOT eligible for part-time work on D-10</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Do you plan to do internships?</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="d10-internship-plan" value="yes">
+                                <span>Yes, I plan to do internships</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="d10-internship-plan" value="no" checked>
+                                <span>No immediate plans</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="d10-internship-plan" value="already">
+                                <span>I already have an internship offer</span>
+                            </label>
+                        </div>
+                        <p class="hint">Internships must be reported within 15 days of starting</p>
+                    </div>
+
+                    <div class="form-section-title">💼 Job Seeking Plan</div>
+
+                    <div class="form-group">
+                        <label>Target Industry/Field <span class="required">*</span></label>
+                        <input type="text" id="d10-target-industry" placeholder="e.g., IT/Software Development, Marketing, Engineering" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Job Seeking Activities (Brief Plan) <span class="required">*</span></label>
+                        <textarea id="d10-job-plan" placeholder="Describe your job search plan, e.g.:
+- Applying to tech companies in Seoul
+- Using job portals (Saramin, JobKorea, LinkedIn)
+- Attending career fairs at my university
+- Networking with alumni in my field" required></textarea>
+                        <p class="hint">This will be used for your Job Seeking Plan document</p>
+                    </div>
+
+                    <div class="form-section-title">📎 Additional Notes</div>
+
+                    <div class="form-group">
+                        <label>Additional Information or Questions</label>
+                        <textarea id="d10-additional-notes" placeholder="Any special circumstances, questions, or concerns you'd like us to know about..."></textarea>
+                    </div>
+
+                    <div class="info-box">
+                        <p><strong>📌 New Graduate Exemption:</strong> If you graduated within 1 year, you are <strong>exempt from the points system</strong> and <strong>do not need to submit bank statements</strong> (proof of financial ability).</p>
+                    </div>
+                </div>
+
+                <!-- Process Steps -->
+                <div class="process-steps">
+                    <h2><i class="fas fa-list-check"></i> <span data-i18n="serviceApply.howItWorks">How It Works</span></h2>
+
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3 data-i18n="serviceApply.step1Title">Submit Application</h3>
+                            <p data-i18n="serviceApply.step1Desc">A dedicated thread will be created instantly</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3 data-i18n="serviceApply.step2Title">Specialist Assigned</h3>
+                            <p data-i18n="serviceApply.step2Desc">We'll contact you within 30 minutes</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3 data-i18n="serviceApply.step3Title">Document Review</h3>
+                            <p data-i18n="serviceApply.step3Desc">We'll guide you through required documents</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3 data-i18n="serviceApply.step4Title">Service Complete</h3>
+                            <p data-i18n="serviceApply.step4Desc">We'll handle everything until completion</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Consent -->
+                <div class="service-consent-area" id="service-consent-area">
+                    <label class="service-consent-label">
+                        <input type="checkbox" id="serviceConsentCheck" onchange="onServiceConsentChange()">
+                        <span class="consent-mark"></span>
+                        <span class="service-consent-text" id="serviceConsentText"></span>
+                    </label>
+                    <div class="service-consent-links">
+                        <a href="terms-of-service.html" target="_blank"><i class="fas fa-external-link-alt"></i> <span data-i18n="footer.terms">서비스 이용약관</span></a>
+                        <a href="privacy-policy.html" target="_blank"><i class="fas fa-external-link-alt"></i> <span data-i18n="footer.privacy">개인정보 처리방침</span></a>
+                    </div>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="cta-section">
+                    <button class="btn-payment btn-toss" id="payBtn" onclick="processPayment()" disabled>
+                        <div class="btn-logo-area">
+                            <img src="Toss_Logo_Button_Type.png" alt="Toss">
+                        </div>
+                        <span id="btn-text" class="btn-text" data-i18n="payment.payWithCard">Pay with Card</span>
+                    </button>
+
+                    <button class="btn-payment btn-wise" id="wiseBtn" onclick="processWisePayment()" disabled>
+                        <div class="btn-logo-area">
+                            <img src="wise_logo.png" alt="Wise" style="height: 52px; width: 52px;">
+                        </div>
+                        <span class="btn-text" data-i18n="payment.bankTransfer">Bank Transfer</span>
+                    </button>
+
+                    <!-- 관리자 전용: 테스트 쓰레드 열기 버튼 (Wise 아래, 관리자 모드일 때만 표시) -->
+                    <button class="btn-payment btn-admin-thread" id="adminThreadBtn" onclick="createAdminTestThread()" style="display: none;">
+                        <i class="fas fa-comments"></i>
+                        <span class="btn-text">테스트 쓰레드 열기</span>
+                    </button>
+
+                    <div class="security-badges">
+                        <div class="security-badge toss-badge">
+                            <i class="fas fa-shield-alt"></i>
+                            <span data-i18n="payment.securedByToss">Secured by Toss Payments · PCI DSS Certified</span>
+                        </div>
+                        <div class="security-badge wise-security-badge">
+                            <i class="fas fa-lock"></i>
+                            <span data-i18n="payment.securedByWise">Wise is FCA regulated</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Thread Preview -->
+            <div class="right-column">
+                <div class="thread-preview">
+                    <div class="thread-preview-header">
+                        <div class="thread-preview-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="thread-preview-title">
+                            <h3 data-i18n="serviceApply.dedicatedThread">Your Dedicated Thread</h3>
+                            <p data-i18n="serviceApply.realtimeComm">Real-time communication with our team</p>
+                        </div>
+                    </div>
+
+                    <div class="thread-preview-image">
+                        <img src="/images/thread-preview.png" alt="Thread Preview" style="width: 100%; height: auto; display: block;">
+                    </div>
+
+                    <div class="thread-preview-caption" data-i18n="serviceApply.trackProgress">Track your progress in real-time through your dedicated thread</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WISE Modal -->
+    <div class="wise-modal-overlay" id="wiseModalOverlay" onclick="closeWiseModal(event)">
+        <div class="wise-modal" onclick="event.stopPropagation()">
+            <div class="wise-modal-icon">W</div>
+            <h2 id="wiseModalTitle">Bank Transfer via WISE</h2>
+
+            <div class="wise-modal-info">
+                <div class="wise-modal-info-row">
+                    <span class="wise-modal-info-label" id="wiseServiceLabel">Service</span>
+                    <span class="wise-modal-info-value" id="wiseServiceName">-</span>
+                </div>
+                <div class="wise-modal-info-row">
+                    <span class="wise-modal-info-label" id="wiseOrderLabel">Order ID</span>
+                    <span class="wise-modal-info-value" id="wiseOrderId">-</span>
+                </div>
+                <div class="wise-modal-info-row total">
+                    <span class="wise-modal-info-label" id="wiseAmountLabel">Amount</span>
+                    <span class="wise-modal-info-value" id="wiseAmount">-</span>
+                </div>
+            </div>
+
+            <div class="wise-modal-notice" id="wiseNotice">
+                <strong>Instructions:</strong>
+                <p>Click the button below to pay via WISE.</p>
+                <p style="margin-top: 8px;">Service will start after admin confirms payment.</p>
+            </div>
+
+            <button class="wise-modal-btn primary" id="wisePayBtn" onclick="processWiseModalPayment()">
+                Pay with WISE
+            </button>
+            <button class="wise-modal-btn secondary" id="wiseCloseBtn" onclick="closeWiseModal()">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Immigration Fees (Based on Immigration Control Act)
+        const govtFees = {
+            'visa-extension': 50000,
+            'visa-change': 119000,
+            'visa-grant': 80000,
+            'workplace-change': 99000,
+            'outside-activity': 120000,
+            'arc-application': 30000,
+            'arc-reissue': 30000,
+            'arc-change': 30000,
+            'f4-residence': 30000,
+            'naturalization': 300000,
+            'nationality-recovery': 200000,
+            'nationality-acquisition': 20000,
+            'nationality-selection': 20000,
+            'nationality-loss': 20000,
+            'nationality-retention': 20000,
+            'cert-entry-exit': 2000,
+            'cert-arc': 2000,
+            'cert-residence': 2000,
+            'cert-realestate': 2000,
+            'cert-number-change': 2000,
+            'cert-nationality': 2000
+        };
+
+        // Service Pricing (Agency fee, VAT included)
+        const servicePricing = {
+            // Premium Services
+            'visa-prediagnosis': { name: 'Visa Legal Advice', price: 55000, govFee: 0, desc: 'Visa change, overstay risk, immigration law consultation', icon: '🔍', badge: 'Legal Advice' },
+            'emergency-legal': { name: 'Immigration Dispute Resolution', price: 0, govFee: 0, desc: 'Criminal investigation, deportation defense, visa denial appeals', icon: '⚖️', deferredPayment: true },
+            'pre-consultation': { name: 'Pre-Consultation', nameKo: '사전 상담', price: 0, govFee: 0, desc: 'Free initial consultation via navigator', descKo: '네비게이터를 통한 무료 사전 상담', icon: '💬', deferredPayment: true, hidden: true },
+
+            // Education & Job Search
+            'd4-to-d2-change': { name: 'D-4→D-2 Student Visa Change', price: 110000, govFee: 119000, desc: 'Language course to degree program', icon: '🎓' },
+            'd10-1-change': { name: 'D-10-1 Job Seeker Visa Change', nameKo: 'D-10-1 일반구직 비자 변경', price: 220000, govFee: 100000, desc: 'General job seeking visa', icon: '🔍', bundledItems: [{ key: 'arc-reissue', name: 'Alien Registration Card Reissue', nameKo: '외국인등록증 재발급', amount: 34000 }] },
+            'd10-1-chosun': { name: 'D-10-1 General Job Seeker Visa (Chosun)', nameKo: 'D-10-1 일반구직 비자 변경 (조선대)', price: 55000, govFee: 100000, desc: 'Chosun University special rate', icon: '🎓', organization: 'chosun', bundledItems: [{ key: 'arc-reissue', name: 'Alien Registration Card Reissue', nameKo: '외국인등록증 재발급', amount: 34000 }] },
+            'd10-2-change': { name: 'D-10-2 Tech Startup Job Seeker', price: 330000, govFee: 100000, desc: 'Startup preparation visa', icon: '💡' },
+            'd10-2-chosun': { name: 'D-10-2 Tech Startup Job Seeker (Chosun)', price: 55000, govFee: 100000, desc: 'Chosun University special rate', icon: '💡', organization: 'chosun' },
+            'd10-3-change': { name: 'D-10-3 High-tech Intern Visa', price: 330000, govFee: 100000, desc: 'Advanced technology internship', icon: '🔬' },
+            'd10-3-chosun': { name: 'D-10-3 High-tech Intern Visa (Chosun)', price: 55000, govFee: 100000, desc: 'Chosun University special rate', icon: '🔬', organization: 'chosun' },
+            'd10-t-change': { name: 'D-10-T Top Talent Job Seeker', price: 330000, govFee: 100000, desc: 'Elite university graduate visa', icon: '🏆' },
+            'd10-t-chosun': { name: 'D-10-T Top Talent Job Seeker (Chosun)', price: 55000, govFee: 100000, desc: 'Chosun University special rate', icon: '🏆', organization: 'chosun' },
+            'd2-qualification-change-chosun': { name: 'D-2 Qualification Change (Chosun)', price: 55000, govFee: 100000, desc: 'D-4, D-2 sub-status change', icon: '🔄', organization: 'chosun' },
+            'd10-1-feu': { name: 'D-10-1 General Job Seeker Visa (FEU)', nameKo: 'D-10-1 일반구직 비자 변경 (극동대)', price: 55000, govFee: 100000, desc: 'Far East University special rate', icon: '🎓', organization: 'feu', bundledItems: [{ key: 'arc-reissue', name: 'Alien Registration Card Reissue', nameKo: '외국인등록증 재발급', amount: 34000 }] },
+            'd10-2-feu': { name: 'D-10-2 Tech Startup Job Seeker (FEU)', price: 55000, govFee: 100000, desc: 'Far East University special rate', icon: '💡', organization: 'feu' },
+            'd10-3-feu': { name: 'D-10-3 High-tech Intern Visa (FEU)', price: 55000, govFee: 100000, desc: 'Far East University special rate', icon: '🔬', organization: 'feu' },
+            'd10-t-feu': { name: 'D-10-T Top Talent Job Seeker (FEU)', price: 55000, govFee: 100000, desc: 'Far East University special rate', icon: '🏆', organization: 'feu' },
+            'd2-qualification-change-feu': { name: 'D-2 Qualification Change (FEU)', price: 55000, govFee: 100000, desc: 'D-4, D-2 sub-status change', icon: '🔄', organization: 'feu' },
+            'd2-d4-extension': { name: 'D-2, D-4 Visa Extension', price: 110000, govFee: 50000, desc: 'Student visa renewal', icon: '📖' },
+            'd10-extension': { name: 'D-10 Visa Extension', price: 220000, govFee: 50000, desc: 'Job seeker visa renewal', icon: '⏳' },
+            'parttime-permit': { name: 'Part-time Work Permit', price: 33000, govFee: 0, desc: 'D-2, D-4 part-time employment', icon: '⏰' },
+            'parttime-change': { name: 'Part-time Work Change Report', price: 33000, govFee: 0, desc: 'Part-time employment change notification', icon: '🔄' },
+            'd10-parttime-permit': { name: 'D-10 Part-time Work Permit', price: 33000, govFee: 0, desc: 'D-10 visa part-time employment', icon: '⏰' },
+            'intern-report': { name: 'Internship Start/Change Report', price: 110000, govFee: 0, desc: 'D-10 internship notification', icon: '📝' },
+            'parent-invite': { name: 'Student Parent Invitation', price: 550000, govFee: 60000, desc: 'Excellent student parent visa', icon: '👨‍👩‍👧' },
+
+            // Employment
+            'e7-4-change': { name: 'E-7-4 Skilled Worker Visa', price: 550000, govFee: 119000, desc: 'E-9/H-2 skilled transition', icon: '🔧' },
+            'e7-4r-change': { name: 'E-7-4R Regional Skilled Worker', price: 550000, govFee: 119000, desc: 'Depopulated area skilled worker', icon: '🏘️' },
+            'e7-change': { name: 'E-7 Professional Visa Change', price: 550000, govFee: 100000, desc: 'Professional employment visa', icon: '💼' },
+            'f2-7-change': { name: 'F-2-7 Points-based Residence', price: 550000, govFee: 100000, desc: 'Outstanding talent residence', icon: '⭐' },
+            'f2-r-change': { name: 'F-2-R Regional Residence Visa', price: 550000, govFee: 100000, desc: 'Depopulated area residence', icon: '🏡' },
+            'e7-st-change': { name: 'E-7-S/T Elite Professional', price: 550000, govFee: 100000, desc: 'High-tech/high-income talent', icon: '🏆' },
+            'e1-e6-change': { name: 'E-1~E-6 Professional Change', price: 550000, govFee: 100000, desc: 'Professor, researcher, specialist', icon: '🎓' },
+            'e7-extension': { name: 'E-7 Visa Extension', price: 110000, govFee: 60000, desc: 'Professional visa renewal', icon: '📅' },
+            'e9-workplace-change': { name: 'E-9 Workplace Change', price: 220000, govFee: 99000, desc: 'E-9 employer change', icon: '🏭' },
+            'workplace-change-permit': { name: 'Workplace Change Permit', price: 220000, govFee: 120000, desc: 'Job transfer pre-approval', icon: '🏢' },
+            'outside-activity': { name: 'Additional Activity Permit', price: 220000, govFee: 120000, desc: 'Activities beyond visa scope', icon: '🔓' },
+            'h2-work-start': { name: 'H-2 Employment Start Report', price: 55000, govFee: 0, desc: 'Working visit job notification', icon: '📋' },
+            'workplace-change-report': { name: 'Workplace Change Report', price: 110000, govFee: 0, desc: 'Job transfer post-notification', icon: '📝' },
+            'employment-info-change': { name: 'Employment Info Update', price: 55000, govFee: 0, desc: 'Workplace/salary change report', icon: '💰' },
+            'dispatch-report': { name: 'Dispatch Work Report', price: 110000, govFee: 0, desc: 'Subsidiary assignment report', icon: '🔄' },
+            'income-report': { name: 'Annual Income Report', price: 55000, govFee: 0, desc: 'Job and income notification', icon: '💵' },
+            'foreign-worker-change': { name: 'Foreign Worker Status Report', price: 55000, govFee: 0, desc: 'Resignation/departure report', icon: '📊' },
+
+            // Business & Investment
+            'd8-1-change': { name: 'D-8-1 Corporate Investment', price: 1100000, govFee: 100000, desc: 'Corporate establishment visa', icon: '🏢' },
+            'd8-2-change': { name: 'D-8-2 Venture Investment', price: 1100000, govFee: 100000, desc: 'Venture company investment', icon: '🚀' },
+            'd8-3-change': { name: 'D-8-3 Individual Investment', price: 1100000, govFee: 100000, desc: 'Sole proprietor investment', icon: '💼' },
+            'd8-4-change': { name: 'D-8-4 Tech Startup Visa', price: 1100000, govFee: 100000, desc: 'Student entrepreneur visa', icon: '💡' },
+            'd9-1-change': { name: 'D-9-1 Trade Business', price: 1100000, govFee: 100000, desc: 'Trading business visa', icon: '🌐' },
+            'd9-2-change': { name: 'D-9-2 Export Equipment', price: 1100000, govFee: 100000, desc: 'Export facility management', icon: '🏭' },
+            'd9-3-change': { name: 'D-9-3 Shipbuilding Supervisor', price: 1100000, govFee: 100000, desc: 'Ship/equipment supervision', icon: '⚓' },
+            'd9-4-change': { name: 'D-9-4 Commercial Business', price: 1100000, govFee: 100000, desc: 'Individual commercial visa', icon: '📊' },
+            'd9-5-change': { name: 'D-9-5 Graduate Entrepreneur', price: 1100000, govFee: 100000, desc: 'Former student business', icon: '🎓' },
+            'business-extension': { name: 'D-8, D-9 Business Extension', price: 1100000, govFee: 60000, desc: 'Investment visa renewal', icon: '📅' },
+            'fic-registration': { name: 'Foreign Investment Registration', price: 330000, govFee: 0, desc: 'FIC certificate issuance', icon: '📋' },
+            'fi-report': { name: 'Foreign Investment Report', price: 220000, govFee: 0, desc: 'Investment pre-notification', icon: '📝' },
+
+            // Ethnic Korean & Family
+            'h2-to-f4-change': { name: 'H-2→F-4 Overseas Korean', price: 550000, govFee: 119000, desc: 'Working visit to overseas Korean', icon: '🇰🇷' },
+            'f4-change': { name: 'F-4 Overseas Korean Visa', price: 220000, govFee: 100000, desc: 'Overseas Korean status', icon: '🎌' },
+            'f4-registration': { name: 'F-4 Residence Registration', price: 110000, govFee: 35000, desc: 'F-4 residence card issuance', icon: '📍' },
+            'f4-extension': { name: 'F-4 Visa Extension', price: 110000, govFee: 50000, desc: 'F-4 residence renewal', icon: '📅' },
+            'h2-extension': { name: 'H-2 Visa Extension', price: 110000, govFee: 50000, desc: 'Working visit renewal', icon: '🛬' },
+            'f6-change': { name: 'F-6 Marriage Immigration', price: 550000, govFee: 100000, desc: 'Spouse visa acquisition', icon: '💍' },
+            'f6-extension': { name: 'F-6 Visa Extension', price: 110000, govFee: 30000, desc: 'Marriage visa renewal', icon: '💒' },
+            'f3-change': { name: 'F-3 Dependent Family Visa', price: 330000, govFee: 100000, desc: 'Spouse/child accompanying', icon: '👪' },
+            'f1-change': { name: 'F-1 Family Visit Visa', price: 330000, govFee: 100000, desc: 'Relative long-term stay', icon: '🏠' },
+            'visa-grant-child': { name: 'Child Birth Visa Grant', price: 220000, govFee: 80000, desc: 'Newborn child visa', icon: '👶' },
+            'visa-grant-f6-child': { name: 'F-6 Child Visa Grant', price: 220000, govFee: 40000, desc: 'Marriage immigrant child', icon: '👶' },
+            'family-invite': { name: 'Family Invitation Visa', price: 550000, govFee: 60000, desc: 'Overseas family invitation', icon: '✈️' },
+            'housework-report': { name: 'Domestic Work Report', price: 55000, govFee: 0, desc: 'Household help notification', icon: '🏡' },
+
+            // Residence & Citizenship
+            'f5-change': { name: 'F-5 Permanent Residence', price: 1100000, govFee: 200000, desc: 'Korea permanent residency', icon: '🏠' },
+            'f5-reissue': { name: 'F-5 Card Renewal (10yr)', price: 110000, govFee: 35000, desc: 'Permanent residence card', icon: '🔄' },
+            'f2-extension': { name: 'F-2 Residence Extension', price: 110000, govFee: 60000, desc: 'Residence visa renewal', icon: '🏡' },
+            'naturalization': { name: 'Naturalization Application', price: 1100000, govFee: 300000, desc: 'Korean citizenship', icon: '🏛️' },
+            'nationality-recovery': { name: 'Nationality Recovery', price: 550000, govFee: 200000, desc: 'Former Korean citizenship', icon: '🔙' },
+            'nationality-selection': { name: 'Nationality Selection', price: 110000, govFee: 20000, desc: 'Dual citizen selection', icon: '🌍' },
+            'nationality-renounce': { name: 'Nationality Renunciation', price: 110000, govFee: 20000, desc: 'Korean citizenship waiver', icon: '📄' },
+            'nationality-loss': { name: 'Nationality Loss Report', price: 110000, govFee: 0, desc: 'Foreign citizenship report', icon: '📋' },
+            'nationality-retention': { name: 'Nationality Retention', price: 110000, govFee: 20000, desc: 'Citizenship retention intent', icon: '✍️' },
+            'nationality-acquisition': { name: 'Nationality Acquisition', price: 110000, govFee: 20000, desc: 'Recognition-based citizenship', icon: '📜' },
+            'nationality-judgment': { name: 'Nationality Determination', price: 110000, govFee: 30000, desc: 'Nationality status inquiry', icon: '⚖️' },
+
+            // General Registration & Certificates
+            'arc-registration': { name: 'Alien Registration', price: 110000, govFee: 35000, desc: 'Required within 90 days', icon: '🆔' },
+            'arc-reissue': { name: 'ARC Reissue', price: 110000, govFee: 35000, desc: 'Lost/damaged card replacement', icon: '🔄' },
+            'address-change': { name: 'Address Change Report', price: 33000, govFee: 0, desc: 'Moving address update', icon: '🏠' },
+            'f4-address-change': { name: 'F-4 Address Change', price: 33000, govFee: 0, desc: 'Overseas Korean address', icon: '🇰🇷' },
+            'passport-change': { name: 'Passport/Info Change', price: 33000, govFee: 0, desc: 'Passport/name update', icon: '📝' },
+            'reentry-permit-multiple': { name: 'Multiple Re-entry Permit', price: 55000, govFee: 41300, desc: 'Multiple border crossings', icon: '🔁' },
+            'reentry-permit-single': { name: 'Single Re-entry Permit', price: 55000, govFee: 28300, desc: 'One-time border crossing', icon: '🔙' },
+            'cert-entry-exit': { name: 'Entry/Exit Certificate', price: 22000, govFee: 2000, desc: 'Travel history record', icon: '📋' },
+            'cert-arc': { name: 'ARC Certificate', price: 22000, govFee: 2000, desc: 'Registration proof', icon: '📄' },
+            'cert-residence': { name: 'Residence Certificate', price: 22000, govFee: 2000, desc: 'F-4 residence proof', icon: '🏠' },
+            'cert-realestate': { name: 'Real Estate Registration ID', price: 22000, govFee: 2000, desc: 'Property transaction', icon: '🏘️' },
+            'cert-arc-number-change': { name: 'ARC Number Change Cert', price: 22000, govFee: 2000, desc: 'Number change confirmation', icon: '📋' },
+            'cert-nationality': { name: 'Nationality Certificate', price: 22000, govFee: 2000, desc: 'Nationality status proof', icon: '📜' }
+        };
+
+        // 가격 위변조 방지: servicePricing 객체를 완전히 동결 (번들 항목 포함)
+        Object.values(servicePricing).forEach(v => {
+            if (Array.isArray(v.bundledItems)) {
+                v.bundledItems.forEach(b => Object.freeze(b));
+                Object.freeze(v.bundledItems);
+            }
+            Object.freeze(v);
+        });
+        Object.freeze(servicePricing);
+
+        let selectedService = null;
+
+        // 결제 시 원본 가격을 재계산하여 위변조 검증
+        function getVerifiedPrice(serviceId) {
+            const original = servicePricing[serviceId];
+            if (!original) return null;
+            const bundledTotal = Array.isArray(original.bundledItems)
+                ? original.bundledItems.reduce((sum, b) => sum + (b.amount || 0), 0)
+                : 0;
+            return {
+                price: original.price,
+                govFee: original.govFee || 0,
+                bundledTotal: bundledTotal,
+                totalPrice: original.price + (original.govFee || 0) + bundledTotal
+            };
+        }
+
+        // 번들 항목을 가격 카드에 렌더링하고 합계 반환
+        function renderBundledItems(bundledItems, isKorean) {
+            const container = document.getElementById('bundled-items-rows');
+            if (!container) return 0;
+            container.innerHTML = '';
+            if (!Array.isArray(bundledItems) || bundledItems.length === 0) return 0;
+            let total = 0;
+            bundledItems.forEach(item => {
+                const amount = Number(item.amount) || 0;
+                total += amount;
+                const label = (isKorean && item.nameKo) ? item.nameKo : item.name;
+                const row = document.createElement('div');
+                row.className = 'price-row';
+                row.innerHTML = `<span class="price-label">${label}</span><span class="price-value">₩${amount.toLocaleString()}</span>`;
+                container.appendChild(row);
+            });
+            return total;
+        }
+
+        // 번들 포함 주문명 생성 (토스 결제 / thread.service_name 용)
+        function buildOrderName(service, isKorean) {
+            const baseName = (isKorean && service.nameKo) ? service.nameKo : service.name;
+            if (!Array.isArray(service.bundledItems) || service.bundledItems.length === 0) {
+                return baseName;
+            }
+            const bundleLabels = service.bundledItems
+                .map(b => (isKorean && b.nameKo) ? b.nameKo : b.name)
+                .join(', ');
+            return baseName + ' + ' + bundleLabels;
+        }
+
+        function goBack() {
+            const referrer = document.referrer;
+            if (referrer && referrer.includes(window.location.host)) {
+                window.location.href = referrer;
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+
+        window.isAdminLoggedIn = function() {
+            // 보안 강화: sessionStorage만으로는 불충분 - Supabase 세션 + role 검증 필요
+            return sessionStorage.getItem('adminLoggedIn') === 'true' &&
+                   sessionStorage.getItem('adminRole') &&
+                   ['super_admin', 'admin', 'staff'].includes(sessionStorage.getItem('adminRole'));
+        };
+
+        // 서버 측 관리자 권한 검증
+        async function verifyAdminRole() {
+            const ADMIN_ROLES = ['super_admin', 'admin', 'staff'];
+            try {
+                const session = await checkSession();
+                if (session && session.user) {
+                    // 1) profiles 테이블에서 role 확인
+                    const { data: profile } = await supabaseClient
+                        .from('profiles')
+                        .select('role')
+                        .eq('id', session.user.id)
+                        .single();
+
+                    if (profile && ADMIN_ROLES.includes(profile.role)) return true;
+
+                    // 2) admins 테이블에서도 확인 (관리자 전용 테이블)
+                    const { data: admin } = await supabaseClient
+                        .from('admins')
+                        .select('role')
+                        .eq('email', session.user.email)
+                        .single();
+
+                    if (admin && ADMIN_ROLES.includes(admin.role)) return true;
+                }
+
+                // 3) Supabase 세션 없는 경우 sessionStorage 폴백 (admin-login에서 설정)
+                if (sessionStorage.getItem('adminLoggedIn') === 'true' &&
+                    ADMIN_ROLES.includes(sessionStorage.getItem('adminRole'))) {
+                    return true;
+                }
+
+                return false;
+            } catch (e) {
+                // 네트워크 오류 시 sessionStorage 폴백
+                if (sessionStorage.getItem('adminLoggedIn') === 'true' &&
+                    ADMIN_ROLES.includes(sessionStorage.getItem('adminRole'))) {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', async function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            // 보안 수정: URL 파라미터 ?admin=true 만으로는 admin 모드 진입 불가
+            // 반드시 서버 측 role 검증을 거쳐야 함
+            let isAdminMode = false;
+
+            if (urlParams.get('admin') === 'true' || window.isAdminLoggedIn()) {
+                // 서버 측에서 실제 관리자 role 검증
+                isAdminMode = await verifyAdminRole();
+                if (!isAdminMode) {
+                    console.warn('Admin access denied: insufficient privileges');
+                    // admin 파라미터 제거하고 일반 사용자 흐름으로 진행
+                    const cleanUrl = new URL(window.location.href);
+                    cleanUrl.searchParams.delete('admin');
+                    window.history.replaceState({}, '', cleanUrl.toString());
+                }
+            }
+
+            if (isAdminMode) {
+                try {
+                    tossPayments = TossPayments(clientKey);
+                } catch (error) {
+                    console.error('Toss Payments init failed:', error);
+                }
+
+                const serviceId = urlParams.get('service');
+                if (!serviceId || !servicePricing[serviceId]) {
+                    alert(getUIMessage('invalidService'));
+                    window.location.href = 'index.html';
+                    return;
+                }
+
+                selectedService = { ...servicePricing[serviceId] };
+                document.getElementById('loading').style.display = 'none';
+                showContent(serviceId);
+
+                // 관리자 모드: 테스트 쓰레드 열기 버튼만 추가 표시 (나머지 결제 UI는 그대로)
+                document.getElementById('adminThreadBtn').style.display = 'flex';
+
+                return;
+            }
+
+            let session = await checkSession();
+
+            if (!session || !session.user) {
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                session = await checkSession();
+            }
+
+            if (!session || !session.user) {
+                const currentUrl = window.location.href;
+                localStorage.setItem('redirectAfterLogin', currentUrl);
+
+                if (confirm(getUIMessage('loginConfirm'))) {
+                    await signInWithGoogle();
+                }
+                return;
+            }
+
+            try {
+                tossPayments = TossPayments(clientKey);
+                // Toss Payments initialized
+            } catch (error) {
+                console.error('❌ Toss Payments init failed:', error);
+            }
+
+            const serviceId = urlParams.get('service');
+
+            if (!serviceId || !servicePricing[serviceId]) {
+                alert(getUIMessage('invalidAccess'));
+                window.history.back();
+                return;
+            }
+
+            selectedService = { ...servicePricing[serviceId] };
+
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                showContent(serviceId);
+            }, 500);
+        });
+
+        function showContent(serviceId) {
+            // 한국어인 경우 nameKo, descKo 사용
+            const isKorean = typeof i18n !== 'undefined' && i18n.currentLanguage === 'ko';
+            const serviceName = (isKorean && selectedService.nameKo) ? selectedService.nameKo : selectedService.name;
+            const serviceDesc = (isKorean && selectedService.descKo) ? selectedService.descKo : selectedService.desc;
+
+            document.getElementById('service-name').textContent = serviceName;
+            document.getElementById('service-desc').textContent = serviceDesc;
+
+            // Set badge text
+            const badgeText = document.getElementById('service-badge-text');
+            if (badgeText) {
+                badgeText.textContent = selectedService.badge || 'Visa Service';
+            }
+
+            if (selectedService.consulting) {
+                // Consulting mode
+                document.getElementById('price-card').style.display = 'none';
+                document.getElementById('consulting-notice').style.display = 'flex';
+                document.getElementById('service-badge').innerHTML = '<i class="fas fa-comments"></i><span>Consultation</span>';
+                document.getElementById('service-badge').classList.add('consulting-badge');
+                document.getElementById('btn-text').textContent = 'Request Quote';
+                document.getElementById('payBtn').onclick = applyForConsulting;
+
+                // Hide WISE button for consulting
+                document.getElementById('wiseBtn').style.display = 'none';
+            } else if (selectedService.deferredPayment) {
+                // Deferred payment mode - show price but open thread instead of payment
+                const agencyFee = selectedService.price;
+                const govtFee = selectedService.govFee || 0;
+                const bundledTotal = renderBundledItems(selectedService.bundledItems, isKorean);
+                const totalPrice = agencyFee + govtFee + bundledTotal;
+
+                document.getElementById('agency-fee').textContent = '₩' + agencyFee.toLocaleString();
+
+                if (govtFee > 0) {
+                    document.getElementById('govt-fee-row').style.display = 'flex';
+                    document.getElementById('govt-fee').textContent = '₩' + govtFee.toLocaleString();
+                    document.getElementById('govt-notice').style.display = 'flex';
+                }
+
+                document.getElementById('total-price').textContent = '₩' + totalPrice.toLocaleString();
+                document.getElementById('deferred-notice').style.display = 'flex';
+
+                // Change button to open thread
+                const btnText = document.getElementById('btn-text');
+                btnText.setAttribute('data-i18n', 'serviceApply.openThread');
+                btnText.textContent = typeof i18n !== 'undefined' ? i18n.translate('serviceApply.openThread') : 'Open Thread';
+                document.getElementById('payBtn').onclick = applyForDeferredPayment;
+
+                // Hide WISE button for deferred payment
+                document.getElementById('wiseBtn').style.display = 'none';
+
+                selectedService.totalPrice = totalPrice;
+                selectedService.agencyFee = agencyFee;
+                selectedService.govtFee = govtFee;
+                selectedService.bundledTotal = bundledTotal;
+            } else {
+                // Payment mode
+                const agencyFee = selectedService.price;
+                const govtFee = selectedService.govFee || 0;
+                const bundledTotal = renderBundledItems(selectedService.bundledItems, isKorean);
+                const totalPrice = agencyFee + govtFee + bundledTotal;
+
+                document.getElementById('agency-fee').textContent = '₩' + agencyFee.toLocaleString();
+
+                if (govtFee > 0) {
+                    document.getElementById('govt-fee-row').style.display = 'flex';
+                    document.getElementById('govt-fee').textContent = '₩' + govtFee.toLocaleString();
+                    document.getElementById('govt-notice').style.display = 'flex';
+                }
+
+                document.getElementById('total-price').textContent = '₩' + totalPrice.toLocaleString();
+
+                selectedService.totalPrice = totalPrice;
+                selectedService.agencyFee = agencyFee;
+                selectedService.govtFee = govtFee;
+                selectedService.bundledTotal = bundledTotal;
+            }
+
+            // D-10-1 form is now submitted within the thread, not on payment page
+            // Keep form hidden - users will fill it out in the thread after payment
+
+            document.getElementById('main-content').style.display = 'grid';
+
+            // Initialize consent text
+            initServiceConsentText();
+        }
+
+        // Get D-10-1 form data
+        function getD10FormData() {
+            const form = document.getElementById('d10-1-form');
+            if (!form || form.style.display === 'none') return null;
+
+            const residenceProof = document.querySelector('input[name="d10-residence-proof"]:checked');
+            const eVisaHistory = document.querySelector('input[name="d10-e-visa-history"]:checked');
+            const internshipPlan = document.querySelector('input[name="d10-internship-plan"]:checked');
+
+            return {
+                currentVisa: document.getElementById('d10-current-visa').value,
+                visaExpiry: document.getElementById('d10-visa-expiry').value,
+                graduationDate: document.getElementById('d10-graduation-date').value,
+                degreeType: document.getElementById('d10-degree-type').value,
+                university: document.getElementById('d10-university').value,
+                address: document.getElementById('d10-address').value,
+                residenceProof: residenceProof ? residenceProof.value : '',
+                koreanLevel: document.getElementById('d10-korean-level').value,
+                eVisaHistory: eVisaHistory ? eVisaHistory.value : 'no',
+                internshipPlan: internshipPlan ? internshipPlan.value : 'no',
+                targetIndustry: document.getElementById('d10-target-industry').value,
+                jobPlan: document.getElementById('d10-job-plan').value,
+                additionalNotes: document.getElementById('d10-additional-notes').value
+            };
+        }
+
+        // Validate D-10-1 form
+        function validateD10Form() {
+            const form = document.getElementById('d10-1-form');
+            if (!form || form.style.display === 'none') return true;
+
+            const requiredFields = [
+                { id: 'd10-current-visa', name: 'Current Visa Status' },
+                { id: 'd10-visa-expiry', name: 'Visa Expiry Date' },
+                { id: 'd10-graduation-date', name: 'Graduation Date' },
+                { id: 'd10-degree-type', name: 'Degree Type' },
+                { id: 'd10-university', name: 'University Name' },
+                { id: 'd10-address', name: 'Current Address' },
+                { id: 'd10-target-industry', name: 'Target Industry' },
+                { id: 'd10-job-plan', name: 'Job Seeking Plan' }
+            ];
+
+            for (const field of requiredFields) {
+                const element = document.getElementById(field.id);
+                if (!element || !element.value.trim()) {
+                    alert(getUIMessage('fillInField', { field: field.name }));
+                    element?.focus();
+                    return false;
+                }
+            }
+
+            // Check residence proof radio
+            const residenceProof = document.querySelector('input[name="d10-residence-proof"]:checked');
+            if (!residenceProof) {
+                alert(getUIMessage('selectResidenceProof'));
+                return false;
+            }
+
+            return true;
+        }
+
+        // Format D-10-1 data for thread message
+        function formatD10DataForMessage(data) {
+            if (!data) return '';
+
+            const graduationDate = new Date(data.graduationDate);
+            const today = new Date();
+            const monthsSinceGraduation = Math.floor((today - graduationDate) / (1000 * 60 * 60 * 24 * 30));
+            const isWithinOneYear = monthsSinceGraduation <= 12;
+
+            return `
+📋 **D-10-1 Application Details**
+
+**Basic Eligibility:**
+• Current Visa: ${data.currentVisa}
+• Visa Expiry: ${data.visaExpiry}
+• Graduation Date: ${data.graduationDate} (${isWithinOneYear ? '✅ Within 1 year - Points Exempt!' : '⚠️ Over 1 year - Points required'})
+• Degree: ${data.degreeType}
+• University: ${data.university}
+
+**Residence:**
+• Address: ${data.address}
+• Proof Type: ${data.residenceProof}
+
+**Korean & Work:**
+• Korean Level: ${data.koreanLevel || 'Not specified'}
+• Previous E-visa: ${data.eVisaHistory === 'yes' ? '⚠️ Yes - Part-time NOT allowed' : '✅ No'}
+• Internship Plan: ${data.internshipPlan}
+
+**Job Seeking Plan:**
+• Target Industry: ${data.targetIndustry}
+• Plan: ${data.jobPlan}
+
+${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
+`;
+        }
+
+        // API 개별 연동 클라이언트 키 (HTML <head>의 __PAYMENT_CONFIG__에서 주입)
+        const clientKey = window.__PAYMENT_CONFIG__?.tossClientKey;
+        // Consent checkbox handler
+        function onServiceConsentChange() {
+            const checked = document.getElementById('serviceConsentCheck').checked;
+            const payBtn = document.getElementById('payBtn');
+            const wiseBtn = document.getElementById('wiseBtn');
+            if (payBtn) payBtn.disabled = !checked;
+            if (wiseBtn) wiseBtn.disabled = !checked;
+        }
+
+        function initServiceConsentText() {
+            const textEl = document.getElementById('serviceConsentText');
+            if (textEl) {
+                textEl.textContent = getUIMessage('serviceConsentLabel');
+            }
+        }
+
+        function checkServiceConsent() {
+            const check = document.getElementById('serviceConsentCheck');
+            if (!check || !check.checked) {
+                alert(getUIMessage('consentRequired'));
+                return false;
+            }
+            return true;
+        }
+
+        let tossPayments = null;
+
+        async function processPayment() {
+            // Validate consent
+            if (!checkServiceConsent()) return;
+
+            // Validate D-10-1 form if applicable
+            if (!validateD10Form()) {
+                return;
+            }
+
+            const btn = document.getElementById('payBtn');
+            btn.disabled = true;
+            btn.classList.add('loading');
+            document.getElementById('btn-text').innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + getUIMessage('processing');
+
+            try {
+                let profile = null;
+
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    alert(getUIMessage('loginRequired'));
+                    window.location.href = 'index.html';
+                    return;
+                }
+
+                const profileResult = await getUserProfile(session.user.id);
+                if (profileResult.success && profileResult.data) {
+                    profile = profileResult.data;
+                } else {
+                    profile = {
+                        name: session.user.email.split('@')[0],
+                        email: session.user.email,
+                        phone: ''
+                    };
+                }
+
+                // Get D-10-1 form data if applicable
+                const d10Data = getD10FormData();
+
+                // 가격 위변조 방지: 원본 servicePricing에서 가격 재계산
+                const payServiceId = new URLSearchParams(window.location.search).get('service');
+                const verified = getVerifiedPrice(payServiceId);
+                if (!verified || verified.totalPrice !== selectedService.totalPrice) {
+                    alert(getUIMessage('priceVerificationFailed'));
+                    return;
+                }
+
+                const isKoreanLang = typeof i18n !== 'undefined' && i18n.currentLanguage === 'ko';
+                const composedOrderName = buildOrderName(selectedService, isKoreanLang);
+
+                const orderInfo = {
+                    orderId: 'ORD' + Date.now(),
+                    orderName: composedOrderName,
+                    amount: verified.totalPrice,
+                    agencyFee: verified.price,
+                    govtFee: verified.govFee,
+                    bundledTotal: verified.bundledTotal || 0,
+                    customerName: profile.name || session.user.email,
+                    customerEmail: profile.email || session.user.email,
+                    customerPhone: profile.phone || '',
+                    paymentMethod: 'card',
+                    timestamp: new Date().toISOString()
+                };
+
+                // Get organization and lecture code from URL
+                const paymentUrlParams = new URLSearchParams(window.location.search);
+                const paymentOrg = paymentUrlParams.get('org') || selectedService.organization || 'general';
+                const paymentLectureCode = paymentUrlParams.get('lectureCode') || sessionStorage.getItem('chosun_lecture_code') || sessionStorage.getItem('feu_lecture_code') || '';
+
+                sessionStorage.setItem('pendingPayment', JSON.stringify({
+                    orderId: orderInfo.orderId,
+                    serviceId: payServiceId,
+                    serviceName: orderInfo.orderName,
+                    amount: orderInfo.amount,
+                    agencyFee: orderInfo.agencyFee,
+                    govtFee: orderInfo.govtFee,
+                    bundledTotal: orderInfo.bundledTotal,
+                    bundledItems: Array.isArray(selectedService.bundledItems)
+                        ? selectedService.bundledItems.map(b => ({ key: b.key, name: b.name, nameKo: b.nameKo, amount: b.amount }))
+                        : [],
+                    paymentMethod: orderInfo.paymentMethod,
+                    customerName: orderInfo.customerName,
+                    customerEmail: orderInfo.customerEmail,
+                    d10FormData: d10Data,
+                    d10FormattedMessage: d10Data ? formatD10DataForMessage(d10Data) : null,
+                    organization: paymentOrg,
+                    lectureCode: paymentLectureCode
+                }));
+
+                // Card payment with Toss
+                if (!tossPayments) {
+                    throw new Error('Payment system not initialized');
+                }
+
+                const currentUrl = window.location.origin;
+
+                // v1 API 개별 연동 방식
+                const paymentRequest = {
+                    amount: orderInfo.amount,
+                    orderId: orderInfo.orderId,
+                    orderName: orderInfo.orderName,
+                    successUrl: currentUrl + '/payment-success.html',
+                    failUrl: currentUrl + '/payment-fail.html',
+                    customerEmail: orderInfo.customerEmail,
+                    customerName: orderInfo.customerName
+                };
+
+                if (orderInfo.customerPhone && orderInfo.customerPhone.trim()) {
+                    paymentRequest.customerMobilePhone = orderInfo.customerPhone.replace(/-/g, '');
+                }
+
+                await tossPayments.requestPayment('카드', paymentRequest);
+
+            } catch (error) {
+                console.error('Payment error:', error);
+                btn.disabled = false;
+                btn.classList.remove('loading');
+                document.getElementById('btn-text').textContent = 'Pay with Card';
+
+                if (error.code === 'PAY_PROCESS_CANCELED') {
+                    return;
+                }
+
+                alert(getUIMessage('paymentError'));
+            }
+        }
+
+        // 관리자 테스트용: 결제 없이 바로 쓰레드 생성
+        async function createAdminTestThread() {
+            const btn = document.getElementById('payBtn');
+            try {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner"></i> 쓰레드 생성 중...';
+
+                // Supabase 세션 확인 (이메일/비밀번호 또는 Google 로그인)
+                let session = await checkSession();
+                if (!session || !session.user) {
+                    // 관리자 세션이 만료된 경우 재로그인 안내
+                    alert(getUIMessage('sessionExpired'));
+                    window.location.href = 'admin-login.html';
+                    return;
+                }
+
+                // 프로필 확인/생성
+                const profileResult = await getUserProfile(session.user.id);
+                if (!profileResult.success || !profileResult.data) {
+                    await createOrUpdateProfile(session.user.id, {
+                        name: session.user.email.split('@')[0],
+                        email: session.user.email,
+                        phone: ''
+                    });
+                }
+
+                const urlParams = new URLSearchParams(window.location.search);
+                const organization = urlParams.get('org') || 'general';
+
+                // 쓰레드 생성 (결제 완료 상태로)
+                const adminTestIsKorean = typeof i18n !== 'undefined' && i18n.currentLanguage === 'ko';
+                const adminTestOrderName = buildOrderName(selectedService, adminTestIsKorean);
+                const threadResult = await createThread({
+                    service_name: adminTestOrderName,
+                    status: 'payment',
+                    amount: selectedService.totalPrice,
+                    government_fee: selectedService.govtFee || 0,
+                    order_id: 'ADMIN-TEST-' + Date.now(),
+                    organization: organization
+                });
+
+                if (!threadResult.success) {
+                    throw new Error(threadResult.error || '쓰레드 생성 실패');
+                }
+
+                const threadId = threadResult.data.id;
+
+                // 환영 메시지 전송 (실패해도 쓰레드 이동은 계속)
+                try {
+                    await createWelcomeMessage(threadId, adminTestOrderName);
+                } catch (msgErr) {
+                    console.error('Welcome message failed (non-blocking):', msgErr);
+                }
+
+                // D-10-1 폼 데이터가 있으면 전송 (실패해도 쓰레드 이동은 계속)
+                try {
+                    const d10Data = getD10FormData();
+                    if (d10Data) {
+                        const d10Msg = formatD10DataForMessage(d10Data);
+                        if (d10Msg) {
+                            const profile = await getUserProfile(session.user.id);
+                            await supabaseClient.from('messages').insert({
+                                thread_id: threadId,
+                                sender_id: session.user.id,
+                                sender_type: 'user',
+                                sender_name: profile?.data?.name || session.user.email.split('@')[0],
+                                content: d10Msg
+                            });
+                        }
+                    }
+                } catch (d10Err) {
+                    console.error('D-10-1 form message failed (non-blocking):', d10Err);
+                }
+
+                // 쓰레드로 바로 이동
+                window.location.href = `thread-general-v2.html?id=${threadId}`;
+
+            } catch (error) {
+                console.error('Admin test thread creation error:', error);
+                alert(getUIMessage('threadCreationFailed') + ': ' + error.message);
+                btn.disabled = false;
+                btn.innerHTML = '<span id="btn-text">카드 결제하기</span>';
+            }
+        }
+
+        // WISE 결제 링크 (금액별)
+        const wisePaymentLinks = {
+            24000: 'https://wise.com/pay/r/1IF6cGVkIsF9Phs',
+            33000: 'https://wise.com/pay/r/ThTuo2OBnRXSNzA',
+            55000: 'https://wise.com/pay/r/i7KO0SXvaD2VKx0',
+            83300: 'https://wise.com/pay/r/3cpuwd5jgDJvRWI',
+            96300: 'https://wise.com/pay/r/xm5CL2eyBlhEUPo',
+            110000: 'https://wise.com/pay/r/ck3gsRVGWcZpoeE',
+            130000: 'https://wise.com/pay/r/hXGMfv9e6L2dg78',
+            140000: 'https://wise.com/pay/r/PkdBQb9xgn4SOLM',
+            145000: 'https://wise.com/pay/r/Y1MSgycmIZMV4MU',
+            155000: 'https://wise.com/pay/r/b8AvUz6dY-91T4c',
+            160000: 'https://wise.com/pay/r/qHAyX6cHMWRdVls',
+            170000: 'https://wise.com/pay/r/ev-p0-QK7Uymogo',
+            220000: 'https://wise.com/pay/r/TfzM0z6uzy90szg',
+            229000: 'https://wise.com/pay/r/EbYeYimivPXNvIs',
+            260000: 'https://wise.com/pay/r/I09u0zn6y1dlMkw',
+            280000: 'https://wise.com/pay/r/fpxp4Ko0ttWuS5g',
+            300000: 'https://wise.com/pay/r/TdxN_6ncwsAW460',
+            319000: 'https://wise.com/pay/r/gOlOHagrUvwG6zs',
+            320000: 'https://wise.com/pay/r/-CjjhEWULXbz0rk',
+            330000: 'https://wise.com/pay/r/84ApB3e-b9aCpPk',
+            339000: 'https://wise.com/pay/r/4qzd0KQCWf3o-Ls',
+            340000: 'https://wise.com/pay/r/tdJ55UOW4bOEQlU',
+            390000: 'https://wise.com/pay/r/I5OTBday1hGlEMs',
+            430000: 'https://wise.com/pay/r/MST3-o_g9BBc1d8',
+            610000: 'https://wise.com/pay/r/cjgZCYNgy0agO24',
+            650000: 'https://wise.com/pay/r/LtBfptW0Uo6loss',
+            669000: 'https://wise.com/pay/r/7nzDH3XWRbw-ty8',
+            750000: 'https://wise.com/pay/r/NyVuEVRRg0Dcnzw',
+            1200000: 'https://wise.com/pay/r/xaC-lXmieWY_O50',
+            1300000: 'https://wise.com/pay/r/tEFm5TAgSAzHHF0',
+            1400000: 'https://wise.com/pay/r/3Z1Ac7naWvLabmw'
+        };
+
+        // WISE 결제 처리
+        async function processWisePayment() {
+            // Validate consent
+            if (!checkServiceConsent()) return;
+
+            // 현재 로그인 사용자 확인
+            const session = await checkSession();
+            if (!session || !session.user) {
+                const currentUrl = window.location.href;
+                localStorage.setItem('redirectAfterLogin', currentUrl);
+
+                if (confirm(getUIMessage('loginConfirm'))) {
+                    await signInWithGoogle();
+                }
+                return;
+            }
+
+            // 주문 정보 생성
+            const orderId = 'WISE-' + Date.now();
+            const amount = selectedService.totalPrice;
+            const serviceName = selectedService.name;
+            const wiseLink = wisePaymentLinks[amount] || null;
+
+            if (!wiseLink) {
+                alert(getUIMessage('wiseLinkNotFound'));
+                return;
+            }
+
+            // WISE 결제 모달 표시
+            showWisePaymentModal({
+                orderId: orderId,
+                serviceName: serviceName,
+                amount: amount,
+                customerEmail: session.user.email,
+                wiseLink: wiseLink
+            });
+        }
+
+        // WISE 결제 모달 표시
+        function showWisePaymentModal(orderInfo) {
+            // 기존 모달이 있으면 제거
+            const existingModal = document.getElementById('wisePaymentModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+
+            const modal = document.createElement('div');
+            modal.id = 'wisePaymentModal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.6);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                padding: 20px;
+            `;
+
+            modal.innerHTML = `
+                <div style="
+                    background: white;
+                    border-radius: 20px;
+                    max-width: 480px;
+                    width: 100%;
+                    padding: 32px;
+                    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                ">
+                    <div style="text-align: center; margin-bottom: 24px;">
+                        <div style="
+                            width: 64px;
+                            height: 64px;
+                            background: linear-gradient(135deg, #9FE870 0%, #7DD957 100%);
+                            border-radius: 4px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            margin: 0 auto 16px;
+                        ">
+                            <span style="font-size: 28px; font-weight: bold; color: #1A1A1A;">W</span>
+                        </div>
+                        <h2 style="font-size: 22px; font-weight: 800; color: #1A1A1A; margin: 0;">${getUIMessage('wiseTitle')}</h2>
+                    </div>
+
+                    <div style="
+                        background: #F7F6F3;
+                        border-radius: 4px;
+                        padding: 20px;
+                        margin-bottom: 24px;
+                    ">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                            <span style="color: #6B7280; font-size: 14px;">${getUIMessage('wiseServiceLabel')}</span>
+                            <span style="font-weight: 600; color: #1A1A1A; font-size: 14px;">${orderInfo.serviceName}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                            <span style="color: #6B7280; font-size: 14px;">${getUIMessage('wiseOrderLabel')}</span>
+                            <span style="font-weight: 600; color: #1A1A1A; font-size: 14px;">${orderInfo.orderId}</span>
+                        </div>
+                        <div style="
+                            display: flex;
+                            justify-content: space-between;
+                            padding-top: 12px;
+                            border-top: 1px solid #E5E7EB;
+                        ">
+                            <span style="color: #1A1A1A; font-weight: 700;">${getUIMessage('wiseAmountLabel')}</span>
+                            <span style="font-weight: 800; color: #887668; font-size: 20px;">₩${orderInfo.amount.toLocaleString()}</span>
+                        </div>
+                    </div>
+
+                    <div style="
+                        background: #ECFDF5;
+                        border: 1px solid #A7F3D0;
+                        border-radius: 4px;
+                        padding: 16px;
+                        margin-bottom: 24px;
+                    ">
+                        <p style="color: #4A3C2B; font-size: 14px; margin: 0; line-height: 1.6;">
+                            <strong>${getUIMessage('wiseInstructions')}:</strong><br>
+                            ${getUIMessage('wiseInstruction1')}<br><br>
+                            ${getUIMessage('wiseInstruction2')}
+                        </p>
+                    </div>
+
+                    <a href="${orderInfo.wiseLink}" target="_blank" style="
+                        display: block;
+                        width: 100%;
+                        height: 56px;
+                        background: linear-gradient(135deg, #9FE870 0%, #7DD957 100%);
+                        color: #1A1A1A;
+                        border: none;
+                        border-radius: 14px;
+                        font-size: 17px;
+                        font-weight: 700;
+                        cursor: pointer;
+                        text-decoration: none;
+                        text-align: center;
+                        line-height: 56px;
+                        box-shadow: 0 4px 16px rgba(159, 232, 112, 0.3);
+                    ">
+                        ${getUIMessage('wisePayBtn')}
+                    </a>
+
+                    <button onclick="document.getElementById('wisePaymentModal').remove()" style="
+                        width: 100%;
+                        height: 48px;
+                        background: transparent;
+                        color: #6B7280;
+                        border: 1px solid #E5E7EB;
+                        border-radius: 4px;
+                        font-size: 15px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        margin-top: 12px;
+                    ">
+                        ${getUIMessage('wiseClose')}
+                    </button>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            // 모달 외부 클릭 시 닫기
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+
+        // Get welcome message in user's selected language
+        function getWelcomeMessage() {
+            const lang = localStorage.getItem('i18n_language') || 'en';
+
+            const messages = {
+                ko: `안녕하세요! 법무법인 로연 출입국이민지원센터입니다.
+
+비자 자문 서비스 신청이 접수되었습니다.
+정확한 자문을 위해 아래 정보를 제출해 주세요.
+
+■ 기본사항 제출
+<a href="profile-submit.html" target="_blank" style="color: #887668; font-weight: 600;">기본사항 입력하기</a>
+
+■ 자문 요청 사항
+현재 상황과 궁금하신 점을 자유롭게 작성해 주세요.
+
+예시:
+- 비자 변경 예정
+- 영주권 또는 가족 초청
+- 회사 관련 비자 문제
+- 국적 취득 관련
+- 출입국 범칙금 또는 형사 사건
+
+담당자가 확인 후 자문 필요 서류를 안내드리겠습니다.
+감사합니다.`,
+
+                en: `Hello! This is Lawyeon Immigration Center.
+
+Your visa consultation request has been received.
+Please submit the following information for accurate consultation.
+
+■ Basic Information
+<a href="profile-submit.html" target="_blank" style="color: #887668; font-weight: 600;">Enter Basic Information</a>
+
+■ Consultation Request
+Please describe your current situation and any questions you have.
+
+Examples:
+- Planning to change visa
+- Permanent residence or family invitation
+- Company-related visa issues
+- Nationality acquisition
+- Immigration fines or criminal cases
+
+Our staff will review and guide you on the required documents.
+Thank you.`,
+
+                zh: `您好！这里是律渊出入境移民支援中心。
+
+您的签证咨询申请已收到。
+为了准确咨询，请提交以下信息。
+
+■ 基本信息提交
+<a href="profile-submit.html" target="_blank" style="color: #887668; font-weight: 600;">填写基本信息</a>
+
+■ 咨询内容
+请自由描述您的当前情况和疑问。
+
+示例：
+- 计划变更签证
+- 永久居留权或家庭邀请
+- 公司相关签证问题
+- 国籍取得相关
+- 出入境罚款或刑事案件
+
+工作人员确认后将为您指导所需文件。
+谢谢。`,
+
+                vi: `Xin chao! Day la Trung tam Ho tro Di tru Lawyeon.
+
+Yeu cau tu van visa cua ban da duoc tiep nhan.
+Vui long cung cap thong tin sau de duoc tu van chinh xac.
+
+■ Thong tin co ban
+<a href="profile-submit.html" target="_blank" style="color: #887668; font-weight: 600;">Nhap thong tin co ban</a>
+
+■ Noi dung tu van
+Vui long mo ta tinh huong hien tai va cac thac mac cua ban.
+
+Vi du:
+- Du dinh doi visa
+- Thuong tru hoac moi gia dinh
+- Van de visa lien quan den cong ty
+- Nhap quoc tich
+- Phat vi pham xuat nhap canh hoac vu an hinh su
+
+Nhan vien se xem xet va huong dan ban ve cac tai lieu can thiet.
+Cam on.`,
+
+                ja: `こんにちは！ロヨン出入国移民支援センターです。
+
+ビザ相談の申請が受け付けられました。
+正確な相談のため、以下の情報をご提出ください。
+
+■ 基本情報の提出
+<a href="profile-submit.html" target="_blank" style="color: #887668; font-weight: 600;">基本情報を入力する</a>
+
+■ 相談内容
+現在の状況とご質問を自由にお書きください。
+
+例：
+- ビザ変更予定
+- 永住権または家族招待
+- 会社関連のビザ問題
+- 国籍取得関連
+- 出入国の罰金または刑事事件
+
+担当者が確認後、必要書類をご案内いたします。
+ありがとうございます。`,
+
+                mn: `Сайн байна уу! Lawyeon Цагаачлалын төв байна.
+
+Визийн зөвлөгөөний хүсэлт хүлээн авлаа.
+Зөв зөвлөгөө авахын тулд дараах мэдээллийг илгээнэ үү.
+
+■ Үндсэн мэдээлэл
+<a href="profile-submit.html" target="_blank" style="color: #887668; font-weight: 600;">Үндсэн мэдээлэл оруулах</a>
+
+■ Зөвлөгөөний агуулга
+Одоогийн нөхцөл байдал, асуултаа чөлөөтэй бичнэ үү.
+
+Жишээ:
+- Виз солих төлөвлөгөөтэй
+- Байнгын оршин суух эрх эсвэл гэр бүлийн урилга
+- Компанийн визтэй холбоотой асуудал
+- Иргэншил авах
+- Орох гарах торгууль эсвэл эрүүгийн хэрэг
+
+Ажилтан шалгаж, шаардлагатай бичиг баримтыг зааварчилна.
+Баярлалаа.`,
+
+                th: `สวัสดีครับ/ค่ะ! นี่คือศูนย์ตรวจคนเข้าเมือง Lawyeon
+
+คำขอปรึกษาวีซ่าของคุณได้รับแล้ว
+กรุณาส่งข้อมูลต่อไปนี้เพื่อการปรึกษาที่ถูกต้อง
+
+■ ข้อมูลพื้นฐาน
+<a href="profile-submit.html" target="_blank" style="color: #887668; font-weight: 600;">กรอกข้อมูลพื้นฐาน</a>
+
+■ เนื้อหาการปรึกษา
+กรุณาอธิบายสถานการณ์ปัจจุบันและคำถามของคุณ
+
+ตัวอย่าง:
+- วางแผนเปลี่ยนวีซ่า
+- ถิ่นที่อยู่ถาวรหรือเชิญครอบครัว
+- ปัญหาวีซ่าเกี่ยวกับบริษัท
+- การได้สัญชาติ
+- ค่าปรับตรวจคนเข้าเมืองหรือคดีอาญา
+
+เจ้าหน้าที่จะตรวจสอบและแนะนำเอกสารที่จำเป็น
+ขอบคุณครับ/ค่ะ`
+            };
+
+            return messages[lang] || messages.en;
+        }
+
+        // Get sender name in user's selected language
+        function getSenderName() {
+            const lang = localStorage.getItem('i18n_language') || 'en';
+            const names = {
+                ko: '법무법인 로연',
+                en: 'Lawyeon Law Firm',
+                zh: '律渊律师事务所',
+                vi: 'Cong ty Luat Lawyeon',
+                ja: 'ロヨン法律事務所',
+                mn: 'Lawyeon Хуулийн Фирм',
+                th: 'สำนักงานกฎหมาย Lawyeon'
+            };
+            return names[lang] || names.en;
+        }
+
+        // Get UI messages in user's selected language
+        function getUIMessage(key, params = {}) {
+            const lang = localStorage.getItem('i18n_language') || 'en';
+            const messages = {
+                loginRequired: {
+                    ko: '로그인이 필요합니다.',
+                    en: 'Login required.',
+                    zh: '需要登录。',
+                    vi: 'Can dang nhap.',
+                    ja: 'ログインが必要です。',
+                    mn: 'Нэвтрэх шаардлагатай.',
+                    th: 'ต้องเข้าสู่ระบบ'
+                },
+                loginConfirm: {
+                    ko: '로그인이 필요합니다.\n\nGoogle 계정으로 로그인하시겠습니까?',
+                    en: 'Login required.\n\nSign in with Google?',
+                    zh: '需要登录。\n\n使用Google账户登录？',
+                    vi: 'Can dang nhap.\n\nDang nhap bang Google?',
+                    ja: 'ログインが必要です。\n\nGoogleアカウントでログインしますか？',
+                    mn: 'Нэвтрэх шаардлагатай.\n\nGoogle-ээр нэвтрэх үү?',
+                    th: 'ต้องเข้าสู่ระบบ\n\nเข้าสู่ระบบด้วย Google?'
+                },
+                openingThread: {
+                    ko: '쓰레드 열는 중...',
+                    en: 'Opening Thread...',
+                    zh: '正在打开线程...',
+                    vi: 'Dang mo chuoi...',
+                    ja: 'スレッドを開いています...',
+                    mn: 'Нээж байна...',
+                    th: 'กำลังเปิดเธรด...'
+                },
+                processing: {
+                    ko: '처리 중...',
+                    en: 'Processing...',
+                    zh: '处理中...',
+                    vi: 'Dang xu ly...',
+                    ja: '処理中...',
+                    mn: 'Боловсруулж байна...',
+                    th: 'กำลังประมวลผล...'
+                },
+                submitting: {
+                    ko: '제출 중...',
+                    en: 'Submitting...',
+                    zh: '提交中...',
+                    vi: 'Dang gui...',
+                    ja: '送信中...',
+                    mn: 'Илгээж байна...',
+                    th: 'กำลังส่ง...'
+                },
+                threadCreated: {
+                    ko: '쓰레드가 생성되었습니다!\n\n담당자와 상담 후 ₩{amount} 결제가 안내됩니다.',
+                    en: 'Your thread has been created!\n\nPayment of ₩{amount} will be requested after consultation with our specialist.',
+                    zh: '您的线程已创建！\n\n与专员咨询后将收取 ₩{amount} 的费用。',
+                    vi: 'Chuoi cua ban da duoc tao!\n\nSau khi tu van voi chuyen gia, ban se duoc yeu cau thanh toan ₩{amount}.',
+                    ja: 'スレッドが作成されました！\n\n担当者との相談後、₩{amount}の決済をご案内いたします。',
+                    mn: 'Таны хүсэлт илгээгдлээ!\n\nМэргэжилтэнтэй зөвлөлдсөний дараа ₩{amount} төлбөр хүсэх болно.',
+                    th: 'สร้างเธรดแล้ว!\n\nหลังจากปรึกษากับผู้เชี่ยวชาญจะแจ้งการชำระเงิน ₩{amount}'
+                },
+                threadCreatedConsultFirst: {
+                    ko: '쓰레드가 생성되었습니다!\n\n담당자와 상담 후 결제가 안내됩니다.',
+                    en: 'Your thread has been created!\n\nPayment details will be provided after consultation with our specialist.',
+                    zh: '您的线程已创建！\n\n与专员咨询后将提供付款详情。',
+                    vi: 'Chuoi cua ban da duoc tao!\n\nChi tiet thanh toan se duoc cung cap sau khi tu van.',
+                    ja: 'スレッドが作成されました！\n\n担当者との相談後、お支払いをご案内いたします。',
+                    mn: 'Таны хүсэлт илгээгдлээ!\n\nМэргэжилтэнтэй зөвлөлдсөний дараа төлбөрийг мэдэгдэнэ.',
+                    th: 'สร้างเธรดแล้ว!\n\nรายละเอียดการชำระเงินจะแจ้งหลังจากปรึกษากับผู้เชี่ยวชาญ'
+                },
+                d10Started: {
+                    ko: 'D-10-1 비자 신청 시작',
+                    en: 'D-10-1 Visa Application Started',
+                    zh: 'D-10-1签证申请已开始',
+                    vi: 'Đơn xin thị thực D-10-1 đã bắt đầu',
+                    ja: 'D-10-1ビザ申請開始',
+                    mn: 'D-10-1 визийн өргөдөл эхэлсэн',
+                    th: 'เริ่มสมัครวีซ่า D-10-1'
+                },
+                d10SubmitInfo: {
+                    ko: '기본 정보를 제출하여 진행해 주세요:',
+                    en: 'Please submit your basic information to proceed:',
+                    zh: '请提交基本信息以继续：',
+                    vi: 'Vui lòng gửi thông tin cơ bản để tiếp tục:',
+                    ja: '基本情報を提出して手続きを進めてください：',
+                    mn: 'Үргэлжлүүлэхийн тулд үндсэн мэдээллээ илгээнэ үү:',
+                    th: 'กรุณาส่งข้อมูลพื้นฐานเพื่อดำเนินการต่อ:'
+                },
+                d10ContactTime: {
+                    ko: '정보 제출 후 30분 이내에 담당자가 연락드립니다.',
+                    en: 'Our specialist will contact you within 30 minutes after you submit your information.',
+                    zh: '提交信息后30分钟内专员将与您联系。',
+                    vi: 'Chuyên viên sẽ liên hệ trong 30 phút sau khi bạn gửi thông tin.',
+                    ja: '情報提出後30分以内に担当者がご連絡いたします。',
+                    mn: 'Мэдээлэл илгээсний дараа 30 минутын дотор мэргэжилтэн холбогдоно.',
+                    th: 'ผู้เชี่ยวชาญจะติดต่อภายใน 30 นาทีหลังส่งข้อมูล'
+                },
+                genericSubmitInfo: {
+                    ko: '기본 정보를 제출해 주세요.',
+                    en: 'Please submit your basic information.',
+                    zh: '请提交您的基本信息。',
+                    vi: 'Vui lòng gửi thông tin cơ bản.',
+                    ja: '基本情報をご提出ください。',
+                    mn: 'Үндсэн мэдээллээ илгээнэ үү.',
+                    th: 'กรุณาส่งข้อมูลพื้นฐาน'
+                },
+                consultationStarted: {
+                    ko: '상담이 시작되었습니다.\n\n어떤 것이든 상담하고 싶은 내용을 메시지로 보내주세요.',
+                    en: 'Your consultation has started.\n\nFeel free to send us a message about anything you would like to discuss.',
+                    zh: '咨询已开始。\n\n如有任何想咨询的内容，请随时发送消息给我们。',
+                    vi: 'Buổi tư vấn đã bắt đầu.\n\nHãy gửi tin nhắn cho chúng tôi về bất cứ điều gì bạn muốn tư vấn.',
+                    ja: '相談が開始されました。\n\nご相談されたい内容を何でもメッセージでお送りください。',
+                    mn: 'Зөвлөгөө эхэллээ.\n\nЗөвлөгөө авахыг хүссэн ямар ч асуудлаа мессежээр илгээнэ үү.',
+                    th: 'การปรึกษาได้เริ่มขึ้นแล้ว\n\nสามารถส่งข้อความเรื่องใดก็ได้ที่คุณต้องการปรึกษามาหาเรา'
+                },
+                quoteSubmitted: {
+                    ko: '견적 요청이 제출되었습니다!\n\n담당자가 곧 전용 쓰레드를 통해 연락드리겠습니다.',
+                    en: 'Quote request submitted!\n\nOur specialist will contact you shortly through your dedicated thread.',
+                    zh: '报价请求已提交！\n\n我们的专员将通过您的专用线程与您联系。',
+                    vi: 'Yeu cau bao gia da gui!\n\nChuyen gia cua chung toi se lien he voi ban qua chuoi rieng.',
+                    ja: '見積もり依頼が送信されました！\n\n担当者が専用スレッドを通じてご連絡いたします。',
+                    mn: 'Үнийн санал илгээгдлээ!\n\nМэргэжилтэн таны хүсэлтийг хянаж удахгүй холбогдоно.',
+                    th: 'ส่งคำขอใบเสนอราคาแล้ว!\n\nผู้เชี่ยวชาญจะติดต่อคุณผ่านเธรดเร็วๆ นี้'
+                },
+                errorOccurred: {
+                    ko: '오류가 발생했습니다. 다시 시도해주세요.',
+                    en: 'An error occurred. Please try again.',
+                    zh: '发生错误，请重试。',
+                    vi: 'Da xay ra loi. Vui long thu lai.',
+                    ja: 'エラーが発生しました。もう一度お試しください。',
+                    mn: 'Алдаа гарлаа. Дахин оролдоно уу.',
+                    th: 'เกิดข้อผิดพลาด กรุณาลองใหม่'
+                },
+                paymentError: {
+                    ko: '결제 처리 오류가 발생했습니다. 다시 시도해주세요.',
+                    en: 'Payment processing error. Please try again.',
+                    zh: '支付处理错误，请重试。',
+                    vi: 'Loi xu ly thanh toan. Vui long thu lai.',
+                    ja: '決済処理エラーが発生しました。もう一度お試しください。',
+                    mn: 'Төлбөрийн алдаа. Дахин оролдоно уу.',
+                    th: 'เกิดข้อผิดพลาดในการชำระเงิน กรุณาลองใหม่'
+                },
+                invalidService: {
+                    ko: '유효하지 않은 서비스입니다.',
+                    en: 'Invalid service.',
+                    zh: '无效的服务。',
+                    vi: 'Dich vu khong hop le.',
+                    ja: '無効なサービスです。',
+                    mn: 'Үйлчилгээ буруу байна.',
+                    th: 'บริการไม่ถูกต้อง'
+                },
+                invalidAccess: {
+                    ko: '잘못된 접근입니다.',
+                    en: 'Invalid access.',
+                    zh: '无效访问。',
+                    vi: 'Truy cap khong hop le.',
+                    ja: '無効なアクセスです。',
+                    mn: 'Хүчингүй хандалт.',
+                    th: 'การเข้าถึงไม่ถูกต้อง'
+                },
+                consentRequired: {
+                    ko: '서비스 신청을 위해 이용약관 및 개인정보 처리방침에 동의해 주세요.',
+                    en: 'Please agree to the Terms of Service and Privacy Policy to proceed.',
+                    zh: '请同意服务条款和隐私政策后再继续。',
+                    vi: 'Vui long dong y voi Dieu khoan va Chinh sach bao mat de tiep tuc.',
+                    ja: '利用規約とプライバシーポリシーに同意してください。',
+                    mn: 'Үйлчилгээний нөхцөл болон Нууцлалын бодлогыг зөвшөөрнө үү.',
+                    th: 'กรุณายอมรับข้อกำหนดการใช้งานและนโยบายความเป็นส่วนตัว'
+                },
+                serviceConsentLabel: {
+                    ko: '서비스 이용약관 및 개인정보 처리방침에 동의합니다. 출입국 민원 대행 위임에 동의하며, 개인정보가 법무부 출입국·외국인정책본부에 제공될 수 있음을 확인합니다.',
+                    en: 'I agree to the Terms of Service and Privacy Policy. I consent to the delegation of immigration civil affairs and acknowledge that my personal information may be provided to the Ministry of Justice.',
+                    zh: '我同意服务条款和隐私政策。我同意委托办理出入境事务，并确认我的个人信息可能会提供给法务部。',
+                    vi: 'Toi dong y voi Dieu khoan dich vu va Chinh sach bao mat. Toi dong y uy quyen xu ly thu tuc xuat nhap canh va xac nhan thong tin ca nhan co the duoc cung cap cho Bo Tu phap.',
+                    ja: '利用規約とプライバシーポリシーに同意します。出入国民事委任に同意し、個人情報が法務部に提供される場合があることを確認します。',
+                    mn: 'Үйлчилгээний нөхцөл болон Нууцлалын бодлогыг зөвшөөрч байна. Цагаачлалын үйлчилгээг даалгахыг зөвшөөрч, хувийн мэдээллийг Хууль зүйн яаманд өгч болохыг баталж байна.',
+                    th: 'ข้าพเจ้ายอมรับข้อกำหนดการใช้งานและนโยบายความเป็นส่วนตัว ข้าพเจ้ายินยอมมอบอำนาจในการดำเนินการตรวจคนเข้าเมือง'
+                },
+                selectResidenceProof: {
+                    ko: '거주 증명 유형을 선택해주세요',
+                    en: 'Please select your Proof of Residence type',
+                    zh: '请选择您的居住证明类型',
+                    vi: 'Vui long chon loai chung minh cu tru',
+                    ja: '居住証明の種類を選択してください',
+                    mn: 'Оршин суугаа баталгааны төрлийг сонгоно уу',
+                    th: 'กรุณาเลือกประเภทหลักฐานการพำนัก'
+                },
+                fillInField: {
+                    ko: '다음 항목을 입력해주세요: {field}',
+                    en: 'Please fill in: {field}',
+                    zh: '请填写：{field}',
+                    vi: 'Vui long dien: {field}',
+                    ja: '次の項目を入力してください：{field}',
+                    mn: 'Бөглөнө үү: {field}',
+                    th: 'กรุณากรอก: {field}'
+                },
+                openThread: {
+                    ko: '쓰레드 열기',
+                    en: 'Open Thread',
+                    zh: '打开线程',
+                    vi: 'Mo chuoi',
+                    ja: 'スレッドを開く',
+                    mn: 'Нээх',
+                    th: 'เปิดเธรด'
+                },
+                wiseTitle: {
+                    ko: 'WISE 계좌 이체',
+                    en: 'Bank Transfer via WISE',
+                    zh: 'WISE银行转账',
+                    vi: 'Chuyển khoản qua WISE',
+                    ja: 'WISE銀行振込',
+                    mn: 'WISE банк шилжүүлэг',
+                    th: 'โอนเงินผ่าน WISE'
+                },
+                wiseServiceLabel: {
+                    ko: '서비스',
+                    en: 'Service',
+                    zh: '服务',
+                    vi: 'Dịch vụ',
+                    ja: 'サービス',
+                    mn: 'Үйлчилгээ',
+                    th: 'บริการ'
+                },
+                wiseOrderLabel: {
+                    ko: '주문번호',
+                    en: 'Order ID',
+                    zh: '订单号',
+                    vi: 'Mã đơn hàng',
+                    ja: '注文番号',
+                    mn: 'Захиалгын дугаар',
+                    th: 'หมายเลขคำสั่งซื้อ'
+                },
+                wiseAmountLabel: {
+                    ko: '결제 금액',
+                    en: 'Amount',
+                    zh: '支付金额',
+                    vi: 'Số tiền',
+                    ja: '決済金額',
+                    mn: 'Төлбөрийн дүн',
+                    th: 'จำนวนเงิน'
+                },
+                wiseInstructions: {
+                    ko: '안내',
+                    en: 'Instructions',
+                    zh: '说明',
+                    vi: 'Hướng dẫn',
+                    ja: 'ご案内',
+                    mn: 'Заавар',
+                    th: 'คำแนะนำ'
+                },
+                wiseInstruction1: {
+                    ko: '아래 버튼을 클릭하여 WISE로 결제해 주세요.',
+                    en: 'Click the button below to pay via WISE.',
+                    zh: '请点击下方按钮通过WISE支付。',
+                    vi: 'Nhấn nút bên dưới để thanh toán qua WISE.',
+                    ja: '下のボタンをクリックしてWISEで決済してください。',
+                    mn: 'Доорх товчийг дарж WISE-ээр төлнө үү.',
+                    th: 'คลิกปุ่มด้านล่างเพื่อชำระผ่าน WISE'
+                },
+                wiseInstruction2: {
+                    ko: '결제 후 관리자가 확인하면 서비스가 시작됩니다.',
+                    en: 'Service will start after admin confirms payment.',
+                    zh: '管理员确认付款后服务将开始。',
+                    vi: 'Dịch vụ sẽ bắt đầu sau khi quản trị viên xác nhận thanh toán.',
+                    ja: '管理者が入金確認後、サービスが開始されます。',
+                    mn: 'Админ төлбөрийг баталгаажуулсны дараа үйлчилгээ эхэлнэ.',
+                    th: 'บริการจะเริ่มหลังจากผู้ดูแลยืนยันการชำระเงิน'
+                },
+                wisePayBtn: {
+                    ko: 'WISE로 결제하기',
+                    en: 'Pay with WISE',
+                    zh: '使用WISE支付',
+                    vi: 'Thanh toán qua WISE',
+                    ja: 'WISEで支払う',
+                    mn: 'WISE-ээр төлөх',
+                    th: 'ชำระผ่าน WISE'
+                },
+                wiseClose: {
+                    ko: '닫기',
+                    en: 'Close',
+                    zh: '关闭',
+                    vi: 'Đóng',
+                    ja: '閉じる',
+                    mn: 'Хаах',
+                    th: 'ปิด'
+                },
+                wiseLinkNotFound: {
+                    ko: 'WISE 결제 링크를 찾을 수 없습니다. 관리자에게 문의해주세요.',
+                    en: 'WISE payment link not found. Please contact admin.',
+                    zh: '未找到WISE支付链接。请联系管理员。',
+                    vi: 'Không tìm thấy liên kết WISE. Vui lòng liên hệ quản trị viên.',
+                    ja: 'WISE決済リンクが見つかりません。管理者にお問い合わせください。',
+                    mn: 'WISE төлбөрийн линк олдсонгүй. Админтай холбогдоно уу.',
+                    th: 'ไม่พบลิงก์ WISE กรุณาติดต่อผู้ดูแล'
+                },
+                wiseConfirmMsg: {
+                    ko: '감사합니다! 1-2 영업일 이내에 결제를 확인하겠습니다.',
+                    en: 'Thank you! We\'ll confirm your payment within 1-2 business days.',
+                    zh: '谢谢！我们将在1-2个工作日内确认您的付款。',
+                    vi: 'Cảm ơn! Chúng tôi sẽ xác nhận thanh toán trong 1-2 ngày làm việc.',
+                    ja: 'ありがとうございます！1-2営業日以内にお支払いを確認いたします。',
+                    mn: 'Баярлалаа! 1-2 ажлын өдрийн дотор төлбөрийг баталгаажуулна.',
+                    th: 'ขอบคุณ! เราจะยืนยันการชำระเงินภายใน 1-2 วันทำการ'
+                },
+                priceVerificationFailed: {
+                    ko: '결제 금액 검증 실패. 페이지를 새로고침 해주세요.',
+                    en: 'Price verification failed. Please refresh the page.',
+                    zh: '价格验证失败，请刷新页面。',
+                    vi: 'Xác minh giá thất bại. Vui lòng tải lại trang.',
+                    ja: '決済金額の検証に失敗しました。ページを更新してください。',
+                    mn: 'Үнийн баталгаажуулалт амжилтгүй. Хуудсыг дахин ачаална уу.',
+                    th: 'การตรวจสอบราคาล้มเหลว กรุณารีเฟรชหน้า'
+                },
+                sessionExpired: {
+                    ko: '세션이 만료되었습니다. 다시 로그인해주세요.',
+                    en: 'Session expired. Please log in again.',
+                    zh: '会话已过期，请重新登录。',
+                    vi: 'Phiên đã hết hạn. Vui lòng đăng nhập lại.',
+                    ja: 'セッションが期限切れです。再度ログインしてください。',
+                    mn: 'Хугацаа дууссан. Дахин нэвтэрнэ үү.',
+                    th: 'เซสชันหมดอายุ กรุณาเข้าสู่ระบบอีกครั้ง'
+                },
+                threadCreationFailed: {
+                    ko: '쓰레드 생성 실패',
+                    en: 'Thread creation failed',
+                    zh: '创建线程失败',
+                    vi: 'Tạo chuỗi thất bại',
+                    ja: 'スレッド作成に失敗しました',
+                    mn: 'Хүсэлт үүсгэхэд алдаа гарлаа',
+                    th: 'สร้างเธรดล้มเหลว'
+                }
+            };
+
+            let msg = messages[key];
+            if (!msg) return key;
+
+            let text = msg[lang] || msg.en;
+
+            // Replace parameters like {amount}
+            Object.keys(params).forEach(param => {
+                text = text.replace(`{${param}}`, params[param]);
+            });
+
+            return text;
+        }
+
+        // WISE Modal Functions
+        let wiseOrderInfo = null;
+
+        function showWiseModal(orderInfo) {
+            wiseOrderInfo = orderInfo;
+            // Translate modal labels
+            document.getElementById('wiseModalTitle').textContent = getUIMessage('wiseTitle');
+            document.getElementById('wiseServiceLabel').textContent = getUIMessage('wiseServiceLabel');
+            document.getElementById('wiseOrderLabel').textContent = getUIMessage('wiseOrderLabel');
+            document.getElementById('wiseAmountLabel').textContent = getUIMessage('wiseAmountLabel');
+            document.getElementById('wiseNotice').innerHTML = '<strong>' + getUIMessage('wiseInstructions') + ':</strong><p>' + getUIMessage('wiseInstruction1') + '</p><p style="margin-top: 8px;">' + getUIMessage('wiseInstruction2') + '</p>';
+            document.getElementById('wisePayBtn').textContent = getUIMessage('wisePayBtn');
+            document.getElementById('wiseCloseBtn').textContent = getUIMessage('wiseClose');
+            // Set order info
+            document.getElementById('wiseServiceName').textContent = orderInfo.orderName;
+            document.getElementById('wiseOrderId').textContent = 'WISE-' + orderInfo.orderId;
+            document.getElementById('wiseAmount').textContent = '₩' + orderInfo.amount.toLocaleString();
+            document.getElementById('wiseModalOverlay').classList.add('active');
+        }
+
+        function closeWiseModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            document.getElementById('wiseModalOverlay').classList.remove('active');
+            wiseOrderInfo = null;
+        }
+
+        async function processWiseModalPayment() {
+            if (!wiseOrderInfo) return;
+
+            const btn = document.getElementById('wisePayBtn');
+            btn.disabled = true;
+            btn.classList.add('loading');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + getUIMessage('processing');
+
+            try {
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    alert(getUIMessage('loginRequired'));
+                    window.location.href = 'index.html';
+                    return;
+                }
+
+                // Get D-10-1 form data if applicable
+                const d10Data = getD10FormData();
+
+                // Get pending payment info from session storage
+                const pendingPayment = sessionStorage.getItem('pendingPayment');
+                let paymentInfo = pendingPayment ? JSON.parse(pendingPayment) : {};
+
+                // Create thread for Wise payment (pending confirmation)
+                const threadResult = await createThread({
+                    service_name: wiseOrderInfo.orderName,
+                    status: 'payment',
+                    amount: wiseOrderInfo.amount,
+                    government_fee: wiseOrderInfo.govtFee || 0,
+                    order_id: 'WISE-' + wiseOrderInfo.orderId,
+                    organization: paymentInfo.organization || 'general',
+                    payment_id: 'WISE-' + wiseOrderInfo.orderId
+                });
+
+                if (!threadResult.success) {
+                    throw new Error('Thread creation failed');
+                }
+
+                const threadId = threadResult.data.id;
+
+                // Send welcome message with Wise payment info
+                const welcomeMessage = `📋 **Payment Pending - Wise Transfer**
+
+Your order has been received. We're waiting for your Wise transfer to be confirmed.
+
+**Order ID:** WISE-${wiseOrderInfo.orderId}
+**Amount:** ₩${wiseOrderInfo.amount.toLocaleString()}
+**Payment Method:** Wise International Transfer
+
+⏳ Payment confirmation typically takes 1-2 business days.
+
+Once confirmed, our specialist will contact you to proceed with your application.
+
+Please submit your basic information:
+${window.location.origin}/profile-submit.html?thread=${threadId}`;
+
+                await supabaseClient
+                    .from('messages')
+                    .insert({
+                        thread_id: threadId,
+                        sender_id: null,
+                        sender_type: 'admin',
+                        sender_name: 'Lawyeon Visa Center',
+                        content: welcomeMessage
+                    });
+
+                // Send D-10-1 form data if applicable
+                if (d10Data && paymentInfo.d10FormattedMessage) {
+                    await supabaseClient
+                        .from('messages')
+                        .insert({
+                            thread_id: threadId,
+                            sender_id: session.user.id,
+                            sender_type: 'customer',
+                            sender_name: wiseOrderInfo.customerName || 'Customer',
+                            content: paymentInfo.d10FormattedMessage
+                        });
+                }
+
+                // Clear pending payment
+                sessionStorage.removeItem('pendingPayment');
+
+                // Close modal and redirect to thread
+                closeWiseModal();
+                alert(getUIMessage('wiseConfirmMsg'));
+                window.location.href = `thread-general-v2.html?id=${threadId}`;
+
+            } catch (error) {
+                console.error('Error:', error);
+                btn.disabled = false;
+                btn.classList.remove('loading');
+                btn.innerHTML = getUIMessage('wisePayBtn');
+                alert(getUIMessage('errorOccurred'));
+            }
+        }
+
+        async function applyForDeferredPayment() {
+            // Validate consent
+            if (!checkServiceConsent()) return;
+
+            const btn = document.getElementById('payBtn');
+            btn.disabled = true;
+            btn.classList.add('loading');
+            btn.innerHTML = '<i class="fas fa-spinner"></i> ' + getUIMessage('openingThread');
+
+            try {
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    alert(getUIMessage('loginRequired'));
+                    window.location.href = 'index.html';
+                    return;
+                }
+
+                // Check if we have an existing thread from URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const existingThreadId = urlParams.get('thread');
+                const organization = urlParams.get('org') || 'general';
+
+                let threadId;
+
+                if (existingThreadId) {
+                    // Use existing thread
+                    threadId = existingThreadId;
+                    // console.log('Using existing thread:', threadId);
+                } else {
+                    // Create new thread
+                    const deferredIsKorean = typeof i18n !== 'undefined' && i18n.currentLanguage === 'ko';
+                    const deferredOrderName = buildOrderName(selectedService, deferredIsKorean);
+                    const threadResult = await createThread({
+                        service_name: deferredOrderName,
+                        status: 'received',
+                        amount: selectedService.totalPrice,
+                        order_id: 'DEFERRED-' + Date.now(),
+                        organization: organization
+                    });
+
+                    if (!threadResult.success) {
+                        throw new Error('Thread creation failed');
+                    }
+                    threadId = threadResult.data.id;
+                }
+
+                // Get D-10-1 form data if available
+                const d10FormData = getD10FormData();
+                const d10FormattedMessage = d10FormData ? formatD10DataForMessage(d10FormData) : null;
+
+                // Send D-10-1 form data as user message if available
+                if (d10FormattedMessage) {
+                    const profile = await getUserProfile(session.user.id);
+                    try {
+                        const { error: d10Error } = await supabaseClient
+                            .from('messages')
+                            .insert({
+                                thread_id: threadId,
+                                sender_id: session.user.id,
+                                sender_type: 'user',
+                                sender_name: profile?.data?.name || session.user.email?.split('@')[0] || 'Applicant',
+                                content: d10FormattedMessage,
+                                created_at: new Date().toISOString()
+                            });
+
+                        if (d10Error) {
+                            console.error('D-10-1 form message failed:', d10Error);
+                        } else {
+                            // console.log('✅ D-10-1 form data sent to thread');
+                        }
+                    } catch (d10Err) {
+                        console.error('D-10-1 form message error:', d10Err);
+                    }
+                }
+
+                // Only send welcome message if creating new thread (not for existing thread)
+                if (!existingThreadId) {
+                    // Get lecture code if university service
+                    const lectureCode = urlParams.get('lectureCode') || sessionStorage.getItem('chosun_lecture_code') || sessionStorage.getItem('feu_lecture_code') || '';
+
+                    let welcomeMessage;
+                    const profileUrl = `${window.location.origin}/profile-submit.html?thread=${threadId}`;
+                    const universityOrgs = { 'chosun': 'Chosun University', 'feu': 'Far East University' };
+                    const deferredServiceId = urlParams.get('service');
+                    if (deferredServiceId === 'pre-consultation') {
+                        // 사전 상담: D-10 신청 안내가 아니라 상담 시작 메시지만 노출
+                        welcomeMessage = `💬 ${getUIMessage('consultationStarted', 'Your consultation has started.')}`;
+                    } else if (universityOrgs[organization] && lectureCode) {
+                        welcomeMessage = `📋 **${getUIMessage('d10Started', 'D-10-1 Visa Application Started')}**
+
+**University:** ${universityOrgs[organization]}
+**Lecture Code:** ${lectureCode}
+
+${getUIMessage('d10SubmitInfo', 'Please submit your basic information to proceed:')}
+${profileUrl}
+
+${getUIMessage('d10ContactTime', 'Our specialist will review your information and guide you through the process.')}`;
+                    } else {
+                        welcomeMessage = `📋 ${getUIMessage('genericSubmitInfo', 'Please submit your basic information.')}\n\n${profileUrl}`;
+                    }
+
+                    const senderName = getSenderName();
+
+                    try {
+                        const { error: msgError } = await supabaseClient
+                            .from('messages')
+                            .insert({
+                                thread_id: threadId,
+                                sender_id: null,
+                                sender_type: 'admin',
+                                sender_name: senderName,
+                                content: welcomeMessage
+                            });
+
+                        if (msgError) {
+                            console.error('Welcome message failed:', msgError);
+                        }
+                    } catch (msgErr) {
+                        console.error('Welcome message error:', msgErr);
+                    }
+
+                    if (selectedService.totalPrice > 0) {
+                        alert(getUIMessage('threadCreated', { amount: selectedService.totalPrice.toLocaleString() }));
+                    } else {
+                        alert(getUIMessage('threadCreatedConsultFirst'));
+                    }
+                }
+
+                window.location.href = `thread-general-v2.html?id=${threadId}`;
+            } catch (error) {
+                console.error('Thread creation error:', error);
+                btn.disabled = false;
+                btn.classList.remove('loading');
+                btn.innerHTML = '<i class="fas fa-comments"></i> ' + getUIMessage('openThread');
+                alert(getUIMessage('errorOccurred'));
+            }
+        }
+
+        async function applyForConsulting() {
+            // Validate consent
+            if (!checkServiceConsent()) return;
+
+            const btn = document.getElementById('payBtn');
+            btn.disabled = true;
+            btn.classList.add('loading');
+            btn.innerHTML = '<i class="fas fa-spinner"></i> ' + getUIMessage('submitting');
+
+            try {
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    alert(getUIMessage('loginRequired'));
+                    window.location.href = 'index.html';
+                    return;
+                }
+
+                const threadResult = await createThread({
+                    service_name: selectedService.name + ' (Quote Request)',
+                    status: 'document',
+                    amount: 0,
+                    order_id: 'CONSULT-' + Date.now(),
+                    is_consulting: true,
+                    organization: 'general'
+                });
+
+                if (!threadResult.success) {
+                    throw new Error('Thread creation failed');
+                }
+
+                alert(getUIMessage('quoteSubmitted'));
+                window.location.href = `thread-general-v2.html?id=${threadResult.data.id}`;
+            } catch (error) {
+                console.error('Consultation request error:', error);
+                btn.disabled = false;
+                btn.classList.remove('loading');
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> ' + getUIMessage('openThread');
+                alert(getUIMessage('errorOccurred'));
+            }
+        }
+    </script>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/js/supabase-client.js?v=20260614"></script>
+    <script src="/js/notification-service.js?v=20260506"></script>
+
+    <!-- i18n 다국어 지원 -->
+    <script src="/js/translations.js?v=20260605"></script>
+    <script src="/js/i18n.js?v=20260605"></script>
+</body>
+</html>

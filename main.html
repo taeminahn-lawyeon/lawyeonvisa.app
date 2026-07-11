@@ -19,10 +19,16 @@
 <meta property="og:url" content="https://www.lawyeonvisa.app/main">
 <meta property="og:site_name" content="Law Firm Lawyeon Immigration Center">
 <meta property="og:image" content="https://www.lawyeonvisa.app/images/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Law Firm Lawyeon — Visa & Immigration Center">
+<meta name="twitter:description" content="Law Firm Lawyeon, Visa & Immigration Center. Legal representation for criminal cases, contracts and immigration office affairs for expats and migrants in Korea.">
+<meta name="twitter:image" content="https://www.lawyeonvisa.app/images/og-image.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css?v=7">
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -134,9 +140,7 @@
                     <div class="attorney-card"><img src="images/attorneys/D.G. SHIN.jpg" alt="" class="attorney-photo"><div class="attorney-info"><div class="attorney-name">Atty. D.G. Shin</div></div></div>
                 </div>
             </div>
-            <div class="office-photo" style="background-image:url('images/office.jpg')">
-                <div class="ph">Office photo</div>
-            </div>
+            <div class="office-photo"><img src="images/office.jpg" alt="Law Firm Lawyeon office" loading="lazy"></div>
         </div>
     </div>
 </section>
@@ -327,15 +331,6 @@
             tab.addEventListener('click', function(){ applyCat(tab.getAttribute('data-cat')); });
         });
         applyCat('visa');
-    })();
-    (function(){
-        var box = document.querySelector('.office-photo');
-        if(!box) return;
-        var ph = box.querySelector('.ph');
-        var test = new Image();
-        test.onload = function(){ if(ph) ph.style.display = 'none'; };
-        test.onerror = function(){ box.style.backgroundImage = 'none'; };
-        test.src = 'images/office.jpg';
     })();
 </script>
 

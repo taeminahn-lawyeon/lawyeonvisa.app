@@ -662,8 +662,8 @@
 
         .message-body .warning-box,
         .warning-box {
-            background: #FEF3C7;
-            border-left: 4px solid #F59E0B;
+            background: #F7EFDD;
+            border-left: 4px solid #B0883F;
             padding: 16px 20px;
             margin: 12px 0;
             border-radius: 0 8px 8px 0;
@@ -671,8 +671,8 @@
 
         .message-body .success-box,
         .success-box {
-            background: #D1FAE5;
-            border-left: 4px solid #10B981;
+            background: #EDF1E6;
+            border-left: 4px solid #6E8A56;
             padding: 16px 20px;
             margin: 12px 0;
             border-radius: 0 8px 8px 0;
@@ -680,8 +680,8 @@
 
         .message-body .numbered-steps,
         .numbered-steps {
-            background: #F8FAFC;
-            border: 1px solid #E2E8F0;
+            background: #F6F5F2;
+            border: 1px solid #E9E6DF;
             border-radius: 4px;
             padding: 20px;
             margin: 12px 0;
@@ -693,7 +693,7 @@
             gap: 12px;
             align-items: flex-start;
             padding: 12px 0;
-            border-bottom: 1px solid #E2E8F0;
+            border-bottom: 1px solid #E9E6DF;
         }
 
         .message-body .numbered-steps .step:last-child,
@@ -730,21 +730,21 @@
         .message-body .numbered-steps .step-title,
         .numbered-steps .step-title {
             font-weight: 700;
-            color: #1E293B;
+            color: #211C15;
             margin-bottom: 4px;
         }
 
         .message-body .numbered-steps .step-desc,
         .numbered-steps .step-desc {
             font-size: 14px;
-            color: #64748B;
+            color: #6E665B;
         }
 
         /* Highlight styles */
-        .highlight-yellow { background-color: #FEF08A; padding: 2px 4px; border-radius: 3px; }
-        .highlight-green { background-color: #BBF7D0; padding: 2px 4px; border-radius: 3px; }
+        .highlight-yellow { background-color: #F2E1B0; padding: 2px 4px; border-radius: 3px; }
+        .highlight-green { background-color: #D8E4C4; padding: 2px 4px; border-radius: 3px; }
         .highlight-blue { background-color: #E3DBCC; padding: 2px 4px; border-radius: 3px; }
-        .highlight-pink { background-color: #FBCFE8; padding: 2px 4px; border-radius: 3px; }
+        .highlight-pink { background-color: #EDD6C6; padding: 2px 4px; border-radius: 3px; }
 
         .message-body .info-box-title {
             font-weight: 700;
@@ -3583,17 +3583,17 @@
             const formattedAmount = amount ? amount.toLocaleString() + '원' : '';
 
             let content = `
-                <h4>💳 결제 안내 / Payment Guide</h4>
+                <h4>결제 안내 / Payment Guide</h4>
                 <p>상담 결과에 따라 아래 서비스로 진행됩니다.<br>Based on our consultation, please proceed with the payment below.</p>
                 <div class="info-box" style="background: #F3F4F6; border: 1px solid #E5E7EB; border-radius: 4px; padding: 16px 20px; margin: 12px 0;">
                     <div style="font-weight: 700; color: #191F28; margin-bottom: 8px;">서비스: ${serviceName}</div>
                     ${formattedAmount ? `<div style="font-size: 18px; font-weight: 700; color: #887668; margin-bottom: 12px;">${formattedAmount}</div>` : ''}
                     <div style="display: flex; flex-direction: column; gap: 8px;">
                         <a href="${tossPaymentUrl}" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; background: #887668; color: white; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px;">
-                            💳 카드 결제 (Toss Payments)
+                            카드 결제 (Toss Payments)
                         </a>
                         ${wiseLink ? `<a href="${wiseLink}" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; background: #00B9FF; color: white; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px;">
-                            🌐 해외 송금 (WISE Transfer)
+                            해외 송금 (WISE Transfer)
                         </a>` : ''}
                     </div>
                 </div>

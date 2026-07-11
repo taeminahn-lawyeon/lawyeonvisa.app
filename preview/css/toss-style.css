@@ -1,0 +1,526 @@
+/**
+ * Toss-Inspired Design System
+ * 토스 디자인 시스템 기반 스타일
+ */
+
+/* ========================================
+   1. CSS Variables (토스 컬러 시스템)
+   ======================================== */
+:root {
+    /* Primary Colors */
+    --toss-blue: #0064FF;
+    --toss-blue-hover: #0055E6;
+    --toss-blue-pressed: #0047CC;
+    --toss-blue-light: #E5F0FF;
+    
+    /* Background */
+    --toss-bg: #F9FAFB;
+    --toss-white: #FFFFFF;
+    --toss-card-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    
+    /* Text Colors */
+    --toss-text-primary: #191F28;
+    --toss-text-secondary: #4E5968;
+    --toss-text-tertiary: #8B95A1;
+    --toss-text-inverse: #FFFFFF;
+    
+    /* Semantic Colors */
+    --toss-success: #00C73C;
+    --toss-error: #F04452;
+    --toss-warning: #FFA927;
+    
+    /* Spacing (8px 기준) */
+    --spacing-xs: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 16px;
+    --spacing-lg: 20px;
+    --spacing-xl: 24px;
+    --spacing-2xl: 32px;
+    --spacing-3xl: 48px;
+    
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    
+    /* Typography */
+    --font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Segoe UI", "Malgun Gothic", sans-serif;
+}
+
+/* ========================================
+   2. Reset & Base
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--toss-bg);
+    color: var(--toss-text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================================
+   3. Typography (토스 타이포)
+   ======================================== */
+.toss-h1 {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--toss-text-primary);
+    letter-spacing: -0.5px;
+}
+
+.toss-h2 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--toss-text-primary);
+    letter-spacing: -0.3px;
+}
+
+.toss-body {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--toss-text-primary);
+}
+
+.toss-caption {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--toss-text-secondary);
+}
+
+.toss-small {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--toss-text-tertiary);
+}
+
+/* ========================================
+   4. Container & Layout
+   ======================================== */
+.toss-container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 20px;
+    background-color: var(--toss-bg);
+    min-height: 100vh;
+}
+
+.toss-section {
+    padding: var(--spacing-xl) 0;
+}
+
+/* ========================================
+   5. Card (토스 카드)
+   ======================================== */
+.toss-card {
+    background: var(--toss-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    box-shadow: var(--toss-card-shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.toss-card:active {
+    transform: scale(0.98);
+}
+
+.toss-card-clickable {
+    cursor: pointer;
+}
+
+.toss-card-clickable:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.toss-card-selected {
+    border: 2px solid var(--toss-blue);
+    background: var(--toss-blue-light);
+}
+
+/* ========================================
+   6. Button (토스 버튼)
+   ======================================== */
+.toss-btn {
+    width: 100%;
+    height: 56px;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--font-family);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.toss-btn:active {
+    transform: scale(0.98);
+}
+
+.toss-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Primary Button */
+.toss-btn-primary {
+    background-color: var(--toss-blue);
+    color: var(--toss-text-inverse);
+}
+
+.toss-btn-primary:hover:not(:disabled) {
+    background-color: var(--toss-blue-hover);
+}
+
+.toss-btn-primary:active:not(:disabled) {
+    background-color: var(--toss-blue-pressed);
+}
+
+/* Secondary Button */
+.toss-btn-secondary {
+    background-color: var(--toss-bg);
+    color: var(--toss-text-primary);
+}
+
+.toss-btn-secondary:hover:not(:disabled) {
+    background-color: #F0F1F3;
+}
+
+/* Outline Button */
+.toss-btn-outline {
+    background-color: transparent;
+    border: 1px solid #E5E8EB;
+    color: var(--toss-text-primary);
+}
+
+.toss-btn-outline:hover:not(:disabled) {
+    background-color: var(--toss-bg);
+}
+
+.toss-btn-outline.selected {
+    border-color: var(--toss-blue);
+    background-color: var(--toss-blue-light);
+    color: var(--toss-blue);
+}
+
+/* ========================================
+   7. Badge (토스 뱃지)
+   ======================================== */
+.toss-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    gap: 4px;
+}
+
+.toss-badge-primary {
+    background-color: var(--toss-blue-light);
+    color: var(--toss-blue);
+}
+
+.toss-badge-success {
+    background-color: #E5F7ED;
+    color: var(--toss-success);
+}
+
+.toss-badge-warning {
+    background-color: #FFF5E5;
+    color: var(--toss-warning);
+}
+
+/* ========================================
+   8. Progress (토스 프로그레스)
+   ======================================== */
+.toss-progress {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    background: var(--toss-white);
+    border-bottom: 1px solid #F0F1F3;
+}
+
+.toss-progress-step {
+    flex: 1;
+    height: 4px;
+    background-color: #F0F1F3;
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+}
+
+.toss-progress-step.active {
+    background-color: var(--toss-blue);
+}
+
+.toss-progress-step.completed {
+    background-color: var(--toss-blue);
+}
+
+/* ========================================
+   9. Divider (토스 구분선)
+   ======================================== */
+.toss-divider {
+    height: 1px;
+    background-color: #F0F1F3;
+    margin: var(--spacing-xl) 0;
+}
+
+.toss-divider-thick {
+    height: 8px;
+    background-color: var(--toss-bg);
+    margin: var(--spacing-2xl) -20px;
+}
+
+/* ========================================
+   10. Info Box (토스 안내 박스)
+   ======================================== */
+.toss-info-box {
+    background-color: var(--toss-bg);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+}
+
+.toss-info-box-blue {
+    background-color: var(--toss-blue-light);
+}
+
+.toss-info-box p {
+    font-size: 14px;
+    color: var(--toss-text-secondary);
+    margin: 6px 0;
+    line-height: 1.6;
+}
+
+/* ========================================
+   11. List (토스 리스트)
+   ======================================== */
+.toss-list {
+    list-style: none;
+}
+
+.toss-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid #F0F1F3;
+}
+
+.toss-list-item:last-child {
+    border-bottom: none;
+}
+
+.toss-list-item-label {
+    font-size: 15px;
+    color: var(--toss-text-secondary);
+}
+
+.toss-list-item-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--toss-text-primary);
+}
+
+/* ========================================
+   12. Amount Display (금액 표시)
+   ======================================== */
+.toss-amount {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--toss-text-primary);
+    letter-spacing: -1px;
+}
+
+.toss-amount-unit {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--toss-text-secondary);
+    margin-left: 4px;
+}
+
+/* ========================================
+   13. Icon (토스 아이콘)
+   ======================================== */
+.toss-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+}
+
+.toss-icon-lg {
+    width: 32px;
+    height: 32px;
+}
+
+.toss-icon-xl {
+    width: 48px;
+    height: 48px;
+}
+
+/* ========================================
+   14. Checkbox & Radio (토스 스타일)
+   ======================================== */
+.toss-checkbox,
+.toss-radio {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #E5E8EB;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.toss-checkbox:checked,
+.toss-radio:checked {
+    background-color: var(--toss-blue);
+    border-color: var(--toss-blue);
+    background-image: url("data:image/svg+xml,%3Csvg width='14' height='11' viewBox='0 0 14 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5.5L5 9.5L13 1.5' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.toss-radio {
+    border-radius: 50%;
+}
+
+/* ========================================
+   15. Animation (토스 애니메이션)
+   ======================================== */
+@keyframes toss-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.toss-fade-in {
+    animation: toss-fade-in 0.3s ease-out;
+}
+
+@keyframes toss-slide-up {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.toss-slide-up {
+    animation: toss-slide-up 0.3s ease-out;
+}
+
+/* ========================================
+   16. Loading (토스 로딩)
+   ======================================== */
+.toss-loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: toss-spin 0.6s linear infinite;
+}
+
+@keyframes toss-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ========================================
+   17. Responsive (모바일 최적화)
+   ======================================== */
+@media (max-width: 480px) {
+    .toss-container {
+        padding: 0 16px;
+    }
+    
+    .toss-h1 {
+        font-size: 24px;
+    }
+    
+    .toss-h2 {
+        font-size: 18px;
+    }
+}
+
+/* ========================================
+   18. Utility Classes
+   ======================================== */
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.mt-xs { margin-top: var(--spacing-xs); }
+.mt-sm { margin-top: var(--spacing-sm); }
+.mt-md { margin-top: var(--spacing-md); }
+.mt-lg { margin-top: var(--spacing-lg); }
+.mt-xl { margin-top: var(--spacing-xl); }
+.mt-2xl { margin-top: var(--spacing-2xl); }
+.mt-3xl { margin-top: var(--spacing-3xl); }
+
+.mb-xs { margin-bottom: var(--spacing-xs); }
+.mb-sm { margin-bottom: var(--spacing-sm); }
+.mb-md { margin-bottom: var(--spacing-md); }
+.mb-lg { margin-bottom: var(--spacing-lg); }
+.mb-xl { margin-bottom: var(--spacing-xl); }
+.mb-2xl { margin-bottom: var(--spacing-2xl); }
+.mb-3xl { margin-bottom: var(--spacing-3xl); }
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.gap-xs { gap: var(--spacing-xs); }
+.gap-sm { gap: var(--spacing-sm); }
+.gap-md { gap: var(--spacing-md); }
+.gap-lg { gap: var(--spacing-lg); }

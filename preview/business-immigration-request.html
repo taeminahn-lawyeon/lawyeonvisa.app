@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png?v=3">
+    <title>Business Immigration Pre-Consultation Request | 법무법인 로연</title>
+    <meta name="description" content="Request a pre-consultation for Korean business immigration. The pre-consultation is free of charge; cost-related questions are not discussed at this stage.">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Manrope','IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F7F6F3;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #241F18 0%, #332920 100%);
+            padding: 20px 0;
+            border-bottom: 3px solid #887668;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .btn-back {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-back:hover {
+            opacity: 1;
+        }
+
+        /* Main Container - 2 Column Layout */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .two-column-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        /* Left Column */
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Consultation Banner */
+        .consultation-banner {
+            background: linear-gradient(135deg, #F0EBE1 0%, #F4F2EE 100%);
+            border: 2px solid #887668;
+            border-radius: 20px;
+            padding: 28px 32px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .consultation-banner-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #887668 0%, #6F6053 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .consultation-banner-content h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #4A3C2B;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .consultation-banner-content p {
+            font-size: 15px;
+            color: #887668;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        /* Service Card */
+        .service-card {
+            background: white;
+            border-radius: 20px;
+            padding: 28px 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .service-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #FEF3C7;
+            color: #D97706;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .service-card h2 {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1E293B;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+
+        .service-card p {
+            font-size: 15px;
+            color: #64748B;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* Process Steps */
+        .process-steps {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .process-steps h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1E293B;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .process-steps h2 i {
+            color: #887668;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid #F7F6F3;
+        }
+
+        .step-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #887668 0%, #6F6053 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1E293B;
+            margin-bottom: 4px;
+        }
+
+        .step-content p {
+            font-size: 14px;
+            color: #64748B;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* CTA Button */
+        .cta-section {
+            margin-top: 8px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            height: 56px;
+            background: linear-gradient(135deg, #887668 0%, #6F6053 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 16px rgba(136, 118, 104, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(136, 118, 104, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #CBD5E1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-primary.loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Free Badge */
+        .free-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #F0FDF4;
+            border: 1px solid #86EFAC;
+            border-radius: 4px;
+            padding: 12px 16px;
+            margin-top: 16px;
+        }
+
+        .free-badge i {
+            color: #22C55E;
+            font-size: 18px;
+        }
+
+        .free-badge-text {
+            font-size: 13px;
+            color: #166534;
+            font-weight: 600;
+        }
+
+        /* Right Column - Thread Preview */
+        .right-column {
+            position: sticky;
+            top: 100px;
+        }
+
+        .thread-preview {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            border: 1px solid #E2E8F0;
+        }
+
+        .thread-preview-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #F7F6F3;
+        }
+
+        .thread-preview-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #887668 0%, #6F6053 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .thread-preview-title {
+            flex: 1;
+        }
+
+        .thread-preview-title h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1E293B;
+            margin-bottom: 2px;
+        }
+
+        .thread-preview-title p {
+            font-size: 13px;
+            color: #64748B;
+            font-weight: 500;
+        }
+
+        .thread-preview-image {
+            width: 100%;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #F7F6F3;
+            border: 1px solid #E2E8F0;
+        }
+
+        .thread-preview-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .thread-preview-caption {
+            text-align: center;
+            padding: 16px;
+            color: #64748B;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .thread-preview-caption strong {
+            color: #887668;
+            font-weight: 700;
+        }
+
+        /* Loading State */
+        .loading-container {
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid #E5E7EB;
+            border-top-color: #887668;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        .loading-text {
+            font-size: 15px;
+            color: #6B7280;
+            font-weight: 600;
+        }
+
+        /* Consent checkbox */
+        .consult-consent-area {
+            margin-bottom: 16px;
+            padding: 14px 16px;
+            background: #F9FAFB;
+            border: 1px solid #E5E7EB;
+            border-radius: 4px;
+        }
+
+        .consult-consent-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .consult-consent-label input[type="checkbox"] {
+            display: none;
+        }
+
+        .consult-consent-label .cmark {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            border: 2px solid #D1D5DB;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            margin-top: 1px;
+        }
+
+        .consult-consent-label .cmark::after {
+            content: '';
+            display: none;
+            width: 5px;
+            height: 9px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            margin-top: -2px;
+        }
+
+        .consult-consent-label input[type="checkbox"]:checked + .cmark {
+            background: #887668;
+            border-color: #887668;
+        }
+
+        .consult-consent-label input[type="checkbox"]:checked + .cmark::after {
+            display: block;
+        }
+
+        .consult-consent-text {
+            font-size: 13px;
+            color: #374151;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .consult-consent-links {
+            margin-top: 6px;
+            margin-left: 30px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .consult-consent-links a {
+            font-size: 12px;
+            color: #887668;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .consult-consent-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 968px) {
+            .two-column-layout {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .right-column {
+                position: static;
+                order: -1;
+            }
+
+            .thread-preview {
+                display: none;
+            }
+
+            .main-container {
+                padding: 24px 16px;
+            }
+
+            .consultation-banner,
+            .service-card,
+            .process-steps {
+                padding: 24px 20px;
+                border-radius: 4px;
+            }
+
+            .consultation-banner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .consultation-banner-content h1 {
+                font-size: 20px;
+            }
+
+            .service-card h2 {
+                font-size: 18px;
+            }
+
+            .step-item {
+                gap: 12px;
+            }
+
+            .step-number {
+                width: 28px;
+                height: 28px;
+                font-size: 13px;
+            }
+        }
+
+        /* === [1] 히어로 (장식 최소, CTA 없음) === */
+        .biz-request-hero {
+            background: #FFFFFF;
+            border-radius: 4px;
+            padding: 32px 28px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .biz-request-hero-headline {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0F172A;
+            line-height: 1.4;
+            margin: 0 0 10px;
+            letter-spacing: -0.3px;
+        }
+        .biz-request-hero-subhead {
+            font-size: 15px;
+            color: #4E5968;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* === [2] 서비스 개요 === */
+        .biz-request-overview {
+            background: #FFFFFF;
+            border-radius: 4px;
+            padding: 28px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .biz-request-overview p {
+            font-size: 15px;
+            color: #4E5968;
+            line-height: 1.7;
+            margin: 0 0 14px;
+        }
+        .biz-request-overview p:last-child { margin-bottom: 0; }
+
+        /* === [3] 5단계 구조 === */
+        .biz-request-steps {
+            background: #FFFFFF;
+            border-radius: 4px;
+            padding: 28px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .biz-request-steps-heading {
+            font-size: 18px;
+            font-weight: 800;
+            color: #0F172A;
+            margin: 0 0 16px;
+        }
+        .biz-request-steps .step-item { padding: 14px 0; border-bottom: 1px solid #F7F6F3; }
+        .biz-request-steps .step-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .biz-request-steps .step-content h3 { font-size: 15px; font-weight: 700; color: #1E293B; margin: 0 0 6px; }
+        .biz-request-steps .step-content p { font-size: 14px; color: #4E5968; line-height: 1.6; margin: 0; }
+
+        /* === [4] 고객 준비사항 === */
+        .biz-request-prepare {
+            background: #F7F6F3;
+            border: 1px solid #E5E8EB;
+            border-radius: 4px;
+            padding: 24px 28px;
+        }
+        .biz-request-prepare-heading {
+            font-size: 16px;
+            font-weight: 800;
+            color: #0F172A;
+            margin: 0 0 10px;
+        }
+        .biz-request-prepare-intro {
+            font-size: 14px;
+            color: #4E5968;
+            line-height: 1.6;
+            margin: 0 0 12px;
+        }
+        .biz-request-prepare-list {
+            margin: 0 0 12px;
+            padding-left: 20px;
+        }
+        .biz-request-prepare-list li {
+            font-size: 14px;
+            color: #1E293B;
+            line-height: 1.9;
+        }
+        .biz-request-prepare-disclaimer {
+            font-size: 13px;
+            color: #8B95A1;
+            font-style: italic;
+            margin: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-inner">
+            <div class="header-title" data-i18n="consultation.header">Consultation Request</div>
+            <a href="javascript:history.back()" class="btn-back">
+                <i class="fas fa-times"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="main-container">
+        <div id="loading" class="loading-container">
+            <div class="spinner"></div>
+            <div class="loading-text" data-i18n="common.loading">Loading...</div>
+        </div>
+
+        <!-- Main Content -->
+        <div id="main-content" class="two-column-layout" style="display: none;">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- [1] 페이지 히어로 (CTA 없음, 장식 최소) -->
+                <div class="biz-request-hero">
+                    <h1 class="biz-request-hero-headline" data-i18n="biz.request.hero.headline">한국에서 사업을 시작하고 이주하기 위한 통합 법률서비스</h1>
+                    <p class="biz-request-hero-subhead" data-i18n="biz.request.hero.subhead">한국으로의 사업 이민을 검토하는 이민자 고객을 위한 전담 상담 경로입니다.</p>
+                </div>
+
+                <!-- [2] 사업이민 서비스 개요 -->
+                <div class="biz-request-overview">
+                    <p data-i18n="biz.request.overview.para1">저희 법무법인 로연 출입국이민지원센터는 해외에 거주하시는 외국인이 한국에서 사업을 시작하고 정착하시기까지 필요한 법률서비스를 통합 제공합니다.</p>
+                    <p data-i18n="biz.request.overview.para2">프로젝트 탐색부터 규제 자문, 비자 취득, 한국 정착, 동반가족 지원까지 모든 단계가 하나의 법률자문 계약 안에서 진행됩니다.</p>
+                    <p data-i18n="biz.request.overview.para3">사전 상담은 무상이며, 본 페이지에서 신청하실 수 있습니다.</p>
+                </div>
+
+                <!-- Process Steps -->
+                <!-- [3] 사업이민 프로젝트 5단계 구조 -->
+                <div class="biz-request-steps">
+                    <h2 class="biz-request-steps-heading" data-i18n="biz.request.steps.heading">프로젝트 5단계</h2>
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3 data-i18n="biz.step1.title">사전 상담</h3>
+                            <p data-i18n="biz.step1.body">쓰레드를 통해 귀하의 국적, 자금 조달 방식, 이주 시점, 가족 구성을 확인하고 한국 사업이민 경로 개요를 안내합니다.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3 data-i18n="biz.step2.title">본 상담</h3>
+                            <p data-i18n="biz.step2.body">이민 경로 상세 자문, 사업 개시 절차 및 예산 배정 구조화, 주요 리스크 안내, 비자 발급 등 출입국 행정 안내를 제공합니다.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3 data-i18n="biz.step3.title">착수</h3>
+                            <p data-i18n="biz.step3.body">프로젝트 설계, 오퍼레이션 설계, 실사 방문 코디네이션, 최종 점검 회의를 수행합니다.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3 data-i18n="biz.step4.title">정착</h3>
+                            <p data-i18n="biz.step4.body">계약 체결 지원, 외국인 투자 절차, 행정 등록 감독, 비자 취득, 동반 가족 비자 발급.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h3 data-i18n="biz.step5.title">사후관리</h3>
+                            <p data-i18n="biz.step5.body">주거 임대차 검토, 가맹본부-점주 분쟁 조정, 근로계약 자문, 체류기간 연장, 영주권 전환 자문을 별도 계약으로 제공합니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- [4] 고객이 준비해야 할 것 -->
+                <div class="biz-request-prepare">
+                    <h2 class="biz-request-prepare-heading" data-i18n="biz.request.prepare.heading">고객이 준비해야 할 것</h2>
+                    <p class="biz-request-prepare-intro" data-i18n="biz.request.prepare.intro">신청 전에 다음 사항을 정리해 두시면 사전 상담이 원활하게 진행됩니다.</p>
+                    <ul class="biz-request-prepare-list">
+                        <li data-i18n="biz.request.prepare.item1">한국 이주 검토 시점 (단기 / 중기 / 미정)</li>
+                        <li data-i18n="biz.request.prepare.item2">가족 동반 계획 (배우자·자녀·부모)</li>
+                        <li data-i18n="biz.request.prepare.item3">본국 사업 또는 근로 경력</li>
+                        <li data-i18n="biz.request.prepare.item4">한국 거주·방문 경험</li>
+                        <li data-i18n="biz.request.prepare.item5">한국어 사용 수준</li>
+                    </ul>
+                    <p class="biz-request-prepare-disclaimer" data-i18n="biz.request.prepare.disclaimer">자금 규모 및 투자 구조에 관한 상세는 본 상담 단계에서 확인합니다.</p>
+                </div>
+
+                <!-- 사업이민 사전 상담 신청 — 약관 동의 + 제출만 (상세 정보는 쓰레드에서 수집) -->
+                <form id="biz-request-form" class="biz-req-form" style="background:#fff;border-radius:20px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+                    <!-- 개인정보 수집·이용 동의 (법적 필수) -->
+                    <div class="consult-consent-area">
+                        <label class="consult-consent-label">
+                            <input type="checkbox" id="consultConsentCheck" required>
+                            <span class="cmark"></span>
+                            <span class="consult-consent-text" data-i18n="consult.consent.text">서비스 이용약관 및 개인정보 처리방침에 동의합니다. 상담 목적의 개인정보 수집·이용에 동의합니다.</span>
+                        </label>
+                        <div class="consult-consent-links">
+                            <a href="terms-of-service.html" target="_blank"><i class="fas fa-external-link-alt"></i> <span data-i18n="consult.consent.tosLink">이용약관</span></a>
+                            <a href="privacy-policy.html" target="_blank"><i class="fas fa-external-link-alt"></i> <span data-i18n="consult.consent.privacyLink">개인정보 처리방침</span></a>
+                        </div>
+                    </div>
+
+                    <!-- CTA Button (form submit 방식으로 전환; business-immigration.js가 바인딩) -->
+                    <div class="cta-section">
+                        <button type="submit" class="btn-primary" id="consultBtn">
+                            <i class="fas fa-paper-plane"></i>
+                            <span data-i18n="biz.form.submit">상담 신청하기</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Right Column - Thread Preview -->
+            <div class="right-column">
+                <div class="thread-preview">
+                    <div class="thread-preview-header">
+                        <div class="thread-preview-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="thread-preview-title">
+                            <h3 data-i18n="biz.request.threadPreview.title">사업이민 쓰레드</h3>
+                            <p data-i18n="biz.request.threadPreview.subtitle">담당자와 실시간 커뮤니케이션</p>
+                        </div>
+                    </div>
+
+                    <div class="thread-preview-image">
+                        <img src="/images/thread_screenshot.png" alt="Business Immigration Thread Preview" style="width: 100%; height: auto; display: block;">
+                    </div>
+
+                    <div class="thread-preview-caption" data-i18n="biz.request.threadPreview.caption">쓰레드에서 상담 진행, 서류 요청, 단계 전환이 이루어집니다.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Service information (linked from blog posts)
+        const serviceInfo = {
+            'd10-change': { name: 'D-10 Job Seeker Visa Change', desc: 'Visa change for job seeking after graduation' },
+            'd10-1-change': { name: 'D-10-1 General Job Seeker Visa', desc: 'General job seeking visa change' },
+            'd10-2-change': { name: 'D-10-2 Tech Startup Job Seeker', desc: 'Startup preparation visa' },
+            'd10-3-change': { name: 'D-10-3 High-tech Intern Visa', desc: 'Advanced technology internship' },
+            'd10-t-change': { name: 'D-10-T Top Talent Job Seeker', desc: 'Elite university graduate visa' },
+            'd10-extension': { name: 'D-10 Visa Extension', desc: 'Job seeker visa renewal' },
+            'visa-prediagnosis': { name: 'Visa Pre-diagnosis', desc: 'Visa change, overstay risk, immigration law consultation' },
+            'e7-change': { name: 'E-7 Professional Visa Change', desc: 'Professional employment visa' },
+            'f2-7-change': { name: 'F-2-7 Points-based Residence', desc: 'Outstanding talent residence visa' },
+            'default': { name: 'Free Pre-Consultation', desc: 'Free case review - get procedure guidance and cost estimate before payment' }
+        };
+
+        let selectedService = null;
+
+        // i18n helper
+        function t(key, fallback) {
+            if (typeof i18n !== 'undefined' && i18n.translate) {
+                const result = i18n.translate(key);
+                return result !== key ? result : (fallback || key);
+            }
+            return fallback || key;
+        }
+
+        // Page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const serviceId = urlParams.get('service');
+
+            if (!serviceId) {
+                selectedService = serviceInfo['default'];
+            } else {
+                selectedService = serviceInfo[serviceId] || serviceInfo['default'];
+            }
+
+            selectedService.id = serviceId || 'general-consultation';
+
+            // Gate on authentication — only authenticated users may see
+            // the consultation details and submit. Non-authenticated users
+            // see a confirm() popup (unified with index.html card flow)
+            // and are redirected back here after Google sign-in.
+            let session = null;
+            try {
+                session = await checkSession();
+            } catch (e) {
+                console.error('checkSession failed:', e);
+            }
+
+            var loadingEl = document.getElementById('loading');
+            if (loadingEl) loadingEl.style.display = 'none';
+
+            if (!session || !session.user) {
+                localStorage.setItem('redirectAfterLogin', window.location.href);
+                const msg = (window.i18n && window.i18n.translate)
+                    ? window.i18n.translate('common.serviceLoginConfirm')
+                    : '서비스 신청을 위해 로그인이 필요합니다. 계속하시겠습니까?';
+                if (confirm(msg)) {
+                    await signInWithGoogle();
+                } else {
+                    localStorage.removeItem('redirectAfterLogin');
+                    window.location.href = 'index.html';
+                }
+                return;
+            }
+
+            // Authenticated — show main content as before.
+            var mainEl = document.getElementById('main-content');
+            if (mainEl) mainEl.style.display = 'grid';
+
+            // Check for pending consultation after login
+            setTimeout(async () => {
+                await checkPendingConsultation();
+            }, 500);
+        });
+
+        async function applyForConsultation() {
+            // Validate consent
+            const consentCheck = document.getElementById('consultConsentCheck');
+            if (!consentCheck || !consentCheck.checked) {
+                alert(t('consultation.consentRequired', 'Please agree to the Terms of Service and Privacy Policy.'));
+                return;
+            }
+
+            const btn = document.getElementById('consultBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner"></i> ' + t('common.processing', 'Processing...');
+
+            try {
+                // Check current login status
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    // Save pending info and start Google login
+                    localStorage.setItem('pendingConsultation', JSON.stringify({
+                        serviceId: selectedService.id,
+                        serviceName: selectedService.name,
+                        timestamp: Date.now()
+                    }));
+
+                    // console.log('📋 Saved consultation info, starting Google login');
+
+                    const result = await signInWithGoogle();
+                    if (!result.success) {
+                        throw new Error('Login failed');
+                    }
+                    return;
+                }
+
+                // Already logged in, create thread directly
+                await createConsultationThread();
+            } catch (error) {
+                console.error('Consultation request error:', error);
+                alert(t('common.errorRetry', 'An error occurred. Please try again.'));
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> ' + t('consultation.requestBtn', 'Request Consultation');
+            }
+        }
+
+        // Thread creation function
+        async function createConsultationThread() {
+            const btn = document.getElementById('consultBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner"></i> ' + t('consultation.creatingThread', 'Creating thread...');
+
+            try {
+                // Ensure profile exists before creating thread (foreign key requirement)
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    throw new Error('Login required');
+                }
+
+                const profileResult = await getUserProfile(session.user.id);
+                if (!profileResult.success || !profileResult.data) {
+                    console.log('Profile not found, creating minimal profile...');
+                    const profileCreateResult = await createOrUpdateProfile(session.user.id, {
+                        name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || '',
+                        email: session.user.email || ''
+                    });
+                    if (!profileCreateResult.success) {
+                        console.error('Profile creation failed:', profileCreateResult.error);
+                        throw new Error('Profile creation failed: ' + profileCreateResult.error);
+                    }
+                    console.log('Profile created successfully');
+                }
+
+                // Create consultation thread in Supabase
+                const threadResult = await createThread({
+                    service_name: selectedService.name + ' (Consultation)',
+                    status: 'document',
+                    amount: 0,
+                    order_id: 'CONSULT-' + Date.now(),
+                    is_consulting: true,
+                    organization: 'general'
+                });
+
+                if (!threadResult.success) {
+                    console.error('Thread creation failed:', threadResult.error);
+                    throw new Error('Thread creation failed: ' + threadResult.error);
+                }
+
+                // Create welcome message
+                await createWelcomeMessage(threadResult.data.id, selectedService.name);
+
+                // Clear pending info
+                localStorage.removeItem('pendingConsultation');
+
+                alert(t('consultation.submitted', 'Consultation request submitted!\n\nOur specialist will contact you shortly through your dedicated thread.'));
+                window.location.href = `thread-general-v2.html?id=${threadResult.data.id}`;
+            } catch (error) {
+                console.error('Thread creation error:', error);
+                alert(t('common.errorRetry', 'An error occurred. Please try again.'));
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> ' + t('consultation.requestBtn', 'Request Consultation');
+            }
+        }
+
+        // Check for pending consultation after login
+        async function checkPendingConsultation() {
+            const pending = localStorage.getItem('pendingConsultation');
+            if (!pending) return;
+
+            try {
+                const pendingData = JSON.parse(pending);
+
+                // Only process requests within 10 minutes
+                if (Date.now() - pendingData.timestamp > 10 * 60 * 1000) {
+                    // console.log('⏰ Pending consultation expired');
+                    localStorage.removeItem('pendingConsultation');
+                    return;
+                }
+
+                // Check login status
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    return;
+                }
+
+                // console.log('✅ Login complete - processing pending consultation');
+
+                // Restore selectedService if not set
+                if (!selectedService || selectedService.id !== pendingData.serviceId) {
+                    selectedService = {
+                        id: pendingData.serviceId,
+                        name: pendingData.serviceName
+                    };
+                }
+
+                // Auto-create thread
+                await createConsultationThread();
+            } catch (error) {
+                console.error('Pending consultation error:', error);
+                localStorage.removeItem('pendingConsultation');
+            }
+        }
+    </script>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/js/supabase-client.js?v=20260614"></script>
+    <script src="/js/notification-service.js?v=20260506"></script>
+
+    <!-- i18n 다국어 지원 -->
+    <script src="/js/translations.js?v=20260605"></script>
+    <script src="/js/i18n.js?v=20260605"></script>
+    <script src="/js/business-immigration.js"></script>
+</body>
+</html>
