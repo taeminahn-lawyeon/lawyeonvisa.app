@@ -201,7 +201,7 @@ const PAGES = [
   {
     id: 'foreigner-entry-ban-check-lift-korea-2026', content: 'foreigner-entry-ban-check-lift-korea-2026',
     langs: ['ko', 'en'],
-    title: { ko: '출국명령·강제퇴거로 입국규제가 붙었을 때 — 다시 한국에 들어오는 방법 (2026) — 법무법인 로연',
+    title: { ko: '출국명령·강제퇴거로 입국이 불가할 때 — 대응 방법 (2026) — 법무법인 로연',
              en: 'Re-entering Korea After a Departure Order or Deportation (2026) — Law Firm Lawyeon' },
     desc:  { ko: '출국명령이나 강제퇴거에는 입국규제가 함께 부과됩니다. 처분 전 사범심사 대응이 왜 중요한지, 이미 출국한 경우 이의신청·취소소송·입국규제 해제로 다시 입국하는 방법과 기한을 정리했습니다.',
              en: 'A departure order or deportation comes with an entry ban. Why responding at the violation-review stage matters most, and how — if you have already left — an objection, a revocation lawsuit, or lifting the entry ban lets you re-enter, within the deadlines.' },
