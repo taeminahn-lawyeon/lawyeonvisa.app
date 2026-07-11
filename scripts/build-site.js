@@ -198,6 +198,14 @@ const PAGES = [
              en: "Does divorce end your F-6 visa in Korea? How to keep staying through child-rearing (F-6-2) or marriage dissolution (F-6-3), how to prove your spouse's fault, the support exception, family-affairs status (F-1-6), and staying during separation or a divorce suit.",
              vi: 'Ly hôn có làm mất visa F-6 không? Cách tiếp tục cư trú qua diện nuôi con (F-6-2) hoặc hôn nhân tan vỡ (F-6-3), cách chứng minh lỗi của vợ/chồng, ngoại lệ phụng dưỡng, diện thu xếp gia sự (F-1-6), và cư trú khi ly thân hoặc đang kiện ly hôn.' },
   },
+  {
+    id: 'foreigner-entry-ban-check-lift-korea-2026', content: 'foreigner-entry-ban-check-lift-korea-2026',
+    langs: ['ko', 'en'],
+    title: { ko: '출국명령·강제퇴거로 입국규제가 붙었을 때 — 다시 한국에 들어오는 방법 (2026) — 법무법인 로연',
+             en: 'Re-entering Korea After a Departure Order or Deportation (2026) — Law Firm Lawyeon' },
+    desc:  { ko: '출국명령이나 강제퇴거에는 입국규제가 함께 부과됩니다. 처분 전 사범심사 대응이 왜 중요한지, 이미 출국한 경우 이의신청·취소소송·입국규제 해제로 다시 입국하는 방법과 기한을 정리했습니다.',
+             en: 'A departure order or deportation comes with an entry ban. Why responding at the violation-review stage matters most, and how — if you have already left — an objection, a revocation lawsuit, or lifting the entry ban lets you re-enter, within the deadlines.' },
+  },
 ];
 
 // Publication dates for blog articles (page id -> ISO date). A page is an
@@ -219,6 +227,7 @@ const ARTICLE_DATES = {
   'far-east-university-student-job-fair-mou-2026':'2026-05-26',
   'foreigner-dui-deportation-korea-2026':'2026-07-01',
   'foreigner-divorce-f6-visa-stay-korea-2026':'2026-07-01',
+  'foreigner-entry-ban-check-lift-korea-2026':'2026-07-11',
 };
 
 // Strip the brand suffix from a page title for use as a bare headline.
