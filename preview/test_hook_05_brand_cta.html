@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<title>Lawyeon — Living Legal Document (test_hook_05 · Blog Series Index)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory: #f8f4ea;
+    --ink: #1a1a1a;
+    --stamp: #c4302b;
+    --navy: #0f2552;
+
+    --safe-top: 220px;
+    --safe-bottom: 1470px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%;
+    min-height: 100vh;
+    background: #2a2a28;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    overflow: auto;
+  }
+
+  .stage {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+    flex: 0 0 auto;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.55);
+    background: var(--ivory);
+    overflow: hidden;
+    transform-origin: top center;
+  }
+  @media (max-height: 1960px) {
+    .stage { transform: scale(var(--fit, 1)); }
+  }
+
+  .paper-noise { position: absolute; inset: 0; pointer-events: none; opacity: 0.55; mix-blend-mode: multiply; }
+  .grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(26,26,26,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(26,26,26,0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .vignette {
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 55%, rgba(120,90,40,0.14) 100%);
+  }
+
+  .safe-zone-overlay {
+    position: absolute; left: 0; right: 0;
+    top: var(--safe-top);
+    height: calc(var(--safe-bottom) - var(--safe-top));
+    pointer-events: none; display: none;
+    border: 2px dashed rgba(196, 48, 43, 0.55);
+    z-index: 30;
+  }
+  .debug .safe-zone-overlay { display: block; }
+
+  /* ====== HEADER ====== */
+  .header-wrap {
+    position: absolute; top: 260px; left: 0; right: 0;
+    text-align: center; color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .header-title {
+    font-size: 30px; font-weight: 500; letter-spacing: 7px;
+    opacity: 0; animation: fadeInTxt 0.45s ease 0.15s forwards;
+  }
+  .header-line {
+    position: absolute; top: 320px; left: 90px; right: 90px;
+    height: 3px; overflow: visible;
+  }
+  @keyframes fadeInTxt {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ====== SERIES LABEL ====== */
+  .series-label {
+    position: absolute; top: 380px; left: 0; right: 0;
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: 10px;
+    color: var(--stamp);
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  /* ====== BLOG POSTS LIST ====== */
+  .blog-post {
+    position: absolute;
+    left: 80px;
+    right: 80px;
+    display: flex;
+    align-items: flex-start;
+    gap: 38px;
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  .blog-post .num {
+    flex: 0 0 auto;
+    width: 170px;
+    font-family: 'Merriweather', 'Times New Roman', serif;
+    font-weight: 900;
+    font-size: 150px;
+    line-height: 0.95;
+    color: var(--navy);
+    letter-spacing: -4px;
+    text-align: left;
+  }
+  .blog-post .title {
+    flex: 1 1 auto;
+    font-family: 'Merriweather', 'Times New Roman', serif;
+    font-weight: 900;
+    font-size: 42px;
+    line-height: 1.18;
+    color: var(--ink);
+    letter-spacing: -0.3px;
+    padding-top: 14px;
+  }
+
+  .blog-post.in {
+    animation: rise 0.55s cubic-bezier(0.2, 0.9, 0.25, 1) forwards;
+  }
+  @keyframes rise {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Per-post positions (safe zone: 220-1470) */
+  #p1 { top: 470px; }
+  #p2 { top: 690px; }
+  #p3 { top: 910px; }
+  #p4 { top: 1130px; }
+
+  /* ====== BOTTOM HINT ====== */
+  .bottom-hint {
+    position: absolute; top: 1360px; left: 0; right: 0;
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 26px;
+    letter-spacing: 5px;
+    color: rgba(26,26,26,0.78);
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  .bottom-hint .dot { color: var(--stamp); margin: 0 14px; }
+  .bottom-hint.in {
+    animation: rise 0.55s cubic-bezier(0.2, 0.9, 0.25, 1) forwards;
+  }
+
+  /* ====== FOOTER ====== */
+  .footer {
+    position: absolute; top: 1428px; left: 0; right: 0;
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 24px; font-weight: 500; letter-spacing: 5px;
+    color: var(--ink);
+    opacity: 0;
+    animation: fadeInTxt 0.45s ease 0.3s forwards;
+  }
+
+  .controls {
+    position: fixed; top: 20px; right: 20px; z-index: 50;
+    display: flex; gap: 10px;
+  }
+  .replay-btn {
+    background: var(--ivory); color: var(--ink);
+    border: 2px solid var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600; font-size: 14px; letter-spacing: 3px;
+    padding: 12px 20px; cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .replay-btn:hover { background: var(--stamp); color: var(--ivory); border-color: var(--stamp); }
+  .replay-btn:active { transform: translateY(1px); }
+  .capture .controls { display: none; }
+
+  .series-label.in {
+    animation: rise 0.55s cubic-bezier(0.2, 0.9, 0.25, 1) forwards;
+  }
+
+  .prep * { animation: none !important; }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <button class="replay-btn" id="replayBtn">▶ REPLAY</button>
+</div>
+
+<div class="stage" id="stage">
+
+  <svg width="0" height="0" style="position:absolute;">
+    <defs>
+      <filter id="paperNoise" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="23" stitchTiles="stitch"/>
+        <feColorMatrix values="0 0 0 0 0.55
+                               0 0 0 0 0.45
+                               0 0 0 0 0.30
+                               0 0 0 0.22 0"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <svg class="paper-noise" viewBox="0 0 1080 1920" preserveAspectRatio="none">
+    <rect width="1080" height="1920" filter="url(#paperNoise)"/>
+  </svg>
+  <div class="grid"></div>
+  <div class="vignette"></div>
+  <div class="safe-zone-overlay"></div>
+
+  <!-- Header -->
+  <div class="header-wrap">
+    <div class="header-title">IMMIGRATION&nbsp;&nbsp;LAW&nbsp;&nbsp;FIRM&nbsp;&nbsp;IN&nbsp;&nbsp;KOREA</div>
+  </div>
+  <svg class="header-line" viewBox="0 0 900 3" preserveAspectRatio="none">
+    <line id="hLine" x1="0" y1="1.5" x2="900" y2="1.5"
+          stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"
+          pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1"/>
+  </svg>
+
+  <!-- Series label -->
+  <div class="series-label" id="seriesLabel">THE&nbsp;&nbsp;BUSINESS&nbsp;&nbsp;IMMIGRATION&nbsp;&nbsp;SERIES</div>
+
+  <!-- Blog posts -->
+  <div class="blog-post" id="p1">
+    <div class="num">01</div>
+    <div class="title">How&nbsp;to&nbsp;Start&nbsp;a&nbsp;Business&nbsp;in&nbsp;Korea<br>as&nbsp;a&nbsp;Foreigner</div>
+  </div>
+
+  <div class="blog-post" id="p2">
+    <div class="num">02</div>
+    <div class="title">Korea&nbsp;Business&nbsp;Visa&nbsp;in&nbsp;2026</div>
+  </div>
+
+  <div class="blog-post" id="p3">
+    <div class="num">03</div>
+    <div class="title">How&nbsp;to&nbsp;Open&nbsp;a&nbsp;Store&nbsp;in&nbsp;Korea<br>as&nbsp;a&nbsp;Foreigner</div>
+  </div>
+
+  <div class="blog-post" id="p4">
+    <div class="num">04</div>
+    <div class="title">How&nbsp;to&nbsp;Stay&nbsp;in&nbsp;Korea&nbsp;Long‑Term<br>as&nbsp;a&nbsp;Foreign&nbsp;Business&nbsp;Owner</div>
+  </div>
+
+  <!-- Bottom hint -->
+  <div class="bottom-hint" id="bottomHint">
+    READ&nbsp;THE&nbsp;FULL&nbsp;SERIES<span class="dot">·</span>SEE&nbsp;BIO
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    Lawyeon&nbsp;&nbsp;Visa&nbsp;&nbsp;&&nbsp;&nbsp;Immigration&nbsp;&nbsp;Center
+  </div>
+
+</div>
+
+<script>
+(function () {
+  const stage        = document.getElementById('stage');
+  const hLine        = document.getElementById('hLine');
+  const seriesLabel  = document.getElementById('seriesLabel');
+  const posts        = ['p1','p2','p3','p4'].map(id => document.getElementById(id));
+  const bottomHint   = document.getElementById('bottomHint');
+  const replayBtn    = document.getElementById('replayBtn');
+
+  const params = new URLSearchParams(location.search);
+  if (params.get('debug') === '1') document.body.classList.add('debug');
+  if (params.get('capture') === '1') document.body.classList.add('capture');
+
+  const timers = [];
+  let rafId = null;
+
+  function fitStage() {
+    const vh = window.innerHeight;
+    const vw = window.innerWidth;
+    const scale = Math.min(vh / 1920, vw / 1080, 1);
+    stage.style.setProperty('--fit', scale);
+  }
+  window.addEventListener('resize', fitStage);
+  fitStage();
+
+  function clearAll() {
+    timers.forEach(t => clearTimeout(t));
+    timers.length = 0;
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = null;
+  }
+
+  function drawLine(el, duration, easing) {
+    return new Promise(resolve => {
+      const start = performance.now();
+      const ease = easing || (t => t);
+      function tick(now) {
+        const p = Math.min(1, (now - start) / duration);
+        const v = 1 - ease(p);
+        el.setAttribute('stroke-dashoffset', v.toFixed(4));
+        if (p < 1) rafId = requestAnimationFrame(tick);
+        else resolve();
+      }
+      rafId = requestAnimationFrame(tick);
+    });
+  }
+
+  function reveal(el) { el.classList.add('in'); }
+
+  function sleep(ms) {
+    return new Promise(resolve => {
+      const t = setTimeout(resolve, ms);
+      timers.push(t);
+    });
+  }
+
+  function resetAll() {
+    clearAll();
+    hLine.setAttribute('stroke-dashoffset', '1');
+    [seriesLabel, bottomHint, ...posts].forEach(el => el.classList.remove('in'));
+    stage.classList.add('prep');
+    void stage.offsetWidth;
+    stage.classList.remove('prep');
+  }
+
+  // ============================================================
+  // Timeline (~12.0s):
+  // 0.0–0.6 : header line draws
+  // 0.6–1.0 : series label "THE BUSINESS IMMIGRATION SERIES"
+  //           VO: "This is Law Firm Lawyeon..."
+  // 1.0–2.2 : Post 01 rises — matches "Full guide on how to
+  //           start a business in Korea" (the exact post title)
+  // 2.2–3.4 : Post 02
+  // 3.4–4.6 : Post 03
+  // 4.6–5.8 : Post 04
+  // 5.8–7.2 : bottom hint "READ THE FULL SERIES · SEE BIO"
+  //           VO: "Free pre-consultation available."
+  // 7.2–12  : tail hold
+  // ============================================================
+  async function play() {
+    resetAll();
+
+    await drawLine(hLine, 600, t => 1 - Math.pow(1 - t, 2));
+
+    reveal(seriesLabel);
+    await sleep(400);
+
+    for (let i = 0; i < posts.length; i++) {
+      reveal(posts[i]);
+      await sleep(1200);
+    }
+
+    await sleep(200);
+    reveal(bottomHint);
+
+    await sleep(4800);
+  }
+
+  replayBtn.addEventListener('click', () => play());
+
+  window.addEventListener('load', () => {
+    requestAnimationFrame(() => requestAnimationFrame(play));
+  });
+})();
+</script>
+
+</body>
+</html>

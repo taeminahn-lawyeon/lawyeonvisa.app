@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta name="robots" content="noindex,nofollow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Complete - Lawyeon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Manrope','IBM Plex Sans KR', sans-serif;
+            background: #F7F6F3;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* 헤더 */
+        .header {
+            background: linear-gradient(135deg, #000000 0%, #241F18 100%);
+            padding: 20px 0;
+            border-bottom: 3px solid #887668;
+        }
+
+        .header-inner {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-title i {
+            color: #887668;
+        }
+
+        /* 컨테이너 */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+        }
+
+        /* 성공 배너 */
+        .success-banner {
+            background: linear-gradient(135deg, #887668 0%, #6F6053 100%);
+            border-radius: 20px;
+            padding: 40px 24px;
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.2);
+            border: 3px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            animation: scaleIn 0.6s ease;
+            position: relative;
+        }
+
+        @keyframes scaleIn {
+            0% { transform: scale(0) rotate(-180deg); }
+            50% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .success-icon i {
+            font-size: 36px;
+            color: white;
+        }
+
+        .success-title {
+            font-size: 26px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            position: relative;
+        }
+
+        .success-message {
+            font-size: 15px;
+            color: rgba(255,255,255,0.95);
+            font-weight: 500;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* 카드 */
+        .card {
+            background: white;
+            border-radius: 4px;
+            padding: 24px;
+            margin: 16px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .card-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: #191F28;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title i {
+            color: #887668;
+            font-size: 18px;
+        }
+
+        /* 정보 행 */
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid #F3F4F6;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-size: 14px;
+            color: #6B7280;
+            font-weight: 600;
+        }
+
+        .info-value {
+            font-size: 14px;
+            color: #191F28;
+            font-weight: 700;
+            text-align: right;
+        }
+
+        .info-row.total {
+            margin-top: 12px;
+            padding-top: 16px;
+            border-top: 2px solid #E5E7EB;
+        }
+
+        .info-row.total .info-label {
+            font-size: 16px;
+            font-weight: 800;
+            color: #191F28;
+        }
+
+        .info-row.total .info-value {
+            font-size: 22px;
+            color: #887668;
+            font-weight: 900;
+        }
+
+        /* 다음 단계 */
+        .next-steps {
+            background: linear-gradient(135deg, #F4F2EE 0%, #F0EBE1 100%);
+            border: 2px solid #E3DBCC;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 16px 0;
+        }
+
+        .next-steps-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: #4A3C2B;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .next-steps-title i {
+            color: #887668;
+        }
+
+        .steps-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .steps-list li {
+            padding: 10px 0;
+            color: #4A3C2B;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            line-height: 1.5;
+        }
+
+        .steps-list li i {
+            color: #887668;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        /* 버튼 */
+        .btn-primary {
+            width: 100%;
+            height: 56px;
+            background: linear-gradient(135deg, #887668 0%, #6F6053 100%);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(136, 118, 104, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(136, 118, 104, 0.4);
+        }
+
+        .btn-secondary {
+            width: 100%;
+            height: 56px;
+            background: white;
+            color: #6B7280;
+            border: 2px solid #E5E7EB;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-secondary:hover {
+            background: #F9FAFB;
+            border-color: #D1D5DB;
+            color: #4B5563;
+        }
+
+        /* 로딩 */
+        .loading-container {
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid #E5E7EB;
+            border-top-color: #887668;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 24px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 16px;
+            color: #6B7280;
+            font-weight: 600;
+        }
+
+        /* 에러 배너 */
+        .error-banner {
+            background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+            border-radius: 20px;
+            padding: 40px 24px;
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .error-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.2);
+            border: 3px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            animation: shake 0.5s ease;
+            position: relative;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .error-icon i {
+            font-size: 36px;
+            color: white;
+        }
+
+        .error-steps {
+            background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+            border: 2px solid #FCA5A5;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 16px 0;
+        }
+
+        .error-steps .next-steps-title {
+            color: #991B1B;
+        }
+
+        .error-steps .next-steps-title i {
+            color: #DC2626;
+        }
+
+        .error-steps .steps-list li {
+            color: #991B1B;
+        }
+
+        .error-steps .steps-list li i {
+            color: #DC2626;
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 768px) {
+            /* 글로벌 텍스트 줄바꿈 */
+            * {
+                word-break: keep-all;
+                overflow-wrap: break-word;
+            }
+            
+            .success-banner, .error-banner {
+                padding: 32px 20px;
+                margin: 16px 0;
+            }
+
+            .success-icon, .error-icon {
+                width: 64px;
+                height: 64px;
+            }
+
+            .success-icon i, .error-icon i {
+                font-size: 28px;
+            }
+
+            .success-title {
+                font-size: 20px;
+                line-height: 1.4;
+                word-break: keep-all;
+            }
+
+            .success-message {
+                font-size: 14px;
+                line-height: 1.6;
+                word-break: keep-all;
+            }
+
+            .card {
+                padding: 20px;
+            }
+            
+            .card-title {
+                font-size: 16px;
+                line-height: 1.4;
+                word-break: keep-all;
+            }
+            
+            .info-label, .info-value {
+                font-size: 13px;
+                word-break: keep-all;
+            }
+
+            .info-row.total .info-value {
+                font-size: 20px;
+            }
+            
+            .next-steps-title {
+                font-size: 15px;
+                line-height: 1.4;
+                word-break: keep-all;
+            }
+            
+            .steps-list li {
+                font-size: 13px;
+                line-height: 1.6;
+                word-break: keep-all;
+            }
+
+            .btn-primary, .btn-secondary {
+                height: 52px;
+                font-size: 15px;
+                word-break: keep-all;
+                white-space: normal;
+                line-height: 1.3;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <div class="header">
+        <div class="header-inner">
+            <div class="header-title">
+                <i class="fas fa-check-circle"></i>
+                <span data-i18n="payment.success.headerTitle">결제 완료</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 로딩 상태 -->
+        <div id="loading-content">
+            <div class="card">
+                <div class="loading-container">
+                    <div class="spinner"></div>
+                    <div class="loading-text" data-i18n="payment.success.loading">결제 완료 처리 중...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 성공/에러 컨텐츠 (JavaScript로 렌더링) -->
+        <div id="result-content" style="display: none;"></div>
+    </div>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/js/supabase-client.js?v=20260614"></script>
+    <script src="/js/notification-service.js?v=20260506"></script>
+
+    <!-- 다국어 시스템 -->
+    <script src="/js/translations.js?v=20260605"></script>
+    <script src="/js/i18n.js?v=20260605"></script>
+
+    <script>
+        // i18n 헬퍼 함수
+        function t(key, fallback) {
+            if (typeof i18n !== 'undefined' && i18n.translate) {
+                const result = i18n.translate(key);
+                return result !== key ? result : (fallback || key);
+            }
+            return fallback || key;
+        }
+
+        let createdThreadId = null;
+
+        window.addEventListener('DOMContentLoaded', async function() {
+            try {
+                // 현재 로그인 사용자 확인
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    displayError(t('payment.success.error.loginRequired', '로그인이 필요합니다.'));
+                    setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+                    return;
+                }
+
+                // URL 파라미터에서 결제 정보 가져오기
+                const urlParams = new URLSearchParams(window.location.search);
+                const orderId = urlParams.get('orderId');
+                const paymentKey = urlParams.get('paymentKey');
+                const amount = urlParams.get('amount');
+
+                // console.log('💳 결제 성공 페이지 로드:', { orderId, paymentKey: paymentKey?.substring(0, 20) + '...', amount });
+
+                if (!orderId || !paymentKey || !amount) {
+                    displayError(t('payment.success.error.invalidPayment', '결제 정보가 올바르지 않습니다.'));
+                    return;
+                }
+
+                // 견적(quote) 기반 결제: 기존 스레드에 귀속 — 신규 스레드 생성 안 함
+                const quoteId = urlParams.get('quote');
+                if (quoteId) {
+                    await handleQuotePaymentSuccess({ quoteId, orderId, paymentKey, amount });
+                    return;
+                }
+
+                // sessionStorage에서 결제 정보 가져오기
+                const pendingPayment = sessionStorage.getItem('pendingPayment');
+                let paymentInfo = null;
+                
+                if (pendingPayment) {
+                    paymentInfo = JSON.parse(pendingPayment);
+                    // console.log('📦 저장된 결제 정보:', paymentInfo);
+                }
+
+                // 🔒 토스페이먼츠 결제 승인 + 쓰레드 생성 (서버사이드)
+
+                // Supabase Edge Function URL
+                const supabaseUrl = 'https://gqistzsergddnpcvuzba.supabase.co';
+                const serviceName = paymentInfo?.serviceName || '서비스 신청';
+
+                // Edge Function에 쓰레드 데이터도 함께 전달하여 서버사이드에서 생성
+                const confirmResponse = await fetch(`${supabaseUrl}/functions/v1/confirm-payment`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${(await supabaseClient.auth.getSession()).data.session?.access_token}`
+                    },
+                    body: JSON.stringify({
+                        paymentKey,
+                        orderId,
+                        amount: Number(amount),
+                        serviceId: paymentInfo?.serviceId || null,
+                        threadData: {
+                            service_name: serviceName,
+                            organization: paymentInfo?.organization || 'general',
+                            government_fee: paymentInfo?.govtFee || 0,
+                            payment_id: 'payment-' + Date.now(),
+                            customer_name: paymentInfo?.customerName || '',
+                            customer_email: paymentInfo?.customerEmail || ''
+                        }
+                    })
+                });
+
+                const confirmResult = await confirmResponse.json();
+
+                if (!confirmResult.success) {
+                    // 결제 승인 실패
+                    console.error('❌ 결제 승인 실패:', confirmResult);
+                    displayError(`${t('payment.success.error.confirmFailed', '결제 승인 실패')}: ${confirmResult.message || t('common.unknownError', '알 수 없는 오류')}`);
+                    return;
+                }
+
+                // 결제 승인 성공 - 토스페이먼츠 응답 데이터
+                const tossPaymentData = confirmResult.data;
+
+                // paymentData 구성
+                const paymentData = {
+                    id: 'payment-' + Date.now(),
+                    order_id: orderId,
+                    service_name: paymentInfo?.serviceName || tossPaymentData.orderName || '서비스 신청',
+                    amount: tossPaymentData.totalAmount || parseInt(amount),
+                    agency_fee: paymentInfo?.agencyFee || 0,
+                    govt_fee: paymentInfo?.govtFee || 0,
+                    payment_method: tossPaymentData.method || 'card',
+                    payment_key: paymentKey,
+                    customer_name: paymentInfo?.customerName || tossPaymentData.customerName,
+                    customer_email: paymentInfo?.customerEmail || tossPaymentData.customerEmail,
+                    organization: paymentInfo?.organization || 'general',
+                    lectureCode: paymentInfo?.lectureCode || '',
+                    status: 'completed',
+                    toss_response: tossPaymentData,
+                    d10FormattedMessage: paymentInfo?.d10FormattedMessage || null
+                };
+
+                // sessionStorage 정리
+                sessionStorage.removeItem('pendingPayment');
+
+                // 💳 결제 정보를 payments 테이블에 저장
+                try {
+                    await createPayment({
+                        order_id: orderId,
+                        service_name: paymentData.service_name,
+                        amount: paymentData.amount,
+                        agency_fee: paymentData.agency_fee,
+                        govt_fee: paymentData.govt_fee,
+                        payment_method: paymentData.payment_method,
+                        status: 'completed',
+                        organization: paymentData.organization
+                    });
+                } catch (payErr) {
+                    console.error('결제 정보 저장 실패 (무시):', payErr);
+                }
+
+                // 서버사이드에서 생성된 쓰레드 확인
+                let thread = confirmResult.thread || null;
+
+                // 서버사이드 쓰레드 생성 실패 시 클라이언트 폴백
+                if (!thread) {
+                    console.warn('⚠️ 서버사이드 쓰레드 생성 실패 - 클라이언트에서 재시도');
+                    thread = await createThreadFromPayment(paymentData);
+                }
+
+                if (thread) {
+                    createdThreadId = thread.id;
+
+                    // 환영 메시지 발송
+                    try {
+                        await sendWelcomeMessage(thread.id, paymentData.service_name, paymentData.organization, paymentData.lectureCode);
+                    } catch (msgErr) {
+                        console.error('환영 메시지 발송 실패 (무시):', msgErr);
+                    }
+
+                    // D-10-1 폼 데이터가 있으면 추가 메시지 발송
+                    if (paymentData.d10FormattedMessage) {
+                        try {
+                            await sendD10FormMessage(thread.id, paymentData.d10FormattedMessage);
+                        } catch (d10Err) {
+                            console.error('D-10 폼 메시지 발송 실패 (무시):', d10Err);
+                        }
+                    }
+                } else {
+                    console.warn('⚠️ 결제는 완료되었지만 쓰레드 생성 실패');
+                }
+
+                // 성공 화면 표시 (쓰레드 생성 실패해도 결제는 완료)
+                displaySuccess(paymentData, thread);
+            } catch (error) {
+                console.error('❌ 결제 완료 처리 오류:', error);
+                displayError(t('payment.success.error.processing', '결제 처리 중 오류가 발생했습니다.\n\n고객센터로 문의해주세요.'));
+            }
+        });
+
+        // 견적 기반 결제 승인 — confirm-payment 가 quoteId 로 금액/소유권/상태 검증 후 quote 를 paid 처리
+        async function handleQuotePaymentSuccess({ quoteId, orderId, paymentKey, amount }) {
+            try {
+                const supabaseUrl = 'https://gqistzsergddnpcvuzba.supabase.co';
+                const confirmResponse = await fetch(`${supabaseUrl}/functions/v1/confirm-payment`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${(await supabaseClient.auth.getSession()).data.session?.access_token}`
+                    },
+                    body: JSON.stringify({
+                        paymentKey,
+                        orderId,
+                        amount: Number(amount),
+                        quoteId
+                    })
+                });
+
+                const confirmResult = await confirmResponse.json();
+                if (!confirmResult.success) {
+                    console.error('❌ 견적 결제 승인 실패:', confirmResult);
+                    displayError(`${t('payment.success.error.confirmFailed', '결제 승인 실패')}: ${confirmResult.message || t('common.unknownError', '알 수 없는 오류')}`);
+                    return;
+                }
+
+                const tossPaymentData = confirmResult.data;
+                const threadId = confirmResult.threadId || (confirmResult.quote && confirmResult.quote.thread_id) || null;
+                if (threadId) createdThreadId = threadId;
+
+                const paymentData = {
+                    order_id: orderId,
+                    service_name: tossPaymentData.orderName || t('payment.success.quoteService', '견적 결제'),
+                    amount: tossPaymentData.totalAmount || Number(amount),
+                    payment_method: tossPaymentData.method || 'card'
+                };
+
+                displaySuccess(paymentData, threadId ? { id: threadId } : null);
+            } catch (error) {
+                console.error('❌ 견적 결제 처리 오류:', error);
+                displayError(t('payment.success.error.processing', '결제 처리 중 오류가 발생했습니다.\n\n고객센터로 문의해주세요.'));
+            }
+        }
+
+        // Supabase에 쓰레드 생성
+        async function createThreadFromPayment(paymentData) {
+            try {
+                // console.log('🔄 쓰레드 생성 시작:', {
+                //     service_name: paymentData.service_name,
+                //     amount: paymentData.amount,
+                //     order_id: paymentData.order_id,
+                //     payment_id: paymentData.id
+                // });
+
+                // 🔥 프로필 확인 및 자동 생성
+                const user = await getCurrentUser();
+                if (!user) {
+                    throw new Error(t('payment.success.error.loginRequired', 'Login required'));
+                }
+
+                const profileResult = await getUserProfile(user.id);
+                if (!profileResult.success || !profileResult.data) {
+                    // console.log('📋 프로필 없음 - 자동 생성 시작');
+                    const newProfileResult = await createOrUpdateProfile(user.id, {
+                        name: '',  // 기본사항 제출 시 입력받음
+                        email: paymentData.customer_email || user.email || '',
+                        phone: ''
+                    });
+
+                    if (!newProfileResult.success) {
+                        console.error('❌ 프로필 자동 생성 실패:', newProfileResult.error);
+                        throw new Error(t('payment.success.error.profileFailed', 'Profile creation failed') + ': ' + newProfileResult.error);
+                    }
+                    // console.log('✅ 프로필 자동 생성 완료');
+                }
+
+                const threadResult = await createThread({
+                    service_name: paymentData.service_name,
+                    status: 'payment',
+                    amount: paymentData.amount,
+                    government_fee: paymentData.govt_fee || 0,
+                    order_id: paymentData.order_id,
+                    organization: paymentData.organization || null,
+                    payment_id: paymentData.id
+                });
+
+                // console.log('📋 쓰레드 생성 결과:', threadResult);
+
+                if (!threadResult.success) {
+                    console.error('❌ 쓰레드 생성 실패:', threadResult.error);
+                    throw new Error(threadResult.error || t('payment.success.error.threadFailed', 'Thread creation failed'));
+                }
+
+                createdThreadId = threadResult.data.id;
+
+                // 환영 메시지/D-10 폼 메시지는 호출자(main flow)에서 발송
+                return threadResult.data;
+            } catch (error) {
+                console.error('❌ 쓰레드 생성 오류:', error);
+                // 에러를 다시 던지지 않고 null 반환 (결제는 완료되었으므로)
+                return null;
+            }
+        }
+
+        // 환영 메시지 발송 - createWelcomeMessage() 사용
+        async function sendWelcomeMessage(threadId, serviceName, organization, lectureCode) {
+            try {
+                await createWelcomeMessage(threadId, serviceName);
+            } catch (error) {
+                console.error('❌ 환영 메시지 발송 오류:', error);
+            }
+        }
+
+        // D-10-1 신청 정보 메시지 발송
+        async function sendD10FormMessage(threadId, formattedMessage) {
+            try {
+                // 사용자 메시지로 발송 (신청자가 제출한 정보이므로)
+                const user = await getCurrentUser();
+                const profile = await getUserProfile(user?.id);
+
+                const { data, error } = await supabaseClient
+                    .from('messages')
+                    .insert({
+                        thread_id: threadId,
+                        sender_id: user?.id || null,
+                        sender_type: 'user',
+                        sender_name: profile?.data?.name || '신청자',
+                        content: formattedMessage,
+                        created_at: new Date().toISOString()
+                    });
+
+                if (error) {
+                    console.error('❌ D-10-1 폼 메시지 발송 실패:', error);
+                } else {
+                    // console.log('✅ D-10-1 폼 메시지 발송 완료');
+                }
+            } catch (error) {
+                console.error('❌ D-10-1 폼 메시지 발송 오류:', error);
+            }
+        }
+
+        // XSS 방지를 위한 HTML 이스케이프 함수
+        function escapeHtml(text) {
+            if (text === null || text === undefined) return '';
+            const div = document.createElement('div');
+            div.textContent = String(text);
+            return div.innerHTML;
+        }
+
+        function displaySuccess(paymentData, thread) {
+            document.getElementById('loading-content').style.display = 'none';
+            const resultContent = document.getElementById('result-content');
+            resultContent.style.display = 'block';
+
+            // 쓰레드 생성 여부에 따른 메시지
+            const threadMessage = thread
+                ? t('payment.success.threadCreated', '센터 담당자가 전용 쓰레드에서 곧 연락드립니다')
+                : t('payment.success.noThread', '결제가 완료되었습니다. 곧 담당자가 연락드립니다');
+
+            // XSS 방지를 위한 데이터 이스케이프
+            const safeServiceName = escapeHtml(paymentData.service_name);
+            const safeOrderId = escapeHtml(paymentData.order_id);
+            const safeAmount = Number(paymentData.amount) || 0;
+            const safePaymentMethod = escapeHtml(getPaymentMethodName(paymentData.payment_method || 'card'));
+
+            resultContent.innerHTML = `
+                <!-- 성공 배너 -->
+                <div class="success-banner">
+                    <div class="success-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="success-title">${escapeHtml(t('payment.success.title', '결제가 완료되었습니다!'))}</div>
+                    <div class="success-message">${escapeHtml(threadMessage)}</div>
+                </div>
+
+                <!-- 결제 정보 -->
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-receipt"></i>
+                        ${escapeHtml(t('payment.success.paymentInfo', '결제 정보'))}
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">${escapeHtml(t('payment.success.serviceName', '신청 서비스'))}</span>
+                        <span class="info-value">${safeServiceName}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">${escapeHtml(t('payment.success.orderId', '주문번호'))}</span>
+                        <span class="info-value">${safeOrderId}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">${escapeHtml(t('payment.success.paymentMethod', '결제 수단'))}</span>
+                        <span class="info-value">${safePaymentMethod}</span>
+                    </div>
+                    <div class="info-row total">
+                        <span class="info-label">${escapeHtml(t('payment.success.totalAmount', '결제 금액'))}</span>
+                        <span class="info-value">₩${safeAmount.toLocaleString()}</span>
+                    </div>
+                </div>
+
+                <!-- 다음 단계 -->
+                <div class="next-steps">
+                    <div class="next-steps-title">
+                        <i class="fas fa-list-check"></i>
+                        ${escapeHtml(t('payment.success.nextSteps', '다음 단계'))}
+                    </div>
+                    <ul class="steps-list">
+                        <li><i class="fas fa-check-circle"></i> <span>${escapeHtml(t('payment.success.step1', '센터 담당자가 전용 쓰레드에서 연락드립니다'))}</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span>${escapeHtml(t('payment.success.step2', '쓰레드에서 추가 서류를 요청드립니다'))}</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span>${escapeHtml(t('payment.success.step3', '진행 상황은 쓰레드에서 실시간 확인 가능합니다'))}</span></li>
+                    </ul>
+                </div>
+
+                <!-- 버튼 -->
+                ${thread ? `
+                    <button class="btn-primary" onclick="goToThread()">
+                        <i class="fas fa-comments"></i> ${escapeHtml(t('payment.success.goToThread', '쓰레드로 이동'))}
+                    </button>
+                ` : ''}
+                <button class="btn-secondary" onclick="goToHome()">
+                    <i class="fas fa-home"></i> ${escapeHtml(t('payment.success.goToHome', '메인으로 이동'))}
+                </button>
+            `;
+        }
+
+        function displayError(message) {
+            document.getElementById('loading-content').style.display = 'none';
+            const resultContent = document.getElementById('result-content');
+            resultContent.style.display = 'block';
+
+            // XSS 방지를 위한 메시지 이스케이프
+            const safeMessage = escapeHtml(message);
+
+            resultContent.innerHTML = `
+                <!-- 에러 배너 -->
+                <div class="error-banner">
+                    <div class="error-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="success-title">${escapeHtml(t('payment.success.error.title', '오류가 발생했습니다'))}</div>
+                    <div class="success-message">${safeMessage}</div>
+                </div>
+
+                <!-- 안내 -->
+                <div class="error-steps">
+                    <div class="next-steps-title">
+                        <i class="fas fa-info-circle"></i>
+                        ${escapeHtml(t('payment.success.error.guidance', '안내'))}
+                    </div>
+                    <ul class="steps-list">
+                        <li><i class="fas fa-arrow-right"></i> <span>${escapeHtml(t('payment.success.error.redirecting', '잠시 후 메인 페이지로 이동합니다'))}</span></li>
+                        <li><i class="fas fa-arrow-right"></i> <span>${escapeHtml(t('payment.success.error.contactSupport', '문제가 지속되면 고객센터로 문의해주세요'))}</span></li>
+                    </ul>
+                </div>
+
+                <!-- 버튼 -->
+                <button class="btn-primary" onclick="goToHome()">
+                    <i class="fas fa-home"></i> ${escapeHtml(t('payment.success.goToHome', '메인으로 이동'))}
+                </button>
+            `;
+        }
+
+        function getPaymentMethodName(method) {
+            const cardLabel = t('payment.success.method.card', '신용/체크카드');
+            const methodMap = {
+                'card': cardLabel,
+                'CARD': cardLabel,
+                '카드': cardLabel,
+                'paypal': 'PayPal',
+                'PAYPAL': 'PayPal'
+            };
+            return methodMap[method] || method;
+        }
+
+        function goToThread() {
+            if (createdThreadId) {
+                window.location.href = `thread-general-v2.html?id=${createdThreadId}`;
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+
+        function goToHome() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

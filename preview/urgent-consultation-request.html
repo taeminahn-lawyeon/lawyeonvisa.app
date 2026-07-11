@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png?v=3">
+    <title>Urgent Legal Consultation Request - Lawyeon Visa Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Manrope','IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F7F6F3;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #241F18 0%, #332920 100%);
+            padding: 20px 0;
+            border-bottom: 3px solid #DC2626;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .btn-back {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-back:hover {
+            opacity: 1;
+        }
+
+        /* Main Container - 2 Column Layout */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .two-column-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        /* Left Column */
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Urgent Consultation Banner */
+        .consultation-banner {
+            background: linear-gradient(135deg, #FEE2E2 0%, #FEF2F2 100%);
+            border: 2px solid #DC2626;
+            border-radius: 20px;
+            padding: 28px 32px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .consultation-banner-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .consultation-banner-content h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #4A3C2B;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .consultation-banner-content p {
+            font-size: 15px;
+            color: #887668;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        /* Service Card */
+        .service-card {
+            background: white;
+            border-radius: 20px;
+            padding: 28px 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .service-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #FEF3C7;
+            color: #D97706;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .service-card h2 {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1E293B;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+
+        .service-card p {
+            font-size: 15px;
+            color: #64748B;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* Process Steps */
+        .process-steps {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .process-steps h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1E293B;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .process-steps h2 i {
+            color: #DC2626;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid #F7F6F3;
+        }
+
+        .step-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1E293B;
+            margin-bottom: 4px;
+        }
+
+        .step-content p {
+            font-size: 14px;
+            color: #64748B;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* CTA Button */
+        .cta-section {
+            margin-top: 8px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            height: 56px;
+            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 16px rgba(136, 118, 104, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(136, 118, 104, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #CBD5E1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-primary.loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Free Badge */
+        .free-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #F0FDF4;
+            border: 1px solid #86EFAC;
+            border-radius: 4px;
+            padding: 12px 16px;
+            margin-top: 16px;
+        }
+
+        .free-badge i {
+            color: #22C55E;
+            font-size: 18px;
+        }
+
+        .free-badge-text {
+            font-size: 13px;
+            color: #166534;
+            font-weight: 600;
+        }
+
+        /* Right Column - Thread Preview */
+        .right-column {
+            position: sticky;
+            top: 100px;
+        }
+
+        .thread-preview {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            border: 1px solid #E2E8F0;
+        }
+
+        .thread-preview-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #F7F6F3;
+        }
+
+        .thread-preview-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .thread-preview-title {
+            flex: 1;
+        }
+
+        .thread-preview-title h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1E293B;
+            margin-bottom: 2px;
+        }
+
+        .thread-preview-title p {
+            font-size: 13px;
+            color: #64748B;
+            font-weight: 500;
+        }
+
+        .thread-preview-image {
+            width: 100%;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #F7F6F3;
+            border: 1px solid #E2E8F0;
+        }
+
+        .thread-preview-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .thread-preview-caption {
+            text-align: center;
+            padding: 16px;
+            color: #64748B;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .thread-preview-caption strong {
+            color: #DC2626;
+            font-weight: 700;
+        }
+
+        /* Loading State */
+        .loading-container {
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid #E5E7EB;
+            border-top-color: #DC2626;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        .loading-text {
+            font-size: 15px;
+            color: #6B7280;
+            font-weight: 600;
+        }
+
+        /* Consent checkbox */
+        .consult-consent-area {
+            margin-bottom: 16px;
+            padding: 14px 16px;
+            background: #F9FAFB;
+            border: 1px solid #E5E7EB;
+            border-radius: 4px;
+        }
+
+        .consult-consent-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .consult-consent-label input[type="checkbox"] {
+            display: none;
+        }
+
+        .consult-consent-label .cmark {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            border: 2px solid #D1D5DB;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            margin-top: 1px;
+        }
+
+        .consult-consent-label .cmark::after {
+            content: '';
+            display: none;
+            width: 5px;
+            height: 9px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            margin-top: -2px;
+        }
+
+        .consult-consent-label input[type="checkbox"]:checked + .cmark {
+            background: #DC2626;
+            border-color: #DC2626;
+        }
+
+        .consult-consent-label input[type="checkbox"]:checked + .cmark::after {
+            display: block;
+        }
+
+        .consult-consent-text {
+            font-size: 13px;
+            color: #374151;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .consult-consent-links {
+            margin-top: 6px;
+            margin-left: 30px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .consult-consent-links a {
+            font-size: 12px;
+            color: #DC2626;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .consult-consent-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 968px) {
+            .two-column-layout {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .right-column {
+                position: static;
+                order: -1;
+            }
+
+            .thread-preview {
+                display: none;
+            }
+
+            .main-container {
+                padding: 24px 16px;
+            }
+
+            .consultation-banner,
+            .service-card,
+            .process-steps {
+                padding: 24px 20px;
+                border-radius: 4px;
+            }
+
+            .consultation-banner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .consultation-banner-content h1 {
+                font-size: 20px;
+            }
+
+            .service-card h2 {
+                font-size: 18px;
+            }
+
+            .step-item {
+                gap: 12px;
+            }
+
+            .step-number {
+                width: 28px;
+                height: 28px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-inner">
+            <div class="header-title" data-i18n="urgent.header">Urgent Legal Consultation</div>
+            <a href="javascript:history.back()" class="btn-back">
+                <i class="fas fa-times"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="main-container">
+        <div id="loading" class="loading-container">
+            <div class="spinner"></div>
+            <div class="loading-text" data-i18n="common.loading">Loading...</div>
+        </div>
+
+        <!-- Main Content -->
+        <div id="main-content" class="two-column-layout" style="display: none;">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- Urgent Consultation Banner -->
+                <div class="consultation-banner">
+                    <div class="consultation-banner-icon">
+                        <i class="fas fa-triangle-exclamation"></i>
+                    </div>
+                    <div class="consultation-banner-content">
+                        <h1 data-i18n="urgent.title">Urgent Legal Consultation Request</h1>
+                        <p data-i18n="urgent.desc">For time-sensitive matters — deportation orders, visa denials, criminal investigations, and immigration disputes.</p>
+                    </div>
+                </div>
+
+                <!-- Service Card -->
+                <div class="service-card">
+                    <div class="service-badge">
+                        <i class="fas fa-gavel"></i>
+                        <span data-i18n="urgent.badge">Urgent Matter</span>
+                    </div>
+                    <h2 id="service-name">Urgent Legal Consultation</h2>
+                    <p id="service-desc">Time-sensitive immigration legal matters</p>
+                </div>
+
+                <!-- Process Steps -->
+                <div class="process-steps">
+                    <h2><i class="fas fa-list-check"></i> <span data-i18n="urgent.howItWorks">How It Works</span></h2>
+
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3 data-i18n="urgent.step1Title">Submit Your Case</h3>
+                            <p data-i18n="urgent.step1Desc">A dedicated thread is opened for your urgent matter</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3 data-i18n="urgent.step2Title">Attorney Review</h3>
+                            <p data-i18n="urgent.step2Desc">A specialist attorney examines your situation and supporting documents</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3 data-i18n="urgent.step3Title">Action Plan</h3>
+                            <p data-i18n="urgent.step3Desc">Receive legal options and next steps for your case</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3 data-i18n="urgent.step4Title">Fee Quote</h3>
+                            <p data-i18n="urgent.step4Desc">A detailed legal fee estimate is provided after case review</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Consent -->
+                <div class="consult-consent-area">
+                    <label class="consult-consent-label">
+                        <input type="checkbox" id="consultConsentCheck" onchange="document.getElementById('consultBtn').disabled = !this.checked">
+                        <span class="cmark"></span>
+                        <span class="consult-consent-text">I agree to the Terms of Service and Privacy Policy. I consent to the collection and use of personal information for consultation purposes.<br>
+                        서비스 이용약관 및 개인정보 처리방침에 동의합니다. 상담 목적의 개인정보 수집·이용에 동의합니다.</span>
+                    </label>
+                    <div class="consult-consent-links">
+                        <a href="terms-of-service.html" target="_blank"><i class="fas fa-external-link-alt"></i> Terms of Service / 이용약관</a>
+                        <a href="privacy-policy.html" target="_blank"><i class="fas fa-external-link-alt"></i> Privacy Policy / 개인정보 처리방침</a>
+                    </div>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="cta-section">
+                    <button class="btn-primary" id="consultBtn" onclick="applyForConsultation()" disabled>
+                        <i class="fas fa-paper-plane"></i>
+                        <span data-i18n="urgent.requestBtn">Request Urgent Consultation</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Column - Thread Preview -->
+            <div class="right-column">
+                <div class="thread-preview">
+                    <div class="thread-preview-header">
+                        <div class="thread-preview-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="thread-preview-title">
+                            <h3 data-i18n="serviceApply.dedicatedThread">Your Dedicated Thread</h3>
+                            <p data-i18n="serviceApply.realtimeComm">Real-time communication with our team</p>
+                        </div>
+                    </div>
+
+                    <div class="thread-preview-image">
+                        <img src="/images/thread-preview.png" alt="Thread Preview" style="width: 100%; height: auto; display: block;">
+                    </div>
+
+                    <div class="thread-preview-caption" data-i18n="serviceApply.trackProgress">Track your progress in real-time through your dedicated thread</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Urgent consultation context — single service path
+        const serviceInfo = {
+            'default': { name: 'Urgent Legal Consultation', desc: 'Time-sensitive immigration legal matters' }
+        };
+
+        let selectedService = null;
+
+        // i18n helper
+        function t(key, fallback) {
+            if (typeof i18n !== 'undefined' && i18n.translate) {
+                const result = i18n.translate(key);
+                return result !== key ? result : (fallback || key);
+            }
+            return fallback || key;
+        }
+
+        // Page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            selectedService = serviceInfo['default'];
+            selectedService.id = 'urgent-legal';
+
+            // Show UI
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('service-name').textContent = selectedService.name;
+                document.getElementById('service-desc').textContent = selectedService.desc;
+                document.getElementById('main-content').style.display = 'grid';
+            }, 300);
+
+            // Check for pending consultation after login
+            setTimeout(async () => {
+                await checkPendingConsultation();
+            }, 500);
+        });
+
+        async function applyForConsultation() {
+            // Validate consent
+            const consentCheck = document.getElementById('consultConsentCheck');
+            if (!consentCheck || !consentCheck.checked) {
+                alert(t('consultation.consentRequired', 'Please agree to the Terms of Service and Privacy Policy.'));
+                return;
+            }
+
+            const btn = document.getElementById('consultBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner"></i> ' + t('common.processing', 'Processing...');
+
+            try {
+                // Check current login status
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    // Save pending info and start Google login
+                    localStorage.setItem('pendingUrgentConsultation', JSON.stringify({
+                        serviceId: selectedService.id,
+                        serviceName: selectedService.name,
+                        timestamp: Date.now()
+                    }));
+
+                    // console.log('📋 Saved consultation info, starting Google login');
+
+                    const result = await signInWithGoogle();
+                    if (!result.success) {
+                        throw new Error('Login failed');
+                    }
+                    return;
+                }
+
+                // Already logged in, create thread directly
+                await createConsultationThread();
+            } catch (error) {
+                console.error('Consultation request error:', error);
+                alert(t('common.errorRetry', 'An error occurred. Please try again.'));
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> ' + t('urgent.requestBtn', 'Request Urgent Consultation');
+            }
+        }
+
+        // Thread creation function
+        async function createConsultationThread() {
+            const btn = document.getElementById('consultBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner"></i> ' + t('consultation.creatingThread', 'Creating thread...');
+
+            try {
+                // Ensure profile exists before creating thread (foreign key requirement)
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    throw new Error('Login required');
+                }
+
+                const profileResult = await getUserProfile(session.user.id);
+                if (!profileResult.success || !profileResult.data) {
+                    console.log('Profile not found, creating minimal profile...');
+                    const profileCreateResult = await createOrUpdateProfile(session.user.id, {
+                        name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || '',
+                        email: session.user.email || ''
+                    });
+                    if (!profileCreateResult.success) {
+                        console.error('Profile creation failed:', profileCreateResult.error);
+                        throw new Error('Profile creation failed: ' + profileCreateResult.error);
+                    }
+                    console.log('Profile created successfully');
+                }
+
+                // Create urgent consultation thread in Supabase
+                const threadResult = await createThread({
+                    service_name: selectedService.name,
+                    status: 'document',
+                    amount: 0,
+                    order_id: 'URGENT-' + Date.now(),
+                    is_consulting: true,
+                    organization: 'general'
+                });
+
+                if (!threadResult.success) {
+                    console.error('Thread creation failed:', threadResult.error);
+                    throw new Error('Thread creation failed: ' + threadResult.error);
+                }
+
+                // Create welcome message
+                await createWelcomeMessage(threadResult.data.id, selectedService.name);
+
+                // Clear pending info
+                localStorage.removeItem('pendingUrgentConsultation');
+
+                alert(t('urgent.submitted', 'Urgent consultation request submitted.\n\nA dedicated thread has been created for your case.'));
+                window.location.href = `thread-general-v2.html?id=${threadResult.data.id}`;
+            } catch (error) {
+                console.error('Thread creation error:', error);
+                alert(t('common.errorRetry', 'An error occurred. Please try again.'));
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> ' + t('urgent.requestBtn', 'Request Urgent Consultation');
+            }
+        }
+
+        // Check for pending consultation after login
+        async function checkPendingConsultation() {
+            const pending = localStorage.getItem('pendingUrgentConsultation');
+            if (!pending) return;
+
+            try {
+                const pendingData = JSON.parse(pending);
+
+                // Only process requests within 10 minutes
+                if (Date.now() - pendingData.timestamp > 10 * 60 * 1000) {
+                    // console.log('⏰ Pending consultation expired');
+                    localStorage.removeItem('pendingUrgentConsultation');
+                    return;
+                }
+
+                // Check login status
+                const session = await checkSession();
+                if (!session || !session.user) {
+                    return;
+                }
+
+                // console.log('✅ Login complete - processing pending consultation');
+
+                // Restore selectedService if not set
+                if (!selectedService || selectedService.id !== pendingData.serviceId) {
+                    selectedService = {
+                        id: pendingData.serviceId,
+                        name: pendingData.serviceName
+                    };
+                }
+
+                // Auto-create thread
+                await createConsultationThread();
+            } catch (error) {
+                console.error('Pending consultation error:', error);
+                localStorage.removeItem('pendingUrgentConsultation');
+            }
+        }
+    </script>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/js/supabase-client.js?v=20260614"></script>
+    <script src="/js/notification-service.js?v=20260506"></script>
+
+    <!-- i18n 다국어 지원 -->
+    <script src="/js/translations.js?v=20260605"></script>
+    <script src="/js/i18n.js?v=20260605"></script>
+</body>
+</html>
