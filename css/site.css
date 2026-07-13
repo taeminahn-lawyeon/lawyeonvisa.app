@@ -86,8 +86,8 @@ section{padding:74px 0}
 .intro{padding:60px 0 64px;border-bottom:1px solid var(--rule)}
 .intro-grid{display:grid;grid-template-columns:minmax(0,0.82fr) minmax(0,1.18fr);gap:52px;align-items:center}
 .intro-left{min-width:0}
-.intro-left h1{font-weight:700;font-size:clamp(28px,3.2vw,42px);line-height:1.2;letter-spacing:-.025em;color:var(--ink);max-width:460px}
-.intro-left .intro-desc{font-size:16px;color:var(--muted);line-height:1.75;margin-top:18px;max-width:440px}
+.intro-left h1{font-weight:700;font-size:clamp(26px,2.9vw,37px);line-height:1.28;letter-spacing:-.025em;color:var(--ink);max-width:560px}
+.intro-left .intro-desc{font-size:16px;color:var(--muted);line-height:1.75;margin-top:18px;max-width:500px}
 .reg-badge{display:flex;align-items:center;gap:14px;margin:28px 0;padding:16px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
 .reg-badge img{height:60px;width:auto}
 .reg-text{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.02em;line-height:1.6}
