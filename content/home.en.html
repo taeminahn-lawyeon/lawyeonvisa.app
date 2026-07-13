@@ -216,6 +216,7 @@
         var emptyEl = document.getElementById('insightEmpty');
         var moreLink = document.querySelector('.insights .more-plus');
         if(!tabs.length) return;
+        var valid = Array.prototype.map.call(tabs, function(t){ return t.getAttribute('data-cat'); });
         function applyCat(cat){
             var shown = 0;
             tabs.forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-cat') === cat); });
@@ -226,11 +227,14 @@
             });
             if(emptyEl) emptyEl.style.display = shown ? 'none' : '';
             if(moreLink) moreLink.setAttribute('href', 'insights?cat=' + cat);
+            try{ sessionStorage.setItem('insightCat', cat); }catch(e){}
         }
         tabs.forEach(function(tab){
             tab.addEventListener('click', function(){ applyCat(tab.getAttribute('data-cat')); });
         });
-        applyCat('visa');
+        var init; try{ init = sessionStorage.getItem('insightCat'); }catch(e){}
+        if(valid.indexOf(init) < 0) init = valid[0];
+        applyCat(init);
     })();
     (function(){
         var box = document.querySelector('.office-photo');

@@ -196,7 +196,8 @@
     var valid = Array.prototype.map.call(tabs, function(t){ return t.getAttribute('data-cat'); });
     var params = new URLSearchParams(location.search);
     var cat = params.get('cat');
-    if(valid.indexOf(cat) < 0) cat = 'visa';
+    if(valid.indexOf(cat) < 0){ try{ cat = sessionStorage.getItem('insightCat'); }catch(e){ cat = null; } }
+    if(valid.indexOf(cat) < 0) cat = valid[0];
     function applyCat(c){
         var shown = 0;
         tabs.forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-cat') === c); });
@@ -206,6 +207,7 @@
             if(match) shown++;
         });
         if(emptyEl) emptyEl.style.display = shown ? 'none' : '';
+        try{ sessionStorage.setItem('insightCat', c); }catch(e){}
         try{ history.replaceState(null, '', 'insights?cat=' + c); }catch(_){}
     }
     tabs.forEach(function(tab){
