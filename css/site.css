@@ -89,6 +89,7 @@ section{padding:74px 0}
 .intro-left h1{font-weight:700;font-size:clamp(20px,2.15vw,27px);line-height:1.44;letter-spacing:-.02em;color:var(--ink);max-width:600px}
 .intro-left h1 .h1-lead{display:block;color:var(--brown);font-weight:600}
 .intro-left h1 .h1-firm{display:block;color:var(--ink);margin-top:9px}
+.intro-left h1 .wg{white-space:nowrap}
 .intro-left .intro-desc{font-size:16px;color:var(--muted);line-height:1.75;margin-top:20px;max-width:500px}
 .reg-badge{display:flex;align-items:center;gap:14px;margin:28px 0;padding:16px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
 .reg-badge img{height:60px;width:auto}
@@ -297,7 +298,7 @@ section{padding:74px 0}
     .footer-info{font-size:13.5px}
 }
 @media (max-width:400px){
-    .intro-left h1{font-size:23px}
+    .intro-left h1{font-size:21px}
     .sec-title{font-size:24px}
     .doc-title,.ccard .cc-title{font-size:19.5px}
     .body p,.body .callout{font-size:17px}
