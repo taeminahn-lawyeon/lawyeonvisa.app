@@ -2273,7 +2273,7 @@ ${data.additionalNotes ? `**Additional Notes:**\n${data.additionalNotes}` : ''}
                 const adminTestIsKorean = typeof i18n !== 'undefined' && i18n.currentLanguage === 'ko';
                 const adminTestOrderName = buildOrderName(selectedService, adminTestIsKorean);
                 const threadResult = await createThread({
-                    service_name: '사전 상담',  // 서비스명 통일(구매 항목은 order_id·금액으로 식별). 안내문은 adminTestOrderName 사용.
+                    service_name: adminTestOrderName,
                     status: 'payment',
                     amount: selectedService.totalPrice,
                     government_fee: selectedService.govtFee || 0,
@@ -3097,7 +3097,7 @@ Cam on.`,
 
                 // Create thread for Wise payment (pending confirmation)
                 const threadResult = await createThread({
-                    service_name: '사전 상담',  // 서비스명 통일(구매 항목은 order_id·금액으로 식별)
+                    service_name: wiseOrderInfo.orderName,
                     status: 'payment',
                     amount: wiseOrderInfo.amount,
                     government_fee: wiseOrderInfo.govtFee || 0,
@@ -3201,7 +3201,7 @@ ${window.location.origin}/profile-submit.html?thread=${threadId}`;
                     const deferredIsKorean = typeof i18n !== 'undefined' && i18n.currentLanguage === 'ko';
                     const deferredOrderName = buildOrderName(selectedService, deferredIsKorean);
                     const threadResult = await createThread({
-                        service_name: '사전 상담',  // 서비스명 통일(구매 항목은 order_id·금액으로 식별)
+                        service_name: deferredOrderName,
                         status: 'received',
                         amount: selectedService.totalPrice,
                         order_id: 'DEFERRED-' + Date.now(),
@@ -3324,7 +3324,7 @@ ${getUIMessage('d10ContactTime', 'Our specialist will review your information an
                 }
 
                 const threadResult = await createThread({
-                    service_name: '사전 상담',
+                    service_name: selectedService.name + ' (Quote Request)',
                     status: 'document',
                     amount: 0,
                     order_id: 'CONSULT-' + Date.now(),

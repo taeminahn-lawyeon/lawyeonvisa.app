@@ -778,7 +778,7 @@
 
                 // Create consultation thread in Supabase
                 const threadResult = await createThread({
-                    service_name: '사전 상담',
+                    service_name: selectedService.name + ' (Consultation)',
                     status: 'document',
                     amount: 0,
                     order_id: 'CONSULT-' + Date.now(),
