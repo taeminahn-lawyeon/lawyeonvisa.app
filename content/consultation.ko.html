@@ -226,7 +226,8 @@
             }); }catch(_){}
 
             var svcName = d.category + ' 상담';
-            var tr=await createThread({ service_name: svcName+' (Consultation)', status:'document', amount:0, order_id:'CONSULT-'+Date.now(), is_consulting:true, organization:'general' });
+            // 서비스명은 '사전 상담'으로 통일(분야는 아래 첫 메시지에 기록). 안내문 생성엔 원래 명칭 사용.
+            var tr=await createThread({ service_name: '사전 상담', status:'document', amount:0, order_id:'CONSULT-'+Date.now(), is_consulting:true, organization:'general' });
             if(!tr||!tr.success){ throw new Error('thread'); }
             try{ await createWelcomeMessage(tr.data.id, svcName); }catch(_){}
             // 입력한 사안 정보를 첫 메시지로 남김(선택 내용 포함)
