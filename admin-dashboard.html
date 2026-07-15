@@ -832,6 +832,74 @@
         .btn-open-thread { background:var(--a-btn); color:#fff; border:none; border-radius:6px; padding:7px 12px; font-size:12.5px; font-weight:600; cursor:pointer; white-space:nowrap; display:inline-flex; align-items:center; gap:6px; }
         .btn-open-thread:hover { background:var(--a-btn-d); }
     </style>
+    <style>
+        /* ===== 모바일 카드형 레이아웃 (쓰레드 목록) =====
+           768px 이하에서 넓은 표 대신 쓰레드별 카드로 표시해 가로 스크롤 제거. */
+        @media (max-width: 768px) {
+            .threads-table { display: block !important; overflow: visible !important; }
+            .threads-table thead { display: none !important; }
+            .threads-table tbody { display: block !important; }
+            .threads-table tr {
+                display: block !important;
+                background: var(--a-card) !important;
+                border: 1px solid var(--a-rule) !important;
+                border-radius: 12px !important;
+                padding: 12px 14px !important;
+                margin-bottom: 12px !important;
+            }
+            .threads-table tr.unread-row {
+                border-left: 3px solid #C0392B !important;
+                background: #FFF9F7 !important;
+            }
+            .threads-table td {
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                gap: 12px !important;
+                width: auto !important;
+                padding: 8px 0 !important;
+                border: none !important;
+                border-bottom: 1px solid #F0EEE8 !important;
+                font-size: 14px !important;
+                text-align: right !important;
+            }
+            .threads-table td::before {
+                content: attr(data-label);
+                flex: 0 0 auto;
+                font-weight: 700;
+                color: var(--a-muted);
+                font-size: 12.5px;
+                text-align: left;
+                white-space: nowrap;
+            }
+            /* 체크박스 열: 모바일에선 숨김 */
+            .threads-table td.col-check { display: none !important; }
+            /* 고객명: 카드 제목처럼 좌측 정렬, 라벨 없음 */
+            .threads-table td.col-customer {
+                display: block !important;
+                text-align: left !important;
+                padding: 2px 0 10px !important;
+                border-bottom: 1px solid var(--a-rule) !important;
+                margin-bottom: 4px !important;
+            }
+            .threads-table td.col-customer::before { display: none !important; }
+            .threads-table td.col-customer strong { font-size: 15.5px !important; }
+            /* 작업 버튼: 라벨 없이 가로 꽉 채운 버튼 */
+            .threads-table td.col-actions {
+                display: flex !important;
+                gap: 8px !important;
+                padding-top: 12px !important;
+                border-bottom: none !important;
+            }
+            .threads-table td.col-actions::before { display: none !important; }
+            .threads-table td.col-actions .action-btn {
+                flex: 1 1 0 !important;
+                padding: 11px 0 !important;
+                text-align: center !important;
+                font-size: 14px !important;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="header">
@@ -1184,24 +1252,15 @@
         // 미확인(고객 답변 후 관리자가 아직 열어보지 않은) 쓰레드 ID 집합
         let unreadThreadIds = new Set();
 
-        // 관리자가 해당 쓰레드를 마지막으로 확인한 시각 (admin-thread.html 진입 시 기록)
-        function getAdminThreadReadAt(threadId) {
-            try {
-                const v = localStorage.getItem('admin_thread_read_' + threadId);
-                return v ? new Date(v).getTime() : 0;
-            } catch (e) {
-                return 0;
-            }
-        }
-
-        // 각 쓰레드의 "고객 마지막 메시지" 시각과 관리자 확인 시각을 비교해 미확인 여부 계산
+        // 각 쓰레드의 "가장 최근 메시지" 발신자를 확인해 미확인(NEW) 여부 계산.
+        //  · 마지막 메시지가 고객(user)이면 = 관리자 답장 대기 = NEW.
+        //  · 관리자가 답글을 남기면 admin 메시지가 더 최신이 되어 자동으로 NEW 해제됨.
+        //  · 서버(messages) 기준이라 기기·브라우저와 무관하게 항상 일치.
         async function loadUnreadStatus() {
             try {
-                // 고객(user)이 보낸 메시지만 조회 — 관리자/시스템 메시지는 제외
                 const { data, error } = await supabaseClient
                     .from('messages')
                     .select('thread_id, created_at, sender_type')
-                    .eq('sender_type', 'user')
                     .order('created_at', { ascending: false });
 
                 if (error) {
@@ -1209,19 +1268,18 @@
                     return;
                 }
 
-                // 쓰레드별 가장 최근 고객 메시지 시각 (내림차순 정렬이라 첫 항목이 최신)
-                const latestUserMsg = {};
+                // 쓰레드별 가장 최근 메시지의 발신자 (내림차순 정렬이라 첫 항목이 최신)
+                const latestSender = {};
                 (data || []).forEach(m => {
                     if (!m.thread_id) return;
-                    if (latestUserMsg[m.thread_id] === undefined) {
-                        latestUserMsg[m.thread_id] = new Date(m.created_at).getTime();
+                    if (latestSender[m.thread_id] === undefined) {
+                        latestSender[m.thread_id] = m.sender_type;
                     }
                 });
 
                 unreadThreadIds = new Set();
-                Object.keys(latestUserMsg).forEach(threadId => {
-                    const lastRead = getAdminThreadReadAt(threadId);
-                    if (latestUserMsg[threadId] > lastRead) {
+                Object.keys(latestSender).forEach(threadId => {
+                    if (latestSender[threadId] === 'user') {
                         unreadThreadIds.add(threadId);
                     }
                 });
@@ -1652,20 +1710,20 @@
 
                 tableHTML += `
                     <tr data-thread-id="${thread.id}" data-service-type="${serviceType}"${rowClass}>
-                        <td><input type="checkbox" class="row-checkbox" onchange="toggleRowSelect(this, '${thread.id}')"></td>
-                        <td>
+                        <td class="col-check"><input type="checkbox" class="row-checkbox" onchange="toggleRowSelect(this, '${thread.id}')"></td>
+                        <td class="col-customer">
                             <div><strong>${thread.customer_name}</strong> ${unreadBadge}</div>
                             <div style="font-size: 12px; color: #6B7280;">${thread.customer_email}</div>
                         </td>
-                        <td>${phoneDisplay}</td>
-                        <td>${thread.service_name}</td>
-                        <td>${organizationBadge}</td>
-                        <td>${orderDisplay}</td>
-                        <td><span class="status-badge ${statusClass}">${statusLabel}</span></td>
-                        <td>${stageDisplay}</td>
-                        <td><strong>${thread.amount.toLocaleString()}원</strong></td>
-                        <td>${new Date(thread.created_at).toLocaleDateString()}</td>
-                        <td>
+                        <td data-label="연락처">${phoneDisplay}</td>
+                        <td data-label="서비스명">${thread.service_name}</td>
+                        <td data-label="협약단체">${organizationBadge}</td>
+                        <td data-label="주문번호">${orderDisplay}</td>
+                        <td data-label="상태"><span class="status-badge ${statusClass}">${statusLabel}</span></td>
+                        <td data-label="진행단계">${stageDisplay}</td>
+                        <td data-label="금액"><strong>${thread.amount.toLocaleString()}원</strong></td>
+                        <td data-label="신청일">${new Date(thread.created_at).toLocaleDateString()}</td>
+                        <td class="col-actions">
                             <button class="action-btn view" onclick="viewThread('${thread.id}')">보기</button>
                             <button class="action-btn edit" onclick="openStatusModal('${thread.id}')">수정</button>
                             <button class="action-btn delete" onclick="deleteThread('${thread.id}')">삭제</button>
