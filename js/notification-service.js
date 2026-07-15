@@ -322,7 +322,10 @@ async function notifyUserByEmailOnNewMessage(threadId) {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${session.access_token}`
             },
-            body: JSON.stringify({ threadId })
+            body: JSON.stringify({ threadId }),
+            // 쓰레드 생성/전송 직후 페이지 이동(리다이렉트)이 일어나도
+            // 진행 중인 알림 요청이 취소되지 않도록 keepalive 사용.
+            keepalive: true
         });
 
         if (!response.ok) {
@@ -362,7 +365,10 @@ async function notifyAdminEmail(threadId, eventType) {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${session.access_token}`
             },
-            body: JSON.stringify({ threadId, eventType })
+            body: JSON.stringify({ threadId, eventType }),
+            // 쓰레드 생성/답글 등록 직후 thread-general-v2.html 등으로 리다이렉트되어도
+            // 관리자 알림 요청(fire-and-forget)이 취소되지 않도록 keepalive 사용.
+            keepalive: true
         });
 
         if (!response.ok) {
