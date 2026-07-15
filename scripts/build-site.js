@@ -22,7 +22,8 @@ const HEADER = read('partials/header.html');
 const FOOTER = { en: read('partials/footer.en.html'), ko: read('partials/footer.ko.html'), vi: read('partials/footer.vi.html') };
 const SCRIPTS = [
   '<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>',
-  '<script src="__BASE__js/supabase-client.js?v=20260614"></script>',
+  '<script src="__BASE__js/supabase-client.js?v=20260715"></script>',
+  '<script src="__BASE__js/notification-service.js?v=20260715"></script>',
   '<script src="__BASE__js/site.js?v=10"></script>',
 ].join('\n');
 

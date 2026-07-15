@@ -437,7 +437,8 @@ async function notifyAdminOnNewReservation(reservationId) {
                 'Authorization': 'Bearer ' + token,
                 'apikey': SUPABASE_ANON_KEY
             },
-            body: JSON.stringify({ type: 'reservation', reservationId })
+            body: JSON.stringify({ type: 'reservation', reservationId }),
+            keepalive: true  // 접수 직후 페이지 이동에도 알림 요청이 취소되지 않도록
         });
         if (!res.ok) {
             return { success: false, error: await res.text() };
@@ -517,7 +518,8 @@ async function notifyAdminOnNewInquiry(inquiryId) {
                 'Authorization': 'Bearer ' + token,
                 'apikey': SUPABASE_ANON_KEY
             },
-            body: JSON.stringify({ type: 'corporate_inquiry', inquiryId })
+            body: JSON.stringify({ type: 'corporate_inquiry', inquiryId }),
+            keepalive: true  // 접수 직후 페이지 이동에도 알림 요청이 취소되지 않도록
         });
         if (!res.ok) {
             return { success: false, error: await res.text() };
