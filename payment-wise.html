@@ -525,7 +525,7 @@
 
                 // Create thread for Wise payment (pending confirmation)
                 const threadResult = await createThread({
-                    service_name: '사전 상담',  // 쓰레드 서비스명 통일(구매 항목은 order_id·금액으로 식별)
+                    service_name: paymentInfo?.serviceName || serviceName,
                     status: 'payment',
                     amount: amount,
                     government_fee: paymentInfo?.govtFee || 0,
