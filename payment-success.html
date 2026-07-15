@@ -553,7 +553,7 @@
                         amount: Number(amount),
                         serviceId: paymentInfo?.serviceId || null,
                         threadData: {
-                            service_name: serviceName,
+                            service_name: '사전 상담',  // 쓰레드 서비스명 통일(구매 항목은 order_id·금액·payments 기록으로 식별). 안내문은 serviceName 사용.
                             organization: paymentInfo?.organization || 'general',
                             government_fee: paymentInfo?.govtFee || 0,
                             payment_id: 'payment-' + Date.now(),
@@ -728,7 +728,7 @@
                 }
 
                 const threadResult = await createThread({
-                    service_name: paymentData.service_name,
+                    service_name: '사전 상담',  // 쓰레드 서비스명 통일(구매 항목은 order_id·금액·payments 기록으로 식별)
                     status: 'payment',
                     amount: paymentData.amount,
                     government_fee: paymentData.govt_fee || 0,

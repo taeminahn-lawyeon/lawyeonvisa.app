@@ -2227,14 +2227,14 @@
         // ========================================
         async function adminOpenThread(customerId, customerName) {
             if (!customerId) { alert('대상 회원을 확인할 수 없습니다.'); return; }
-            const svcName = prompt(`${customerName || '회원'} 님에게 새 쓰레드를 엽니다.\n쓰레드 제목(서비스명)을 입력하세요. (자동 안내 메시지는 생성되지 않습니다)`, '상담');
+            const svcName = prompt(`${customerName || '회원'} 님에게 새 쓰레드를 엽니다.\n쓰레드 제목(서비스명)을 입력하세요. (자동 안내 메시지는 생성되지 않습니다)`, '사전 상담');
             if (svcName === null) return;
             try {
                 const { data, error } = await supabaseClient
                     .from('threads')
                     .insert({
                         user_id: customerId,
-                        service_name: (svcName || '상담').trim() || '상담',
+                        service_name: (svcName || '사전 상담').trim() || '사전 상담',
                         status: 'received',
                         amount: 0,
                         is_active: true,
