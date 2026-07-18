@@ -216,6 +216,14 @@ const PAGES = [
              vi: 'Ly hôn làm mất căn cứ của diện vợ/chồng công dân (F-6-1), nhưng có thể tiếp tục cư trú theo diện nuôi con (F-6-2), hôn nhân tan vỡ (F-6-3) hoặc thu xếp gia sự (F-1-6). Điều kiện của từng diện, cách chứng minh lỗi, và cư trú khi ly thân hoặc đang kiện ly hôn.' },
   },
   {
+    id: 'nationality-reinstatement-procedure-korea-2026', content: 'nationality-reinstatement-procedure-korea-2026',
+    langs: ['ko', 'en'],
+    title: { ko: '외국 시민권 취득 후 한국 국적회복 절차와 순서: 국적상실신고, F-4, 국적회복허가 (2026) — 법무법인 로연',
+             en: 'Reinstating Korean Nationality After Acquiring Foreign Citizenship: Loss Report, F-4, Reinstatement Permission (2026) — Law Firm Lawyeon' },
+    desc:  { ko: '외국 시민권 취득으로 한국 국적이 자동 상실된 재외동포가 국적상실의 정리와 동일인 확인, F-4 체류자격과 국내거소신고를 거쳐 국적회복허가에 이르는 순서와 요건을 다룹니다.',
+             en: 'For overseas Koreans whose Korean nationality was automatically lost on acquiring foreign citizenship: the sequence and requirements running from settling the loss and confirming identity, through F-4 status and the domestic place-of-residence report, to permission for reinstatement of nationality.' },
+  },
+  {
     id: 'foreigner-entry-ban-check-lift-korea-2026', content: 'foreigner-entry-ban-check-lift-korea-2026',
     langs: ['ko', 'en'],
     title: { ko: '출국명령·강제퇴거 후 입국규제 해제와 불복 절차 (2026) — 법무법인 로연',
@@ -247,6 +255,7 @@ const ARTICLE_DATES = {
   'foreigner-entry-ban-check-lift-korea-2026':'2026-07-11',
   'd10-visa-points-system-deduction-korea-2026':'2026-07-18',
   'd10-2-startup-preparation-visa-korea-2026':'2026-07-18',
+  'nationality-reinstatement-procedure-korea-2026':'2026-07-16',
 };
 
 // Strip the brand suffix from a page title for use as a bare headline.
