@@ -128,10 +128,26 @@ const PAGES = [
   },
   {
     id: 'd10-job-seeker-visa-korea-2026', content: 'd10-job-seeker-visa-korea-2026',
-    title: { en: 'D-10-1 Job Seeker Status After Graduation: Points-Exemption Requirements (2026) — Law Firm Lawyeon',
-             ko: '졸업 후 D-10-1 구직 체류자격 변경, 점수제 면제 요건 (2026) — 법무법인 로연' },
-    desc:  { en: 'Graduates of Korean universities applying for D-10-1 within one year of graduation are exempt from the 60-point review. The exemption requirements, internship and part-time work rules, stay periods by type, and the extension review (as of 2026).',
-             ko: '한국 대학 졸업 후 1년 이내에 처음 신청하는 졸업자는 D-10-1 점수제(60점) 심사가 면제됩니다. 면제 요건과 인턴·시간제 취업 규칙, 유형별 체류 기간, 연장 심사 기준을 다룹니다(2026년 기준).' },
+    title: { en: 'D-10 Job Seeker Visa: Subcategory Requirements and the Points Exemption (2026) — Law Firm Lawyeon',
+             ko: 'D-10 구직 비자 세부유형별 요건과 점수제 면제 (2026) — 법무법인 로연' },
+    desc:  { en: 'The four D-10 subcategories (D-10-1, D-10-2, D-10-3, D-10-T), the points-system exemptions including first-time changes by graduates of Korean universities, the internship and part-time work rules, and the stay ceilings and extension review (as of 2026).',
+             ko: '구직(D-10)의 네 세부유형(D-10-1·D-10-2·D-10-3·D-10-T)과 국내 대학 졸업자의 최초 변경 등 점수제 면제 특례, 인턴·시간제 취업 규칙, 유형별 체류 상한과 연장 심사를 다룹니다(2026년 기준).' },
+  },
+  {
+    id: 'd10-visa-points-system-deduction-korea-2026', content: 'd10-visa-points-system-deduction-korea-2026',
+    langs: ['ko', 'en'],
+    title: { ko: 'D-10-1 구직 비자 점수제 계산과 감점·결격 기준 (2026) — 법무법인 로연',
+             en: 'The D-10-1 Points System: Calculation, Deductions and Disqualification (2026) — Law Firm Lawyeon' },
+    desc:  { ko: '구직(D-10-1) 점수제는 총 190점 중 기본항목 20점 이상을 포함해 60점 이상을 요합니다. 기본·선택·가점의 배점 구조, 5년 이내 범칙금·벌금 이력의 감점과 결격 기준, 80점 이상과 미만의 체류 기간 차등을 다룹니다(2026년 기준).',
+             en: 'The D-10-1 points system requires 60 of 190 points including 20 basic points. The structure of basic, optional and bonus items, the deductions and disqualification criteria for fine and penalty records within five years, and how stay periods differ above and below 80 points (as of 2026).' },
+  },
+  {
+    id: 'd10-2-startup-preparation-visa-korea-2026', content: 'd10-2-startup-preparation-visa-korea-2026',
+    langs: ['ko', 'en'],
+    title: { ko: 'D-10-2 기술창업준비 체류자격 요건과 창업 경로 (2026) — 법무법인 로연',
+             en: 'D-10-2 Start-Up Preparation Status: Requirements and the Path to Founding (2026) — Law Firm Lawyeon' },
+    desc:  { ko: '학사 이상 학위와 특허 보유·출원, OASIS 교육 이수 등으로 신청하는 기술창업준비(D-10-2)의 요건, 인턴·시간제 취업이 제한되는 활동 범위와 요건별 체류 상한, 기술창업(D-8-4) 점수제로 이어지는 준비 구조를 다룹니다(2026년 기준).',
+             en: 'Requirements for start-up preparation (D-10-2) status — a bachelor\'s degree with patents held or pending, OASIS training and similar grounds — its activity scope excluding internships and part-time work, stay ceilings by ground, and how preparation feeds the technology start-up (D-8-4) points review (as of 2026).' },
   },
   {
     id: 'foreigner-criminal-fine-deportation-reentry-ban-korea-2026', content: 'foreigner-criminal-fine-deportation-reentry-ban-korea-2026',
@@ -229,6 +245,8 @@ const ARTICLE_DATES = {
   'foreigner-dui-deportation-korea-2026':'2026-07-01',
   'foreigner-divorce-f6-visa-stay-korea-2026':'2026-07-01',
   'foreigner-entry-ban-check-lift-korea-2026':'2026-07-11',
+  'd10-visa-points-system-deduction-korea-2026':'2026-07-18',
+  'd10-2-startup-preparation-visa-korea-2026':'2026-07-18',
 };
 
 // Strip the brand suffix from a page title for use as a bare headline.
