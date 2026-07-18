@@ -1,0 +1,64 @@
+name: Build Site (SSG)
+
+# 목적: content/·partials/·css/ 등 소스가 main에 커밋되면
+# scripts/build-site.js 를 자동 실행해 정적 페이지를 재생성·커밋한다.
+# → 사용자가 GitHub 웹에서 content 파일만 고쳐도 사이트에 반영된다.
+# (사용법: docs/direct-edit-guide.md)
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+    paths:
+      - 'content/**'
+      - 'partials/**'
+      - 'css/**'
+      - 'images/**'
+      - 'js/**'
+      - 'scripts/build-site.js'
+
+permissions:
+  contents: write
+
+# 연속 커밋 시 중복 실행 방지 (마지막 것만 실행)
+concurrency:
+  group: build-site
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # build-site.js 는 Node 내장 모듈(fs/path)만 사용 — npm install 불필요
+      - name: Build site
+        run: node scripts/build-site.js
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git add -A
+          if git diff --staged --quiet; then
+            echo "changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push changes
+        if: steps.git-check.outputs.changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -m "chore: 사이트 정적 페이지 자동 생성 [skip ci]"
+          git pull --rebase origin main
+          git push
