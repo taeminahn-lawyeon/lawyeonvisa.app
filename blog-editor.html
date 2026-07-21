@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>새 글 작성 · 법무법인 로연</title>
+<link rel="icon" type="image/png" href="favicon.png?v=4">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#211C15;--muted:#6B7684;--rule:#E7E1D6;--rule-d:#D7CFC0;--btn:#887668;--btn-d:#6F6053;--bg:#F5F2EC;--card:#fff;--accent:#B0883F;--warn:#C0392B}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Noto Sans KR",sans-serif;color:var(--ink);background:var(--bg);font-size:14px;line-height:1.6}
+  a{color:var(--btn)}
+  .topbar{position:sticky;top:0;z-index:20;background:#211C15;color:#fff;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .topbar h1{font-size:15px;margin:0;font-weight:700;letter-spacing:-.01em}
+  .topbar .sub{font-size:12px;color:#C9C2B4}
+  .topbar .grow{flex:1}
+  .topbar a.back{color:#C9C2B4;text-decoration:none;font-size:13px}
+  .topbar a.back:hover{color:#fff}
+  .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;min-height:calc(100vh - 49px)}
+  @media(max-width:1100px){.layout{grid-template-columns:1fr}.preview-pane{display:none}.layout.show-preview .form-pane{display:none}.layout.show-preview .preview-pane{display:block}}
+  .form-pane{padding:22px 24px;overflow-y:auto;max-height:calc(100vh - 49px)}
+  .preview-pane{border-left:1px solid var(--rule);background:#ECEAE4;overflow-y:auto;max-height:calc(100vh - 49px);position:sticky;top:49px}
+  .preview-head{padding:10px 16px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--rule);background:#F5F2EC;display:flex;align-items:center;gap:10px}
+  iframe#pv{width:100%;height:calc(100vh - 92px);border:0;background:#fff}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px 16px 18px;margin-bottom:16px}
+  .card > h2{font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);margin:0 0 12px;display:flex;align-items:center;gap:8px}
+  .card > h2 .hint{font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:12px}
+  label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:10px 0 4px}
+  label:first-child{margin-top:0}
+  input[type=text],textarea,select{width:100%;padding:9px 10px;border:1px solid var(--rule-d);border-radius:7px;font-family:inherit;font-size:14px;color:var(--ink);background:#fff}
+  textarea{resize:vertical;line-height:1.7;min-height:60px}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--btn);box-shadow:0 0 0 2px rgba(136,118,104,.15)}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .row > div{flex:1;min-width:120px}
+  .muted{color:var(--muted);font-size:12px;line-height:1.6}
+  .counter{font-size:11px;color:var(--muted);text-align:right;margin-top:2px}
+  .counter.warn{color:var(--warn);font-weight:600}
+  .counter.ok{color:#2f9e44}
+  .btn{padding:8px 13px;border:1px solid var(--rule-d);background:#fff;border-radius:7px;cursor:pointer;font-size:13px;font-weight:600;color:var(--ink);font-family:inherit}
+  .btn:hover{background:#F4F2EE}
+  .btn.primary{background:var(--btn);color:#fff;border-color:transparent}
+  .btn.primary:hover{background:var(--btn-d)}
+  .btn.sm{padding:4px 8px;font-size:12px}
+  .btn.danger{color:var(--warn);border-color:#e6c3bd}
+  .btn.danger:hover{background:#fbeeec}
+  .blk{border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:8px;padding:12px;margin-bottom:10px;background:#FCFBF9}
+  .blk.b-h2{border-left-color:#2f6f9e}
+  .blk.b-callout{border-left-color:#2f9e44}
+  .blk.b-table{border-left-color:#9e6f2f}
+  .blk.b-figure{border-left-color:#7a5ea0}
+  .blk-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .blk-tag{font-size:11px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--accent)}
+  .blk.b-h2 .blk-tag{color:#2f6f9e}.blk.b-callout .blk-tag{color:#2f9e44}.blk.b-table .blk-tag{color:#9e6f2f}.blk.b-figure .blk-tag{color:#7a5ea0}
+  .blk-head .grow{flex:1}
+  .blk-head .btn.sm{padding:2px 7px}
+  .addbar{display:flex;gap:7px;flex-wrap:wrap;margin-top:6px}
+  .qa-pair,.rel-item{border:1px solid var(--rule);border-radius:8px;padding:10px;margin-bottom:9px;background:#FCFBF9}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px;position:sticky;top:0;background:var(--bg);padding:8px 0;z-index:5}
+  .out{background:#1c1917;color:#e7e2d8;border-radius:8px;padding:12px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;line-height:1.55;white-space:pre;overflow-x:auto;max-height:340px;overflow-y:auto}
+  .flash{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#211C15;color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50}
+  .flash.on{opacity:1}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:20px;background:#EFE7D5;color:#8a6d2f;margin-left:6px}
+  details.help{margin:6px 0 0}
+  details.help summary{cursor:pointer;font-size:12px;color:var(--btn);font-weight:600}
+  details.help div{font-size:12px;color:var(--muted);line-height:1.7;padding:6px 0 2px}
+  .warnbox{background:#fdf3f1;border:1px solid #f0d5cf;color:#8a3a2c;border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.6;margin-bottom:14px}
+  .checkitem{font-size:12.5px;color:var(--muted);padding:3px 0;display:flex;gap:7px;align-items:flex-start}
+  .checkitem .ic{width:15px;flex-shrink:0;font-weight:700}
+  .checkitem.pass .ic{color:#2f9e44}.checkitem.fail .ic{color:var(--warn)}.checkitem.fail{color:#8a3a2c}
+  .bold-hint{font-size:11px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <h1>새 글 작성</h1>
+  <span class="sub">로연 아티클 프로토콜 v2.1 형식으로 작성 → 완성 HTML을 Claude Code에 전달</span>
+  <span class="grow"></span>
+  <button class="btn sm" id="togglePv" style="background:#3a342b;color:#fff;border:0" onclick="togglePreview()">미리보기</button>
+  <a class="back" href="admin-dashboard.html">← 대시보드</a>
+</div>
+
+<div class="layout" id="layout">
+  <div class="form-pane">
+    <div class="toolbar">
+      <label style="margin:0;font-weight:700;color:var(--ink)">언어</label>
+      <select id="lang" style="width:auto" onchange="onLangChange()">
+        <option value="ko">한국어 (ko)</option>
+        <option value="en">English (en)</option>
+        <option value="vi">Tiếng Việt (vi)</option>
+      </select>
+      <span class="grow" style="flex:1"></span>
+      <button class="btn" onclick="loadDraft()">임시 불러오기</button>
+      <button class="btn" onclick="saveDraft()">임시 저장</button>
+      <button class="btn primary" onclick="buildAll()">완성 · 출력</button>
+    </div>
+
+    <div class="warnbox">
+      <b>이 에디터는 서버에 저장하지 않습니다.</b> 작성이 끝나면 아래 <b>완성 · 출력</b>을 눌러 나오는 HTML을 복사(또는 다운로드)해 Claude Code에 전달하시면, 빌드 등록·배포까지 진행됩니다. 브라우저를 닫아도 되도록 <b>임시 저장</b>으로 이 기기에 초안을 보관할 수 있습니다.
+    </div>
+
+    <!-- 1. 기본 정보 -->
+    <div class="card">
+      <h2>1. 기본 정보 <span class="hint">검색·등록에 쓰입니다</span></h2>
+      <div class="row">
+        <div>
+          <label>분류(카테고리)</label>
+          <select id="cat" onchange="render()">
+            <option value="visa">비자·이민 (visa)</option>
+            <option value="criminal">형사·사범심사 (criminal)</option>
+            <option value="residence">거주·국적 (residence)</option>
+            <option value="admin">행정 (admin)</option>
+          </select>
+        </div>
+        <div>
+          <label>읽는 시간(분)</label>
+          <input type="text" id="readmin" value="7" oninput="render()" style="max-width:90px">
+        </div>
+      </div>
+      <label>슬러그 (영문 소문자·하이픈, 세 언어 공통) <span class="pill">필수</span></label>
+      <input type="text" id="slug" placeholder="foreigner-xxx-korea-2026" oninput="render()">
+      <div class="counter" id="slugchk"></div>
+      <label>상단 라벨 — 카테고리 표시명 · 소주제</label>
+      <div class="row">
+        <div><input type="text" id="kickCat" placeholder="형사" oninput="render()"></div>
+        <div><input type="text" id="kickSub" placeholder="출입국·사범심사" oninput="render()"></div>
+      </div>
+      <label>분류 표기 (art-meta) — 예: 출입국·형사</label>
+      <input type="text" id="metaCat" placeholder="출입국·형사" oninput="render()">
+    </div>
+
+    <!-- 2. 제목 & 메타 -->
+    <div class="card">
+      <h2>2. 제목과 요약</h2>
+      <label>제목(H1) — 상황·검색어 앞, 제도·코드 뒤 <span class="pill">필수</span></label>
+      <textarea id="title" rows="2" placeholder="외국인 음주운전 벌금과 사범심사, 강제출국 기준(2026)" oninput="render()"></textarea>
+      <label>메타 설명(description) — 검색 결과 요약, 핵심 수치 포함</label>
+      <textarea id="desc" rows="3" placeholder="독자의 질문에 답하는 한 문단 요약." oninput="render()"></textarea>
+      <div class="counter" id="descchk"></div>
+      <label>목록 태그 (쉼표로 구분, 예: #D-10, #점수제)</label>
+      <input type="text" id="tags" placeholder="#태그1, #태그2, #태그3" oninput="render()">
+    </div>
+
+    <!-- 3. 도입 & 직답 -->
+    <div class="card">
+      <h2>3. 도입과 직답</h2>
+      <label>도입(곤경 제시) — 150~300자, 독자의 상황에서 출발</label>
+      <textarea id="intro" rows="4" placeholder="~한 상황에 놓이신 분이라면… 이 글은 …를 다룹니다." oninput="render()"></textarea>
+      <div class="counter" id="introchk"></div>
+      <label>직답 — 검색한 질문 한 줄</label>
+      <input type="text" id="daQ" placeholder="음주운전으로 벌금을 받으면 강제출국되나요?" oninput="render()">
+      <label>직답 — 결론 먼저 (2~3문장)</label>
+      <textarea id="daA" rows="3" placeholder="벌금형이 곧바로 강제출국으로 이어지는 것은 아니나…" oninput="render()"></textarea>
+      <div class="bold-hint">본문·직답에서 <b>굵게</b>는 <code>**두 별표**</code>로 감싸세요 (예: <code>**F-2-7**</code>). 프로토콜상 굵게는 아껴 씁니다.</div>
+    </div>
+
+    <!-- 4. 본문 블록 -->
+    <div class="card">
+      <h2>4. 본문 <span class="hint">소제목(H2) 3~5개, 그중 하나는 경계 지점</span></h2>
+      <div id="blocks"></div>
+      <div class="addbar">
+        <button class="btn sm" onclick="addBlock('h2')">+ 소제목(H2)</button>
+        <button class="btn sm" onclick="addBlock('p')">+ 문단</button>
+        <button class="btn sm" onclick="addBlock('table')">+ 표</button>
+        <button class="btn sm" onclick="addBlock('callout')">+ 상담 콜아웃</button>
+        <button class="btn sm" onclick="addBlock('figure')">+ 사진</button>
+      </div>
+      <details class="help"><summary>경계 지점이란?</summary><div>본문 후반 H2 하나는 “예컨대 ~한 경우를 상정하면…”으로 상황을 상정하고, 일반 규칙이 답을 주지 못하는 이유와 고려 요소를 짚은 뒤 “구체적 사실관계에 따라 결론이 달라질 수 있어 사안별 검토가 필요합니다”로 닫습니다. 해법·전략은 쓰지 않습니다.</div></details>
+    </div>
+
+    <!-- 5. FAQ -->
+    <div class="card">
+      <h2>5. 자주 묻는 질문 <span class="hint">1~2개, 최소 1개는 오해 바로잡기</span></h2>
+      <div id="faqs"></div>
+      <button class="btn sm" onclick="addFaq()">+ 질문 추가</button>
+    </div>
+
+    <!-- 6. 소개/고정 문안/이어지는 글 -->
+    <div class="card">
+      <h2>6. 마무리 요소</h2>
+      <label>소개 문단(art-about) — 모든 글 공통, 기본값 유지 권장</label>
+      <textarea id="about" rows="6"></textarea>
+      <label>고정 문안(부록 C) — 수정 금지</label>
+      <textarea id="fixed" rows="3" readonly style="background:#f4f2ec;color:var(--muted)"></textarea>
+      <label>이어지는 글 (내부링크)</label>
+      <div id="rels"></div>
+      <button class="btn sm" onclick="addRel()">+ 링크 추가</button>
+      <div class="muted" style="margin-top:6px">slug는 확장자 없는 글 주소입니다(예: <code>foreigner-dui-deportation-korea-2026</code>). 목록으로 보내는 링크는 <code>insights?cat=criminal</code> 형태로 씁니다.</div>
+    </div>
+
+    <!-- 7. 점검 & 출력 -->
+    <div class="card">
+      <h2>7. 자가 점검</h2>
+      <div id="checks"></div>
+    </div>
+
+    <div class="card" id="outCard" style="display:none">
+      <h2>8. 완성 결과 <span class="hint">Claude Code에 전달</span></h2>
+      <div class="row" style="margin-bottom:10px">
+        <button class="btn primary" onclick="copyOut('html')">본문 HTML 복사</button>
+        <button class="btn" onclick="downloadHtml()">HTML 파일 다운로드</button>
+        <button class="btn" onclick="copyOut('meta')">등록 정보 복사</button>
+        <button class="btn" onclick="copyOut('both')">전체(HTML+등록) 복사</button>
+      </div>
+      <label>content/&lt;slug&gt;.&lt;lang&gt;.html</label>
+      <div class="out" id="outHtml"></div>
+      <label style="margin-top:12px">제출용 등록 정보 (제목·설명·분류·태그·발행일)</label>
+      <div class="out" id="outMeta"></div>
+    </div>
+  </div>
+
+  <div class="preview-pane">
+    <div class="preview-head">미리보기 <span class="muted" style="font-weight:400;text-transform:none;letter-spacing:0">실제 블로그 스타일</span></div>
+    <iframe id="pv" title="preview"></iframe>
+  </div>
+</div>
+
+<div class="flash" id="flash"></div>
+
+<script>
+/* ============================ 상수/보일러플레이트 ============================ */
+var BASE = location.origin; // 배포 사이트에서 실행 시 css/폰트 절대경로
+var L10N = {
+  ko:{toc:'목차',faq:'자주 묻는 질문',rel:'이어지는 글',cta:'상담 신청하기 →',metaCat:'분류',metaRead:'읽는 시간',readUnit:function(n){return '약 '+n+'분';}},
+  en:{toc:'Contents',faq:'Frequently asked questions',rel:'Related articles',cta:'Request a consultation →',metaCat:'Category',metaRead:'Reading time',readUnit:function(n){return 'approx. '+n+' min';}},
+  vi:{toc:'Mục lục',faq:'Câu hỏi thường gặp',rel:'Bài viết liên quan',cta:'Đăng ký tư vấn →',metaCat:'Phân loại',metaRead:'Thời gian đọc',readUnit:function(n){return 'khoảng '+n+' phút';}}
+};
+var ABOUT = {
+  ko:'법무법인 로연 출입국이민지원센터는 다수 업무 경험과 네트워크, 실무적인 지식을 바탕으로 한국 출입국, 비자 업무와 형사 사건과 출입국 사범심사 통합 대응에 특화된 법률서비스를 제공하고 있습니다.\n로연 출입국이민지원센터는 형사 전문 변호사로서 다양한 출입국 업무 분야에서 법률자문을 제공해 온 민준우, 남도현, 김승철 변호사와 서울시 서울글로벌센터, 법무부 글로벌창업이민센터 센터장, 서울지방고용노동청 외국인근로자권익보호협의회 위원 업무를 한 전문위원인 안태민 센터장이 유기적인 협업 체제를 구축하며 설립한 법무법인 로연의 이민 분야 업무 특화 센터입니다.\n특히 형사 확정 판결에 이어지는 출국명령과 입국 규제 처분에 대하여 형사 변호와 처분 이의, 입국 규제 해제 신청 시 통합적인 전략 구성으로 실효적인 대안을 제시하고 있으며, 다수 의뢰인의 출입국 리스크 관리로 안정적인 한국 내 비즈니스 활동을 지원하고 있습니다.',
+  en:'The Visa & Immigration Center of Law Firm Lawyeon provides legal services specialized in the integrated handling of Korean immigration and visa matters together with criminal cases and immigration-violation reviews, built on extensive case experience, professional networks, and practical knowledge.\nThe Center was founded through the organic collaboration of attorneys Junwoo Min, Dohyun Nam, and Seungchul Kim — criminal-law specialists who have advised across a wide range of immigration matters — with Senior Advisor Taemin Ahn, who has served at the Seoul Global Center, as a center head at the Ministry of Justice’s Global Start-up Immigration Center, and as a member of the Foreign Workers’ Rights Protection Council of the Seoul Regional Employment and Labor Administration. It is Law Firm Lawyeon’s dedicated center for immigration practice.\nIn particular, for departure orders and entry-ban dispositions that follow a final criminal conviction, the Center presents effective solutions through an integrated strategy spanning criminal defense, objections to the disposition, and applications to lift the entry ban, and it supports stable business activity in Korea by managing many clients’ immigration risk.',
+  vi:'Trung tâm Hỗ trợ Xuất nhập cảnh và Di trú là bộ phận chuyên trách về di trú của Công ty Luật Lawyeon, xử lý các vấn đề visa và tư cách cư trú cùng với các vụ án hình sự và thủ tục thẩm tra vi phạm xuất nhập cảnh.\nTrung tâm vận hành theo cơ chế phối hợp giữa các luật sư Junwoo Min, Dohyun Nam, Seungchul Kim và Giám đốc Trung tâm Taemin Ahn.'
+};
+var FIXED = {
+  ko:'본 글은 일반적인 제도 안내를 목적으로 작성되었으며, 개별 사안에 대한 법률 자문이 아닙니다. 체류자격에 관한 판단은 체류 이력, 소득, 계약 관계 등 구체적 사실관계에 따라 달라질 수 있습니다. 개별 사안의 검토가 필요하신 경우 법무법인 로연 출입국이민지원센터(lawyeonvisa.app)로 상담을 신청하실 수 있습니다.',
+  en:'This article is intended as general information about the relevant legal framework and is not legal advice on any individual matter. Determinations concerning immigration status may differ depending on specific facts such as residence history, income and contractual relationships. If your situation requires individual review, you may request a consultation with the Immigration Support Center of Law Firm Lawyeon (lawyeonvisa.app).',
+  vi:'Bài viết này được soạn nhằm mục đích giới thiệu chế độ pháp luật một cách tổng quát và không phải là tư vấn pháp lý cho vụ việc cụ thể. Nếu quý vị cần xem xét vụ việc của riêng mình, có thể đăng ký tư vấn với Trung tâm Hỗ trợ Xuất nhập cảnh và Di trú của Công ty Luật Lawyeon (lawyeonvisa.app).'
+};
+var BRAND = {ko:' — 법무법인 로연', en:' — Law Firm Lawyeon', vi:' — Lawyeon'};
+
+/* ============================ 상태 ============================ */
+var state = { blocks:[], faqs:[], rels:[] };
+var uid = 1;
+
+function lang(){ return document.getElementById('lang').value; }
+function $(id){ return document.getElementById(id); }
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+// 텍스트 → 인라인 HTML: escape 후 **bold** 변환
+function inl(s){ return esc(s).replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>'); }
+
+/* ============================ 블록 UI ============================ */
+function addBlock(type, data){
+  var b = {id:uid++, type:type};
+  if(type==='table'){ b.cap=''; b.head=['항목','내용']; b.rows=[['','']]; b.note=''; }
+  else if(type==='figure'){ b.src=''; b.alt=''; }
+  else { b.text=''; }
+  if(data) Object.assign(b,data);
+  state.blocks.push(b); renderBlocks(); render();
+}
+function moveBlock(id,d){ var i=state.blocks.findIndex(function(x){return x.id===id;}); var j=i+d; if(j<0||j>=state.blocks.length)return; var t=state.blocks[i];state.blocks[i]=state.blocks[j];state.blocks[j]=t; renderBlocks(); render(); }
+function delBlock(id){ state.blocks=state.blocks.filter(function(x){return x.id!==id;}); renderBlocks(); render(); }
+function setBlk(id,k,v){ var b=state.blocks.find(function(x){return x.id===id;}); if(b){b[k]=v; render();} }
+
+function renderBlocks(){
+  var host=$('blocks'); host.innerHTML='';
+  var sIdx=0;
+  state.blocks.forEach(function(b){
+    var wrap=document.createElement('div');
+    var tag, body;
+    if(b.type==='h2'){ sIdx++; tag='소제목 H2 · s'+sIdx; body=
+      '<input type="text" value="'+attr(b.text)+'" placeholder="소제목(명사구 또는 검색 질문형)" oninput="setBlk('+b.id+',\'text\',this.value)">'; wrap.className='blk b-h2'; }
+    else if(b.type==='p'){ tag='문단'; body=
+      '<textarea rows="3" placeholder="한 논지, 2~4문장. 나열은 1) 2) 3)로." oninput="setBlk('+b.id+',\'text\',this.value)">'+esc(b.text)+'</textarea>'; wrap.className='blk'; }
+    else if(b.type==='callout'){ tag='상담 콜아웃 (자동 CTA)'; body=
+      '<textarea rows="3" placeholder="또한, …하시는 것을 권해 드립니다. 상담 시에는 1) … 2) …를 확인합니다." oninput="setBlk('+b.id+',\'text\',this.value)">'+esc(b.text)+'</textarea><div class="muted">문장 끝에 “'+L10N[lang()].cta+'” 링크가 자동으로 붙습니다.</div>'; wrap.className='blk b-callout'; }
+    else if(b.type==='figure'){ tag='사진'; body=
+      '<label style="margin-top:0">이미지 경로</label><input type="text" value="'+attr(b.src)+'" placeholder="__BASE__images/blog/이름.jpg" oninput="setBlk('+b.id+',\'src\',this.value)">'+
+      '<label>대체 텍스트(alt)</label><input type="text" value="'+attr(b.alt)+'" placeholder="설명" oninput="setBlk('+b.id+',\'alt\',this.value)">'+
+      '<div class="muted">사진은 개발/Claude에 별도 전달이 필요합니다(파일 업로드).</div>'; wrap.className='blk b-figure'; }
+    else if(b.type==='table'){ tag='표'; body=tableEditor(b); wrap.className='blk b-table'; }
+    wrap.innerHTML='<div class="blk-head"><span class="blk-tag">'+tag+'</span><span class="grow"></span>'+
+      '<button class="btn sm" title="위로" onclick="moveBlock('+b.id+',-1)">↑</button>'+
+      '<button class="btn sm" title="아래로" onclick="moveBlock('+b.id+',1)">↓</button>'+
+      '<button class="btn sm danger" onclick="delBlock('+b.id+')">삭제</button></div>'+body;
+    host.appendChild(wrap);
+  });
+  if(!state.blocks.length) host.innerHTML='<div class="muted">아래 버튼으로 소제목·문단·표를 추가하세요.</div>';
+}
+function attr(s){ return (s||'').replace(/"/g,'&quot;'); }
+
+function tableEditor(b){
+  var h='<label style="margin-top:0">표 제목(선택)</label><input type="text" value="'+attr(b.cap)+'" placeholder="예: 혈중알코올농도별 형사처벌(2026년 기준)" oninput="setBlk('+b.id+',\'cap\',this.value)">';
+  h+='<label>열 머리글</label><div class="row">';
+  b.head.forEach(function(c,ci){ h+='<div><input type="text" value="'+attr(c)+'" oninput="tblHead('+b.id+','+ci+',this.value)"></div>'; });
+  h+='<div style="flex:0"><button class="btn sm" onclick="tblCol('+b.id+',1)">+열</button> <button class="btn sm" onclick="tblCol('+b.id+',-1)">−열</button></div></div>';
+  h+='<label>행</label>';
+  b.rows.forEach(function(r,ri){
+    h+='<div class="row" style="margin-bottom:6px">';
+    r.forEach(function(c,ci){ h+='<div><input type="text" value="'+attr(c)+'" oninput="tblCell('+b.id+','+ri+','+ci+',this.value)"></div>'; });
+    h+='<div style="flex:0"><button class="btn sm danger" onclick="tblRow('+b.id+','+ri+')">×</button></div></div>';
+  });
+  h+='<button class="btn sm" onclick="tblAddRow('+b.id+')">+ 행</button>';
+  h+='<label>표 아래 주석(선택)</label><input type="text" value="'+attr(b.note)+'" oninput="setBlk('+b.id+',\'note\',this.value)">';
+  return h;
+}
+function tblHead(id,ci,v){ var b=blk(id); b.head[ci]=v; render(); }
+function tblCell(id,ri,ci,v){ var b=blk(id); b.rows[ri][ci]=v; render(); }
+function tblCol(id,d){ var b=blk(id); if(d>0){b.head.push('');b.rows.forEach(function(r){r.push('');});} else if(b.head.length>1){b.head.pop();b.rows.forEach(function(r){r.pop();});} renderBlocks(); render(); }
+function tblAddRow(id){ var b=blk(id); b.rows.push(b.head.map(function(){return '';})); renderBlocks(); render(); }
+function tblRow(id,ri){ var b=blk(id); if(b.rows.length>1)b.rows.splice(ri,1); renderBlocks(); render(); }
+function blk(id){ return state.blocks.find(function(x){return x.id===id;}); }
+
+/* ============================ FAQ / 관련글 UI ============================ */
+function addFaq(data){ state.faqs.push(Object.assign({id:uid++,q:'',a:''},data||{})); renderFaqs(); render(); }
+function delFaq(id){ state.faqs=state.faqs.filter(function(x){return x.id!==id;}); renderFaqs(); render(); }
+function setFaq(id,k,v){ var f=state.faqs.find(function(x){return x.id===id;}); if(f){f[k]=v; render();} }
+function renderFaqs(){
+  var host=$('faqs'); host.innerHTML='';
+  state.faqs.forEach(function(f){
+    var d=document.createElement('div'); d.className='qa-pair';
+    d.innerHTML='<div class="blk-head"><span class="blk-tag">Q&A</span><span class="grow"></span><button class="btn sm danger" onclick="delFaq('+f.id+')">삭제</button></div>'+
+      '<input type="text" value="'+attr(f.q)+'" placeholder="질문(검색형)" oninput="setFaq('+f.id+',\'q\',this.value)">'+
+      '<textarea rows="2" placeholder="답변(본문과 같은 문체)" style="margin-top:6px" oninput="setFaq('+f.id+',\'a\',this.value)">'+esc(f.a)+'</textarea>';
+    host.appendChild(d);
+  });
+  if(!state.faqs.length) host.innerHTML='<div class="muted">질문을 1~2개 추가하세요.</div>';
+}
+function addRel(data){ state.rels.push(Object.assign({id:uid++,href:'',title:'',tag:''},data||{})); renderRels(); render(); }
+function delRel(id){ state.rels=state.rels.filter(function(x){return x.id!==id;}); renderRels(); render(); }
+function setRel(id,k,v){ var r=state.rels.find(function(x){return x.id===id;}); if(r){r[k]=v; render();} }
+function renderRels(){
+  var host=$('rels'); host.innerHTML='';
+  state.rels.forEach(function(r){
+    var d=document.createElement('div'); d.className='rel-item';
+    d.innerHTML='<div class="blk-head"><span class="blk-tag">링크</span><span class="grow"></span><button class="btn sm danger" onclick="delRel('+r.id+')">삭제</button></div>'+
+      '<div class="row"><div style="flex:2"><input type="text" value="'+attr(r.href)+'" placeholder="slug 또는 insights?cat=criminal" oninput="setRel('+r.id+',\'href\',this.value)"></div>'+
+      '<div style="flex:0;min-width:90px"><input type="text" value="'+attr(r.tag)+'" placeholder="태그" oninput="setRel('+r.id+',\'tag\',this.value)"></div></div>'+
+      '<input type="text" value="'+attr(r.title)+'" placeholder="표시 제목" style="margin-top:6px" oninput="setRel('+r.id+',\'title\',this.value)">';
+    host.appendChild(d);
+  });
+  if(!state.rels.length) host.innerHTML='<div class="muted">관련 글 링크를 추가하세요(선택).</div>';
+}
+
+/* ============================ HTML 생성 ============================ */
+function buildContentHtml(){
+  var lg=lang(), t=L10N[lg];
+  var readmin=$('readmin').value.trim()||'7';
+  var kickCat=inl($('kickCat').value), kickSub=inl($('kickSub').value);
+  var metaCat=inl($('metaCat').value);
+  var title=inl($('title').value);
+  var intro=inl($('intro').value);
+  var daQ=inl($('daQ').value), daA=inl($('daA').value);
+  var about=($('about').value||'').split('\n').filter(function(x){return x.trim();});
+  var fixed=esc($('fixed').value);
+
+  var toc=[], bodyParts=[], sIdx=0;
+  // 직답
+  if(daQ||daA) bodyParts.push('            <p><b>"'+daQ+'"</b> '+daA+'</p>');
+  state.blocks.forEach(function(b){
+    if(b.type==='h2'){ sIdx++; var id='s'+sIdx; toc.push('            <a href="#'+id+'">'+inl(b.text)+'</a>');
+      bodyParts.push('\n            <h2 id="'+id+'">'+inl(b.text)+'</h2>'); }
+    else if(b.type==='p'){ bodyParts.push('            <p>'+inl(b.text)+'</p>'); }
+    else if(b.type==='callout'){ bodyParts.push('            <div class="callout">'+inl(b.text)+' <a href="consultation" style="color:var(--btn);font-weight:700">'+t.cta+'</a></div>'); }
+    else if(b.type==='figure' && b.src){ bodyParts.push('            <figure class="art-fig"><img src="'+attr(b.src)+'" alt="'+attr(b.alt)+'"></figure>'); }
+    else if(b.type==='table'){
+      var s='';
+      if(b.cap) s+='            <div class="tbl-cap">'+inl(b.cap)+'</div>\n';
+      s+='            <div class="tbl">\n                <table>\n                    <thead><tr>'+b.head.map(function(c){return '<th>'+inl(c)+'</th>';}).join('')+'</tr></thead>\n                    <tbody>\n';
+      b.rows.forEach(function(r){ s+='                        <tr>'+r.map(function(c){return '<td>'+inl(c)+'</td>';}).join('')+'</tr>\n'; });
+      s+='                    </tbody>\n                </table>';
+      if(b.note) s+='\n                <div class="tbl-note">'+inl(b.note)+'</div>';
+      s+='\n            </div>';
+      bodyParts.push(s);
+    }
+  });
+  // FAQ
+  if(state.faqs.length){
+    toc.push('            <a href="#faq">'+t.faq+'</a>');
+    bodyParts.push('\n            <h2 id="faq">'+t.faq+'</h2>');
+    state.faqs.forEach(function(f){ bodyParts.push('            <div class="qa"><div class="q">'+inl(f.q)+'</div><div class="a">'+inl(f.a)+'</div></div>'); });
+  }
+  // art-about
+  var aboutHtml='\n            <div class="art-about">\n'+about.map(function(p){return '                <p>'+inl(p)+'</p>';}).join('\n')+'\n            </div>';
+  // fixed footer
+  var fixedHtml='            <p class="disclaimer" style="margin-top:30px">'+fixed+'</p>';
+  // related
+  var relHtml='';
+  if(state.rels.length){
+    relHtml='\n            <div class="related">\n                <h4>'+t.rel+'</h4>\n'+
+      state.rels.map(function(r){return '                <a href="'+attr(r.href)+'"><span class="rt">'+inl(r.title)+'</span><span class="rtag">'+inl(r.tag)+'</span></a>';}).join('\n')+
+      '\n            </div>';
+  }
+
+  var html=''+
+'<div class="wrap">\n'+
+'    <div class="art-head">\n'+
+'        <div class="art-kicker"><span class="cat">'+kickCat+'</span><span class="dot">·</span><span>'+kickSub+'</span></div>\n'+
+'        <h1>'+title+'</h1>\n'+
+'        <div class="art-meta"><span><b>'+t.metaCat+'</b> '+metaCat+'</span><span><b>'+t.metaRead+'</b> '+t.readUnit(readmin)+'</span></div>\n'+
+'        <p class="disclaimer">'+intro+'</p>\n'+
+'    </div>\n'+
+'</div>\n\n'+
+'<div class="wrap">\n'+
+'    <div class="art-layout">\n'+
+'        <nav class="toc">\n            <h4>'+t.toc+'</h4>\n'+toc.join('\n')+'\n        </nav>\n\n'+
+'        <article class="body">\n'+
+bodyParts.join('\n')+'\n'+
+aboutHtml+'\n'+
+fixedHtml+'\n'+
+relHtml+(relHtml?'\n':'')+
+'        </article>\n'+
+'    </div>\n'+
+'</div>\n';
+  return html;
+}
+
+function buildMeta(){
+  var lg=lang();
+  var slug=$('slug').value.trim();
+  var tags=$('tags').value.split(',').map(function(s){return s.trim();}).filter(Boolean);
+  var title=$('title').value.trim();
+  var desc=$('desc').value.trim();
+  var m='';
+  m+='슬러그(파일명 공통): '+slug+'\n';
+  m+='언어: '+lg+'\n';
+  m+='분류(data-cat): '+$('cat').value+'\n';
+  m+='발행월(목록 표시): (YYYY.MM 지정)\n';
+  m+='제목('+lg+'): '+title+(title?BRAND[lg]:'')+'\n';
+  m+='메타설명('+lg+'): '+desc+'\n';
+  m+='목록 태그: '+tags.join(' ')+'\n';
+  m+='\n— Claude Code 등록 안내 —\n';
+  m+='1) content/'+slug+'.'+lg+'.html 저장\n';
+  m+='2) scripts/build-site.js PAGES에 id='+slug+' 등록(langs 포함), ARTICLE_DATES에 발행일 추가\n';
+  m+='3) content/insights.'+lg+'.html · home.'+lg+'.html 목록에 행 추가(data-cat='+$('cat').value+', 최신순)\n';
+  m+='4) node scripts/build-site.js → 커밋 → main 배포';
+  return m;
+}
+
+/* ============================ 미리보기 ============================ */
+function render(){
+  try{
+    var html=buildContentHtml();
+    var lg=lang();
+    var doc='<!DOCTYPE html><html lang="'+lg+'"><head><meta charset="UTF-8">'+
+      '<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300..700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">'+
+      '<link rel="stylesheet" href="'+BASE+'/css/site.css">'+
+      '<style>body{background:#fff;margin:0}.__pv{padding:0 0 40px}</style></head><body><div class="__pv">'+
+      html.replace(/__BASE__/g, BASE+'/')+
+      '</div></body></html>';
+    $('pv').srcdoc=doc;
+    updateCounters(); updateChecks();
+  }catch(e){ /* noop */ }
+}
+
+function updateCounters(){
+  var intro=$('intro').value.length; var ic=$('introchk');
+  ic.textContent=intro+'자 (권장 150~300)'; ic.className='counter'+(intro>=150&&intro<=320?' ok':(intro>0?' warn':''));
+  var desc=$('desc').value.length; $('descchk').textContent=desc+'자';
+  var slug=$('slug').value.trim(); var sc=$('slugchk');
+  if(!slug){ sc.textContent=''; }
+  else if(/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)){ sc.textContent='형식 OK'; sc.className='counter ok'; }
+  else { sc.textContent='영문 소문자·숫자·하이픈만 사용'; sc.className='counter warn'; }
+}
+
+function updateChecks(){
+  var host=$('checks'); var items=[];
+  var h2s=state.blocks.filter(function(b){return b.type==='h2';}).length;
+  var tables=state.blocks.filter(function(b){return b.type==='table';}).length;
+  // 본문 텍스트 모으기(점검용)
+  var txt=state.blocks.map(function(b){return b.type==='p'?b.text:'';}).join(' ')+' '+$('daA').value+' '+$('intro').value;
+  var bodyLen=state.blocks.reduce(function(a,b){return a+((b.type==='p'||b.type==='h2')?(b.text||'').length:0);},0)+$('daQ').value.length+$('daA').value.length;
+  items.push(['슬러그 입력', /^[a-z0-9]+(-[a-z0-9]+)*$/.test($('slug').value.trim())]);
+  items.push(['제목·도입·직답 작성', !!($('title').value.trim()&&$('intro').value.trim()&&$('daA').value.trim())]);
+  items.push(['소제목(H2) 3~5개 ('+h2s+')', h2s>=3&&h2s<=5]);
+  items.push(['표 1개 이하 ('+tables+')', tables<=1]);
+  items.push(['FAQ 1~2개 ('+state.faqs.length+')', state.faqs.length>=1&&state.faqs.length<=2]);
+  items.push(['상담 콜아웃 1개', state.blocks.filter(function(b){return b.type==='callout';}).length===1]);
+  items.push(['고정 문안 유지', $('fixed').value.trim()===FIXED[lang()]]);
+  // 금지어(간이)
+  var banned=['무조건','골든타임','물거품','발목','치명적','지름길','갈림길','꿀팁','총정리','완벽 가이드','놓치지','지금 바로','무료'];
+  var hit=banned.filter(function(w){return txt.indexOf(w)>=0;});
+  items.push([hit.length?('금지 표현 발견: '+hit.join(', ')):'금지 표현 없음', hit.length===0]);
+  // 본문 수사의문문(간이)
+  var rhet=/(까요\?|일까요|할까요)/.test(state.blocks.filter(function(b){return b.type==='p';}).map(function(b){return b.text;}).join(' '));
+  items.push([rhet?'본문 문단에 수사의문문 있음':'본문 수사의문문 없음', !rhet]);
+  host.innerHTML=items.map(function(it){return '<div class="checkitem '+(it[1]?'pass':'fail')+'"><span class="ic">'+(it[1]?'✓':'✕')+'</span><span>'+it[0]+'</span></div>';}).join('');
+}
+
+/* ============================ 출력/복사 ============================ */
+var LAST={html:'',meta:''};
+function buildAll(){
+  LAST.html=buildContentHtml(); LAST.meta=buildMeta();
+  $('outHtml').textContent=LAST.html; $('outMeta').textContent=LAST.meta;
+  $('outCard').style.display='';
+  $('outCard').scrollIntoView({behavior:'smooth'});
+  flash('완성되었습니다. 복사해 Claude Code에 전달하세요.');
+}
+function copyOut(which){
+  var txt = which==='html'?LAST.html : which==='meta'?LAST.meta : (LAST.meta+'\n\n===== content/'+$('slug').value.trim()+'.'+lang()+'.html =====\n'+LAST.html);
+  navigator.clipboard.writeText(txt).then(function(){flash('복사되었습니다');},function(){flash('복사 실패 — 직접 선택해 복사하세요');});
+}
+function downloadHtml(){
+  var name=($('slug').value.trim()||'article')+'.'+lang()+'.html';
+  var blob=new Blob([LAST.html],{type:'text/html'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
+}
+function flash(msg){ var f=$('flash'); f.textContent=msg; f.classList.add('on'); setTimeout(function(){f.classList.remove('on');},1800); }
+
+/* ============================ 초안 저장 ============================ */
+function collect(){
+  return {lang:lang(),cat:$('cat').value,readmin:$('readmin').value,slug:$('slug').value,kickCat:$('kickCat').value,kickSub:$('kickSub').value,metaCat:$('metaCat').value,title:$('title').value,desc:$('desc').value,tags:$('tags').value,intro:$('intro').value,daQ:$('daQ').value,daA:$('daA').value,about:$('about').value,blocks:state.blocks,faqs:state.faqs,rels:state.rels,uid:uid};
+}
+function saveDraft(){ localStorage.setItem('lawyeon_blog_draft', JSON.stringify(collect())); flash('이 기기에 임시 저장했습니다'); }
+function loadDraft(){
+  var raw=localStorage.getItem('lawyeon_blog_draft'); if(!raw){flash('저장된 초안이 없습니다');return;}
+  try{ var d=JSON.parse(raw);
+    $('lang').value=d.lang||'ko'; $('cat').value=d.cat||'visa'; $('readmin').value=d.readmin||'7';
+    ['slug','kickCat','kickSub','metaCat','title','desc','tags','intro','daQ','daA'].forEach(function(k){ if($(k))$(k).value=d[k]||''; });
+    state.blocks=d.blocks||[]; state.faqs=d.faqs||[]; state.rels=d.rels||[]; uid=d.uid||1000;
+    applyLangDefaults(true); renderBlocks(); renderFaqs(); renderRels(); render(); flash('초안을 불러왔습니다');
+  }catch(e){ flash('초안 형식 오류'); }
+}
+
+/* ============================ 언어 전환 ============================ */
+function applyLangDefaults(keepText){
+  var lg=lang();
+  if(!keepText || !$('about').value.trim() || isBoilerplate($('about').value)) $('about').value=ABOUT[lg];
+  $('fixed').value=FIXED[lg];
+  document.documentElement.lang=lg;
+}
+function isBoilerplate(v){ return v.trim()===ABOUT.ko.trim()||v.trim()===ABOUT.en.trim()||v.trim()===ABOUT.vi.trim(); }
+function onLangChange(){ applyLangDefaults(true); render(); }
+
+/* ============================ 미리보기 토글(모바일) ============================ */
+function togglePreview(){ $('layout').classList.toggle('show-preview'); }
+
+/* ============================ 초기화 ============================ */
+(function init(){
+  applyLangDefaults(false);
+  // 기본 골격: 소제목 3 + 문단 + 콜아웃 + FAQ 1
+  addBlock('h2'); addBlock('p'); addBlock('h2'); addBlock('p'); addBlock('h2'); addBlock('p'); addBlock('callout');
+  addFaq();
+  renderBlocks(); renderFaqs(); renderRels(); render();
+})();
+</script>
+</body>
+</html>
