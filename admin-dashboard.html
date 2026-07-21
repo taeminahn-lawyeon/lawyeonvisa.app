@@ -9,7 +9,6 @@
     <!-- Supabase 라이브러리 (head에서 먼저 로드) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js?v=20260715"></script>
-    <script src="js/admin-block-editor.js?v=1"></script>
     <script src="js/business-immigration.js"></script>
     <style>
         * {
@@ -1038,9 +1037,9 @@
                 <button class="tab" onclick="switchTab('corporate')">
                     <i class="fas fa-building"></i> 기업 자문 <span id="corporateBadge" class="badge" style="display: none;">0</span>
                 </button>
-                <button class="tab" onclick="switchTab('editor')">
-                    <i class="fas fa-pen-to-square"></i> 글 편집
-                </button>
+                <a class="tab" href="blog-editor.html" style="text-decoration:none">
+                    <i class="fas fa-pen-nib"></i> 새 글 작성
+                </a>
             </div>
         </div>
 
@@ -1179,147 +1178,6 @@
             <div id="corporateTableContainer"></div>
         </div>
 
-        <!-- 글 편집 탭 -->
-        <div id="editorTab" class="tab-content threads-section">
-            <h2><span><i class="fas fa-pen-to-square"></i> 글 편집</span></h2>
-            <div class="ed-help">오타·단어·문장 등 <b>작은 수정</b>용입니다. 글을 고르고 <b>불러오기</b> → 블록별 텍스트를 고친 뒤 <b>저장</b>하면 1~3분 뒤 사이트에 반영됩니다. 링크·이미지·표 등 복잡한 블록은 안전을 위해 <b>잠겨</b> 있습니다(그런 수정은 개발 요청). 한국어를 고치면 영어 글도 따로 고쳐 주세요.</div>
-            <div class="ed-bar">
-                <select id="ed-file" class="ed-select"></select>
-                <button class="ed-btn" type="button" onclick="edLoad()"><i class="fas fa-rotate"></i> 불러오기</button>
-                <button class="ed-btn ed-primary" type="button" id="ed-save" onclick="edSave()" disabled><i class="fas fa-floppy-disk"></i> 저장</button>
-                <span id="ed-status" class="ed-status"></span>
-            </div>
-            <div id="ed-blocks" class="ed-blocks"><div class="ed-empty">글을 선택하고 “불러오기”를 누르세요.</div></div>
-        </div>
-        <style>
-        #editorTab .ed-help{font-size:13px;line-height:1.7;color:#6B5B47;background:#F7F4EE;border-radius:8px;padding:12px 14px;margin-bottom:14px}
-        #editorTab .ed-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
-        #editorTab .ed-select{flex:1;min-width:240px;max-width:560px;padding:9px 10px;border:1px solid #E3DBCC;border-radius:8px;font-size:14px;background:#fff}
-        #editorTab .ed-btn{padding:9px 14px;border:1px solid #E3DBCC;background:#fff;border-radius:8px;cursor:pointer;font-size:13.5px;font-weight:600;color:#211C15}
-        #editorTab .ed-btn:hover{background:#F4F2EE}
-        #editorTab .ed-primary{background:#887668;color:#fff;border-color:transparent}
-        #editorTab .ed-primary:disabled{opacity:.45;cursor:default}
-        #editorTab .ed-status{font-size:13px;color:#6B7684}
-        #editorTab .ed-status.ok{color:#2f9e44;font-weight:600}
-        #editorTab .ed-status.err{color:#e03131;font-weight:600}
-        #editorTab .ed-blocks{display:flex;flex-direction:column;gap:10px}
-        #editorTab .ed-empty{color:#9aa0a6;font-size:14px;padding:24px 0;text-align:center}
-        #editorTab .ed-row{border:1px solid #ECE7DC;border-radius:8px;padding:10px 12px;background:#fff}
-        #editorTab .ed-row.locked{background:#FAF9F6}
-        #editorTab .ed-lab{font-size:11px;font-weight:700;letter-spacing:.02em;color:#B0883F;margin-bottom:6px;display:flex;align-items:center;gap:6px}
-        #editorTab .ed-field{font-size:14.5px;line-height:1.7;color:#211C15;outline:none;border-radius:6px;padding:6px 8px;min-height:1.5em}
-        #editorTab .ed-field:focus{background:#FFFBEF;box-shadow:inset 0 0 0 1px #E7D9A8}
-        #editorTab .ed-field[contenteditable="false"]{color:#8a8175}
-        #editorTab .ed-row.changed{border-color:#E7C349;box-shadow:0 0 0 1px #E7C349 inset}
-        #editorTab .ed-bfmt{margin-bottom:6px}
-        #editorTab .ed-bfmt button{font-size:12px;font-weight:700;border:1px solid #E3DBCC;background:#fff;border-radius:5px;padding:2px 9px;cursor:pointer}
-        </style>
-        <script>
-        const ED_FILES = [
-          {path:'content/home.ko.html', label:'[KO] 홈페이지 (첫 화면)'},
-          {path:'content/home.en.html', label:'[EN] Home (main)'},
-          {path:'content/insights.ko.html', label:'[KO] 인사이트 목록'},
-          {path:'content/insights.en.html', label:'[EN] Insights (list)'},
-          {path:'content/foreigner-criminal-fine-deportation-reentry-ban-korea-2026.ko.html', label:'[KO] 외국인 벌금형, 강제출국·재입국 금지 기준'},
-          {path:'content/foreigner-criminal-fine-deportation-reentry-ban-korea-2026.en.html', label:'[EN] Criminal Fines for Foreigners'},
-          {path:'content/foreigner-immigration-penalty-fine-deportation-korea-2026.ko.html', label:'[KO] 외국인 출입국 범칙금, 강제출국 기준'},
-          {path:'content/foreigner-immigration-penalty-fine-deportation-korea-2026.en.html', label:'[EN] Immigration Penalties (Beomchikgeum)'},
-          {path:'content/foreigner-entry-ban-check-lift-korea-2026.ko.html', label:'[KO] 출국명령·강제퇴거로 입국이 불가할 때'},
-          {path:'content/foreigner-entry-ban-check-lift-korea-2026.en.html', label:'[EN] Re-entering Korea After a Departure Order'},
-          {path:'content/foreigner-dui-deportation-korea-2026.ko.html', label:'[KO] 외국인 음주운전 강제출국'},
-          {path:'content/foreigner-dui-deportation-korea-2026.en.html', label:'[EN] Deported for Drunk Driving?'},
-          {path:'content/foreigner-unlawful-stay-voluntary-departure-korea-2026.ko.html', label:'[KO] 불법체류 사전 신고 후 자진출국'},
-          {path:'content/foreigner-unlawful-stay-voluntary-departure-korea-2026.en.html', label:'[EN] Voluntary Departure After Self-Reporting'},
-          {path:'content/foreigner-immigration-detention-temporary-release-korea-2026.ko.html', label:'[KO] 외국인 보호조치와 보호일시해제'},
-          {path:'content/foreigner-immigration-detention-temporary-release-korea-2026.en.html', label:'[EN] Immigration Detention & Temporary Release'},
-          {path:'content/visa-extension-change-denial-reapply-appeal-korea-2026.ko.html', label:'[KO] 비자 연장·변경 불허 — 재신청과 불복'},
-          {path:'content/visa-extension-change-denial-reapply-appeal-korea-2026.en.html', label:'[EN] Visa Extension/Change Denied — Reapply vs Appeal'},
-          {path:'content/foreigner-divorce-f6-visa-stay-korea-2026.ko.html', label:'[KO] 한국인 배우자와 이혼 후 체류 — F-6'},
-          {path:'content/foreigner-divorce-f6-visa-stay-korea-2026.en.html', label:'[EN] Staying After Divorcing a Korean Spouse — F-6'},
-          {path:'content/foreigner-national-pension-lump-sum-refund-korea-2026.ko.html', label:'[KO] E-9·H-2 국민연금 반환일시금'},
-          {path:'content/foreigner-national-pension-lump-sum-refund-korea-2026.en.html', label:'[EN] National Pension Lump-Sum Refund (E-9·H-2)'},
-          {path:'content/article.ko.html', label:'[KO] 한국 사업이민 비자 개괄 — D-9-4/D-9-5'},
-          {path:'content/article.en.html', label:'[EN] Overview of Korea Business-Immigration Visas'},
-          {path:'content/foreigner-franchise-business-korea-2026.ko.html', label:'[KO] 사업이민 비자 제도의 구조'},
-          {path:'content/foreigner-franchise-business-korea-2026.en.html', label:'[EN] Franchise Business for Foreigners'},
-          {path:'content/how-to-open-a-business-in-korea-as-a-foreigner-2026.ko.html', label:'[KO] 한국에서 사업을 시작하기까지'},
-          {path:'content/how-to-open-a-business-in-korea-as-a-foreigner-2026.en.html', label:'[EN] How to Open a Store in Korea'},
-          {path:'content/korea-permanent-residency-foreign-business-owner-2026.ko.html', label:'[KO] 한국 사업이민 이후 — 장기 거주·영주'},
-          {path:'content/korea-permanent-residency-foreign-business-owner-2026.en.html', label:'[EN] Permanent Residency for Foreign Business Owners'},
-          {path:'content/d10-job-seeker-visa-korea-2026.ko.html', label:'[KO] D-10 구직 비자'},
-          {path:'content/d10-job-seeker-visa-korea-2026.en.html', label:'[EN] D-10 Job Seeker Visa'},
-          {path:'content/chosun-university-student-legal-mou-2026.ko.html', label:'[KO] 조선대 MOU'},
-          {path:'content/chosun-university-student-legal-mou-2026.en.html', label:'[EN] Chosun University MOU'},
-          {path:'content/far-east-university-student-job-fair-mou-2026.ko.html', label:'[KO] 극동대 MOU'},
-          {path:'content/far-east-university-student-job-fair-mou-2026.en.html', label:'[EN] Far East University MOU'},
-        ];
-        let ED_SRC = '', ED_BLOCKS = [], ED_PATH = '';
-        function edInit(){
-          const sel = document.getElementById('ed-file');
-          if (sel.options.length) return;
-          ED_FILES.forEach(f => { const o = document.createElement('option'); o.value = f.path; o.textContent = f.label; sel.appendChild(o); });
-        }
-        function edStatus(msg, cls){ const s = document.getElementById('ed-status'); s.textContent = msg || ''; s.className = 'ed-status' + (cls ? (' ' + cls) : ''); }
-        async function edApi(payload){
-          const { data: { session } } = await supabaseClient.auth.getSession();
-          if (!session) throw new Error('로그인이 필요합니다');
-          const res = await fetch(SUPABASE_URL + '/functions/v1/commit-content', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + session.access_token, 'apikey': SUPABASE_ANON_KEY },
-            body: JSON.stringify(payload)
-          });
-          let j = {}; try { j = await res.json(); } catch (e) {}
-          if (!res.ok) throw new Error(j.error || ('요청 실패 (' + res.status + ')'));
-          return j;
-        }
-        async function edLoad(){
-          const path = document.getElementById('ed-file').value;
-          edStatus('불러오는 중…'); document.getElementById('ed-save').disabled = true;
-          try {
-            const j = await edApi({ action: 'get', path });
-            ED_SRC = j.content; ED_PATH = path; ED_BLOCKS = AdminBlockEditor.parseBlocks(ED_SRC);
-            edRender();
-            edStatus('불러왔습니다. 텍스트를 수정한 뒤 저장하세요.', 'ok');
-            document.getElementById('ed-save').disabled = false;
-          } catch (e) { edStatus('불러오기 실패: ' + e.message, 'err'); }
-        }
-        function edRender(){
-          const wrap = document.getElementById('ed-blocks'); wrap.innerHTML = '';
-          ED_BLOCKS.forEach(b => {
-            const row = document.createElement('div'); row.className = 'ed-row' + (b.editable ? '' : ' locked');
-            const lab = document.createElement('div'); lab.className = 'ed-lab';
-            lab.innerHTML = (b.editable ? '<i class="fas fa-pen"></i>' : '<i class="fas fa-lock"></i>') + ' ' + b.label + (b.editable ? '' : ' · 잠김');
-            row.appendChild(lab);
-            if (b.editable) {
-              const fmt = document.createElement('div'); fmt.className = 'ed-bfmt';
-              fmt.innerHTML = '<button type="button" onmousedown="event.preventDefault()" onclick="document.execCommand(\'bold\')"><b>B</b> 굵게</button>';
-              row.appendChild(fmt);
-            }
-            const fld = document.createElement('div'); fld.className = 'ed-field';
-            fld.contentEditable = b.editable ? 'true' : 'false';
-            fld.innerHTML = b.inner; fld.dataset.bid = b.id; fld.dataset.orig = fld.innerHTML;
-            if (b.editable) fld.addEventListener('input', () => { row.classList.toggle('changed', fld.innerHTML !== fld.dataset.orig); });
-            row.appendChild(fld); wrap.appendChild(row);
-          });
-        }
-        async function edSave(){
-          const edits = {}; let n = 0;
-          document.querySelectorAll('#ed-blocks .ed-field[contenteditable="true"]').forEach(fld => {
-            if (fld.innerHTML !== fld.dataset.orig) { edits[+fld.dataset.bid] = AdminBlockEditor.sanitizeInner(fld.innerHTML); n++; }
-          });
-          if (!n) { edStatus('변경된 내용이 없습니다.', 'err'); return; }
-          if (!confirm(n + '개 블록을 저장하고 사이트에 반영할까요?')) return;
-          edStatus('저장 중…'); document.getElementById('ed-save').disabled = true;
-          try {
-            const newSrc = AdminBlockEditor.applyEdits(ED_SRC, ED_BLOCKS, edits);
-            const j = await edApi({ action: 'save', path: ED_PATH, content: newSrc });
-            ED_SRC = newSrc; ED_BLOCKS = AdminBlockEditor.parseBlocks(ED_SRC); edRender();
-            edStatus('저장 완료. 1~3분 뒤 반영됩니다.' + (j.commit ? ' (커밋 ' + j.commit.slice(0, 7) + ')' : ''), 'ok');
-          } catch (e) { edStatus('저장 실패: ' + e.message, 'err'); }
-          document.getElementById('ed-save').disabled = false;
-        }
-        </script>
-    </div>
 
     <!-- 상태 변경 모달 -->
     <div class="modal" id="statusModal">
@@ -2312,9 +2170,6 @@
             } else if (tabName === 'corporate') {
                 document.getElementById('corporateTab').classList.add('active');
                 loadCorporateInquiries();
-            } else if (tabName === 'editor') {
-                document.getElementById('editorTab').classList.add('active');
-                edInit();
             }
         }
 
