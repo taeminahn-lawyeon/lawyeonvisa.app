@@ -403,6 +403,33 @@
             gap: 6px;
         }
 
+        /* 읽음 확인 배지 — 로연이 보낸 답글을 고객이 열어봤는지 표시 */
+        .read-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 9px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .read-badge.read {
+            background: #E6F4EA;
+            color: #1E7E34;
+        }
+
+        .read-badge.unread {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .read-badge.untracked {
+            background: #F3F4F6;
+            color: #9CA3AF;
+        }
+
         .message-body {
             font-size: 15px;
             line-height: 1.8;
@@ -2472,6 +2499,11 @@
                     localStorage.setItem('admin_thread_read_' + threadId, new Date().toISOString());
                 } catch (e) { /* localStorage 사용 불가 시 무시 */ }
 
+                // 서버에도 확인 기록 — 고객 화면에서 "로연이 읽음"으로 표시됨
+                if (typeof markThreadMessagesRead === 'function' && !document.hidden) {
+                    markThreadMessagesRead(threadId);
+                }
+
                 // Scroll to bottom
                 window.scrollTo(0, document.body.scrollHeight);
 
@@ -2631,6 +2663,7 @@
                         </div>
                         <div class="message-time">
                             ${editBtnHtml}
+                            <span class="read-status-slot">${renderReadBadge(msg)}</span>
                             ${formatDateTime(msg.created_at)}
                         </div>
                     </div>
@@ -2640,6 +2673,58 @@
                     ${attachmentsHtml}
                 </div>
             `;
+        }
+
+        // ============================================
+        // 읽음 확인 (Read Receipt)
+        // ============================================
+
+        // 로연이 보낸 답글에만 읽음 배지를 표시한다.
+        // 판정 기준(isAdminSideMessage)은 DB RPC 조건과 동일 — supabase-client.js 참고.
+        function renderReadBadge(msg) {
+            const isAdminSide = typeof isAdminSideMessage === 'function'
+                ? isAdminSideMessage(msg)
+                : (['admin', 'staff', 'system'].includes(msg.sender_type) || !msg.sender_id);
+
+            if (!isAdminSide) return '';
+
+            // read_at 컬럼이 아직 없는 환경(마이그레이션 미적용)에서는 배지를 숨김
+            if (!('read_at' in msg)) return '';
+
+            if (msg.read_at) {
+                return `<span class="read-badge read" title="고객이 ${formatDateTime(msg.read_at)}에 확인했습니다">✓ 읽음 ${formatReadTime(msg.read_at)}</span>`;
+            }
+
+            // 읽음 확인 기능 도입 이전 메시지는 미열람으로 단정할 수 없음
+            if (msg.read_tracked === false) {
+                return `<span class="read-badge untracked" title="읽음 확인 기능 도입 전에 보낸 답글이라 열람 여부를 알 수 없습니다">확인 기록 없음</span>`;
+            }
+
+            return `<span class="read-badge unread" title="고객이 아직 이 답글을 열어보지 않았습니다">안 읽음</span>`;
+        }
+
+        // 읽음 시각 축약 표기 — 오늘이면 시:분, 아니면 월/일
+        function formatReadTime(value) {
+            const d = new Date(value);
+            if (isNaN(d.getTime())) return '';
+            const now = new Date();
+            const sameDay = d.getFullYear() === now.getFullYear()
+                && d.getMonth() === now.getMonth()
+                && d.getDate() === now.getDate();
+            if (sameDay) {
+                return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+            }
+            return `${d.getMonth() + 1}/${d.getDate()}`;
+        }
+
+        // 특정 메시지의 읽음 배지만 부분 갱신 (전체 재렌더 없이 스크롤 위치 유지)
+        function updateReadBadge(msg) {
+            if (!msg || !msg.id) return;
+            const card = document.querySelector(`.message-card[data-message-id="${msg.id}"]`);
+            if (!card) return;
+            const slot = card.querySelector('.read-status-slot');
+            if (!slot) return;
+            slot.innerHTML = renderReadBadge(msg);
         }
 
         // 견적 마커를 관리자 화면용 상태 배지/버튼으로 치환
@@ -2814,11 +2899,43 @@
                         loadMessages();
                     }
                 })
+                .on('postgres_changes', {
+                    event: 'UPDATE',
+                    schema: 'public',
+                    table: 'messages',
+                    filter: `thread_id=eq.${threadId}`
+                }, (payload) => {
+                    // 고객이 답글을 열어보면 read_at 이 채워진다 → 해당 카드의 배지만 갱신.
+                    // 전체 재렌더를 하지 않으므로 스크롤 위치가 유지되고 갱신 루프도 생기지 않는다.
+                    updateReadBadge(payload.new);
+                })
                 .subscribe((status, err) => {
                     if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
                         console.error('Realtime subscription error:', status, err);
                     }
                 });
+        }
+
+        // 탭으로 돌아왔을 때 읽음 상태를 최신으로 동기화 (Realtime 이벤트 유실 대비)
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && threadId) {
+                refreshReadStatus();
+            }
+        });
+
+        // 메시지 본문은 그대로 두고 읽음 배지만 다시 조회해 갱신
+        async function refreshReadStatus() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('messages')
+                    .select('id, sender_type, sender_id, read_at, read_tracked')
+                    .eq('thread_id', threadId);
+
+                if (error || !data) return;
+                data.forEach(updateReadBadge);
+            } catch (e) {
+                console.warn('읽음 상태 갱신 실패:', e);
+            }
         }
 
         // Realtime 구독 정리 (메모리 누수 방지)

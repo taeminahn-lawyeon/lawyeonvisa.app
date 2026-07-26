@@ -291,6 +291,29 @@
             box-shadow: inset 3px 0 0 #F03E3E;
         }
 
+        /* 답글 확인(고객이 내 답글을 읽었는지) 표시 */
+        .reply-read-badge {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1;
+            padding: 4px 9px;
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+        .reply-read-badge.read {
+            background: #E6F4EA;
+            color: #1E7E34;
+        }
+        .reply-read-badge.unread {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+        .reply-read-badge.untracked {
+            background: #F3F4F6;
+            color: #9CA3AF;
+        }
+
         .status-badge {
             display: inline-block;
             padding: 4px 10px;
@@ -1254,12 +1277,51 @@
         let selectedThreadIds = new Set();
         // 미확인(고객 답변 후 관리자가 아직 열어보지 않은) 쓰레드 ID 집합
         let unreadThreadIds = new Set();
+        // 쓰레드별 "우리가 마지막으로 보낸 답글"의 고객 열람 상태
+        //   { [threadId]: { sentAt, readAt, tracked } }
+        //   · readAt  이 null → 고객이 아직 안 읽음
+        //   · tracked 가 false → 읽음 확인 기능 도입 이전 답글(열람 여부 확인 불가)
+        let adminReplyReadStatus = {};
 
-        // 각 쓰레드의 "가장 최근 메시지" 발신자를 확인해 미확인(NEW) 여부 계산.
-        //  · 마지막 메시지가 고객(user)이면 = 관리자 답장 대기 = NEW.
-        //  · 관리자가 답글을 남기면 admin 메시지가 더 최신이 되어 자동으로 NEW 해제됨.
+        // 각 쓰레드의 미확인(NEW) 여부 + 내 답글의 고객 열람 여부를 계산.
+        //  · 마지막 메시지가 고객이면 = 관리자 답장 대기 = NEW.
+        //  · 마지막 관리자 답글의 read_at 이 비어 있으면 = 고객이 아직 안 읽음.
         //  · 서버(messages) 기준이라 기기·브라우저와 무관하게 항상 일치.
         async function loadUnreadStatus() {
+            // 1순위: 서버 집계 RPC (migrations/20260726_add_message_read_receipts.sql)
+            //  → 전체 메시지를 내려받지 않아 기본 1000행 제한 영향을 받지 않음
+            try {
+                const { data, error } = await supabaseClient.rpc('get_thread_read_summary');
+
+                if (!error && Array.isArray(data)) {
+                    unreadThreadIds = new Set();
+                    adminReplyReadStatus = {};
+
+                    data.forEach(row => {
+                        if (!row.thread_id) return;
+                        if (row.last_message_from_admin === false) {
+                            unreadThreadIds.add(row.thread_id);
+                        }
+                        if (row.last_admin_message_at) {
+                            adminReplyReadStatus[row.thread_id] = {
+                                sentAt: row.last_admin_message_at,
+                                readAt: row.last_admin_read_at || null,
+                                // false = 읽음 확인 기능 도입 이전 답글 (열람 여부 확인 불가)
+                                tracked: row.last_admin_read_tracked !== false
+                            };
+                        }
+                    });
+                    return;
+                }
+
+                if (error) {
+                    console.warn('읽음 요약 RPC 사용 불가, 폴백 집계 사용:', error.message);
+                }
+            } catch (e) {
+                console.warn('읽음 요약 RPC 오류, 폴백 집계 사용:', e);
+            }
+
+            // 폴백: 마이그레이션 미적용 환경 — 기존 방식대로 NEW 여부만 계산
             try {
                 const { data, error } = await supabaseClient
                     .from('messages')
@@ -1281,6 +1343,7 @@
                 });
 
                 unreadThreadIds = new Set();
+                adminReplyReadStatus = {};
                 Object.keys(latestSender).forEach(threadId => {
                     if (latestSender[threadId] === 'user') {
                         unreadThreadIds.add(threadId);
@@ -1289,6 +1352,30 @@
             } catch (e) {
                 console.warn('미확인 상태 로드 오류:', e);
             }
+        }
+
+        // 답글 확인 열 렌더링 — 내가 보낸 마지막 답글을 고객이 열어봤는지
+        function renderReplyReadCell(threadId) {
+            const status = adminReplyReadStatus[threadId];
+            if (!status) {
+                // 아직 답글이 없거나(고객 문의만 있음) 읽음 데이터가 없는 경우
+                return '<span style="color: #9CA3AF; font-size: 12px;">-</span>';
+            }
+
+            if (status.readAt) {
+                const readDate = new Date(status.readAt);
+                const label = isNaN(readDate.getTime())
+                    ? ''
+                    : `${readDate.getMonth() + 1}/${readDate.getDate()}`;
+                return `<span class="reply-read-badge read" title="고객이 마지막 답글을 확인했습니다">✓ 읽음 ${label}</span>`;
+            }
+
+            // 읽음 확인 기능 도입 이전 답글은 미열람으로 단정할 수 없음
+            if (!status.tracked) {
+                return `<span class="reply-read-badge untracked" title="읽음 확인 기능 도입 전에 보낸 답글이라 열람 여부를 알 수 없습니다">확인 기록 없음</span>`;
+            }
+
+            return `<span class="reply-read-badge unread" title="고객이 마지막 답글을 아직 열어보지 않았습니다">안 읽음</span>`;
         }
 
         // 진행 단계 정의
@@ -1640,6 +1727,7 @@
                             <th>협약단체</th>
                             <th>주문번호</th>
                             <th>상태</th>
+                            <th>답글 확인</th>
                             <th>진행단계</th>
                             <th>금액</th>
                             <th>신청일</th>
@@ -1723,6 +1811,7 @@
                         <td data-label="협약단체">${organizationBadge}</td>
                         <td data-label="주문번호">${orderDisplay}</td>
                         <td data-label="상태"><span class="status-badge ${statusClass}">${statusLabel}</span></td>
+                        <td data-label="답글 확인">${renderReplyReadCell(thread.id)}</td>
                         <td data-label="진행단계">${stageDisplay}</td>
                         <td data-label="금액"><strong>${thread.amount.toLocaleString()}원</strong></td>
                         <td data-label="신청일">${new Date(thread.created_at).toLocaleDateString()}</td>
