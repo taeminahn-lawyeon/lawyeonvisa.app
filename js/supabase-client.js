@@ -1283,6 +1283,42 @@ async function getMessages(threadId) {
 }
 
 // ============================================
+// 읽음 확인 (Read Receipt) 관련 함수
+// ============================================
+
+// 메시지가 로연(관리자/시스템) 발신인지 판정.
+// 판정 기준은 마이그레이션 20260726_add_message_read_receipts.sql 의 SQL 조건과 동일해야 한다.
+function isAdminSideMessage(msg) {
+    if (!msg) return false;
+    if (['admin', 'staff', 'system'].includes(msg.sender_type)) return true;
+    return !msg.sender_id; // 시스템 메시지(sender_id NULL)
+}
+
+// 쓰레드 열람 시 상대방이 보낸 미확인 메시지를 읽음 처리
+//  · 고객이 열면   → 로연이 보낸 답글이 읽음 처리됨
+//  · 관리자가 열면 → 고객이 보낸 메시지가 읽음 처리됨
+// 마이그레이션 미적용 환경에서도 화면이 깨지지 않도록 실패는 조용히 무시한다.
+async function markThreadMessagesRead(threadId) {
+    if (!threadId) return { success: false, updated: 0 };
+
+    try {
+        const { data, error } = await supabaseClient
+            .rpc('mark_thread_messages_read', { p_thread_id: threadId });
+
+        if (error) {
+            debugLog('👁 [markThreadMessagesRead] 실패(무시):', error.message);
+            return { success: false, updated: 0, error: error.message };
+        }
+
+        debugLog('👁 [markThreadMessagesRead] 읽음 처리:', data, '건');
+        return { success: true, updated: data || 0 };
+    } catch (error) {
+        debugLog('👁 [markThreadMessagesRead] 예외(무시):', error.message);
+        return { success: false, updated: 0, error: error.message };
+    }
+}
+
+// ============================================
 // 환영 메시지 템플릿 함수
 // ============================================
 

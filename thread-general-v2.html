@@ -569,6 +569,28 @@
             gap: 6px;
         }
 
+        /* 읽음 확인 배지 — 내가 보낸 메시지를 로연이 확인했는지 표시 */
+        .read-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 9px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .read-badge.read {
+            background: #E6F4EA;
+            color: #1E7E34;
+        }
+
+        .read-badge.unread {
+            background: #F3F4F6;
+            color: #6B7280;
+        }
+
         .message-body {
             font-size: 15px;
             line-height: 1.8;
@@ -2971,6 +2993,9 @@
 
                 container.innerHTML = visibleMessages.map(msg => renderMessageCard(msg)).join('');
 
+                // 로연이 보낸 답글을 읽음 처리 → 관리자 화면에 "읽음"으로 표시됨
+                markVisibleMessagesRead();
+
                 // Scroll to newest message
                 if (window.matchMedia('(max-width: 768px)').matches) {
                     // 모바일: 하단 고정 입력바 위로 마지막 메시지가 보이도록
@@ -3215,6 +3240,7 @@
                         </div>
                         <div class="message-time">
                             ${editBtnHtml}
+                            <span class="read-status-slot">${renderReadBadge(msg)}</span>
                             ${formatDateTime(msg.created_at)}
                         </div>
                     </div>
@@ -3224,6 +3250,71 @@
                     ${attachmentsHtml}
                 </div>
             `;
+        }
+
+        // ============================================
+        // 읽음 확인 (Read Receipt)
+        // ============================================
+
+        // 내가(고객이) 보낸 메시지에만 표시 — 로연이 확인했는지 여부.
+        // 로연이 보낸 답글은 내가 보는 순간 읽음 처리되므로 배지를 달지 않는다.
+        function renderReadBadge(msg) {
+            const isAdminSide = typeof isAdminSideMessage === 'function'
+                ? isAdminSideMessage(msg)
+                : (['admin', 'staff', 'system'].includes(msg.sender_type) || !msg.sender_id);
+
+            if (isAdminSide) return '';
+
+            // read_at 컬럼이 아직 없는 환경(마이그레이션 미적용)에서는 배지를 숨김
+            if (!('read_at' in msg)) return '';
+
+            if (msg.read_at) {
+                return `<span class="read-badge read">✓ ${tt('thread.read.read', 'Read')}</span>`;
+            }
+
+            // 읽음 확인 기능 도입 이전 메시지는 상태를 알 수 없으므로 표시하지 않음
+            if (msg.read_tracked === false) return '';
+
+            return `<span class="read-badge unread">${tt('thread.read.unread', 'Unread')}</span>`;
+        }
+
+        // 특정 메시지의 읽음 배지만 부분 갱신 (전체 재렌더 없이 스크롤 위치 유지)
+        function updateReadBadge(msg) {
+            if (!msg || !msg.id) return;
+            const card = document.querySelector(`.message-card[data-message-id="${msg.id}"]`);
+            if (!card) return;
+            const slot = card.querySelector('.read-status-slot');
+            if (!slot) return;
+            slot.innerHTML = renderReadBadge(msg);
+        }
+
+        // 로연 답글을 읽음 처리 — 화면이 실제로 보이는 상태에서만 기록
+        function markVisibleMessagesRead() {
+            if (document.hidden || !threadId) return;
+            if (typeof markThreadMessagesRead !== 'function') return;
+            markThreadMessagesRead(threadId);
+        }
+
+        // 탭을 다시 열었을 때 읽음 처리 + 내 메시지 읽음 배지 동기화
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden || !threadId) return;
+            markVisibleMessagesRead();
+            refreshReadStatus();
+        });
+
+        // 메시지 본문은 그대로 두고 읽음 배지만 다시 조회해 갱신
+        async function refreshReadStatus() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('messages')
+                    .select('id, sender_type, sender_id, read_at, read_tracked')
+                    .eq('thread_id', threadId);
+
+                if (error || !data) return;
+                data.forEach(updateReadBadge);
+            } catch (e) {
+                console.warn('읽음 상태 갱신 실패:', e);
+            }
         }
 
         // 메시지 내용 처리 - URL을 클릭 가능한 링크로 변환, 줄바꿈 처리
@@ -3458,6 +3549,15 @@
                     filter: `thread_id=eq.${threadId}`
                 }, payload => {
                     loadMessages();
+                })
+                .on('postgres_changes', {
+                    event: 'UPDATE',
+                    schema: 'public',
+                    table: 'messages',
+                    filter: `thread_id=eq.${threadId}`
+                }, payload => {
+                    // 로연이 내 메시지를 확인하면 read_at 이 채워진다 → 해당 카드 배지만 갱신
+                    updateReadBadge(payload.new);
                 })
                 .subscribe((status, err) => {
                     if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
