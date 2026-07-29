@@ -132,9 +132,7 @@ serve(async (req) => {
 
     // ===== 기업 자문(Corporate Advisory) 신규 문의 알림 분기 =====
     // 문의는 비로그인(anon) 방문자도 접수하므로 service role 로 조회해 메일 발송.
-    // type 을 명시하지 않고 inquiryId 만 보내던 초기 호출부 호환을 위해 fallback 유지.
-    // 단 type 이 지정된 경우(예: 'inquiry')는 아래 전용 분기가 처리하도록 넘긴다.
-    if (body && (body.type === 'corporate_inquiry' || (body.inquiryId && !body.type))) {
+    if (body && (body.type === 'corporate_inquiry' || body.inquiryId)) {
       const inquiryId = body.inquiryId
       if (!inquiryId) {
         throw new Error('Missing required field: inquiryId')
@@ -199,110 +197,6 @@ serve(async (req) => {
       }
 
       console.log('📧 Admin email sent (corporate_inquiry):', resendBody.id)
-      return new Response(
-        JSON.stringify({ success: true, id: resendBody.id }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
-    }
-
-    // ===== 온라인 문의(Inquiry) 신규 접수 알림 분기 =====
-    // 문의는 쓰레드를 만들지 않고 담당자 메일로만 전달된다.
-    // 비로그인(anon) 방문자도 접수하므로 service role 로 조회해 메일 발송.
-    if (body && body.type === 'inquiry') {
-      const inquiryId = body.inquiryId
-      if (!inquiryId) {
-        throw new Error('Missing required field: inquiryId')
-      }
-
-      const supabaseUrl = Deno.env.get('SUPABASE_URL')!
-      const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-      const supabase = createClient(supabaseUrl, serviceKey)
-
-      const { data: q, error: qErr } = await supabase
-        .from('inquiries')
-        .select('id, source, service_name, name, phone, email, category, in_korea, visa_type, visa_expiry, country, message, lang, created_at')
-        .eq('id', inquiryId)
-        .single()
-
-      if (qErr || !q) {
-        throw new Error(`Inquiry not found: ${qErr?.message || 'no data'}`)
-      }
-
-      const SOURCE_LABELS: Record<string, string> = {
-        consultation: '온라인 상담 신청',
-        service: '서비스 상담 신청',
-        urgent: '긴급 상담 신청',
-        business_immigration: '사업이민 사전 상담',
-      }
-      const sourceLabel = SOURCE_LABELS[q.source] || '온라인 문의'
-
-      // 체류 상태 한 줄 요약
-      let stayLine = '-'
-      if (q.in_korea === true) {
-        stayLine = '국내 체류'
-          + (q.visa_type ? ` / ${q.visa_type}` : '')
-          + (q.visa_expiry ? ` / 만료 ${q.visa_expiry}` : '')
-      } else if (q.in_korea === false) {
-        stayLine = '국외 체류' + (q.country ? ` / ${q.country}` : '')
-      }
-
-      const adminUrl = `${SITE_URL}/admin-dashboard.html#inquiries`
-      const subject = `[Lawyeon] ${sourceLabel} — ${q.name}${q.category ? ' (' + q.category + ')' : ''}`
-      const lines = [
-        `${q.name}님이 ${sourceLabel}을 접수하셨습니다.`,
-        ``,
-        `· 연락처: ${q.phone || '-'}`,
-        `· 이메일: ${q.email || '-'}`,
-        `· 분야: ${q.category || '-'}`,
-        `· 체류: ${stayLine}`,
-      ]
-      if (q.service_name) lines.push(`· 서비스: ${q.service_name}`)
-      lines.push(`· 언어: ${q.lang || '-'}`)
-      if (q.message) lines.push(``, `[상담 내용]`, q.message)
-
-      const messageText = lines.join('\n')
-      const html = buildHtml(messageText.replace(/\n/g, '<br>'), adminUrl)
-      const text = buildText(messageText, adminUrl)
-
-      const resendRes = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${RESEND_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        // 고객 이메일이 있으면 담당자가 메일에서 바로 회신할 수 있도록 reply_to 설정
-        body: JSON.stringify({
-          from: FROM_EMAIL,
-          to: ADMIN_EMAIL,
-          subject,
-          html,
-          text,
-          ...(q.email ? { reply_to: q.email } : {}),
-        }),
-      })
-      const resendBody = await resendRes.json()
-
-      try {
-        await supabase.from('notification_logs').insert({
-          messenger: 'email',
-          recipient: ADMIN_EMAIL,
-          template_type: `admin_new_inquiry_${q.source}`,
-          status: resendRes.ok ? 'sent' : 'failed',
-          sent_at: new Date().toISOString()
-        })
-      } catch (err) {
-        console.log('notification_logs insert error:', err)
-      }
-
-      if (!resendRes.ok) {
-        console.error('📧 Resend error (inquiry):', resendBody)
-        return new Response(
-          JSON.stringify({ success: false, error: resendBody }),
-          { status: resendRes.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        )
-      }
-
-      console.log('📧 Admin email sent (inquiry):', resendBody.id)
       return new Response(
         JSON.stringify({ success: true, id: resendBody.id }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
