@@ -532,6 +532,97 @@ async function notifyAdminOnNewInquiry(inquiryId) {
 }
 
 // ============================================
+// 온라인 문의 접수 (쓰레드 미생성 → 담당자 메일 전달)
+// ============================================
+
+// 온라인 문의 접수.
+// 쓰레드를 만들지 않고 inquiries 테이블에 적재한 뒤 담당자 메일로 전달한다.
+// 비로그인 방문자도 접수 가능하며, 로그인 상태라면 user_id 를 함께 남긴다.
+//   data: { source, service_name, name, phone, email, category,
+//           in_korea, visa_type, visa_expiry, country, message, lang }
+async function createInquiry(data) {
+    try {
+        if (!data || !data.name || !data.phone) {
+            return { success: false, error: '이름과 연락처는 필수입니다.' };
+        }
+
+        // 로그인 상태면 user_id 기록 (비로그인이어도 접수는 진행)
+        let userId = null;
+        let sessionEmail = null;
+        try {
+            const { data: s } = await supabaseClient.auth.getSession();
+            if (s && s.session && s.session.user) {
+                userId = s.session.user.id;
+                sessionEmail = s.session.user.email || null;
+            }
+        } catch (_) { /* 비로그인 */ }
+
+        const insertData = {
+            user_id: userId,
+            source: data.source || 'consultation',
+            service_name: data.service_name || null,
+            name: data.name,
+            phone: data.phone,
+            email: data.email || sessionEmail,
+            category: data.category || null,
+            in_korea: typeof data.in_korea === 'boolean' ? data.in_korea : null,
+            visa_type: data.visa_type || null,
+            visa_expiry: data.visa_expiry || null,
+            country: data.country || null,
+            message: data.message || null,
+            lang: data.lang || 'ko'
+        };
+
+        const { data: row, error } = await supabaseClient
+            .from('inquiries')
+            .insert(insertData)
+            .select()
+            .single();
+
+        if (error) throw error;
+
+        // 담당자 메일 발송 — 실패해도 접수 자체는 성공으로 처리(메일은 재발송 가능)
+        const mail = await notifyAdminOnNewInquiryMail(row.id);
+
+        return { success: true, data: row, mailed: mail.success };
+    } catch (error) {
+        console.error('온라인 문의 접수 실패:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// 온라인 문의 어드민 이메일 알림 (send-admin-email Edge Function 호출)
+async function notifyAdminOnNewInquiryMail(inquiryId) {
+    try {
+        let token = SUPABASE_ANON_KEY;
+        try {
+            const { data } = await supabaseClient.auth.getSession();
+            if (data && data.session && data.session.access_token) {
+                token = data.session.access_token;
+            }
+        } catch (_) { /* 비로그인 — anon key 사용 */ }
+
+        const res = await fetch(SUPABASE_URL + '/functions/v1/send-admin-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+                'apikey': SUPABASE_ANON_KEY
+            },
+            body: JSON.stringify({ type: 'inquiry', inquiryId }),
+            keepalive: true  // 접수 직후 페이지 이동에도 알림 요청이 취소되지 않도록
+        });
+        if (!res.ok) {
+            return { success: false, error: await res.text() };
+        }
+        return { success: true, data: await res.json() };
+    } catch (error) {
+        console.error('온라인 문의 어드민 알림 실패(무시):', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// ============================================
 // 쓰레드 관련 함수
 // ============================================
 
