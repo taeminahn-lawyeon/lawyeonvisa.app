@@ -26,15 +26,6 @@ const FROM_EMAIL = 'Law Firm Lawyeon <noreply@lawyeonvisa.app>'
 const ADMIN_EMAIL = Deno.env.get('ADMIN_EMAIL') || 'taemin.ahn@lawyeon.com'
 const SITE_URL = 'https://lawyeonvisa.app'
 
-// 발신 표시 이름에 고객 이름을 넣어 받은편지함 목록에서 바로 구분되게 한다.
-// 발신 주소 자체는 인증된 도메인이어야 하므로 바꾸지 않는다(고객 주소로 위조하면
-// SPF/DKIM 검증에 실패해 스팸 처리된다). 대신 Reply-To 에 고객 주소를 넣어
-// '답장'을 누르면 곧바로 고객에게 회신되도록 한다.
-function fromWithName(name: string): string {
-  const safe = (name || '').replace(/[",<>\r\n]/g, ' ').trim()
-  return safe ? `${safe} (사전상담) <noreply@lawyeonvisa.app>` : FROM_EMAIL
-}
-
 function buildHtml(message: string, threadUrl: string): string {
   return `<!DOCTYPE html>
 <html>
@@ -142,7 +133,8 @@ serve(async (req) => {
 
     // ===== 온라인 사전상담(Pre-consultation) 접수 분기 =====
     // 상담 쓰레드를 대체하는 경로. 비로그인(anon) 접수이므로 service role 로 재조회한다.
-    // 알림이 아니라 "고객이 보낸 상담 신청"으로 다루기 위해 Reply-To 에 고객 주소를 넣는다.
+    // 예약·기업자문과 같은 단순 알림 메일이다. 회신은 담당자가 본문의 신청자
+    // 이메일 주소를 보고 직접 새 메일을 보내는 방식으로 처리한다.
     if (body && (body.type === 'pre_consultation' || body.preConsultationId)) {
       const preConsultationId = body.preConsultationId
       if (!preConsultationId) {
@@ -181,7 +173,14 @@ serve(async (req) => {
       ]
       if (c.message) lines.push(`· Message: ${c.message}`)
       const messageText = lines.join('\n')
-      const html = buildHtml(messageText.replace(/\n/g, '<br>'), adminUrl)
+      // 본문의 신청자 주소는 눌러서 바로 새 메일을 쓸 수 있게 mailto 로 건다.
+      const htmlBody = messageText
+        .replace(/\n/g, '<br>')
+        .replace(
+          `· Email: ${c.email}`,
+          `· Email: <a href="mailto:${c.email}?subject=${encodeURIComponent('[법무법인 로연] 사전상담 회신 — ' + c.name)}">${c.email}</a>`
+        )
+      const html = buildHtml(htmlBody, adminUrl)
       const text = buildText(messageText, adminUrl)
 
       const resendRes = await fetch('https://api.resend.com/emails', {
@@ -190,14 +189,7 @@ serve(async (req) => {
           'Authorization': `Bearer ${RESEND_API_KEY}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          from: fromWithName(c.name),
-          to: ADMIN_EMAIL,
-          reply_to: c.email,   // ← '답장'이 곧바로 고객에게 가도록
-          subject,
-          html,
-          text,
-        }),
+        body: JSON.stringify({ from: FROM_EMAIL, to: ADMIN_EMAIL, subject, html, text }),
       })
       const resendBody = await resendRes.json()
 
