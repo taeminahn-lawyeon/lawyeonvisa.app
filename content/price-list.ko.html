@@ -1,0 +1,58 @@
+<style>
+.fee-note{border:1.5px solid var(--btn);background:var(--card-2);border-radius:3px;padding:18px 22px;margin:0 0 28px}
+.fee-note p{margin:0;font-size:15.5px;line-height:1.7;color:var(--ink);font-weight:600}
+.fee-table{width:100%;border-collapse:collapse;margin:0 0 18px}
+.fee-table th{text-align:left;font-size:13px;font-weight:700;color:var(--brown);border-bottom:2px solid var(--rule-d);padding:12px 4px}
+.fee-table th:last-child,.fee-table td:last-child{text-align:right;white-space:nowrap}
+.fee-table td{font-size:15.5px;color:var(--ink);border-bottom:1px solid var(--rule);padding:15px 4px;line-height:1.5}
+.fee-table td:last-child{font-weight:700;font-variant-numeric:tabular-nums}
+.fee-sub{display:block;font-size:13px;color:var(--muted);margin-top:3px}
+.fee-foot{list-style:none;margin:0 0 34px;padding:0}
+.fee-foot li{position:relative;padding-left:14px;font-size:14px;line-height:1.75;color:var(--muted)}
+.fee-foot li:before{content:"·";position:absolute;left:2px}
+.fee-cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;border-top:1px solid var(--rule-d);padding-top:26px;margin-bottom:20px}
+.fee-cta .t{flex:1 1 240px;font-size:15px;font-weight:600;color:var(--brown)}
+@media(max-width:680px){.fee-table td{font-size:14.5px;padding:13px 2px}}
+</style>
+
+<section class="page-head">
+    <div class="wrap">
+        <h1>보수 기준</h1>
+        <p class="lead">법무법인 로연 출입국이민지원센터가 수행하는 주요 업무의 보수 기준입니다.</p>
+    </div>
+</section>
+
+<div class="wrap" style="max-width:840px">
+    <div class="fee-note">
+        <p>모든 업무에 관한 비용은 사전 상담 후 업무 절차를 검토하여 제안을 드립니다.</p>
+    </div>
+
+    <table class="fee-table">
+        <thead>
+            <tr><th>업무</th><th>보수</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>사증 발급<span class="fee-sub">사증발급인정서 신청 포함</span></td><td>KRW 1,200,000 ~</td></tr>
+            <tr><td>체류자격 변경</td><td>KRW 700,000 ~</td></tr>
+            <tr><td>외국인등록정보 변경 등 각종 신고 대리</td><td>KRW 500,000 ~</td></tr>
+            <tr><td>국적 귀화</td><td>KRW 2,000,000 ~</td></tr>
+            <tr><td>영주</td><td>KRW 2,000,000 ~</td></tr>
+            <tr><td>난민</td><td>KRW 1,500,000 ~</td></tr>
+            <tr><td>외국인투자</td><td>KRW 2,000,000 ~</td></tr>
+            <tr><td>사범심사</td><td>KRW 3,000,000 ~</td></tr>
+        </tbody>
+    </table>
+
+    <ul class="fee-foot">
+        <li>표시 금액은 해당 업무의 최저 보수이며, 상한을 정하고 있지 않습니다.</li>
+        <li>표시 금액은 부가가치세 별도입니다.</li>
+        <li>출입국·외국인관서에 납부하는 수수료는 보수에 포함되지 않습니다.</li>
+        <li>환불에 관한 사항은 <a href="__BASE__refund-policy">환불 규정</a>을 확인해 주세요.</li>
+    </ul>
+
+    <div class="fee-cta">
+        <div class="t">사안에 맞는 절차와 비용을 안내받아 보세요.</div>
+        <a href="__BASE__consultation" class="btn btn-primary">사전상담 신청</a>
+        <a href="__BASE__booking" class="btn btn-line">방문 상담 예약</a>
+    </div>
+</div>

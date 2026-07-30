@@ -1054,6 +1054,9 @@
                 <button class="tab" onclick="switchTab('newMembers')">
                     <i class="fas fa-user-plus"></i> 신규 회원 <span id="newMemberBadge" class="badge" style="display: none;">0</span>
                 </button>
+                <button class="tab" onclick="switchTab('preConsult')">
+                    <i class="fas fa-envelope-open-text"></i> 사전상담 <span id="preConsultBadge" class="badge" style="display: none;">0</span>
+                </button>
                 <button class="tab" onclick="switchTab('reservations')">
                     <i class="fas fa-calendar-check"></i> 방문 예약 <span id="reservationBadge" class="badge" style="display: none;">0</span>
                 </button>
@@ -1163,6 +1166,25 @@
             </div>
             
             <div id="newMembersTableContainer">
+                <!-- 테이블이 여기에 동적으로 생성됨 -->
+            </div>
+        </div>
+
+        <!-- 사전상담 탭 -->
+        <div id="preConsultTab" class="tab-content threads-section">
+            <h2>
+                <span><i class="fas fa-envelope-open-text"></i> 온라인 사전상담</span>
+                <span class="thread-count" id="preConsultCount">총 0건</span>
+            </h2>
+
+            <div style="margin-bottom: 20px; padding: 16px; background: #F4F2EE; border-radius: 8px; border: 1px solid #E3DBCC;">
+                <p style="font-size: 14px; color: #4A3C2B; margin: 0;">
+                    <i class="fas fa-info-circle"></i>
+                    회원가입 없이 접수된 온라인 사전상담 신청 목록입니다. 같은 내용이 담당자 메일로도 발송되며, 메일에서 '답장'을 누르면 신청자에게 바로 회신됩니다. 상태를 변경하면 즉시 저장됩니다.
+                </p>
+            </div>
+
+            <div id="preConsultTableContainer">
                 <!-- 테이블이 여기에 동적으로 생성됨 -->
             </div>
         </div>
@@ -1442,14 +1464,22 @@
                 if (el) el.textContent = String(count || 0);
             } catch (_) { /* 실패 시 0 유지 */ }
 
-            // 예약 알림 메일의 #reservations 딥링크 → 방문 예약 탭 자동 활성화
-            if ((window.location.hash || '') === '#reservations') {
+            // 미확인 사전상담 건수는 탭을 열지 않아도 뱃지에 보이도록 먼저 읽어 둔다.
+            loadPreConsultations().catch(() => { /* 뱃지 갱신 실패는 무시 */ });
+
+            // 알림 메일의 딥링크 → 해당 탭 자동 활성화
+            const DEEP_LINKS = {
+                '#reservations': { tab: 'reservations', content: 'reservationsTab', load: loadReservationsData },
+                '#preConsultations': { tab: 'preConsult', content: 'preConsultTab', load: loadPreConsultations }
+            };
+            const deep = DEEP_LINKS[window.location.hash || ''];
+            if (deep) {
                 document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                 document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                const tabBtn = document.querySelector('.tab[onclick*="reservations"]');
+                const tabBtn = document.querySelector(`.tab[onclick*="${deep.tab}"]`);
                 if (tabBtn) tabBtn.classList.add('active');
-                document.getElementById('reservationsTab').classList.add('active');
-                loadReservationsData();
+                document.getElementById(deep.content).classList.add('active');
+                deep.load();
             }
         });
 
@@ -2253,12 +2283,152 @@
             } else if (tabName === 'newMembers') {
                 document.getElementById('newMembersTab').classList.add('active');
                 loadNewMembersData();
+            } else if (tabName === 'preConsult') {
+                document.getElementById('preConsultTab').classList.add('active');
+                loadPreConsultations();
             } else if (tabName === 'reservations') {
                 document.getElementById('reservationsTab').classList.add('active');
                 loadReservationsData();
             } else if (tabName === 'corporate') {
                 document.getElementById('corporateTab').classList.add('active');
                 loadCorporateInquiries();
+            }
+        }
+
+        // ========================================
+        // 온라인 사전상담 탭
+        // ========================================
+        // 상담 쓰레드를 대체하는 접수 경로. 같은 내용이 담당자 메일로도 발송되며
+        // (send-admin-email 의 pre_consultation 분기), 여기서는 이력을 확인·관리한다.
+        let preConsultations = [];
+        const PRECONSULT_STATUS = {
+            requested: { label: '접수', bg: '#B0883F' },
+            contacted: { label: '회신 완료', bg: '#2F855A' },
+            closed:    { label: '종료', bg: '#6E665B' }
+        };
+
+        async function loadPreConsultations() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('pre_consultations')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                if (error) { console.error('사전상담 로드 오류:', error); preConsultations = []; }
+                else { preConsultations = data || []; }
+                const pending = preConsultations.filter(r => (r.status || 'requested') === 'requested').length;
+                const badge = document.getElementById('preConsultBadge');
+                if (badge) {
+                    if (pending > 0) { badge.textContent = pending; badge.style.display = 'inline-block'; }
+                    else { badge.style.display = 'none'; }
+                }
+                renderPreConsultTable();
+            } catch (e) { console.error('사전상담 로드 오류:', e); }
+        }
+
+        function renderPreConsultTable() {
+            const container = document.getElementById('preConsultTableContainer');
+            document.getElementById('preConsultCount').textContent = `총 ${preConsultations.length}건`;
+            if (!preConsultations.length) {
+                container.innerHTML = '<div class="empty-state" style="text-align:center; padding:60px 20px; color:#6B7684;"><i class="fas fa-envelope-open-text" style="font-size:48px; margin-bottom:16px; opacity:0.5;"></i><p style="font-size:16px;">접수된 사전상담 신청이 없습니다.</p></div>';
+                return;
+            }
+
+            let html = `
+                <table class="customers-table">
+                    <thead>
+                        <tr>
+                            <th>접수일</th>
+                            <th>이름</th>
+                            <th>이메일</th>
+                            <th>연락처</th>
+                            <th>분야</th>
+                            <th>체류</th>
+                            <th>상담 내용</th>
+                            <th>상태</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            preConsultations.forEach(c => {
+                const st = PRECONSULT_STATUS[c.status || 'requested'] || PRECONSULT_STATUS.requested;
+                // 국내면 체류자격·만료일, 해외면 거주 국가를 보여 준다.
+                const stay = c.in_korea
+                    ? '국내' + (c.visa ? ` / ${escCorp(c.visa)}` : '') + (c.visa_expiry ? `<br><span style="color:#6B7684;font-size:12px;">~ ${escCorp(c.visa_expiry)}</span>` : '')
+                    : '해외' + (c.country ? ` / ${escCorp(c.country)}` : '');
+                const subject = encodeURIComponent(`[법무법인 로연] 사전상담 회신 — ${c.name}`);
+                const email = `<a href="mailto:${escCorp(c.email)}?subject=${subject}" style="color:#887668;">${escCorp(c.email)}</a>`;
+                const phone = c.phone ? `<a href="tel:${escCorp(c.phone)}" style="color:#887668;text-decoration:none;">${escCorp(c.phone)}</a>` : '-';
+                const options = Object.keys(PRECONSULT_STATUS).map(k =>
+                    `<option value="${k}"${(c.status || 'requested') === k ? ' selected' : ''}>${PRECONSULT_STATUS[k].label}</option>`
+                ).join('');
+
+                html += `
+                    <tr>
+                        <td>${new Date(c.created_at).toLocaleDateString('ko-KR')}</td>
+                        <td><strong>${escCorp(c.name)}</strong></td>
+                        <td>${email}</td>
+                        <td>${phone}</td>
+                        <td>${escCorp(c.category) || '-'}</td>
+                        <td>${stay}</td>
+                        <td style="max-width:300px; white-space:pre-wrap; color:#4A3C2B;">${escCorp(c.message) || '-'}</td>
+                        <td>
+                            <span class="status-badge" style="background:${st.bg}; color:#fff; padding:3px 9px; border-radius:6px; font-size:12px; font-weight:600; display:inline-block; margin-bottom:6px;">${st.label}</span><br>
+                            <select onchange="updatePreConsultStatus('${c.id}', this.value)" style="font-size:12px; padding:4px 6px; border:1px solid #D8D2C6; border-radius:4px;">
+                                ${options}
+                            </select>
+                            <button onclick="deletePreConsultation('${c.id}', '${escCorp(c.name)}')" title="이 접수 건을 삭제합니다" style="margin-top:6px; display:block; font-size:12px; padding:4px 8px; border:1px solid #D8D2C6; border-radius:4px; background:#fff; color:#B03A2E; cursor:pointer;">
+                                <i class="fas fa-trash"></i> 삭제
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        async function updatePreConsultStatus(id, status) {
+            try {
+                const { error } = await supabaseClient
+                    .from('pre_consultations')
+                    .update({ status })
+                    .eq('id', id);
+                if (error) {
+                    console.error('❌ 사전상담 상태 변경 오류:', error);
+                    alert('상태 변경에 실패했습니다: ' + error.message);
+                    return;
+                }
+                const c = preConsultations.find(x => x.id === id);
+                if (c) c.status = status;
+                renderPreConsultTable();
+            } catch (e) {
+                console.error('사전상담 상태 변경 오류:', e);
+                alert('상태 변경 중 오류가 발생했습니다.');
+            }
+        }
+
+        // 접수 건 개별 파기. 보유기간(3년)이 지난 건은 DB 의
+        // purge_old_pre_consultations() 가 일괄 처리하고, 그 전에 지워야 할 건은 여기서 지운다.
+        async function deletePreConsultation(id, name) {
+            if (!confirm(`${name || '이'} 님의 사전상담 접수 건을 삭제합니다.\n삭제하면 되돌릴 수 없습니다. 계속할까요?`)) return;
+            try {
+                const { error } = await supabaseClient
+                    .from('pre_consultations')
+                    .delete()
+                    .eq('id', id);
+                if (error) {
+                    console.error('❌ 사전상담 삭제 오류:', error);
+                    alert('삭제에 실패했습니다: ' + error.message);
+                    return;
+                }
+                preConsultations = preConsultations.filter(x => x.id !== id);
+                renderPreConsultTable();
+                loadPreConsultations().catch(() => {});
+            } catch (e) {
+                console.error('사전상담 삭제 오류:', e);
+                alert('삭제 중 오류가 발생했습니다.');
             }
         }
 

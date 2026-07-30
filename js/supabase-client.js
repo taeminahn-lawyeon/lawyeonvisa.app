@@ -532,6 +532,88 @@ async function notifyAdminOnNewInquiry(inquiryId) {
 }
 
 // ============================================
+// 사전상담(Pre-consultation) 신청
+// ============================================
+// 온라인 상담은 더 이상 쓰레드를 만들지 않는다. 접수 내용을 한 행으로 남기고
+// 담당 변호사 메일로 보내며, 확인은 어드민 대시보드에서 한다.
+// 예약(createReservation)과 같은 이유로 id 를 클라이언트에서 만든다:
+// anon 방문자는 SELECT 권한이 없어 insert 후 되읽기가 RLS 에 막힌다.
+async function createPreConsultation(d) {
+    try {
+        if (!supabaseClient) {
+            throw new Error('Supabase 클라이언트가 준비되지 않았습니다');
+        }
+
+        // 허니팟: 사람에게 보이지 않는 입력란이 채워져 있으면 봇으로 보고
+        // 저장·발송 없이 성공한 것처럼 응답한다(봇에게 실패를 알리지 않음).
+        if ((d.hp || '').trim()) {
+            debugLog('사전상담 허니팟 감지 — 접수 생략');
+            return { success: true, data: null, skipped: true };
+        }
+
+        const newId = uuidv4();
+        const record = {
+            id: newId,
+            name: (d.name || '').trim(),
+            email: (d.email || '').trim(),
+            phone: (d.phone || '').trim(),
+            category: d.category || null,
+            in_korea: !!d.in_korea,
+            visa: ((d.visa || '').trim()) || null,
+            visa_expiry: d.visa_expiry || null,
+            country: ((d.country || '').trim()) || null,
+            message: ((d.message || '').trim()) || null,
+            lang: d.lang || 'ko'
+        };
+
+        const { error } = await supabaseClient
+            .from('pre_consultations')
+            .insert(record);
+
+        if (error) {
+            console.error('사전상담 접수 오류:', error);
+            throw error;
+        }
+
+        debugLog('사전상담 접수 성공:', newId);
+
+        // 📧 담당 변호사 메일 발송 (실패는 무시 — 저장 성공이 우선)
+        notifyAdminOnNewPreConsultation(newId)
+            .then(res => debugLog('📧 [createPreConsultation] 메일 발송 결과:', res))
+            .catch(err => debugLog('Pre-consultation notification error (ignored):', err));
+
+        return { success: true, data: Object.assign({ id: newId }, record) };
+    } catch (error) {
+        console.error('사전상담 접수 실패:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// 사전상담 접수 메일 발송 (send-admin-email Edge Function 호출)
+// 비로그인 접수이므로 anon key 로 호출한다.
+async function notifyAdminOnNewPreConsultation(preConsultationId) {
+    try {
+        const res = await fetch(SUPABASE_URL + '/functions/v1/send-admin-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+                'apikey': SUPABASE_ANON_KEY
+            },
+            body: JSON.stringify({ type: 'pre_consultation', preConsultationId }),
+            keepalive: true  // 접수 직후 페이지 이동에도 발송 요청이 취소되지 않도록
+        });
+        if (!res.ok) {
+            return { success: false, error: await res.text() };
+        }
+        return { success: true, data: await res.json() };
+    } catch (error) {
+        console.error('사전상담 메일 발송 실패(무시):', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// ============================================
 // 쓰레드 관련 함수
 // ============================================
 

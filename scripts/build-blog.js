@@ -1136,7 +1136,7 @@ function generateSitemap(posts) {
     const staticPages = [
         { loc: 'https://www.lawyeonvisa.app/', priority: '1.0', changefreq: 'weekly' },
         { loc: 'https://www.lawyeonvisa.app/blog.html', priority: '0.9', changefreq: 'daily' },
-        { loc: 'https://www.lawyeonvisa.app/price-list.html', priority: '0.8', changefreq: 'monthly' },
+        { loc: 'https://www.lawyeonvisa.app/price-list', priority: '0.8', changefreq: 'monthly' },
         { loc: 'https://www.lawyeonvisa.app/partnership-apply.html', priority: '0.7', changefreq: 'monthly' },
         { loc: 'https://www.lawyeonvisa.app/terms-of-service.html', priority: '0.3', changefreq: 'yearly' },
         { loc: 'https://www.lawyeonvisa.app/privacy-policy.html', priority: '0.3', changefreq: 'yearly' },
