@@ -33,36 +33,38 @@
 /* 시행일 등 문서 메타 */
 .legal .update-date{font-size:13.5px;color:var(--muted);margin:0 0 34px;padding-bottom:16px;border-bottom:1px solid var(--rule-d)}
 
-/* 강조 문단 3종. 색으로 소리치지 않고 왼쪽 괘선의 굵기·명도로만 구분한다. */
+/* 주석 성격의 문단 — 상자를 만들지 않는다.
+   배경·테두리·좌측 띠 없이, 머리에 붙는 작은 표제와 여백만으로 본문과 구분한다.
+   인쇄된 약관·법령의 주(註) 조판 방식이다. */
 .legal .info-box,
 .legal .warning-box,
 .legal .success-box,
 .legal .contact-box{
-    background:var(--card-2);
-    border:1px solid var(--rule);
-    border-left:3px solid var(--rule-d);
-    border-radius:2px;
-    padding:16px 20px;
-    margin:18px 0;
-    font-size:14.8px;
-    line-height:1.8;
+    margin:26px 0;
 }
-.legal .warning-box{border-left-color:var(--gold)}
-.legal .success-box,
-.legal .contact-box{border-left-color:var(--btn)}
-.legal .info-box strong,
-.legal .warning-box strong,
-.legal .success-box strong,
-.legal .contact-box strong{display:inline-block;margin-bottom:2px}
+.legal .info-box > strong:first-child,
+.legal .warning-box > strong:first-child,
+.legal .success-box > strong:first-child,
+.legal .contact-box > strong:first-child{
+    display:block;
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:.09em;
+    color:var(--taupe);
+    margin-bottom:7px;
+}
+/* <strong>라벨</strong><br> 다음의 <br> 은 표제를 블록으로 세우면 불필요하다. */
+.legal .info-box > strong:first-child + br,
+.legal .warning-box > strong:first-child + br,
+.legal .success-box > strong:first-child + br,
+.legal .contact-box > strong:first-child + br{display:none}
 
-/* 본문 중 짚어야 할 한 줄 */
+/* 본문 중 짚어야 할 한 줄 — 굵기와 색으로만 세운다. */
 .legal .highlight{
     display:block;
-    border-left:2px solid var(--btn);
-    padding:2px 0 2px 14px;
     margin:14px 0;
     color:var(--brown);
-    font-weight:600;
+    font-weight:700;
 }
 
 /* 표 — 가로 괘선만 남긴 장부 스타일 */
