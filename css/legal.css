@@ -1,0 +1,95 @@
+/* ============================================================
+   legal.css — 약관·개인정보 처리방침·환불 규정 전용 스타일.
+   site.css 를 먼저 불러온 뒤 이 파일을 얹는다. 팔레트와 타이포는
+   site.css 의 변수를 그대로 쓰고, 법령 문서에 필요한 조문 구조
+   (조·항·호, 표, 강조 문단)만 여기서 정의한다.
+   ============================================================ */
+
+.legal{padding:44px 0 90px;max-width:760px}
+
+/* 조문 묶음 — 카드가 아니라 얇은 구분선으로 끊는다. */
+.legal .section{padding-bottom:34px;margin-bottom:34px;border-bottom:1px solid var(--rule)}
+.legal .section:last-of-type{border-bottom:0;margin-bottom:0}
+
+.legal h2{font-size:19px;font-weight:700;letter-spacing:-.01em;color:var(--brown);margin-bottom:16px}
+.legal h3{font-size:15.5px;font-weight:700;color:var(--ink);margin:24px 0 10px}
+.legal h3:first-of-type{margin-top:18px}
+
+.legal p{font-size:15.5px;line-height:1.85;color:var(--ink);margin-bottom:13px}
+.legal p:last-child{margin-bottom:0}
+
+.legal ol,.legal ul{margin:0 0 13px;padding-left:20px}
+.legal ol:last-child,.legal ul:last-child{margin-bottom:0}
+.legal li{font-size:15.5px;line-height:1.85;color:var(--ink);margin-bottom:7px;padding-left:3px}
+.legal li:last-child{margin-bottom:0}
+.legal li > ul,.legal li > ol{margin:8px 0 4px}
+.legal ol{list-style:decimal}
+.legal ul{list-style:none;padding-left:0}
+.legal ul > li{position:relative;padding-left:14px}
+.legal ul > li:before{content:"·";position:absolute;left:2px;color:var(--muted)}
+.legal ol ul > li:before{content:"–";font-size:13px}
+.legal strong{font-weight:700;color:var(--brown)}
+
+/* 시행일 등 문서 메타 */
+.legal .update-date{font-size:13.5px;color:var(--muted);margin:0 0 34px;padding-bottom:16px;border-bottom:1px solid var(--rule-d)}
+
+/* 강조 문단 3종. 색으로 소리치지 않고 왼쪽 괘선의 굵기·명도로만 구분한다. */
+.legal .info-box,
+.legal .warning-box,
+.legal .success-box,
+.legal .contact-box{
+    background:var(--card-2);
+    border:1px solid var(--rule);
+    border-left:3px solid var(--rule-d);
+    border-radius:2px;
+    padding:16px 20px;
+    margin:18px 0;
+    font-size:14.8px;
+    line-height:1.8;
+}
+.legal .warning-box{border-left-color:var(--gold)}
+.legal .success-box,
+.legal .contact-box{border-left-color:var(--btn)}
+.legal .info-box strong,
+.legal .warning-box strong,
+.legal .success-box strong,
+.legal .contact-box strong{display:inline-block;margin-bottom:2px}
+
+/* 본문 중 짚어야 할 한 줄 */
+.legal .highlight{
+    display:block;
+    border-left:2px solid var(--btn);
+    padding:2px 0 2px 14px;
+    margin:14px 0;
+    color:var(--brown);
+    font-weight:600;
+}
+
+/* 표 — 가로 괘선만 남긴 장부 스타일 */
+.legal .table-scroll{overflow-x:auto;margin:16px 0}
+.legal table{width:100%;border-collapse:collapse;min-width:460px}
+.legal th{
+    text-align:left;font-size:12.5px;font-weight:700;color:var(--brown);
+    letter-spacing:.02em;padding:11px 12px 11px 0;
+    border-bottom:2px solid var(--rule-d);white-space:nowrap;
+}
+.legal td{
+    font-size:14.5px;line-height:1.7;color:var(--ink);
+    padding:13px 12px 13px 0;border-bottom:1px solid var(--rule);vertical-align:top;
+}
+.legal th:last-child,.legal td:last-child{padding-right:0}
+
+/* 환불 규정의 비율 숫자 */
+.legal .refund-rate{font-weight:700;color:var(--brown);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* 하단 복귀 링크 */
+.legal-foot{margin-top:44px;padding-top:24px;border-top:1px solid var(--rule)}
+.legal-foot a{font-size:14.5px;color:var(--muted);border-bottom:1px solid var(--rule-d);padding-bottom:2px}
+.legal-foot a:hover{color:var(--brown);border-bottom-color:var(--btn)}
+
+@media(max-width:860px){
+    .legal{padding:30px 0 64px}
+    .legal .section{padding-bottom:28px;margin-bottom:28px}
+    .legal h2{font-size:18px}
+    .legal p,.legal li{font-size:16px}
+}
