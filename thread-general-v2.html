@@ -1627,7 +1627,9 @@
                             관리자 도구
                         </div>
                         <div class="admin-buttons">
-                            <button class="admin-btn" onclick="openPaymentLinkModal()">
+                            <!-- 결제 링크 전송: service-apply-general 을 보관(비노출) 처리하면서 함께 숨김.
+                                 결제 재개 시 이 주석만 풀면 된다. -->
+                            <button class="admin-btn" onclick="openPaymentLinkModal()" hidden>
                                 결제 링크 전송
                             </button>
                             <button class="admin-btn" onclick="openBasicInfoModal()">

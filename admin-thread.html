@@ -1468,7 +1468,8 @@
                         <!-- Admin Template Toolbar -->
                         <div class="admin-template-toolbar">
                             <button type="button" class="template-btn" onclick="insertBasicInfoRequest()">기본사항 요청</button>
-                            <button type="button" class="template-btn" onclick="insertPaymentRequest()">결제 요청</button>
+                            <!-- 결제 요청: service-apply-general 을 보관(비노출) 처리하면서 함께 숨김. 결제 재개 시 hidden 만 제거. -->
+                            <button type="button" class="template-btn" onclick="insertPaymentRequest()" hidden>결제 요청</button>
                             <button type="button" class="template-btn" onclick="insertLinkButton()">링크 첨부</button>
                             <button type="button" class="template-btn" onclick="insertGrayBox()">회색 박스</button>
                             <button type="button" class="template-btn" onclick="openQuoteModal()">견적 보내기</button>
