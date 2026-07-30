@@ -66,17 +66,26 @@ $$;
 REVOKE ALL ON FUNCTION public.purge_old_pre_consultations() FROM PUBLIC, anon;
 
 -- 어드민: 전체 조회·관리 (reservations_admin_all 과 동일한 역할 집합)
+--
+-- 역할 비교는 반드시 role::text 로 한다. 문자열을 'staff'::user_role 처럼
+-- enum 으로 캐스팅하면 해당 값이 enum 에 없을 때 문장 자체가 에러를 내고,
+-- Supabase SQL 편집기는 전체를 한 트랜잭션으로 실행하므로 테이블 생성까지
+-- 함께 롤백된다. 20260608_reservations_admin_select.sql 과 같은 형태를 쓴다.
 DROP POLICY IF EXISTS pre_consultations_admin_all ON public.pre_consultations;
 CREATE POLICY pre_consultations_admin_all
   ON public.pre_consultations
   FOR ALL TO authenticated
   USING (EXISTS (
-    SELECT 1 FROM public.profiles
-    WHERE profiles.id = auth.uid()
-      AND profiles.role IN ('super_admin'::user_role, 'admin'::user_role, 'staff'::user_role)
+    SELECT 1 FROM public.profiles p
+    WHERE p.id = auth.uid()
+      AND p.role::text IN ('super_admin','admin','staff')
   ))
   WITH CHECK (EXISTS (
-    SELECT 1 FROM public.profiles
-    WHERE profiles.id = auth.uid()
-      AND profiles.role IN ('super_admin'::user_role, 'admin'::user_role, 'staff'::user_role)
+    SELECT 1 FROM public.profiles p
+    WHERE p.id = auth.uid()
+      AND p.role::text IN ('super_admin','admin','staff')
   ));
+
+-- PostgREST 스키마 캐시 갱신. 이걸 하지 않으면 테이블이 실제로 만들어져 있어도
+-- 잠시 동안 PGRST205 (Could not find the table ... in the schema cache) 가 난다.
+NOTIFY pgrst, 'reload schema';

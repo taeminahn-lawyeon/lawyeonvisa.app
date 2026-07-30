@@ -23,10 +23,13 @@
 같은 SQL Editor에서 아래를 실행합니다.
 
 ```sql
-select count(*) from public.pre_consultations;
+select to_regclass('public.pre_consultations');
 ```
 
-`0` 이 나오면 테이블이 정상적으로 만들어진 것입니다.
+테이블 이름이 나오면 정상입니다. **`null` 이 나오면 만들어지지 않은 것입니다** —
+SQL Editor는 붙여넣은 전체를 하나의 트랜잭션으로 실행하므로,
+중간의 한 문장만 실패해도 테이블 생성까지 통째로 취소됩니다.
+이 경우 Run 직후 화면 아래에 빨간 에러 메시지가 떠 있으니 그 문구를 알려 주세요.
 
 ---
 
@@ -89,9 +92,28 @@ Functions → `send-admin-email` → **Logs** 에 마지막 배포 시각이 갱
 
 ## 안 될 때
 
+### `PGRST205 — Could not find the table 'public.pre_consultations' in the schema cache`
+
+이 오류는 원인이 둘이고, 위의 `to_regclass` 결과로 구분합니다.
+
+**결과가 `null` (테이블이 없음)** — 1단계 SQL이 실패해 롤백된 것입니다. 다시 실행하고 에러 메시지를 확인하세요.
+
+**결과에 테이블 이름이 나옴 (테이블은 있음)** — PostgREST의 스키마 캐시가 아직 갱신되지 않은 것입니다. 아래를 실행하고 30초쯤 뒤 다시 시도하세요.
+
+```sql
+notify pgrst, 'reload schema';
+```
+
+그래도 그대로면 대시보드에서 캐시를 강제로 다시 읽게 합니다.
+Settings → API → **Restart server**, 또는 Database → Extensions 화면을 한 번 열었다 닫으면 재적재됩니다.
+
+### 그 밖의 증상
+
 | 증상 | 원인과 조치 |
 |---|---|
-| "신청을 전송하지 못했습니다" 알림 | 1단계 SQL 미실행. 테이블이 없습니다 |
+| "신청을 전송하지 못했습니다" 알림 | 브라우저 콘솔(F12)의 오류 코드를 확인. `PGRST205` 면 위 항목 참고 |
+| `PGRST205` | 테이블 없음 또는 스키마 캐시 미갱신 — 위 항목 참고 |
+| `42501` / `new row violates row-level security` | 1단계 SQL 중 INSERT 정책 부분이 적용되지 않음. 다시 실행 |
 | 화면은 접수됐는데 메일이 안 옴 | 2단계 배포 미실행, 또는 `RESEND_API_KEY` 시크릿 누락. Functions → Logs 에서 오류 확인 |
 | 메일은 오는데 답장 주소가 회사 주소 | 2단계 배포가 이전 버전. 다시 배포 |
 | 대시보드 사전상담 탭이 비어 있음 | 로그인한 관리자 계정의 `profiles.role` 이 `super_admin`/`admin`/`staff` 중 하나여야 합니다 |
