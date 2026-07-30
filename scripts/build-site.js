@@ -20,24 +20,34 @@ const replaceAll = (s, find, val) => s.split(find).join(val == null ? '' : val);
 const HEAD = read('partials/head.html');
 const HEADER = read('partials/header.html');
 const FOOTER = { en: read('partials/footer.en.html'), ko: read('partials/footer.ko.html'), vi: read('partials/footer.vi.html') };
-const SCRIPTS = [
+// Scripts every built page gets. site.js is presentation-only (mobile nav,
+// article CTAs, share button) — it no longer touches auth.
+const SCRIPTS = '<script src="__BASE__js/site.js?v=11"></script>';
+
+// Supabase is loaded only by the pages that actually submit a form
+// (pre-consultation, visit booking, corporate advisory). Article and index
+// pages used to pull it in just for the header login button; that button is
+// gone, so ~40 pages no longer download 60+ KB of client they never used.
+// Opt in per page with `supabase: true` in PAGES.
+const SUPABASE_SCRIPTS = [
   '<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>',
-  '<script src="__BASE__js/supabase-client.js?v=20260715"></script>',
-  '<script src="__BASE__js/notification-service.js?v=20260715"></script>',
-  '<script src="__BASE__js/site.js?v=10"></script>',
+  '<script src="__BASE__js/supabase-client.js?v=20260730"></script>',
 ].join('\n');
 
 // ---- per-language UI strings (header chrome) ----
 const STRINGS = {
   en: { brandName: 'Law Firm Lawyeon', brandSub: 'Visa & Immigration Center',
         siteName: 'Law Firm Lawyeon Immigration Center', siteNameAlt: 'Law Firm Lawyeon',
-        navAbout: 'About Lawyeon', navInsights: 'Insights', navCases: 'Cases & News', navConsult: 'Consultation', navMypage: 'My Page', login: 'Login' },
+        navAbout: 'About Lawyeon', navInsights: 'Insights', navCases: 'Cases & News', navConsult: 'Consultation',
+        headerCta: 'Apply for pre-consultation' },
   ko: { brandName: '법무법인 로연', brandSub: '출입국이민지원센터',
         siteName: '법무법인 로연', siteNameAlt: '법무법인 로연 출입국이민지원센터',
-        navAbout: '로연 소개', navInsights: '인사이트', navCases: '사례·소식', navConsult: '상담', navMypage: '마이 페이지', login: '로그인' },
+        navAbout: '로연 소개', navInsights: '인사이트', navCases: '사례·소식', navConsult: '상담',
+        headerCta: '사전상담 신청' },
   vi: { brandName: 'Law Firm Lawyeon', brandSub: 'Trung tâm Xuất nhập cảnh & Di trú',
         siteName: 'Trung tâm Hỗ trợ Xuất nhập cảnh Lawyeon', siteNameAlt: 'Law Firm Lawyeon',
-        navAbout: 'Giới thiệu', navInsights: 'Thông tin pháp lý', navCases: 'Tin tức', navConsult: 'Tư vấn', navMypage: 'Trang của tôi', login: 'Đăng nhập' },
+        navAbout: 'Giới thiệu', navInsights: 'Thông tin pháp lý', navCases: 'Tin tức', navConsult: 'Tư vấn',
+        headerCta: 'Đăng ký tư vấn sơ bộ' },
 };
 
 // Directory prefix each language's built pages live under (en at root).
@@ -56,31 +66,25 @@ const PAGES = [
              ko: '법무법인 로연 출입국이민지원센터. 외국인·이주민을 위한 형사사건, 계약, 출입국 민원 등 법률 대리 서비스.' },
   },
   {
-    id: 'consultation', content: 'consultation',
-    title: { en: 'Request Consultation — Law Firm Lawyeon', ko: '상담 신청 — 법무법인 로연' },
-    desc:  { en: 'Consultation with Law Firm Lawyeon. Open a private thread for your visa, immigration, or criminal matter in Korea.',
-             ko: '법무법인 로연 상담 신청. 비자·출입국·형사 사안에 대해 비공개 쓰레드로 상담을 시작하세요.' },
+    id: 'consultation', content: 'consultation', supabase: true,
+    title: { en: 'Apply for a Pre-Consultation — Law Firm Lawyeon', ko: '사전상담 신청 — 법무법인 로연' },
+    desc:  { en: 'Apply for a pre-consultation with Law Firm Lawyeon. Send us your visa, immigration or criminal matter and we will review it and reply by email.',
+             ko: '법무법인 로연 사전상담 신청. 비자·출입국·형사 사안을 남겨 주시면 검토 후 이메일로 회신드립니다.' },
   },
   {
-    id: 'booking', content: 'booking',
+    id: 'booking', content: 'booking', supabase: true,
     title: { en: 'Book a Visit Consultation — Law Firm Lawyeon', ko: '방문 상담 예약 — 법무법인 로연' },
     desc:  { en: 'Book an in-person consultation at the Seoul or Gwangju office of Law Firm Lawyeon. Weekdays 09:00–17:00, 1-hour slots.',
              ko: '법무법인 로연 서울·광주 사무소 방문 상담 예약. 평일 09:00–17:00, 1시간 단위(점심 12:00–13:00 제외).' },
   },
   {
-    id: 'mypage', content: 'mypage',
-    title: { en: 'My Page — Law Firm Lawyeon', ko: '마이 페이지 — 법무법인 로연' },
-    desc:  { en: 'Your cases, residence status and immigration service desk in one place.',
-             ko: '내 사건, 체류 상태, 출입국 업무 데스크를 한 곳에서.' },
+    id: 'price-list', content: 'price-list',
+    title: { en: 'Fees — Law Firm Lawyeon', ko: '보수 기준 — 법무법인 로연' },
+    desc:  { en: 'Reference fees for immigration matters handled by Law Firm Lawyeon. The fee for every matter is proposed after a pre-consultation and a review of the procedure involved.',
+             ko: '법무법인 로연 출입국 업무 보수 기준. 모든 업무에 관한 비용은 사전 상담 후 업무 절차를 검토하여 제안을 드립니다.' },
   },
   {
-    id: 'visa-info', content: 'visa-info',
-    title: { en: 'Submit Visa Information — Law Firm Lawyeon', ko: '비자 정보 제출 — 법무법인 로연' },
-    desc:  { en: 'Submit your residence and visa information to view your status on My Page.',
-             ko: '체류·비자 정보를 제출하고 마이 페이지에서 상태를 확인하세요.' },
-  },
-  {
-    id: 'corporate-advisory', content: 'corporate-advisory',
+    id: 'corporate-advisory', content: 'corporate-advisory', supabase: true,
     title: { en: 'Corporate Advisory Inquiry — Law Firm Lawyeon', ko: '기업 자문 문의 — 법무법인 로연' },
     desc:  { en: 'Corporate advisory for foreign-employee visas, immigration compliance and employment matters. Send an inquiry — no sign-up required.',
              ko: '외국인 임직원 비자·출입국 규정 준수·고용 사안에 대한 기업 자문. 회원가입 없이 문의를 남겨 주세요.' },
@@ -427,7 +431,8 @@ function build() {
       const date = ARTICLE_DATES[page.id];
       const ogImage = isArticle ? pageOgImage(bodyHtml) : SITE + '/images/og-image.png';
 
-      let doc = HEAD + '\n' + HEADER + '\n' + bodyHtml + '\n' + FOOTER[lang] + '\n' + SCRIPTS + '\n</body>\n</html>\n';
+      const scripts = (page.supabase ? SUPABASE_SCRIPTS + '\n' : '') + SCRIPTS;
+      let doc = HEAD + '\n' + HEADER + '\n' + bodyHtml + '\n' + FOOTER[lang] + '\n' + scripts + '\n</body>\n</html>\n';
       const subs = {
         '__LANG__': lang,
         '__TITLE__': isArticle ? stripBrand(page.title[lang]) : page.title[lang],
@@ -443,8 +448,7 @@ function build() {
         '__NAV_INSIGHTS__': S.navInsights,
         '__NAV_CASES__': S.navCases,
         '__NAV_CONSULT__': S.navConsult,
-        '__NAV_MYPAGE__': S.navMypage,
-        '__LOGIN__': S.login,
+        '__HEADER_CTA__': S.headerCta,
         '__LANGTOGGLE__': langToggle(lang, page.id, langs),
         '__OG_SITE_NAME__': S.siteName,
         '__JSONLD__': page.jsonld ? legalServiceJsonLd(lang) : '',
@@ -485,8 +489,10 @@ function build() {
       return locs.map((loc) => `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n` + alts + `  </url>`).join('\n');
     }).join('\n') + '\n</urlset>\n';
   fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap, 'utf8');
+  // archive/ holds retired pages that GitHub Pages still serves — keep them out
+  // of the index so decommissioned flows don't surface in search results.
   fs.writeFileSync(path.join(ROOT, 'robots.txt'),
-    'User-agent: *\nAllow: /\n\nSitemap: ' + SITE + '/sitemap.xml\n', 'utf8');
+    'User-agent: *\nAllow: /\nDisallow: /archive/\n\nSitemap: ' + SITE + '/sitemap.xml\n', 'utf8');
   console.log('built sitemap.xml, robots.txt');
 
   console.log(`\nDone. ${count} page(s) generated.`);

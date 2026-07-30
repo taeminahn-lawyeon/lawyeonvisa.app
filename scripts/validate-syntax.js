@@ -126,28 +126,9 @@ function validatePaymentFlow() {
         }
     }
 
-    // 2. service-apply-general.html의 servicePricing과 data/services.json 비교
-    const servicesJsonPath = path.join(ROOT, 'data', 'services.json');
-    const serviceApplyPath = path.join(ROOT, 'service-apply-general.html');
-
-    if (fs.existsSync(servicesJsonPath) && fs.existsSync(serviceApplyPath)) {
-        const servicesJson = JSON.parse(fs.readFileSync(servicesJsonPath, 'utf-8'));
-        const applyContent = fs.readFileSync(serviceApplyPath, 'utf-8');
-
-        const jsonIds = new Set();
-        for (const cat of servicesJson.categories) {
-            for (const svc of cat.services) {
-                jsonIds.add(svc.id);
-            }
-        }
-
-        for (const id of jsonIds) {
-            if (!applyContent.includes(`'${id}'`)) {
-                log('WARN', 'service-apply-general.html', null,
-                    `services.json의 서비스 "${id}"가 결제 페이지에 없습니다`);
-            }
-        }
-    }
+    // 2. (제거) service-apply-general.html ↔ data/services.json id 정합성 검사.
+    //    서비스 신청 플로우와 상세 요금 데이터가 함께 archive/ 로 내려가면서
+    //    비교 대상이 사라졌다. 공개 보수 기준은 content/price-list.{en,ko}.html.
 
     // 3. Edge Function 파일 존재 확인
     const confirmPaymentPath = path.join(ROOT, 'supabase', 'functions', 'confirm-payment', 'index.ts');

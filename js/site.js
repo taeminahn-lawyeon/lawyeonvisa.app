@@ -1,29 +1,19 @@
 /* ============================================================
    site.js — shared front-end behavior for built pages.
-   - Login-first gating: links marked [data-login-go] require a
-     Google sign-in before navigating to the target page.
-   - Auth-aware header: swaps the "Login" button to the user's
-     account + a logout action when a Supabase session exists.
-   - Degrades gracefully if Supabase isn't available.
-   Depends on (optional): supabase-client.js globals
-     checkSession(), signInWithGoogle(), signOut(), getCurrentUser()
+   - Article extras: copy protection, consultation CTA bands,
+     share button, related-attorney cards.
+   - Mobile hamburger menu.
+   Presentation only: no auth, no Supabase. Built pages that
+   actually submit a form (pre-consultation, booking, corporate
+   advisory) load supabase-client.js separately — see the
+   `supabase` flag in scripts/build-site.js PAGES.
    ============================================================ */
 (function () {
   var isKo = (document.documentElement.getAttribute('lang') || 'en').toLowerCase().indexOf('ko') === 0;
-  var T = isKo
-    ? { account: '내 계정', logout: '로그아웃' }
-    : { account: 'My Account', logout: 'Log out' };
 
   function ready(fn) {
     if (document.readyState !== 'loading') fn();
     else document.addEventListener('DOMContentLoaded', fn);
-  }
-
-  // Normalize a path/href to a comparable page key (drop /, /ko/, .html, query/hash).
-  function pageKey(p) {
-    return String(p || '').replace(/^https?:\/\/[^/]+/, '')
-      .replace(/^\/(ko\/)?/, '').replace(/^\//, '')
-      .split(/[?#]/)[0].replace(/\.html$/, '');
   }
 
   // Build a consultation CTA band (online + in-person) for article pages.
@@ -37,11 +27,10 @@
     var a1 = document.createElement('a');
     a1.className = 'btn btn-primary';
     a1.href = 'consultation';
-    a1.setAttribute('data-login-go', 'consultation'); // online thread requires sign-in
-    a1.textContent = isKo ? '온라인 상담 신청' : 'Online consultation';
+    a1.textContent = isKo ? '사전상담 신청' : 'Apply for pre-consultation';
     var a2 = document.createElement('a');
     a2.className = 'btn btn-line';
-    a2.href = 'booking'; // visit booking — no sign-in required
+    a2.href = 'booking';
     a2.textContent = isKo ? '방문 상담 예약' : 'Book a visit';
     w.appendChild(t); w.appendChild(a1); w.appendChild(a2);
     return w;
@@ -194,8 +183,7 @@
       }
     })();
 
-    // 0.5) Mobile hamburger menu. Cloned nav items keep their attributes
-    //      (incl. data-login-go), so the gating loop below binds them too.
+    // 0.5) Mobile hamburger menu — clones the desktop nav items.
     (function buildMobileNav() {
       var header = document.querySelector('.header');
       var content = header && header.querySelector('.header-content');
@@ -219,20 +207,9 @@
       actions.querySelectorAll('.nav-links a').forEach(function (a) {
         inner.appendChild(a.cloneNode(true));
       });
-      var mp = actions.querySelector('.nav-mypage');
-      if (mp) inner.appendChild(mp.cloneNode(true));
       // (EN/한국어 토글은 모바일에서도 상단 바에 상시 노출되므로 메뉴에 넣지 않음)
       var btn = actions.querySelector('.btn-primary');
-      if (btn) {
-        var bclone = btn.cloneNode(true);
-        bclone.addEventListener('click', function (e) {
-          if (typeof signInWithGoogle === 'function') {
-            e.preventDefault();
-            try { signInWithGoogle(); } catch (_) {}
-          }
-        });
-        inner.appendChild(bclone);
-      }
+      if (btn) inner.appendChild(btn.cloneNode(true));
       header.appendChild(menu);
 
       function setOpen(open) {
@@ -242,86 +219,5 @@
       toggle.addEventListener('click', function () { setOpen(!menu.classList.contains('open')); });
       inner.addEventListener('click', function (e) { if (e.target.closest('a')) setOpen(false); });
     })();
-
-    var hasAuth = (typeof checkSession === 'function' && typeof signInWithGoogle === 'function');
-
-    // 1) Login-first gating for consultation/booking entry buttons.
-    //    Not signed in -> remember the target, start Google sign-in, then
-    //    resume to the target once back. Signed in -> navigate normally.
-    if (hasAuth) {
-      document.querySelectorAll('[data-login-go]').forEach(function (el) {
-        el.addEventListener('click', function (e) {
-          var target = el.getAttribute('data-login-go') || el.getAttribute('href');
-          e.preventDefault();
-          Promise.resolve(checkSession()).then(function (s) {
-            var u = s && (s.user || s);
-            if (u && u.id) { window.location.href = target; return; }
-            // 로그인 후 목적지로 직행하도록 절대 URL을 redirectTo 로 전달(+ 폴백용 저장).
-            var abs = target;
-            try { abs = new URL(target, window.location.href).href; } catch (_) {}
-            try { localStorage.setItem('postLoginRedirect', target); } catch (_) {}
-            try { signInWithGoogle(abs); } catch (_) { window.location.href = target; }
-          }).catch(function () { window.location.href = target; });
-        });
-      });
-    }
-
-    var loginBtn = document.querySelector('.header-actions .btn-primary');
-    if (loginBtn) {
-      // Not-logged-in default: clicking Login starts Google OAuth (if available).
-      loginBtn.addEventListener('click', function (e) {
-        if (typeof signInWithGoogle === 'function') {
-          e.preventDefault();
-          try { signInWithGoogle(); } catch (_) {}
-        }
-        // else: fall through to its href (consultation)
-      });
-    }
-
-    if (typeof checkSession !== 'function') return;
-
-    Promise.resolve()
-      .then(function () { return checkSession(); })
-      .then(function (session) {
-        var user = session && (session.user || session);
-        if (!user || !user.id) return; // stay as Login
-
-        // Honor a pending post-login redirect set by a [data-login-go] button.
-        try {
-          var redir = localStorage.getItem('postLoginRedirect');
-          if (redir) {
-            localStorage.removeItem('postLoginRedirect');
-            if (pageKey(location.pathname) !== pageKey(redir)) {
-              location.href = redir;
-              return;
-            }
-          }
-        } catch (_) {}
-
-        if (!loginBtn) return;
-        var meta = user.user_metadata || {};
-        var name = meta.name || meta.full_name || (user.email ? user.email.split('@')[0] : T.account);
-
-        // Swap login button -> account
-        var clone = loginBtn.cloneNode(false); // drop the OAuth click listener
-        clone.textContent = name;
-        clone.setAttribute('href', 'mypage'); // logged-in: name links to My Page
-        loginBtn.parentNode.replaceChild(clone, loginBtn);
-
-        // Add a logout action
-        var lo = document.createElement('a');
-        lo.className = 'btn btn-line';
-        lo.style.marginLeft = '8px';
-        lo.href = '#';
-        lo.textContent = T.logout;
-        lo.addEventListener('click', function (e) {
-          e.preventDefault();
-          if (typeof signOut === 'function') {
-            Promise.resolve(signOut()).then(function () { location.reload(); });
-          }
-        });
-        clone.parentNode.appendChild(lo);
-      })
-      .catch(function () { /* keep default Login */ });
   });
 })();

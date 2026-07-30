@@ -1,0 +1,58 @@
+<style>
+.fee-note{border:1.5px solid var(--btn);background:var(--card-2);border-radius:3px;padding:18px 22px;margin:0 0 28px}
+.fee-note p{margin:0;font-size:15.5px;line-height:1.7;color:var(--ink);font-weight:600}
+.fee-table{width:100%;border-collapse:collapse;margin:0 0 18px}
+.fee-table th{text-align:left;font-size:13px;font-weight:700;color:var(--brown);border-bottom:2px solid var(--rule-d);padding:12px 4px}
+.fee-table th:last-child,.fee-table td:last-child{text-align:right;white-space:nowrap}
+.fee-table td{font-size:15.5px;color:var(--ink);border-bottom:1px solid var(--rule);padding:15px 4px;line-height:1.5}
+.fee-table td:last-child{font-weight:700;font-variant-numeric:tabular-nums}
+.fee-sub{display:block;font-size:13px;color:var(--muted);margin-top:3px}
+.fee-foot{list-style:none;margin:0 0 34px;padding:0}
+.fee-foot li{position:relative;padding-left:14px;font-size:14px;line-height:1.75;color:var(--muted)}
+.fee-foot li:before{content:"·";position:absolute;left:2px}
+.fee-cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;border-top:1px solid var(--rule-d);padding-top:26px;margin-bottom:20px}
+.fee-cta .t{flex:1 1 240px;font-size:15px;font-weight:600;color:var(--brown)}
+@media(max-width:680px){.fee-table td{font-size:14.5px;padding:13px 2px}}
+</style>
+
+<section class="page-head">
+    <div class="wrap">
+        <h1>Fees</h1>
+        <p class="lead">Reference fees for the principal matters handled by the Visa &amp; Immigration Center of Law Firm Lawyeon.</p>
+    </div>
+</section>
+
+<div class="wrap" style="max-width:840px">
+    <div class="fee-note">
+        <p>The fee for every matter is proposed after a pre-consultation and a review of the procedure the matter requires.</p>
+    </div>
+
+    <table class="fee-table">
+        <thead>
+            <tr><th>Matter</th><th>Fee</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Visa issuance<span class="fee-sub">Including the certificate of visa eligibility</span></td><td>KRW 1,200,000 ~</td></tr>
+            <tr><td>Change of status of stay</td><td>KRW 700,000 ~</td></tr>
+            <tr><td>Reporting on your behalf, including changes to alien registration details</td><td>KRW 500,000 ~</td></tr>
+            <tr><td>Naturalization</td><td>KRW 2,000,000 ~</td></tr>
+            <tr><td>Permanent residence</td><td>KRW 2,000,000 ~</td></tr>
+            <tr><td>Refugee status</td><td>KRW 1,500,000 ~</td></tr>
+            <tr><td>Foreign investment</td><td>KRW 2,000,000 ~</td></tr>
+            <tr><td>Immigration violation review</td><td>KRW 3,000,000 ~</td></tr>
+        </tbody>
+    </table>
+
+    <ul class="fee-foot">
+        <li>Each figure is the minimum fee for that matter. No upper limit is set.</li>
+        <li>Figures are exclusive of VAT.</li>
+        <li>Fees payable to the immigration office are not included.</li>
+        <li>For refunds, please see the <a href="__BASE__refund-policy">refund policy</a>.</li>
+    </ul>
+
+    <div class="fee-cta">
+        <div class="t">Ask us about the procedure and cost for your own matter.</div>
+        <a href="__BASE__consultation" class="btn btn-primary">Apply for pre-consultation</a>
+        <a href="__BASE__booking" class="btn btn-line">Book a visit</a>
+    </div>
+</div>

@@ -22,8 +22,18 @@ function getCorsHeaders(origin: string | null) {
 }
 
 const FROM_EMAIL = 'Law Firm Lawyeon <noreply@lawyeonvisa.app>'
-const ADMIN_EMAIL = 'taemin.ahn@lawyeon.com'
+// 담당자가 바뀔 수 있으므로 함수 시크릿으로 덮어쓸 수 있게 한다.
+const ADMIN_EMAIL = Deno.env.get('ADMIN_EMAIL') || 'taemin.ahn@lawyeon.com'
 const SITE_URL = 'https://lawyeonvisa.app'
+
+// 발신 표시 이름에 고객 이름을 넣어 받은편지함 목록에서 바로 구분되게 한다.
+// 발신 주소 자체는 인증된 도메인이어야 하므로 바꾸지 않는다(고객 주소로 위조하면
+// SPF/DKIM 검증에 실패해 스팸 처리된다). 대신 Reply-To 에 고객 주소를 넣어
+// '답장'을 누르면 곧바로 고객에게 회신되도록 한다.
+function fromWithName(name: string): string {
+  const safe = (name || '').replace(/[",<>\r\n]/g, ' ').trim()
+  return safe ? `${safe} (사전상담) <noreply@lawyeonvisa.app>` : FROM_EMAIL
+}
 
 function buildHtml(message: string, threadUrl: string): string {
   return `<!DOCTYPE html>
@@ -124,6 +134,94 @@ serve(async (req) => {
       }
 
       console.log('📧 Admin email sent (reservation):', resendBody.id)
+      return new Response(
+        JSON.stringify({ success: true, id: resendBody.id }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    // ===== 온라인 사전상담(Pre-consultation) 접수 분기 =====
+    // 상담 쓰레드를 대체하는 경로. 비로그인(anon) 접수이므로 service role 로 재조회한다.
+    // 알림이 아니라 "고객이 보낸 상담 신청"으로 다루기 위해 Reply-To 에 고객 주소를 넣는다.
+    if (body && (body.type === 'pre_consultation' || body.preConsultationId)) {
+      const preConsultationId = body.preConsultationId
+      if (!preConsultationId) {
+        throw new Error('Missing required field: preConsultationId')
+      }
+
+      const supabaseUrl = Deno.env.get('SUPABASE_URL')!
+      const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+      const supabase = createClient(supabaseUrl, serviceKey)
+
+      const { data: c, error: cErr } = await supabase
+        .from('pre_consultations')
+        .select('id, name, email, phone, category, in_korea, visa, visa_expiry, country, message, lang, created_at')
+        .eq('id', preConsultationId)
+        .single()
+
+      if (cErr || !c) {
+        throw new Error(`Pre-consultation not found: ${cErr?.message || 'no data'}`)
+      }
+
+      const adminUrl = `${SITE_URL}/admin-dashboard.html#preConsultations`
+      const subject = `[Lawyeon] 사전상담 신청 — ${c.name}${c.category ? ' (' + c.category + ')' : ''}`
+
+      // Stay 한 줄은 국내/해외에 따라 붙는 정보가 달라진다.
+      const stay = c.in_korea
+        ? 'KR' + (c.visa ? ` / ${c.visa}` : '') + (c.visa_expiry ? ` / expires ${c.visa_expiry}` : '')
+        : 'Abroad' + (c.country ? ` / ${c.country}` : '')
+
+      const lines = [
+        `[Consultation request]`,
+        `· Category: ${c.category || '-'}`,
+        `· Stay: ${stay}`,
+        `· Name: ${c.name}`,
+        `· Email: ${c.email}`,
+        `· Phone: ${c.phone || '-'}`,
+      ]
+      if (c.message) lines.push(`· Message: ${c.message}`)
+      const messageText = lines.join('\n')
+      const html = buildHtml(messageText.replace(/\n/g, '<br>'), adminUrl)
+      const text = buildText(messageText, adminUrl)
+
+      const resendRes = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from: fromWithName(c.name),
+          to: ADMIN_EMAIL,
+          reply_to: c.email,   // ← '답장'이 곧바로 고객에게 가도록
+          subject,
+          html,
+          text,
+        }),
+      })
+      const resendBody = await resendRes.json()
+
+      try {
+        await supabase.from('notification_logs').insert({
+          messenger: 'email',
+          recipient: ADMIN_EMAIL,
+          template_type: 'admin_new_pre_consultation',
+          status: resendRes.ok ? 'sent' : 'failed',
+          sent_at: new Date().toISOString()
+        })
+      } catch (err) {
+        console.log('notification_logs insert error:', err)
+      }
+
+      if (!resendRes.ok) {
+        console.error('📧 Resend error (pre_consultation):', resendBody)
+        return new Response(
+          JSON.stringify({ success: false, error: resendBody }),
+          { status: resendRes.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
+      console.log('📧 Admin email sent (pre_consultation):', resendBody.id)
       return new Response(
         JSON.stringify({ success: true, id: resendBody.id }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

@@ -963,7 +963,7 @@
                                     <span>${t('blog.post.shareLink', '링크 복사')}</span>
                                 </button>
                                 ${relatedServices.length > 0 ? `
-                                <a href="/service-apply-general.html?service=${relatedServices[0].id}" class="header-cta-btn">
+                                <a href="/consultation" class="header-cta-btn">
                                     <span>${relatedServices[0].name} ${ctaText.apply}</span>
                                     <span class="arrow">→</span>
                                 </a>` : ''}
@@ -1056,7 +1056,7 @@
                         html += `
                             <div class="mid-cta-banner">
                                 <div class="mid-cta-text"><strong>${service.name}</strong> — ${cta.midQ}</div>
-                                <a href="/service-apply-general.html?service=${service.id}" class="mid-cta-link">
+                                <a href="/consultation" class="mid-cta-link">
                                     ${cta.midBtn}
                                 </a>
                             </div>
@@ -1151,7 +1151,7 @@
             }
 
             return services.map(service => `
-                <a href="/service-apply-general.html?service=${service.id}" class="service-cta-btn">
+                <a href="/consultation" class="service-cta-btn">
                     <span>${service.name} ${cta.apply}</span>
                     <span class="arrow">→</span>
                 </a>
