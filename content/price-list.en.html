@@ -4,32 +4,30 @@
 .fee-table{width:100%;border-collapse:collapse;margin:0 0 20px;table-layout:fixed}
 .fee-table th{text-align:left;font-size:12.5px;font-weight:700;color:var(--brown);letter-spacing:.03em;border-bottom:2px solid var(--rule-d);padding:0 0 11px}
 .fee-table th:last-child,.fee-table td:last-child{text-align:right}
-.fee-table td{font-size:15.5px;color:var(--ink);border-bottom:1px solid var(--rule);padding:15px 0;line-height:1.5;vertical-align:top;overflow-wrap:break-word}
+.fee-table td{font-size:15.5px;color:var(--ink);border-bottom:1px solid var(--rule);padding:16px 0;line-height:1.5;vertical-align:baseline}
 .fee-table td:first-child{padding-right:18px}
 .fee-table td:last-child{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--brown)}
 /* site.css 의 전역 표 규칙(tbody td:first-child{white-space:nowrap})이 이 표까지
-   적용돼 영문 업무명이 줄바꿈되지 않고 화면 밖으로 나간다. 여기서 무효화한다. */
+   적용돼 업무명이 줄바꿈되지 않고 화면 밖으로 나간다. 여기서 무효화한다. */
 .fee-table tbody td:first-child{white-space:normal;font-weight:400;color:var(--ink);word-break:normal;overflow-wrap:anywhere}
-.fee-sub{display:block;font-size:13px;color:var(--muted);margin-top:4px;line-height:1.55;font-weight:400;white-space:normal;word-break:normal;overflow-wrap:anywhere}
 .fee-foot{list-style:none;margin:0 0 34px;padding:0}
 .fee-foot li{position:relative;padding-left:14px;font-size:14px;line-height:1.75;color:var(--muted)}
-.fee-foot li:before{content:"·";position:absolute;left:2px}
+.fee-foot li:before{content:"\B7";position:absolute;left:2px}
 .fee-cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;border-top:1px solid var(--rule-d);padding-top:26px}
 .fee-cta .t{flex:1 1 240px;font-size:15px;font-weight:600;color:var(--brown)}
 
-/* 좁은 화면에서는 표를 항목별 블록으로 바꾼다.
-   두 열을 유지하면 업무명이 길어 최소 폭이 화면을 넘고, 결국 페이지 전체가
-   좌우로 스크롤된다. 가로 스크롤은 만들지 않는다. */
+/* 좁은 화면에서는 표를 항목별 블록으로 바꾼다. 두 열을 유지하면 최소 폭이
+   화면을 넘어 페이지 전체가 좌우로 스크롤된다. 가로 스크롤은 만들지 않는다. */
 @media(max-width:600px){
     .fee-page{padding:28px 0 60px}
     .fee-lead{font-size:15.5px;margin-bottom:24px;padding-bottom:20px}
     .fee-table,.fee-table tbody,.fee-table tr,.fee-table td{display:block;width:auto}
     .fee-table thead{display:none}
-    .fee-table tr{padding:15px 0;border-bottom:1px solid var(--rule)}
+    .fee-table tr{padding:14px 0;border-bottom:1px solid var(--rule)}
     .fee-table tr:first-child{border-top:2px solid var(--rule-d)}
     .fee-table td{border:0;padding:0;font-size:16px}
     .fee-table td:first-child{padding-right:0;font-weight:600}
-    .fee-table td:last-child{text-align:left;margin-top:7px;font-size:15.5px}
+    .fee-table td:last-child{text-align:left;margin-top:6px;font-size:15.5px}
     .fee-cta .btn{flex:1 1 100%;text-align:center}
 }
 </style>
@@ -51,35 +49,35 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Visa application<span class="fee-sub">Including the Certificate of Visa Eligibility filed from within Korea</span></td>
+                    <td>Visa issuance</td>
                     <td>KRW 1,200,000</td>
                 </tr>
                 <tr>
-                    <td>Change of status of stay<span class="fee-sub">Moving from one visa category to another</span></td>
+                    <td>Change of visa status</td>
                     <td>KRW 700,000</td>
                 </tr>
                 <tr>
-                    <td>Statutory immigration reports<span class="fee-sub">Changes to alien registration particulars, address or workplace</span></td>
+                    <td>Immigration reports</td>
                     <td>KRW 500,000</td>
                 </tr>
                 <tr>
-                    <td>Naturalization<span class="fee-sub">Acquiring Korean nationality</span></td>
+                    <td>Nationality</td>
                     <td>KRW 2,000,000</td>
                 </tr>
                 <tr>
-                    <td>Permanent residence<span class="fee-sub">F-5 applications</span></td>
+                    <td>Permanent residence</td>
                     <td>KRW 2,000,000</td>
                 </tr>
                 <tr>
-                    <td>Refugee status<span class="fee-sub">Applications, objections and litigation</span></td>
+                    <td>Refugee status</td>
                     <td>KRW 1,500,000</td>
                 </tr>
                 <tr>
-                    <td>Foreign investment<span class="fee-sub">Investor visas and foreign-invested company registration</span></td>
+                    <td>Foreign investment</td>
                     <td>KRW 2,000,000</td>
                 </tr>
                 <tr>
-                    <td>Immigration offense review<span class="fee-sub">Representation at the review, and appeals against departure orders or deportation</span></td>
+                    <td>Immigration offense review</td>
                     <td>KRW 3,000,000</td>
                 </tr>
             </tbody>
