@@ -65,63 +65,103 @@
 
 <style>
 .fee-page{max-width:720px;padding:44px 0 84px}
-.fee-note{border:1.5px solid var(--btn);background:var(--card-2);border-radius:3px;padding:18px 22px;margin:0 0 28px}
-.fee-note p{margin:0;font-size:15.5px;line-height:1.7;color:var(--ink);font-weight:600}
-.fee-table{width:100%;border-collapse:collapse;margin:0 0 18px}
-.fee-table th{text-align:left;font-size:13px;font-weight:700;color:var(--brown);border-bottom:2px solid var(--rule-d);padding:12px 4px}
-.fee-table th:last-child,.fee-table td:last-child{text-align:right;white-space:nowrap}
-.fee-table td{font-size:15.5px;color:var(--ink);border-bottom:1px solid var(--rule);padding:15px 4px;line-height:1.5}
-.fee-table td:last-child{font-weight:700;font-variant-numeric:tabular-nums}
-.fee-sub{display:block;font-size:13px;color:var(--muted);margin-top:3px}
+.fee-lead{font-size:16px;line-height:1.75;color:var(--brown);font-weight:600;margin:0 0 30px;padding-bottom:24px;border-bottom:1px solid var(--rule-d)}
+.fee-table{width:100%;border-collapse:collapse;margin:0 0 20px;table-layout:fixed}
+.fee-table th{text-align:left;font-size:12.5px;font-weight:700;color:var(--brown);letter-spacing:.03em;border-bottom:2px solid var(--rule-d);padding:0 0 11px}
+.fee-table th:last-child,.fee-table td:last-child{text-align:right}
+.fee-table td{font-size:15.5px;color:var(--ink);border-bottom:1px solid var(--rule);padding:15px 0;line-height:1.5;vertical-align:top;overflow-wrap:break-word}
+.fee-table td:first-child{padding-right:18px}
+.fee-table td:last-child{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--brown)}
+/* site.css 의 전역 표 규칙(tbody td:first-child{white-space:nowrap})이 이 표까지
+   적용돼 영문 업무명이 줄바꿈되지 않고 화면 밖으로 나간다. 여기서 무효화한다. */
+.fee-table tbody td:first-child{white-space:normal;font-weight:400;color:var(--ink);word-break:normal;overflow-wrap:anywhere}
+.fee-sub{display:block;font-size:13px;color:var(--muted);margin-top:4px;line-height:1.55;font-weight:400;white-space:normal;word-break:normal;overflow-wrap:anywhere}
 .fee-foot{list-style:none;margin:0 0 34px;padding:0}
 .fee-foot li{position:relative;padding-left:14px;font-size:14px;line-height:1.75;color:var(--muted)}
 .fee-foot li:before{content:"·";position:absolute;left:2px}
-.fee-cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;border-top:1px solid var(--rule-d);padding-top:26px;margin-bottom:20px}
+.fee-cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;border-top:1px solid var(--rule-d);padding-top:26px}
 .fee-cta .t{flex:1 1 240px;font-size:15px;font-weight:600;color:var(--brown)}
-@media(max-width:680px){.fee-page{padding:30px 0 60px}.fee-table td{font-size:14.5px;padding:13px 2px}}
+
+/* 좁은 화면에서는 표를 항목별 블록으로 바꾼다.
+   두 열을 유지하면 업무명이 길어 최소 폭이 화면을 넘고, 결국 페이지 전체가
+   좌우로 스크롤된다. 가로 스크롤은 만들지 않는다. */
+@media(max-width:600px){
+    .fee-page{padding:28px 0 60px}
+    .fee-lead{font-size:15.5px;margin-bottom:24px;padding-bottom:20px}
+    .fee-table,.fee-table tbody,.fee-table tr,.fee-table td{display:block;width:auto}
+    .fee-table thead{display:none}
+    .fee-table tr{padding:15px 0;border-bottom:1px solid var(--rule)}
+    .fee-table tr:first-child{border-top:2px solid var(--rule-d)}
+    .fee-table td{border:0;padding:0;font-size:16px}
+    .fee-table td:first-child{padding-right:0;font-weight:600}
+    .fee-table td:last-child{text-align:left;margin-top:7px;font-size:15.5px}
+    .fee-cta .btn{flex:1 1 100%;text-align:center}
+}
 </style>
 
 <section class="page-head">
     <div class="wrap">
         <h1>Fees</h1>
-        <p class="lead">Reference fees for the principal matters handled by the Visa &amp; Immigration Center of Law Firm Lawyeon.</p>
+        <p class="lead">A fee guide for the immigration matters handled by the Visa &amp; Immigration Center of Law Firm Lawyeon.</p>
     </div>
 </section>
 
 <div class="wrap">
     <div class="fee-page">
-    <div class="fee-note">
-        <p>The fee for every matter is proposed after a pre-consultation and a review of the procedure the matter requires.</p>
-    </div>
+        <p class="fee-lead">We quote the fee for your matter after a pre-consultation, once we have reviewed the procedure it will require.</p>
 
-    <table class="fee-table">
-        <thead>
-            <tr><th>Matter</th><th>Fee</th></tr>
-        </thead>
-        <tbody>
-            <tr><td>Visa issuance<span class="fee-sub">Including the certificate of visa eligibility</span></td><td>KRW 1,200,000 ~</td></tr>
-            <tr><td>Change of status of stay</td><td>KRW 700,000 ~</td></tr>
-            <tr><td>Reporting on your behalf, including changes to alien registration details</td><td>KRW 500,000 ~</td></tr>
-            <tr><td>Naturalization</td><td>KRW 2,000,000 ~</td></tr>
-            <tr><td>Permanent residence</td><td>KRW 2,000,000 ~</td></tr>
-            <tr><td>Refugee status</td><td>KRW 1,500,000 ~</td></tr>
-            <tr><td>Foreign investment</td><td>KRW 2,000,000 ~</td></tr>
-            <tr><td>Immigration violation review</td><td>KRW 3,000,000 ~</td></tr>
-        </tbody>
-    </table>
+        <table class="fee-table">
+            <thead>
+                <tr><th>Matter</th><th>From</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Visa application<span class="fee-sub">Including the Certificate of Visa Eligibility filed from within Korea</span></td>
+                    <td>KRW 1,200,000</td>
+                </tr>
+                <tr>
+                    <td>Change of status of stay<span class="fee-sub">Moving from one visa category to another</span></td>
+                    <td>KRW 700,000</td>
+                </tr>
+                <tr>
+                    <td>Statutory immigration reports<span class="fee-sub">Changes to alien registration particulars, address or workplace</span></td>
+                    <td>KRW 500,000</td>
+                </tr>
+                <tr>
+                    <td>Naturalization<span class="fee-sub">Acquiring Korean nationality</span></td>
+                    <td>KRW 2,000,000</td>
+                </tr>
+                <tr>
+                    <td>Permanent residence<span class="fee-sub">F-5 applications</span></td>
+                    <td>KRW 2,000,000</td>
+                </tr>
+                <tr>
+                    <td>Refugee status<span class="fee-sub">Applications, objections and litigation</span></td>
+                    <td>KRW 1,500,000</td>
+                </tr>
+                <tr>
+                    <td>Foreign investment<span class="fee-sub">Investor visas and foreign-invested company registration</span></td>
+                    <td>KRW 2,000,000</td>
+                </tr>
+                <tr>
+                    <td>Immigration offense review<span class="fee-sub">Representation at the review, and appeals against departure orders or deportation</span></td>
+                    <td>KRW 3,000,000</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <ul class="fee-foot">
-        <li>Each figure is the minimum fee for that matter. No upper limit is set.</li>
-        <li>Figures are exclusive of VAT.</li>
-        <li>Fees payable to the immigration office are not included.</li>
-        <li>For refunds, please see the <a href="refund-policy">refund policy</a>.</li>
-    </ul>
+        <ul class="fee-foot">
+            <li>Each figure is a starting fee. No upper limit is set — the final amount depends on the matter.</li>
+            <li>Fees are exclusive of VAT.</li>
+            <li>Government fees payable to the immigration office are not included.</li>
+            <li>For refunds, please see the <a href="refund-policy">refund policy</a>.</li>
+        </ul>
 
-    <div class="fee-cta">
-        <div class="t">Ask us about the procedure and cost for your own matter.</div>
-        <a href="consultation" class="btn btn-primary">Apply for pre-consultation</a>
-        <a href="booking" class="btn btn-line">Book a visit</a>
-    </div>
+        <div class="fee-cta">
+            <div class="t">Ask us what your own matter would involve.</div>
+            <a href="consultation" class="btn btn-primary">Apply for pre-consultation</a>
+            <a href="booking" class="btn btn-line">Book a visit</a>
+        </div>
     </div>
 </div>
 
@@ -149,7 +189,7 @@
             <div class="footer-links">
                 <a href="privacy-policy?v=2">Privacy Policy</a><span class="sep">·</span>
                 <a href="terms-of-service?v=2">Terms of Service</a><span class="sep">·</span>
-                <a href="price-list">Price List</a><span class="sep">·</span>
+                <a href="price-list">Fees</a><span class="sep">·</span>
                 <a href="refund-policy">Refund Policy</a><span class="sep">·</span>
                 <a href="https://lawyeon.com/" target="_blank" rel="noopener">Law Firm Lawyeon</a>
             </div>
