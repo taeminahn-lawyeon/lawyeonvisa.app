@@ -62,6 +62,12 @@ const LANG_DIR = { en: '', ko: 'ko/', vi: 'vi/' };
 // Root-absolute nav home per language, so shared header links resolve correctly
 // from any depth (vi pages reuse the English top-level pages).
 const NAV_HOME = { en: '', ko: '/ko/', vi: '/' };
+// 각 언어의 홈 URL. 홈은 /main 이 아니라 도메인 루트다 — Google 은 사이트 이름을
+// 루트에서만 읽고, /main 과 / 가 함께 있으면 홈페이지가 둘로 갈린다.
+const HOME_URL = { en: '/', ko: '/ko/', vi: '/' };
+// 페이지의 사이트 경로. 홈이면 '' (루트), 그 외에는 id.
+const pagePath = (page, lang) => (page.home ? '' : page.id);
+const pageUrl = (page, lang) => `${SITE}/${LANG_DIR[lang]}${pagePath(page, lang)}`;
 
 // 빌드 시스템 밖에 있으나 색인 대상인 정적 문서.
 const STATIC_PAGES = ['terms-of-service', 'privacy-policy', 'refund-policy'];
@@ -69,7 +75,7 @@ const STATIC_PAGES = ['terms-of-service', 'privacy-policy', 'refund-policy'];
 // ---- page registry (add pages here as they are migrated) ----
 const PAGES = [
   {
-    id: 'main', content: 'home', jsonld: true,
+    id: 'main', content: 'home', jsonld: true, home: true,
     title: { en: 'Law Firm Lawyeon — Visa & Immigration Center',
              ko: '법무법인 로연 — 출입국이민지원센터' },
     desc:  { en: 'Law Firm Lawyeon, Visa & Immigration Center. Legal representation for criminal cases, contracts and immigration office affairs for expats and migrants in Korea.',
@@ -433,7 +439,7 @@ function relPath(fromLang, toLang, id) {
   return up + LANG_DIR[toLang] + id;
 }
 
-function langToggle(lang, id, langs) {
+function langToggle(lang, id, langs, isHome) {
   langs = langs || LANGS;
   const labels = { en: 'EN', ko: '한국어', vi: 'Tiếng Việt' };
   // Always offer EN/KO (muted when a page lacks one); show Vietnamese only
@@ -443,7 +449,7 @@ function langToggle(lang, id, langs) {
   const muted = (t) => `<span style="color:var(--rule-d)">${t}</span>`;
   return display.map((l) => {
     if (langs.indexOf(l) < 0) return muted(labels[l]);
-    const href = l === lang ? id : relPath(lang, l, id);
+    const href = isHome ? HOME_URL[l] : (l === lang ? id : relPath(lang, l, id));
     return `<a href="${href}"${l === lang ? ' class="active"' : ''}>${labels[l]}</a>`;
   }).join('<span class="sep">·</span>');
 }
@@ -455,13 +461,13 @@ function build() {
     const hasEn = langs.indexOf('en') >= 0;
     const hasKo = langs.indexOf('ko') >= 0;
     const hasVi = langs.indexOf('vi') >= 0;
-    const altEn = hasEn ? `${SITE}/${page.id}` : `${SITE}/ko/${page.id}`;
-    const altKo = hasKo ? `${SITE}/ko/${page.id}` : `${SITE}/${page.id}`;
+    const altEn = hasEn ? pageUrl(page, 'en') : pageUrl(page, 'ko');
+    const altKo = hasKo ? pageUrl(page, 'ko') : pageUrl(page, 'en');
     const hreflangVi = hasVi ? `<link rel="alternate" hreflang="vi" href="${SITE}/vi/${page.id}">` : '';
     for (const lang of langs) {
       const base = lang === 'en' ? '' : '../';
-      const out = lang === 'en' ? `${page.id}.html` : `${LANG_DIR[lang]}${page.id}.html`;
-      const canonical = `${SITE}/${LANG_DIR[lang]}${page.id}`;
+      const out = `${LANG_DIR[lang]}${page.home ? 'index' : page.id}.html`;
+      const canonical = pageUrl(page, lang);
       const S = STRINGS[lang];
       const bodyHtml = read(`content/${page.content}.${lang}.html`);
 
@@ -480,6 +486,7 @@ function build() {
         '__ALT_KO__': altKo,
         '__HREFLANG_VI__': hreflangVi,
         '__NAV_HOME__': NAV_HOME[lang],
+        '__HOME__': HOME_URL[lang],
         '__BRAND_NAME__': S.brandName,
         '__BRAND_SUB__': S.brandSub,
         '__NAV_ABOUT__': S.navAbout,
@@ -487,7 +494,7 @@ function build() {
         '__NAV_CASES__': S.navCases,
         '__NAV_CONSULT__': S.navConsult,
         '__HEADER_CTA__': S.headerCta,
-        '__LANGTOGGLE__': langToggle(lang, page.id, langs),
+        '__LANGTOGGLE__': langToggle(lang, page.id, langs, !!page.home),
         '__OG_SITE_NAME__': S.siteName,
         '__JSONLD__': page.jsonld ? legalServiceJsonLd(lang) : '',
         '__WEBSITE_JSONLD__': websiteJsonLd(lang),
@@ -513,23 +520,20 @@ function build() {
   // ---- sitemap.xml + robots.txt ----
   const sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n' +
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' +
-    // 홈페이지(도메인 루트). Google 은 사이트 이름을 홈페이지에서 읽으므로
-    // 루트가 사이트맵에 반드시 있어야 한다.
-    `  <url>\n    <loc>${SITE}/</loc>\n    <lastmod>${BUILD_DAY}</lastmod>\n  </url>\n` +
     // 빌드 대상은 아니지만 상시 공개되고 푸터에서 링크되는 문서들.
     STATIC_PAGES.map((p) => `  <url>\n    <loc>${SITE}/${p}</loc>\n    <lastmod>${BUILD_DAY}</lastmod>\n  </url>`).join('\n') + '\n' +
     PAGES.map(p => {
       const langs = p.langs || LANGS;
       const lastmod = pageLastmod(p);
       const locs = [];
-      if (langs.indexOf('en') >= 0) locs.push(`${SITE}/${p.id}`);
-      if (langs.indexOf('ko') >= 0) locs.push(`${SITE}/ko/${p.id}`);
-      if (langs.indexOf('vi') >= 0) locs.push(`${SITE}/vi/${p.id}`);
+      if (langs.indexOf('en') >= 0) locs.push(pageUrl(p, 'en'));
+      if (langs.indexOf('ko') >= 0) locs.push(pageUrl(p, 'ko'));
+      if (langs.indexOf('vi') >= 0) locs.push(pageUrl(p, 'vi'));
       let alts = '';
-      if (langs.indexOf('en') >= 0) alts += `    <xhtml:link rel="alternate" hreflang="en" href="${SITE}/${p.id}"/>\n`;
-      if (langs.indexOf('ko') >= 0) alts += `    <xhtml:link rel="alternate" hreflang="ko" href="${SITE}/ko/${p.id}"/>\n`;
-      if (langs.indexOf('vi') >= 0) alts += `    <xhtml:link rel="alternate" hreflang="vi" href="${SITE}/vi/${p.id}"/>\n`;
-      const xdefault = langs.indexOf('en') >= 0 ? `${SITE}/${p.id}` : `${SITE}/ko/${p.id}`;
+      if (langs.indexOf('en') >= 0) alts += `    <xhtml:link rel="alternate" hreflang="en" href="${pageUrl(p, 'en')}"/>\n`;
+      if (langs.indexOf('ko') >= 0) alts += `    <xhtml:link rel="alternate" hreflang="ko" href="${pageUrl(p, 'ko')}"/>\n`;
+      if (langs.indexOf('vi') >= 0) alts += `    <xhtml:link rel="alternate" hreflang="vi" href="${pageUrl(p, 'vi')}"/>\n`;
+      const xdefault = langs.indexOf('en') >= 0 ? pageUrl(p, 'en') : pageUrl(p, 'ko');
       alts += `    <xhtml:link rel="alternate" hreflang="x-default" href="${xdefault}"/>\n`;
       return locs.map((loc) => `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n` + alts + `  </url>`).join('\n');
     }).join('\n') + '\n</urlset>\n';
