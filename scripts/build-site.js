@@ -63,6 +63,9 @@ const LANG_DIR = { en: '', ko: 'ko/', vi: 'vi/' };
 // from any depth (vi pages reuse the English top-level pages).
 const NAV_HOME = { en: '', ko: '/ko/', vi: '/' };
 
+// 빌드 시스템 밖에 있으나 색인 대상인 정적 문서.
+const STATIC_PAGES = ['terms-of-service', 'privacy-policy', 'refund-policy'];
+
 // ---- page registry (add pages here as they are migrated) ----
 const PAGES = [
   {
@@ -485,6 +488,8 @@ function build() {
     // 홈페이지(도메인 루트). Google 은 사이트 이름을 홈페이지에서 읽으므로
     // 루트가 사이트맵에 반드시 있어야 한다.
     `  <url>\n    <loc>${SITE}/</loc>\n    <lastmod>2026-07-30</lastmod>\n  </url>\n` +
+    // 빌드 대상은 아니지만 상시 공개되고 푸터에서 링크되는 문서들.
+    STATIC_PAGES.map((p) => `  <url>\n    <loc>${SITE}/${p}</loc>\n    <lastmod>2026-07-30</lastmod>\n  </url>`).join('\n') + '\n' +
     PAGES.map(p => {
       const langs = p.langs || LANGS;
       const lastmod = ARTICLE_DATES[p.id] || '2026-07-01';
@@ -499,10 +504,12 @@ function build() {
       return locs.map((loc) => `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n` + alts + `  </url>`).join('\n');
     }).join('\n') + '\n</urlset>\n';
   fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap, 'utf8');
-  // archive/ holds retired pages that GitHub Pages still serves — keep them out
-  // of the index so decommissioned flows don't surface in search results.
+  // 폐지 페이지는 robots.txt 로 막지 않는다. Disallow 는 크롤링만 막을 뿐
+  // 색인 제거 수단이 아니며, 오히려 Google 이 페이지에 들어가지 못해
+  // <meta name="robots" content="noindex"> 를 읽지 못한다. 이미 색인된 URL 은
+  // 그대로 남는다. 색인에서 빼려면 크롤을 허용하고 noindex 를 읽히게 해야 한다.
   fs.writeFileSync(path.join(ROOT, 'robots.txt'),
-    'User-agent: *\nAllow: /\nDisallow: /archive/\n\nSitemap: ' + SITE + '/sitemap.xml\n', 'utf8');
+    'User-agent: *\nAllow: /\n\nSitemap: ' + SITE + '/sitemap.xml\n', 'utf8');
   console.log('built sitemap.xml, robots.txt');
 
   console.log(`\nDone. ${count} page(s) generated.`);
