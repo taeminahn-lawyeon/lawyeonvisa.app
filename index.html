@@ -1787,22 +1787,6 @@
         </div>
 
         <!-- 뉴스 & 인사이트 섹션 -->
-        <div class="blog-section">
-            <h3 data-i18n="blog.title">뉴스 & 인사이트</h3>
-            <p class="blog-section-desc" data-i18n="blog.subtitle">출입국·비자에 관한 유용한 정보를 확인하세요</p>
-
-            <div class="blog-grid" id="blogGrid">
-                <div class="blog-empty">
-                    <div class="blog-empty-icon">📝</div>
-                    <p data-i18n="blog.loading">글을 불러오는 중...</p>
-                </div>
-            </div>
-
-            <a href="blog.html" class="blog-more-btn">
-                <span data-i18n="blog.moreBtn">더 많은 글 보기</span>
-                <span>→</span>
-            </a>
-        </div>
 
         <!-- 나의 신청 내역 -->
         <div class="applications-section">
@@ -2041,7 +2025,6 @@
             // 서비스 및 블로그 로드 (다국어 시스템 초기화 후)
             setTimeout(() => {
                 loadServices();
-                loadBlogPosts();
             }, 100);
             
             // 🌍 언어 변경 이벤트 리스너 추가 (개선됨: 모든 동적 콘텐츠 다시 렌더링)
@@ -2762,98 +2745,6 @@
         })();
 
         // 블로그 글 로드 함수 (메인 페이지용)
-        async function loadBlogPosts() {
-            const blogGrid = document.getElementById('blogGrid');
-            if (!blogGrid) return;
-
-            const categoryNames = {
-                'visa': '비자',
-                'stay': '체류',
-                'case': '판례·사례',
-                'news': '법령·뉴스'
-            };
-
-            const categoryEmojis = {
-                'visa': '🛂',
-                'stay': '🏠',
-                'case': '⚖️',
-                'news': '📰'
-            };
-
-            try {
-                // Multilingual filter: prefer the user's current i18n language;
-                // fall back to English when a translation_group has no version
-                // in the user's language. Posts without translation_group are
-                // treated as standalone (one row = one group).
-                const userLang = (typeof localStorage !== 'undefined'
-                    && localStorage.getItem('i18n_language')) || 'en';
-
-                const { data: allPosts, error } = await supabaseClient
-                    .from('blog_posts')
-                    .select('*')
-                    .eq('is_published', true)
-                    .order('created_at', { ascending: false });
-
-                if (error) throw error;
-
-                // Group by translation_group, then pick userLang version if
-                // present, else 'en' fallback, else any first version.
-                const byGroup = {};
-                (allPosts || []).forEach(p => {
-                    const key = p.translation_group || `__solo_${p.id}`;
-                    if (!byGroup[key]) byGroup[key] = {};
-                    byGroup[key][p.language || 'en'] = p;
-                });
-                const filtered = Object.values(byGroup).map(versions =>
-                    versions[userLang] || versions['en'] || Object.values(versions)[0]
-                ).filter(Boolean);
-                filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-                const posts = filtered.slice(0, 6);
-
-                if (!posts || posts.length === 0) {
-                    blogGrid.innerHTML = `
-                        <div class="blog-empty" style="grid-column: 1 / -1;">
-                            <div class="blog-empty-icon">📝</div>
-                            <p>아직 작성된 글이 없습니다.</p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                blogGrid.innerHTML = posts.map(post => {
-                    const date = new Date(post.created_at);
-                    const dateStr = date.getFullYear() + '.' + String(date.getMonth() + 1).padStart(2, '0') + '.' + String(date.getDate()).padStart(2, '0');
-                    const href = post.template === 'navy_v4'
-                        ? `blog/${post.slug}.html`
-                        : `blog-post.html?slug=${post.slug}`;
-
-                    return `
-                        <a href="${href}" class="blog-card">
-                            <div class="blog-card-thumb">
-                                ${post.thumbnail_url
-                                    ? '<img src="' + post.thumbnail_url + '" alt="' + post.title + '">'
-                                    : categoryEmojis[post.category] || '📄'
-                                }
-                            </div>
-                            <div class="blog-card-content">
-                                <span class="blog-card-category">${categoryNames[post.category] || post.category}</span>
-                                <div class="blog-card-title">${post.title}</div>
-                                <div class="blog-card-date">${dateStr}</div>
-                            </div>
-                        </a>
-                    `;
-                }).join('');
-
-            } catch (error) {
-                console.error('Error loading blog posts:', error);
-                blogGrid.innerHTML = `
-                    <div class="blog-empty" style="grid-column: 1 / -1;">
-                        <div class="blog-empty-icon">📝</div>
-                        <p>아직 작성된 글이 없습니다.</p>
-                    </div>
-                `;
-            }
-        }
 
     </script>
 </body>
