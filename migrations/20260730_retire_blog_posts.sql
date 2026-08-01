@@ -6,6 +6,11 @@
 -- 전부 noindex + canonical 이 인사이트 기사를 가리키고 있었다. 2026-07-30 자로
 -- blog/ 산출물과 빌더·워크플로를 모두 삭제했으므로 이 테이블을 읽는 코드는 없다.
 --
+-- 2026-07-30 확인 결과: 프로덕션(gqistzsergddnpcvuzba)에는 public.blog_posts 가
+-- 존재하지 않는다("relation does not exist"). 이미 정리된 것으로 보이며 실행할
+-- 것이 없다. 이 파일은 기록용으로 남긴다. 혹시 다른 환경에서 테이블이 남아 있다면
+-- 아래 절차를 그대로 쓰면 된다.
+--
 -- 한 번에 실행하지 말고 1 → 2 → 3 순서로 확인하며 진행할 것.
 -- SQL Editor: https://supabase.com/dashboard/project/gqistzsergddnpcvuzba/sql/new
 
