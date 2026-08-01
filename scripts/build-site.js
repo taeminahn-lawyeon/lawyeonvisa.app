@@ -34,18 +34,25 @@ const SUPABASE_SCRIPTS = [
   '<script src="__BASE__js/supabase-client.js?v=20260730"></script>',
 ].join('\n');
 
+// 사이트 이름은 언어와 무관하게 하나로 고정한다.
+// Google 은 도메인 단위로 사이트 이름을 하나만 고르며, 페이지마다 다른 이름을
+// 선언하면(이전에는 언어별로 4가지였다) 판단을 포기하고 도메인(lawyeonvisa.app)을
+// 그대로 표시한다. og:site_name·WebSite.name·index.html 이 모두 같아야 한다.
+const SITE_NAME = 'Law Firm Lawyeon Immigration Center';
+const SITE_NAME_ALT = '법무법인 로연 출입국이민지원센터';
+
 // ---- per-language UI strings (header chrome) ----
 const STRINGS = {
   en: { brandName: 'Law Firm Lawyeon', brandSub: 'Visa & Immigration Center',
-        siteName: 'Law Firm Lawyeon Immigration Center', siteNameAlt: 'Law Firm Lawyeon',
+        siteName: SITE_NAME, siteNameAlt: SITE_NAME_ALT,
         navAbout: 'About Lawyeon', navInsights: 'Insights', navCases: 'Cases & News', navConsult: 'Consultation',
         headerCta: 'Apply for pre-consultation' },
   ko: { brandName: '법무법인 로연', brandSub: '출입국이민지원센터',
-        siteName: '법무법인 로연', siteNameAlt: '법무법인 로연 출입국이민지원센터',
+        siteName: SITE_NAME, siteNameAlt: SITE_NAME_ALT,
         navAbout: '로연 소개', navInsights: '인사이트', navCases: '사례·소식', navConsult: '상담',
         headerCta: '사전상담 신청' },
   vi: { brandName: 'Law Firm Lawyeon', brandSub: 'Trung tâm Xuất nhập cảnh & Di trú',
-        siteName: 'Trung tâm Hỗ trợ Xuất nhập cảnh Lawyeon', siteNameAlt: 'Law Firm Lawyeon',
+        siteName: SITE_NAME, siteNameAlt: SITE_NAME_ALT,
         navAbout: 'Giới thiệu', navInsights: 'Thông tin pháp lý', navCases: 'Tin tức', navConsult: 'Tư vấn',
         headerCta: 'Đăng ký tư vấn sơ bộ' },
 };
@@ -475,6 +482,9 @@ function build() {
   // ---- sitemap.xml + robots.txt ----
   const sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n' +
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' +
+    // 홈페이지(도메인 루트). Google 은 사이트 이름을 홈페이지에서 읽으므로
+    // 루트가 사이트맵에 반드시 있어야 한다.
+    `  <url>\n    <loc>${SITE}/</loc>\n    <lastmod>2026-07-30</lastmod>\n  </url>\n` +
     PAGES.map(p => {
       const langs = p.langs || LANGS;
       const lastmod = ARTICLE_DATES[p.id] || '2026-07-01';
