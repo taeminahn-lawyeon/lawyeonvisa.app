@@ -1,12 +1,18 @@
 <style>
 .fee-page{max-width:720px;padding:44px 0 84px}
 .fee-lead{font-size:16px;line-height:1.75;color:var(--brown);font-weight:600;margin:0 0 30px;padding-bottom:24px;border-bottom:1px solid var(--rule-d)}
-.fee-table{width:100%;border-collapse:collapse;margin:0 0 20px;table-layout:fixed}
-.fee-table th{text-align:left;font-size:12.5px;font-weight:700;color:var(--brown);letter-spacing:.03em;border-bottom:2px solid var(--rule-d);padding:0 0 11px}
+/* 표는 두 열이 한눈에 짝지어 보이도록 본문 폭 전체를 쓰지 않는다.
+   금액 열은 폭을 고정해 자릿수가 세로로 정렬되게 한다. */
+.fee-table{width:auto;border-collapse:collapse;margin:0 0 22px;table-layout:auto}
+/* site.css 의 thead th 배경 띠(var(--card-2))는 이 페이지의 괘선 위주 조판과
+   맞지 않는다. 배경을 지우고 머리글은 라벨 한 줄로만 둔다. */
+.fee-table thead th{background:transparent;text-align:left;font-size:12.5px;font-weight:700;color:var(--taupe);letter-spacing:.03em;border-bottom:2px solid var(--rule-d);padding:0 0 10px}
 .fee-table th:last-child,.fee-table td:last-child{text-align:right}
-.fee-table td{font-size:15.5px;color:var(--ink);border-bottom:1px solid var(--rule);padding:16px 0;line-height:1.5;vertical-align:baseline}
-.fee-table td:first-child{padding-right:18px}
+.fee-table td{font-size:15.5px;color:var(--ink);border-bottom:1px solid var(--rule);padding:15px 0;line-height:1.5;vertical-align:baseline}
+.fee-table td:first-child{padding-right:56px}
 .fee-table td:last-child{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--brown)}
+/* site.css 는 마지막 행의 아래 괘선을 지운다. 표를 닫아 주기 위해 되살린다. */
+.fee-table tbody tr:last-child td{border-bottom:1px solid var(--rule)}
 /* site.css 의 전역 표 규칙(tbody td:first-child{white-space:nowrap})이 이 표까지
    적용돼 업무명이 줄바꿈되지 않고 화면 밖으로 나간다. 여기서 무효화한다. */
 .fee-table tbody td:first-child{white-space:normal;font-weight:400;color:var(--ink);word-break:normal;overflow-wrap:anywhere}
@@ -21,13 +27,13 @@
 @media(max-width:600px){
     .fee-page{padding:28px 0 60px}
     .fee-lead{font-size:15.5px;margin-bottom:24px;padding-bottom:20px}
-    .fee-table,.fee-table tbody,.fee-table tr,.fee-table td{display:block;width:auto}
+    .fee-table,.fee-table tbody,.fee-table tr,.fee-table td{display:block;width:auto;max-width:none;min-width:0}
     .fee-table thead{display:none}
     .fee-table tr{padding:14px 0;border-bottom:1px solid var(--rule)}
     .fee-table tr:first-child{border-top:2px solid var(--rule-d)}
-    .fee-table td{border:0;padding:0;font-size:16px}
+    .fee-table td,.fee-table tbody tr:last-child td{border:0;padding:0;font-size:16px}
     .fee-table td:first-child{padding-right:0;font-weight:600}
-    .fee-table td:last-child{text-align:left;margin-top:6px;font-size:15.5px}
+    .fee-table td:last-child{text-align:left;width:auto;margin-top:6px;font-size:15.5px}
     .fee-cta .btn{flex:1 1 100%;text-align:center}
 }
 </style>
