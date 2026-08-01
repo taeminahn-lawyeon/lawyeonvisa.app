@@ -34,6 +34,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # 사이트맵의 lastmod 를 파일별 마지막 커밋일에서 뽑으므로 전체 이력이 필요하다.
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4

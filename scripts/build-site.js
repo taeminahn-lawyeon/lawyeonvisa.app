@@ -272,6 +272,34 @@ const ARTICLE_DATES = {
   'nationality-reinstatement-procedure-korea-2026':'2026-07-16',
 };
 
+// 사이트맵 lastmod. 하드코딩한 날짜를 전 페이지에 똑같이 박으면 Google 이
+// 신호로 쓰지 않는다. 해당 페이지의 소스(content/<id>.<lang>.html)가 마지막으로
+// 커밋된 날을 쓴다. 얕은 복제 등으로 조회에 실패하면 빌드일로 되돌린다.
+const { execFileSync } = require('child_process');
+const BUILD_DAY = new Date().toISOString().slice(0, 10);
+const _lastmodCache = new Map();
+function lastCommitDate(relPath) {
+  if (_lastmodCache.has(relPath)) return _lastmodCache.get(relPath);
+  let d = null;
+  try {
+    const out = execFileSync('git', ['log', '-1', '--format=%cs', '--', relPath],
+      { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    if (/^\d{4}-\d{2}-\d{2}$/.test(out)) d = out;
+  } catch (_) { /* git 없음 또는 이력 없음 */ }
+  _lastmodCache.set(relPath, d);
+  return d;
+}
+
+// 페이지의 사이트맵 lastmod: 기사면 발행일, 그 외에는 소스의 마지막 커밋일.
+function pageLastmod(page) {
+  const langs = page.langs || LANGS;
+  const dates = langs
+    .map((l) => lastCommitDate(`content/${page.content}.${l}.html`))
+    .filter(Boolean)
+    .sort();
+  return dates.length ? dates[dates.length - 1] : (ARTICLE_DATES[page.id] || BUILD_DAY);
+}
+
 // Strip the brand suffix from a page title for use as a bare headline.
 function stripBrand(title) {
   return title
@@ -487,12 +515,12 @@ function build() {
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' +
     // 홈페이지(도메인 루트). Google 은 사이트 이름을 홈페이지에서 읽으므로
     // 루트가 사이트맵에 반드시 있어야 한다.
-    `  <url>\n    <loc>${SITE}/</loc>\n    <lastmod>2026-07-30</lastmod>\n  </url>\n` +
+    `  <url>\n    <loc>${SITE}/</loc>\n    <lastmod>${BUILD_DAY}</lastmod>\n  </url>\n` +
     // 빌드 대상은 아니지만 상시 공개되고 푸터에서 링크되는 문서들.
-    STATIC_PAGES.map((p) => `  <url>\n    <loc>${SITE}/${p}</loc>\n    <lastmod>2026-07-30</lastmod>\n  </url>`).join('\n') + '\n' +
+    STATIC_PAGES.map((p) => `  <url>\n    <loc>${SITE}/${p}</loc>\n    <lastmod>${BUILD_DAY}</lastmod>\n  </url>`).join('\n') + '\n' +
     PAGES.map(p => {
       const langs = p.langs || LANGS;
-      const lastmod = ARTICLE_DATES[p.id] || '2026-07-01';
+      const lastmod = pageLastmod(p);
       const locs = [];
       if (langs.indexOf('en') >= 0) locs.push(`${SITE}/${p.id}`);
       if (langs.indexOf('ko') >= 0) locs.push(`${SITE}/ko/${p.id}`);
@@ -501,6 +529,8 @@ function build() {
       if (langs.indexOf('en') >= 0) alts += `    <xhtml:link rel="alternate" hreflang="en" href="${SITE}/${p.id}"/>\n`;
       if (langs.indexOf('ko') >= 0) alts += `    <xhtml:link rel="alternate" hreflang="ko" href="${SITE}/ko/${p.id}"/>\n`;
       if (langs.indexOf('vi') >= 0) alts += `    <xhtml:link rel="alternate" hreflang="vi" href="${SITE}/vi/${p.id}"/>\n`;
+      const xdefault = langs.indexOf('en') >= 0 ? `${SITE}/${p.id}` : `${SITE}/ko/${p.id}`;
+      alts += `    <xhtml:link rel="alternate" hreflang="x-default" href="${xdefault}"/>\n`;
       return locs.map((loc) => `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n` + alts + `  </url>`).join('\n');
     }).join('\n') + '\n</urlset>\n';
   fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap, 'utf8');
