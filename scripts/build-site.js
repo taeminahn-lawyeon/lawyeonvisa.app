@@ -76,8 +76,11 @@ const STATIC_PAGES = ['terms-of-service', 'privacy-policy', 'refund-policy'];
 const PAGES = [
   {
     id: 'main', content: 'home', jsonld: true, home: true,
-    title: { en: 'Law Firm Lawyeon — Visa & Immigration Center',
-             ko: '법무법인 로연 — 출입국이민지원센터' },
+    // 홈페이지 title 은 사이트 이름과 정확히 같아야 한다. Google 은 사이트 이름을
+    // 고를 때 WebSite.name·og:site_name 과 함께 홈의 <title> 도 후보로 읽는데,
+    // 서로 다르면 판단이 흔들린다.
+    title: { en: SITE_NAME,
+             ko: '법무법인 로연 출입국이민지원센터' },
     desc:  { en: 'Law Firm Lawyeon, Visa & Immigration Center. Legal representation for criminal cases, contracts and immigration office affairs for expats and migrants in Korea.',
              ko: '법무법인 로연 출입국이민지원센터. 외국인·이주민을 위한 형사사건, 계약, 출입국 민원 등 법률 대리 서비스.' },
   },
