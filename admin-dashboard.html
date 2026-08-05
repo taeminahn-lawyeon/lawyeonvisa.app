@@ -1064,6 +1064,9 @@
                 <button class="tab" onclick="switchTab('corporate')">
                     <i class="fas fa-building"></i> 기업 자문 <span id="corporateBadge" class="badge" style="display: none;">0</span>
                 </button>
+                <button class="tab" onclick="switchTab('blocks')">
+                    <i class="fas fa-ban"></i> 예약 차단
+                </button>
                 <a class="tab" href="blog-editor.html" style="text-decoration:none">
                     <i class="fas fa-pen-nib"></i> 새 글 작성
                 </a>
@@ -1222,6 +1225,59 @@
                 </p>
             </div>
             <div id="corporateTableContainer"></div>
+        </div>
+
+        <!-- 예약 차단 탭 -->
+        <div id="blocksTab" class="tab-content threads-section">
+            <h2>
+                <span><i class="fas fa-ban"></i> 방문 예약 차단</span>
+                <span class="thread-count" id="blockCount">총 0건</span>
+            </h2>
+
+            <div style="margin-bottom: 20px; padding: 16px; background: #F4F2EE; border-radius: 8px; border: 1px solid #E3DBCC;">
+                <p style="font-size: 14px; color: #4A3C2B; margin: 0; line-height: 1.7;">
+                    <i class="fas fa-info-circle"></i>
+                    여기에 등록한 날짜·시간에는 방문 상담 예약을 받지 않습니다. 예약 페이지의 해당 칸이 잠기고, 직접 신청하더라도 접수되지 않습니다.<br>
+                    <b>오늘과 내일은 등록하지 않아도 자동으로 막힙니다.</b> 방문 예약은 신청일로부터 2일 뒤부터만 받습니다.
+                </p>
+            </div>
+
+            <div class="customer-filter-grid">
+                <div class="filter-item">
+                    <label>시작일</label>
+                    <input type="date" id="blkStartDate">
+                </div>
+                <div class="filter-item">
+                    <label>종료일 <span style="font-weight:400;color:#6B7684;">(하루면 비워 두기)</span></label>
+                    <input type="date" id="blkEndDate">
+                </div>
+                <div class="filter-item">
+                    <label>시간</label>
+                    <label style="display:flex;align-items:center;gap:8px;font-weight:400;padding-top:6px;">
+                        <input type="checkbox" id="blkAllDay" style="width:auto;"> 하루 전체 차단
+                    </label>
+                </div>
+                <div class="filter-item" id="blkTimeStartWrap">
+                    <label>시작 시간</label>
+                    <select id="blkStartTime"></select>
+                </div>
+                <div class="filter-item" id="blkTimeEndWrap">
+                    <label>종료 시간 <span style="font-weight:400;color:#6B7684;">(이 시간까지 차단)</span></label>
+                    <select id="blkEndTime"></select>
+                </div>
+                <div class="filter-item">
+                    <label>사유 <span style="font-weight:400;color:#6B7684;">(내부 메모)</span></label>
+                    <input type="text" id="blkReason" placeholder="예: 외부 일정">
+                </div>
+            </div>
+
+            <p id="blkPreview" style="font-size:13.5px;color:#4A3C2B;margin:4px 0 0;"></p>
+
+            <div class="filter-actions">
+                <button class="filter-btn primary" onclick="addBookingBlock()">차단 추가</button>
+            </div>
+
+            <div id="blocksTableContainer"></div>
         </div>
 
 
@@ -2297,6 +2353,10 @@
             } else if (tabName === 'corporate') {
                 document.getElementById('corporateTab').classList.add('active');
                 loadCorporateInquiries();
+            } else if (tabName === 'blocks') {
+                document.getElementById('blocksTab').classList.add('active');
+                initBookingBlockForm();
+                loadBookingBlocks();
             }
         }
 
@@ -2647,6 +2707,212 @@
             } catch (e) {
                 console.error('예약 상태 변경 오류:', e);
                 alert('상태 변경 중 오류가 발생했습니다.');
+            }
+        }
+
+        // ========================================
+        // 예약 차단 탭 (booking_blocks)
+        // ========================================
+        // 여기서 등록한 날짜·시간에는 방문 예약을 받지 않는다. 예약 페이지가 같은
+        // 목록을 get_booking_blocks RPC 로 읽어 달력을 잠그고, 실제 차단은
+        // reservations 의 BEFORE INSERT 트리거가 한다.
+        // (migrations/20260805_create_booking_blocks.sql)
+        //
+        // DB 의 end_time 은 '열린 끝'이다. 화면에서는 "13:00 까지"처럼 고르는 편이
+        // 자연스러우므로, 고른 시간 + 1시간을 저장한다. 아래 blockEndExclusive() 참조.
+        const BOOK_SLOTS = ['09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00'];
+        let bookingBlocks = [];
+        let blockFormReady = false;
+
+        // 사무소 기준(한국 시간)의 오늘. 서버·예약 페이지와 기준을 맞춘다.
+        function kstToday() {
+            try { return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' }); }
+            catch (_) { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+        }
+        function addDays(isoDate, n) {
+            const p = isoDate.split('-');
+            const d = new Date(+p[0], +p[1] - 1, +p[2] + n);
+            return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        }
+        function blockEndExclusive(hhmm) {
+            return String(parseInt(hhmm.slice(0, 2), 10) + 1).padStart(2, '0') + ':00';
+        }
+        function blockedSlotsOf(startTime, endExclusive) {
+            if (!startTime) return BOOK_SLOTS.slice();
+            return BOOK_SLOTS.filter(t => t >= startTime && t < endExclusive);
+        }
+
+        function initBookingBlockForm() {
+            if (blockFormReady) return;
+            blockFormReady = true;
+
+            const opts = BOOK_SLOTS.map(t => `<option value="${t}">${t}</option>`).join('');
+            const s = document.getElementById('blkStartTime');
+            const e = document.getElementById('blkEndTime');
+            s.innerHTML = opts; e.innerHTML = opts;
+            s.value = '09:00'; e.value = '17:00';
+
+            // 오늘·내일은 어차피 자동으로 막히므로, 기본값은 예약이 열리는 첫날로 둔다.
+            document.getElementById('blkStartDate').value = addDays(kstToday(), 2);
+
+            document.getElementById('blkAllDay').addEventListener('change', function () {
+                const off = this.checked;
+                document.getElementById('blkTimeStartWrap').style.opacity = off ? '.45' : '';
+                document.getElementById('blkTimeEndWrap').style.opacity = off ? '.45' : '';
+                s.disabled = off; e.disabled = off;
+                previewBookingBlock();
+            });
+            ['blkStartDate','blkEndDate','blkStartTime','blkEndTime'].forEach(id => {
+                document.getElementById(id).addEventListener('change', previewBookingBlock);
+            });
+            previewBookingBlock();
+        }
+
+        // 저장하기 전에 "실제로 어느 칸이 막히는지"를 그대로 보여 준다.
+        function previewBookingBlock() {
+            const el = document.getElementById('blkPreview');
+            const start = document.getElementById('blkStartDate').value;
+            const end = document.getElementById('blkEndDate').value || start;
+            if (!start) { el.textContent = ''; return; }
+            if (end < start) { el.innerHTML = '<span style="color:#B03A2E;">종료일이 시작일보다 빠릅니다.</span>'; return; }
+
+            const allDay = document.getElementById('blkAllDay').checked;
+            const period = start === end ? start : `${start} ~ ${end}`;
+            if (allDay) {
+                el.innerHTML = `<b>${period}</b> · 하루 전체 차단`;
+                return;
+            }
+            const st = document.getElementById('blkStartTime').value;
+            const en = document.getElementById('blkEndTime').value;
+            if (en < st) { el.innerHTML = '<span style="color:#B03A2E;">종료 시간이 시작 시간보다 빠릅니다.</span>'; return; }
+            const slots = blockedSlotsOf(st, blockEndExclusive(en));
+            el.innerHTML = `<b>${period}</b> · 차단되는 시간: ${slots.join(', ')}`
+                + (start !== end ? ' <span style="color:#6B7684;">(기간 내 모든 날짜에 같은 시간대 적용)</span>' : '');
+        }
+
+        async function addBookingBlock() {
+            const start = document.getElementById('blkStartDate').value;
+            const end = document.getElementById('blkEndDate').value || start;
+            if (!start) { alert('시작일을 선택해 주세요.'); return; }
+            if (end < start) { alert('종료일이 시작일보다 빠릅니다.'); return; }
+
+            const allDay = document.getElementById('blkAllDay').checked;
+            let startTime = null, endTime = null;
+            if (!allDay) {
+                const st = document.getElementById('blkStartTime').value;
+                const en = document.getElementById('blkEndTime').value;
+                if (en < st) { alert('종료 시간이 시작 시간보다 빠릅니다.'); return; }
+                startTime = st;
+                endTime = blockEndExclusive(en);
+                if (!blockedSlotsOf(startTime, endTime).length) {
+                    alert('선택하신 범위에 상담 시간이 없습니다. 다시 선택해 주세요.');
+                    return;
+                }
+            }
+
+            // 이미 잡혀 있는 예약을 모르고 덮는 일이 없도록 먼저 확인한다.
+            const clash = await reservationsInRange(start, end, startTime, endTime);
+            if (clash.length) {
+                const lines = clash.slice(0, 10)
+                    .map(r => `· ${r.reserve_date} ${r.reserve_time} ${r.name} (${r.office || '-'})`).join('\n');
+                const more = clash.length > 10 ? `\n… 외 ${clash.length - 10}건` : '';
+                if (!confirm(`이 범위에 이미 잡힌 예약이 ${clash.length}건 있습니다.\n\n${lines}${more}\n\n차단해도 기존 예약은 사라지지 않습니다. 해당 고객에게는 따로 연락해 주세요.\n계속할까요?`)) return;
+            }
+
+            try {
+                const user = await getCurrentUser();
+                const { error } = await supabaseClient.from('booking_blocks').insert({
+                    start_date: start,
+                    end_date: end,
+                    start_time: startTime,
+                    end_time: endTime,
+                    reason: (document.getElementById('blkReason').value || '').trim() || null,
+                    created_by: user && user.id ? user.id : null
+                });
+                if (error) throw error;
+                document.getElementById('blkReason').value = '';
+                await loadBookingBlocks();
+            } catch (e) {
+                console.error('❌ 예약 차단 등록 오류:', e);
+                alert('차단 등록에 실패했습니다: ' + (e.message || e));
+            }
+        }
+
+        // 차단하려는 범위에 걸리는 기존 예약(취소·완료 제외).
+        async function reservationsInRange(start, end, startTime, endExclusive) {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('reservations')
+                    .select('reserve_date, reserve_time, name, office, status')
+                    .gte('reserve_date', start)
+                    .lte('reserve_date', end)
+                    .in('status', ['requested', 'confirmed'])
+                    .order('reserve_date', { ascending: true });
+                if (error) throw error;
+                const hit = blockedSlotsOf(startTime, endExclusive);
+                return (data || []).filter(r => hit.indexOf(String(r.reserve_time).slice(0, 5)) >= 0);
+            } catch (e) {
+                console.error('기존 예약 확인 실패(무시):', e);
+                return [];
+            }
+        }
+
+        async function loadBookingBlocks() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('booking_blocks')
+                    .select('*')
+                    .order('start_date', { ascending: true })
+                    .order('start_time', { ascending: true, nullsFirst: true });
+                if (error) throw error;
+                bookingBlocks = data || [];
+            } catch (e) {
+                console.error('❌ 예약 차단 로드 오류:', e);
+                bookingBlocks = [];
+            }
+            renderBookingBlocks();
+        }
+
+        function renderBookingBlocks() {
+            const container = document.getElementById('blocksTableContainer');
+            document.getElementById('blockCount').textContent = `총 ${bookingBlocks.length}건`;
+
+            if (!bookingBlocks.length) {
+                container.innerHTML = '<div class="empty-state" style="text-align:center; padding:60px 20px; color:#6B7684;"><i class="fas fa-calendar-check" style="font-size:48px; margin-bottom:16px; opacity:0.5;"></i><p style="font-size:16px;">등록된 차단이 없습니다. 오늘과 내일은 자동으로 막혀 있습니다.</p></div>';
+                return;
+            }
+
+            const today = kstToday();
+            let html = '<table class="customers-table"><thead><tr><th>기간</th><th>차단 시간</th><th>사유</th><th>등록일</th><th>해제</th></tr></thead><tbody>';
+            bookingBlocks.forEach(b => {
+                const past = b.end_date < today;
+                const period = b.start_date === b.end_date
+                    ? escCorp(b.start_date)
+                    : `${escCorp(b.start_date)} ~ ${escCorp(b.end_date)}`;
+                const times = b.start_time
+                    ? blockedSlotsOf(String(b.start_time).slice(0,5), String(b.end_time).slice(0,5)).join(', ')
+                    : '하루 전체';
+                html += `<tr${past ? ' style="opacity:.5;"' : ''}>
+                    <td><strong>${period}</strong>${past ? ' <span style="font-size:12px;color:#6B7684;">(지남)</span>' : ''}</td>
+                    <td>${times}</td>
+                    <td>${escCorp(b.reason) || '-'}</td>
+                    <td>${new Date(b.created_at).toLocaleDateString('ko-KR')}</td>
+                    <td><button onclick="deleteBookingBlock('${b.id}')" style="font-size:12px; padding:4px 10px; border:1px solid #D8D2C6; border-radius:4px; background:#fff; color:#B03A2E; cursor:pointer;"><i class="fas fa-trash"></i> 해제</button></td>
+                </tr>`;
+            });
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        async function deleteBookingBlock(id) {
+            if (!confirm('이 차단을 해제합니다. 해당 날짜·시간에 다시 예약을 받게 됩니다. 계속할까요?')) return;
+            try {
+                const { error } = await supabaseClient.from('booking_blocks').delete().eq('id', id);
+                if (error) throw error;
+                await loadBookingBlocks();
+            } catch (e) {
+                console.error('❌ 예약 차단 해제 오류:', e);
+                alert('해제에 실패했습니다: ' + (e.message || e));
             }
         }
 

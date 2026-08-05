@@ -450,6 +450,35 @@ async function notifyAdminOnNewReservation(reservationId) {
     }
 }
 
+// 예약을 받지 않는 날짜·시간대 조회.
+// 어드민이 대시보드 '예약 차단' 탭에서 등록한 것이며, 방문자도 읽어야 하므로
+// 테이블을 직접 열지 않고 날짜·시간만 돌려주는 RPC 를 쓴다(사유는 내부 메모).
+// 마이그레이션 20260805_create_booking_blocks.sql 적용 전에는 함수가 없어
+// 오류가 나는데, 그때는 빈 목록으로 취급한다(달력은 리드타임만 적용).
+async function getBookingBlocks(fromDate, toDate) {
+    try {
+        if (!supabaseClient) throw new Error('Supabase 클라이언트가 준비되지 않았습니다');
+        const { data, error } = await supabaseClient.rpc('get_booking_blocks', {
+            p_from: fromDate, p_to: toDate
+        });
+        if (error) throw error;
+        // time 은 'HH:MM:SS' 로 오므로 슬롯 표기('HH:MM')에 맞춰 자른다.
+        const norm = (t) => (t ? String(t).slice(0, 5) : null);
+        return {
+            success: true,
+            data: (data || []).map(b => ({
+                start_date: b.start_date,
+                end_date: b.end_date,
+                start_time: norm(b.start_time),
+                end_time: norm(b.end_time)
+            }))
+        };
+    } catch (error) {
+        console.error('예약 차단 시간 조회 실패:', error);
+        return { success: false, error: error.message, data: [] };
+    }
+}
+
 // ============================================
 // 기업 자문 문의 (로그인 불필요 — anon INSERT 허용 테이블)
 // ============================================

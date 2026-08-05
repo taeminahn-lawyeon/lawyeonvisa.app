@@ -94,6 +94,7 @@
             <div class="bk-step">
                 <div class="step-label"><span>01</span> Select a date</div>
                 <div class="cal-grid" id="calWrap"></div>
+                <p class="lunch-note">· Visits can be booked from <b>2 days</b> after your request. The earliest date available is <b id="minDateNote"></b>.</p>
             </div>
 
             <div class="bk-step">
@@ -206,6 +207,9 @@
         confirmTtl:'Booking request received ✓',
         err:'We could not save your booking. Please try again or call +82-2-2039-0544.',
         badPhone:"Please enter a valid phone number.", badEmail:"Please enter a valid email address.",
+        blocked:'Unavailable',
+        errSlot:'The date and time you selected is not available for booking. Please choose another time.',
+        errLead:'Visits can be booked from 2 days after the request. Please choose another date.',
         confirm:function(name,when,office,phone){
             return name+', your visit consultation for <b>'+when+'</b> at the '+office+' has been requested. Our team will confirm by calling '+phone+'.';
         },
@@ -219,9 +223,40 @@
     var SEL_KEY = 'bookingLoginSel';
 
     var calWrap = document.getElementById('calWrap');
-    var today = new Date(); today.setHours(0,0,0,0);
-    var maxDate = new Date(today.getFullYear(), today.getMonth()+2, 0);
     function pad(n){ return (n<10?'0':'')+n; }
+
+    // Today and tomorrow are not bookable. Same value as the DB trigger
+    // (reservations_check_availability).
+    var LEAD_DAYS = 2;
+    // Anchored to "today" in the office's timezone. Using the visitor's local
+    // date would open a day early for visitors in earlier timezones.
+    function seoulToday(){
+        var s = null;
+        try { s = new Date().toLocaleDateString('en-CA', { timeZone:'Asia/Seoul' }); } catch(_) {}
+        var m = s && /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+        if(!m){ var d = new Date(); d.setHours(0,0,0,0); return d; }
+        return new Date(+m[1], +m[2]-1, +m[3]);
+    }
+    var today = seoulToday();
+    var minDate = new Date(today.getFullYear(), today.getMonth(), today.getDate()+LEAD_DAYS);
+    var maxDate = new Date(today.getFullYear(), today.getMonth()+2, 0);
+    function isoOf(d){ return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+
+    // Dates and time ranges the firm has closed from the admin dashboard. The
+    // calendar renders before this list arrives, then locks the cells (applyBlocks).
+    var blocks = [];
+    function slotBlocked(dateIso, t){
+        for(var i=0;i<blocks.length;i++){
+            var b = blocks[i];
+            if(dateIso < b.start_date || dateIso > b.end_date) continue;
+            if(!b.start_time) return true;                       // whole day
+            if(t >= b.start_time && t < b.end_time) return true;  // end_time is exclusive
+        }
+        return false;
+    }
+    function dayBlocked(dateIso){
+        return SLOTS.every(function(t){ return slotBlocked(dateIso, t); });
+    }
     function buildMonth(year, month){
         var first = new Date(year, month, 1);
         var startDow = first.getDay();
@@ -235,7 +270,7 @@
             var dow = cur.getDay();
             var iso = cur.getFullYear()+'-'+pad(cur.getMonth()+1)+'-'+pad(dd);
             var weekend = (dow===0||dow===6);
-            var inRange = (cur>=today && cur<=maxDate);
+            var inRange = (cur>=minDate && cur<=maxDate);
             if(weekend || !inRange){
                 html += '<div class="cal-day disabled">'+dd+'</div>';
             } else {
@@ -249,21 +284,68 @@
     Array.prototype.forEach.call(calWrap.querySelectorAll('.cal-day.pick'), function(cell){
         cell.addEventListener('click', function(){ selectDate(this); });
     });
+    var minNote = document.getElementById('minDateNote');
+    if(minNote) minNote.textContent = STR.dateLabel(minDate.getMonth(), minDate.getDate(), minDate.getDay());
 
     var timeGrid = document.getElementById('timeGrid');
     function renderTimes(){
         timeGrid.innerHTML = '';
         SLOTS.forEach(function(t){
             var el = document.createElement('div');
-            el.className = 'time-slot';
+            var off = state.date && slotBlocked(state.date, t);
+            el.className = 'time-slot' + (off ? ' disabled' : '');
             el.textContent = t;
-            el.addEventListener('click', function(){ selectTime(this, t); });
-            if(state.time===t) el.classList.add('sel');
+            if(off){
+                var tag = document.createElement('span');
+                tag.className = 'tag'; tag.textContent = STR.blocked;
+                el.appendChild(tag);
+            } else {
+                el.addEventListener('click', function(){ selectTime(this, t); });
+                if(state.time===t) el.classList.add('sel');
+            }
             timeGrid.appendChild(el);
         });
     }
 
+    // Fetch the closed ranges and apply them. If the list cannot be read
+    // (migration not applied yet, network error) the page still works and the
+    // DB trigger does the actual blocking.
+    function loadBlocks(tries){
+        // supabase-client.js is loaded after this script, so it may not exist yet.
+        if(typeof getBookingBlocks !== 'function'){
+            if((tries||0) < 6) setTimeout(function(){ loadBlocks((tries||0)+1); }, 400);
+            return;
+        }
+        getBookingBlocks(isoOf(minDate), isoOf(maxDate)).then(function(res){
+            if(!res || !res.success) return;
+            blocks = res.data || [];
+            applyBlocks();
+        }).catch(function(){});
+    }
+    function applyBlocks(){
+        if(!blocks.length) return;
+        Array.prototype.forEach.call(calWrap.querySelectorAll('.cal-day.pick'), function(c){
+            if(!dayBlocked(c.dataset.date)) return;
+            c.classList.remove('pick','sel');
+            c.classList.add('disabled');
+            if(state.date === c.dataset.date) clearSelection();
+        });
+        if(state.date && state.time && slotBlocked(state.date, state.time)){
+            state.time = null;
+            var stm = document.getElementById('sTime');
+            stm.textContent = STR.notSel; stm.classList.add('empty');
+        }
+        renderTimes(); sync();
+    }
+    function clearSelection(){
+        state.date = null; state.time = null; state.dateLabel = null;
+        var sd = document.getElementById('sDate'); sd.textContent = STR.notSel; sd.classList.add('empty');
+        var stm = document.getElementById('sTime'); stm.textContent = STR.notSel; stm.classList.add('empty');
+    }
+
     function selectDate(cell){
+        // Blocked cells lose the pick class; the listener stays, so stop it here.
+        if(!cell.classList.contains('pick')) return;
         Array.prototype.forEach.call(calWrap.querySelectorAll('.cal-day'), function(c){ c.classList.remove('sel'); });
         cell.classList.add('sel');
         state.date = cell.dataset.date; state.dateLabel = cell.dataset.label;
@@ -342,11 +424,21 @@
             if(!res || !res.success){ throw new Error(res && res.error || 'save failed'); }
             showConfirm(payload, state.dateLabel+' '+state.time);
         }catch(e){
-            console.error(e); alert(STR.err);
+            console.error(e);
+            // The trigger tags its errors so we can pick the right message
+            // (20260805_create_booking_blocks.sql).
+            var msg = String((e && e.message) || e || '');
+            if(/BOOKING_SLOT_UNAVAILABLE/.test(msg)) alert(STR.errSlot);
+            else if(/BOOKING_LEAD_TIME/.test(msg)) alert(STR.errLead);
+            else alert(STR.err);
             submitting = false; bookBtn.textContent = STR.submit; sync();
+            loadBlocks();  // a range may have been closed while this page was open
         }
     });
 
     renderTimes();
+    // supabase-client is initialised after this script runs.
+    if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ loadBlocks(); });
+    else loadBlocks();
 })();
 </script>

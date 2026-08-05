@@ -159,6 +159,7 @@
             <div class="bk-step">
                 <div class="step-label"><span>01</span> 날짜 선택</div>
                 <div class="cal-grid" id="calWrap"></div>
+                <p class="lunch-note">· 방문일은 신청일로부터 <b>2일 뒤</b>부터 선택할 수 있습니다. 가장 빠른 방문일은 <b id="minDateNote"></b>입니다.</p>
             </div>
 
             <div class="bk-step">
@@ -269,6 +270,9 @@
         agree:'개인정보 수집·이용 및 제공에 동의해 주세요.',
         err:'예약 저장에 실패했습니다. 다시 시도하시거나 02-2039-0544로 연락해 주세요.',
         badPhone:"올바른 전화번호를 입력해 주세요.", badEmail:"올바른 이메일 주소를 입력해 주세요.",
+        blocked:'예약 불가',
+        errSlot:'선택하신 날짜·시간은 예약을 받지 않습니다. 다른 시간을 선택해 주세요.',
+        errLead:'방문 예약은 신청일로부터 2일 뒤부터 가능합니다. 다른 날짜를 선택해 주세요.',
         confirm:function(name,when,office,phone){
             return name+'님, <b>'+when+'</b> '+office+' 방문 상담이 요청되었습니다. 담당자가 '+phone+'로 확정을 안내드립니다.';
         }
@@ -279,9 +283,39 @@
     var state = { date:null, time:null, dateLabel:null };
 
     var calWrap = document.getElementById('calWrap');
-    var today = new Date(); today.setHours(0,0,0,0);
-    var maxDate = new Date(today.getFullYear(), today.getMonth()+2, 0);
     function pad(n){ return (n<10?'0':'')+n; }
+
+    // 오늘·내일은 예약을 받지 않는다. DB 트리거(reservations_check_availability)와 같은 값.
+    var LEAD_DAYS = 2;
+    // 기준은 사무소 시간(한국)의 '오늘'이다. 방문자의 로컬 날짜로 계산하면
+    // 시차가 있는 나라에서 하루 일찍 열린다.
+    function seoulToday(){
+        var s = null;
+        try { s = new Date().toLocaleDateString('en-CA', { timeZone:'Asia/Seoul' }); } catch(_) {}
+        var m = s && /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+        if(!m){ var d = new Date(); d.setHours(0,0,0,0); return d; }
+        return new Date(+m[1], +m[2]-1, +m[3]);
+    }
+    var today = seoulToday();
+    var minDate = new Date(today.getFullYear(), today.getMonth(), today.getDate()+LEAD_DAYS);
+    var maxDate = new Date(today.getFullYear(), today.getMonth()+2, 0);
+    function isoOf(d){ return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+
+    // 관리자가 막아 둔 날짜·시간대. 목록을 읽기 전에도 달력은 그대로 뜨고,
+    // 읽고 난 뒤 해당 칸을 잠근다(applyBlocks).
+    var blocks = [];
+    function slotBlocked(dateIso, t){
+        for(var i=0;i<blocks.length;i++){
+            var b = blocks[i];
+            if(dateIso < b.start_date || dateIso > b.end_date) continue;
+            if(!b.start_time) return true;                      // 종일 차단
+            if(t >= b.start_time && t < b.end_time) return true; // end_time 은 열린 끝
+        }
+        return false;
+    }
+    function dayBlocked(dateIso){
+        return SLOTS.every(function(t){ return slotBlocked(dateIso, t); });
+    }
     function buildMonth(year, month){
         var first = new Date(year, month, 1);
         var startDow = first.getDay();
@@ -295,7 +329,7 @@
             var dow = cur.getDay();
             var iso = cur.getFullYear()+'-'+pad(cur.getMonth()+1)+'-'+pad(dd);
             var weekend = (dow===0||dow===6);
-            var inRange = (cur>=today && cur<=maxDate);
+            var inRange = (cur>=minDate && cur<=maxDate);
             if(weekend || !inRange){
                 html += '<div class="cal-day disabled">'+dd+'</div>';
             } else {
@@ -309,21 +343,67 @@
     Array.prototype.forEach.call(calWrap.querySelectorAll('.cal-day.pick'), function(cell){
         cell.addEventListener('click', function(){ selectDate(this); });
     });
+    var minNote = document.getElementById('minDateNote');
+    if(minNote) minNote.textContent = (minDate.getMonth()+1)+'월 '+minDate.getDate()+'일 ('+DOW[minDate.getDay()]+')';
 
     var timeGrid = document.getElementById('timeGrid');
     function renderTimes(){
         timeGrid.innerHTML = '';
         SLOTS.forEach(function(t){
             var el = document.createElement('div');
-            el.className = 'time-slot';
+            var off = state.date && slotBlocked(state.date, t);
+            el.className = 'time-slot' + (off ? ' disabled' : '');
             el.textContent = t;
-            el.addEventListener('click', function(){ selectTime(this, t); });
-            if(state.time===t) el.classList.add('sel');
+            if(off){
+                var tag = document.createElement('span');
+                tag.className = 'tag'; tag.textContent = STR.blocked;
+                el.appendChild(tag);
+            } else {
+                el.addEventListener('click', function(){ selectTime(this, t); });
+                if(state.time===t) el.classList.add('sel');
+            }
             timeGrid.appendChild(el);
         });
     }
 
+    // 차단 목록을 읽어 달력·시간표에 반영한다. 목록을 못 읽어도(마이그레이션 전,
+    // 네트워크 오류) 화면은 그대로 동작하고, 실제 차단은 DB 트리거가 한다.
+    function loadBlocks(tries){
+        // supabase-client.js 는 이 스크립트 뒤에 실려 아직 없을 수 있다.
+        if(typeof getBookingBlocks !== 'function'){
+            if((tries||0) < 6) setTimeout(function(){ loadBlocks((tries||0)+1); }, 400);
+            return;
+        }
+        getBookingBlocks(isoOf(minDate), isoOf(maxDate)).then(function(res){
+            if(!res || !res.success) return;
+            blocks = res.data || [];
+            applyBlocks();
+        }).catch(function(){});
+    }
+    function applyBlocks(){
+        if(!blocks.length) return;
+        Array.prototype.forEach.call(calWrap.querySelectorAll('.cal-day.pick'), function(c){
+            if(!dayBlocked(c.dataset.date)) return;
+            c.classList.remove('pick','sel');
+            c.classList.add('disabled');
+            if(state.date === c.dataset.date) clearSelection();
+        });
+        if(state.date && state.time && slotBlocked(state.date, state.time)){
+            state.time = null;
+            var stm = document.getElementById('sTime');
+            stm.textContent = '선택 안 됨'; stm.classList.add('empty');
+        }
+        renderTimes(); sync();
+    }
+    function clearSelection(){
+        state.date = null; state.time = null; state.dateLabel = null;
+        var sd = document.getElementById('sDate'); sd.textContent = '선택 안 됨'; sd.classList.add('empty');
+        var stm = document.getElementById('sTime'); stm.textContent = '선택 안 됨'; stm.classList.add('empty');
+    }
+
     function selectDate(cell){
+        // 차단으로 잠긴 칸은 pick 클래스가 벗겨진다(리스너는 남아 있으므로 여기서 막는다).
+        if(!cell.classList.contains('pick')) return;
         Array.prototype.forEach.call(calWrap.querySelectorAll('.cal-day'), function(c){ c.classList.remove('sel'); });
         cell.classList.add('sel');
         state.date = cell.dataset.date; state.dateLabel = cell.dataset.label;
@@ -402,12 +482,21 @@
             if(!res || !res.success){ throw new Error(res && res.error || 'save failed'); }
             showConfirm(payload, state.dateLabel+' '+state.time);
         }catch(e){
-            console.error(e); alert(STR.err);
+            console.error(e);
+            // 트리거가 붙인 표식으로 안내 문구를 고른다(20260805_create_booking_blocks.sql).
+            var msg = String((e && e.message) || e || '');
+            if(/BOOKING_SLOT_UNAVAILABLE/.test(msg)) alert(STR.errSlot);
+            else if(/BOOKING_LEAD_TIME/.test(msg)) alert(STR.errLead);
+            else alert(STR.err);
             submitting = false; bookBtn.textContent = STR.submit; sync();
+            loadBlocks();  // 화면이 열려 있는 동안 차단이 추가됐을 수 있다
         }
     });
 
     renderTimes();
+    // supabase-client 는 DOMContentLoaded 에서 초기화되므로 그 뒤에 읽는다.
+    if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ loadBlocks(); });
+    else loadBlocks();
 })();
 </script>
 
