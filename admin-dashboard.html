@@ -2199,8 +2199,9 @@
                     .from('pre_consultations')
                     .select('*')
                     .order('created_at', { ascending: false });
-                if (error) { console.error('사전상담 로드 오류:', error); preConsultations = []; }
-                else { preConsultations = data || []; }
+                if (error) throw error;
+                delete listLoadError.preConsult;
+                preConsultations = data || [];
                 const pending = preConsultations.filter(r => (r.status || 'requested') === 'requested').length;
                 const badge = document.getElementById('preConsultBadge');
                 if (badge) {
@@ -2208,14 +2209,27 @@
                     else { badge.style.display = 'none'; }
                 }
                 renderPreConsultTable();
-            } catch (e) { console.error('사전상담 로드 오류:', e); }
+            } catch (e) {
+                console.error('사전상담 로드 오류:', e);
+                listLoadError.preConsult = e.message || String(e);
+                preConsultations = [];
+                renderPreConsultTable();
+            }
         }
 
         function renderPreConsultTable() {
             const container = document.getElementById('preConsultTableContainer');
-            document.getElementById('preConsultCount').textContent = `총 ${preConsultations.length}건`;
-            if (!preConsultations.length) {
-                container.innerHTML = '<div class="empty-state" style="text-align:center; padding:60px 20px; color:#6B7684;"><i class="fas fa-envelope-open-text" style="font-size:48px; margin-bottom:16px; opacity:0.5;"></i><p style="font-size:16px;">접수된 사전상담 신청이 없습니다.</p></div>';
+            const q = toolbarValue('preConsultSearch');
+            const status = toolbarValue('preConsultStatusFilter');
+            const rows = preConsultations.filter(c =>
+                (!status || (c.status || 'requested') === status)
+                && textMatch(q, c.name, c.email, c.phone, c.category, c.country, c.visa, c.message));
+
+            document.getElementById('preConsultCount').textContent = listCountLabel(rows.length, preConsultations.length);
+            if (!rows.length) {
+                container.innerHTML = listLoadError.preConsult
+                    ? errorState('preConsult', 'loadPreConsultations()')
+                    : emptyState('fa-envelope-open-text', preConsultations.length ? '조건에 맞는 접수 건이 없습니다.' : '접수된 사전상담 신청이 없습니다.');
                 return;
             }
 
@@ -2236,7 +2250,7 @@
                     <tbody>
             `;
 
-            preConsultations.forEach(c => {
+            rows.forEach(c => {
                 const st = PRECONSULT_STATUS[c.status || 'requested'] || PRECONSULT_STATUS.requested;
                 // 국내면 체류자격·만료일, 해외면 거주 국가를 보여 준다.
                 const stay = c.in_korea
@@ -2335,13 +2349,19 @@
                     .from('corporate_inquiries')
                     .select('*')
                     .order('created_at', { ascending: false });
-                if (error) { console.error('기업 자문 로드 오류:', error); corporateInquiries = []; }
-                else { corporateInquiries = data || []; }
+                if (error) throw error;
+                delete listLoadError.corporate;
+                corporateInquiries = data || [];
                 const pending = corporateInquiries.filter(r => (r.status || 'requested') === 'requested').length;
                 const badge = document.getElementById('corporateBadge');
                 if (badge) { if (pending > 0) { badge.textContent = pending; badge.style.display = 'inline-block'; } else { badge.style.display = 'none'; } }
                 renderCorporateTable();
-            } catch (e) { console.error('기업 자문 로드 오류:', e); }
+            } catch (e) {
+                console.error('기업 자문 로드 오류:', e);
+                listLoadError.corporate = e.message || String(e);
+                corporateInquiries = [];
+                renderCorporateTable();
+            }
         }
 
         function renderCorporateTable() {
@@ -2354,7 +2374,9 @@
 
             document.getElementById('corporateCount').textContent = listCountLabel(rows.length, corporateInquiries.length);
             if (!rows.length) {
-                container.innerHTML = emptyState('fa-building', corporateInquiries.length ? '조건에 맞는 문의가 없습니다.' : '접수된 기업 자문 문의가 없습니다.');
+                container.innerHTML = listLoadError.corporate
+                    ? errorState('corporate', 'loadCorporateInquiries()')
+                    : emptyState('fa-building', corporateInquiries.length ? '조건에 맞는 문의가 없습니다.' : '접수된 기업 자문 문의가 없습니다.');
                 return;
             }
             let html = '<table class="customers-table"><thead><tr><th>이름</th><th>회사/기관</th><th>연락처</th><th>문의 내용</th><th>접수일</th><th>상태</th></tr></thead><tbody>';
@@ -2413,6 +2435,17 @@
         function listCountLabel(shown, total) {
             return shown === total ? `총 ${total}건` : `${shown}건 표시 · 전체 ${total}건`;
         }
+        // 목록 읽기가 실패했을 때, 지금까지는 빈 배열로 두어 '0건'과 똑같이 보였다.
+        // 권한·네트워크 문제로 못 읽은 것인지 정말로 없는 것인지 구분되어야 한다.
+        const listLoadError = {};
+        function errorState(key, retryFn) {
+            return `<div class="empty-state" style="text-align:center; padding:48px 20px; color:#B03A2E;">
+                <i class="fas fa-triangle-exclamation" style="font-size:40px; margin-bottom:14px; opacity:.6;"></i>
+                <p style="font-size:16px; font-weight:600; margin-bottom:6px;">목록을 불러오지 못했습니다.</p>
+                <p style="font-size:13px; color:#6B7684; margin-bottom:14px;">접수된 건이 없는 것이 아니라, 읽기에 실패한 것입니다.<br>${escCorp(listLoadError[key])}</p>
+                <button onclick="${retryFn}" style="font-size:13px; padding:7px 16px; border:1px solid #D8D2C6; border-radius:6px; background:#fff; cursor:pointer;">다시 시도</button>
+            </div>`;
+        }
         function emptyState(icon, message) {
             return `<div class="empty-state" style="text-align:center; padding:60px 20px; color:#6B7684;">
                 <i class="fas ${icon}" style="font-size:48px; margin-bottom:16px; opacity:0.5;"></i>
@@ -2465,12 +2498,9 @@
                     .order('reserve_date', { ascending: false })
                     .order('reserve_time', { ascending: false });
 
-                if (error) {
-                    console.error('❌ 예약 로드 오류:', error);
-                    reservations = [];
-                } else {
-                    reservations = data || [];
-                }
+                if (error) throw error;
+                delete listLoadError.reservations;
+                reservations = data || [];
 
                 // 배지: '요청' 상태 건수
                 const pending = reservations.filter(r => (r.status || 'requested') === 'requested').length;
@@ -2481,6 +2511,9 @@
                 renderReservationsTable();
             } catch (error) {
                 console.error('예약 데이터 로드 오류:', error);
+                listLoadError.reservations = error.message || String(error);
+                reservations = [];
+                renderReservationsTable();
             }
         }
 
@@ -2516,7 +2549,9 @@
             document.getElementById('reservationCount').textContent = listCountLabel(rows.length, reservations.length);
 
             if (rows.length === 0) {
-                container.innerHTML = emptyState('fa-calendar-times', reservations.length ? '조건에 맞는 예약이 없습니다.' : '접수된 방문 예약이 없습니다.');
+                container.innerHTML = listLoadError.reservations
+                    ? errorState('reservations', 'loadReservationsData()')
+                    : emptyState('fa-calendar-times', reservations.length ? '조건에 맞는 예약이 없습니다.' : '접수된 방문 예약이 없습니다.');
                 return;
             }
 
@@ -2754,9 +2789,11 @@
                     .select('*')
                     .order('start_date', { ascending: true });
                 if (error) throw error;
+                delete listLoadError.blocks;
                 bookingBlocks = data || [];
             } catch (e) {
                 console.error('❌ 예약 차단 로드 오류:', e);
+                listLoadError.blocks = e.message || String(e);
                 bookingBlocks = [];
             }
             renderBookingBlocks();
@@ -2767,7 +2804,9 @@
             document.getElementById('blockCount').textContent = `총 ${bookingBlocks.length}건`;
 
             if (!bookingBlocks.length) {
-                container.innerHTML = '<div class="empty-state" style="text-align:center; padding:60px 20px; color:#6B7684;"><i class="fas fa-calendar-check" style="font-size:48px; margin-bottom:16px; opacity:0.5;"></i><p style="font-size:16px;">등록된 차단이 없습니다. 오늘과 내일은 자동으로 막혀 있습니다.</p></div>';
+                container.innerHTML = listLoadError.blocks
+                    ? errorState('blocks', 'loadBookingBlocks()')
+                    : emptyState('fa-calendar-check', '등록된 차단이 없습니다. 오늘과 내일은 자동으로 막혀 있습니다.');
                 return;
             }
 
