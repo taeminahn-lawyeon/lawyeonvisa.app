@@ -400,8 +400,13 @@ function legalServiceJsonLd(lang) {
   const obj = {
     '@context': 'https://schema.org',
     '@type': 'LegalService',
-    name: S.brandName + ' ' + S.brandSub,
-    url: SITE + (lang === 'en' ? '/main' : '/ko/main'),
+    // 조직 이름은 WebSite.name·og:site_name·<title> 과 글자 하나까지 같아야 한다.
+    // 브랜드 표기(brandName + brandSub)를 이어 붙이면 'Visa &' 가 들어가 미세하게
+    // 달라지고, Google 은 이름 후보가 둘이면 판단을 보류한다.
+    name: SITE_NAME,
+    alternateName: SITE_NAME_ALT,
+    // 홈이 /main 에서 도메인 루트로 옮겨졌다.
+    url: SITE + HOME_URL[lang],
     telephone: '+82-2-2039-0544',
     image: SITE + '/images/og-image.png',
     areaServed: { '@type': 'Country', name: lang === 'en' ? 'South Korea' : '대한민국' },
