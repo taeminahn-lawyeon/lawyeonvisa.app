@@ -704,7 +704,37 @@
             border-bottom: 1px solid #F2F4F6;
             font-size: 14px;
             color: #191F28;
+            vertical-align: top;
         }
+
+        /* 상담 내용은 길이가 제각각이라, 한 건이 길면 그 행 전체가 화면을 채우고
+           나머지 칸이 세로 가운데로 밀려 읽기 어려웠다. 기본 3줄만 보이고
+           '더보기'로 펼친다. */
+        .memo-cell { max-width: 420px; min-width: 260px; }
+        .memo-cell .memo-text {
+            white-space: pre-wrap;
+            line-height: 1.65;
+            color: #4A3C2B;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .memo-cell.open .memo-text { display: block; overflow: visible; }
+        .memo-more {
+            margin-top: 6px;
+            padding: 0;
+            border: none;
+            background: none;
+            font-size: 12.5px;
+            font-family: inherit;
+            color: #887668;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .cell-sub { display: block; margin-top: 4px; font-size: 12.5px; color: #6B7684; }
+        .cell-link { color: #887668; text-decoration: none; }
+        .cell-link:hover { text-decoration: underline; }
 
         .customers-table tr:hover {
             background: #F9FAFB;
@@ -2436,7 +2466,7 @@
                         <td>${phone}</td>
                         <td>${escCorp(c.category) || '-'}</td>
                         <td>${stay}</td>
-                        <td style="max-width:300px; white-space:pre-wrap; color:#4A3C2B;">${escCorp(c.message) || '-'}</td>
+                        ${memoCellHtml(c.message)}
                         <td>
                             <span class="status-badge" style="background:${st.bg}; color:#fff; padding:3px 9px; border-radius:6px; font-size:12px; font-weight:600; display:inline-block; margin-bottom:6px;">${st.label}</span><br>
                             <select onchange="updatePreConsultStatus('${c.id}', this.value)" style="font-size:12px; padding:4px 6px; border:1px solid #D8D2C6; border-radius:4px;">
@@ -2540,7 +2570,7 @@
                     <td>${escCorp(q.company) || '-'}</td>
                     <td>${phone}</td>
                     <td>${email}</td>
-                    <td style="max-width:320px;white-space:pre-wrap;color:#4A3C2B;">${escCorp(q.message) || '-'}</td>
+                    ${memoCellHtml(q.message)}
                     <td>${new Date(q.created_at).toLocaleDateString('ko-KR')}</td>
                     <td><span class="org-badge" style="background:${st.bg};color:#fff;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:600;">${st.label}</span></td>
                 </tr>`;
@@ -2588,6 +2618,43 @@
             return String(s == null ? '' : s)
                 .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
                 .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        // 긴 상담 내용은 3줄까지만 보이고 '더보기'로 펼친다.
+        // 짧은 글에는 버튼을 붙이지 않는다.
+        function memoCellHtml(text) {
+            const t = (text || '').trim();
+            if (!t) return '<td class="memo-cell"><span style="color:#9CA3AF;">-</span></td>';
+            const long = t.length > 110 || (t.match(/\n/g) || []).length >= 3;
+            return `<td class="memo-cell">
+                <div class="memo-text">${escapeReservationHtml(t)}</div>
+                ${long ? '<button class="memo-more" onclick="toggleMemo(this)">더보기</button>' : ''}
+            </td>`;
+        }
+        function toggleMemo(btn) {
+            const cell = btn.closest('.memo-cell');
+            cell.classList.toggle('open');
+            btn.textContent = cell.classList.contains('open') ? '접기' : '더보기';
+        }
+
+        // email / visa 컬럼이 생기기 전(20260610 마이그레이션)에 접수된 건은
+        // 메모 앞에 '[Email: … | Visa: …]' 형태로 합쳐져 있다. 화면에서는
+        // 컬럼에 있든 메모에 있든 같은 자리에 보이도록 여기서 분리한다.
+        function splitReservationMemo(r) {
+            let email = (r.email || '').trim();
+            let visa = (r.visa || '').trim();
+            let memo = (r.memo || '').trim();
+            const m = /^\[([^\]]*)\]\s*/.exec(memo);
+            if (m) {
+                const em = /Email:\s*([^|\]]+)/i.exec(m[1]);
+                const vi = /Visa:\s*([^|\]]+)/i.exec(m[1]);
+                if (em || vi) {
+                    if (!email && em) email = em[1].trim();
+                    if (!visa && vi) visa = vi[1].trim();
+                    memo = memo.slice(m[0].length);
+                }
+            }
+            return { email, visa, memo };
         }
 
         async function loadReservationsData() {
@@ -2642,13 +2709,11 @@
                 <table class="customers-table">
                     <thead>
                         <tr>
-                            <th>방문일</th>
-                            <th>시간</th>
-                            <th>이름</th>
+                            <th>방문 일시</th>
+                            <th>신청인</th>
                             <th>연락처</th>
-                            <th>사무소</th>
-                            <th>분야</th>
-                            <th>내용</th>
+                            <th>사무소 · 분야</th>
+                            <th>상담 내용</th>
                             <th>상태</th>
                             <th>접수일</th>
                         </tr>
@@ -2658,27 +2723,33 @@
 
             reservations.forEach(r => {
                 const st = RESERVATION_STATUS[r.status] || RESERVATION_STATUS.requested;
-                const memo = r.memo ? escapeReservationHtml(r.memo) : '<span style="color:#9CA3AF;">-</span>';
+                const info = splitReservationMemo(r);
                 const options = Object.keys(RESERVATION_STATUS).map(k =>
                     `<option value="${k}"${(r.status || 'requested') === k ? ' selected' : ''}>${RESERVATION_STATUS[k].label}</option>`
                 ).join('');
 
+                const phone = r.phone
+                    ? `<a class="cell-link" href="tel:${escapeReservationHtml(String(r.phone).replace(/\s/g, ''))}">${escapeReservationHtml(r.phone)}</a>`
+                    : '-';
+                const subject = encodeURIComponent(`[법무법인 로연] 방문 상담 예약 — ${r.name}`);
+                const email = info.email
+                    ? `<a class="cell-link cell-sub" href="mailto:${escapeReservationHtml(info.email)}?subject=${subject}">${escapeReservationHtml(info.email)}</a>`
+                    : '';
+
                 tableHTML += `
                     <tr>
-                        <td><strong>${escapeReservationHtml(r.reserve_date)}</strong></td>
-                        <td>${escapeReservationHtml(r.reserve_time)}</td>
-                        <td><strong>${escapeReservationHtml(r.name)}</strong></td>
-                        <td>${escapeReservationHtml(r.phone)}</td>
-                        <td>${escapeReservationHtml(r.office || '-')}</td>
-                        <td>${escapeReservationHtml(r.topic || '-')}</td>
-                        <td style="max-width:240px; white-space:normal;">${memo}</td>
-                        <td>
+                        <td style="white-space:nowrap;"><strong>${escapeReservationHtml(r.reserve_date)}</strong><span class="cell-sub">${escapeReservationHtml(r.reserve_time)}</span></td>
+                        <td><strong>${escapeReservationHtml(r.name)}</strong>${info.visa ? `<span class="cell-sub">${escapeReservationHtml(info.visa)}</span>` : ''}</td>
+                        <td style="white-space:nowrap;">${phone}${email}</td>
+                        <td>${escapeReservationHtml(r.office || '-')}<span class="cell-sub">${escapeReservationHtml(r.topic || '-')}</span></td>
+                        ${memoCellHtml(info.memo)}
+                        <td style="white-space:nowrap;">
                             <span class="status-badge" style="background:${st.bg}; color:#fff; padding:3px 9px; border-radius:6px; font-size:12px; font-weight:600; display:inline-block; margin-bottom:6px;">${st.label}</span><br>
                             <select onchange="updateReservationStatus('${r.id}', this.value)" style="font-size:12px; padding:4px 6px; border:1px solid #D8D2C6; border-radius:4px;">
                                 ${options}
                             </select>
                         </td>
-                        <td>${new Date(r.created_at).toLocaleDateString('ko-KR')}</td>
+                        <td style="white-space:nowrap;">${new Date(r.created_at).toLocaleDateString('ko-KR')}</td>
                     </tr>
                 `;
             });
