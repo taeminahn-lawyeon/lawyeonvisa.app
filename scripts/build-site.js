@@ -93,8 +93,8 @@ const PAGES = [
   {
     id: 'booking', content: 'booking', supabase: true,
     title: { en: 'Book a Visit Consultation — Law Firm Lawyeon', ko: '방문 상담 예약 — 법무법인 로연' },
-    desc:  { en: 'Book an in-person consultation at the Seoul or Gwangju office of Law Firm Lawyeon. Weekdays 09:00–17:00, 1-hour slots.',
-             ko: '법무법인 로연 서울·광주 사무소 방문 상담 예약. 평일 09:00–17:00, 1시간 단위(점심 12:00–13:00 제외).' },
+    desc:  { en: 'Book an in-person consultation at the Seoul or Gwangju office of Law Firm Lawyeon. Weekdays 10:00–17:00, 1-hour slots.',
+             ko: '법무법인 로연 서울·광주 사무소 방문 상담 예약. 평일 10:00–17:00, 1시간 단위(점심 12:00–13:00 제외).' },
   },
   {
     id: 'price-list', content: 'price-list',

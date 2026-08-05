@@ -2720,7 +2720,7 @@
         //
         // DB 의 end_time 은 '열린 끝'이다. 화면에서는 "13:00 까지"처럼 고르는 편이
         // 자연스러우므로, 고른 시간 + 1시간을 저장한다. 아래 blockEndExclusive() 참조.
-        const BOOK_SLOTS = ['09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00'];
+        const BOOK_SLOTS = ['10:00','11:00','13:00','14:00','15:00','16:00','17:00'];
         let bookingBlocks = [];
         let blockFormReady = false;
 
@@ -2750,7 +2750,7 @@
             const s = document.getElementById('blkStartTime');
             const e = document.getElementById('blkEndTime');
             s.innerHTML = opts; e.innerHTML = opts;
-            s.value = '09:00'; e.value = '17:00';
+            s.value = '10:00'; e.value = '17:00';
 
             // 오늘·내일은 어차피 자동으로 막히므로, 기본값은 예약이 열리는 첫날로 둔다.
             document.getElementById('blkStartDate').value = addDays(kstToday(), 2);
