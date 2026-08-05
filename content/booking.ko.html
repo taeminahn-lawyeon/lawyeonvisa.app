@@ -278,8 +278,14 @@
     Array.prototype.forEach.call(calWrap.querySelectorAll('.cal-day.pick'), function(cell){
         cell.addEventListener('click', function(){ selectDate(this); });
     });
-    var minNote = document.getElementById('minDateNote');
-    if(minNote) minNote.textContent = (minDate.getMonth()+1)+'월 '+minDate.getDate()+'일 ('+DOW[minDate.getDay()]+')';
+    // 안내 문구의 '가장 빠른 방문일'은 달력에서 실제로 고를 수 있는 첫 칸에서 읽는다.
+    // 리드타임으로 계산한 날짜가 주말이거나 차단된 날일 수 있다.
+    function updateMinNote(){
+        var note = document.getElementById('minDateNote');
+        var first = calWrap.querySelector('.cal-day.pick');
+        if(note && first) note.textContent = first.dataset.label;
+    }
+    updateMinNote();
 
     var timeGrid = document.getElementById('timeGrid');
     function renderTimes(){
@@ -328,7 +334,7 @@
             var stm = document.getElementById('sTime');
             stm.textContent = '선택 안 됨'; stm.classList.add('empty');
         }
-        renderTimes(); sync();
+        renderTimes(); sync(); updateMinNote();
     }
     function clearSelection(){
         state.date = null; state.time = null; state.dateLabel = null;
