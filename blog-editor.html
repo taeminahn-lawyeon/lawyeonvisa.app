@@ -97,12 +97,13 @@
     </div>
 
     <div class="warnbox">
-      <b>이 에디터는 서버에 저장하지 않습니다.</b> 작성이 끝나면 아래 <b>완성 · 출력</b>을 눌러 나오는 HTML을 복사(또는 다운로드)해 Claude Code에 전달하시면, 빌드 등록·배포까지 진행됩니다. 브라우저를 닫아도 되도록 <b>임시 저장</b>으로 이 기기에 초안을 보관할 수 있습니다.
+      <b>이 에디터는 서버에 저장하지 않습니다.</b> 작성이 끝나면 아래 <b>완성 · 출력</b>을 눌러 나오는 HTML을 복사(또는 다운로드)해 Claude Code에 전달하시면, 빌드 등록·배포까지 진행됩니다. 브라우저를 닫아도 되도록 <b>임시 저장</b>으로 이 기기에 초안을 보관할 수 있습니다.<br>
+      <b>슬러그 · 상단 라벨 · 분류 표기 · 메타 설명 · 목록 태그</b>는 쓰지 않으셔도 됩니다. 글 내용을 읽고 Claude Code가 작성합니다.
     </div>
 
     <!-- 1. 기본 정보 -->
     <div class="card">
-      <h2>1. 기본 정보 <span class="hint">검색·등록에 쓰입니다</span></h2>
+      <h2>1. 기본 정보</h2>
       <div class="row">
         <div>
           <label>분류(카테고리)</label>
@@ -118,28 +119,13 @@
           <input type="text" id="readmin" value="7" oninput="render()" style="max-width:90px">
         </div>
       </div>
-      <label>슬러그 (영문 소문자·하이픈, 세 언어 공통) <span class="pill">필수</span></label>
-      <input type="text" id="slug" placeholder="foreigner-xxx-korea-2026" oninput="render()">
-      <div class="counter" id="slugchk"></div>
-      <label>상단 라벨 — 카테고리 표시명 · 소주제</label>
-      <div class="row">
-        <div><input type="text" id="kickCat" placeholder="형사" oninput="render()"></div>
-        <div><input type="text" id="kickSub" placeholder="출입국·사범심사" oninput="render()"></div>
-      </div>
-      <label>분류 표기 (art-meta) — 예: 출입국·형사</label>
-      <input type="text" id="metaCat" placeholder="출입국·형사" oninput="render()">
     </div>
 
     <!-- 2. 제목 & 메타 -->
     <div class="card">
-      <h2>2. 제목과 요약</h2>
+      <h2>2. 제목</h2>
       <label>제목(H1) — 상황·검색어 앞, 제도·코드 뒤 <span class="pill">필수</span></label>
       <textarea id="title" rows="2" placeholder="외국인 음주운전 벌금과 사범심사, 강제출국 기준(2026)" oninput="render()"></textarea>
-      <label>메타 설명(description) — 검색 결과 요약, 핵심 수치 포함</label>
-      <textarea id="desc" rows="3" placeholder="독자의 질문에 답하는 한 문단 요약." oninput="render()"></textarea>
-      <div class="counter" id="descchk"></div>
-      <label>목록 태그 (쉼표로 구분, 예: #D-10, #점수제)</label>
-      <input type="text" id="tags" placeholder="#태그1, #태그2, #태그3" oninput="render()">
     </div>
 
     <!-- 3. 도입 & 직답 -->
@@ -205,7 +191,7 @@
       </div>
       <label>content/&lt;slug&gt;.&lt;lang&gt;.html</label>
       <div class="out" id="outHtml"></div>
-      <label style="margin-top:12px">제출용 등록 정보 (제목·설명·분류·태그·발행일)</label>
+      <label style="margin-top:12px">제출용 등록 정보 · Claude Code가 채울 항목</label>
       <div class="out" id="outMeta"></div>
     </div>
   </div>
@@ -342,11 +328,13 @@ function renderRels(){
 }
 
 /* ============================ HTML 생성 ============================ */
+// 슬러그·상단 라벨·분류 표기·메타 설명·목록 태그는 글쓴이가 채우지 않는다.
+// 글을 읽고 Claude Code 가 채우도록, 생성 HTML 에는 이 자리 표시만 남긴다.
+var TOKEN={kickCat:'__KICKER_CAT__', kickSub:'__KICKER_SUB__', metaCat:'__META_CAT__'};
+
 function buildContentHtml(){
   var lg=lang(), t=L10N[lg];
   var readmin=$('readmin').value.trim()||'7';
-  var kickCat=inl($('kickCat').value), kickSub=inl($('kickSub').value);
-  var metaCat=inl($('metaCat').value);
   var title=inl($('title').value);
   var intro=inl($('intro').value);
   var daQ=inl($('daQ').value), daA=inl($('daA').value);
@@ -394,9 +382,9 @@ function buildContentHtml(){
   var html=''+
 '<div class="wrap">\n'+
 '    <div class="art-head">\n'+
-'        <div class="art-kicker"><span class="cat">'+kickCat+'</span><span class="dot">·</span><span>'+kickSub+'</span></div>\n'+
+'        <div class="art-kicker"><span class="cat">'+TOKEN.kickCat+'</span><span class="dot">·</span><span>'+TOKEN.kickSub+'</span></div>\n'+
 '        <h1>'+title+'</h1>\n'+
-'        <div class="art-meta"><span><b>'+t.metaCat+'</b> '+metaCat+'</span><span><b>'+t.metaRead+'</b> '+t.readUnit(readmin)+'</span></div>\n'+
+'        <div class="art-meta"><span><b>'+t.metaCat+'</b> '+TOKEN.metaCat+'</span><span><b>'+t.metaRead+'</b> '+t.readUnit(readmin)+'</span></div>\n'+
 '        <p class="disclaimer">'+intro+'</p>\n'+
 '    </div>\n'+
 '</div>\n\n'+
@@ -416,21 +404,22 @@ relHtml+(relHtml?'\n':'')+
 
 function buildMeta(){
   var lg=lang();
-  var slug=$('slug').value.trim();
-  var tags=$('tags').value.split(',').map(function(s){return s.trim();}).filter(Boolean);
   var title=$('title').value.trim();
-  var desc=$('desc').value.trim();
   var m='';
-  m+='슬러그(파일명 공통): '+slug+'\n';
   m+='언어: '+lg+'\n';
   m+='분류(data-cat): '+$('cat').value+'\n';
-  m+='발행월(목록 표시): (YYYY.MM 지정)\n';
+  m+='읽는 시간: '+($('readmin').value.trim()||'7')+'분\n';
   m+='제목('+lg+'): '+title+(title?BRAND[lg]:'')+'\n';
-  m+='메타설명('+lg+'): '+desc+'\n';
-  m+='목록 태그: '+tags.join(' ')+'\n';
-  m+='\n— Claude Code 등록 안내 —\n';
-  m+='1) content/'+slug+'.'+lg+'.html 저장\n';
-  m+='2) scripts/build-site.js PAGES에 id='+slug+' 등록(langs 포함), ARTICLE_DATES에 발행일 추가\n';
+  m+='\n— Claude Code 가 글을 읽고 작성할 항목 —\n';
+  m+='· 슬러그(영문 소문자·하이픈, 세 언어 공통) → 파일명과 URL\n';
+  m+='· 상단 라벨 → 본문의 __KICKER_CAT__ / __KICKER_SUB__ 자리\n';
+  m+='· 분류 표기(art-meta) → 본문의 __META_CAT__ 자리\n';
+  m+='· 메타 설명(description) → 검색 결과 요약\n';
+  m+='· 목록 태그 → 인사이트 목록에 붙는 #태그\n';
+  m+='· 발행일\n';
+  m+='\n— Claude Code 등록 절차 —\n';
+  m+='1) 위 항목을 정하고 본문의 __…__ 자리를 채운 뒤 content/<slug>.'+lg+'.html 저장\n';
+  m+='2) scripts/build-site.js PAGES에 등록(langs 포함), ARTICLE_DATES에 발행일 추가\n';
   m+='3) content/insights.'+lg+'.html · home.'+lg+'.html 목록에 행 추가(data-cat='+$('cat').value+', 최신순)\n';
   m+='4) node scripts/build-site.js → 커밋 → main 배포';
   return m;
@@ -445,7 +434,10 @@ function render(){
       '<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300..700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">'+
       '<link rel="stylesheet" href="'+BASE+'/css/site.css">'+
       '<style>body{background:#fff;margin:0}.__pv{padding:0 0 40px}</style></head><body><div class="__pv">'+
-      html.replace(/__BASE__/g, BASE+'/')+
+      html.replace(/__BASE__/g, BASE+'/')
+          .replace(/__KICKER_CAT__/g, '<span style="background:#F3EFE6;color:#8B7A5E;padding:0 4px">분류</span>')
+          .replace(/__KICKER_SUB__/g, '<span style="background:#F3EFE6;color:#8B7A5E;padding:0 4px">소주제</span>')
+          .replace(/__META_CAT__/g, '<span style="background:#F3EFE6;color:#8B7A5E;padding:0 4px">분류 표기</span>')+
       '</div></body></html>';
     $('pv').srcdoc=doc;
     updateCounters(); updateChecks();
@@ -455,11 +447,6 @@ function render(){
 function updateCounters(){
   var intro=$('intro').value.length; var ic=$('introchk');
   ic.textContent=intro+'자 (권장 150~300)'; ic.className='counter'+(intro>=150&&intro<=320?' ok':(intro>0?' warn':''));
-  var desc=$('desc').value.length; $('descchk').textContent=desc+'자';
-  var slug=$('slug').value.trim(); var sc=$('slugchk');
-  if(!slug){ sc.textContent=''; }
-  else if(/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)){ sc.textContent='형식 OK'; sc.className='counter ok'; }
-  else { sc.textContent='영문 소문자·숫자·하이픈만 사용'; sc.className='counter warn'; }
 }
 
 function updateChecks(){
@@ -469,7 +456,6 @@ function updateChecks(){
   // 본문 텍스트 모으기(점검용)
   var txt=state.blocks.map(function(b){return b.type==='p'?b.text:'';}).join(' ')+' '+$('daA').value+' '+$('intro').value;
   var bodyLen=state.blocks.reduce(function(a,b){return a+((b.type==='p'||b.type==='h2')?(b.text||'').length:0);},0)+$('daQ').value.length+$('daA').value.length;
-  items.push(['슬러그 입력', /^[a-z0-9]+(-[a-z0-9]+)*$/.test($('slug').value.trim())]);
   items.push(['제목·도입·직답 작성', !!($('title').value.trim()&&$('intro').value.trim()&&$('daA').value.trim())]);
   items.push(['소제목(H2) 3~5개 ('+h2s+')', h2s>=3&&h2s<=5]);
   items.push(['표 1개 이하 ('+tables+')', tables<=1]);
@@ -496,11 +482,11 @@ function buildAll(){
   flash('완성되었습니다. 복사해 Claude Code에 전달하세요.');
 }
 function copyOut(which){
-  var txt = which==='html'?LAST.html : which==='meta'?LAST.meta : (LAST.meta+'\n\n===== content/'+$('slug').value.trim()+'.'+lang()+'.html =====\n'+LAST.html);
+  var txt = which==='html'?LAST.html : which==='meta'?LAST.meta : (LAST.meta+'\n\n===== content/<slug>.'+lang()+'.html =====\n'+LAST.html);
   navigator.clipboard.writeText(txt).then(function(){flash('복사되었습니다');},function(){flash('복사 실패 — 직접 선택해 복사하세요');});
 }
 function downloadHtml(){
-  var name=($('slug').value.trim()||'article')+'.'+lang()+'.html';
+  var name='article.'+lang()+'.html';
   var blob=new Blob([LAST.html],{type:'text/html'});
   var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; a.click();
   setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
@@ -509,14 +495,14 @@ function flash(msg){ var f=$('flash'); f.textContent=msg; f.classList.add('on');
 
 /* ============================ 초안 저장 ============================ */
 function collect(){
-  return {lang:lang(),cat:$('cat').value,readmin:$('readmin').value,slug:$('slug').value,kickCat:$('kickCat').value,kickSub:$('kickSub').value,metaCat:$('metaCat').value,title:$('title').value,desc:$('desc').value,tags:$('tags').value,intro:$('intro').value,daQ:$('daQ').value,daA:$('daA').value,about:$('about').value,blocks:state.blocks,faqs:state.faqs,rels:state.rels,uid:uid};
+  return {lang:lang(),cat:$('cat').value,readmin:$('readmin').value,title:$('title').value,intro:$('intro').value,daQ:$('daQ').value,daA:$('daA').value,about:$('about').value,blocks:state.blocks,faqs:state.faqs,rels:state.rels,uid:uid};
 }
 function saveDraft(){ localStorage.setItem('lawyeon_blog_draft', JSON.stringify(collect())); flash('이 기기에 임시 저장했습니다'); }
 function loadDraft(){
   var raw=localStorage.getItem('lawyeon_blog_draft'); if(!raw){flash('저장된 초안이 없습니다');return;}
   try{ var d=JSON.parse(raw);
     $('lang').value=d.lang||'ko'; $('cat').value=d.cat||'visa'; $('readmin').value=d.readmin||'7';
-    ['slug','kickCat','kickSub','metaCat','title','desc','tags','intro','daQ','daA'].forEach(function(k){ if($(k))$(k).value=d[k]||''; });
+    ['title','intro','daQ','daA'].forEach(function(k){ if($(k))$(k).value=d[k]||''; });
     state.blocks=d.blocks||[]; state.faqs=d.faqs||[]; state.rels=d.rels||[]; uid=d.uid||1000;
     applyLangDefaults(true); renderBlocks(); renderFaqs(); renderRels(); render(); flash('초안을 불러왔습니다');
   }catch(e){ flash('초안 형식 오류'); }
