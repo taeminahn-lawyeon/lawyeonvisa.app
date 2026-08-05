@@ -1202,10 +1202,6 @@
                     <label>종료 시간 <span style="font-weight:400;color:#6B7684;">(이 시간까지 차단)</span></label>
                     <select id="blkEndTime"></select>
                 </div>
-                <div class="filter-item">
-                    <label>사유 <span style="font-weight:400;color:#6B7684;">(내부 메모)</span></label>
-                    <input type="text" id="blkReason" placeholder="예: 외부 일정">
-                </div>
             </div>
 
             <p id="blkPreview" style="font-size:13.5px;color:#4A3C2B;margin:4px 0 0;"></p>
@@ -2722,11 +2718,9 @@
                     end_date: end,
                     start_time: startTime,
                     end_time: endTime,
-                    reason: (document.getElementById('blkReason').value || '').trim() || null,
                     created_by: user && user.id ? user.id : null
                 });
                 if (error) throw error;
-                document.getElementById('blkReason').value = '';
                 await loadBookingBlocks();
             } catch (e) {
                 console.error('❌ 예약 차단 등록 오류:', e);
@@ -2758,8 +2752,7 @@
                 const { data, error } = await supabaseClient
                     .from('booking_blocks')
                     .select('*')
-                    .order('start_date', { ascending: true })
-                    .order('start_time', { ascending: true, nullsFirst: true });
+                    .order('start_date', { ascending: true });
                 if (error) throw error;
                 bookingBlocks = data || [];
             } catch (e) {
@@ -2779,8 +2772,16 @@
             }
 
             const today = kstToday();
-            let html = '<table class="customers-table"><thead><tr><th>기간</th><th>차단 시간</th><th>사유</th><th>등록일</th><th>해제</th></tr></thead><tbody>';
-            bookingBlocks.forEach(b => {
+            // 등록 순서와 무관하게 날짜·시간 순으로 본다. 같은 날이면 종일 차단이 먼저.
+            const rows = bookingBlocks.slice().sort((a, b) => {
+                if (a.start_date !== b.start_date) return a.start_date < b.start_date ? -1 : 1;
+                const ta = a.start_time ? String(a.start_time) : '';
+                const tb = b.start_time ? String(b.start_time) : '';
+                return ta < tb ? -1 : ta > tb ? 1 : 0;
+            });
+
+            let html = '<table class="customers-table"><thead><tr><th>기간</th><th>차단 시간</th><th>해제</th></tr></thead><tbody>';
+            rows.forEach(b => {
                 const past = b.end_date < today;
                 const period = b.start_date === b.end_date
                     ? escCorp(b.start_date)
@@ -2788,11 +2789,9 @@
                 const times = b.start_time
                     ? blockedSlotsOf(String(b.start_time).slice(0,5), String(b.end_time).slice(0,5)).join(', ')
                     : '하루 전체';
-                html += `<tr${past ? ' style="opacity:.5;"' : ''}>
+                html += `<tr${past ? ' class="row-past"' : ''}>
                     <td><strong>${period}</strong>${past ? ' <span style="font-size:12px;color:#6B7684;">(지남)</span>' : ''}</td>
                     <td>${times}</td>
-                    <td>${escCorp(b.reason) || '-'}</td>
-                    <td>${new Date(b.created_at).toLocaleDateString('ko-KR')}</td>
                     <td><button onclick="deleteBookingBlock('${b.id}')" style="font-size:12px; padding:4px 10px; border:1px solid #D8D2C6; border-radius:4px; background:#fff; color:#B03A2E; cursor:pointer;"><i class="fas fa-trash"></i> 해제</button></td>
                 </tr>`;
             });
