@@ -732,6 +732,57 @@
             text-decoration: underline;
             cursor: pointer;
         }
+        /* 목록 상단 도구 막대 — 탭마다 같은 자리, 같은 모양 */
+        .list-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+        .list-toolbar input[type="search"] {
+            flex: 1 1 280px;
+            max-width: 420px;
+            min-width: 0;
+            padding: 10px 14px;
+            border: 1px solid #E3DBCC;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            color: #191F28;
+            background: #fff;
+        }
+        .list-toolbar input[type="search"]:focus,
+        .list-toolbar select:focus { outline: none; border-color: #887668; }
+        .list-toolbar select {
+            padding: 10px 12px;
+            border: 1px solid #E3DBCC;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            color: #4A3C2B;
+            background: #fff;
+        }
+        .lt-check {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 13.5px;
+            color: #4E5968;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .lt-check input { width: auto; margin: 0; }
+        .row-divider td {
+            background: #F7F5F1;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .06em;
+            color: #8B8378;
+            padding: 8px 16px;
+        }
+        .row-past td:not(.memo-cell) { color: #8B8378; }
+
         .cell-sub { display: block; margin-top: 4px; font-size: 12.5px; color: #6B7684; }
         .cell-link { color: #887668; text-decoration: none; }
         .cell-link:hover { text-decoration: underline; }
@@ -963,8 +1014,8 @@
                 <p>법무법인 로연 출입국이민지원센터</p>
             </div>
             <div class="header-actions">
-                <button class="header-btn" onclick="window.location.href='index.html'" style="background: #10B981;">
-                    서비스 신청
+                <button class="header-btn" onclick="window.open('index.html', '_blank')">
+                    사이트 보기
                 </button>
                 <button class="header-btn" onclick="location.reload()">
                     새로고침
@@ -977,115 +1028,10 @@
     </div>
 
     <div class="container">
-        <!-- 통계 카드 -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-content">
-                    <p>전체 고객</p>
-                    <h3 id="totalCustomers">0</h3>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-content">
-                    <p>진행 중 쓰레드</p>
-                    <h3 id="activeThreads">0</h3>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-content">
-                    <p>긴급 케이스</p>
-                    <h3 id="urgentCases">0</h3>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-content">
-                    <p>이번 달 매출 (합계금액)</p>
-                    <h3 id="monthlyRevenue">₩0</h3>
-                </div>
-            </div>
-
-            <div class="stat-card" id="systemErrorsCard" style="border-left:4px solid #f03e3e;">
-                <div class="stat-content">
-                    <p><i class="fa-solid fa-triangle-exclamation" style="color:#f03e3e;"></i> <span data-i18n="admin.nav.system_errors">시스템 오류</span> <span id="system-errors-badge" class="nav-badge nav-badge-hidden">0</span></p>
-                    <h3 id="systemErrorsCount" style="color:#f03e3e;">0</h3>
-                </div>
-            </div>
-        </div>
-
-        <!-- 필터 섹션 -->
-        <div class="filter-section">
-            <h2>필터</h2>
-            <div class="filter-grid">
-                <div class="filter-item">
-                    <label>고객명</label>
-                    <input type="text" id="filterName" placeholder="이름 검색...">
-                </div>
-                <div class="filter-item">
-                    <label>서비스명</label>
-                    <input type="text" id="filterService" placeholder="서비스 검색...">
-                </div>
-                <div class="filter-item">
-                    <label>상태</label>
-                    <select id="filterStatus">
-                        <option value="">전체</option>
-                        <option value="received">신청 접수</option>
-                        <option value="completed">완료</option>
-                        <option value="archived">보관</option>
-                    </select>
-                </div>
-                <div class="filter-item">
-                    <label>우선순위</label>
-                    <select id="filterPriority">
-                        <option value="">전체</option>
-                        <option value="urgent">긴급</option>
-                        <option value="high">높음</option>
-                        <option value="normal">보통</option>
-                    </select>
-                </div>
-                <div class="filter-item">
-                    <label>진행 형태</label>
-                    <select id="filterServiceType">
-                        <option value="">전체</option>
-                        <option value="consulting">자문</option>
-                        <option value="civil">민원</option>
-                        <option value="litigation">소송</option>
-                    </select>
-                </div>
-                <div class="filter-item">
-                    <label>요청 유형</label>
-                    <select id="filterRequestType">
-                        <option value="">전체</option>
-                        <option value="general">일반</option>
-                        <option value="business_immigration">사업이민</option>
-                    </select>
-                </div>
-            </div>
-            <div class="filter-actions">
-                <button class="filter-btn primary" onclick="applyFilters()">
-                    검색
-                </button>
-                <button class="filter-btn secondary" onclick="resetFilters()">
-                    초기화
-                </button>
-            </div>
-        </div>
-
         <!-- 탭 UI -->
         <div class="tabs-container">
             <div class="tabs">
-                <button class="tab active" onclick="switchTab('threads')">
-                    쓰레드 목록
-                </button>
-                <button class="tab" onclick="switchTab('customers')">
-                    고객 명단
-                </button>
-                <button class="tab" onclick="switchTab('newMembers')">
-                    <i class="fas fa-user-plus"></i> 신규 회원 <span id="newMemberBadge" class="badge" style="display: none;">0</span>
-                </button>
-                <button class="tab" onclick="switchTab('preConsult')">
+                <button class="tab active" onclick="switchTab('preConsult')">
                     <i class="fas fa-envelope-open-text"></i> 사전상담 <span id="preConsultBadge" class="badge" style="display: none;">0</span>
                 </button>
                 <button class="tab" onclick="switchTab('reservations')">
@@ -1097,6 +1043,9 @@
                 <button class="tab" onclick="switchTab('blocks')">
                     <i class="fas fa-ban"></i> 예약 차단
                 </button>
+                <button class="tab" onclick="switchTab('threads')">
+                    <i class="fas fa-folder-open"></i> 지난 쓰레드
+                </button>
                 <a class="tab" href="blog-editor.html" style="text-decoration:none">
                     <i class="fas fa-pen-nib"></i> 새 글 작성
                 </a>
@@ -1104,108 +1053,34 @@
         </div>
 
         <!-- 쓰레드 탭 -->
-        <div id="threadsTab" class="tab-content active threads-section">
+        <div id="threadsTab" class="tab-content threads-section">
             <h2>
-                <span>쓰레드 목록</span>
+                <span>지난 쓰레드</span>
                 <span class="thread-count" id="threadCount">총 0건</span>
             </h2>
+            <div style="margin-bottom: 20px; padding: 16px; background: #F4F2EE; border-radius: 8px; border: 1px solid #E3DBCC;">
+                <p style="font-size: 14px; color: #4A3C2B; margin: 0;">
+                    <i class="fas fa-info-circle"></i>
+                    온라인 상담이 메일 접수로 바뀌기 전에 열린 상담 쓰레드입니다. 새 쓰레드는 더 이상 생기지 않으며, 진행 중인 건의 확인·정리용입니다.
+                </p>
+            </div>
+            <div class="list-toolbar">
+                <input type="search" id="threadSearch" placeholder="고객명 · 이메일 · 연락처 · 서비스명 · 주문번호" oninput="applyFilters()">
+                <select id="threadStatusFilter" onchange="applyFilters()">
+                    <option value="">전체 상태</option>
+                    <option value="received">신청 접수</option>
+                    <option value="completed">완료</option>
+                    <option value="archived">보관</option>
+                </select>
+                <label class="lt-check"><input type="checkbox" id="threadUnreadOnly" onchange="applyFilters()"> 미확인 답변만</label>
+            </div>
             <div id="threadsTableContainer">
                 <!-- 테이블이 여기에 동적으로 생성됨 -->
             </div>
         </div>
 
-        <!-- 고객 명단 탭 -->
-        <div id="customersTab" class="tab-content threads-section">
-            <h2>
-                <span>고객 명단</span>
-                <span class="thread-count" id="customerCount">총 0명</span>
-            </h2>
-            
-            <!-- 고객 필터 -->
-            <div class="customer-filter-grid">
-                <div class="filter-item">
-                    <label>고객명</label>
-                    <input type="text" id="customerFilterName" placeholder="이름 검색...">
-                </div>
-                <div class="filter-item">
-                    <label>소속 단체</label>
-                    <select id="customerFilterOrg">
-                        <option value="">전체</option>
-                        <option value="lawyeon">법무법인 로연</option>
-                        <option value="chosun">조선대학교</option>
-                        <option value="feu">극동대학교</option>
-                        <option value="general">일반</option>
-                    </select>
-                </div>
-                <div class="filter-item">
-                    <label>비자 종류</label>
-                    <select id="customerFilterVisa">
-                        <option value="">전체</option>
-                        <option value="F-4">F-4 (재외동포)</option>
-                        <option value="E-7">E-7 (특정활동)</option>
-                        <option value="D-2">D-2 (유학)</option>
-                        <option value="D-10">D-10 (구직)</option>
-                        <option value="E-9">E-9 (비전문취업)</option>
-                        <option value="H-2">H-2 (방문취업)</option>
-                    </select>
-                </div>
-                <div class="filter-item">
-                    <label>국적</label>
-                    <select id="customerFilterNationality">
-                        <option value="">전체</option>
-                        <option value="KR">한국</option>
-                        <option value="CN">중국</option>
-                        <option value="VN">베트남</option>
-                        <option value="US">미국</option>
-                        <option value="JP">일본</option>
-                        <option value="PH">필리핀</option>
-                    </select>
-                </div>
-                <div class="filter-item">
-                    <label>체류 만료 기간</label>
-                    <select id="customerFilterExpiry">
-                        <option value="">전체</option>
-                        <option value="expired">만료됨</option>
-                        <option value="30days">30일 이내</option>
-                        <option value="60days">60일 이내</option>
-                        <option value="90days">90일 이내</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="filter-actions">
-                <button class="filter-btn primary" onclick="applyCustomerFilters()">
-                    검색
-                </button>
-                <button class="filter-btn secondary" onclick="resetCustomerFilters()">
-                    초기화
-                </button>
-            </div>
-            
-            <div id="customersTableContainer"></div>
-        </div>
-
-        <!-- 신규 회원 탭 -->
-        <div id="newMembersTab" class="tab-content threads-section">
-            <h2>
-                <span><i class="fas fa-user-plus"></i> 신규 회원 (기본사항 제출)</span>
-                <span class="thread-count" id="newMemberCount">총 0명</span>
-            </h2>
-            
-            <div style="margin-bottom: 20px; padding: 16px; background: #EBF4FF; border-radius: 12px; border: 1px solid #887668;">
-                <p style="font-size: 14px; color: #1E40AF; margin: 0;">
-                    <i class="fas fa-info-circle"></i> 
-                    최근 7일 이내 기본사항을 제출한 회원 목록입니다. 첨부파일(외국인등록증, 여권, 전자서명)은 쓰레드에서 확인할 수 있습니다.
-                </p>
-            </div>
-            
-            <div id="newMembersTableContainer">
-                <!-- 테이블이 여기에 동적으로 생성됨 -->
-            </div>
-        </div>
-
         <!-- 사전상담 탭 -->
-        <div id="preConsultTab" class="tab-content threads-section">
+        <div id="preConsultTab" class="tab-content active threads-section">
             <h2>
                 <span><i class="fas fa-envelope-open-text"></i> 온라인 사전상담</span>
                 <span class="thread-count" id="preConsultCount">총 0건</span>
@@ -1216,6 +1091,16 @@
                     <i class="fas fa-info-circle"></i>
                     회원가입 없이 접수된 온라인 사전상담 신청 목록입니다. 같은 내용이 담당자 메일로도 발송됩니다. 회신은 아래 이메일 주소를 눌러 새 메일로 보내 주세요. 상태를 변경하면 즉시 저장됩니다.
                 </p>
+            </div>
+
+            <div class="list-toolbar">
+                <input type="search" id="preConsultSearch" placeholder="이름 · 이메일 · 연락처 · 분야 · 내용" oninput="renderPreConsultTable()">
+                <select id="preConsultStatusFilter" onchange="renderPreConsultTable()">
+                    <option value="">전체 상태</option>
+                    <option value="requested">접수</option>
+                    <option value="contacted">회신 완료</option>
+                    <option value="closed">종료</option>
+                </select>
             </div>
 
             <div id="preConsultTableContainer">
@@ -1237,6 +1122,18 @@
                 </p>
             </div>
 
+            <div class="list-toolbar">
+                <input type="search" id="resvSearch" placeholder="이름 · 연락처 · 사무소 · 분야 · 내용" oninput="renderReservationsTable()">
+                <select id="resvStatusFilter" onchange="renderReservationsTable()">
+                    <option value="">전체 상태</option>
+                    <option value="requested">요청</option>
+                    <option value="confirmed">확정</option>
+                    <option value="done">완료</option>
+                    <option value="cancelled">취소</option>
+                </select>
+                <label class="lt-check"><input type="checkbox" id="resvHidePast" onchange="renderReservationsTable()"> 지난 예약 숨기기</label>
+            </div>
+
             <div id="reservationsTableContainer">
                 <!-- 테이블이 여기에 동적으로 생성됨 -->
             </div>
@@ -1254,6 +1151,16 @@
                     회원가입 없이 접수된 기업 자문 문의 목록입니다.
                 </p>
             </div>
+            <div class="list-toolbar">
+                <input type="search" id="corpSearch" placeholder="이름 · 회사 · 연락처 · 이메일 · 내용" oninput="renderCorporateTable()">
+                <select id="corpStatusFilter" onchange="renderCorporateTable()">
+                    <option value="">전체 상태</option>
+                    <option value="requested">접수</option>
+                    <option value="contacted">연락 완료</option>
+                    <option value="closed">종료</option>
+                </select>
+            </div>
+
             <div id="corporateTableContainer"></div>
         </div>
 
@@ -1540,19 +1447,11 @@
             // 데이터 로드
             loadDashboardData();
 
-            // 시스템 오류 카운트 (business-immigration.js의 refreshSystemErrorsBadge가
-            // 헤더 뱃지를 갱신하고, 여기서는 통계 카드의 숫자도 함께 갱신)
-            try {
-                const { count } = await supabaseClient
-                    .from('system_errors')
-                    .select('id', { count: 'exact', head: true })
-                    .is('resolved_at', null);
-                const el = document.getElementById('systemErrorsCount');
-                if (el) el.textContent = String(count || 0);
-            } catch (_) { /* 실패 시 0 유지 */ }
-
-            // 미확인 사전상담 건수는 탭을 열지 않아도 뱃지에 보이도록 먼저 읽어 둔다.
+            // 미처리 건수는 탭을 열지 않아도 뱃지에 보이도록 먼저 읽어 둔다.
+            // (사전상담은 첫 화면이므로 목록까지 함께 그려진다)
             loadPreConsultations().catch(() => { /* 뱃지 갱신 실패는 무시 */ });
+            loadReservationsData().catch(() => {});
+            loadCorporateInquiries().catch(() => {});
 
             // 알림 메일의 딥링크 → 해당 탭 자동 활성화
             const DEEP_LINKS = {
@@ -1744,77 +1643,11 @@
                 // 미확인(고객 답변) 쓰레드 계산 후 렌더링
                 await loadUnreadStatus();
 
-                updateStatistics();
                 renderThreadsTable();
-
-                // 신규 회원 배지 업데이트
-                updateNewMemberBadge();
             } catch (error) {
                 console.error('대시보드 데이터 로드 오류:', error);
                 alert('데이터를 불러오는 중 오류가 발생했습니다.');
             }
-        }
-
-        // 신규 회원 배지만 업데이트 (전체 데이터 로드 없이)
-        async function updateNewMemberBadge() {
-            try {
-                const sevenDaysAgo = new Date();
-                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-                
-                const { count, error } = await supabaseClient
-                    .from('profiles')
-                    .select('*', { count: 'exact', head: true })
-                    .gte('created_at', sevenDaysAgo.toISOString());
-                
-                if (!error && count > 0) {
-                    const badge = document.getElementById('newMemberBadge');
-                    badge.textContent = count;
-                    badge.style.display = 'inline-block';
-                }
-            } catch (error) {
-                console.error('신규 회원 배지 업데이트 오류:', error);
-            }
-        }
-
-
-
-        // 통계 업데이트
-        function updateStatistics() {
-            // 전체 고객 (중복 제거)
-            const uniqueCustomers = new Set(allThreads.map(t => t.customer_name));
-            document.getElementById('totalCustomers').textContent = uniqueCustomers.size;
-            
-            // 진행 중 쓰레드 (completed, archived 제외)
-            const activeThreads = allThreads.filter(t => 
-                !['completed', 'archived'].includes(t.status)
-            );
-            document.getElementById('activeThreads').textContent = activeThreads.length;
-            
-            // 긴급 케이스 (긴급 구제, 사전 진단, 변호사 전담 대응 포함)
-            const urgentCases = allThreads.filter(t => 
-                t.priority === 'urgent' || 
-                (t.service_name && t.service_name.includes('긴급 구제')) || 
-                (t.service_name && t.service_name.includes('사전 진단')) ||
-                (t.service_name && t.service_name.includes('변호사 전담 대응'))
-            );
-            document.getElementById('urgentCases').textContent = urgentCases.length;
-            
-            // 이번 달 매출 (모든 상태, 부가세 포함 합계금액)
-            // 주의: 출입국 수수료 포함
-            const now = new Date();
-            const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
-            const monthlyRevenue = allThreads
-                .filter(t => 
-                    t.created_at >= thisMonthStart &&
-                    t.amount > 0
-                )
-                .reduce((sum, t) => {
-                    // 부가세 포함 총 금액 (합계금액)
-                    return sum + (t.amount || 0);
-                }, 0);
-            
-            document.getElementById('monthlyRevenue').textContent = 
-                '₩' + monthlyRevenue.toLocaleString();
         }
 
         // 쓰레드 테이블 렌더링
@@ -1953,55 +1786,34 @@
             container.innerHTML = tableHTML;
         }
 
-        // 필터 적용
-        function applyFilters() {
-            const nameFilter = document.getElementById('filterName').value.toLowerCase();
-            const serviceFilter = document.getElementById('filterService').value.toLowerCase();
-            const statusFilter = document.getElementById('filterStatus').value;
-            const priorityFilter = document.getElementById('filterPriority').value;
-            const serviceTypeFilter = document.getElementById('filterServiceType').value;
-            const requestTypeFilter = document.getElementById('filterRequestType')?.value || '';
-
-            filteredThreads = allThreads.filter(thread => {
-                if (nameFilter && !thread.customer_name.toLowerCase().includes(nameFilter)) return false;
-                if (serviceFilter && !thread.service_name.toLowerCase().includes(serviceFilter)) return false;
-
-                // 요청 유형 필터 (일반 / 사업이민) — 기존 status 필터 적용 시 request_type='general'로
-                // 제한해 기존 경로 결과 보존(섹션 14-2-4). 사업이민은 별도 상태 체계 사용.
-                const threadRequestType = thread.request_type || 'general';
-                if (requestTypeFilter) {
-                    if (threadRequestType !== requestTypeFilter) return false;
-                }
-
-                // 상태 필터 (기존 상태도 호환) — 사업이민 쓰레드에는 적용하지 않음
-                if (statusFilter && threadRequestType === 'general') {
-                    const normalizedStatus = ['payment', 'document', 'processing'].includes(thread.status) ? 'received' : thread.status;
-                    if (normalizedStatus !== statusFilter) return false;
-                }
-
-                if (priorityFilter && thread.priority !== priorityFilter) return false;
-
-                // 서비스 유형 필터 (자문/민원/소송)
-                if (serviceTypeFilter) {
-                    if (thread.service_type !== serviceTypeFilter) return false;
-                }
-                return true;
-            });
-
-            renderThreadsTable();
+        // 목록 검색 — 띄어쓰기로 나눈 낱말이 모두 들어 있으면 통과.
+        // 예전 필터 패널(6칸짜리)은 '검색' 버튼을 눌러야 동작하고 조건이 많아
+        // 실제로 쓰이지 않았다. 각 탭 상단의 검색창 하나로 대신한다.
+        function textMatch(q, ...fields) {
+            if (!q) return true;
+            const hay = fields.filter(Boolean).join(' ').toLowerCase();
+            return q.toLowerCase().split(/\s+/).filter(Boolean).every(w => hay.indexOf(w) >= 0);
+        }
+        function toolbarValue(id) {
+            const el = document.getElementById(id);
+            return el ? (el.type === 'checkbox' ? el.checked : el.value.trim()) : '';
         }
 
-        // 필터 초기화
-        function resetFilters() {
-            document.getElementById('filterName').value = '';
-            document.getElementById('filterService').value = '';
-            document.getElementById('filterStatus').value = '';
-            document.getElementById('filterPriority').value = '';
-            document.getElementById('filterServiceType').value = '';
-            const rt = document.getElementById('filterRequestType');
-            if (rt) rt.value = '';
+        // 쓰레드 목록: 검색어 + 상태 + 미확인만
+        function applyFilters() {
+            const q = toolbarValue('threadSearch');
+            const status = toolbarValue('threadStatusFilter');
+            const unreadOnly = toolbarValue('threadUnreadOnly');
 
-            filteredThreads = [...allThreads];
+            filteredThreads = allThreads.filter(t => {
+                if (unreadOnly && !unreadThreadIds.has(t.id)) return false;
+                if (status) {
+                    const normalized = ['payment', 'document', 'processing'].includes(t.status) ? 'received' : t.status;
+                    if (normalized !== status) return false;
+                }
+                return textMatch(q, t.customer_name, t.customer_email, t.customer_phone, t.service_name, t.order_id);
+            });
+
             renderThreadsTable();
         }
 
@@ -2150,7 +1962,6 @@
                 filteredThreads = filteredThreads.filter(t => t.id !== threadId);
 
                 alert('쓰레드가 삭제되었습니다.');
-                updateStatistics();
                 renderThreadsTable();
 
             } catch (error) {
@@ -2197,7 +2008,6 @@
 
                 alert(`${selectedThreadIds.size}건의 쓰레드가 삭제되었습니다.`);
                 clearSelection();
-                updateStatistics();
                 renderThreadsTable();
 
             } catch (error) {
@@ -2310,7 +2120,6 @@
                     thread.updated_at = new Date().toISOString();
                 }
 
-                updateStatistics();
                 applyFilters();
                 closeStatusModal();
 
@@ -2345,14 +2154,6 @@
             }
         }
 
-        // ========================================
-        // 고객 명단 탭 함수
-        // ========================================
-
-        // 전역 변수
-        let allCustomers = [];
-        let filteredCustomers = [];
-
         // 탭 전환 함수
         function switchTab(tabName) {
             // 탭 버튼 활성화
@@ -2368,12 +2169,6 @@
             
             if (tabName === 'threads') {
                 document.getElementById('threadsTab').classList.add('active');
-            } else if (tabName === 'customers') {
-                document.getElementById('customersTab').classList.add('active');
-                loadCustomersData();
-            } else if (tabName === 'newMembers') {
-                document.getElementById('newMembersTab').classList.add('active');
-                loadNewMembersData();
             } else if (tabName === 'preConsult') {
                 document.getElementById('preConsultTab').classList.add('active');
                 loadPreConsultations();
@@ -2555,57 +2350,55 @@
 
         function renderCorporateTable() {
             const container = document.getElementById('corporateTableContainer');
-            document.getElementById('corporateCount').textContent = `총 ${corporateInquiries.length}건`;
-            if (!corporateInquiries.length) {
-                container.innerHTML = '<div class="empty-state"><i class="fas fa-building"></i><p>접수된 기업 자문 문의가 없습니다.</p></div>';
+            const query = toolbarValue('corpSearch');
+            const status = toolbarValue('corpStatusFilter');
+            const rows = corporateInquiries.filter(q =>
+                (!status || (q.status || 'requested') === status)
+                && textMatch(query, q.name, q.company, q.phone, q.email, q.message));
+
+            document.getElementById('corporateCount').textContent = listCountLabel(rows.length, corporateInquiries.length);
+            if (!rows.length) {
+                container.innerHTML = emptyState('fa-building', corporateInquiries.length ? '조건에 맞는 문의가 없습니다.' : '접수된 기업 자문 문의가 없습니다.');
                 return;
             }
-            let html = '<table class="customers-table"><thead><tr><th>이름</th><th>회사/기관</th><th>연락처</th><th>이메일</th><th>문의 내용</th><th>접수일</th><th>상태</th></tr></thead><tbody>';
-            corporateInquiries.forEach(q => {
+            let html = '<table class="customers-table"><thead><tr><th>이름</th><th>회사/기관</th><th>연락처</th><th>문의 내용</th><th>접수일</th><th>상태</th></tr></thead><tbody>';
+            rows.forEach(q => {
                 const st = CORP_STATUS[q.status || 'requested'] || CORP_STATUS.requested;
-                const phone = q.phone ? `<a href="tel:${escCorp(q.phone)}" style="color:#887668;text-decoration:none;">${escCorp(q.phone)}</a>` : '-';
-                const email = q.email ? `<a href="mailto:${escCorp(q.email)}" style="color:#887668;text-decoration:none;">${escCorp(q.email)}</a>` : '-';
+                const subject = encodeURIComponent(`[법무법인 로연] 기업 자문 문의 회신 — ${q.name}`);
+                const phone = q.phone ? `<a class="cell-link" href="tel:${escCorp(String(q.phone).replace(/\s/g, ''))}">${escCorp(q.phone)}</a>` : '-';
+                const email = q.email ? `<a class="cell-link cell-sub" href="mailto:${escCorp(q.email)}?subject=${subject}">${escCorp(q.email)}</a>` : '';
+                const options = Object.keys(CORP_STATUS).map(k =>
+                    `<option value="${k}"${(q.status || 'requested') === k ? ' selected' : ''}>${CORP_STATUS[k].label}</option>`
+                ).join('');
                 html += `<tr>
                     <td><strong>${escCorp(q.name)}</strong></td>
                     <td>${escCorp(q.company) || '-'}</td>
-                    <td>${phone}</td>
-                    <td>${email}</td>
+                    <td style="white-space:nowrap;">${phone}${email}</td>
                     ${memoCellHtml(q.message)}
-                    <td>${new Date(q.created_at).toLocaleDateString('ko-KR')}</td>
-                    <td><span class="org-badge" style="background:${st.bg};color:#fff;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:600;">${st.label}</span></td>
+                    <td style="white-space:nowrap;">${new Date(q.created_at).toLocaleDateString('ko-KR')}</td>
+                    <td style="white-space:nowrap;">
+                        <span class="status-badge" style="background:${st.bg};color:#fff;padding:3px 9px;border-radius:6px;font-size:12px;font-weight:600;display:inline-block;margin-bottom:6px;">${st.label}</span><br>
+                        <select onchange="updateCorporateStatus('${q.id}', this.value)" style="font-size:12px;padding:4px 6px;border:1px solid #D8D2C6;border-radius:4px;">
+                            ${options}
+                        </select>
+                    </td>
                 </tr>`;
             });
             html += '</tbody></table>';
             container.innerHTML = html;
         }
 
-        // ========================================
-        // 관리자가 회원에게 직접 쓰레드 열기 (자동 안내 멘트 없음)
-        // ========================================
-        async function adminOpenThread(customerId, customerName) {
-            if (!customerId) { alert('대상 회원을 확인할 수 없습니다.'); return; }
-            const svcName = prompt(`${customerName || '회원'} 님에게 새 쓰레드를 엽니다.\n쓰레드 제목(서비스명)을 입력하세요. (자동 안내 메시지는 생성되지 않습니다)`, '상담');
-            if (svcName === null) return;
+        async function updateCorporateStatus(id, status) {
             try {
-                const { data, error } = await supabaseClient
-                    .from('threads')
-                    .insert({
-                        user_id: customerId,
-                        service_name: (svcName || '상담').trim() || '상담',
-                        status: 'received',
-                        amount: 0,
-                        is_active: true,
-                        is_consulting: true,
-                        organization: 'general'
-                    })
-                    .select()
-                    .single();
+                const { error } = await supabaseClient.from('corporate_inquiries').update({ status }).eq('id', id);
                 if (error) throw error;
-                alert('쓰레드를 열었습니다. 관리자 쓰레드 화면을 새 탭에서 엽니다.');
-                window.open('admin-thread.html?id=' + data.id, '_blank');
+                const q = corporateInquiries.find(x => x.id === id);
+                if (q) q.status = status;
+                renderCorporateTable();
+                loadCorporateInquiries().catch(() => {});
             } catch (e) {
-                console.error('쓰레드 생성 실패:', e);
-                alert('쓰레드 생성에 실패했습니다: ' + (e.message || e) + '\n(threads 테이블에 super_admin INSERT 권한이 필요할 수 있습니다.)');
+                console.error('❌ 기업 자문 상태 변경 오류:', e);
+                alert('상태 변경에 실패했습니다: ' + (e.message || e));
             }
         }
 
@@ -2618,6 +2411,17 @@
             return String(s == null ? '' : s)
                 .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
                 .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        // 목록 상단의 '표시 N건 / 전체 M건'
+        function listCountLabel(shown, total) {
+            return shown === total ? `총 ${total}건` : `${shown}건 표시 · 전체 ${total}건`;
+        }
+        function emptyState(icon, message) {
+            return `<div class="empty-state" style="text-align:center; padding:60px 20px; color:#6B7684;">
+                <i class="fas ${icon}" style="font-size:48px; margin-bottom:16px; opacity:0.5;"></i>
+                <p style="font-size:16px;">${message}</p>
+            </div>`;
         }
 
         // 긴 상담 내용은 3줄까지만 보이고 '더보기'로 펼친다.
@@ -2693,15 +2497,30 @@
 
         function renderReservationsTable() {
             const container = document.getElementById('reservationsTableContainer');
-            document.getElementById('reservationCount').textContent = `총 ${reservations.length}건`;
+            const q = toolbarValue('resvSearch');
+            const status = toolbarValue('resvStatusFilter');
+            const hidePast = toolbarValue('resvHidePast');
+            const today = kstToday();
 
-            if (reservations.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state" style="text-align: center; padding: 60px 20px; color: #6B7684;">
-                        <i class="fas fa-calendar-times" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
-                        <p style="font-size: 16px;">접수된 방문 예약이 없습니다.</p>
-                    </div>
-                `;
+            // 다가오는 예약을 가까운 순으로 위에, 지난 예약은 최근 순으로 아래에 둔다.
+            const rows = reservations
+                .filter(r => {
+                    if (hidePast && r.reserve_date < today) return false;
+                    if (status && (r.status || 'requested') !== status) return false;
+                    const info = splitReservationMemo(r);
+                    return textMatch(q, r.name, r.phone, info.email, info.visa, r.office, r.topic, info.memo);
+                })
+                .sort((a, b) => {
+                    const aPast = a.reserve_date < today, bPast = b.reserve_date < today;
+                    if (aPast !== bPast) return aPast ? 1 : -1;
+                    const ka = a.reserve_date + ' ' + a.reserve_time, kb = b.reserve_date + ' ' + b.reserve_time;
+                    return aPast ? kb.localeCompare(ka) : ka.localeCompare(kb);
+                });
+
+            document.getElementById('reservationCount').textContent = listCountLabel(rows.length, reservations.length);
+
+            if (rows.length === 0) {
+                container.innerHTML = emptyState('fa-calendar-times', reservations.length ? '조건에 맞는 예약이 없습니다.' : '접수된 방문 예약이 없습니다.');
                 return;
             }
 
@@ -2721,9 +2540,15 @@
                     <tbody>
             `;
 
-            reservations.forEach(r => {
+            let pastHeaderDone = false;
+            rows.forEach(r => {
                 const st = RESERVATION_STATUS[r.status] || RESERVATION_STATUS.requested;
                 const info = splitReservationMemo(r);
+                const past = r.reserve_date < today;
+                if (past && !pastHeaderDone) {
+                    pastHeaderDone = true;
+                    tableHTML += '<tr class="row-divider"><td colspan="7">지난 예약</td></tr>';
+                }
                 const options = Object.keys(RESERVATION_STATUS).map(k =>
                     `<option value="${k}"${(r.status || 'requested') === k ? ' selected' : ''}>${RESERVATION_STATUS[k].label}</option>`
                 ).join('');
@@ -2737,7 +2562,7 @@
                     : '';
 
                 tableHTML += `
-                    <tr>
+                    <tr${past ? ' class="row-past"' : ''}>
                         <td style="white-space:nowrap;"><strong>${escapeReservationHtml(r.reserve_date)}</strong><span class="cell-sub">${escapeReservationHtml(r.reserve_time)}</span></td>
                         <td><strong>${escapeReservationHtml(r.name)}</strong>${info.visa ? `<span class="cell-sub">${escapeReservationHtml(info.visa)}</span>` : ''}</td>
                         <td style="white-space:nowrap;">${phone}${email}</td>
@@ -2985,284 +2810,6 @@
                 console.error('❌ 예약 차단 해제 오류:', e);
                 alert('해제에 실패했습니다: ' + (e.message || e));
             }
-        }
-
-        // ========================================
-        // 신규 회원 탭 함수
-        // ========================================
-        let newMembers = [];
-
-        // 신규 회원 데이터 로드 (최근 7일)
-        async function loadNewMembersData() {
-            try {
-                const sevenDaysAgo = new Date();
-                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-                
-                const { data: profiles, error } = await supabaseClient
-                    .from('profiles')
-                    .select('*')
-                    .gte('created_at', sevenDaysAgo.toISOString())
-                    .order('created_at', { ascending: false });
-                
-                if (error) {
-                    console.error('❌ 신규 회원 로드 오류:', error);
-                    newMembers = [];
-                } else {
-                    // console.log('✅ 신규 회원 로드 성공:', profiles.length, '명');
-                    newMembers = profiles;
-                }
-                
-                // 배지 업데이트
-                const badge = document.getElementById('newMemberBadge');
-                if (newMembers.length > 0) {
-                    badge.textContent = newMembers.length;
-                    badge.style.display = 'inline-block';
-                } else {
-                    badge.style.display = 'none';
-                }
-                
-                renderNewMembersTable();
-            } catch (error) {
-                console.error('신규 회원 데이터 로드 오류:', error);
-            }
-        }
-
-        // 신규 회원 테이블 렌더링
-        function renderNewMembersTable() {
-            const container = document.getElementById('newMembersTableContainer');
-            document.getElementById('newMemberCount').textContent = `총 ${newMembers.length}명`;
-            
-            if (newMembers.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state" style="text-align: center; padding: 60px 20px; color: #6B7684;">
-                        <i class="fas fa-user-check" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
-                        <p style="font-size: 16px;">최근 7일 이내 신규 회원이 없습니다.</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            let tableHTML = `
-                <table class="customers-table">
-                    <thead>
-                        <tr>
-                            <th>이름</th>
-                            <th>이메일</th>
-                            <th>전화번호</th>
-                            <th>소속 단체</th>
-                            <th>비자</th>
-                            <th>국적</th>
-                            <th>첨부파일</th>
-                            <th>가입일</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
-            const newMemberOrgLabels = {
-                'chosun': { name: '조선대', bg: '#1B3A7B' },
-                'feu': { name: '극동대', bg: '#003366' }
-            };
-
-            newMembers.forEach(member => {
-                const hasArc = member.arc_front_url || member.arc_back_url;
-                const hasPassport = member.passport_url;
-                const hasSignature = member.signature_url;
-
-                const attachments = [];
-                if (hasArc) attachments.push('<span title="외국인등록증"><i class="fas fa-id-card" style="color: #887668;"></i></span>');
-                if (hasPassport) attachments.push('<span title="여권"><i class="fas fa-passport" style="color: #10B981;"></i></span>');
-                if (hasSignature) attachments.push('<span title="전자서명"><i class="fas fa-signature" style="color: #8B5CF6;"></i></span>');
-
-                const attachmentHTML = attachments.length > 0
-                    ? attachments.join(' ')
-                    : '<span style="color: #9CA3AF;">없음</span>';
-
-                const orgInfo = newMemberOrgLabels[member.organization];
-                const organizationBadge = orgInfo
-                    ? `<span class="org-badge" style="background:${orgInfo.bg}; color:white; padding:4px 10px; border-radius:6px; font-size:12px; font-weight:600; display:inline-block;">${orgInfo.name}</span>`
-                    : `<span style="color: #9CA3AF; font-size: 12px;">일반</span>`;
-
-                tableHTML += `
-                    <tr>
-                        <td><strong>${member.name || '-'}</strong></td>
-                        <td>${member.email || '-'}</td>
-                        <td>${member.phone || '-'}</td>
-                        <td>${organizationBadge}</td>
-                        <td><span class="visa-badge">${member.visa_type || '-'}</span></td>
-                        <td>${member.nationality || '-'}</td>
-                        <td style="font-size: 16px;">${attachmentHTML}</td>
-                        <td>${new Date(member.created_at).toLocaleDateString('ko-KR')}</td>
-                    </tr>
-                `;
-            });
-            
-            tableHTML += `
-                    </tbody>
-                </table>
-            `;
-            
-            container.innerHTML = tableHTML;
-        }
-
-        // 고객 데이터 로드
-        async function loadCustomersData() {
-            try {
-                // Supabase에서 프로필 정보 가져오기
-                const { data: profiles, error } = await supabaseClient
-                    .from('profiles')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-                
-                if (error) {
-                    console.error('❌ 고객 로드 오류:', error);
-                    allCustomers = [];
-                } else {
-                    // console.log('✅ 고객 로드 성공:', profiles.length, '명');
-                    allCustomers = profiles;
-                }
-                
-                filteredCustomers = [...allCustomers];
-                renderCustomersTable();
-            } catch (error) {
-                console.error('고객 데이터 로드 오류:', error);
-            }
-        }
-
-        // 고객 테이블 렌더링
-        function renderCustomersTable() {
-            const container = document.getElementById('customersTableContainer');
-            document.getElementById('customerCount').textContent = `총 ${filteredCustomers.length}명`;
-            
-            if (filteredCustomers.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-user-slash"></i>
-                        <p>검색 결과가 없습니다.</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            let tableHTML = `
-                <table class="customers-table">
-                    <thead>
-                        <tr>
-                            <th>고객명</th>
-                            <th>이메일</th>
-                            <th>연락처</th>
-                            <th>소속 단체</th>
-                            <th>비자</th>
-                            <th>국적</th>
-                            <th>체류 만료일</th>
-                            <th>등록일</th>
-                            <th>작업</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-            
-            filteredCustomers.forEach(customer => {
-                const stayExpiry = (customer.visa_expiry_date || customer.stay_expiry)
-                    ? new Date(customer.visa_expiry_date || customer.stay_expiry)
-                    : null;
-                
-                let expiryDisplay = '-';
-                let expiryClass = 'expiry-normal';
-                
-                if (stayExpiry) {
-                    const now = new Date();
-                    const diffDays = Math.floor((stayExpiry - now) / (1000 * 60 * 60 * 24));
-                    
-                    if (diffDays < 0) {
-                        expiryDisplay = `만료됨 (${Math.abs(diffDays)}일 전)`;
-                        expiryClass = 'expiry-warning';
-                    } else if (diffDays <= 30) {
-                        expiryDisplay = `${diffDays}일 남음`;
-                        expiryClass = 'expiry-warning';
-                    } else {
-                        expiryDisplay = stayExpiry.toLocaleDateString('ko-KR');
-                    }
-                }
-                
-                const phoneDisplay = customer.phone || '-';
-                const phoneLink = customer.phone
-                    ? `<a href="tel:${customer.phone}" style="color: #887668; text-decoration: none;">${customer.phone}</a>`
-                    : '-';
-
-                const customerOrgLabels = {
-                    'chosun': { name: '조선대', bg: '#1B3A7B' },
-                    'feu': { name: '극동대', bg: '#003366' }
-                };
-                const customerOrgInfo = customerOrgLabels[customer.organization];
-                const customerOrgBadge = customerOrgInfo
-                    ? `<span class="org-badge" style="background:${customerOrgInfo.bg}; color:white; padding:4px 10px; border-radius:6px; font-size:12px; font-weight:600; display:inline-block;">${customerOrgInfo.name}</span>`
-                    : `<span style="color: #9CA3AF; font-size: 12px;">일반</span>`;
-
-                tableHTML += `
-                    <tr>
-                        <td><strong>${customer.name || '알 수 없음'}</strong></td>
-                        <td>${customer.email || '-'}</td>
-                        <td>${phoneLink}</td>
-                        <td>${customerOrgBadge}</td>
-                        <td>${customer.visa_type ? `<span class="visa-badge">${customer.visa_type}</span>` : '-'}</td>
-                        <td>${customer.nationality || '-'}</td>
-                        <td class="${expiryClass}">${expiryDisplay}</td>
-                        <td>${new Date(customer.created_at).toLocaleDateString('ko-KR')}</td>
-                        <td><button class="btn-open-thread" onclick="adminOpenThread('${customer.id}', '${(customer.name || '').replace(/'/g, '')}')"><i class="fas fa-comment-dots"></i> 쓰레드 열기</button></td>
-                    </tr>
-                `;
-            });
-            
-            tableHTML += `
-                    </tbody>
-                </table>
-            `;
-            
-            container.innerHTML = tableHTML;
-        }
-
-        // 고객 필터 적용
-        function applyCustomerFilters() {
-            const nameFilter = document.getElementById('customerFilterName').value.toLowerCase();
-            const orgFilter = document.getElementById('customerFilterOrg').value;
-            const visaFilter = document.getElementById('customerFilterVisa').value;
-            const nationalityFilter = document.getElementById('customerFilterNationality').value;
-            const expiryFilter = document.getElementById('customerFilterExpiry').value;
-            
-            filteredCustomers = allCustomers.filter(customer => {
-                if (nameFilter && !customer.name?.toLowerCase().includes(nameFilter)) return false;
-                if (orgFilter && customer.organization !== orgFilter) return false;
-                if (visaFilter && customer.visa_type !== visaFilter) return false;
-                if (nationalityFilter && customer.nationality !== nationalityFilter) return false;
-                
-                if (expiryFilter && (customer.visa_expiry_date || customer.stay_expiry)) {
-                    const stayExpiry = new Date(customer.visa_expiry_date || customer.stay_expiry);
-                    const now = new Date();
-                    const diffDays = Math.floor((stayExpiry - now) / (1000 * 60 * 60 * 24));
-                    
-                    if (expiryFilter === 'expired' && diffDays >= 0) return false;
-                    if (expiryFilter === '30days' && (diffDays < 0 || diffDays > 30)) return false;
-                    if (expiryFilter === '60days' && (diffDays < 0 || diffDays > 60)) return false;
-                    if (expiryFilter === '90days' && (diffDays < 0 || diffDays > 90)) return false;
-                }
-                
-                return true;
-            });
-            
-            renderCustomersTable();
-        }
-
-        // 고객 필터 초기화
-        function resetCustomerFilters() {
-            document.getElementById('customerFilterName').value = '';
-            document.getElementById('customerFilterOrg').value = '';
-            document.getElementById('customerFilterVisa').value = '';
-            document.getElementById('customerFilterNationality').value = '';
-            document.getElementById('customerFilterExpiry').value = '';
-            
-            filteredCustomers = [...allCustomers];
-            renderCustomersTable();
         }
 
         // 페이지 로드 시 - 권한 체크는 로그인 페이지에서 이미 완료됨
