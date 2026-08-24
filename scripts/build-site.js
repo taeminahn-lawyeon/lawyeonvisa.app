@@ -10,7 +10,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
-const SITE = 'https://www.lawyeonvisa.app';
+const SITE = 'https://www.lawyeon-immigration.com';
 // 기사 하단 고지문에 도메인이 글자로 적혀 있다. 도메인을 바꿀 때 그 45곳을
 // 따로 찾아 고치면 반드시 빠뜨리는 곳이 생기므로, 본문에는 __DOMAIN__ 토큰만
 // 두고 여기서 만들어 넣는다. 바꿀 곳은 위의 SITE 한 줄뿐이다.
@@ -40,7 +40,7 @@ const SUPABASE_SCRIPTS = [
 
 // 사이트 이름은 언어와 무관하게 하나로 고정한다.
 // Google 은 도메인 단위로 사이트 이름을 하나만 고르며, 페이지마다 다른 이름을
-// 선언하면(이전에는 언어별로 4가지였다) 판단을 포기하고 도메인(lawyeonvisa.app)을
+// 선언하면(이전에는 언어별로 4가지였다) 판단을 포기하고 도메인(lawyeon-immigration.com)을
 // 그대로 표시한다. og:site_name·WebSite.name·index.html 이 모두 같아야 한다.
 const SITE_NAME = 'Law Firm Lawyeon Immigration Center';
 const SITE_NAME_ALT = '법무법인 로연 출입국이민지원센터';

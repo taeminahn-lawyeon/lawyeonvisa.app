@@ -6,6 +6,8 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const ALLOWED_ORIGINS = [
+  'https://www.lawyeon-immigration.com',
+  'https://lawyeon-immigration.com',
   'https://lawyeonvisa.app',
   'https://www.lawyeonvisa.app',
   'http://localhost:3000',
@@ -21,10 +23,12 @@ function getCorsHeaders(origin: string | null) {
   }
 }
 
+// 발신 도메인은 Resend 에 인증된 도메인이어야 한다. lawyeon-immigration.com 의
+// 인증(SPF·DKIM)이 끝난 뒤에 noreply@lawyeon-immigration.com 으로 바꾼다.
 const FROM_EMAIL = 'Law Firm Lawyeon <noreply@lawyeonvisa.app>'
 // 담당자가 바뀔 수 있으므로 함수 시크릿으로 덮어쓸 수 있게 한다.
 const ADMIN_EMAIL = Deno.env.get('ADMIN_EMAIL') || 'taemin.ahn@lawyeon.com'
-const SITE_URL = 'https://lawyeonvisa.app'
+const SITE_URL = 'https://www.lawyeon-immigration.com'
 
 function buildHtml(message: string, threadUrl: string): string {
   return `<!DOCTYPE html>

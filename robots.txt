@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.lawyeonvisa.app/sitemap.xml
+Sitemap: https://www.lawyeon-immigration.com/sitemap.xml

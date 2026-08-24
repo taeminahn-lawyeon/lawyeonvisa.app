@@ -16,7 +16,7 @@
  *   node scripts/capture_hooks.js
  *
  * Override the base URL (default = production):
- *   BASE_URL=https://www.lawyeonvisa.app node scripts/capture_hooks.js
+ *   BASE_URL=https://www.lawyeon-immigration.com node scripts/capture_hooks.js
  *   BASE_URL=file:///home/user/lawyeonvisa.app node scripts/capture_hooks.js
  *
  * Output:
@@ -31,7 +31,7 @@ const { execSync, spawnSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-const BASE_URL = process.env.BASE_URL || 'https://www.lawyeonvisa.app';
+const BASE_URL = process.env.BASE_URL || 'https://www.lawyeon-immigration.com';
 
 // Scene list: (file, name, exact duration in seconds)
 // Duration matches the timeline in each HTML's play() function.

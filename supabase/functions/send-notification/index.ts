@@ -6,6 +6,8 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 // 허용된 도메인 목록
 const ALLOWED_ORIGINS = [
+  'https://www.lawyeon-immigration.com',
+  'https://lawyeon-immigration.com',
   'https://lawyeonvisa.app',
   'https://www.lawyeonvisa.app',
   'http://localhost:3000',
