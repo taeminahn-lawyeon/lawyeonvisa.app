@@ -43,7 +43,7 @@ const SITE_NAME_ALT = '법무법인 로연 출입국이민지원센터';
 
 // ---- per-language UI strings (header chrome) ----
 const STRINGS = {
-  en: { brandName: 'Law Firm Lawyeon', brandSub: 'Visa & Immigration Center',
+  en: { brandName: 'Law Firm Lawyeon', brandSub: 'Immigration Center',
         siteName: SITE_NAME, siteNameAlt: SITE_NAME_ALT,
         navAbout: 'About Lawyeon', navInsights: 'Insights', navCases: 'Cases & News', navConsult: 'Consultation',
         headerCta: 'Apply for pre-consultation' },
@@ -81,7 +81,7 @@ const PAGES = [
     // 서로 다르면 판단이 흔들린다.
     title: { en: SITE_NAME,
              ko: '법무법인 로연 출입국이민지원센터' },
-    desc:  { en: 'Law Firm Lawyeon, Visa & Immigration Center. Legal representation for criminal cases, contracts and immigration office affairs for expats and migrants in Korea.',
+    desc:  { en: 'Law Firm Lawyeon Immigration Center. Legal representation for criminal cases, contracts and immigration office affairs for expats and migrants in Korea.',
              ko: '법무법인 로연 출입국이민지원센터. 외국인·이주민을 위한 형사사건, 계약, 출입국 민원 등 법률 대리 서비스.' },
   },
   {
@@ -505,7 +505,10 @@ function build() {
         '__LANGTOGGLE__': langToggle(lang, page.id, langs, !!page.home),
         '__OG_SITE_NAME__': S.siteName,
         '__JSONLD__': page.jsonld ? legalServiceJsonLd(lang) : '',
-        '__WEBSITE_JSONLD__': websiteJsonLd(lang),
+        // WebSite 구조화 데이터는 홈에만 넣는다. Google 은 사이트 이름을 홈페이지에서만
+        // 읽고, 하위 페이지에 url 이 루트인 WebSite 를 함께 실으면 그 페이지의 canonical
+        // 과 어긋나는 선언이 51개 생긴다.
+        '__WEBSITE_JSONLD__': page.home ? websiteJsonLd(lang) : '',
         '__OG_TYPE__': isArticle ? 'article' : 'website',
         '__OG_IMAGE__': ogImage,
         '__ARTICLE_META__': isArticle
