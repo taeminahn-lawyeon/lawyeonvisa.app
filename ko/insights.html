@@ -200,12 +200,55 @@
         </a>
     </div>
     <div class="doc-empty" id="insightEmpty" style="display:none">해당 카테고리의 글은 준비 중입니다.</div>
+
+    <div class="sec-head-row" id="cases" style="margin:72px 0 0">
+        <div><div class="sec-title">해결 사례</div></div>
+    </div>
+    <p class="ins-notice" style="margin:16px 0 24px">법무법인 로연 출입국이민지원센터가 수행하여 종결된 사건을 의뢰인이 특정되지 않도록 정리한 사례입니다.</p>
+    <div class="cat-toggle" id="caseCats" style="margin-bottom:8px;padding-bottom:18px;border-bottom:2px solid var(--ink)">
+        <button class="ct active" data-cat="all">전체</button>
+        <span class="ct-div">|</span>
+        <button class="ct" data-cat="criminal">형사 &amp; 사범심사</button>
+        <span class="ct-div">|</span>
+        <button class="ct" data-cat="visa">비자·이민</button>
+        <span class="ct-div">|</span>
+        <button class="ct" data-cat="residence">거주·국적</button>
+        <span class="ct-div">|</span>
+        <button class="ct" data-cat="admin">행정</button>
+    </div>
+    <div class="doc-list" id="caseList">
+    </div>
+    <div class="doc-empty" id="caseEmpty">해결 사례를 준비 중입니다.</div>
 </div>
 </section>
 
 <script>
 (function(){
-    var tabs = document.querySelectorAll('.cat-toggle .ct');
+    var tabs = document.querySelectorAll('#caseCats .ct');
+    var rows = document.querySelectorAll('#caseList .doc-row');
+    var emptyEl = document.getElementById('caseEmpty');
+    if(!tabs.length) return;
+    var valid = Array.prototype.map.call(tabs, function(t){ return t.getAttribute('data-cat'); });
+    var cat = new URLSearchParams(location.search).get('case');
+    if(valid.indexOf(cat) < 0) cat = 'all';
+    function applyCat(c){
+        var shown = 0;
+        tabs.forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-cat') === c); });
+        rows.forEach(function(row){
+            var match = c === 'all' || row.getAttribute('data-cat') === c;
+            row.classList.toggle('hidden', !match);
+            if(match) shown++;
+        });
+        if(emptyEl) emptyEl.style.display = shown ? 'none' : '';
+    }
+    tabs.forEach(function(tab){
+        tab.addEventListener('click', function(){ applyCat(tab.getAttribute('data-cat')); });
+    });
+    applyCat(cat);
+})();
+
+(function(){
+    var tabs = document.querySelectorAll('#insightCats .ct');
     var rows = document.querySelectorAll('#insightList .doc-row');
     var emptyEl = document.getElementById('insightEmpty');
     if(!tabs.length) return;

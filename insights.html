@@ -200,12 +200,55 @@
         </a>
     </div>
     <div class="doc-empty" id="insightEmpty" style="display:none">Articles in this category are coming soon.</div>
+
+    <div class="sec-head-row" id="cases" style="margin:72px 0 0">
+        <div><div class="sec-title">Cases</div></div>
+    </div>
+    <p class="ins-notice" style="margin:16px 0 24px">Closed matters handled by the Immigration Center of Law Firm Lawyeon, summarized so that no client can be identified.</p>
+    <div class="cat-toggle" id="caseCats" style="margin-bottom:8px;padding-bottom:18px;border-bottom:2px solid var(--ink)">
+        <button class="ct active" data-cat="all">All</button>
+        <span class="ct-div">|</span>
+        <button class="ct" data-cat="criminal">Criminal &amp; Immigration Review</button>
+        <span class="ct-div">|</span>
+        <button class="ct" data-cat="visa">Visa &amp; Immigration</button>
+        <span class="ct-div">|</span>
+        <button class="ct" data-cat="residence">Residence &amp; Nationality</button>
+        <span class="ct-div">|</span>
+        <button class="ct" data-cat="admin">Administrative Affairs</button>
+    </div>
+    <div class="doc-list" id="caseList">
+    </div>
+    <div class="doc-empty" id="caseEmpty">Case reports are coming soon.</div>
 </div>
 </section>
 
 <script>
 (function(){
-    var tabs = document.querySelectorAll('.cat-toggle .ct');
+    var tabs = document.querySelectorAll('#caseCats .ct');
+    var rows = document.querySelectorAll('#caseList .doc-row');
+    var emptyEl = document.getElementById('caseEmpty');
+    if(!tabs.length) return;
+    var valid = Array.prototype.map.call(tabs, function(t){ return t.getAttribute('data-cat'); });
+    var cat = new URLSearchParams(location.search).get('case');
+    if(valid.indexOf(cat) < 0) cat = 'all';
+    function applyCat(c){
+        var shown = 0;
+        tabs.forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-cat') === c); });
+        rows.forEach(function(row){
+            var match = c === 'all' || row.getAttribute('data-cat') === c;
+            row.classList.toggle('hidden', !match);
+            if(match) shown++;
+        });
+        if(emptyEl) emptyEl.style.display = shown ? 'none' : '';
+    }
+    tabs.forEach(function(tab){
+        tab.addEventListener('click', function(){ applyCat(tab.getAttribute('data-cat')); });
+    });
+    applyCat(cat);
+})();
+
+(function(){
+    var tabs = document.querySelectorAll('#insightCats .ct');
     var rows = document.querySelectorAll('#insightList .doc-row');
     var emptyEl = document.getElementById('insightEmpty');
     if(!tabs.length) return;
