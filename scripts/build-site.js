@@ -11,6 +11,10 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const SITE = 'https://www.lawyeonvisa.app';
+// 기사 하단 고지문에 도메인이 글자로 적혀 있다. 도메인을 바꿀 때 그 45곳을
+// 따로 찾아 고치면 반드시 빠뜨리는 곳이 생기므로, 본문에는 __DOMAIN__ 토큰만
+// 두고 여기서 만들어 넣는다. 바꿀 곳은 위의 SITE 한 줄뿐이다.
+const DOMAIN = SITE.replace(/^https?:\/\//, '').replace(/^www\./, '');
 const LANGS = ['en', 'ko'];
 
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
@@ -495,6 +499,7 @@ function build() {
         '__HREFLANG_VI__': hreflangVi,
         '__NAV_HOME__': NAV_HOME[lang],
         '__HOME__': HOME_URL[lang],
+        '__DOMAIN__': DOMAIN,
         '__BRAND_NAME__': S.brandName,
         '__BRAND_SUB__': S.brandSub,
         '__NAV_ABOUT__': S.navAbout,
