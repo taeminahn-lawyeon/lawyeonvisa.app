@@ -140,8 +140,13 @@
                     <div class="attorney-card"><img src="images/attorneys/D.G. SHIN.jpg" alt="" class="attorney-photo"><div class="attorney-info"><div class="attorney-name">Atty. D.G. Shin</div></div></div>
                 </div>
             </div>
-            <div class="office-photo" style="background-image:url('images/office.jpg')">
-                <div class="ph">Office photo</div>
+            <div class="office-shots" id="officeShots">
+                <img src="images/office/seoul-sign.jpg" alt="Lobby signage at the Seoul office" class="on">
+                <img data-src="images/office/seoul-entrance.jpg" alt="Entrance to the Seoul office">
+                <img data-src="images/office/seoul-lounge.jpg" alt="Waiting area at the Seoul office">
+                <img data-src="images/office/seoul-meeting.jpg" alt="Meeting room at the Seoul office">
+                <img data-src="images/office/gwangju-reception.jpg" alt="Reception at the Gwangju office">
+                <img data-src="images/office/gwangju-meeting.jpg" alt="Meeting room at the Gwangju office">
             </div>
         </div>
     </div>
@@ -367,13 +372,36 @@
         applyCat(init);
     })();
     (function(){
-        var box = document.querySelector('.office-photo');
+        var box = document.getElementById('officeShots');
         if(!box) return;
-        var ph = box.querySelector('.ph');
-        var test = new Image();
-        test.onload = function(){ if(ph) ph.style.display = 'none'; };
-        test.onerror = function(){ box.style.backgroundImage = 'none'; };
-        test.src = 'images/office.jpg';
+        var shots = box.querySelectorAll('img');
+        if(shots.length < 2) return;
+
+        // 첫 장 외에는 페이지 로딩이 끝난 뒤에 내려받는다. 여섯 장을 한꺼번에
+        // 받으면 첫 화면이 그만큼 늦어진다.
+        function loadRest(){
+            Array.prototype.forEach.call(shots, function(im){
+                if(im.getAttribute('data-src')){
+                    im.src = im.getAttribute('data-src');
+                    im.removeAttribute('data-src');
+                }
+            });
+        }
+        if(document.readyState === 'complete') loadRest();
+        else window.addEventListener('load', loadRest);
+
+        // 화면 움직임을 줄이도록 설정한 사용자에게는 첫 장만 보여 준다.
+        try{
+            if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        }catch(e){}
+
+        var n = 0;
+        setInterval(function(){
+            if(document.hidden) return;   // 다른 탭을 보고 있으면 넘기지 않는다
+            shots[n].classList.remove('on');
+            n = (n + 1) % shots.length;
+            shots[n].classList.add('on');
+        }, 5000);
     })();
 </script>
 

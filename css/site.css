@@ -105,8 +105,14 @@ section{padding:74px 0}
 .attorney-photo{width:100%;height:210px;object-fit:cover;object-position:top center;display:block}
 .attorney-info{position:absolute;bottom:0;left:0;right:0;padding:12px;background:linear-gradient(transparent,rgba(40,33,22,.9))}
 .attorney-name{font-size:13px;font-weight:600;color:#F3E9D2;text-align:center}
-.office-photo{position:relative;width:100%;height:232px;border-radius:8px;overflow:hidden;background:var(--beige) 50% 12%/cover no-repeat;border:1px solid var(--rule)}
-.office-photo .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#A99B82;font-size:13px;font-weight:600;letter-spacing:.04em}
+/* 사무소 전경 — 5초마다 한 장씩 겹쳐 넘긴다. 위의 변호사 띠와 같은 방향으로
+   흐르는 움직임을 두 줄 겹치지 않기 위해 가로 스크롤 대신 페이드를 쓴다.
+   높이 300px 는 정사각으로 찍힌 사진이 잘리지 않는 최소치다. */
+.office-shots{position:relative;width:100%;height:300px;border-radius:8px;overflow:hidden;border:1px solid var(--rule);background:var(--beige)}
+.office-shots img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease}
+.office-shots img.on{opacity:1}
+@media(max-width:560px){.office-shots{height:240px}}
+@media(prefers-reduced-motion:reduce){.office-shots img{transition:none}}
 
 /* ---------- Insights / document list ---------- */
 .insights{background:#F2F2F2;border-bottom:1px solid var(--rule)}

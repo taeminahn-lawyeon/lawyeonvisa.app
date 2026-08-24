@@ -124,6 +124,7 @@
 .booking-page .maps{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .booking-page .map-card{border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:#fff}
 .booking-page .map-card iframe{width:100%;height:300px;border:0;display:block;filter:grayscale(.18)}
+.booking-page .map-card .mc-photo{width:100%;height:190px;object-fit:cover;display:block;border-bottom:1px solid var(--rule)}
 .booking-page .map-card .mc-body{padding:16px 18px}
 .booking-page .map-card .mc-name{font-weight:700;color:var(--ink);font-size:15px}
 .booking-page .map-card .mc-addr{font-size:13px;color:var(--muted);margin-top:5px;line-height:1.6}
@@ -241,10 +242,12 @@
         <p class="sub">Our Seoul and Gwangju office locations.</p>
         <div class="maps">
             <div class="map-card">
+                <img class="mc-photo" src="images/office/seoul-entrance.jpg" alt="Entrance to the Seoul office" loading="lazy">
                 <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://maps.google.com/maps?q=%EC%84%9C%EC%9A%B8%20%EA%B0%95%EC%84%9C%EA%B5%AC%20%EA%B3%B5%ED%95%AD%EB%8C%80%EB%A1%9C%20164%20%EB%A5%98%EB%A7%88%ED%83%80%EC%9B%8C&t=&z=16&ie=UTF8&iwloc=&output=embed" title="Seoul Office map"></iframe>
                 <div class="mc-body"><div class="mc-name">Seoul Office</div><div class="mc-addr">164 Gonghang-daero, Gangseo-gu, Seoul · 5F #503 (Magok-dong, Ryuma Tower)</div></div>
             </div>
             <div class="map-card">
+                <img class="mc-photo" src="images/office/gwangju-reception.jpg" alt="Reception at the Gwangju office" loading="lazy">
                 <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://maps.google.com/maps?q=%EA%B4%91%EC%A3%BC%20%EB%8F%99%EA%B5%AC%20%EC%A4%80%EB%B2%95%EB%A1%9C%201%20%EC%B4%88%EC%84%9D%EB%B9%8C%EB%94%A9&t=&z=16&ie=UTF8&iwloc=&output=embed" title="Gwangju Office map"></iframe>
                 <div class="mc-body"><div class="mc-name">Gwangju Office</div><div class="mc-addr">1 Junbeop-ro, Dong-gu, Gwangju · 3F (Jisan-dong, Choseok Bldg)</div></div>
             </div>
