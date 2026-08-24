@@ -183,6 +183,12 @@
             if(match) shown++;
         });
         if(emptyEl) emptyEl.style.display = shown ? 'none' : '';
+        try{
+            var qs = new URLSearchParams(location.search);
+            if(c === 'all') qs.delete('case'); else qs.set('case', c);
+            var s = qs.toString();
+            history.replaceState(null, '', 'insights' + (s ? '?' + s : '') + location.hash);
+        }catch(e){}
     }
     tabs.forEach(function(tab){
         tab.addEventListener('click', function(){ applyCat(tab.getAttribute('data-cat')); });
@@ -210,7 +216,11 @@
         });
         if(emptyEl) emptyEl.style.display = shown ? 'none' : '';
         try{ sessionStorage.setItem('insightCat', c); }catch(e){}
-        try{ history.replaceState(null, '', 'insights?cat=' + c); }catch(_){}
+        try{
+            var qs = new URLSearchParams(location.search);
+            qs.set('cat', c);
+            history.replaceState(null, '', 'insights?' + qs.toString() + location.hash);
+        }catch(_){}
     }
     tabs.forEach(function(tab){
         tab.addEventListener('click', function(){ applyCat(tab.getAttribute('data-cat')); });

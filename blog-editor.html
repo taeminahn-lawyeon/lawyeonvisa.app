@@ -166,7 +166,7 @@
     <div class="card">
       <h2>6. 마무리 요소</h2>
       <label>소개 문단(art-about) — 모든 글 공통, 기본값 유지 권장</label>
-      <textarea id="about" rows="6"></textarea>
+      <textarea id="about" rows="6" oninput="render()"></textarea>
       <label>고정 문안(부록 C) — 수정 금지</label>
       <textarea id="fixed" rows="3" readonly style="background:#f4f2ec;color:var(--muted)"></textarea>
       <label>이어지는 글 (내부링크)</label>
@@ -217,11 +217,14 @@ var ABOUT = {
   en:'The Visa & Immigration Center of Law Firm Lawyeon provides legal services specialized in the integrated handling of Korean immigration and visa matters together with criminal cases and immigration-violation reviews, built on extensive case experience, professional networks, and practical knowledge.\nThe Center was founded through the organic collaboration of attorneys Junwoo Min, Dohyun Nam, and Seungchul Kim — criminal-law specialists who have advised across a wide range of immigration matters — with Senior Advisor Taemin Ahn, who has served at the Seoul Global Center, as a center head at the Ministry of Justice’s Global Start-up Immigration Center, and as a member of the Foreign Workers’ Rights Protection Council of the Seoul Regional Employment and Labor Administration. It is Law Firm Lawyeon’s dedicated center for immigration practice.\nIn particular, for departure orders and entry-ban dispositions that follow a final criminal conviction, the Center presents effective solutions through an integrated strategy spanning criminal defense, objections to the disposition, and applications to lift the entry ban, and it supports stable business activity in Korea by managing many clients’ immigration risk.',
   vi:'Trung tâm Hỗ trợ Xuất nhập cảnh và Di trú là bộ phận chuyên trách về di trú của Công ty Luật Lawyeon, xử lý các vấn đề visa và tư cách cư trú cùng với các vụ án hình sự và thủ tục thẩm tra vi phạm xuất nhập cảnh.\nTrung tâm vận hành theo cơ chế phối hợp giữa các luật sư Junwoo Min, Dohyun Nam, Seungchul Kim và Giám đốc Trung tâm Taemin Ahn.'
 };
+// 도메인은 글자로 적지 않는다. 본문에는 __DOMAIN__ 토큰만 두고
+// scripts/build-site.js 가 빌드 때 만들어 넣는다 (기존 아티클 35곳과 동일).
 var FIXED = {
-  ko:'본 글은 일반적인 제도 안내를 목적으로 작성되었으며, 개별 사안에 대한 법률 자문이 아닙니다. 체류자격에 관한 판단은 체류 이력, 소득, 계약 관계 등 구체적 사실관계에 따라 달라질 수 있습니다. 개별 사안의 검토가 필요하신 경우 법무법인 로연 출입국이민지원센터(lawyeon-immigration.com)로 상담을 신청하실 수 있습니다.',
-  en:'This article is intended as general information about the relevant legal framework and is not legal advice on any individual matter. Determinations concerning immigration status may differ depending on specific facts such as residence history, income and contractual relationships. If your situation requires individual review, you may request a consultation with the Immigration Support Center of Law Firm Lawyeon (lawyeon-immigration.com).',
-  vi:'Bài viết này được soạn nhằm mục đích giới thiệu chế độ pháp luật một cách tổng quát và không phải là tư vấn pháp lý cho vụ việc cụ thể. Nếu quý vị cần xem xét vụ việc của riêng mình, có thể đăng ký tư vấn với Trung tâm Hỗ trợ Xuất nhập cảnh và Di trú của Công ty Luật Lawyeon (lawyeon-immigration.com).'
+  ko:'본 글은 일반적인 제도 안내를 목적으로 작성되었으며, 개별 사안에 대한 법률 자문이 아닙니다. 체류자격에 관한 판단은 체류 이력, 소득, 계약 관계 등 구체적 사실관계에 따라 달라질 수 있습니다. 개별 사안의 검토가 필요하신 경우 법무법인 로연 출입국이민지원센터(__DOMAIN__)로 상담을 신청하실 수 있습니다.',
+  en:'This article is intended as general information about the relevant legal framework and is not legal advice on any individual matter. Determinations concerning immigration status may differ depending on specific facts such as residence history, income and contractual relationships. If your situation requires individual review, you may request a consultation with the Immigration Support Center of Law Firm Lawyeon (__DOMAIN__).',
+  vi:'Bài viết này được soạn nhằm mục đích giới thiệu chế độ pháp luật một cách tổng quát và không phải là tư vấn pháp lý cho vụ việc cụ thể. Nếu quý vị cần xem xét vụ việc của riêng mình, có thể đăng ký tư vấn với Trung tâm Hỗ trợ Xuất nhập cảnh và Di trú của Công ty Luật Lawyeon (__DOMAIN__).'
 };
+var DOMAIN = (location.hostname || 'lawyeon-immigration.com').replace(/^www\./, '');
 var BRAND = {ko:' — 법무법인 로연', en:' — Law Firm Lawyeon', vi:' — Lawyeon'};
 
 /* ============================ 상태 ============================ */
@@ -435,6 +438,7 @@ function render(){
       '<link rel="stylesheet" href="'+BASE+'/css/site.css">'+
       '<style>body{background:#fff;margin:0}.__pv{padding:0 0 40px}</style></head><body><div class="__pv">'+
       html.replace(/__BASE__/g, BASE+'/')
+          .replace(/__DOMAIN__/g, DOMAIN)
           .replace(/__KICKER_CAT__/g, '<span style="background:#F3EFE6;color:#8B7A5E;padding:0 4px">분류</span>')
           .replace(/__KICKER_SUB__/g, '<span style="background:#F3EFE6;color:#8B7A5E;padding:0 4px">소주제</span>')
           .replace(/__META_CAT__/g, '<span style="background:#F3EFE6;color:#8B7A5E;padding:0 4px">분류 표기</span>')+
