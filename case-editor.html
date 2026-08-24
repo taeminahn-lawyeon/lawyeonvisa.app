@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>사례 작성 · 법무법인 로연</title>
+<link rel="icon" type="image/png" href="favicon.png?v=5">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#211C15;--muted:#6B7684;--rule:#E7E1D6;--rule-d:#D7CFC0;--btn:#887668;--btn-d:#6F6053;--bg:#F5F2EC;--card:#fff;--accent:#B0883F;--warn:#C0392B}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Noto Sans KR",sans-serif;color:var(--ink);background:var(--bg);font-size:14px;line-height:1.6}
+  a{color:var(--btn)}
+  .topbar{position:sticky;top:0;z-index:20;background:#211C15;color:#fff;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .topbar h1{font-size:15px;margin:0;font-weight:700;letter-spacing:-.01em}
+  .topbar .sub{font-size:12px;color:#C9C2B4}
+  .topbar .grow{flex:1}
+  .topbar a.back{color:#C9C2B4;text-decoration:none;font-size:13px}
+  .topbar a.back:hover{color:#fff}
+  .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;min-height:calc(100vh - 49px)}
+  @media(max-width:1100px){.layout{grid-template-columns:1fr}.preview-pane{display:none}.layout.show-preview .form-pane{display:none}.layout.show-preview .preview-pane{display:block}}
+  .form-pane{padding:22px 24px;overflow-y:auto;max-height:calc(100vh - 49px)}
+  .preview-pane{border-left:1px solid var(--rule);background:#ECEAE4;overflow-y:auto;max-height:calc(100vh - 49px);position:sticky;top:49px}
+  .preview-head{padding:10px 16px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--rule);background:#F5F2EC;display:flex;align-items:center;gap:10px}
+  iframe#pv{width:100%;height:calc(100vh - 92px);border:0;background:#fff}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px 16px 18px;margin-bottom:16px}
+  .card > h2{font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);margin:0 0 12px;display:flex;align-items:center;gap:8px}
+  .card > h2 .hint{font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:12px}
+  label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:10px 0 4px}
+  label:first-child{margin-top:0}
+  input[type=text],textarea,select{width:100%;padding:9px 10px;border:1px solid var(--rule-d);border-radius:7px;font-family:inherit;font-size:14px;color:var(--ink);background:#fff}
+  textarea{resize:vertical;line-height:1.7;min-height:60px}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--btn);box-shadow:0 0 0 2px rgba(136,118,104,.15)}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .row > div{flex:1;min-width:120px}
+  .muted{color:var(--muted);font-size:12px;line-height:1.6}
+  .counter{font-size:11px;color:var(--muted);text-align:right;margin-top:2px}
+  .counter.warn{color:var(--warn);font-weight:600}
+  .counter.ok{color:#2f9e44}
+  .btn{padding:8px 13px;border:1px solid var(--rule-d);background:#fff;border-radius:7px;cursor:pointer;font-size:13px;font-weight:600;color:var(--ink);font-family:inherit}
+  .btn:hover{background:#F4F2EE}
+  .btn.primary{background:var(--btn);color:#fff;border-color:transparent}
+  .btn.primary:hover{background:var(--btn-d)}
+  .btn.sm{padding:4px 8px;font-size:12px}
+  .btn.danger{color:var(--warn);border-color:#e6c3bd}
+  .btn.danger:hover{background:#fbeeec}
+  .blk{border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:8px;padding:12px;margin-bottom:10px;background:#FCFBF9}
+  .blk.b-h2{border-left-color:#2f6f9e}
+  .blk.b-callout{border-left-color:#2f9e44}
+  .blk.b-table{border-left-color:#9e6f2f}
+  .blk.b-figure{border-left-color:#7a5ea0}
+  .blk.b-steps{border-left-color:#9e2f6f}
+  .blk-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .blk-tag{font-size:11px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--accent)}
+  .blk.b-h2 .blk-tag{color:#2f6f9e}.blk.b-callout .blk-tag{color:#2f9e44}.blk.b-table .blk-tag{color:#9e6f2f}.blk.b-figure .blk-tag{color:#7a5ea0}.blk.b-steps .blk-tag{color:#9e2f6f}
+  .blk-head .grow{flex:1}
+  .blk-head .btn.sm{padding:2px 7px}
+  .addbar{display:flex;gap:7px;flex-wrap:wrap;margin-top:6px}
+  .step-item,.rel-item{border:1px solid var(--rule);border-radius:8px;padding:10px;margin-bottom:9px;background:#FCFBF9}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px;position:sticky;top:0;background:var(--bg);padding:8px 0;z-index:5}
+  .out{background:#1c1917;color:#e7e2d8;border-radius:8px;padding:12px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;line-height:1.55;white-space:pre;overflow-x:auto;max-height:340px;overflow-y:auto}
+  .flash{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#211C15;color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50}
+  .flash.on{opacity:1}
+  details.help{margin:6px 0 0}
+  details.help summary{cursor:pointer;font-size:12px;color:var(--btn);font-weight:600}
+  details.help div{font-size:12px;color:var(--muted);line-height:1.7;padding:6px 0 2px}
+  .warnbox{background:#fdf3f1;border:1px solid #f0d5cf;color:#8a3a2c;border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.6;margin-bottom:14px}
+  .checkitem{font-size:12.5px;color:var(--muted);padding:3px 0;display:flex;gap:7px;align-items:flex-start}
+  .checkitem .ic{width:15px;flex-shrink:0;font-weight:700}
+  .checkitem.pass .ic{color:#2f9e44}.checkitem.fail .ic{color:var(--warn)}.checkitem.fail{color:#8a3a2c}
+  .confirmitem{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;color:var(--ink);padding:5px 0;cursor:pointer}
+  .confirmitem input{margin-top:2px}
+  .bold-hint{font-size:11px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <h1>사례 작성</h1>
+  <span class="sub">종결 사례를 한국어로 작성 → 완성 HTML을 Claude Code에 전달 (영어판은 Claude Code가 용어 교차검증 후 작성)</span>
+  <span class="grow"></span>
+  <button class="btn sm" id="togglePv" style="background:#3a342b;color:#fff;border:0" onclick="togglePreview()">미리보기</button>
+  <a class="back" href="admin-dashboard.html">← 대시보드</a>
+</div>
+
+<div class="layout" id="layout">
+  <div class="form-pane">
+    <div class="toolbar">
+      <span style="font-weight:700;color:var(--ink)">해결 사례 · 한국어</span>
+      <span class="grow" style="flex:1"></span>
+      <button class="btn" onclick="loadDraft()">임시 불러오기</button>
+      <button class="btn" onclick="saveDraft()">임시 저장</button>
+      <button class="btn primary" onclick="buildAll()">완성 · 출력</button>
+    </div>
+
+    <div class="warnbox">
+      <b>이 에디터는 서버에 저장하지 않습니다.</b> 작성이 끝나면 아래 <b>완성 · 출력</b>을 눌러 나오는 HTML을 복사(또는 다운로드)해 Claude Code에 전달하시면, 영어판 작성(맥락·법률 용어 교차검증)과 빌드 등록·배포까지 진행됩니다. 브라우저를 닫아도 되도록 <b>임시 저장</b>으로 이 기기에 초안을 보관할 수 있습니다.<br>
+      <b>슬러그 · 상단 라벨 소주제 · 분류 표기 · 메타 설명 · 목록 태그 · 영어판</b>은 쓰지 않으셔도 됩니다. 글 내용을 읽고 Claude Code가 작성합니다.<br>
+      <b>익명화:</b> 의뢰인이 특정될 수 있는 실명·국적·기업명·일 단위 날짜는 쓰지 않거나 일반화하여 기재하세요. 아래 자가 점검에서 확인합니다.
+    </div>
+
+    <!-- 1. 기본 정보 -->
+    <div class="card">
+      <h2>1. 기본 정보</h2>
+      <div class="row">
+        <div>
+          <label>분류(카테고리)</label>
+          <select id="cat" onchange="render()">
+            <option value="criminal">형사·사범심사 (criminal)</option>
+            <option value="visa">비자·이민 (visa)</option>
+            <option value="residence">거주·국적 (residence)</option>
+            <option value="admin">행정 (admin)</option>
+          </select>
+        </div>
+        <div>
+          <label>종결 시점(YYYY.MM)</label>
+          <input type="text" id="closedAt" placeholder="2026.07" oninput="render()" style="max-width:110px">
+        </div>
+        <div>
+          <label>읽는 시간(분)</label>
+          <input type="text" id="readmin" value="4" oninput="render()" style="max-width:90px">
+        </div>
+      </div>
+      <label>결과 한 줄 — 처분·신청 → 결과 <span class="bold-hint">(예: 출국명령 사전 대응 → 체류허가 유지)</span></label>
+      <input type="text" id="result" placeholder="사범심사 대응 → 체류허가 유지" oninput="render()">
+    </div>
+
+    <!-- 2. 제목 -->
+    <div class="card">
+      <h2>2. 제목</h2>
+      <label>제목(H1) — 사안 유형과 결과가 드러나게, 특정 정보 없이</label>
+      <textarea id="title" rows="2" placeholder="음주운전 벌금형 이후 사범심사에서 체류허가를 유지한 사례" oninput="render()"></textarea>
+    </div>
+
+    <!-- 3. 도입 -->
+    <div class="card">
+      <h2>3. 도입(사건 요약)</h2>
+      <label>의뢰 배경과 결과를 2~3문장으로 — 100~300자</label>
+      <textarea id="intro" rows="4" placeholder="…한 처분을 받고 상담을 신청하신 의뢰인의 사안에서, …를 소명하여 …한 결과로 종결되었습니다." oninput="render()"></textarea>
+      <div class="counter" id="introchk"></div>
+      <div class="bold-hint">본문에서 <b>굵게</b>는 <code>**두 별표**</code>로 감싸세요 (예: <code>**체류허가 유지**</code>). 굵게는 아껴 씁니다.</div>
+    </div>
+
+    <!-- 4. 본문 블록 -->
+    <div class="card">
+      <h2>4. 본문 <span class="hint">사건 개요 → 쟁점 → 대응 경과 → 결과와 시사점</span></h2>
+      <div id="blocks"></div>
+      <div class="addbar">
+        <button class="btn sm" onclick="addBlock('h2')">+ 소제목(H2)</button>
+        <button class="btn sm" onclick="addBlock('p')">+ 문단</button>
+        <button class="btn sm" onclick="addBlock('steps')">+ 단계(대응 경과)</button>
+        <button class="btn sm" onclick="addBlock('table')">+ 표</button>
+        <button class="btn sm" onclick="addBlock('callout')">+ 상담 콜아웃</button>
+        <button class="btn sm" onclick="addBlock('figure')">+ 사진</button>
+      </div>
+      <details class="help"><summary>사례 글의 기본 구성</summary><div>1) 사건 개요: 처분·신청의 경위를 일반화하여 기술 2) 쟁점: 심사에서 문제가 된 지점 3) 대응 경과: 단계 블록으로 순서대로 4) 결과와 시사점: 결과를 사실대로 기술하고, 같은 유형의 사안에서 검토가 필요한 지점을 짚습니다. 결과를 보장하는 표현은 쓰지 않습니다.</div></details>
+    </div>
+
+    <!-- 5. 마무리 요소 -->
+    <div class="card">
+      <h2>5. 마무리 요소</h2>
+      <label>소개 문단(art-about) — 모든 글 공통, 기본값 유지 권장</label>
+      <textarea id="about" rows="6"></textarea>
+      <label>고정 문안(사례 고지) — 수정 금지</label>
+      <textarea id="fixed" rows="4" readonly style="background:#f4f2ec;color:var(--muted)"></textarea>
+      <label>이어지는 글 (관련 인사이트 내부링크)</label>
+      <div id="rels"></div>
+      <button class="btn sm" onclick="addRel()">+ 링크 추가</button>
+      <div class="muted" style="margin-top:6px">slug는 확장자 없는 글 주소입니다(예: <code>foreigner-dui-deportation-korea-2026</code>). 사례 목록으로 보내는 링크는 <code>insights#cases</code> 형태로 씁니다.</div>
+    </div>
+
+    <!-- 6. 자가 점검 -->
+    <div class="card">
+      <h2>6. 자가 점검</h2>
+      <label class="confirmitem"><input type="checkbox" id="ckAnon" onchange="render()"><span>실명·이니셜·기업명 등 의뢰인이 특정되는 정보를 쓰지 않았습니다.</span></label>
+      <label class="confirmitem"><input type="checkbox" id="ckFact" onchange="render()"><span>국적·날짜·지역 등 사실관계는 특정되지 않는 수준으로만 기재했습니다.</span></label>
+      <div id="checks" style="margin-top:8px"></div>
+    </div>
+
+    <div class="card" id="outCard" style="display:none">
+      <h2>7. 완성 결과 <span class="hint">Claude Code에 전달</span></h2>
+      <div class="row" style="margin-bottom:10px">
+        <button class="btn primary" onclick="copyOut('html')">본문 HTML 복사</button>
+        <button class="btn" onclick="downloadHtml()">HTML 파일 다운로드</button>
+        <button class="btn" onclick="copyOut('meta')">등록 정보 복사</button>
+        <button class="btn" onclick="copyOut('both')">전체(HTML+등록) 복사</button>
+      </div>
+      <label>content/&lt;slug&gt;.ko.html</label>
+      <div class="out" id="outHtml"></div>
+      <label style="margin-top:12px">제출용 등록 정보 · Claude Code가 채울 항목</label>
+      <div class="out" id="outMeta"></div>
+    </div>
+  </div>
+
+  <div class="preview-pane">
+    <div class="preview-head">미리보기 <span class="muted" style="font-weight:400;text-transform:none;letter-spacing:0">실제 사이트 스타일</span></div>
+    <iframe id="pv" title="preview"></iframe>
+  </div>
+</div>
+
+<div class="flash" id="flash"></div>
+
+<script>
+/* ============================ 상수/보일러플레이트 ============================ */
+var BASE = location.origin; // 배포 사이트에서 실행 시 css/폰트 절대경로
+var T = {toc:'목차',rel:'이어지는 글',cta:'상담 신청하기 →',metaCat:'분류',metaResult:'결과',metaRead:'읽는 시간',readUnit:function(n){return '약 '+n+'분';}};
+var ABOUT_KO = '법무법인 로연 출입국이민지원센터는 다수 업무 경험과 네트워크, 실무적인 지식을 바탕으로 한국 출입국, 비자 업무와 형사 사건과 출입국 사범심사 통합 대응에 특화된 법률서비스를 제공하고 있습니다.\n로연 출입국이민지원센터는 형사 전문 변호사로서 다양한 출입국 업무 분야에서 법률자문을 제공해 온 민준우, 남도현, 김승철 변호사와 서울시 서울글로벌센터, 법무부 글로벌창업이민센터 센터장, 서울지방고용노동청 외국인근로자권익보호협의회 위원 업무를 한 전문위원인 안태민 센터장이 유기적인 협업 체제를 구축하며 설립한 법무법인 로연의 이민 분야 업무 특화 센터입니다.\n특히 형사 확정 판결에 이어지는 출국명령과 입국 규제 처분에 대하여 형사 변호와 처분 이의, 입국 규제 해제 신청 시 통합적인 전략 구성으로 실효적인 대안을 제시하고 있으며, 다수 의뢰인의 출입국 리스크 관리로 안정적인 한국 내 비즈니스 활동을 지원하고 있습니다.';
+var FIXED_KO = '본 사례는 법무법인 로연 출입국이민지원센터가 수행하여 종결된 실제 사건을 의뢰인이 특정되지 않도록 일부 사실관계를 일반화하여 소개한 것입니다. 같은 유형의 사안이라도 체류 이력, 처분 경위 등 구체적 사실관계에 따라 결과가 달라질 수 있으며, 본 사례가 유사 사건의 결과를 보장하는 것은 아닙니다. 개별 사안의 검토가 필요하신 경우 법무법인 로연 출입국이민지원센터(lawyeon-immigration.com)로 상담을 신청하실 수 있습니다.';
+var CAT_LABEL = {criminal:'형사·사범심사', visa:'비자·이민', residence:'거주·국적', admin:'행정'};
+
+/* ============================ 상태 ============================ */
+var state = { blocks:[], rels:[] };
+var uid = 1;
+
+function $(id){ return document.getElementById(id); }
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+// 텍스트 → 인라인 HTML: escape 후 **bold** 변환
+function inl(s){ return esc(s).replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>'); }
+function attr(s){ return (s||'').replace(/"/g,'&quot;'); }
+
+/* ============================ 블록 UI ============================ */
+function addBlock(type, data){
+  var b = {id:uid++, type:type};
+  if(type==='table'){ b.cap=''; b.head=['항목','내용']; b.rows=[['','']]; b.note=''; }
+  else if(type==='figure'){ b.src=''; b.alt=''; }
+  else if(type==='steps'){ b.items=[{t:'',x:''},{t:'',x:''}]; }
+  else { b.text=''; }
+  if(data) Object.assign(b,data);
+  state.blocks.push(b); renderBlocks(); render();
+}
+function moveBlock(id,d){ var i=state.blocks.findIndex(function(x){return x.id===id;}); var j=i+d; if(j<0||j>=state.blocks.length)return; var t=state.blocks[i];state.blocks[i]=state.blocks[j];state.blocks[j]=t; renderBlocks(); render(); }
+function delBlock(id){ state.blocks=state.blocks.filter(function(x){return x.id!==id;}); renderBlocks(); render(); }
+function setBlk(id,k,v){ var b=blk(id); if(b){b[k]=v; render();} }
+function blk(id){ return state.blocks.find(function(x){return x.id===id;}); }
+
+function renderBlocks(){
+  var host=$('blocks'); host.innerHTML='';
+  var sIdx=0;
+  state.blocks.forEach(function(b){
+    var wrap=document.createElement('div');
+    var tag, body;
+    if(b.type==='h2'){ sIdx++; tag='소제목 H2 · s'+sIdx; body=
+      '<input type="text" value="'+attr(b.text)+'" placeholder="소제목(명사구)" oninput="setBlk('+b.id+',\'text\',this.value)">'; wrap.className='blk b-h2'; }
+    else if(b.type==='p'){ tag='문단'; body=
+      '<textarea rows="3" placeholder="한 논지, 2~4문장. 나열은 1) 2) 3)로." oninput="setBlk('+b.id+',\'text\',this.value)">'+esc(b.text)+'</textarea>'; wrap.className='blk'; }
+    else if(b.type==='callout'){ tag='상담 콜아웃 (자동 CTA)'; body=
+      '<textarea rows="3" placeholder="유사한 처분을 받으신 경우 … 검토를 권해 드립니다." oninput="setBlk('+b.id+',\'text\',this.value)">'+esc(b.text)+'</textarea><div class="muted">문장 끝에 “'+T.cta+'” 링크가 자동으로 붙습니다.</div>'; wrap.className='blk b-callout'; }
+    else if(b.type==='figure'){ tag='사진'; body=
+      '<label style="margin-top:0">이미지 경로</label><input type="text" value="'+attr(b.src)+'" placeholder="__BASE__images/blog/이름.jpg" oninput="setBlk('+b.id+',\'src\',this.value)">'+
+      '<label>대체 텍스트(alt)</label><input type="text" value="'+attr(b.alt)+'" placeholder="설명" oninput="setBlk('+b.id+',\'alt\',this.value)">'+
+      '<div class="muted">사진은 개발/Claude에 별도 전달이 필요합니다(파일 업로드). 인물이 식별되는 사진은 쓰지 않습니다.</div>'; wrap.className='blk b-figure'; }
+    else if(b.type==='table'){ tag='표'; body=tableEditor(b); wrap.className='blk b-table'; }
+    else if(b.type==='steps'){ tag='단계(대응 경과)'; body=stepsEditor(b); wrap.className='blk b-steps'; }
+    wrap.innerHTML='<div class="blk-head"><span class="blk-tag">'+tag+'</span><span class="grow"></span>'+
+      '<button class="btn sm" title="위로" onclick="moveBlock('+b.id+',-1)">↑</button>'+
+      '<button class="btn sm" title="아래로" onclick="moveBlock('+b.id+',1)">↓</button>'+
+      '<button class="btn sm danger" onclick="delBlock('+b.id+')">삭제</button></div>'+body;
+    host.appendChild(wrap);
+  });
+  if(!state.blocks.length) host.innerHTML='<div class="muted">아래 버튼으로 소제목·문단·단계를 추가하세요.</div>';
+}
+
+function tableEditor(b){
+  var h='<label style="margin-top:0">표 제목(선택)</label><input type="text" value="'+attr(b.cap)+'" placeholder="예: 단계별 진행 경과" oninput="setBlk('+b.id+',\'cap\',this.value)">';
+  h+='<label>열 머리글</label><div class="row">';
+  b.head.forEach(function(c,ci){ h+='<div><input type="text" value="'+attr(c)+'" oninput="tblHead('+b.id+','+ci+',this.value)"></div>'; });
+  h+='<div style="flex:0"><button class="btn sm" onclick="tblCol('+b.id+',1)">+열</button> <button class="btn sm" onclick="tblCol('+b.id+',-1)">−열</button></div></div>';
+  h+='<label>행</label>';
+  b.rows.forEach(function(r,ri){
+    h+='<div class="row" style="margin-bottom:6px">';
+    r.forEach(function(c,ci){ h+='<div><input type="text" value="'+attr(c)+'" oninput="tblCell('+b.id+','+ri+','+ci+',this.value)"></div>'; });
+    h+='<div style="flex:0"><button class="btn sm danger" onclick="tblRow('+b.id+','+ri+')">×</button></div></div>';
+  });
+  h+='<button class="btn sm" onclick="tblAddRow('+b.id+')">+ 행</button>';
+  h+='<label>표 아래 주석(선택)</label><input type="text" value="'+attr(b.note)+'" oninput="setBlk('+b.id+',\'note\',this.value)">';
+  return h;
+}
+function tblHead(id,ci,v){ var b=blk(id); b.head[ci]=v; render(); }
+function tblCell(id,ri,ci,v){ var b=blk(id); b.rows[ri][ci]=v; render(); }
+function tblCol(id,d){ var b=blk(id); if(d>0){b.head.push('');b.rows.forEach(function(r){r.push('');});} else if(b.head.length>1){b.head.pop();b.rows.forEach(function(r){r.pop();});} renderBlocks(); render(); }
+function tblAddRow(id){ var b=blk(id); b.rows.push(b.head.map(function(){return '';})); renderBlocks(); render(); }
+function tblRow(id,ri){ var b=blk(id); if(b.rows.length>1)b.rows.splice(ri,1); renderBlocks(); render(); }
+
+function stepsEditor(b){
+  var h='';
+  b.items.forEach(function(it,ii){
+    h+='<div class="step-item"><div class="blk-head" style="margin-bottom:6px"><span class="blk-tag" style="color:#9e2f6f">'+(ii+1)+'단계</span><span class="grow"></span>'+
+       (b.items.length>1?'<button class="btn sm danger" onclick="stepDel('+b.id+','+ii+')">×</button>':'')+'</div>'+
+       '<input type="text" value="'+attr(it.t)+'" placeholder="단계 제목(예: 경위서·소명자료 준비)" oninput="stepSet('+b.id+','+ii+',\'t\',this.value)">'+
+       '<textarea rows="2" placeholder="단계 내용" style="margin-top:6px" oninput="stepSet('+b.id+','+ii+',\'x\',this.value)">'+esc(it.x)+'</textarea></div>';
+  });
+  h+='<button class="btn sm" onclick="stepAdd('+b.id+')">+ 단계</button>';
+  return h;
+}
+function stepSet(id,ii,k,v){ var b=blk(id); b.items[ii][k]=v; render(); }
+function stepAdd(id){ var b=blk(id); b.items.push({t:'',x:''}); renderBlocks(); render(); }
+function stepDel(id,ii){ var b=blk(id); if(b.items.length>1)b.items.splice(ii,1); renderBlocks(); render(); }
+
+/* ============================ 관련글 UI ============================ */
+function addRel(data){ state.rels.push(Object.assign({id:uid++,href:'',title:'',tag:''},data||{})); renderRels(); render(); }
+function delRel(id){ state.rels=state.rels.filter(function(x){return x.id!==id;}); renderRels(); render(); }
+function setRel(id,k,v){ var r=state.rels.find(function(x){return x.id===id;}); if(r){r[k]=v; render();} }
+function renderRels(){
+  var host=$('rels'); host.innerHTML='';
+  state.rels.forEach(function(r){
+    var d=document.createElement('div'); d.className='rel-item';
+    d.innerHTML='<div class="blk-head"><span class="blk-tag">링크</span><span class="grow"></span><button class="btn sm danger" onclick="delRel('+r.id+')">삭제</button></div>'+
+      '<div class="row"><div style="flex:2"><input type="text" value="'+attr(r.href)+'" placeholder="slug 또는 insights#cases" oninput="setRel('+r.id+',\'href\',this.value)"></div>'+
+      '<div style="flex:0;min-width:90px"><input type="text" value="'+attr(r.tag)+'" placeholder="태그" oninput="setRel('+r.id+',\'tag\',this.value)"></div></div>'+
+      '<input type="text" value="'+attr(r.title)+'" placeholder="표시 제목" style="margin-top:6px" oninput="setRel('+r.id+',\'title\',this.value)">';
+    host.appendChild(d);
+  });
+  if(!state.rels.length) host.innerHTML='<div class="muted">관련 인사이트 글 링크를 추가하세요(선택).</div>';
+}
+
+/* ============================ HTML 생성 ============================ */
+// 슬러그·상단 라벨 소주제·분류 표기·메타 설명·목록 태그·영어판은 글쓴이가 채우지 않는다.
+// 글을 읽고 Claude Code 가 채우도록, 생성 HTML 에는 이 자리 표시만 남긴다.
+var TOKEN={kickSub:'__KICKER_SUB__', metaCat:'__META_CAT__'};
+
+function buildContentHtml(){
+  var readmin=$('readmin').value.trim()||'4';
+  var title=inl($('title').value);
+  var intro=inl($('intro').value);
+  var result=inl($('result').value);
+  var about=($('about').value||'').split('\n').filter(function(x){return x.trim();});
+  var fixed=esc($('fixed').value);
+
+  var toc=[], bodyParts=[], sIdx=0;
+  state.blocks.forEach(function(b){
+    if(b.type==='h2'){ sIdx++; var id='s'+sIdx; toc.push('            <a href="#'+id+'">'+inl(b.text)+'</a>');
+      bodyParts.push('\n            <h2 id="'+id+'">'+inl(b.text)+'</h2>'); }
+    else if(b.type==='p'){ bodyParts.push('            <p>'+inl(b.text)+'</p>'); }
+    else if(b.type==='callout'){ bodyParts.push('            <div class="callout">'+inl(b.text)+' <a href="consultation" style="color:var(--btn);font-weight:700">'+T.cta+'</a></div>'); }
+    else if(b.type==='figure' && b.src){ bodyParts.push('            <figure class="art-fig"><img src="'+attr(b.src)+'" alt="'+attr(b.alt)+'" loading="lazy"></figure>'); }
+    else if(b.type==='steps'){
+      var s='            <div class="num">\n';
+      b.items.forEach(function(it,ii){
+        s+='                <div class="num-item"><div class="num-n">'+(ii+1)+'</div><div><div class="ni-title">'+inl(it.t)+'</div><div class="ni-text">'+inl(it.x)+'</div></div></div>\n';
+      });
+      s+='            </div>';
+      bodyParts.push(s);
+    }
+    else if(b.type==='table'){
+      var s='';
+      if(b.cap) s+='            <div class="tbl-cap">'+inl(b.cap)+'</div>\n';
+      s+='            <div class="tbl">\n                <table>\n                    <thead><tr>'+b.head.map(function(c){return '<th>'+inl(c)+'</th>';}).join('')+'</tr></thead>\n                    <tbody>\n';
+      b.rows.forEach(function(r){ s+='                        <tr>'+r.map(function(c){return '<td>'+inl(c)+'</td>';}).join('')+'</tr>\n'; });
+      s+='                    </tbody>\n                </table>';
+      if(b.note) s+='\n                <div class="tbl-note">'+inl(b.note)+'</div>';
+      s+='\n            </div>';
+      bodyParts.push(s);
+    }
+  });
+  // art-about
+  var aboutHtml='\n            <div class="art-about">\n'+about.map(function(p){return '                <p>'+inl(p)+'</p>';}).join('\n')+'\n            </div>';
+  // fixed footer
+  var fixedHtml='            <p class="disclaimer" style="margin-top:30px">'+fixed+'</p>';
+  // related
+  var relHtml='';
+  if(state.rels.length){
+    relHtml='\n            <div class="related">\n                <h4>'+T.rel+'</h4>\n'+
+      state.rels.map(function(r){return '                <a href="'+attr(r.href)+'"><span class="rt">'+inl(r.title)+'</span><span class="rtag">'+inl(r.tag)+'</span></a>';}).join('\n')+
+      '\n            </div>';
+  }
+
+  var html=''+
+'<div class="wrap">\n'+
+'    <div class="art-head">\n'+
+'        <div class="art-kicker"><span class="cat">해결 사례</span><span class="dot">·</span><span>'+TOKEN.kickSub+'</span></div>\n'+
+'        <h1>'+title+'</h1>\n'+
+'        <div class="art-meta"><span><b>'+T.metaCat+'</b> '+TOKEN.metaCat+'</span><span><b>'+T.metaResult+'</b> '+result+'</span><span><b>'+T.metaRead+'</b> '+T.readUnit(readmin)+'</span></div>\n'+
+'        <p class="disclaimer">'+intro+'</p>\n'+
+'    </div>\n'+
+'</div>\n\n'+
+'<div class="wrap">\n'+
+'    <div class="art-layout">\n'+
+'        <nav class="toc">\n            <h4>'+T.toc+'</h4>\n'+toc.join('\n')+'\n        </nav>\n\n'+
+'        <article class="body">\n'+
+bodyParts.join('\n')+'\n'+
+aboutHtml+'\n'+
+fixedHtml+'\n'+
+relHtml+(relHtml?'\n':'')+
+'        </article>\n'+
+'    </div>\n'+
+'</div>\n';
+  return html;
+}
+
+function buildMeta(){
+  var title=$('title').value.trim();
+  var m='';
+  m+='유형: 해결 사례 (Cases — insights 페이지 하단 목록)\n';
+  m+='분류(data-cat): '+$('cat').value+' ('+CAT_LABEL[$('cat').value]+')\n';
+  m+='결과: '+$('result').value.trim()+'\n';
+  m+='종결 시점: '+($('closedAt').value.trim()||'(미기재)')+'\n';
+  m+='읽는 시간: '+($('readmin').value.trim()||'4')+'분\n';
+  m+='제목(ko): '+title+(title?' — 법무법인 로연':'')+'\n';
+  m+='\n— Claude Code 가 글을 읽고 작성할 항목 —\n';
+  m+='· 영어판 본문(content/<slug>.en.html): 한국어 본문의 맥락과 법률 용어를 교차검증하여 작성\n';
+  m+='· 슬러그(영문 소문자·하이픈, ko·en 공통) → 파일명과 URL\n';
+  m+='· 상단 라벨 소주제 → 본문의 __KICKER_SUB__ 자리 (ko·en)\n';
+  m+='· 분류 표기(art-meta) → 본문의 __META_CAT__ 자리 (ko·en)\n';
+  m+='· 영어 제목·메타 설명(description, ko·en) → 검색 결과 요약\n';
+  m+='· 목록 태그 → Cases 목록 행에 붙는 #태그 (결과·사안 유형 중심)\n';
+  m+='· 발행일\n';
+  m+='\n— Claude Code 등록 절차 —\n';
+  m+='1) 익명화 여부를 재검토하고 본문의 __…__ 자리를 채운 뒤 content/<slug>.ko.html 저장,\n';
+  m+='   영어판을 작성해 content/<slug>.en.html 저장\n';
+  m+='2) scripts/build-site.js PAGES에 등록(en·ko), ARTICLE_DATES에 발행일 추가\n';
+  m+='3) content/insights.ko.html · insights.en.html 의 Cases 목록(#caseList)에 행 추가\n';
+  m+='   (data-cat='+$('cat').value+', 날짜는 종결 시점 YYYY.MM, 최신순)\n';
+  m+='4) node scripts/build-site.js → npm run validate → 커밋 → main 배포';
+  return m;
+}
+
+/* ============================ 미리보기 ============================ */
+function render(){
+  try{
+    var html=buildContentHtml();
+    var doc='<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">'+
+      '<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300..700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">'+
+      '<link rel="stylesheet" href="'+BASE+'/css/site.css">'+
+      '<style>body{background:#fff;margin:0}.__pv{padding:0 0 40px}</style></head><body><div class="__pv">'+
+      html.replace(/__BASE__/g, BASE+'/')
+          .replace(/__KICKER_SUB__/g, '<span style="background:#F3EFE6;color:#8B7A5E;padding:0 4px">소주제</span>')
+          .replace(/__META_CAT__/g, '<span style="background:#F3EFE6;color:#8B7A5E;padding:0 4px">분류 표기</span>')+
+      '</div></body></html>';
+    $('pv').srcdoc=doc;
+    updateCounters(); updateChecks();
+  }catch(e){ /* noop */ }
+}
+
+function updateCounters(){
+  var intro=$('intro').value.length; var ic=$('introchk');
+  ic.textContent=intro+'자 (권장 100~300)'; ic.className='counter'+(intro>=100&&intro<=320?' ok':(intro>0?' warn':''));
+}
+
+function updateChecks(){
+  var host=$('checks'); var items=[];
+  var h2s=state.blocks.filter(function(b){return b.type==='h2';}).length;
+  // 점검용 전체 텍스트
+  var txt=state.blocks.map(function(b){
+    if(b.type==='p'||b.type==='h2'||b.type==='callout') return b.text||'';
+    if(b.type==='steps') return b.items.map(function(it){return it.t+' '+it.x;}).join(' ');
+    if(b.type==='table') return (b.cap||'')+' '+b.rows.map(function(r){return r.join(' ');}).join(' ');
+    return '';
+  }).join(' ')+' '+$('intro').value+' '+$('title').value+' '+$('result').value;
+
+  items.push(['제목·도입·결과 작성', !!($('title').value.trim()&&$('intro').value.trim()&&$('result').value.trim())]);
+  items.push(['종결 시점(YYYY.MM) 작성', /^\d{4}\.(0?[1-9]|1[0-2])$/.test($('closedAt').value.trim())]);
+  items.push(['소제목(H2) 2~5개 ('+h2s+')', h2s>=2&&h2s<=5]);
+  items.push(['대응 경과 단계 블록 1개', state.blocks.filter(function(b){return b.type==='steps';}).length===1]);
+  items.push(['상담 콜아웃 1개', state.blocks.filter(function(b){return b.type==='callout';}).length===1]);
+  items.push(['고정 문안 유지', $('fixed').value.trim()===FIXED_KO]);
+  // 금지어(간이) — 기존 프로토콜 + 결과 보장성 표현
+  var banned=['무조건','골든타임','물거품','발목','치명적','지름길','갈림길','꿀팁','총정리','완벽 가이드','놓치지','지금 바로','무료','100%','승소율','보장합니다','보장된','확실하게','확실히'];
+  var hit=banned.filter(function(w){return txt.indexOf(w)>=0;});
+  items.push([hit.length?('금지·보장성 표현 발견: '+hit.join(', ')):'금지·보장성 표현 없음', hit.length===0]);
+  // 익명화(간이): 일 단위 날짜
+  var dayDate=/(\d{4}년\s*\d{1,2}월\s*\d{1,2}일|\d{4}\.\s?\d{1,2}\.\s?\d{1,2}|\d{1,2}월\s*\d{1,2}일)/.test(txt);
+  items.push([dayDate?'일 단위 날짜 발견 — 월 단위로 일반화하세요':'일 단위 날짜 없음', !dayDate]);
+  // 익명화(간이): 국가·국적 언급
+  var nations=['중국','베트남','우즈베키스탄','필리핀','태국','몽골','러시아','카자흐스탄','캄보디아','미얀마','네팔','스리랑카','방글라데시','파키스탄','인도네시아','나이지리아','미국','일본','대만','키르기스스탄'];
+  var nhit=nations.filter(function(w){return txt.indexOf(w)>=0;});
+  items.push([nhit.length?('국가·국적 언급 확인: '+nhit.join(', ')+' — 특정 요소가 아닌지 확인하세요'):'국가·국적 언급 없음', nhit.length===0]);
+  // 수동 확인
+  items.push(['익명화 확인(체크박스 2개)', $('ckAnon').checked&&$('ckFact').checked]);
+
+  host.innerHTML=items.map(function(it){return '<div class="checkitem '+(it[1]?'pass':'fail')+'"><span class="ic">'+(it[1]?'✓':'✕')+'</span><span>'+it[0]+'</span></div>';}).join('');
+}
+
+/* ============================ 출력/복사 ============================ */
+var LAST={html:'',meta:''};
+function buildAll(){
+  LAST.html=buildContentHtml(); LAST.meta=buildMeta();
+  $('outHtml').textContent=LAST.html; $('outMeta').textContent=LAST.meta;
+  $('outCard').style.display='';
+  $('outCard').scrollIntoView({behavior:'smooth'});
+  flash('완성되었습니다. 복사해 Claude Code에 전달하세요.');
+}
+function copyOut(which){
+  var txt = which==='html'?LAST.html : which==='meta'?LAST.meta : (LAST.meta+'\n\n===== content/<slug>.ko.html =====\n'+LAST.html);
+  navigator.clipboard.writeText(txt).then(function(){flash('복사되었습니다');},function(){flash('복사 실패 — 직접 선택해 복사하세요');});
+}
+function downloadHtml(){
+  var blob=new Blob([LAST.html],{type:'text/html'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='case.ko.html'; a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
+}
+function flash(msg){ var f=$('flash'); f.textContent=msg; f.classList.add('on'); setTimeout(function(){f.classList.remove('on');},1800); }
+
+/* ============================ 초안 저장 ============================ */
+function collect(){
+  return {cat:$('cat').value,closedAt:$('closedAt').value,readmin:$('readmin').value,result:$('result').value,title:$('title').value,intro:$('intro').value,about:$('about').value,blocks:state.blocks,rels:state.rels,uid:uid,ckAnon:$('ckAnon').checked,ckFact:$('ckFact').checked};
+}
+function saveDraft(){ localStorage.setItem('lawyeon_case_draft', JSON.stringify(collect())); flash('이 기기에 임시 저장했습니다'); }
+function loadDraft(){
+  var raw=localStorage.getItem('lawyeon_case_draft'); if(!raw){flash('저장된 초안이 없습니다');return;}
+  try{ var d=JSON.parse(raw);
+    $('cat').value=d.cat||'criminal'; $('closedAt').value=d.closedAt||''; $('readmin').value=d.readmin||'4';
+    ['result','title','intro'].forEach(function(k){ if($(k))$(k).value=d[k]||''; });
+    if(d.about&&d.about.trim()) $('about').value=d.about;
+    $('ckAnon').checked=!!d.ckAnon; $('ckFact').checked=!!d.ckFact;
+    state.blocks=d.blocks||[]; state.rels=d.rels||[]; uid=d.uid||1000;
+    renderBlocks(); renderRels(); render(); flash('초안을 불러왔습니다');
+  }catch(e){ flash('초안 형식 오류'); }
+}
+
+/* ============================ 미리보기 토글(모바일) ============================ */
+function togglePreview(){ $('layout').classList.toggle('show-preview'); }
+
+/* ============================ 초기화 ============================ */
+(function init(){
+  $('about').value=ABOUT_KO;
+  $('fixed').value=FIXED_KO;
+  // 기본 골격: 사건 개요 → 쟁점 → 대응 경과(단계) → 결과와 시사점 → 콜아웃
+  addBlock('h2',{text:'사건 개요'}); addBlock('p');
+  addBlock('h2',{text:'쟁점'}); addBlock('p');
+  addBlock('h2',{text:'대응 경과'}); addBlock('steps');
+  addBlock('h2',{text:'결과와 시사점'}); addBlock('p');
+  addBlock('callout');
+  renderBlocks(); renderRels(); render();
+})();
+</script>
+</body>
+</html>
