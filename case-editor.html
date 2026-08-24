@@ -166,7 +166,7 @@
       <label>이어지는 글 (관련 인사이트 내부링크)</label>
       <div id="rels"></div>
       <button class="btn sm" onclick="addRel()">+ 링크 추가</button>
-      <div class="muted" style="margin-top:6px">slug는 확장자 없는 글 주소입니다(예: <code>foreigner-dui-deportation-korea-2026</code>). 사례 목록으로 보내는 링크는 <code>insights#cases</code> 형태로 씁니다.</div>
+      <div class="muted" style="margin-top:6px">slug는 확장자 없는 글 주소입니다(예: <code>foreigner-dui-deportation-korea-2026</code>). 사례 목록(메인 페이지 하단)으로 보내는 링크는 <code>__HOME__#case-list</code> 형태로 씁니다.</div>
     </div>
 
     <!-- 6. 자가 점검 -->
@@ -308,7 +308,7 @@ function renderRels(){
   state.rels.forEach(function(r){
     var d=document.createElement('div'); d.className='rel-item';
     d.innerHTML='<div class="blk-head"><span class="blk-tag">링크</span><span class="grow"></span><button class="btn sm danger" onclick="delRel('+r.id+')">삭제</button></div>'+
-      '<div class="row"><div style="flex:2"><input type="text" value="'+attr(r.href)+'" placeholder="slug 또는 insights#cases" oninput="setRel('+r.id+',\'href\',this.value)"></div>'+
+      '<div class="row"><div style="flex:2"><input type="text" value="'+attr(r.href)+'" placeholder="slug 또는 __HOME__#case-list" oninput="setRel('+r.id+',\'href\',this.value)"></div>'+
       '<div style="flex:0;min-width:90px"><input type="text" value="'+attr(r.tag)+'" placeholder="태그" oninput="setRel('+r.id+',\'tag\',this.value)"></div></div>'+
       '<input type="text" value="'+attr(r.title)+'" placeholder="표시 제목" style="margin-top:6px" oninput="setRel('+r.id+',\'title\',this.value)">';
     host.appendChild(d);
@@ -393,7 +393,7 @@ relHtml+(relHtml?'\n':'')+
 function buildMeta(){
   var title=$('title').value.trim();
   var m='';
-  m+='유형: 해결 사례 (Cases — insights 페이지 하단 목록)\n';
+  m+='유형: 해결 사례 (Cases — 메인 페이지 하단 목록 섹션)\n';
   m+='분류(data-cat): '+$('cat').value+' ('+CAT_LABEL[$('cat').value]+')\n';
   m+='결과: '+$('result').value.trim()+'\n';
   m+='종결 시점: '+($('closedAt').value.trim()||'(미기재)')+'\n';
@@ -411,8 +411,11 @@ function buildMeta(){
   m+='1) 익명화 여부를 재검토하고 본문의 __…__ 자리를 채운 뒤 content/<slug>.ko.html 저장,\n';
   m+='   영어판을 작성해 content/<slug>.en.html 저장\n';
   m+='2) scripts/build-site.js PAGES에 등록(en·ko), ARTICLE_DATES에 발행일 추가\n';
-  m+='3) content/insights.ko.html · insights.en.html 의 Cases 목록(#caseList)에 행 추가\n';
+  m+='3) content/home.ko.html · home.en.html 하단의 해결 사례 목록(id="case-list")에 행 추가\n';
   m+='   (data-cat='+$('cat').value+', 날짜는 종결 시점 YYYY.MM, 최신순)\n';
+  m+='   ※ 첫 사례라면 섹션 신설: 뉴스 카드 섹션(id="cases") 아래에 제목(해결 사례/Cases),\n';
+  m+='   카테고리 탭(전체·형사&사범심사·비자·이민·거주·국적·행정), 행 목록(doc-list, id="case-list")의\n';
+  m+='   목록형 레이아웃으로 만든다. 뉴스 카드는 카드 형태 그대로 둔다. (CLAUDE.md 참조)\n';
   m+='4) node scripts/build-site.js → npm run validate → 커밋 → main 배포';
   return m;
 }
@@ -426,6 +429,7 @@ function render(){
       '<link rel="stylesheet" href="'+BASE+'/css/site.css">'+
       '<style>body{background:#fff;margin:0}.__pv{padding:0 0 40px}</style></head><body><div class="__pv">'+
       html.replace(/__BASE__/g, BASE+'/')
+          .replace(/__HOME__/g, '/')
           .replace(/__DOMAIN__/g, DOMAIN)
           .replace(/__KICKER_SUB__/g, '<span style="background:#F3EFE6;color:#8B7A5E;padding:0 4px">소주제</span>')
           .replace(/__META_CAT__/g, '<span style="background:#F3EFE6;color:#8B7A5E;padding:0 4px">분류 표기</span>')+

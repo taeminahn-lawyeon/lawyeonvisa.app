@@ -16,6 +16,17 @@
   루트(EN)와 `/ko`(KO)로 생성한다. 생성된 파일을 직접 고치지 않는다.
 - 변경 후에는 `node scripts/build-site.js` 와 `npm run validate` 를 돌린다.
 
+## 해결 사례(Cases) — 첫 게시 시 적용할 보류 결정
+
+- 종결 사례 글은 관리자가 `case-editor.html` 로 한국어 원문을 작성해 전달한다.
+  Claude Code 가 법률 용어를 교차검증해 영어판을 만들고, 도구 출력물의
+  등록 절차대로 등록한다.
+- 사례 목록 섹션은 아직 없다. 첫 사례를 등록할 때 메인 페이지
+  (`content/home.ko.html`·`home.en.html`) 하단, 뉴스 카드 섹션(`id="cases"`)
+  아래에 신설한다. 형태는 목록형이다: 제목(해결 사례/Cases) + 카테고리 탭
+  (전체·형사&사범심사·비자·이민·거주·국적·행정) + 행 목록(`doc-list`,
+  `id="case-list"`). 뉴스는 지금의 카드 형태를 유지한다.
+
 ## 백엔드
 
 - Supabase(anon key 브라우저 호출) + Deno Edge Function.
