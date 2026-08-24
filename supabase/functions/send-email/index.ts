@@ -22,9 +22,10 @@ function getCorsHeaders(origin: string | null) {
   }
 }
 
-// 발신 도메인은 Resend 에 인증된 도메인이어야 한다. lawyeon-immigration.com 의
-// 인증(SPF·DKIM)이 끝난 뒤에 noreply@lawyeon-immigration.com 으로 바꾼다.
-const FROM_EMAIL = 'Law Firm Lawyeon <noreply@lawyeonvisa.app>'
+// 발신 도메인은 법인 본 도메인으로 둔다. 사이트 도메인이 다시 바뀌어도
+// 메일 설정을 따라 옮기지 않아도 되고, lawyeon.com 의 기존 업무 메일(구글
+// 워크스페이스)과도 충돌하지 않는다. Resend 가 send·rsend 하위 이름만 쓴다.
+const FROM_EMAIL = 'Law Firm Lawyeon <noreply@lawyeon.com>'
 const SITE_URL = 'https://www.lawyeon-immigration.com'
 const SUBJECT = '[Lawyeon Visa & Immigration Center] You have a new message regarding your consultation'
 
