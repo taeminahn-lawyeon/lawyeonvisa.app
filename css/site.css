@@ -130,7 +130,8 @@ section{padding:74px 0}
 .doc-row.hidden{display:none}
 .doc-empty{padding:46px 4px;text-align:center;color:var(--muted);font-size:14.5px;line-height:1.7}
 .doc-main{min-width:0}
-.doc-title{font-size:clamp(18px,1.7vw,21px);font-weight:600;color:var(--ink);letter-spacing:-.01em;line-height:1.45}
+/* 목록 행 제목은 참조 레이아웃(김앤장)과 같은 DemiLight(350). 본문과 같은 굵기다. */
+.doc-title{font-size:clamp(18px,1.7vw,21px);font-weight:350;color:var(--ink);letter-spacing:-.01em;line-height:1.45}
 .doc-row:hover .doc-title{color:var(--btn)}
 .doc-tags{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px 14px}
 .doc-tags span{font-size:13.5px;color:#9D968B;font-weight:400}
@@ -185,7 +186,7 @@ section{padding:74px 0}
     section{padding:60px 0}
     .case-grid2{grid-template-columns:repeat(2,1fr)}
     /* 태블릿에서도 본문·목록 활자를 키워 시인성 확보 */
-    .doc-title{font-size:20px;font-weight:700}
+    .doc-title{font-size:20px;font-weight:350}
     .doc-tags span{font-size:14px}
     .body p,.body .callout{font-size:17.5px;line-height:1.9}
     .body ul li,.body ol li{font-size:17px;line-height:1.85}
@@ -234,7 +235,7 @@ section{padding:74px 0}
     .cat-toggle .ct{font-size:16px;white-space:nowrap;flex-shrink:0}
     .cat-toggle .ct-div{display:none}
     .doc-row{flex-direction:column;align-items:flex-start;gap:10px;padding:20px 2px}
-    .doc-title{font-size:21px;font-weight:700;line-height:1.42}
+    .doc-title{font-size:21px;font-weight:350;line-height:1.42}
     .doc-tags{margin-top:2px;gap:5px 12px}
     .doc-tags span{font-size:14px}
     .doc-date{font-size:14px}
