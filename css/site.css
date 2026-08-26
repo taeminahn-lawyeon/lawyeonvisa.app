@@ -118,23 +118,22 @@ section{padding:74px 0}
 /* ---------- Insights / document list ---------- */
 .insights{background:#F2F2F2;border-bottom:1px solid var(--rule)}
 .insights .doc-row{border-bottom-color:#E2E1DD}
-.insights .doc-row:hover{background:#FFFFFF}
 .list-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px 30px;padding-bottom:16px;border-bottom:2px solid var(--ink);flex-wrap:wrap}
 .cat-toggle{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .cat-toggle .ct{background:none;border:none;cursor:pointer;font-family:var(--sans);font-size:14.5px;font-weight:500;color:var(--muted);padding:2px 0;transition:color .14s}
 .cat-toggle .ct:hover{color:var(--ink)}
 .cat-toggle .ct.active{color:var(--ink);font-weight:700}
 .cat-toggle .ct-div{color:var(--rule-d);font-size:12px;user-select:none}
-.doc-list{padding-bottom:8px}
-.doc-row{display:flex;justify-content:space-between;align-items:center;gap:30px;padding:26px 4px;border-bottom:1px solid var(--rule);transition:background .14s}
-.doc-row:hover{background:var(--card-2)}
+/* 목록은 회색 배경 위에 흰색 보드로 얹는다(참조 레이아웃과 동일 구조). */
+.doc-list{background:#fff;padding:0 36px}
+.doc-row{display:flex;justify-content:space-between;align-items:center;gap:30px;padding:26px 4px;border-bottom:1px solid var(--rule)}
 .doc-row.hidden{display:none}
-.doc-empty{padding:46px 4px;text-align:center;color:var(--muted);font-size:14.5px;line-height:1.7}
+.doc-empty{background:#fff;padding:46px 4px;text-align:center;color:var(--muted);font-size:14.5px;line-height:1.7}
 .doc-main{min-width:0}
 /* 목록 행 제목은 참조 레이아웃(김앤장) 측정값 20px·DemiLight 기준. 참조는 구형 정적
-   DemiLight(350) 글꼴이라 가변 글꼴 350보다 두껍게 찍힌다. 체감이 같은 400을 쓴다. */
-.doc-title{font-size:20px;font-weight:400;color:var(--ink);letter-spacing:0;line-height:1.4}
-.doc-row:hover .doc-title{color:var(--btn)}
+   DemiLight 글꼴이라 가변 글꼴보다 두껍게 찍혀, 체감을 맞춘 420을 쓴다(가변 축 값). */
+.doc-title{font-size:20px;font-weight:420;color:var(--ink);letter-spacing:0;line-height:1.4;transition:color .14s}
+.doc-row:hover .doc-title{color:#BA2E12}
 .doc-tags{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 14px}
 .doc-tags span{font-size:13.5px;color:#9D968B;font-weight:400}
 .doc-date{font-size:14px;color:#9D968B;white-space:nowrap;flex-shrink:0}
@@ -188,7 +187,8 @@ section{padding:74px 0}
     section{padding:60px 0}
     .case-grid2{grid-template-columns:repeat(2,1fr)}
     /* 태블릿에서도 본문·목록 활자를 키워 시인성 확보 */
-    .doc-title{font-size:20px;font-weight:400}
+    .doc-list{padding:0 26px}
+    .doc-title{font-size:20px;font-weight:420}
     .doc-tags span{font-size:14px}
     .body p,.body .callout{font-size:17.5px;line-height:1.9}
     .body ul li,.body ol li{font-size:17px;line-height:1.85}
@@ -237,7 +237,8 @@ section{padding:74px 0}
     .cat-toggle .ct{font-size:16px;white-space:nowrap;flex-shrink:0}
     .cat-toggle .ct-div{display:none}
     .doc-row{flex-direction:column;align-items:flex-start;gap:10px;padding:20px 2px}
-    .doc-title{font-size:20px;font-weight:400;line-height:1.4}
+    .doc-list{padding:0 16px}
+    .doc-title{font-size:20px;font-weight:420;line-height:1.4}
     .doc-tags{margin-top:2px;gap:5px 12px}
     .doc-tags span{font-size:14px}
     .doc-date{font-size:14px}
@@ -322,12 +323,10 @@ section{padding:74px 0}
 .ins-hero{background:linear-gradient(180deg,#2A2118 0%,#1A150E 100%);padding:64px 0 52px;text-align:left}
 .ins-hero-kicker{font-family:var(--sans);font-size:13.5px;font-weight:400;color:rgba(255,255,255,.58);margin-bottom:15px}
 .ins-hero-title{font-family:'Lato',var(--sans);font-weight:700;font-size:clamp(38px,5.5vw,52px);letter-spacing:.005em;color:#fff;line-height:1;margin:0}
-.ins-hero-title::after{content:"";display:block;width:46px;height:3px;background:var(--gold);margin-top:22px}
 .ins-hero-sub{font-size:15.5px;color:rgba(255,255,255,.76);margin:22px 0 0;max-width:600px;line-height:1.75}
 .ins-body{background:#F2F2F2;padding:40px 0 80px}
 .ins-body .cat-toggle{border-bottom-color:var(--ink)}
 .ins-body .doc-row{border-bottom-color:#E2E1DD}
-.ins-body .doc-row:hover{background:#FFFFFF}
 .ins-notice{margin-bottom:26px;font-size:13px;line-height:1.75;color:var(--muted);max-width:760px}
 .ins-notice-contact{margin-top:12px;color:var(--ink);line-height:1.7}
 .ins-notice-contact b{font-weight:600}
