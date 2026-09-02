@@ -43,7 +43,10 @@ const SUPABASE_SCRIPTS = [
 // 선언하면(이전에는 언어별로 4가지였다) 판단을 포기하고 도메인(lawyeon-immigration.com)을
 // 그대로 표시한다. og:site_name·WebSite.name·index.html 이 모두 같아야 한다.
 const SITE_NAME = 'Law Firm Lawyeon Immigration Center';
-const SITE_NAME_ALT = '법무법인 로연 출입국이민지원센터';
+// 대체 이름. Google 은 대표 이름을 채택하지 못하면 여기서 고르고, 그것도 없으면
+// 도메인을 표시한다. 하위 페이지 제목은 '— Law Firm Lawyeon'·'— 법무법인 로연'
+// 으로 끝나므로 그 짧은 이름도 후보에 넣어 사이트 전체의 표기가 후보 안에 들게 한다.
+const SITE_NAME_ALT = ['법무법인 로연 출입국이민지원센터', 'Law Firm Lawyeon', '법무법인 로연'];
 
 // ---- per-language UI strings (header chrome) ----
 const STRINGS = {
