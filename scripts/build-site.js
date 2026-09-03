@@ -16,6 +16,11 @@ const SITE = 'https://www.lawyeon-immigration.com';
 // 두고 여기서 만들어 넣는다. 바꿀 곳은 위의 SITE 한 줄뿐이다.
 const DOMAIN = SITE.replace(/^https?:\/\//, '').replace(/^www\./, '');
 const LANGS = ['en', 'ko'];
+// 검색엔진 소유 확인 태그. 홈(/, /ko/)에만 넣는다. 네이버 서치어드바이저는 등록한
+// 홈페이지 주소의 <head> 에서 이 태그를 찾는다. 값은 공개되어도 무방하다.
+const SITE_VERIFICATION_TAGS = [
+  '<meta name="naver-site-verification" content="e17e3ba4eede3bf088de6727cb2dfeac1fb53b39">',
+];
 
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 const replaceAll = (s, find, val) => s.split(find).join(val == null ? '' : val);
@@ -517,6 +522,7 @@ function build() {
         // 읽고, 하위 페이지에 url 이 루트인 WebSite 를 함께 실으면 그 페이지의 canonical
         // 과 어긋나는 선언이 51개 생긴다.
         '__WEBSITE_JSONLD__': page.home ? websiteJsonLd(lang) : '',
+        '__SITE_VERIFICATION__': page.home ? '\n' + SITE_VERIFICATION_TAGS.join('\n') : '',
         '__OG_TYPE__': isArticle ? 'article' : 'website',
         '__OG_IMAGE__': ogImage,
         '__ARTICLE_META__': isArticle
