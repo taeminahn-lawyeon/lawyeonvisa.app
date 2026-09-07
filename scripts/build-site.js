@@ -189,8 +189,8 @@ const PAGES = [
     modified: '2026-09-07',
     title: { ko: '외국인 벌금형과 강제출국, 입국규제 해제 — 법무법인 로연',
              en: 'Criminal Fines, Deportation and Entry-Ban Relief for Foreigners in Korea — Law Firm Lawyeon' },
-    desc:  { ko: '외국인 벌금형·집행유예에 따른 출국조치와 체류허용·입국규제 면제요건을 설명합니다. 형사변호부터 처분 변경, 입국규제 해제와 재입국까지 다룹니다.',
-             en: 'Criminal fines and suspended sentences in Korea: removal, residence exceptions and entry-ban relief. Representation from criminal defense through re-entry.' },
+    desc:  { ko: '외국인 벌금형의 금액·반복 처벌 기준과 출국조치의 재량 판단, 체류허용·입국규제 면제를 설명합니다. 형사변호부터 처분 불복, 규제 해제와 재입국까지 다룹니다.',
+             en: 'Criminal fines in Korea: removal thresholds, immigration discretion, residence exceptions and entry-ban relief, from criminal defense through re-entry.' },
   },
   {
     id: 'foreigner-immigration-penalty-fine-deportation-korea-2026', content: 'foreigner-immigration-penalty-fine-deportation-korea-2026',
