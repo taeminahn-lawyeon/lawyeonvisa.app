@@ -186,10 +186,11 @@ const PAGES = [
   },
   {
     id: 'foreigner-criminal-fine-deportation-reentry-ban-korea-2026', content: 'foreigner-criminal-fine-deportation-reentry-ban-korea-2026',
-    title: { ko: '외국인 벌금형 강제출국·재입국 제한 기준 (2026) — 법무법인 로연',
-             en: 'Criminal Fines and Deportation of Foreigners in Korea: Removal and Re-Entry Criteria (2026) — Law Firm Lawyeon' },
-    desc:  { ko: '외국인이 벌금형을 받으면 형사처벌과 별개로 사범심사가 진행됩니다. 초범 300만 원·5년 합산 500만 원 등 강제출국 기준(2026년 기준), 중대범죄와 영구 입국금지, 출국명령과 강제퇴거의 구분, 이의신청 7일·취소소송 90일의 불복 기한을 다룹니다.',
-             en: 'A criminal fine triggers a separate immigration review for foreigners in Korea. Removal thresholds (KRW 3M first offence, KRW 5M cumulative over five years, as of 2026), serious crimes carrying a permanent entry ban, departure order versus deportation, and the 7-day objection and 90-day litigation deadlines.' },
+    modified: '2026-09-07',
+    title: { ko: '외국인 벌금형과 강제출국, 입국규제 해제 — 법무법인 로연',
+             en: 'Criminal Fines, Deportation and Entry-Ban Relief for Foreigners in Korea — Law Firm Lawyeon' },
+    desc:  { ko: '외국인 벌금형의 출국조치 기준과 사범심사상 예외, 처분 불복, 입국규제 일반·특별해제 및 재입국을 설명합니다. 형사변호 단계부터 필요한 대응을 다룹니다.',
+             en: 'Criminal fines, immigration review, departure and deportation orders, entry-ban relief and re-entry in Korea. Representation from the criminal defense stage.' },
   },
   {
     id: 'foreigner-immigration-penalty-fine-deportation-korea-2026', content: 'foreigner-immigration-penalty-fine-deportation-korea-2026',
@@ -313,6 +314,7 @@ function lastCommitDate(relPath) {
 
 // 페이지의 사이트맵 lastmod: 기사면 발행일, 그 외에는 소스의 마지막 커밋일.
 function pageLastmod(page) {
+  if (page.modified) return page.modified;
   const langs = page.langs || LANGS;
   const dates = langs
     .map((l) => lastCommitDate(`content/${page.content}.${l}.html`))
@@ -359,7 +361,7 @@ function articleJsonLd(page, lang, canonical, bodyHtml, ogImage) {
     description: page.desc[lang],
     inLanguage: lang,
     datePublished: date,
-    dateModified: date,
+    dateModified: page.modified || date,
     image: ogImage,
     mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
     author: { '@type': 'Organization', name: org },
@@ -526,7 +528,7 @@ function build() {
         '__OG_TYPE__': isArticle ? 'article' : 'website',
         '__OG_IMAGE__': ogImage,
         '__ARTICLE_META__': isArticle
-          ? '<meta property="article:published_time" content="' + date + '"><meta property="article:modified_time" content="' + date + '">'
+          ? '<meta property="article:published_time" content="' + date + '"><meta property="article:modified_time" content="' + (page.modified || date) + '">'
           : '',
         '__ARTICLE_JSONLD__': isArticle
           ? articleJsonLd(page, lang, canonical, bodyHtml, ogImage) + '\n' + breadcrumbJsonLd(page, lang, canonical)
