@@ -194,10 +194,11 @@ const PAGES = [
   },
   {
     id: 'foreigner-immigration-penalty-fine-deportation-korea-2026', content: 'foreigner-immigration-penalty-fine-deportation-korea-2026',
-    title: { ko: '외국인 출입국 범칙금 처분과 체류 제한 기준 (2026) — 법무법인 로연',
-             en: 'Immigration Penalty Notices and Stay Restrictions for Foreigners in Korea (2026) — Law Firm Lawyeon' },
-    desc:  { ko: '출입국 범칙금은 벌금과 별개의 행정상 처분이나, 초범 500만 원·5년 합산 700만 원·3년 내 3회 등의 기준(2026년 기준)을 넘으면 체류 불허로 이어질 수 있습니다. 예외적으로 체류가 허가되는 경우(F-2·F-4·F-6의 국익·인도적 사유)와 통고서 이후의 절차를 다룹니다.',
-             en: 'Immigration penalty notices (beomchikgeum) are separate from criminal fines, but exceeding the thresholds (KRW 5M first offence, KRW 7M cumulative, three times in three years, as of 2026) can bar further stay. The exceptions for F-2, F-4 and F-6 holders on national-interest or humanitarian grounds, and the procedure after a notice.' },
+    modified: '2026-09-08',
+    title: { ko: '외국인 출입국 범칙금 처분과 체류 제한 기준 — 법무법인 로연',
+             en: 'Immigration Penalty Notices and Stay Restrictions for Foreigners in Korea — Law Firm Lawyeon' },
+    desc:  { ko: '출입국 범칙금과 형사상 벌금의 차이, 납부 후에도 남는 체류·출국 문제를 설명합니다. 위반 사실에 대한 대응부터 체류허가, 출국조치와 입국규제까지 연결해 다룹니다.',
+             en: 'How immigration penalty notices differ from criminal fines, why payment does not secure residence, and how representation connects violation proceedings, removal and entry-ban relief.' },
   },
   {
     id: 'foreigner-unlawful-stay-voluntary-departure-korea-2026', content: 'foreigner-unlawful-stay-voluntary-departure-korea-2026',
@@ -236,10 +237,11 @@ const PAGES = [
   },
   {
     id: 'foreigner-dui-deportation-korea-2026', content: 'foreigner-dui-deportation-korea-2026',
-    title: { en: 'Foreigner DUI Fines in Korea: Deportation Criteria and the Immigration Review (2026) — Law Firm Lawyeon',
-             ko: '외국인 음주운전 벌금과 사범심사, 강제출국 기준 (2026) — 법무법인 로연' },
-    desc:  { en: 'For foreigners, a DUI proceeds as a criminal case and a separate immigration review. Criminal penalties by blood alcohol level, the KRW 3M and 5M fine thresholds (as of 2026), the factors weighed in the review, and why responding starts at the investigation stage.',
-             ko: '외국인의 음주운전은 형사사건과 별개로 사범심사가 진행됩니다. 혈중알코올농도별 형사처벌, 초범 300만 원·합산 500만 원 기준(2026년 기준), 사범심사에서 고려되는 요소, 수사 단계에서 대응이 시작되어야 하는 이유를 다룹니다.' },
+    modified: '2026-09-08',
+    title: { ko: '외국인 음주운전 벌금과 사범심사, 강제출국 기준 — 법무법인 로연',
+             en: 'Foreigner DUI Fines in Korea: Deportation Criteria and the Immigration Review — Law Firm Lawyeon' },
+    desc:  { ko: '음주운전의 형사처벌과 외국인 사범심사는 별개의 판단입니다. 벌금액·반복 처벌 기준, 체류 필요성, 출국조치와 입국규제를 형사변호 단계부터 설명합니다.',
+             en: 'DUI punishment and immigration review are separate decisions. Criminal-fine and repeat-offence criteria, residence needs, removal and entry bans, starting with criminal defense.' },
   },
   {
     id: 'foreigner-divorce-f6-visa-stay-korea-2026', content: 'foreigner-divorce-f6-visa-stay-korea-2026',
@@ -262,10 +264,11 @@ const PAGES = [
   {
     id: 'foreigner-entry-ban-check-lift-korea-2026', content: 'foreigner-entry-ban-check-lift-korea-2026',
     langs: ['ko', 'en'],
-    title: { ko: '출국명령·강제퇴거 후 입국규제 해제와 불복 절차 (2026) — 법무법인 로연',
-             en: 'Entry-Ban Relief and Appeals After a Departure Order or Deportation (2026) — Law Firm Lawyeon' },
-    desc:  { ko: '출국명령·강제퇴거에는 입국규제가 함께 부과됩니다. 처분 전 사범심사 단계의 대응, 이의신청·취소소송의 구조, 국익·인도적 사유에 따른 입국규제 해제 신청과 그 심사에서 고려되는 요소를 다룹니다.',
-             en: 'A departure order or deportation carries an entry ban. Responding at the pre-disposition review stage, the objection and revocation-suit framework, and applying to lift the entry ban on national-interest or humanitarian grounds — with the factors weighed in that review.' },
+    modified: '2026-09-08',
+    title: { ko: '출국명령·강제퇴거 후 입국규제 해제와 재입국 — 법무법인 로연',
+             en: 'Entry-Ban Relief and Re-entry After a Departure Order or Deportation — Law Firm Lawyeon' },
+    desc:  { ko: '출국명령·강제퇴거의 불복과 입국규제 해제는 효과가 다릅니다. 출국 전 처분 대응, 출국 후 일반·특별해제, 사증과 실제 재입국까지 설명합니다.',
+             en: 'Distinguish challenges to removal from entry-ban relief: responding before departure, ordinary and special lifting of a ban, and the visa and admission requirements that follow.' },
   },
 ];
 
