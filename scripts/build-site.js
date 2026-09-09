@@ -128,31 +128,35 @@ const PAGES = [
   },
   {
     id: 'korea-business-immigration-visa-guide-d9-4-d9-5-2026', content: 'article',
+    modifiedByLang: { ko: '2026-09-09' },
     title: { en: "Korea Business-Immigration Visa Overview, D-9-4 and D-9-5 (2026) — Law Firm Lawyeon",
-             ko: '한국 사업이민 비자 개요, D-9-4와 D-9-5 (2026) — 법무법인 로연' },
+             ko: "한국 개인사업자 비자 D-9-4·D-9-5: 사업 형태와 신청자격 (2026) — 법무법인 로연" },
     desc:  { en: "For foreigners planning to immigrate to Korea as sole proprietors: how D-9-4 (KRW 300M) and D-9-5 (KRW 100M, for graduates of Korean universities) differ from the corporate D-8 visas, and why franchise businesses are commonly considered.",
-             ko: '개인사업자 자영업으로 한국 이주를 검토하는 외국인을 위한 안내입니다. 법인 대상인 D-8 계열과 구분되는 D-9-4(3억 원)·D-9-5(유학생 출신, 1억 원)의 요건과, 프랜차이즈·정보공개서 제도가 검토되는 이유를 다룹니다.' },
+             ko: "한국에서 개인사업자로 창업하려는 외국인을 위해 D-9-4와 D-9-5의 투자금·학력·체류자격 요건, D-8과의 차이, 프랜차이즈 운영구조가 비자 선택에 미치는 영향을 설명합니다." },
   },
   {
     id: 'foreigner-franchise-business-korea-2026', content: 'foreigner-franchise-business-korea-2026',
+    modifiedByLang: { ko: '2026-09-09' },
     title: { en: 'D-9-4 and D-9-5 Investment Requirements and Stay Structure (2026) — Law Firm Lawyeon',
-             ko: 'D-9-4·D-9-5 투자금 요건과 체류 구조 (2026) — 법무법인 로연' },
+             ko: "D-9-4·D-9-5 투자금 요건: 자금 도입과 사업 집행 (2026) — 법무법인 로연" },
     desc:  { en: 'What makes funds count as investment for D-9-4 and D-9-5: remittance in your own name, stated purpose, lawful source, the KRW 50M domestic-funds allowance for D-9-5, recognized expenditures, extension review, status change and F-3 family stay.',
-             ko: 'D-9-4·D-9-5 심사에서 자금이 투자금으로 인정되는 요건(본인 명의 송금, 목적, 출처), D-9-5의 국내 자금 5,000만 원 특례, 인정되는 집행의 범위, 연장 심사와 체류자격 변경, 동반(F-3) 가족의 체류 구조를 다룹니다.' },
+             ko: "D-9-4·D-9-5의 투자금 심사에서 해외 자금 도입, 국내 조성 자금 특례, 사업 지출과 남은 자금의 관계를 설명하고 개업 이후 연장 심사까지 연결합니다." },
   },
   {
     id: 'how-to-open-a-business-in-korea-as-a-foreigner-2026', content: 'how-to-open-a-business-in-korea-as-a-foreigner-2026',
+    modifiedByLang: { ko: '2026-09-09' },
     title: { en: 'How Foreigners Start a Business in Korea: Procedure and Preparation (2026) — Law Firm Lawyeon',
-             ko: '한국에서 외국인이 사업을 시작하는 절차와 준비 (2026) — 법무법인 로연' },
+             ko: "외국인의 한국 창업: 계약·사업자등록·비자 신청의 순서 (2026) — 법무법인 로연" },
     desc:  { en: 'The structure of business immigration to Korea: how residence experience shapes the choice of industry, why lease, business registration and licensing must be completed before the visa review, and the typical failure patterns at the preparation stage.',
-             ko: '한국 거주 경험이 업종 선택을 좌우하는 이유, 임대차·사업자등록·인허가가 비자 심사에 선행하는 절차 구조, 준비 단계에서 자주 발생하는 실패 유형을 다룹니다.' },
+             ko: "외국인이 한국 창업을 준비할 때 사업자등록과 인허가, 단기상용 방문과 사업 운영, 가맹·임대차계약과 비자 일정이 서로 어떻게 영향을 주는지 설명합니다." },
   },
   {
     id: 'korea-permanent-residency-foreign-business-owner-2026', content: 'korea-permanent-residency-foreign-business-owner-2026',
+    modifiedByLang: { ko: '2026-09-09' },
     title: { en: 'Long-Term Stay After Business Immigration: F-2-99 Conversion and Family Settlement (2026) — Law Firm Lawyeon',
-             ko: '사업이민 이후 장기 체류, F-2-99 전환과 가족 정착 (2026) — 법무법인 로연' },
+             ko: "사업이민 이후 F-2-99 전환: 사업의 지속과 가족 정착 (2026) — 법무법인 로연" },
     desc:  { en: 'After opening under D-9-4 or D-9-5: what the extension review checks, the F-2-99 conversion after five years (assets KRW 20M, business income KRW 40M, KIIP level 4 or a Korean degree, as of 2026), and how F-3 family stay is linked to yours.',
-             ko: 'D-9 연장 심사에서 확인되는 사업 운영의 실질, 5년 체류 후 거주(F-2-99) 전환의 평가 영역(자산 2,000만 원·사업 소득 4,000만 원·KIIP 4단계 등, 2026년 기준), 동반(F-3) 가족의 체류 구조를 다룹니다.' },
+             ko: "D-9 사업자의 F-2-99 변경에서 5년 체류기간, 본인 소득·자산, 사업활동 지속 요건과 가족의 별도 체류자격을 설명합니다. 폐업·업종 변경을 앞둔 정착계획의 쟁점을 다룹니다." },
   },
   {
     id: 'chosun-university-student-legal-mou-2026', content: 'chosun-university-student-legal-mou-2026',
@@ -163,69 +167,78 @@ const PAGES = [
   },
   {
     id: 'd10-job-seeker-visa-korea-2026', content: 'd10-job-seeker-visa-korea-2026',
+    modifiedByLang: { ko: '2026-09-09' },
     title: { en: 'D-10 Job Seeker Visa: Subcategory Requirements and the Points Exemption (2026) — Law Firm Lawyeon',
-             ko: 'D-10 구직 비자 세부유형별 요건과 점수제 면제 (2026) — 법무법인 로연' },
+             ko: "D-10 구직비자: 졸업 후 점수제 면제와 취업까지의 체류 — 법무법인 로연" },
     desc:  { en: 'The four D-10 subcategories (D-10-1, D-10-2, D-10-3, D-10-T), the points-system exemptions including first-time changes by graduates of Korean universities, the internship and part-time work rules, and the stay ceilings and extension review (as of 2026).',
-             ko: '구직(D-10)의 네 세부유형(D-10-1·D-10-2·D-10-3·D-10-T)과 국내 대학 졸업자의 최초 변경 등 점수제 면제 특례, 인턴·시간제 취업 규칙, 유형별 체류 상한과 연장 심사를 다룹니다(2026년 기준).' },
+             ko: "국내 대학 졸업 후 최초 D-10-1 변경과 한국어능력 우수자 면제의 차이, 연장 시 적용 기준, 이전 취업 이력에 따른 인턴·시간제 취업 제한을 설명합니다." },
   },
   {
     id: 'd10-visa-points-system-deduction-korea-2026', content: 'd10-visa-points-system-deduction-korea-2026',
     langs: ['ko', 'en'],
-    title: { ko: 'D-10-1 구직 비자 점수제 계산과 감점·결격 기준 (2026) — 법무법인 로연',
+    modifiedByLang: { ko: '2026-09-09' },
+    title: { ko: "D-10-1 구직비자 점수제: 60점·80점과 벌금·범칙금의 영향 — 법무법인 로연",
              en: 'The D-10-1 Points System: Calculation, Deductions and Disqualification (2026) — Law Firm Lawyeon' },
-    desc:  { ko: '구직(D-10-1) 점수제는 총 190점 중 기본항목 20점 이상을 포함해 60점 이상을 요합니다. 기본·선택·가점의 배점 구조, 5년 이내 범칙금·벌금 이력의 감점과 결격 기준, 80점 이상과 미만의 체류 기간 차등을 다룹니다(2026년 기준).',
+    desc:  { ko: "D-10-1 점수제에서 기본항목과 총점의 관계, 학위·경력 점수의 인정 범위, 벌금·범칙금의 감점과 신청 제한, 신청 시점에 따라 달라지는 체류 조건을 설명합니다.",
              en: 'The D-10-1 points system requires 60 of 190 points including 20 basic points. The structure of basic, optional and bonus items, the deductions and disqualification criteria for fine and penalty records within five years, and how stay periods differ above and below 80 points (as of 2026).' },
   },
   {
     id: 'd10-2-startup-preparation-visa-korea-2026', content: 'd10-2-startup-preparation-visa-korea-2026',
     langs: ['ko', 'en'],
-    title: { ko: 'D-10-2 기술창업준비 체류자격 요건과 창업 경로 (2026) — 법무법인 로연',
+    modifiedByLang: { ko: '2026-09-09' },
+    title: { ko: "D-10-2 기술창업준비 비자: OASIS 이수와 D-8-4 전환의 조건 — 법무법인 로연",
              en: 'D-10-2 Start-Up Preparation Status: Requirements and the Path to Founding (2026) — Law Firm Lawyeon' },
-    desc:  { ko: '학사 이상 학위와 특허 보유·출원, OASIS 교육 이수 등으로 신청하는 기술창업준비(D-10-2)의 요건, 인턴·시간제 취업이 제한되는 활동 범위와 요건별 체류 상한, 기술창업(D-8-4) 점수제로 이어지는 준비 구조를 다룹니다(2026년 기준).',
+    desc:  { ko: "D-10-2 최초 신청에 필요한 OASIS 요건과 35점에 따른 준비기간, D-8-4의 60점·필수항목 요건이 어떻게 다른지와 기술창업 준비 순서를 설명합니다.",
              en: 'Requirements for start-up preparation (D-10-2) status — a bachelor\'s degree with patents held or pending, OASIS training and similar grounds — its activity scope excluding internships and part-time work, stay ceilings by ground, and how preparation feeds the technology start-up (D-8-4) points review (as of 2026).' },
   },
   {
     id: 'foreigner-criminal-fine-deportation-reentry-ban-korea-2026', content: 'foreigner-criminal-fine-deportation-reentry-ban-korea-2026',
     modified: '2026-09-07',
-    title: { ko: '외국인 벌금형과 강제출국, 입국규제 해제 — 법무법인 로연',
+    modifiedByLang: { ko: '2026-09-09' },
+    title: { ko: "외국인 벌금형과 강제출국: 사범심사에서 달라지는 판단 — 법무법인 로연",
              en: 'Criminal Fines, Deportation and Entry-Ban Relief for Foreigners in Korea — Law Firm Lawyeon' },
-    desc:  { ko: '외국인 벌금형의 금액·반복 처벌 기준과 출국조치의 재량 판단, 체류허용·입국규제 면제를 설명합니다. 형사변호부터 처분 불복, 규제 해제와 재입국까지 다룹니다.',
+    desc:  { ko: "벌금형 이후의 출국조치는 금액만으로 정해지지 않습니다. 체류자격, 이전 위반과 체류허용 이력, 국내 가족생활이 사범심사와 재입국 판단에서 갖는 의미를 설명합니다.",
              en: 'Criminal fines in Korea: removal thresholds, immigration discretion, residence exceptions and entry-ban relief, from criminal defense through re-entry.' },
   },
   {
     id: 'foreigner-immigration-penalty-fine-deportation-korea-2026', content: 'foreigner-immigration-penalty-fine-deportation-korea-2026',
     modified: '2026-09-09',
-    title: { ko: '외국인 출입국 범칙금 처분과 체류 제한 기준 — 법무법인 로연',
+    modifiedByLang: { ko: '2026-09-09' },
+    title: { ko: "외국인 출입국 범칙금: 납부 이후에도 남는 체류 제한 — 법무법인 로연",
              en: 'Immigration Penalty Notices and Stay Restrictions for Foreigners in Korea — Law Firm Lawyeon' },
-    desc:  { ko: '출입국 범칙금과 형사상 벌금의 차이, 납부 후에도 남는 체류·출국 문제를 설명합니다. 위반 사실에 대한 대응부터 체류허가, 출국조치와 입국규제까지 연결해 다룹니다.',
+    desc:  { ko: "출입국 범칙금은 납부하면 끝나는 체류 수수료가 아닙니다. 위반행위와 금액의 산정, 통고처분 납부의 효과, 이후 체류허가 제한이 연결되는 방식을 설명합니다.",
              en: 'How immigration penalty notices differ from criminal fines, why payment does not secure residence, and how representation connects violation proceedings, removal and entry-ban relief.' },
   },
   {
     id: 'foreigner-unlawful-stay-voluntary-departure-korea-2026', content: 'foreigner-unlawful-stay-voluntary-departure-korea-2026',
-    title: { ko: '불법체류 자진출국 신고와 단속 적발의 차이 (2026) — 법무법인 로연',
+    modifiedByLang: { ko: '2026-09-09' },
+    title: { ko: "불법체류 자진출국과 재입국: 범칙금 감면 이후에 남는 심사 — 법무법인 로연",
              en: 'Voluntary Departure vs. Being Caught: Unlawful Stay in Korea (2026) — Law Firm Lawyeon' },
-    desc:  { ko: '불법체류 상태에서 단속에 적발되는 것과 스스로 신고하고 출국하는 것은 범칙금과 입국금지의 처리가 다릅니다. 두 경로의 차이, 한시적으로 운영되는 자진출국 제도, 신고 전에 확인하여야 할 합법 체류의 여지를 다룹니다.',
+    desc:  { ko: "불법체류 자진출국과 단속 적발의 차이, 특별 자진출국의 적용 범위, 재입국 심사와 국내 가족이 있는 경우의 체류 문제를 설명합니다.",
              en: 'Being caught in a crackdown and self-reporting before departure lead to different penalty and entry-ban outcomes for unlawful stay in Korea. The differences between the two paths, the temporary voluntary-departure programs, and what to check before reporting — including whether lawful stay is still possible.' },
   },
   {
     id: 'foreigner-immigration-detention-temporary-release-korea-2026', content: 'foreigner-immigration-detention-temporary-release-korea-2026',
-    title: { ko: '외국인 보호조치와 보호일시해제 청구 (2026) — 법무법인 로연',
+    modifiedByLang: { ko: '2026-09-09' },
+    title: { ko: "외국인 보호일시해제: 치료·가족·재산 문제를 심사하는 기준 — 법무법인 로연",
              en: 'Immigration Detention and Temporary Release in Korea (2026) — Law Firm Lawyeon' },
-    desc:  { ko: '강제퇴거 절차에서 외국인보호소에 보호(구금)된 경우, 절차 종료 전이라도 보호일시해제를 청구할 수 있습니다. 보호조치의 성격, 보증금(2천만 원 이하) 등 해제의 조건, 청구 주체와 심사에서 고려되는 요소를 다룹니다.',
+    desc:  { ko: "외국인보호위원회의 보호일시해제 심사에서 치료와 가족 돌봄, 재산상 손해, 도주 우려가 갖는 의미와 강제퇴거 대응의 관계를 설명합니다.",
              en: 'A foreigner detained during deportation proceedings in Korea may request temporary release before the process ends. The nature of detention, release conditions including a deposit of up to KRW 20M, who may apply, and the factors weighed in the review.' },
   },
   {
     id: 'visa-extension-change-denial-reapply-appeal-korea-2026', content: 'visa-extension-change-denial-reapply-appeal-korea-2026',
-    title: { ko: '체류기간 연장·자격 변경 불허 후 재신청과 불복 (2026) — 법무법인 로연',
+    modifiedByLang: { ko: '2026-09-09' },
+    title: { ko: "체류기간 연장·자격 변경 불허: 재신청으로 해결할 문제와 불복할 판단 — 법무법인 로연",
              en: 'After a Stay Extension or Status Change Denial: Reapplication and Appeal (2026) — Law Firm Lawyeon' },
-    desc:  { ko: '체류기간 연장이나 자격 변경이 불허된 경우, 출국 기한 안에 재신청·불복·출국 중 하나를 선택하게 됩니다. 불허 사유의 확인 방법, 요건의 문제와 이력의 문제에 따른 경로의 구분, 국내 불허 처분에 대한 행정심판·취소소송(90일)을 다룹니다.',
+    desc:  { ko: "체류허가 불허 사유를 해소할 수 있는지, 새 사실과 기존 판단을 바로잡을 증거는 어떻게 다른지, 재신청과 행정심판·소송의 선택 기준을 설명합니다.",
              en: 'When a stay extension or status change is denied in Korea, you choose between reapplying, appealing and departing within the stated deadline. How to confirm the reason for denial, how requirement problems and record problems lead to different paths, and the 90-day window for litigating a domestic denial.' },
   },
   {
     id: 'foreigner-national-pension-lump-sum-refund-korea-2026', content: 'foreigner-national-pension-lump-sum-refund-korea-2026',
-    title: { ko: 'E-9·H-2 근로자 국민연금 반환일시금 청구 (2026) — 법무법인 로연',
+    modifiedByLang: { ko: '2026-09-09' },
+    title: { ko: "E-9·H-2 외국인 국민연금 반환일시금: 지급 대상과 실제 납부액의 확인 — 법무법인 로연",
              en: 'National Pension Lump-Sum Refund for E-9 and H-2 Workers in Korea (2026) — Law Firm Lawyeon' },
-    desc:  { ko: 'E-8·E-9·H-2 자격 근로자는 국적과 무관하게 본국 귀환 시 국민연금 반환일시금을 받을 수 있습니다. 지급액의 구조(보험료율 9%, 2026년 기준), 출국 후의 대리 청구와 본국 계좌 지급, 출국일부터 5년의 청구 기한을 다룹니다.',
+    desc:  { ko: "E-9·H-2 외국인의 국민연금 반환일시금 지급 기준, 현재 E-8 계절근로와의 차이, 납부액·출국·청구기한이 지급에 미치는 영향을 설명합니다.",
              en: 'E-8, E-9 and H-2 workers can claim the Korean National Pension lump-sum refund on returning home, regardless of nationality. How the amount is calculated (9% contribution rate, as of 2026), claiming through a proxy after departure with payment to a home-country account, and the five-year deadline from departure.' },
   },
   {
@@ -238,36 +251,40 @@ const PAGES = [
   {
     id: 'foreigner-dui-deportation-korea-2026', content: 'foreigner-dui-deportation-korea-2026',
     modified: '2026-09-09',
-    title: { ko: '외국인 음주운전 벌금과 사범심사, 강제출국 기준 — 법무법인 로연',
+    modifiedByLang: { ko: '2026-09-09' },
+    title: { ko: "외국인 음주운전과 출국조치: 형사변호와 사범심사의 쟁점 — 법무법인 로연",
              en: 'Foreigner DUI Fines in Korea: Deportation Criteria and the Immigration Review — Law Firm Lawyeon' },
-    desc:  { ko: '음주운전의 형사처벌과 외국인 사범심사는 별개의 판단입니다. 벌금액·반복 처벌 기준, 체류 필요성, 출국조치와 입국규제를 형사변호 단계부터 설명합니다.',
+    desc:  { ko: "음주운전은 사고 없이 벌금형으로 끝나도 외국인의 체류에 영향을 줄 수 있습니다. 합의의 한계, 반복 위반, 도로교통의 위험과 국내 생활기반이 평가되는 방식을 설명합니다.",
              en: 'DUI punishment and immigration review are separate decisions. Criminal-fine and repeat-offence criteria, residence needs, removal and entry bans, starting with criminal defense.' },
   },
   {
     id: 'foreigner-divorce-f6-visa-stay-korea-2026', content: 'foreigner-divorce-f6-visa-stay-korea-2026',
     langs: ['ko', 'en', 'vi'],
-    title: { ko: '한국인 배우자와 이혼 후 체류, F-6 세부유형별 요건 (2026) — 법무법인 로연',
+    modifiedByLang: { ko: '2026-09-09' },
+    title: { ko: "한국인 배우자와 이혼 후 F-6 체류: 자녀양육과 혼인파탄의 주된 책임 — 법무법인 로연",
              en: 'Staying in Korea After Divorce: F-6 Subcategory Requirements (2026) — Law Firm Lawyeon',
              vi: 'Cư trú tại Hàn Quốc sau ly hôn: điều kiện theo từng diện F-6 (2026) — Lawyeon' },
-    desc:  { ko: '이혼으로 국민의 배우자(F-6-1)의 근거는 소멸하나, 자녀양육(F-6-2)·혼인단절(F-6-3)·가사정리(F-1-6)로 체류를 이어갈 수 있습니다. 각 경로의 요건과 귀책 소명의 구조, 별거·이혼소송 중의 체류를 다룹니다.',
+    desc:  { ko: "이혼 후 F-6 체류에서 자녀양육·면접교섭과 혼인파탄의 주된 책임이 갖는 의미, 이혼판결과 협의이혼 기록이 체류심사에 미치는 영향을 설명합니다.",
              en: 'Divorce ends the basis of spouse status (F-6-1), but stay can continue through child-rearing (F-6-2), marriage dissolution (F-6-3) or family-affairs status (F-1-6). The requirements of each path, how fault is substantiated, and staying during separation or divorce litigation.',
              vi: 'Ly hôn làm mất căn cứ của diện vợ/chồng công dân (F-6-1), nhưng có thể tiếp tục cư trú theo diện nuôi con (F-6-2), hôn nhân tan vỡ (F-6-3) hoặc thu xếp gia sự (F-1-6). Điều kiện của từng diện, cách chứng minh lỗi, và cư trú khi ly thân hoặc đang kiện ly hôn.' },
   },
   {
     id: 'nationality-reinstatement-procedure-korea-2026', content: 'nationality-reinstatement-procedure-korea-2026',
     langs: ['ko', 'en'],
-    title: { ko: '외국 시민권 취득 후 한국 국적회복 절차와 순서: 국적상실신고, F-4, 국적회복허가 (2026) — 법무법인 로연',
+    modifiedByLang: { ko: '2026-09-09' },
+    title: { ko: "외국 시민권 취득 후 한국 국적회복: F-4 체류와 65세 복수국적의 관계 — 법무법인 로연",
              en: 'Reinstating Korean Nationality After Acquiring Foreign Citizenship: Loss Report, F-4, Reinstatement Permission (2026) — Law Firm Lawyeon' },
-    desc:  { ko: '외국 시민권 취득으로 한국 국적이 자동 상실된 재외동포가 국적상실의 정리와 동일인 확인, F-4 체류자격과 국내거소신고를 거쳐 국적회복허가에 이르는 순서와 요건을 다룹니다.',
+    desc:  { ko: "한국 국적회복을 준비할 때 구분해야 할 국적상실, F-4 체류, 65세 이상 영주귀국자의 복수국적 요건과 국내외 신분기록의 불일치를 설명합니다.",
              en: 'For overseas Koreans whose Korean nationality was automatically lost on acquiring foreign citizenship: the sequence and requirements running from settling the loss and confirming identity, through F-4 status and the domestic place-of-residence report, to permission for reinstatement of nationality.' },
   },
   {
     id: 'foreigner-entry-ban-check-lift-korea-2026', content: 'foreigner-entry-ban-check-lift-korea-2026',
     langs: ['ko', 'en'],
     modified: '2026-09-09',
-    title: { ko: '출국명령·강제퇴거 후 입국규제 해제와 재입국 — 법무법인 로연',
+    modifiedByLang: { ko: '2026-09-09' },
+    title: { ko: "출국명령·강제퇴거 후 입국규제 해제: 일반해제와 특별해제 — 법무법인 로연",
              en: 'Entry-Ban Relief and Re-entry After a Departure Order or Deportation — Law Firm Lawyeon' },
-    desc:  { ko: '출국명령·강제퇴거의 불복과 입국규제 해제는 효과가 다릅니다. 출국 전 처분 대응, 출국 후 일반·특별해제, 사증과 실제 재입국까지 설명합니다.',
+    desc:  { ko: "입국규제 기간 경과 후의 일반해제와 기간 중 특별해제를 구분하고, 국익·인도적 사유에 해당하는 가족생활·치료·사업의 사실과 증명이 해제 판단에 어떻게 연결되는지 설명합니다.",
              en: 'Distinguish challenges to removal from entry-ban relief: responding before departure, ordinary and special lifting of a ban, and the visa and admission requirements that follow.' },
   },
 ];
@@ -316,9 +333,14 @@ function lastCommitDate(relPath) {
 }
 
 // 페이지의 사이트맵 lastmod: 기사면 발행일, 그 외에는 소스의 마지막 커밋일.
-function pageLastmod(page) {
-  if (page.modified) return page.modified;
-  const langs = page.langs || LANGS;
+function pageModified(page, lang) {
+  return (page.modifiedByLang && page.modifiedByLang[lang]) || page.modified || ARTICLE_DATES[page.id];
+}
+
+function pageLastmod(page, lang) {
+  const modified = (page.modifiedByLang && page.modifiedByLang[lang]) || page.modified;
+  if (modified) return modified;
+  const langs = lang ? [lang] : (page.langs || LANGS);
   const dates = langs
     .map((l) => lastCommitDate(`content/${page.content}.${l}.html`))
     .filter(Boolean)
@@ -364,7 +386,7 @@ function articleJsonLd(page, lang, canonical, bodyHtml, ogImage) {
     description: page.desc[lang],
     inLanguage: lang,
     datePublished: date,
-    dateModified: page.modified || date,
+    dateModified: pageModified(page, lang),
     image: ogImage,
     mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
     author: { '@type': 'Organization', name: org },
@@ -531,7 +553,7 @@ function build() {
         '__OG_TYPE__': isArticle ? 'article' : 'website',
         '__OG_IMAGE__': ogImage,
         '__ARTICLE_META__': isArticle
-          ? '<meta property="article:published_time" content="' + date + '"><meta property="article:modified_time" content="' + (page.modified || date) + '">'
+          ? '<meta property="article:published_time" content="' + date + '"><meta property="article:modified_time" content="' + pageModified(page, lang) + '">'
           : '',
         '__ARTICLE_JSONLD__': isArticle
           ? articleJsonLd(page, lang, canonical, bodyHtml, ogImage) + '\n' + breadcrumbJsonLd(page, lang, canonical)
@@ -554,7 +576,6 @@ function build() {
     STATIC_PAGES.map((p) => `  <url>\n    <loc>${SITE}/${p}</loc>\n    <lastmod>${BUILD_DAY}</lastmod>\n  </url>`).join('\n') + '\n' +
     PAGES.map(p => {
       const langs = p.langs || LANGS;
-      const lastmod = pageLastmod(p);
       const locs = [];
       if (langs.indexOf('en') >= 0) locs.push(pageUrl(p, 'en'));
       if (langs.indexOf('ko') >= 0) locs.push(pageUrl(p, 'ko'));
@@ -565,7 +586,7 @@ function build() {
       if (langs.indexOf('vi') >= 0) alts += `    <xhtml:link rel="alternate" hreflang="vi" href="${pageUrl(p, 'vi')}"/>\n`;
       const xdefault = langs.indexOf('en') >= 0 ? pageUrl(p, 'en') : pageUrl(p, 'ko');
       alts += `    <xhtml:link rel="alternate" hreflang="x-default" href="${xdefault}"/>\n`;
-      return locs.map((loc) => `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n` + alts + `  </url>`).join('\n');
+      return locs.map((loc) => `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${pageLastmod(p, langs.find(l => pageUrl(p, l) === loc))}</lastmod>\n` + alts + `  </url>`).join('\n');
     }).join('\n') + '\n</urlset>\n';
   fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap, 'utf8');
   // 폐지 페이지는 robots.txt 로 막지 않는다. Disallow 는 크롤링만 막을 뿐
@@ -580,3 +601,4 @@ function build() {
 }
 
 build();
+
