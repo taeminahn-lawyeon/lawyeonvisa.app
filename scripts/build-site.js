@@ -194,7 +194,7 @@ const PAGES = [
   },
   {
     id: 'foreigner-immigration-penalty-fine-deportation-korea-2026', content: 'foreigner-immigration-penalty-fine-deportation-korea-2026',
-    modified: '2026-09-08',
+    modified: '2026-09-09',
     title: { ko: '외국인 출입국 범칙금 처분과 체류 제한 기준 — 법무법인 로연',
              en: 'Immigration Penalty Notices and Stay Restrictions for Foreigners in Korea — Law Firm Lawyeon' },
     desc:  { ko: '출입국 범칙금과 형사상 벌금의 차이, 납부 후에도 남는 체류·출국 문제를 설명합니다. 위반 사실에 대한 대응부터 체류허가, 출국조치와 입국규제까지 연결해 다룹니다.',
@@ -237,7 +237,7 @@ const PAGES = [
   },
   {
     id: 'foreigner-dui-deportation-korea-2026', content: 'foreigner-dui-deportation-korea-2026',
-    modified: '2026-09-08',
+    modified: '2026-09-09',
     title: { ko: '외국인 음주운전 벌금과 사범심사, 강제출국 기준 — 법무법인 로연',
              en: 'Foreigner DUI Fines in Korea: Deportation Criteria and the Immigration Review — Law Firm Lawyeon' },
     desc:  { ko: '음주운전의 형사처벌과 외국인 사범심사는 별개의 판단입니다. 벌금액·반복 처벌 기준, 체류 필요성, 출국조치와 입국규제를 형사변호 단계부터 설명합니다.',
@@ -264,7 +264,7 @@ const PAGES = [
   {
     id: 'foreigner-entry-ban-check-lift-korea-2026', content: 'foreigner-entry-ban-check-lift-korea-2026',
     langs: ['ko', 'en'],
-    modified: '2026-09-08',
+    modified: '2026-09-09',
     title: { ko: '출국명령·강제퇴거 후 입국규제 해제와 재입국 — 법무법인 로연',
              en: 'Entry-Ban Relief and Re-entry After a Departure Order or Deportation — Law Firm Lawyeon' },
     desc:  { ko: '출국명령·강제퇴거의 불복과 입국규제 해제는 효과가 다릅니다. 출국 전 처분 대응, 출국 후 일반·특별해제, 사증과 실제 재입국까지 설명합니다.',
