@@ -152,7 +152,7 @@ serve(async (req) => {
 
       const { data: c, error: cErr } = await supabase
         .from('pre_consultations')
-        .select('id, name, email, phone, category, in_korea, visa, visa_expiry, country, message, lang, created_at')
+        .select('id, name, email, phone, category, in_korea, visa, visa_expiry, country, nationality, has_dual_nationality, second_nationality, message, lang, created_at')
         .eq('id', preConsultationId)
         .single()
 
@@ -165,13 +165,15 @@ serve(async (req) => {
 
       // Stay 한 줄은 국내/해외에 따라 붙는 정보가 달라진다.
       const stay = c.in_korea
-        ? 'KR' + (c.visa ? ` / ${c.visa}` : '') + (c.visa_expiry ? ` / expires ${c.visa_expiry}` : '')
+        ? '한국' + (c.visa ? ` / ${c.visa}` : '') + (c.visa_expiry ? ` / expires ${c.visa_expiry}` : '')
         : 'Abroad' + (c.country ? ` / ${c.country}` : '')
 
       const lines = [
         `[Consultation request]`,
         `· Category: ${c.category || '-'}`,
         `· Stay: ${stay}`,
+        `· Nationality: ${c.nationality || 'Not collected'}`,
+        `· Dual nationality: ${c.has_dual_nationality === true ? 'Yes / ' + c.second_nationality : c.has_dual_nationality === false ? 'No' : 'Not collected'}`,
         `· Name: ${c.name}`,
         `· Email: ${c.email}`,
         `· Phone: ${c.phone || '-'}`,

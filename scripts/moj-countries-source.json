@@ -1,0 +1,1089 @@
+{
+  "verified": "2026-09-11",
+  "sources": [
+    "https://www.hikorea.go.kr/info/CheckExprYmdByPassNoR.pt",
+    "https://www.visa.go.kr/"
+  ],
+  "countries": [
+    {
+      "code": "101",
+      "en": "AFGHANISTAN",
+      "ko": "아프가니스탄"
+    },
+    {
+      "code": "301",
+      "en": "ALBANIA",
+      "ko": "알바니아"
+    },
+    {
+      "code": "502",
+      "en": "ALGERIA",
+      "ko": "알제리"
+    },
+    {
+      "code": "302",
+      "en": "ANDORRA",
+      "ko": "안도라"
+    },
+    {
+      "code": "503",
+      "en": "ANGOLA",
+      "ko": "앙골라"
+    },
+    {
+      "code": "201",
+      "en": "ANTIGUA-BARBUDA",
+      "ko": "앤티카바부다"
+    },
+    {
+      "code": "202",
+      "en": "ARGENTINA",
+      "ko": "아르헨티나"
+    },
+    {
+      "code": "304",
+      "en": "ARMENIA",
+      "ko": "아르메니아"
+    },
+    {
+      "code": "404",
+      "en": "AUSTRALIA",
+      "ko": "오스트레일리아"
+    },
+    {
+      "code": "303",
+      "en": "AUSTRIA",
+      "ko": "오스트리아"
+    },
+    {
+      "code": "305",
+      "en": "AZERBAIJAN",
+      "ko": "아제르바이잔"
+    },
+    {
+      "code": "205",
+      "en": "BAHAMAS",
+      "ko": "바하마"
+    },
+    {
+      "code": "104",
+      "en": "BAHRAIN",
+      "ko": "바레인"
+    },
+    {
+      "code": "105",
+      "en": "BANGLADESH",
+      "ko": "방글라데시"
+    },
+    {
+      "code": "206",
+      "en": "BARBADOS",
+      "ko": "바베이도스"
+    },
+    {
+      "code": "308",
+      "en": "BELARUS",
+      "ko": "벨라루스"
+    },
+    {
+      "code": "306",
+      "en": "BELGIUM",
+      "ko": "벨기에"
+    },
+    {
+      "code": "207",
+      "en": "BELIZE",
+      "ko": "벨리즈"
+    },
+    {
+      "code": "520",
+      "en": "BENIN",
+      "ko": "베냉"
+    },
+    {
+      "code": "210",
+      "en": "BERMUDA",
+      "ko": "버뮤다"
+    },
+    {
+      "code": "106",
+      "en": "BHUTAN",
+      "ko": "부탄"
+    },
+    {
+      "code": "208",
+      "en": "BOLIVIA",
+      "ko": "볼리비아"
+    },
+    {
+      "code": "309",
+      "en": "BOSNIA-HERCEGOVINA",
+      "ko": "보스니아-헤르체고비나"
+    },
+    {
+      "code": "506",
+      "en": "BOTSWANA",
+      "ko": "보츠와나"
+    },
+    {
+      "code": "209",
+      "en": "BRAZIL",
+      "ko": "브라질"
+    },
+    {
+      "code": "318",
+      "en": "BRITISH NATIONAL OVERSEAS",
+      "ko": "영국외지민"
+    },
+    {
+      "code": "319",
+      "en": "BRITISH OVERSEAS CITIZEN",
+      "ko": "영국외지시민"
+    },
+    {
+      "code": "317",
+      "en": "BRITISH OVERSEAS TERRITORIES CITIZEN",
+      "ko": "영국해외영토시민"
+    },
+    {
+      "code": "314",
+      "en": "BRITISH PROTECTED PERSON",
+      "ko": "영국보호민"
+    },
+    {
+      "code": "315",
+      "en": "BRITISH SUBJECT",
+      "ko": "영국속국민"
+    },
+    {
+      "code": "107",
+      "en": "BRUNEI",
+      "ko": "브루나이"
+    },
+    {
+      "code": "307",
+      "en": "BULGARIA",
+      "ko": "불가리아"
+    },
+    {
+      "code": "589",
+      "en": "BURKINA FASO",
+      "ko": "부르키나파소"
+    },
+    {
+      "code": "507",
+      "en": "BURUNDI",
+      "ko": "부룬디"
+    },
+    {
+      "code": "110",
+      "en": "CAMBODIA",
+      "ko": "캄보디아"
+    },
+    {
+      "code": "510",
+      "en": "CAMEROON",
+      "ko": "카메룬"
+    },
+    {
+      "code": "213",
+      "en": "CANADA",
+      "ko": "캐나다"
+    },
+    {
+      "code": "511",
+      "en": "CANARY IS.",
+      "ko": "카나리아군도"
+    },
+    {
+      "code": "512",
+      "en": "CAPE VERDE",
+      "ko": "카보베르데"
+    },
+    {
+      "code": "513",
+      "en": "CENTRAL AFRICA",
+      "ko": "중앙아프리카공화국"
+    },
+    {
+      "code": "514",
+      "en": "CHAD",
+      "ko": "차드"
+    },
+    {
+      "code": "214",
+      "en": "CHILE",
+      "ko": "칠레"
+    },
+    {
+      "code": "112",
+      "en": "CHINA P. R.",
+      "ko": "중국"
+    },
+    {
+      "code": "120",
+      "en": "CHINA P. R.(HONG KONG)",
+      "ko": "홍콩"
+    },
+    {
+      "code": "142",
+      "en": "CHINA P. R.(MACAO)",
+      "ko": "마카오"
+    },
+    {
+      "code": "113",
+      "en": "CHINA(TAIWAN)",
+      "ko": "타이완"
+    },
+    {
+      "code": "215",
+      "en": "COLOMBIA",
+      "ko": "콜롬비아"
+    },
+    {
+      "code": "515",
+      "en": "COMOROS",
+      "ko": "코모로"
+    },
+    {
+      "code": "517",
+      "en": "CONGO D R",
+      "ko": "콩고민주공화국"
+    },
+    {
+      "code": "412",
+      "en": "COOK IS.",
+      "ko": "쿡아일랜드"
+    },
+    {
+      "code": "216",
+      "en": "COSTA RICA",
+      "ko": "코스타리카"
+    },
+    {
+      "code": "537",
+      "en": "COTE D'IVOIRE",
+      "ko": "코트디부아르"
+    },
+    {
+      "code": "391",
+      "en": "CROATIA",
+      "ko": "크로아티아"
+    },
+    {
+      "code": "217",
+      "en": "CUBA",
+      "ko": "쿠바"
+    },
+    {
+      "code": "114",
+      "en": "CYPRUS",
+      "ko": "키프로스"
+    },
+    {
+      "code": "310",
+      "en": "CZECH",
+      "ko": "체코"
+    },
+    {
+      "code": "313",
+      "en": "DENMARK",
+      "ko": "덴마크"
+    },
+    {
+      "code": "521",
+      "en": "DJIBOUTI",
+      "ko": "지부티"
+    },
+    {
+      "code": "220",
+      "en": "DOMINICA",
+      "ko": "도미니카연방"
+    },
+    {
+      "code": "221",
+      "en": "DOMINICAN REP.",
+      "ko": "도미니카공화국"
+    },
+    {
+      "code": "156",
+      "en": "EAST-TIMOR",
+      "ko": "티모르민주공화국"
+    },
+    {
+      "code": "224",
+      "en": "ECUADOR",
+      "ko": "에콰도르"
+    },
+    {
+      "code": "525",
+      "en": "EGYPT",
+      "ko": "이집트"
+    },
+    {
+      "code": "225",
+      "en": "EL SALVADOR",
+      "ko": "엘살바도르"
+    },
+    {
+      "code": "526",
+      "en": "EQUATOR-GUINEA",
+      "ko": "적도기니"
+    },
+    {
+      "code": "528",
+      "en": "ERITREA",
+      "ko": "에리트레아"
+    },
+    {
+      "code": "312",
+      "en": "ESTONIA",
+      "ko": "에스토니아"
+    },
+    {
+      "code": "579",
+      "en": "ESWATINI",
+      "ko": "에스와티니"
+    },
+    {
+      "code": "527",
+      "en": "ETHIOPIA",
+      "ko": "에티오피아"
+    },
+    {
+      "code": "418",
+      "en": "FIJI",
+      "ko": "피지"
+    },
+    {
+      "code": "320",
+      "en": "FINLAND",
+      "ko": "핀란드"
+    },
+    {
+      "code": "321",
+      "en": "FRANCE",
+      "ko": "프랑스"
+    },
+    {
+      "code": "530",
+      "en": "GABON",
+      "ko": "가봉"
+    },
+    {
+      "code": "531",
+      "en": "GAMBIA",
+      "ko": "감비아"
+    },
+    {
+      "code": "323",
+      "en": "GEORGIA",
+      "ko": "조지아"
+    },
+    {
+      "code": "324",
+      "en": "GERMANY F.R",
+      "ko": "독일"
+    },
+    {
+      "code": "532",
+      "en": "GHANA",
+      "ko": "가나"
+    },
+    {
+      "code": "326",
+      "en": "GREECE",
+      "ko": "그리스"
+    },
+    {
+      "code": "328",
+      "en": "GREENLAND",
+      "ko": "그린란드"
+    },
+    {
+      "code": "229",
+      "en": "GRENADA",
+      "ko": "그레나다"
+    },
+    {
+      "code": "423",
+      "en": "GUAM",
+      "ko": "괌"
+    },
+    {
+      "code": "231",
+      "en": "GUATEMALA",
+      "ko": "과테말라"
+    },
+    {
+      "code": "533",
+      "en": "GUINEA",
+      "ko": "기니"
+    },
+    {
+      "code": "534",
+      "en": "GUINEA BISSAU",
+      "ko": "기니비사우"
+    },
+    {
+      "code": "232",
+      "en": "GUYANA",
+      "ko": "가이아나"
+    },
+    {
+      "code": "235",
+      "en": "HAITI",
+      "ko": "아이티"
+    },
+    {
+      "code": "390",
+      "en": "HOLY SEE",
+      "ko": "교황청"
+    },
+    {
+      "code": "236",
+      "en": "HONDURAS",
+      "ko": "온두라스"
+    },
+    {
+      "code": "121",
+      "en": "HONG KONG D.I.",
+      "ko": "홍콩거주난민"
+    },
+    {
+      "code": "329",
+      "en": "HUNGARY",
+      "ko": "헝가리"
+    },
+    {
+      "code": "333",
+      "en": "ICELAND",
+      "ko": "아이슬란드"
+    },
+    {
+      "code": "124",
+      "en": "INDIA",
+      "ko": "인도"
+    },
+    {
+      "code": "125",
+      "en": "INDONESIA",
+      "ko": "인도네시아"
+    },
+    {
+      "code": "126",
+      "en": "IRAN",
+      "ko": "이란"
+    },
+    {
+      "code": "127",
+      "en": "IRAQ",
+      "ko": "이라크"
+    },
+    {
+      "code": "334",
+      "en": "IRELAND",
+      "ko": "아일랜드"
+    },
+    {
+      "code": "128",
+      "en": "ISRAEL",
+      "ko": "이스라엘"
+    },
+    {
+      "code": "335",
+      "en": "ITALY",
+      "ko": "이탈리아"
+    },
+    {
+      "code": "240",
+      "en": "JAMAICA",
+      "ko": "자메이카"
+    },
+    {
+      "code": "130",
+      "en": "JAPAN",
+      "ko": "일본"
+    },
+    {
+      "code": "131",
+      "en": "JORDAN",
+      "ko": "요르단"
+    },
+    {
+      "code": "133",
+      "en": "KAZAKHSTAN",
+      "ko": "카자흐스탄"
+    },
+    {
+      "code": "540",
+      "en": "KENYA",
+      "ko": "케냐"
+    },
+    {
+      "code": "429",
+      "en": "KIRIBATI",
+      "ko": "키리바시"
+    },
+    {
+      "code": "135",
+      "en": "KUWAIT",
+      "ko": "쿠웨이트"
+    },
+    {
+      "code": "134",
+      "en": "KYRGYZ REPUBLIC",
+      "ko": "키르기즈"
+    },
+    {
+      "code": "138",
+      "en": "LAOS",
+      "ko": "라오스"
+    },
+    {
+      "code": "339",
+      "en": "LATVIA",
+      "ko": "라트비아"
+    },
+    {
+      "code": "139",
+      "en": "LEBANON",
+      "ko": "레바논"
+    },
+    {
+      "code": "542",
+      "en": "LESOTHO",
+      "ko": "레소토"
+    },
+    {
+      "code": "543",
+      "en": "LIBERIA",
+      "ko": "라이베리아"
+    },
+    {
+      "code": "544",
+      "en": "LIBYA",
+      "ko": "리비아"
+    },
+    {
+      "code": "340",
+      "en": "LIECHTENSTEIN",
+      "ko": "리히텐슈타인"
+    },
+    {
+      "code": "342",
+      "en": "LITHUANIA",
+      "ko": "리투아니아"
+    },
+    {
+      "code": "341",
+      "en": "LUXEMBOURG",
+      "ko": "룩셈부르크"
+    },
+    {
+      "code": "343",
+      "en": "MACEDONIA",
+      "ko": "북마케도니아"
+    },
+    {
+      "code": "550",
+      "en": "MADAGASCAR",
+      "ko": "마다가스카르"
+    },
+    {
+      "code": "551",
+      "en": "MALAWI",
+      "ko": "말라위"
+    },
+    {
+      "code": "143",
+      "en": "MALAYSIA",
+      "ko": "말레이시아"
+    },
+    {
+      "code": "144",
+      "en": "MALDIVES",
+      "ko": "몰디브"
+    },
+    {
+      "code": "552",
+      "en": "MALI",
+      "ko": "말리"
+    },
+    {
+      "code": "344",
+      "en": "MALTA",
+      "ko": "몰타"
+    },
+    {
+      "code": "437",
+      "en": "MARSHALL ISLANDS",
+      "ko": "마샬군도"
+    },
+    {
+      "code": "553",
+      "en": "MAURITANIA",
+      "ko": "모리타니"
+    },
+    {
+      "code": "554",
+      "en": "MAURITIUS",
+      "ko": "모리셔스"
+    },
+    {
+      "code": "248",
+      "en": "MEXICO",
+      "ko": "멕시코"
+    },
+    {
+      "code": "435",
+      "en": "MICRONESIA",
+      "ko": "미이크로네시아"
+    },
+    {
+      "code": "346",
+      "en": "MOLDOVA",
+      "ko": "몰도바"
+    },
+    {
+      "code": "345",
+      "en": "MONACO",
+      "ko": "모나코"
+    },
+    {
+      "code": "145",
+      "en": "MONGOLIA",
+      "ko": "몽골"
+    },
+    {
+      "code": "347",
+      "en": "MONTENEGRO",
+      "ko": "몬테네그로"
+    },
+    {
+      "code": "555",
+      "en": "MOROCCO",
+      "ko": "모로코"
+    },
+    {
+      "code": "556",
+      "en": "MOZAMBIQUE",
+      "ko": "모잠비크"
+    },
+    {
+      "code": "108",
+      "en": "MYANMAR",
+      "ko": "미얀마"
+    },
+    {
+      "code": "560",
+      "en": "NAMIBIA",
+      "ko": "나미비아"
+    },
+    {
+      "code": "441",
+      "en": "NAURU",
+      "ko": "나우루"
+    },
+    {
+      "code": "148",
+      "en": "NEPAL",
+      "ko": "네팔"
+    },
+    {
+      "code": "350",
+      "en": "NETHERLANDS",
+      "ko": "네덜란드"
+    },
+    {
+      "code": "443",
+      "en": "NEW CALEDONIA",
+      "ko": "뉴칼레도니아"
+    },
+    {
+      "code": "446",
+      "en": "NEW ZEALAND",
+      "ko": "뉴질랜드"
+    },
+    {
+      "code": "252",
+      "en": "NICARAGUA",
+      "ko": "니카라과"
+    },
+    {
+      "code": "561",
+      "en": "NIGER",
+      "ko": "니제르"
+    },
+    {
+      "code": "562",
+      "en": "NIGERIA",
+      "ko": "나이지리아"
+    },
+    {
+      "code": "447",
+      "en": "NIUE",
+      "ko": "니우에"
+    },
+    {
+      "code": "352",
+      "en": "NORWAY",
+      "ko": "노르웨이"
+    },
+    {
+      "code": "150",
+      "en": "OMAN",
+      "ko": "오만"
+    },
+    {
+      "code": "153",
+      "en": "PAKISTAN",
+      "ko": "파키스탄"
+    },
+    {
+      "code": "451",
+      "en": "PALAU",
+      "ko": "팔라우"
+    },
+    {
+      "code": "154",
+      "en": "PALESTINE",
+      "ko": "팔레스타인"
+    },
+    {
+      "code": "255",
+      "en": "PANAMA",
+      "ko": "파나마"
+    },
+    {
+      "code": "452",
+      "en": "PAPUA NEW GUINEA",
+      "ko": "파푸아뉴기니"
+    },
+    {
+      "code": "256",
+      "en": "PARAGUAY",
+      "ko": "파라과이"
+    },
+    {
+      "code": "257",
+      "en": "PERU",
+      "ko": "페루"
+    },
+    {
+      "code": "155",
+      "en": "PHILIPPINES",
+      "ko": "필리핀"
+    },
+    {
+      "code": "360",
+      "en": "POLAND",
+      "ko": "폴란드"
+    },
+    {
+      "code": "361",
+      "en": "PORTUGAL",
+      "ko": "포르투갈"
+    },
+    {
+      "code": "258",
+      "en": "PUERTO RICO",
+      "ko": "푸에르토리코"
+    },
+    {
+      "code": "159",
+      "en": "QATAR",
+      "ko": "카타르"
+    },
+    {
+      "code": "337",
+      "en": "REPUBLIC OF KOSOVO",
+      "ko": "코소보"
+    },
+    {
+      "code": "367",
+      "en": "REPUBLIC OF SERBIA",
+      "ko": "세르비아"
+    },
+    {
+      "code": "580",
+      "en": "REPUBLIC OF SOUTH SUDAN",
+      "ko": "남수단공화국"
+    },
+    {
+      "code": "516",
+      "en": "REPUBLIC OF THE CONGO",
+      "ko": "콩고"
+    },
+    {
+      "code": "365",
+      "en": "ROMANIA",
+      "ko": "루마니아"
+    },
+    {
+      "code": "366",
+      "en": "RUSSIA",
+      "ko": "러시아(연방)"
+    },
+    {
+      "code": "566",
+      "en": "RWANDA",
+      "ko": "르완다"
+    },
+    {
+      "code": "461",
+      "en": "SAMOA",
+      "ko": "사모아"
+    },
+    {
+      "code": "371",
+      "en": "SAN MARINO",
+      "ko": "산마리노"
+    },
+    {
+      "code": "571",
+      "en": "SAOTOME-PRINCIPE",
+      "ko": "상투메프린시페"
+    },
+    {
+      "code": "162",
+      "en": "SAUDI ARABIA",
+      "ko": "사우디아라비아"
+    },
+    {
+      "code": "572",
+      "en": "SENEGAL",
+      "ko": "세네갈"
+    },
+    {
+      "code": "573",
+      "en": "SEYCHELLES",
+      "ko": "세이셸"
+    },
+    {
+      "code": "574",
+      "en": "SIERRA LEONE",
+      "ko": "시에라리온"
+    },
+    {
+      "code": "164",
+      "en": "SINGAPORE",
+      "ko": "싱가포르"
+    },
+    {
+      "code": "368",
+      "en": "SLOVAK",
+      "ko": "슬로바크"
+    },
+    {
+      "code": "370",
+      "en": "SLOVENIA",
+      "ko": "슬로베니아"
+    },
+    {
+      "code": "463",
+      "en": "SOLOMON IS.",
+      "ko": "솔로몬군도"
+    },
+    {
+      "code": "575",
+      "en": "SOMALIA",
+      "ko": "소말리아"
+    },
+    {
+      "code": "576",
+      "en": "SOUTH AFRICA",
+      "ko": "남아프리카공화국"
+    },
+    {
+      "code": "372",
+      "en": "SPAIN",
+      "ko": "스페인"
+    },
+    {
+      "code": "111",
+      "en": "SRI LANKA",
+      "ko": "스리랑카"
+    },
+    {
+      "code": "262",
+      "en": "ST. KITTS-NEVIS",
+      "ko": "세인트크리스토퍼네비스"
+    },
+    {
+      "code": "263",
+      "en": "ST. LUCIA",
+      "ko": "세인트루시아"
+    },
+    {
+      "code": "264",
+      "en": "ST. VINCENT",
+      "ko": "세인트빈센트그레나딘"
+    },
+    {
+      "code": "578",
+      "en": "SUDAN",
+      "ko": "수단"
+    },
+    {
+      "code": "265",
+      "en": "SURINAM",
+      "ko": "수리남"
+    },
+    {
+      "code": "375",
+      "en": "SVALBARD AND JAN MAYEN I.",
+      "ko": "스발바르"
+    },
+    {
+      "code": "373",
+      "en": "SWEDEN",
+      "ko": "스웨덴"
+    },
+    {
+      "code": "374",
+      "en": "SWITZERLAND",
+      "ko": "스위스"
+    },
+    {
+      "code": "165",
+      "en": "SYRIA",
+      "ko": "시리아"
+    },
+    {
+      "code": "169",
+      "en": "TAJIKISTAN",
+      "ko": "타지키스탄"
+    },
+    {
+      "code": "583",
+      "en": "TANZANIA",
+      "ko": "탄자니아"
+    },
+    {
+      "code": "170",
+      "en": "THAILAND",
+      "ko": "타이"
+    },
+    {
+      "code": "584",
+      "en": "TOGO",
+      "ko": "토고"
+    },
+    {
+      "code": "473",
+      "en": "TONGA",
+      "ko": "통가"
+    },
+    {
+      "code": "268",
+      "en": "TRINIDAD-TOBAGO",
+      "ko": "트리니다드토바고"
+    },
+    {
+      "code": "585",
+      "en": "TUNISIA",
+      "ko": "튀니지"
+    },
+    {
+      "code": "171",
+      "en": "TURKIYE",
+      "ko": "튀르키예"
+    },
+    {
+      "code": "172",
+      "en": "TURKMENISTAN",
+      "ko": "투르크메니스탄"
+    },
+    {
+      "code": "475",
+      "en": "TUVALU",
+      "ko": "투발루"
+    },
+    {
+      "code": "180",
+      "en": "U.A.E",
+      "ko": "아랍에미리트연합"
+    },
+    {
+      "code": "588",
+      "en": "UGANDA",
+      "ko": "우간다"
+    },
+    {
+      "code": "378",
+      "en": "UKRAINE",
+      "ko": "우크라이나"
+    },
+    {
+      "code": "316",
+      "en": "UNITED KINGDOM",
+      "ko": "영국"
+    },
+    {
+      "code": "275",
+      "en": "UNITED STATES",
+      "ko": "미국"
+    },
+    {
+      "code": "274",
+      "en": "URUGUAY",
+      "ko": "우루과이"
+    },
+    {
+      "code": "181",
+      "en": "UZBEKISTAN",
+      "ko": "우즈베키스탄"
+    },
+    {
+      "code": "485",
+      "en": "VANUATU",
+      "ko": "바누아투"
+    },
+    {
+      "code": "280",
+      "en": "VENEZUELA",
+      "ko": "베네수엘라"
+    },
+    {
+      "code": "185",
+      "en": "VIETNAM",
+      "ko": "베트남"
+    },
+    {
+      "code": "191",
+      "en": "YEMEN",
+      "ko": "예멘공화국"
+    },
+    {
+      "code": "595",
+      "en": "ZAMBIA",
+      "ko": "잠비아"
+    },
+    {
+      "code": "565",
+      "en": "ZIMBABWE",
+      "ko": "짐바브웨"
+    },
+    {
+      "code": "100",
+      "ko": "한국",
+      "en": "REPUBLIC OF KOREA"
+    },
+    {
+      "code": "118",
+      "ko": "북한",
+      "en": "DEMOCRATIC PEOPLE'S REPUBLIC OF KOREA"
+    },
+    {
+      "code": "600",
+      "ko": "무국적",
+      "en": "STATELESS"
+    },
+    {
+      "code": "999",
+      "ko": "국적불명",
+      "en": "UNKNOWN NATIONALITY"
+    }
+  ]
+}

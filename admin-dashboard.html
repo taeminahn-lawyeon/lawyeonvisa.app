@@ -9,7 +9,7 @@
     
     <!-- Supabase 라이브러리 (head에서 먼저 로드) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-client.js?v=20260715"></script>
+    <script src="js/supabase-client.js?v=20260911"></script>
     <script src="js/business-immigration.js"></script>
     <style>
         * {
@@ -2226,7 +2226,7 @@
             const status = toolbarValue('preConsultStatusFilter');
             const rows = preConsultations.filter(c =>
                 (!status || (c.status || 'requested') === status)
-                && textMatch(q, c.name, c.email, c.phone, c.category, c.country, c.visa, c.message));
+                && textMatch(q, c.name, c.email, c.phone, c.category, c.country, c.nationality, c.second_nationality, c.visa, c.message));
 
             document.getElementById('preConsultCount').textContent = listCountLabel(rows.length, preConsultations.length);
             if (!rows.length) {
@@ -2245,6 +2245,7 @@
                             <th>이메일</th>
                             <th>연락처</th>
                             <th>분야</th>
+                            <th>국적</th>
                             <th>체류</th>
                             <th>상담 내용</th>
                             <th>상태</th>
@@ -2259,6 +2260,11 @@
                 const stay = c.in_korea
                     ? '국내' + (c.visa ? ` / ${escCorp(c.visa)}` : '') + (c.visa_expiry ? `<br><span style="color:#6B7684;font-size:12px;">~ ${escCorp(c.visa_expiry)}</span>` : '')
                     : '해외' + (c.country ? ` / ${escCorp(c.country)}` : '');
+                const citizenship = c.nationality
+                    ? escCorp(c.nationality) + (c.has_dual_nationality === true
+                        ? `<br><span style="color:#6B7684;">이중국적: ${escCorp(c.second_nationality)}</span>`
+                        : c.has_dual_nationality === false ? '<br><span style="color:#6B7684;">이중국적 없음</span>' : '')
+                    : '<span style="color:#6B7684;">미수집</span>';
                 const subject = encodeURIComponent(`[법무법인 로연] 사전상담 회신 — ${c.name}`);
                 const email = `<a href="mailto:${escCorp(c.email)}?subject=${subject}" style="color:#887668;">${escCorp(c.email)}</a>`;
                 const phone = c.phone ? `<a href="tel:${escCorp(c.phone)}" style="color:#887668;text-decoration:none;">${escCorp(c.phone)}</a>` : '-';
@@ -2273,6 +2279,7 @@
                         <td>${email}</td>
                         <td>${phone}</td>
                         <td>${escCorp(c.category) || '-'}</td>
+                        <td>${citizenship}</td>
                         <td>${stay}</td>
                         ${memoCellHtml(c.message)}
                         <td>
