@@ -40,7 +40,7 @@ const SCRIPTS = '<script src="__BASE__js/site.js?v=11"></script>';
 // Opt in per page with `supabase: true` in PAGES.
 const SUPABASE_SCRIPTS = [
   '<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>',
-  '<script src="__BASE__js/supabase-client.js?v=20260730"></script>',
+  '<script src="__BASE__js/supabase-client.js?v=20260911"></script>',
 ].join('\n');
 
 // 사이트 이름은 언어와 무관하게 하나로 고정한다.

@@ -9,7 +9,8 @@
 .consult-intake .seg{display:flex;gap:10px}
 .consult-intake .seg label{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--rule-d);border-radius:3px;padding:11px;cursor:pointer;font-size:14.5px;color:var(--ink);font-weight:500}
 .consult-intake .seg label.on{border-color:var(--btn);background:var(--card-2);font-weight:700}
-.consult-intake .seg input{display:none}
+.consult-intake .seg input{width:16px;height:16px;margin:0;padding:0;flex:none;accent-color:var(--btn)}
+.consult-intake .field[hidden]{display:none}
 .consult-intake .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .steps{list-style:none;margin:0;padding:0}
 .steps li{position:relative;padding:0 0 18px 34px;font-size:14px;line-height:1.6;color:var(--ink)}
@@ -63,6 +64,25 @@
                         <option value="사업·투자">Business &amp; Investment</option>
                         <option value="기타">Other</option>
                     </select>
+                </div>
+
+                <div class="two">
+                    <div class="field">
+                        <label for="cNationality">Current nationality <span class="req">*</span></label>
+                        <select id="cNationality" required><option value="">Select your nationality</option></select>
+                    </div>
+                    <div class="field">
+                        <label for="cDualNationality">Do you hold dual nationality? <span class="req">*</span></label>
+                        <select id="cDualNationality" required>
+                            <option value="">Select an option</option>
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="secondNationalityField" class="field" hidden>
+                    <label for="cSecondNationality">Second nationality <span class="req">*</span></label>
+                    <select id="cSecondNationality" disabled><option value="">Select your second nationality</option></select>
                 </div>
 
                 <div class="field">
@@ -127,7 +147,7 @@
                 </div>
 
                 <div id="countryField" class="field" style="display:none">
-                    <label>Current country of residence</label>
+                    <label for="cCountry">Current country of residence <span class="req">*</span></label>
                     <select id="cCountry"><option value="" selected>Select a country</option></select>
                 </div>
 
@@ -143,7 +163,7 @@
                     <label><input type="checkbox" id="consentChk"><span>I agree to the Terms of Service and Privacy Policy, and consent to the collection, use and provision of my personal information for consultation purposes.</span></label>
                     <div class="links">
                         <a href="__BASE__terms-of-service?v=2" target="_blank" rel="noopener">Terms of Service</a>
-                        <a href="__BASE__privacy-policy?v=2" target="_blank" rel="noopener">Privacy Policy</a>
+                        <a href="__BASE__privacy-policy?v=20260911" target="_blank" rel="noopener">Privacy Policy</a>
                     </div>
                 </div>
                 <button class="btn btn-primary btn-block" id="consultBtn" disabled>Apply for pre-consultation</button>
@@ -175,79 +195,5 @@
     </div>
 </div>
 
-<script src="__BASE__js/countries.js?v=1"></script>
-<script>
-(function(){
-    var LANG='en';
-    var STR={ agree:'Please agree to the collection, use and provision of your personal information.',
-        need:'Please enter your name, email, phone, matter category and whether you are in Korea.',
-        badEmail:'Please check your email address — this is where we will reply.',
-        proc:'Sending…', done:'Application received', cta:'Apply for pre-consultation',
-        err:'We could not send your application. Please try again, or call +82-2-2039-0544.',
-        confirm:function(n,e){ return n+', your pre-consultation application has been received. We will review your matter and reply to '+e+'.'; } };
-
-    var name=document.getElementById('cName'), email=document.getElementById('cEmail'),
-        phone=document.getElementById('cPhone'), category=document.getElementById('cCategory'),
-        visa=document.getElementById('cVisa'), expiry=document.getElementById('cExpiry'),
-        country=document.getElementById('cCountry'), memo=document.getElementById('cMemo'),
-        hp=document.getElementById('cCompanyHp'), chk=document.getElementById('consentChk'),
-        btn=document.getElementById('consultBtn');
-    var visaFields=document.getElementById('visaFields'), countryField=document.getElementById('countryField');
-    var seg=document.getElementById('inKoreaSeg');
-    var inKorea=null, submitting=false;
-
-    if(window.countryOptions){ country.innerHTML='<option value="" selected>Select a country</option>'+window.countryOptions(LANG); }
-
-    Array.prototype.forEach.call(seg.querySelectorAll('label'), function(l){
-        l.addEventListener('click', function(){
-            inKorea = l.getAttribute('data-v')==='yes';
-            Array.prototype.forEach.call(seg.querySelectorAll('label'), function(x){ x.classList.remove('on'); });
-            l.classList.add('on');
-            l.querySelector('input').checked=true;
-            visaFields.style.display = inKorea ? '' : 'none';
-            countryField.style.display = inKorea ? 'none' : '';
-            sync();
-        });
-    });
-
-    function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
-
-    function sync(){
-        var ok = name.value.trim() && email.value.trim() && phone.value.trim() &&
-                 category.value && inKorea!==null && chk.checked && !submitting;
-        btn.disabled = !ok;
-    }
-    [name,email,phone].forEach(function(i){ i.addEventListener('input', sync); });
-    category.addEventListener('change', sync);
-    chk.addEventListener('change', sync);
-    btn.addEventListener('click', apply);
-
-    async function apply(){
-        if(submitting) return;
-        if(!name.value.trim()||!email.value.trim()||!phone.value.trim()||!category.value||inKorea===null){ alert(STR.need); return; }
-        if(!validEmail(email.value.trim())){ alert(STR.badEmail); email.focus(); return; }
-        if(!chk.checked){ alert(STR.agree); return; }
-
-        submitting=true; btn.disabled=true; btn.textContent=STR.proc;
-        var payload={
-            name:name.value.trim(), email:email.value.trim(), phone:phone.value.trim(),
-            category:category.value, in_korea:inKorea,
-            visa: inKorea ? (visa.value||'') : '',
-            visa_expiry: inKorea ? (expiry.value||'') : '',
-            country: inKorea ? '' : (country.value||''),
-            message: memo.value.trim(), lang:LANG, hp: hp.value
-        };
-        try{
-            if(typeof createPreConsultation!=='function'){ throw new Error('backend not ready'); }
-            var res=await createPreConsultation(payload);
-            if(!res || !res.success){ throw new Error((res && res.error) || 'save failed'); }
-            document.getElementById('confirmText').textContent=STR.confirm(payload.name, payload.email);
-            document.getElementById('confirm').classList.add('show');
-            document.getElementById('confirm').scrollIntoView({ behavior:'smooth', block:'center' });
-            btn.textContent=STR.done;
-        }catch(e){ console.error(e); alert(STR.err); submitting=false; btn.textContent=STR.cta; sync(); }
-    }
-
-    sync();
-})();
-</script>
+<script src="__BASE__js/moj-countries.js?v=20260911"></script>
+<script src="__BASE__js/preconsultation.js?v=20260911"></script>

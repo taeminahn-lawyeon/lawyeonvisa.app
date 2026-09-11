@@ -580,6 +580,8 @@ async function createPreConsultation(d) {
             return { success: true, data: null, skipped: true };
         }
 
+        if (!window.MojCountries) throw new Error('국가명 목록을 불러오지 못했습니다. 페이지를 새로고침해 주세요.');
+        const identity = window.MojCountries.validate(d);
         const newId = uuidv4();
         const record = {
             id: newId,
@@ -590,7 +592,10 @@ async function createPreConsultation(d) {
             in_korea: !!d.in_korea,
             visa: ((d.visa || '').trim()) || null,
             visa_expiry: d.visa_expiry || null,
-            country: ((d.country || '').trim()) || null,
+            country: identity.country,
+            nationality: identity.nationality,
+            has_dual_nationality: identity.has_dual_nationality,
+            second_nationality: identity.second_nationality,
             message: ((d.message || '').trim()) || null,
             lang: d.lang || 'ko'
         };

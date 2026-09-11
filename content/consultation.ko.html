@@ -9,7 +9,8 @@
 .consult-intake .seg{display:flex;gap:10px}
 .consult-intake .seg label{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--rule-d);border-radius:3px;padding:11px;cursor:pointer;font-size:14.5px;color:var(--ink);font-weight:500}
 .consult-intake .seg label.on{border-color:var(--btn);background:var(--card-2);font-weight:700}
-.consult-intake .seg input{display:none}
+.consult-intake .seg input{width:16px;height:16px;margin:0;padding:0;flex:none;accent-color:var(--btn)}
+.consult-intake .field[hidden]{display:none}
 .consult-intake .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .steps{list-style:none;margin:0;padding:0}
 .steps li{position:relative;padding:0 0 18px 34px;font-size:14px;line-height:1.6;color:var(--ink)}
@@ -63,6 +64,25 @@
                         <option>사업·투자</option>
                         <option>기타</option>
                     </select>
+                </div>
+
+                <div class="two">
+                    <div class="field">
+                        <label for="cNationality">현재 국적 <span class="req">*</span></label>
+                        <select id="cNationality" required><option value="">국적을 선택하세요</option></select>
+                    </div>
+                    <div class="field">
+                        <label for="cDualNationality">이중국적 여부 <span class="req">*</span></label>
+                        <select id="cDualNationality" required>
+                            <option value="">선택하세요</option>
+                            <option value="no">아니요</option>
+                            <option value="yes">예</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="secondNationalityField" class="field" hidden>
+                    <label for="cSecondNationality">두 번째 국적 <span class="req">*</span></label>
+                    <select id="cSecondNationality" disabled><option value="">두 번째 국적을 선택하세요</option></select>
                 </div>
 
                 <div class="field">
@@ -127,7 +147,7 @@
                 </div>
 
                 <div id="countryField" class="field" style="display:none">
-                    <label>현재 거주 국가</label>
+                    <label for="cCountry">현재 거주 국가 <span class="req">*</span></label>
                     <select id="cCountry"><option value="" selected>국가를 선택하세요</option></select>
                 </div>
 
@@ -143,7 +163,7 @@
                     <label><input type="checkbox" id="consentChk"><span>서비스 이용약관 및 개인정보 처리방침에 동의하며, 상담 목적의 개인정보 수집·이용 및 제공에 동의합니다.</span></label>
                     <div class="links">
                         <a href="__BASE__terms-of-service?v=2" target="_blank" rel="noopener">이용약관</a>
-                        <a href="__BASE__privacy-policy?v=2" target="_blank" rel="noopener">개인정보 처리방침</a>
+                        <a href="__BASE__privacy-policy?v=20260911" target="_blank" rel="noopener">개인정보 처리방침</a>
                     </div>
                 </div>
                 <button class="btn btn-primary btn-block" id="consultBtn" disabled>사전상담 신청</button>
@@ -175,79 +195,5 @@
     </div>
 </div>
 
-<script src="__BASE__js/countries.js?v=1"></script>
-<script>
-(function(){
-    var LANG='ko';
-    var STR={ agree:'개인정보 수집·이용 및 제공에 동의해 주세요.',
-        need:'이름·이메일·연락처·사안 분야·체류 여부를 입력해 주세요.',
-        badEmail:'이메일 주소를 확인해 주세요. 이 주소로 회신드립니다.',
-        proc:'전송 중…', done:'신청 접수됨', cta:'사전상담 신청',
-        err:'신청을 전송하지 못했습니다. 다시 시도하시거나 02-2039-0544로 연락 주세요.',
-        confirm:function(n,e){ return n+'님, 사전상담 신청이 접수되었습니다. 사안을 검토한 뒤 '+e+' 로 회신드립니다.'; } };
-
-    var name=document.getElementById('cName'), email=document.getElementById('cEmail'),
-        phone=document.getElementById('cPhone'), category=document.getElementById('cCategory'),
-        visa=document.getElementById('cVisa'), expiry=document.getElementById('cExpiry'),
-        country=document.getElementById('cCountry'), memo=document.getElementById('cMemo'),
-        hp=document.getElementById('cCompanyHp'), chk=document.getElementById('consentChk'),
-        btn=document.getElementById('consultBtn');
-    var visaFields=document.getElementById('visaFields'), countryField=document.getElementById('countryField');
-    var seg=document.getElementById('inKoreaSeg');
-    var inKorea=null, submitting=false;
-
-    if(window.countryOptions){ country.innerHTML='<option value="" selected>국가를 선택하세요</option>'+window.countryOptions(LANG); }
-
-    Array.prototype.forEach.call(seg.querySelectorAll('label'), function(l){
-        l.addEventListener('click', function(){
-            inKorea = l.getAttribute('data-v')==='yes';
-            Array.prototype.forEach.call(seg.querySelectorAll('label'), function(x){ x.classList.remove('on'); });
-            l.classList.add('on');
-            l.querySelector('input').checked=true;
-            visaFields.style.display = inKorea ? '' : 'none';
-            countryField.style.display = inKorea ? 'none' : '';
-            sync();
-        });
-    });
-
-    function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
-
-    function sync(){
-        var ok = name.value.trim() && email.value.trim() && phone.value.trim() &&
-                 category.value && inKorea!==null && chk.checked && !submitting;
-        btn.disabled = !ok;
-    }
-    [name,email,phone].forEach(function(i){ i.addEventListener('input', sync); });
-    category.addEventListener('change', sync);
-    chk.addEventListener('change', sync);
-    btn.addEventListener('click', apply);
-
-    async function apply(){
-        if(submitting) return;
-        if(!name.value.trim()||!email.value.trim()||!phone.value.trim()||!category.value||inKorea===null){ alert(STR.need); return; }
-        if(!validEmail(email.value.trim())){ alert(STR.badEmail); email.focus(); return; }
-        if(!chk.checked){ alert(STR.agree); return; }
-
-        submitting=true; btn.disabled=true; btn.textContent=STR.proc;
-        var payload={
-            name:name.value.trim(), email:email.value.trim(), phone:phone.value.trim(),
-            category:category.value, in_korea:inKorea,
-            visa: inKorea ? (visa.value||'') : '',
-            visa_expiry: inKorea ? (expiry.value||'') : '',
-            country: inKorea ? '' : (country.value||''),
-            message: memo.value.trim(), lang:LANG, hp: hp.value
-        };
-        try{
-            if(typeof createPreConsultation!=='function'){ throw new Error('backend not ready'); }
-            var res=await createPreConsultation(payload);
-            if(!res || !res.success){ throw new Error((res && res.error) || 'save failed'); }
-            document.getElementById('confirmText').textContent=STR.confirm(payload.name, payload.email);
-            document.getElementById('confirm').classList.add('show');
-            document.getElementById('confirm').scrollIntoView({ behavior:'smooth', block:'center' });
-            btn.textContent=STR.done;
-        }catch(e){ console.error(e); alert(STR.err); submitting=false; btn.textContent=STR.cta; sync(); }
-    }
-
-    sync();
-})();
-</script>
+<script src="__BASE__js/moj-countries.js?v=20260911"></script>
+<script src="__BASE__js/preconsultation.js?v=20260911"></script>
