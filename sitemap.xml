@@ -2,15 +2,85 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.lawyeon-immigration.com/terms-of-service</loc>
-    <lastmod>2026-09-11</lastmod>
+    <lastmod>2026-09-17</lastmod>
   </url>
   <url>
     <loc>https://www.lawyeon-immigration.com/privacy-policy</loc>
-    <lastmod>2026-09-11</lastmod>
+    <lastmod>2026-09-17</lastmod>
   </url>
   <url>
     <loc>https://www.lawyeon-immigration.com/refund-policy</loc>
-    <lastmod>2026-09-11</lastmod>
+    <lastmod>2026-09-17</lastmod>
+  </url>
+  <url>
+    <loc>https://www.lawyeon-immigration.com/expertise</loc>
+    <lastmod>2026-09-17</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeon-immigration.com/expertise"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeon-immigration.com/ko/expertise"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lawyeon-immigration.com/expertise"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeon-immigration.com/ko/expertise</loc>
+    <lastmod>2026-09-17</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeon-immigration.com/expertise"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeon-immigration.com/ko/expertise"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lawyeon-immigration.com/expertise"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeon-immigration.com/expertise-criminal</loc>
+    <lastmod>2026-09-17</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeon-immigration.com/expertise-criminal"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeon-immigration.com/ko/expertise-criminal"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lawyeon-immigration.com/expertise-criminal"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeon-immigration.com/ko/expertise-criminal</loc>
+    <lastmod>2026-09-17</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeon-immigration.com/expertise-criminal"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeon-immigration.com/ko/expertise-criminal"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lawyeon-immigration.com/expertise-criminal"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeon-immigration.com/expertise-visa</loc>
+    <lastmod>2026-09-17</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeon-immigration.com/expertise-visa"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeon-immigration.com/ko/expertise-visa"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lawyeon-immigration.com/expertise-visa"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeon-immigration.com/ko/expertise-visa</loc>
+    <lastmod>2026-09-17</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeon-immigration.com/expertise-visa"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeon-immigration.com/ko/expertise-visa"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lawyeon-immigration.com/expertise-visa"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeon-immigration.com/expertise-residence</loc>
+    <lastmod>2026-09-17</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeon-immigration.com/expertise-residence"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeon-immigration.com/ko/expertise-residence"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lawyeon-immigration.com/expertise-residence"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeon-immigration.com/ko/expertise-residence</loc>
+    <lastmod>2026-09-17</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeon-immigration.com/expertise-residence"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeon-immigration.com/ko/expertise-residence"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lawyeon-immigration.com/expertise-residence"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeon-immigration.com/expertise-admin</loc>
+    <lastmod>2026-09-17</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeon-immigration.com/expertise-admin"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeon-immigration.com/ko/expertise-admin"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lawyeon-immigration.com/expertise-admin"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeon-immigration.com/ko/expertise-admin</loc>
+    <lastmod>2026-09-17</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeon-immigration.com/expertise-admin"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeon-immigration.com/ko/expertise-admin"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lawyeon-immigration.com/expertise-admin"/>
   </url>
   <url>
     <loc>https://www.lawyeon-immigration.com/</loc>
