@@ -187,9 +187,10 @@ const PAGES = [
   {
     id: 'foreigner-criminal-fine-deportation-reentry-ban-korea-2026', content: 'foreigner-criminal-fine-deportation-reentry-ban-korea-2026',
     modified: '2026-09-07',
-    title: { ko: '외국인 벌금형과 강제출국, 입국규제 해제 — 법무법인 로연',
+    modifiedKo: '2026-09-17',
+    title: { ko: '외국인 형사판결 확정 후 사범심사와 출국조치·입국규제 대응 — 법무법인 로연',
              en: 'Criminal Fines, Deportation and Entry-Ban Relief for Foreigners in Korea — Law Firm Lawyeon' },
-    desc:  { ko: '외국인 벌금형의 금액·반복 처벌 기준과 출국조치의 재량 판단, 체류허용·입국규제 면제를 설명합니다. 형사변호부터 처분 불복, 규제 해제와 재입국까지 다룹니다.',
+    desc:  { ko: '형사판결 확정 후 출입국 사범심사 진행 순서, 벌금액·죄종별 출국조치와 입국규제, 국익·인도적 사유의 소명 및 변호인 조력을 설명합니다.',
              en: 'Criminal fines in Korea: removal thresholds, immigration discretion, residence exceptions and entry-ban relief, from criminal defense through re-entry.' },
   },
   {
@@ -364,7 +365,7 @@ function articleJsonLd(page, lang, canonical, bodyHtml, ogImage) {
     description: page.desc[lang],
     inLanguage: lang,
     datePublished: date,
-    dateModified: page.modified || date,
+    dateModified: (lang === 'ko' && page.modifiedKo) || page.modified || date,
     image: ogImage,
     mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
     author: { '@type': 'Organization', name: org },
@@ -531,7 +532,7 @@ function build() {
         '__OG_TYPE__': isArticle ? 'article' : 'website',
         '__OG_IMAGE__': ogImage,
         '__ARTICLE_META__': isArticle
-          ? '<meta property="article:published_time" content="' + date + '"><meta property="article:modified_time" content="' + (page.modified || date) + '">'
+          ? '<meta property="article:published_time" content="' + date + '"><meta property="article:modified_time" content="' + ((lang === 'ko' && page.modifiedKo) || page.modified || date) + '">'
           : '',
         '__ARTICLE_JSONLD__': isArticle
           ? articleJsonLd(page, lang, canonical, bodyHtml, ogImage) + '\n' + breadcrumbJsonLd(page, lang, canonical)
