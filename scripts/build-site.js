@@ -57,15 +57,15 @@ const SITE_NAME_ALT = ['법무법인 로연 출입국이민지원센터', 'Law F
 const STRINGS = {
   en: { brandName: 'Law Firm Lawyeon', brandSub: 'Immigration Center',
         siteName: SITE_NAME, siteNameAlt: SITE_NAME_ALT,
-        navAbout: 'About Lawyeon', navInsights: 'Insights', navCases: 'Cases & News', navConsult: 'Consultation',
+        navExpertise: 'Expertise', navInsights: 'Insights', navCases: 'Cases & News', navConsult: 'Consultation',
         headerCta: 'Apply for pre-consultation' },
   ko: { brandName: '법무법인 로연', brandSub: '출입국이민지원센터',
         siteName: SITE_NAME, siteNameAlt: SITE_NAME_ALT,
-        navAbout: '로연 소개', navInsights: '인사이트', navCases: '사례·소식', navConsult: '상담',
+        navExpertise: '업무분야', navInsights: '인사이트', navCases: '사례·소식', navConsult: '상담',
         headerCta: '사전상담 신청' },
   vi: { brandName: 'Law Firm Lawyeon', brandSub: 'Trung tâm Xuất nhập cảnh & Di trú',
         siteName: SITE_NAME, siteNameAlt: SITE_NAME_ALT,
-        navAbout: 'Giới thiệu', navInsights: 'Thông tin pháp lý', navCases: 'Tin tức', navConsult: 'Tư vấn',
+        navExpertise: 'Lĩnh vực hoạt động', navInsights: 'Thông tin pháp lý', navCases: 'Tin tức', navConsult: 'Tư vấn',
         headerCta: 'Đăng ký tư vấn sơ bộ' },
 };
 
@@ -86,6 +86,96 @@ const STATIC_PAGES = ['terms-of-service', 'privacy-policy', 'refund-policy'];
 
 // ---- page registry (add pages here as they are migrated) ----
 const PAGES = [
+  {
+    "id": "expertise",
+    "content": "expertise",
+    "expertise": true,
+    "langs": [
+      "ko",
+      "en"
+    ],
+    "modified": "2026-09-17",
+    "title": {
+      "ko": "업무분야 — 법무법인 로연",
+      "en": "Expertise — Law Firm Lawyeon"
+    },
+    "desc": {
+      "ko": "형사·사범심사, 비자·이민, 거주·국적, 행정 분야의 주요 업무를 소개합니다. 법무법인 로연 출입국이민지원센터.",
+      "en": "Explore Lawyeon’s immigration practice: criminal defense and enforcement, visas, residence and nationality, administrative disputes and claims."
+    }
+  },
+  {
+    "id": "expertise-criminal",
+    "content": "expertise-criminal",
+    "expertise": true,
+    "langs": [
+      "ko",
+      "en"
+    ],
+    "modified": "2026-09-17",
+    "title": {
+      "ko": "형사·사범심사 — 법무법인 로연",
+      "en": "Criminal Defense & Immigration Enforcement — Law Firm Lawyeon"
+    },
+    "desc": {
+      "ko": "형사변호와 판결 후 사범심사, 입국규제 확인·해제, 체류·취업 위반 및 출국조치·보호 대응을 다룹니다.",
+      "en": "Criminal defense and post-judgment immigration review, entry-ban checks and lifting, immigration violations, removal measures and detention."
+    }
+  },
+  {
+    "id": "expertise-visa",
+    "content": "expertise-visa",
+    "expertise": true,
+    "langs": [
+      "ko",
+      "en"
+    ],
+    "modified": "2026-09-17",
+    "title": {
+      "ko": "비자·이민 — 법무법인 로연",
+      "en": "Visas & Immigration — Law Firm Lawyeon"
+    },
+    "desc": {
+      "ko": "취업·구직·전문인력, 사업·창업·외국인투자, 가족 초청과 동반 입국을 위한 사증·체류자격을 검토합니다.",
+      "en": "Visas and immigration advice for employment, professional activities, business, start-ups, foreign investment and family entry."
+    }
+  },
+  {
+    "id": "expertise-residence",
+    "content": "expertise-residence",
+    "expertise": true,
+    "langs": [
+      "ko",
+      "en"
+    ],
+    "modified": "2026-09-17",
+    "title": {
+      "ko": "거주·국적 — 법무법인 로연",
+      "en": "Residence & Nationality — Law Firm Lawyeon"
+    },
+    "desc": {
+      "ko": "거주·영주와 체류자격 유지, 한국 국적·재외동포, 외국인등록·체류기록 정리에 관한 법률 업무를 다룹니다.",
+      "en": "Residence and permanent residence, maintaining status, Korean nationality and overseas Koreans, foreign resident registration and immigration records."
+    }
+  },
+  {
+    "id": "expertise-admin",
+    "content": "expertise-admin",
+    "expertise": true,
+    "langs": [
+      "ko",
+      "en"
+    ],
+    "modified": "2026-09-17",
+    "title": {
+      "ko": "행정 — 법무법인 로연",
+      "en": "Administrative Disputes & Claims — Law Firm Lawyeon"
+    },
+    "desc": {
+      "ko": "출입국 처분에 대한 행정심판·행정소송과 국민연금·투자예치금 등 반환 청구를 대리합니다.",
+      "en": "Administrative appeals and immigration litigation, National Pension lump-sum refunds and investment deposit repayment claims."
+    }
+  },
   {
     id: 'main', content: 'home', jsonld: true, home: true,
     // 홈페이지 title 은 사이트 이름과 정확히 같아야 한다. Google 은 사이트 이름을
@@ -515,7 +605,9 @@ function build() {
         '__DOMAIN__': DOMAIN,
         '__BRAND_NAME__': S.brandName,
         '__BRAND_SUB__': S.brandSub,
-        '__NAV_ABOUT__': S.navAbout,
+        '__NAV_EXPERTISE__': S.navExpertise,
+        '__EXPERTISE_CURRENT__': page.id === 'expertise' ? ' class="expertise-current" aria-current="page"' : (page.id.startsWith('expertise-') ? ' class="expertise-current"' : ''),
+        '__PAGE_STYLES__': page.expertise ? '<link rel="stylesheet" href="__BASE__css/expertise.css?v=1">' : '',
         '__NAV_INSIGHTS__': S.navInsights,
         '__NAV_CASES__': S.navCases,
         '__NAV_CONSULT__': S.navConsult,

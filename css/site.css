@@ -205,7 +205,7 @@ section{padding:74px 0}
 }
 /* Below this width the inline nav cramps — switch to a hamburger menu.
    The EN/한국어 toggle stays visible in the bar, left of the menu icon. */
-@media (max-width:860px){
+@media (max-width:1024px){
     .nav-links,.nav-mypage,.header-actions>.btn{display:none}
     .brand{margin-right:auto}
     .lang{font-size:14px;white-space:nowrap}
