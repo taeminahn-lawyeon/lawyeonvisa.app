@@ -62,11 +62,11 @@ const SITE_NAME_ALT = ['법무법인 로연 출입국이민지원센터', 'Law F
 const STRINGS = {
   en: { brandName: 'Law Firm Lawyeon', brandSub: 'Immigration Center',
         siteName: SITE_NAME, siteNameAlt: SITE_NAME_ALT,
-        navExpertise: 'Expertise', navInsights: 'Insights', navCaseStudies: 'Case Studies', navCases: 'Newsletters & News', navConsult: 'Contact',
+        navExpertise: 'Expertise', navInsights: 'Insights', navCaseStudies: 'Recent Case', navCases: 'Newsletters & News', navConsult: 'Contact',
         navLabel: 'Main navigation' },
   ko: { brandName: '법무법인 로연', brandSub: '출입국이민지원센터',
         siteName: SITE_NAME, siteNameAlt: SITE_NAME_ALT,
-        navExpertise: '업무분야', navInsights: '인사이트', navCaseStudies: '해결사례', navCases: '뉴스레터·소식', navConsult: '문의',
+        navExpertise: '업무분야', navInsights: '인사이트', navCaseStudies: '최근 업무사례', navCases: '뉴스레터·소식', navConsult: '문의',
         navLabel: '주요 메뉴' },
   vi: { brandName: 'Law Firm Lawyeon', brandSub: 'Trung tâm Xuất nhập cảnh & Di trú',
         siteName: SITE_NAME, siteNameAlt: SITE_NAME_ALT,
