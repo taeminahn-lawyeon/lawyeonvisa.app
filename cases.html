@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="favicon.png?v=5">
+<link rel="icon" type="image/x-icon" href="favicon.ico?v=5">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=5">
+<title>Recent Cases — Law Firm Lawyeon</title>
+<meta name="description" content="Recent immigration and administrative matters handled by Law Firm Lawyeon.">
+<link rel="canonical" href="https://www.lawyeon-immigration.com/cases">
+<link rel="alternate" hreflang="en" href="https://www.lawyeon-immigration.com/cases">
+<link rel="alternate" hreflang="ko" href="https://www.lawyeon-immigration.com/ko/cases">
+
+<link rel="alternate" hreflang="x-default" href="https://www.lawyeon-immigration.com/cases">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Recent Cases — Law Firm Lawyeon">
+<meta property="og:description" content="Recent immigration and administrative matters handled by Law Firm Lawyeon.">
+<meta property="og:url" content="https://www.lawyeon-immigration.com/cases">
+<meta property="og:site_name" content="Law Firm Lawyeon Immigration Law Center">
+<meta property="og:image" content="https://www.lawyeon-immigration.com/images/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Recent Cases — Law Firm Lawyeon">
+<meta name="twitter:description" content="Recent immigration and administrative matters handled by Law Firm Lawyeon.">
+<meta name="twitter:image" content="https://www.lawyeon-immigration.com/images/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@700;900&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css?v=e272e2905c25">
+
+
+
+
+</head>
+<body>
+
+<header class="header">
+    <div class="header-content">
+        <a href="/" class="brand">
+            <div>
+                <div class="name">Law Firm Lawyeon</div>
+                <div class="sub">Immigration Law Center</div>
+            </div>
+        </a>
+        <div class="header-actions">
+            <nav class="nav-links" aria-label="Main navigation">
+                <a href="expertise">Expertise</a>
+                <a href="insights">Insights</a>
+                <a href="cases" aria-current="page">Recent Case</a>
+                <a href="newsletters">Newsletters & News</a>
+                <a href="/#consult">Contact</a>
+            </nav>
+            <span class="lang"><a href="cases" class="active">EN</a><span class="sep">·</span><a href="ko/cases">한국어</a></span>
+        </div>
+    </div>
+</header>
+
+<section class="ins-hero"><div class="wrap"><h1 class="ins-hero-title" id="case-heading">Recent Cases</h1><p class="ins-hero-sub">Selected matters handled by Law Firm Lawyeon.</p></div></section>
+<main class="ins-body" aria-labelledby="case-heading"><div class="wrap">
+<div class="list-head"><div class="cat-toggle" id="case-categories" role="group" aria-label="Recent Cases"><button class="ct active" data-cat="all" aria-pressed="true">All</button>
+<span class="ct-div">|</span><button class="ct" data-cat="criminal" aria-pressed="false">Criminal &amp; Immigration Review</button>
+<span class="ct-div">|</span><button class="ct" data-cat="visa" aria-pressed="false">Visa &amp; Immigration</button>
+<span class="ct-div">|</span><button class="ct" data-cat="residence" aria-pressed="false">Residence &amp; Nationality</button>
+<span class="ct-div">|</span><button class="ct" data-cat="admin" aria-pressed="false">Administrative</button></div></div>
+<div class="doc-list" id="case-list">
+        <a class="doc-row" data-cat="admin" href="foreigner-pension-refund-overseas-case-2026">
+            <div class="doc-main"><div class="doc-title">Korean National Pension Refund: Successful Claim Near the Deadline</div><div class="doc-tags"><span>#NationalPension</span><span>#LumpSumRefund</span><span>#OverseasRemittance</span></div></div>
+            <div class="doc-date">2026.08</div>
+        </a>
+        <a class="doc-row" data-cat="criminal" href="f6-immigration-review-no-departure-order-case-2026">
+            <div class="doc-main"><div class="doc-title">F-6 Visa Holder Fined KRW 4 Million: Continued Stay Without a Departure Order</div><div class="doc-tags"><span>#ImmigrationReview</span><span>#MarriageVisa</span><span>#DepartureOrder</span></div></div>
+            <div class="doc-date">2026.08</div>
+        </a>
+
+        </div>
+<div class="doc-empty" id="case-empty" style="display:none">Case studies in this category are being prepared.</div>
+</div></main>
+<script>
+(function(){
+    var tabs=document.querySelectorAll('#case-categories .ct');
+    var rows=document.querySelectorAll('#case-list .doc-row');
+    tabs.forEach(function(tab){tab.addEventListener('click',function(){
+        var cat=tab.getAttribute('data-cat'), count=0;
+        tabs.forEach(function(item){var active=item===tab;item.classList.toggle('active',active);item.setAttribute('aria-pressed',String(active));});
+        rows.forEach(function(row){var show=cat==='all'||row.getAttribute('data-cat')===cat;row.classList.toggle('hidden',!show);if(show)count++;});
+        document.getElementById('case-empty').style.display=count?'none':'';
+    });});
+})();
+</script>
+
+<footer class="footer">
+    <div class="wrap footer-inner">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <div class="fb-name">Law Firm Lawyeon</div>
+                <div class="fb-sub">Immigration Law Center</div>
+                <div class="footer-tel"><span>Telephone</span> <a href="tel:+82220390544">+82-2-2039-0544</a></div>
+                <div class="footer-fax">Fax 070-8230-0545</div>
+            </div>
+            <div class="footer-office">
+                <h3>Seoul Office</h3>
+                <address>164 Gonghang-daero, Gangseo-gu, Seoul, 5F #503 (Magok-dong, Ryuma Tower)</address>
+                <p class="office-representative">Rep. J.W. Min</p>
+            </div>
+            <div class="footer-office">
+                <h3>Gwangju Office</h3>
+                <address>1 Junbeop-ro, Dong-gu, Gwangju, 3F (Jisan-dong, Choseok Bldg)</address>
+                <p class="office-representative">Rep. S.H. Bong</p>
+            </div>
+        </div>
+        <div class="footer-info">
+            <div class="row"><b>Entity</b><span>Law Firm Lawyeon</span></div>
+            <div class="row"><b>Business Reg. No.</b><span>391-85-03007 (Seoul Office)</span></div>
+            <div class="row"><b>E-commerce Reg.</b><span>2025-Seoul Gangseo-3193</span></div>
+            <div class="row"><b>Advertising Attorneys</b><span>D.H. Nam, J.W. Min</span></div>
+        </div>
+        <nav class="footer-links" aria-label="Firm information and policies">
+                <a href="privacy-policy?v=2">Privacy Policy</a>
+                <a href="terms-of-service?v=2">Terms of Service</a>
+                <a href="price-list">Fees</a>
+                <a href="refund-policy">Refund Policy</a>
+                <a href="https://lawyeon.com/" target="_blank" rel="noopener">Law Firm Lawyeon</a>
+        </nav>
+        <p class="copyright">All legal services on this site are provided by Law Firm Lawyeon. © Law Firm Lawyeon Immigration Law Center</p>
+    </div>
+</footer>
+
+<script src="js/site.js?v=14"></script>
+</body>
+</html>

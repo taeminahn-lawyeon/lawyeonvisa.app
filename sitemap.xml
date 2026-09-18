@@ -265,6 +265,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lawyeon-immigration.com/corporate-advisory"/>
   </url>
   <url>
+    <loc>https://www.lawyeon-immigration.com/cases</loc>
+    <lastmod>2026-09-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeon-immigration.com/cases"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeon-immigration.com/ko/cases"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lawyeon-immigration.com/cases"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeon-immigration.com/ko/cases</loc>
+    <lastmod>2026-09-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeon-immigration.com/cases"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeon-immigration.com/ko/cases"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lawyeon-immigration.com/cases"/>
+  </url>
+  <url>
     <loc>https://www.lawyeon-immigration.com/insights</loc>
     <lastmod>2026-09-18</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeon-immigration.com/insights"/>
