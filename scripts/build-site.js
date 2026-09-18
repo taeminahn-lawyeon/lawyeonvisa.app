@@ -92,89 +92,140 @@ const STATIC_PAGES = ['terms-of-service', 'privacy-policy', 'refund-policy'];
 
 // ---- page registry (add pages here as they are migrated) ----
 const PAGES = [
-  {"id": "f4-visa-dui-departure-order-humanitarian-korea", "content": "f4-visa-dui-departure-order-humanitarian-korea", "langs": ["ko"], "title": {"ko": "재외동포 F-4 비자, 음주운전 후 출국명령과 인도적 사유 — 법무법인 로연"}, "desc": {"ko": "재외동포(F-4)의 음주운전 출국명령에서 인도적 사유가 어떻게 평가되는지 설명합니다. 한국인 배우자가 없는 가족의 국내 생활기반과 체류허용 판단의 누락, 재범 사건의 소명 쟁점을 다룹니다."}},
   {
-  "id": "newsletters",
-  "content": "newsletters",
-  "langs": [
-    "ko",
-    "en"
-  ],
-  "modified": "2026-09-18",
-  "title": {
-    "ko": "뉴스레터 — 판결·법령·정책의 시사점 — 법무법인 로연",
-    "en": "Newsletters — Judgments, Law & Policy — Law Firm Lawyeon"
-  },
-  "desc": {
-    "ko": "주요 판결과 법령·매뉴얼·정책 변화가 출입국·국적 사건의 판단과 대응에 미치는 영향을 분석합니다.",
-    "en": "Legal analysis of significant judgments and changes in immigration law, policy and guidance, with implications for individual matters."
-  }
-},
-  {
-  "id": "news",
-  "content": "news",
-  "langs": [
-    "ko",
-    "en"
-  ],
-  "modified": "2026-09-18",
-  "title": {
-    "ko": "로연 소식 — 법무법인 로연",
-    "en": "Lawyeon News — Law Firm Lawyeon"
-  },
-  "desc": {
-    "ko": "법무법인 로연의 업무 협약과 대외 활동 소식을 전합니다.",
-    "en": "Partnerships, professional activities and news from Law Firm Lawyeon."
-  }
-},
-  {
-  "id": "f6-visa-extension-separation-before-divorce-judgment",
-  "content": "f6-visa-extension-separation-before-divorce-judgment",
-  "langs": [
-    "ko",
-    "en"
-  ],
-  "section": "newsletters",
-  "modified": "2026-09-18",
-  "title": {
-    "ko": "별거 중 F-6 비자 연장: 이혼 확정 전에도 혼인단절을 인정받을 수 있는가 — 법무법인 로연",
-    "en": "F-6 Visa Extension During Separation: Is a Final Divorce Required? — Law Firm Lawyeon"
-  },
-  "desc": {
-    "ko": "서울행정법원 2025구단53041 판결을 통해 이혼 확정 전 F-6-3 적용, 혼인 유지와 파탄 책임의 판단, 체류연장 불허 대응에 갖는 의미를 분석합니다.",
-    "en": "A Seoul Administrative Court judgment examines F-6-3 eligibility before divorce, responsibility for marital breakdown, and evidence in an F-6 extension refusal."
-  }
-},
-  {
-  "id": "e74-e74r-combined-employment-quota-2026",
-  "content": "e74-e74r-combined-employment-quota-2026",
-  "langs": [
-    "ko",
-    "en"
-  ],
-  "section": "newsletters",
-  "modified": "2026-09-18",
-  "title": {
-    "ko": "E-7-4·E-7-4R 동시 고용: 기업 추천 가능 인원을 어떻게 판단하는가 — 법무법인 로연",
-    "en": "Employing E-7-4 and E-7-4R Workers Together: How the Employer Limit Applies — Law Firm Lawyeon"
-  },
-  "desc": {
-    "ko": "2026년 9월 체류 매뉴얼을 바탕으로 E-7-4·E-7-4R 동시 고용 시 한도 합산 오류, 유리한 일반 기준 적용과 지역 의무의 관계를 분석합니다.",
-    "en": "Analysis of the September 2026 manual: the combined E-7-4/E-7-4R employment limit, when the general rule is more favorable, and separate regional residence obligations."
-  }
-},
-  {
-    id: 'f6-marriage-visa-requirements-status-change-korea', content: 'f6-marriage-visa-requirements-status-change-korea', langs: ['ko'],
-    title: { ko: '결혼이민 비자(F-6) 신청 요건과 체류자격 변경 — 법무법인 로연' },
-    desc: { ko: '결혼이민(F-6) 신청 요건과 면제 기준, 자녀 출생 전의 비자 발급·체류자격 변경, 통상적인 증빙으로 허가받기 어려운 경우의 소명과 심사 대응을 설명합니다.' },
+    "id": "f4-visa-dui-departure-order-humanitarian-korea",
+    "content": "f4-visa-dui-departure-order-humanitarian-korea",
+    "langs": [
+      "ko",
+      "en"
+    ],
+    "title": {
+      "ko": "재외동포 F-4 비자, 음주운전 후 출국명령과 인도적 사유 — 법무법인 로연",
+      "en": "Korea F-4 Visa: DUI, Departure Orders and Humanitarian Grounds — Law Firm Lawyeon"
+    },
+    "desc": {
+      "ko": "재외동포(F-4)의 음주운전 출국명령에서 인도적 사유가 어떻게 평가되는지 설명합니다. 한국인 배우자가 없는 가족의 국내 생활기반과 체류허용 판단의 누락, 재범 사건의 소명 쟁점을 다룹니다.",
+      "en": "How family ties and humanitarian grounds affect DUI departure orders in Korea, including F-4 cases and challenges to immigration review decisions."
+    }
   },
   {
-    id: 'foreigner-pension-refund-overseas-case-2026', content: 'foreigner-pension-refund-overseas-case-2026',
-    langs: ['ko'],
-    title: { ko: '소멸시효를 앞둔 국민연금 반환일시금 청구, 보완 없이 지급 완료 — 법무법인 로연' },
-    desc: { ko: '출국 후 약 4년 9개월이 지난 외국인의 국민연금 반환일시금 청구를 대리하여, 담당부서 사전 협의와 해외 공증·아포스티유 준비를 거쳐 보완 없이 10,524,250원을 해외송금으로 지급받은 사례입니다.' },
+    "id": "newsletters",
+    "content": "newsletters",
+    "langs": [
+      "ko",
+      "en"
+    ],
+    "modified": "2026-09-18",
+    "title": {
+      "ko": "뉴스레터 — 판결·법령·정책의 시사점 — 법무법인 로연",
+      "en": "Newsletters — Judgments, Law & Policy — Law Firm Lawyeon"
+    },
+    "desc": {
+      "ko": "주요 판결과 법령·매뉴얼·정책 변화가 출입국·국적 사건의 판단과 대응에 미치는 영향을 분석합니다.",
+      "en": "Legal analysis of significant judgments and changes in immigration law, policy and guidance, with implications for individual matters."
+    }
   },
-  {"id": "f6-immigration-review-no-departure-order-case-2026", "content": "f6-immigration-review-no-departure-order-case-2026", "langs": ["ko"], "title": {"ko": "벌금 400만 원을 받은 결혼이민자, 사범심사에서 출국명령 없이 계속 체류 — 법무법인 로연"}, "desc": {"ko": "공무집행방해로 벌금 400만 원을 받은 결혼이민자의 사범심사에서 양육의 필요성과 별도 사건의 종결을 소명하고, 준법서약서 작성 후 출국명령 없이 계속 체류한 사례입니다."}},
+  {
+    "id": "news",
+    "content": "news",
+    "langs": [
+      "ko",
+      "en"
+    ],
+    "modified": "2026-09-18",
+    "title": {
+      "ko": "로연 소식 — 법무법인 로연",
+      "en": "Lawyeon News — Law Firm Lawyeon"
+    },
+    "desc": {
+      "ko": "법무법인 로연의 업무 협약과 대외 활동 소식을 전합니다.",
+      "en": "Partnerships, professional activities and news from Law Firm Lawyeon."
+    }
+  },
+  {
+    "id": "f6-visa-extension-separation-before-divorce-judgment",
+    "content": "f6-visa-extension-separation-before-divorce-judgment",
+    "langs": [
+      "ko",
+      "en"
+    ],
+    "section": "newsletters",
+    "modified": "2026-09-18",
+    "title": {
+      "ko": "별거 중 F-6 비자 연장: 이혼 확정 전에도 혼인단절을 인정받을 수 있는가 — 법무법인 로연",
+      "en": "F-6 Visa Extension During Separation: Is a Final Divorce Required? — Law Firm Lawyeon"
+    },
+    "desc": {
+      "ko": "서울행정법원 2025구단53041 판결을 통해 이혼 확정 전 F-6-3 적용, 혼인 유지와 파탄 책임의 판단, 체류연장 불허 대응에 갖는 의미를 분석합니다.",
+      "en": "A Seoul Administrative Court judgment examines F-6-3 eligibility before divorce, responsibility for marital breakdown, and evidence in an F-6 extension refusal."
+    }
+  },
+  {
+    "id": "e74-e74r-combined-employment-quota-2026",
+    "content": "e74-e74r-combined-employment-quota-2026",
+    "langs": [
+      "ko",
+      "en"
+    ],
+    "section": "newsletters",
+    "modified": "2026-09-18",
+    "title": {
+      "ko": "E-7-4·E-7-4R 동시 고용: 기업 추천 가능 인원을 어떻게 판단하는가 — 법무법인 로연",
+      "en": "Employing E-7-4 and E-7-4R Workers Together: How the Employer Limit Applies — Law Firm Lawyeon"
+    },
+    "desc": {
+      "ko": "2026년 9월 체류 매뉴얼을 바탕으로 E-7-4·E-7-4R 동시 고용 시 한도 합산 오류, 유리한 일반 기준 적용과 지역 의무의 관계를 분석합니다.",
+      "en": "Analysis of the September 2026 manual: the combined E-7-4/E-7-4R employment limit, when the general rule is more favorable, and separate regional residence obligations."
+    }
+  },
+  {
+    "id": "f6-marriage-visa-requirements-status-change-korea",
+    "content": "f6-marriage-visa-requirements-status-change-korea",
+    "langs": [
+      "ko",
+      "en"
+    ],
+    "title": {
+      "ko": "결혼이민 비자(F-6) 신청 요건과 체류자격 변경 — 법무법인 로연",
+      "en": "F-6 Marriage Visa in Korea: Requirements and Change of Status — Law Firm Lawyeon"
+    },
+    "desc": {
+      "ko": "결혼이민(F-6) 신청 요건과 면제 기준, 자녀 출생 전의 비자 발급·체류자격 변경, 통상적인 증빙으로 허가받기 어려운 경우의 소명과 심사 대응을 설명합니다.",
+      "en": "F-6 marriage visa requirements in Korea, childbirth exemptions, lawful stay before birth, and legal submissions where standard documents are insufficient."
+    }
+  },
+  {
+    "id": "foreigner-pension-refund-overseas-case-2026",
+    "content": "foreigner-pension-refund-overseas-case-2026",
+    "langs": [
+      "ko",
+      "en"
+    ],
+    "title": {
+      "ko": "소멸시효를 앞둔 국민연금 반환일시금 청구, 보완 없이 지급 완료 — 법무법인 로연",
+      "en": "Korean National Pension Refund: Successful Claim Near the Deadline — Law Firm Lawyeon"
+    },
+    "desc": {
+      "ko": "출국 후 약 4년 9개월이 지난 외국인의 국민연금 반환일시금 청구를 대리하여, 담당부서 사전 협의와 해외 공증·아포스티유 준비를 거쳐 보완 없이 10,524,250원을 해외송금으로 지급받은 사례입니다.",
+      "en": "Lawyeon secured a KRW 10,524,250 Korean National Pension refund by overseas remittance, filing before the limitation period expired without further document requests."
+    }
+  },
+  {
+    "id": "f6-immigration-review-no-departure-order-case-2026",
+    "content": "f6-immigration-review-no-departure-order-case-2026",
+    "langs": [
+      "ko",
+      "en"
+    ],
+    "title": {
+      "ko": "벌금 400만 원을 받은 결혼이민자, 사범심사에서 출국명령 없이 계속 체류 — 법무법인 로연",
+      "en": "F-6 Visa Holder Fined KRW 4 Million: Continued Stay Without a Departure Order — Law Firm Lawyeon"
+    },
+    "desc": {
+      "ko": "공무집행방해로 벌금 400만 원을 받은 결혼이민자의 사범심사에서 양육의 필요성과 별도 사건의 종결을 소명하고, 준법서약서 작성 후 출국명령 없이 계속 체류한 사례입니다.",
+      "en": "Lawyeon secured continued stay for an F-6 visa holder after a KRW 4 million fine, presenting childcare needs and proof that a separate investigation had closed."
+    }
+  },
   {
     "id": "expertise",
     "content": "expertise",
@@ -670,7 +721,27 @@ function langToggle(lang, id, langs, isHome) {
   }).join('<span class="sep">·</span>');
 }
 
+// Articles are published in Korean and English together. Check before writing
+// any output so a missing translation cannot silently produce a partial release.
+function validateArticleLanguages() {
+  const errors = [];
+  for (const page of PAGES) {
+    if (!Object.prototype.hasOwnProperty.call(ARTICLE_DATES, page.id)) continue;
+    for (const lang of ['ko', 'en']) {
+      const file = path.join(ROOT, 'content', `${page.content}.${lang}.html`);
+      if (!(page.langs || LANGS).includes(lang)) errors.push(`${page.id}: missing ${lang} in langs`);
+      if (!fs.existsSync(file) || !fs.readFileSync(file, 'utf8').trim()) {
+        errors.push(`${page.id}: missing or empty ${lang} article`);
+      }
+      if (!page.title?.[lang]?.trim()) errors.push(`${page.id}: missing ${lang} title`);
+      if (!page.desc?.[lang]?.trim()) errors.push(`${page.id}: missing ${lang} description`);
+    }
+  }
+  if (errors.length) throw new Error(`Articles require Korean and English versions:\n${errors.join('\n')}`);
+}
+
 function build() {
+  validateArticleLanguages();
   let count = 0;
   for (const page of PAGES) {
     const langs = page.langs || LANGS;
