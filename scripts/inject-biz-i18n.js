@@ -36,7 +36,7 @@ const MASTER_KO = {
     'biz.hero.headline': '한국에서 사업을 시작하고 이주하기 위한 통합 법률서비스',
     'biz.hero.subhead': '해외에서 한국 이주를 검토하는 외국인을 대상으로, 프로젝트 탐색·규제 자문·비자 취득을 순차 수행합니다.',
     'biz.hero.cta': '사업이민 사전 상담 신청',
-    'biz.badge.description': '법무법인 로연 출입국이민지원센터는 외국인의 한국 사업이민 법률서비스를 제공합니다.',
+    'biz.badge.description': '법무법인 로연 출입국이민법센터는 외국인의 한국 사업이민 법률서비스를 제공합니다.',
     'biz.step1.title': '사전 상담',
     'biz.step1.body': '쓰레드를 통해 귀하의 국적, 자금 조달 방식, 이주 시점, 가족 구성을 확인하고 한국 사업이민 경로 개요를 안내합니다.',
     'biz.step2.title': '본 상담',
@@ -101,7 +101,7 @@ const MASTER_KO = {
     // 사업이민 신청 페이지 (Q3 강화 기획)
     'biz.request.hero.headline': '한국에서 사업을 시작하고 이주하기 위한 통합 법률서비스',
     'biz.request.hero.subhead': '한국으로의 사업 이민을 검토하는 이민자 고객을 위한 전담 상담 경로입니다.',
-    'biz.request.overview.para1': '저희 법무법인 로연 출입국이민지원센터는 해외에 거주하시는 외국인이 한국에서 사업을 시작하고 정착하시기까지 필요한 법률서비스를 통합 제공합니다.',
+    'biz.request.overview.para1': '저희 법무법인 로연 출입국이민법센터는 해외에 거주하시는 외국인이 한국에서 사업을 시작하고 정착하시기까지 필요한 법률서비스를 통합 제공합니다.',
     'biz.request.overview.para2': '프로젝트 탐색부터 규제 자문, 비자 취득, 한국 정착, 동반가족 지원까지 모든 단계가 하나의 법률자문 계약 안에서 진행됩니다.',
     'biz.request.overview.para3': '사전 상담은 무상이며, 본 페이지에서 신청하실 수 있습니다.',
     'biz.request.steps.heading': '프로젝트 5단계',

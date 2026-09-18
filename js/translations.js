@@ -1,5 +1,5 @@
 /**
- * 법무법인 로연 출입국이민지원센터 - 완전한 다국어 번역 시스템 v3.0 FINAL
+ * 법무법인 로연 출입국이민법센터 - 완전한 다국어 번역 시스템 v3.0 FINAL
  * 
  * 작성일: 2025-12-12
  * 최종 업데이트: 2025-12-12
@@ -67,11 +67,11 @@ const translations = {
         'common.serviceLoginConfirm': '서비스 신청은 로그인이 필요합니다.\n\nGoogle 계정으로 로그인하시겠습니까?',
         
         // === 사이트 정보 (Site Information) ===
-        'site.name': '법무법인 로연 출입국이민지원센터',
+        'site.name': '법무법인 로연 출입국이민법센터',
         'site.company': '법무법인 로연',
         'site.title': 'Law Firm Lawyeon LLC.',
-        'site.visa': 'Visa',
-        'site.immigration': '& Immigration Center',
+        'site.visa': 'Immigration',
+        'site.immigration': 'Law Center',
         
         // === 헤더 (Header) ===
         'header.welcome': '환영합니다!',
@@ -460,7 +460,7 @@ const translations = {
         'footer.privacy': '개인정보 처리방침',
         'footer.terms': '서비스 이용약관',
         'footer.lawFirm': '법무법인 로연',
-        'footer.copyright': 'Copyright © 법무법인 로연 출입국이민지원센터',
+        'footer.copyright': 'Copyright © 법무법인 로연 출입국이민법센터',
         
         // === 개별 서비스 항목 (Individual Services) ===
         // 비자 서비스
@@ -660,7 +660,7 @@ const translations = {
         'profile.consent.delegation.noticeTitle': '유의사항:',
         'profile.consent.delegation.notice1': '비자 신청에 대한 최종 결정은 출입국관리당국의 재량이며, 수임인은 거부 결정에 대해 책임을 지지 않습니다.',
         'profile.consent.delegation.notice2': '본 위임은 대한민국 법률에 따라 규율됩니다.',
-        'profile.consent.delegation.footer': '수임인: 법무법인 로연 (대표변호사 민준우) / 출입국이민지원센터 등록번호: 제25-SM-RG-063호',
+        'profile.consent.delegation.footer': '수임인: 법무법인 로연 (대표변호사 민준우) / 출입국이민법센터 등록번호: 제25-SM-RG-063호',
         'profile.info.title': '기본 정보',
         'profile.info.lastName': '성 (영문)',
         'profile.info.firstName': '이름 (영문)',
@@ -787,7 +787,7 @@ const translations = {
         'thread.progress.status.processing': '진행 중',
         'thread.progress.status.completed': '완료',
         // === Thread (i18n 추가) ===
-        'thread.welcomeMessage': '안녕하세요! 법무법인 로연 출입국이민지원센터입니다.\n\n신청이 접수되었습니다.\n센터 담당자가 곧 연락드리겠습니다.',
+        'thread.welcomeMessage': '안녕하세요! 법무법인 로연 출입국이민법센터입니다.\n\n신청이 접수되었습니다.\n센터 담당자가 곧 연락드리겠습니다.',
         'thread.welcomeSubmitInfo': '기본 정보를 제출해 주세요. Please submit your basic information.',
         'thread.sender.self': '본인',
         'thread.sender.other': '상대방',
@@ -836,7 +836,7 @@ const translations = {
         'thread.alert.selectQ5': '질문 5번에서 하나 이상 선택해 주세요.',
         // === Thread Survey ===
         'thread.survey.title': '외국인유학생 비자 진단 설문',
-        'thread.survey.disclaimer': '이 설문은 법무법인 로연 출입국이민지원센터의 비자 진단을 위한 것입니다. 변호사법에 의해 비밀이 보장되며, 오직 법률 자문 목적으로만 이용됩니다.',
+        'thread.survey.disclaimer': '이 설문은 법무법인 로연 출입국이민법센터의 비자 진단을 위한 것입니다. 변호사법에 의해 비밀이 보장되며, 오직 법률 자문 목적으로만 이용됩니다.',
         'thread.survey.q1': '현재 거주 중인 주소가 외국인등록증(ARC) 뒷면에 적힌 주소와 일치합니까?',
         'thread.survey.q1a': '네, 그렇습니다.',
         'thread.survey.q1b': '아니오, 일치하지 않습니다.',
@@ -1206,7 +1206,7 @@ const translations = {
     'biz.hero.headline': '한국에서 사업을 시작하고 이주하기 위한 통합 법률서비스',
     'biz.hero.subhead': '해외에서 한국 이주를 검토하는 외국인을 대상으로, 프로젝트 탐색·규제 자문·비자 취득을 순차 수행합니다.',
     'biz.hero.cta': '사업이민 사전 상담 신청',
-    'biz.badge.description': '법무법인 로연 출입국이민지원센터는 외국인의 한국 사업이민 법률서비스를 제공합니다.',
+    'biz.badge.description': '법무법인 로연 출입국이민법센터는 외국인의 한국 사업이민 법률서비스를 제공합니다.',
     'biz.step1.title': '사전 상담',
     'biz.step1.body': '쓰레드를 통해 귀하의 국적, 자금 조달 방식, 이주 시점, 가족 구성을 확인하고 한국 사업이민 경로 개요를 안내합니다.',
     'biz.step2.title': '본 상담',
@@ -1275,7 +1275,7 @@ const translations = {
     'biz.request.loginGate.desc': '사업이민 상담은 고객님 전용 쓰레드로 진행되므로, Google 계정 로그인이 필요합니다. 로그인 후 상세 정보를 확인하고 상담을 신청하실 수 있습니다.',
     'biz.request.loginGate.cta': 'Google로 계속하기',
     'biz.request.loginGate.note': '계속 진행 시 이용약관 및 개인정보처리방침에 동의한 것으로 간주됩니다.',
-    'biz.request.overview.para1': '저희 법무법인 로연 출입국이민지원센터는 해외에 거주하시는 외국인이 한국에서 사업을 시작하고 정착하시기까지 필요한 법률서비스를 통합 제공합니다.',
+    'biz.request.overview.para1': '저희 법무법인 로연 출입국이민법센터는 해외에 거주하시는 외국인이 한국에서 사업을 시작하고 정착하시기까지 필요한 법률서비스를 통합 제공합니다.',
     'biz.request.overview.para2': '프로젝트 탐색부터 규제 자문, 비자 취득, 한국 정착, 동반가족 지원까지 모든 단계가 하나의 법률자문 계약 안에서 진행됩니다.',
     'biz.request.overview.para3': '사전 상담은 무상이며, 본 페이지에서 신청하실 수 있습니다.',
     'biz.request.steps.heading': '프로젝트 5단계',
@@ -1349,11 +1349,11 @@ const translations = {
         'common.serviceLoginConfirm': 'Sign in is required to apply for services.\n\nSign in with Google?',
         
         // === Site Information ===
-        'site.name': 'Law Firm Lawyeon\'s Visa & Immigration Center',
+        'site.name': 'Law Firm Lawyeon\'s Immigration Law Center',
         'site.company': 'Law Firm Lawyeon',
         'site.title': 'Law Firm Lawyeon LLC.',
-        'site.visa': 'Visa',
-        'site.immigration': '& Immigration Center',
+        'site.visa': 'Immigration',
+        'site.immigration': 'Law Center',
         
         // === Header ===
         'header.welcome': 'Welcome!',
@@ -1777,7 +1777,7 @@ const translations = {
         'footer.privacy': 'Privacy Policy',
         'footer.terms': 'Terms of Service',
         'footer.lawFirm': 'Law Firm Lawyeon',
-        'footer.copyright': 'Copyright © Law Firm Lawyeon\'s Visa & Immigration Center',
+        'footer.copyright': 'Copyright © Law Firm Lawyeon\'s Immigration Law Center',
         
         // === Individual Services ===
         // Visa Services
@@ -2130,7 +2130,7 @@ const translations = {
         'profile.consent.delegation.noticeTitle': 'Important Notice:',
         'profile.consent.delegation.notice1': 'Final decisions on visa applications are at the discretion of the immigration authorities. The Delegate is not responsible for rejection decisions.',
         'profile.consent.delegation.notice2': 'This delegation is governed by the laws of the Republic of Korea.',
-        'profile.consent.delegation.footer': 'Delegate: Law Firm Lawyeon LLC. (Representative Attorney Min Jun-woo) / Immigration Center Registration: #25-SM-RG-063',
+        'profile.consent.delegation.footer': 'Delegate: Law Firm Lawyeon LLC. (Representative Attorney Min Jun-woo) / Immigration Law Center Registration: #25-SM-RG-063',
         'profile.info.title': 'Basic Information',
         'profile.info.lastName': 'Last Name (English)',
         'profile.info.firstName': 'First Name (English)',
@@ -2214,7 +2214,7 @@ const translations = {
         'thread.progress.status.processing': 'In Progress',
         'thread.progress.status.completed': 'Completed',
         // === Thread (i18n additions) ===
-        'thread.welcomeMessage': 'Hello! This is Lawyeon Visa & Immigration Center.\n\nYour application has been received.\nA center specialist will contact you shortly.',
+        'thread.welcomeMessage': 'Hello! This is Lawyeon Immigration Law Center.\n\nYour application has been received.\nA center specialist will contact you shortly.',
         'thread.welcomeSubmitInfo': 'Please submit your basic information.',
         'thread.sender.self': 'Me',
         'thread.sender.other': 'Other',
@@ -2263,7 +2263,7 @@ const translations = {
         'thread.alert.selectQ5': 'Please select at least one option for question 5.',
         // === Thread Survey ===
         'thread.survey.title': 'International Student Visa Survey',
-        'thread.survey.disclaimer': 'This survey is for visa assessment by Law Firm Lawyeon Immigration Center. Confidentiality is guaranteed under the Attorney-at-Law Act and is used solely for legal consultation purposes.',
+        'thread.survey.disclaimer': 'This survey is for visa assessment by Law Firm Lawyeon Immigration Law Center. Confidentiality is guaranteed under the Attorney-at-Law Act and is used solely for legal consultation purposes.',
         'thread.survey.q1': 'Does your current residential address match the address on the back of your Alien Registration Card (ARC)?',
         'thread.survey.q1a': 'Yes, it does.',
         'thread.survey.q1b': 'No, it does not match.',
