@@ -53,19 +53,19 @@ const SUPABASE_SCRIPTS = [
 // Google 은 도메인 단위로 사이트 이름을 하나만 고르며, 페이지마다 다른 이름을
 // 선언하면(이전에는 언어별로 4가지였다) 판단을 포기하고 도메인(lawyeon-immigration.com)을
 // 그대로 표시한다. og:site_name·WebSite.name·index.html 이 모두 같아야 한다.
-const SITE_NAME = 'Law Firm Lawyeon Immigration Center';
+const SITE_NAME = 'Law Firm Lawyeon Immigration Law Center';
 // 대체 이름. Google 은 대표 이름을 채택하지 못하면 여기서 고르고, 그것도 없으면
 // 도메인을 표시한다. 하위 페이지 제목은 '— Law Firm Lawyeon'·'— 법무법인 로연'
 // 으로 끝나므로 그 짧은 이름도 후보에 넣어 사이트 전체의 표기가 후보 안에 들게 한다.
-const SITE_NAME_ALT = ['법무법인 로연 출입국이민지원센터', 'Law Firm Lawyeon', '법무법인 로연'];
+const SITE_NAME_ALT = ['법무법인 로연 출입국이민법센터', 'Law Firm Lawyeon', '법무법인 로연'];
 
 // ---- per-language UI strings (header chrome) ----
 const STRINGS = {
-  en: { brandName: 'Law Firm Lawyeon', brandSub: 'Immigration Center',
+  en: { brandName: 'Law Firm Lawyeon', brandSub: 'Immigration Law Center',
         siteName: SITE_NAME, siteNameAlt: SITE_NAME_ALT,
         navExpertise: 'Expertise', navInsights: 'Insights', navCaseStudies: 'Recent Case', navCases: 'Newsletters & News', navConsult: 'Contact',
         navLabel: 'Main navigation' },
-  ko: { brandName: '법무법인 로연', brandSub: '출입국이민지원센터',
+  ko: { brandName: '법무법인 로연', brandSub: '출입국이민법센터',
         siteName: SITE_NAME, siteNameAlt: SITE_NAME_ALT,
         navExpertise: '업무분야', navInsights: '인사이트', navCaseStudies: '최근 업무사례', navCases: '뉴스레터·소식', navConsult: '문의',
         navLabel: '주요 메뉴' },
@@ -240,7 +240,7 @@ const PAGES = [
       "en": "Expertise — Law Firm Lawyeon"
     },
     "desc": {
-      "ko": "형사·사범심사, 비자·이민, 거주·국적, 행정 분야의 주요 업무를 소개합니다. 법무법인 로연 출입국이민지원센터.",
+      "ko": "형사·사범심사, 비자·이민, 거주·국적, 행정 분야의 주요 업무를 소개합니다. 법무법인 로연 출입국이민법센터.",
       "en": "Explore Lawyeon’s immigration practice: criminal defense and enforcement, visas, residence and nationality, administrative disputes and claims."
     }
   },
@@ -322,9 +322,9 @@ const PAGES = [
     // 고를 때 WebSite.name·og:site_name 과 함께 홈의 <title> 도 후보로 읽는데,
     // 서로 다르면 판단이 흔들린다.
     title: { en: SITE_NAME,
-             ko: '법무법인 로연 출입국이민지원센터' },
-    desc:  { en: 'Law Firm Lawyeon Immigration Center. Legal representation for criminal cases, contracts and immigration office affairs for expats and migrants in Korea.',
-             ko: '법무법인 로연 출입국이민지원센터. 외국인·이주민을 위한 형사사건, 계약, 출입국 민원 등 법률 대리 서비스.' },
+             ko: '법무법인 로연 출입국이민법센터' },
+    desc:  { en: 'Law Firm Lawyeon Immigration Law Center. Legal representation for criminal cases, contracts and immigration office affairs for expats and migrants in Korea.',
+             ko: '법무법인 로연 출입국이민법센터. 외국인·이주민을 위한 형사사건, 계약, 출입국 민원 등 법률 대리 서비스.' },
   },
   {
     id: 'consultation', content: 'consultation', supabase: true,
