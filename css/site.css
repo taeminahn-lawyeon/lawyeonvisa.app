@@ -571,14 +571,15 @@ a.ccard[href]:focus-visible .cc-title{color:var(--hover)}
 @media(prefers-reduced-motion:reduce){.attorneys-track{animation:none}}
 
 /* Publication cards: category, title and date, with a brown interaction state. */
+.publication-feature,.publication-index{--hover:var(--brown)}
 .publication-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
-.publication-card{display:flex;flex-direction:column;min-width:0;min-height:294px;padding:32px 30px;background:var(--card);border:1px solid #E2E2E2;color:#202020;transition:border-color .18s,color .18s}
+.publication-card{display:flex;flex-direction:column;min-width:0;min-height:294px;padding:32px 30px;background:var(--card);border:1px solid #E2E2E2;color:#202020;transition:border-color .18s,color .18s,box-shadow .18s}
 .publication-category{font-size:14px;font-weight:500;line-height:1.5;color:#707070;margin-bottom:20px}
 .publication-title{font-family:inherit;font-size:20px;line-height:1.5;font-weight:420;letter-spacing:0;text-wrap:wrap;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
 .publication-meta{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:auto;padding-top:30px;color:#767676;font-size:14px;font-weight:500}
 .publication-arrow{display:flex;align-items:center}
 .publication-arrow svg,.publication-controls svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7}
-.publication-card[href]:hover,.publication-card[href]:focus-visible{border-color:var(--hover);color:var(--hover)}
+.publication-card[href]:hover,.publication-card[href]:focus-visible{border-color:var(--hover);color:var(--hover);box-shadow:inset 0 0 0 1px var(--hover)}
 .publication-card[href]:is(:hover,:focus-visible) .publication-category,.publication-card[href]:is(:hover,:focus-visible) .publication-meta{color:var(--hover)}
 .publication-card[href]:focus-visible{outline:2px solid var(--hover);outline-offset:4px}
 .publication-feature{padding-top:0}
