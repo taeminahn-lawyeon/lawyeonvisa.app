@@ -94,6 +94,76 @@ const STATIC_PAGES = ['terms-of-service', 'privacy-policy', 'refund-policy'];
 const PAGES = [
   {"id": "f4-visa-dui-departure-order-humanitarian-korea", "content": "f4-visa-dui-departure-order-humanitarian-korea", "langs": ["ko"], "title": {"ko": "재외동포 F-4 비자, 음주운전 후 출국명령과 인도적 사유 — 법무법인 로연"}, "desc": {"ko": "재외동포(F-4)의 음주운전 출국명령에서 인도적 사유가 어떻게 평가되는지 설명합니다. 한국인 배우자가 없는 가족의 국내 생활기반과 체류허용 판단의 누락, 재범 사건의 소명 쟁점을 다룹니다."}},
   {
+  "id": "newsletters",
+  "content": "newsletters",
+  "langs": [
+    "ko",
+    "en"
+  ],
+  "modified": "2026-09-18",
+  "title": {
+    "ko": "뉴스레터 — 판결·법령·정책의 시사점 — 법무법인 로연",
+    "en": "Newsletters — Judgments, Law & Policy — Law Firm Lawyeon"
+  },
+  "desc": {
+    "ko": "주요 판결과 법령·매뉴얼·정책 변화가 출입국·국적 사건의 판단과 대응에 미치는 영향을 분석합니다.",
+    "en": "Legal analysis of significant judgments and changes in immigration law, policy and guidance, with implications for individual matters."
+  }
+},
+  {
+  "id": "news",
+  "content": "news",
+  "langs": [
+    "ko",
+    "en"
+  ],
+  "modified": "2026-09-18",
+  "title": {
+    "ko": "로연 소식 — 법무법인 로연",
+    "en": "Lawyeon News — Law Firm Lawyeon"
+  },
+  "desc": {
+    "ko": "법무법인 로연의 업무 협약과 대외 활동 소식을 전합니다.",
+    "en": "Partnerships, professional activities and news from Law Firm Lawyeon."
+  }
+},
+  {
+  "id": "f6-visa-extension-separation-before-divorce-judgment",
+  "content": "f6-visa-extension-separation-before-divorce-judgment",
+  "langs": [
+    "ko",
+    "en"
+  ],
+  "section": "newsletters",
+  "modified": "2026-09-18",
+  "title": {
+    "ko": "별거 중 F-6 비자 연장: 이혼 확정 전에도 혼인단절을 인정받을 수 있는가 — 법무법인 로연",
+    "en": "F-6 Visa Extension During Separation: Is a Final Divorce Required? — Law Firm Lawyeon"
+  },
+  "desc": {
+    "ko": "서울행정법원 2025구단53041 판결을 통해 이혼 확정 전 F-6-3 적용, 혼인 유지와 파탄 책임의 판단, 체류연장 불허 대응에 갖는 의미를 분석합니다.",
+    "en": "A Seoul Administrative Court judgment examines F-6-3 eligibility before divorce, responsibility for marital breakdown, and evidence in an F-6 extension refusal."
+  }
+},
+  {
+  "id": "e74-e74r-combined-employment-quota-2026",
+  "content": "e74-e74r-combined-employment-quota-2026",
+  "langs": [
+    "ko",
+    "en"
+  ],
+  "section": "newsletters",
+  "modified": "2026-09-18",
+  "title": {
+    "ko": "E-7-4·E-7-4R 동시 고용: 기업 추천 가능 인원을 어떻게 판단하는가 — 법무법인 로연",
+    "en": "Employing E-7-4 and E-7-4R Workers Together: How the Employer Limit Applies — Law Firm Lawyeon"
+  },
+  "desc": {
+    "ko": "2026년 9월 체류 매뉴얼을 바탕으로 E-7-4·E-7-4R 동시 고용 시 한도 합산 오류, 유리한 일반 기준 적용과 지역 의무의 관계를 분석합니다.",
+    "en": "Analysis of the September 2026 manual: the combined E-7-4/E-7-4R employment limit, when the general rule is more favorable, and separate regional residence obligations."
+  }
+},
+  {
     id: 'f6-marriage-visa-requirements-status-change-korea', content: 'f6-marriage-visa-requirements-status-change-korea', langs: ['ko'],
     title: { ko: '결혼이민 비자(F-6) 신청 요건과 체류자격 변경 — 법무법인 로연' },
     desc: { ko: '결혼이민(F-6) 신청 요건과 면제 기준, 자녀 출생 전의 비자 발급·체류자격 변경, 통상적인 증빙으로 허가받기 어려운 경우의 소명과 심사 대응을 설명합니다.' },
@@ -264,7 +334,7 @@ const PAGES = [
              ko: 'D-9 연장 심사에서 확인되는 사업 운영의 실질, 5년 체류 후 거주(F-2-99) 전환의 평가 영역(자산 2,000만 원·사업 소득 4,000만 원·KIIP 4단계 등, 2026년 기준), 동반(F-3) 가족의 체류 구조를 다룹니다.' },
   },
   {
-    id: 'chosun-university-student-legal-mou-2026', content: 'chosun-university-student-legal-mou-2026',
+    id: 'chosun-university-student-legal-mou-2026', content: 'chosun-university-student-legal-mou-2026', section: 'news',
     title: { en: 'MOU on Legal Support for International Students at Chosun University — Law Firm Lawyeon',
              ko: '조선대학교 외국인 유학생 법률 지원 업무 협약 및 한국 법령 특강 — 법무법인 로연' },
     desc:  { en: 'Law Firm Lawyeon signed an MOU with Chosun University on legal support for international students and delivered a special lecture on Korean law, including the Immigration Control Act and post-graduation visa pathways.',
@@ -339,7 +409,7 @@ const PAGES = [
              en: 'E-8, E-9 and H-2 workers can claim the Korean National Pension lump-sum refund on returning home, regardless of nationality. How the amount is calculated (9% contribution rate, as of 2026), claiming through a proxy after departure with payment to a home-country account, and the five-year deadline from departure.' },
   },
   {
-    id: 'far-east-university-student-job-fair-mou-2026', content: 'far-east-university-student-job-fair-mou-2026',
+    id: 'far-east-university-student-job-fair-mou-2026', content: 'far-east-university-student-job-fair-mou-2026', section: 'news',
     title: { en: 'MOU with Far East University — Visa-Roadmap Lecture & Legal Clinic at the International Student Job Fair — Law Firm Lawyeon',
              ko: '극동대학교 외국인 유학생 취업 박람회 업무 협약 및 비자 로드맵 특강·리걸 클리닉 — 법무법인 로연' },
     desc:  { en: 'Law Firm Lawyeon signed an MOU with Far East University and, at the international student job fair held at its SMART-K tech Center, delivered a lecture on the post-graduation visa roadmap and work-visa law and ran a free legal clinic booth.',
@@ -355,6 +425,7 @@ const PAGES = [
   },
   {
     id: 'foreigner-divorce-f6-visa-stay-korea-2026', content: 'foreigner-divorce-f6-visa-stay-korea-2026',
+    modified: '2026-09-18',
     langs: ['ko', 'en', 'vi'],
     title: { ko: '한국인 배우자와 이혼 후 체류, F-6 세부유형별 요건 (2026) — 법무법인 로연',
              en: 'Staying in Korea After Divorce: F-6 Subcategory Requirements (2026) — Law Firm Lawyeon',
@@ -387,6 +458,9 @@ const PAGES = [
 // meta and sitemap <lastmod>.
 const ARTICLE_DATES = {
   'f4-visa-dui-departure-order-humanitarian-korea':'2026-09-18',
+  'f6-visa-extension-separation-before-divorce-judgment': '2026-09-18',
+  'e74-e74r-combined-employment-quota-2026': '2026-09-18',
+
   'f6-marriage-visa-requirements-status-change-korea':'2026-09-18',
   'foreigner-pension-refund-overseas-case-2026':'2026-09-18',
   'f6-immigration-review-no-departure-order-case-2026':'2026-09-18',
@@ -509,10 +583,13 @@ function articleJsonLd(page, lang, canonical, bodyHtml, ogImage) {
 
 // BreadcrumbList structured data: Home > Insights > Article.
 function breadcrumbJsonLd(page, lang, canonical) {
-  const home = SITE + '/' + LANG_DIR[lang] + 'main';
+  const home = SITE + HOME_URL[lang];
   const insightsDir = lang === 'vi' ? '' : LANG_DIR[lang];
-  const insights = SITE + '/' + insightsDir + 'insights';
-  const insightsName = lang === 'ko' ? '인사이트' : (lang === 'vi' ? 'Thông tin pháp lý' : 'Insights');
+  const section = page.section || 'insights';
+  const insights = SITE + '/' + insightsDir + section;
+  const insightsName = section === 'newsletters' ? (lang === 'ko' ? '뉴스레터' : 'Newsletters')
+    : section === 'news' ? (lang === 'ko' ? '로연 소식' : 'Lawyeon News')
+    : (lang === 'ko' ? '인사이트' : (lang === 'vi' ? 'Thông tin pháp lý' : 'Insights'));
   const obj = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -636,6 +713,7 @@ function build() {
         '__NAV_INSIGHTS__': S.navInsights,
         '__NAV_CASE_STUDIES__': S.navCaseStudies,
         '__NAV_CASES__': S.navCases,
+        '__NEWS_CURRENT__': ['newsletters', 'news'].includes(page.id) || ['newsletters', 'news'].includes(page.section) ? ' class="news-current"' : '',
         '__NAV_CONSULT__': S.navConsult,
         '__NAV_LABEL__': S.navLabel,
         '__CONTACT_CURRENT__': ['consultation', 'booking', 'corporate-advisory'].includes(page.id) ? ' class="contact-current"' : '',
