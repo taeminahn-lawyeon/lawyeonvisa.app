@@ -1,0 +1,32 @@
+<section class="ins-hero"><div class="wrap"><h1 class="ins-hero-title" id="case-heading">Recent Cases</h1><p class="ins-hero-sub">Selected matters handled by Law Firm Lawyeon.</p></div></section>
+<main class="ins-body" aria-labelledby="case-heading"><div class="wrap">
+<div class="list-head"><div class="cat-toggle" id="case-categories" role="group" aria-label="Recent Cases"><button class="ct active" data-cat="all" aria-pressed="true">All</button>
+<span class="ct-div">|</span><button class="ct" data-cat="criminal" aria-pressed="false">Criminal &amp; Immigration Review</button>
+<span class="ct-div">|</span><button class="ct" data-cat="visa" aria-pressed="false">Visa &amp; Immigration</button>
+<span class="ct-div">|</span><button class="ct" data-cat="residence" aria-pressed="false">Residence &amp; Nationality</button>
+<span class="ct-div">|</span><button class="ct" data-cat="admin" aria-pressed="false">Administrative</button></div></div>
+<div class="doc-list" id="case-list">
+        <a class="doc-row" data-cat="admin" href="foreigner-pension-refund-overseas-case-2026">
+            <div class="doc-main"><div class="doc-title">Korean National Pension Refund: Successful Claim Near the Deadline</div><div class="doc-tags"><span>#NationalPension</span><span>#LumpSumRefund</span><span>#OverseasRemittance</span></div></div>
+            <div class="doc-date">2026.08</div>
+        </a>
+        <a class="doc-row" data-cat="criminal" href="f6-immigration-review-no-departure-order-case-2026">
+            <div class="doc-main"><div class="doc-title">F-6 Visa Holder Fined KRW 4 Million: Continued Stay Without a Departure Order</div><div class="doc-tags"><span>#ImmigrationReview</span><span>#MarriageVisa</span><span>#DepartureOrder</span></div></div>
+            <div class="doc-date">2026.08</div>
+        </a>
+
+        </div>
+<div class="doc-empty" id="case-empty" style="display:none">Case studies in this category are being prepared.</div>
+</div></main>
+<script>
+(function(){
+    var tabs=document.querySelectorAll('#case-categories .ct');
+    var rows=document.querySelectorAll('#case-list .doc-row');
+    tabs.forEach(function(tab){tab.addEventListener('click',function(){
+        var cat=tab.getAttribute('data-cat'), count=0;
+        tabs.forEach(function(item){var active=item===tab;item.classList.toggle('active',active);item.setAttribute('aria-pressed',String(active));});
+        rows.forEach(function(row){var show=cat==='all'||row.getAttribute('data-cat')===cat;row.classList.toggle('hidden',!show);if(show)count++;});
+        document.getElementById('case-empty').style.display=count?'none':'';
+    });});
+})();
+</script>

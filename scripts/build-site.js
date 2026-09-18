@@ -196,6 +196,7 @@ const PAGES = [
   },
   {
     "id": "foreigner-pension-refund-overseas-case-2026",
+    "section": "cases",
     "content": "foreigner-pension-refund-overseas-case-2026",
     "langs": [
       "ko",
@@ -212,6 +213,7 @@ const PAGES = [
   },
   {
     "id": "f6-immigration-review-no-departure-order-case-2026",
+    "section": "cases",
     "content": "f6-immigration-review-no-departure-order-case-2026",
     "langs": [
       "ko",
@@ -349,6 +351,11 @@ const PAGES = [
     title: { en: 'Corporate Advisory Inquiry — Law Firm Lawyeon', ko: '기업 자문 문의 — 법무법인 로연' },
     desc:  { en: 'Corporate advisory for foreign-employee visas, immigration compliance and employment matters. Send an inquiry — no sign-up required.',
              ko: '외국인 임직원 비자·출입국 규정 준수·고용 사안에 대한 기업 자문. 회원가입 없이 문의를 남겨 주세요.' },
+  },
+  {
+    id: 'cases', content: 'cases',
+    title: { en: 'Recent Cases — Law Firm Lawyeon', ko: '최근 업무사례 — 법무법인 로연' },
+    desc: { en: 'Recent immigration and administrative matters handled by Law Firm Lawyeon.', ko: '법무법인 로연이 수행한 출입국·이민 및 행정 분야의 최근 업무사례입니다.' },
   },
   {
     id: 'insights', content: 'insights',
@@ -639,6 +646,7 @@ function breadcrumbJsonLd(page, lang, canonical) {
   const section = page.section || 'insights';
   const insights = SITE + '/' + insightsDir + section;
   const insightsName = section === 'newsletters' ? (lang === 'ko' ? '뉴스레터' : 'Newsletters')
+    : section === 'cases' ? (lang === 'ko' ? '최근 업무사례' : 'Recent Cases')
     : section === 'news' ? (lang === 'ko' ? '로연 소식' : 'Lawyeon News')
     : (lang === 'ko' ? '인사이트' : (lang === 'vi' ? 'Thông tin pháp lý' : 'Insights'));
   const obj = {
@@ -783,6 +791,7 @@ function build() {
         '__PAGE_STYLES__': page.expertise ? `<link rel="stylesheet" href="${stylesheetUrl('css/expertise.css')}">` : '',
         '__NAV_INSIGHTS__': S.navInsights,
         '__NAV_CASE_STUDIES__': S.navCaseStudies,
+        '__CASE_CURRENT__': page.id === 'cases' ? ' aria-current="page"' : '',
         '__NAV_CASES__': S.navCases,
         '__NEWS_CURRENT__': ['newsletters', 'news'].includes(page.id) || ['newsletters', 'news'].includes(page.section) ? ' class="news-current"' : '',
         '__NAV_CONSULT__': S.navConsult,
