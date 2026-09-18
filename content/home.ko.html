@@ -207,6 +207,38 @@
     </div>
 </section>
 
+<section class="insights" aria-labelledby="case-heading">
+    <div class="wrap">
+        <div class="sec-head-row"><div class="sec-title" id="case-heading">해결 사례</div></div>
+        <div class="cat-toggle" id="case-categories" role="group" aria-label="해결 사례 분야">
+            <button class="ct active" data-cat="all" aria-pressed="true">전체</button>
+            <span class="ct-div">|</span><button class="ct" data-cat="criminal" aria-pressed="false">형사 &amp; 사범심사</button>
+            <span class="ct-div">|</span><button class="ct" data-cat="visa" aria-pressed="false">비자·이민</button>
+            <span class="ct-div">|</span><button class="ct" data-cat="residence" aria-pressed="false">거주·국적</button>
+            <span class="ct-div">|</span><button class="ct" data-cat="admin" aria-pressed="false">행정</button>
+        </div>
+        <div class="doc-list" id="case-list">
+            <a class="doc-row" data-cat="criminal" href="f6-immigration-review-no-departure-order-case-2026">
+                <div class="doc-main"><div class="doc-title">벌금 400만 원을 받은 결혼이민자, 사범심사에서 출국명령 없이 계속 체류</div><div class="doc-tags"><span>#사범심사</span><span>#결혼이민</span><span>#출국명령</span></div></div>
+                <div class="doc-date">2026.08</div>
+            </a>
+        </div>
+        <div class="doc-empty" id="case-empty" style="display:none">해당 분야의 사례는 준비 중입니다.</div>
+    </div>
+</section>
+<script>
+(function(){
+    var tabs=document.querySelectorAll('#case-categories .ct');
+    var rows=document.querySelectorAll('#case-list .doc-row');
+    tabs.forEach(function(tab){tab.addEventListener('click',function(){
+        var cat=tab.getAttribute('data-cat'), count=0;
+        tabs.forEach(function(item){var active=item===tab;item.classList.toggle('active',active);item.setAttribute('aria-pressed',String(active));});
+        rows.forEach(function(row){var show=cat==='all'||row.getAttribute('data-cat')===cat;row.classList.toggle('hidden',!show);if(show)count++;});
+        document.getElementById('case-empty').style.display=count?'none':'';
+    });});
+})();
+</script>
+
 <!-- ================= CONSULTATION ================= -->
 <section id="consult" class="consult" aria-labelledby="contact-title">
     <div class="wrap">
@@ -229,7 +261,7 @@
 
 <script>
     (function(){
-        var tabs = document.querySelectorAll('.cat-toggle .ct');
+        var tabs = document.querySelectorAll('.insights:not([aria-labelledby="case-heading"]) .cat-toggle .ct');
         var rows = document.querySelectorAll('#insightList .doc-row');
         var emptyEl = document.getElementById('insightEmpty');
         var moreLink = document.querySelector('.insights .more-plus');

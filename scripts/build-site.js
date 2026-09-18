@@ -86,6 +86,7 @@ const STATIC_PAGES = ['terms-of-service', 'privacy-policy', 'refund-policy'];
 
 // ---- page registry (add pages here as they are migrated) ----
 const PAGES = [
+  {"id": "f6-immigration-review-no-departure-order-case-2026", "content": "f6-immigration-review-no-departure-order-case-2026", "langs": ["ko"], "title": {"ko": "벌금 400만 원을 받은 결혼이민자, 사범심사에서 출국명령 없이 계속 체류 — 법무법인 로연"}, "desc": {"ko": "공무집행방해로 벌금 400만 원을 받은 결혼이민자의 사범심사에서 양육의 필요성과 별도 사건의 종결을 소명하고, 준법서약서 작성 후 출국명령 없이 계속 체류한 사례입니다."}},
   {
     "id": "expertise",
     "content": "expertise",
@@ -367,6 +368,7 @@ const PAGES = [
 // "article" iff its id is a key here. Used for article JSON-LD, article:*
 // meta and sitemap <lastmod>.
 const ARTICLE_DATES = {
+  'f6-immigration-review-no-departure-order-case-2026':'2026-09-18',
   'korea-business-immigration-visa-guide-d9-4-d9-5-2026':'2026-05-14',
   'foreigner-franchise-business-korea-2026':'2026-05-07',
   'how-to-open-a-business-in-korea-as-a-foreigner-2026':'2026-04-30',
