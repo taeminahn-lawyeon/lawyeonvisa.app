@@ -93,6 +93,42 @@ const STATIC_PAGES = ['terms-of-service', 'privacy-policy', 'refund-policy'];
 // ---- page registry (add pages here as they are migrated) ----
 const PAGES = [
   {
+    "id": "g1-visa-refusal-after-departure-order-cancellation-korea",
+    "content": "g1-visa-refusal-after-departure-order-cancellation-korea",
+    "langs": [
+      "ko",
+      "en"
+    ],
+    "section": "newsletters",
+    "modified": "2026-09-18",
+    "title": {
+      "ko": "출국명령 취소 후 G-1 비자 거부, 법원이 불허처분을 취소한 이유 — 법무법인 로연",
+      "en": "G-1 Visa Refusal After a Departure Order Was Set Aside: Why the Court Cancelled the Refusal — Law Firm Lawyeon"
+    },
+    "desc": {
+      "ko": "출국명령 취소 후 G-1 변경불허처분을 다시 취소한 판결. 종전 판결의 기속력, 불법취업 경위, 취업허가 심사라는 대체수단과 비례원칙 판단을 분석합니다.",
+      "en": "Analysis of a G-1 refusal set aside after an earlier departure order was cancelled: the prior judgment’s binding effect, unauthorized employment, and proportionality."
+    }
+  },
+  {
+    "id": "foreigner-drug-use-allegation-non-prosecution-korea",
+    "content": "foreigner-drug-use-allegation-non-prosecution-korea",
+    "langs": [
+      "ko",
+      "en"
+    ],
+    "section": "cases",
+    "modified": "2026-09-18",
+    "title": {
+      "ko": "마약 전달 사건에 연루된 외국인, 투약 혐의 불기소 — 법무법인 로연",
+      "en": "Foreign National Investigated in a Drug Delivery Case: No Prosecution for Alleged Drug Use — Law Firm Lawyeon"
+    },
+    "desc": {
+      "ko": "마약 전달 사건에 연루된 외국인의 투약 혐의에 대해, 간이시약 음성 결과와 자백 외 객관적 증거의 부재를 제시하여 불기소 처분을 이끌어낸 업무사례입니다.",
+      "en": "Lawyeon secured non-prosecution of a drug-use allegation involving a foreign national, presenting a negative preliminary test and the lack of objective evidence beyond an admission."
+    }
+  },
+  {
     "id": "f4-visa-dui-departure-order-humanitarian-korea",
     "content": "f4-visa-dui-departure-order-humanitarian-korea",
     "langs": [
@@ -152,12 +188,12 @@ const PAGES = [
     "section": "newsletters",
     "modified": "2026-09-18",
     "title": {
-      "ko": "별거 중 F-6 비자 연장: 이혼 확정 전에도 혼인단절을 인정받을 수 있는가 — 법무법인 로연",
-      "en": "F-6 Visa Extension During Separation: Is a Final Divorce Required? — Law Firm Lawyeon"
+      "ko": "이혼 확정 전 F-6 비자 연장, 혼인단절을 인정한 판결 — 법무법인 로연",
+      "en": "F-6 Visa Extension Before Divorce: Residence Based on Marital Breakdown — Law Firm Lawyeon"
     },
     "desc": {
-      "ko": "서울행정법원 2025구단53041 판결을 통해 이혼 확정 전 F-6-3 적용, 혼인 유지와 파탄 책임의 판단, 체류연장 불허 대응에 갖는 의미를 분석합니다.",
-      "en": "A Seoul Administrative Court judgment examines F-6-3 eligibility before divorce, responsibility for marital breakdown, and evidence in an F-6 extension refusal."
+      "ko": "이혼 확정 전 F-6-3 체류요건을 인정한 판결을 통해 혼인파탄의 주된 책임, 매뉴얼의 이혼 요건 해석과 체류연장 불허 취소소송에서의 심리 범위를 분석합니다.",
+      "en": "A judgment recognizing F-6-3 eligibility before divorce: primary responsibility for marital breakdown, the manual’s wording, and judicial review of an extension refusal."
     }
   },
   {
@@ -170,12 +206,12 @@ const PAGES = [
     "section": "newsletters",
     "modified": "2026-09-18",
     "title": {
-      "ko": "E-7-4·E-7-4R 동시 고용: 기업 추천 가능 인원을 어떻게 판단하는가 — 법무법인 로연",
-      "en": "Employing E-7-4 and E-7-4R Workers Together: How the Employer Limit Applies — Law Firm Lawyeon"
+      "ko": "E-7-4·E-7-4R 고용한도: 지역특화형 상한을 넘는 기업 추천이 가능한 경우 — 법무법인 로연",
+      "en": "E-7-4 and E-7-4R Employment Limits: When the General Rule Permits Additional Recommendations — Law Firm Lawyeon"
     },
     "desc": {
-      "ko": "2026년 9월 체류 매뉴얼을 바탕으로 E-7-4·E-7-4R 동시 고용 시 한도 합산 오류, 유리한 일반 기준 적용과 지역 의무의 관계를 분석합니다.",
-      "en": "Analysis of the September 2026 manual: the combined E-7-4/E-7-4R employment limit, when the general rule is more favorable, and separate regional residence obligations."
+      "ko": "E-7-4와 E-7-4R 동시 고용 시 일반 기준을 적용하여 지역특화형 상한을 넘을 수 있는 경우와 기존 근로자의 자격 전환이 기업 추천 가능 인원에 미치는 영향을 설명합니다.",
+      "en": "How the more favorable general E-7-4 rule can increase a combined E-7-4 and E-7-4R employment limit, and how status changes use the available capacity."
     }
   },
   {
@@ -515,6 +551,8 @@ const PAGES = [
 // "article" iff its id is a key here. Used for article JSON-LD, article:*
 // meta and sitemap <lastmod>.
 const ARTICLE_DATES = {
+  'g1-visa-refusal-after-departure-order-cancellation-korea': '2026-09-18',
+  'foreigner-drug-use-allegation-non-prosecution-korea': '2026-09-18',
   'f4-visa-dui-departure-order-humanitarian-korea':'2026-09-18',
   'f6-visa-extension-separation-before-divorce-judgment': '2026-09-18',
   'e74-e74r-combined-employment-quota-2026': '2026-09-18',
