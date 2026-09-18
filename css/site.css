@@ -523,6 +523,7 @@ tbody tr:last-child td{border-bottom:none}
 /* Article related attorneys (under the TOC on desktop, end of body on mobile) */
 .art-members h4{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
 .toc .art-members{margin-top:30px;padding-top:24px;border-top:1px solid var(--rule)}
+.case-sidebar .art-members{margin-top:0;padding-top:0;border-top:0}
 .body > .art-members{border-top:1px solid var(--rule);margin-top:40px;padding-top:26px}
 .member-grid{display:flex;flex-direction:column;gap:18px}
 .member-card{display:flex;align-items:center;gap:14px}

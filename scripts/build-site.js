@@ -36,7 +36,7 @@ const HEADER = read('partials/header.html');
 const FOOTER = { en: read('partials/footer.en.html'), ko: read('partials/footer.ko.html'), vi: read('partials/footer.vi.html') };
 // Scripts every built page gets. site.js is presentation-only (mobile nav,
 // article CTAs, share button) — it no longer touches auth.
-const SCRIPTS = '<script src="__BASE__js/site.js?v=12"></script>';
+const SCRIPTS = '<script src="__BASE__js/site.js?v=13"></script>';
 
 // Supabase is loaded only by the pages that actually submit a form
 // (pre-consultation, visit booking, corporate advisory). Article and index
@@ -91,6 +91,12 @@ const STATIC_PAGES = ['terms-of-service', 'privacy-policy', 'refund-policy'];
 
 // ---- page registry (add pages here as they are migrated) ----
 const PAGES = [
+  {
+    id: 'foreigner-pension-refund-overseas-case-2026', content: 'foreigner-pension-refund-overseas-case-2026',
+    langs: ['ko'],
+    title: { ko: '소멸시효를 앞둔 국민연금 반환일시금 청구, 보완 없이 지급 완료 — 법무법인 로연' },
+    desc: { ko: '출국 후 약 4년 9개월이 지난 외국인의 국민연금 반환일시금 청구를 대리하여, 담당부서 사전 협의와 해외 공증·아포스티유 준비를 거쳐 보완 없이 10,524,250원을 해외송금으로 지급받은 사례입니다.' },
+  },
   {"id": "f6-immigration-review-no-departure-order-case-2026", "content": "f6-immigration-review-no-departure-order-case-2026", "langs": ["ko"], "title": {"ko": "벌금 400만 원을 받은 결혼이민자, 사범심사에서 출국명령 없이 계속 체류 — 법무법인 로연"}, "desc": {"ko": "공무집행방해로 벌금 400만 원을 받은 결혼이민자의 사범심사에서 양육의 필요성과 별도 사건의 종결을 소명하고, 준법서약서 작성 후 출국명령 없이 계속 체류한 사례입니다."}},
   {
     "id": "expertise",
@@ -373,6 +379,7 @@ const PAGES = [
 // "article" iff its id is a key here. Used for article JSON-LD, article:*
 // meta and sitemap <lastmod>.
 const ARTICLE_DATES = {
+  'foreigner-pension-refund-overseas-case-2026':'2026-09-18',
   'f6-immigration-review-no-departure-order-case-2026':'2026-09-18',
   'korea-business-immigration-visa-guide-d9-4-d9-5-2026':'2026-05-14',
   'foreigner-franchise-business-korea-2026':'2026-05-07',

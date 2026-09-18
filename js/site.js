@@ -55,6 +55,7 @@
       var body = document.querySelector('.art-layout article.body') || document.querySelector('article.body');
       if (!body || body.hasAttribute('data-no-cta')) return;
       body.appendChild(ctaBand()); // bottom
+      if (body.getAttribute('data-cta') === 'bottom') return;
       var h2s = body.querySelectorAll(':scope > h2');
       if (h2s.length >= 3) {
         body.insertBefore(ctaBand(), h2s[Math.floor(h2s.length / 2)]); // middle
@@ -175,7 +176,13 @@
         var mq = window.matchMedia('(max-width:900px)');
         function placeMembers() {
           var target = (mq.matches || !toc) ? body : toc;
-          if (sec.parentNode !== target) target.appendChild(sec);
+          if (sec.parentNode !== target) {
+            if (target === body && body.getAttribute('data-cta') === 'bottom') {
+              body.insertBefore(sec, body.querySelector(':scope > .cta-band:last-child'));
+            } else {
+              target.appendChild(sec);
+            }
+          }
         }
         placeMembers();
         try { mq.addEventListener('change', placeMembers); }
