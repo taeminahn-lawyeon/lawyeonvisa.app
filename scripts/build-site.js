@@ -92,6 +92,11 @@ const STATIC_PAGES = ['terms-of-service', 'privacy-policy', 'refund-policy'];
 // ---- page registry (add pages here as they are migrated) ----
 const PAGES = [
   {
+    id: 'f6-marriage-visa-requirements-status-change-korea', content: 'f6-marriage-visa-requirements-status-change-korea', langs: ['ko'],
+    title: { ko: '결혼이민 비자(F-6) 신청 요건과 체류자격 변경 — 법무법인 로연' },
+    desc: { ko: '결혼이민(F-6) 신청 요건과 면제 기준, 자녀 출생 전의 비자 발급·체류자격 변경, 통상적인 증빙으로 허가받기 어려운 경우의 소명과 심사 대응을 설명합니다.' },
+  },
+  {
     id: 'foreigner-pension-refund-overseas-case-2026', content: 'foreigner-pension-refund-overseas-case-2026',
     langs: ['ko'],
     title: { ko: '소멸시효를 앞둔 국민연금 반환일시금 청구, 보완 없이 지급 완료 — 법무법인 로연' },
@@ -379,6 +384,7 @@ const PAGES = [
 // "article" iff its id is a key here. Used for article JSON-LD, article:*
 // meta and sitemap <lastmod>.
 const ARTICLE_DATES = {
+  'f6-marriage-visa-requirements-status-change-korea':'2026-09-18',
   'foreigner-pension-refund-overseas-case-2026':'2026-09-18',
   'f6-immigration-review-no-departure-order-case-2026':'2026-09-18',
   'korea-business-immigration-visa-guide-d9-4-d9-5-2026':'2026-05-14',
