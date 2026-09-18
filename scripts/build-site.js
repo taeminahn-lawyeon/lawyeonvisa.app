@@ -8,6 +8,7 @@
    ============================================================ */
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 const ROOT = path.resolve(__dirname, '..');
 const SITE = 'https://www.lawyeon-immigration.com';
@@ -24,6 +25,10 @@ const SITE_VERIFICATION_TAGS = [
 
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 const replaceAll = (s, find, val) => s.split(find).join(val == null ? '' : val);
+// All languages and static policy pages share one stylesheet URL. Derive the
+// cache version from its contents so a footer/style edit cannot miss a version bump.
+const SITE_CSS_URL = '/css/site.css?v=' + crypto.createHash('sha256')
+  .update(read('css/site.css')).digest('hex').slice(0, 12);
 
 // ---- shared partials ----
 const HEAD = read('partials/head.html');
@@ -596,6 +601,7 @@ function build() {
       const scripts = (page.supabase ? SUPABASE_SCRIPTS + '\n' : '') + SCRIPTS;
       let doc = HEAD + '\n' + HEADER + '\n' + bodyHtml + '\n' + FOOTER[lang] + '\n' + scripts + '\n</body>\n</html>\n';
       const subs = {
+        '__SITE_CSS_URL__': SITE_CSS_URL,
         '__LANG__': lang,
         '__TITLE__': isArticle ? stripBrand(page.title[lang]) : page.title[lang],
         '__DESC__': page.desc[lang],
@@ -643,6 +649,15 @@ function build() {
       console.log('built', out);
       count++;
     }
+  }
+  // Policy documents are authored separately, but must use the same CSS version.
+  for (const id of STATIC_PAGES) {
+    const file = `${id}.html`;
+    const doc = read(file);
+    const cssLink = /href="\/css\/site\.css(?:\?[^"]*)?"/g;
+    if (!cssLink.test(doc)) throw new Error(`Missing shared stylesheet in ${file}`);
+    const updated = doc.replace(cssLink, `href="${SITE_CSS_URL}"`);
+    if (updated !== doc) fs.writeFileSync(path.join(ROOT, file), updated, 'utf8');
   }
   // ---- sitemap.xml + robots.txt ----
   const sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n' +
