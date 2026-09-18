@@ -57,15 +57,15 @@ const SITE_NAME_ALT = ['법무법인 로연 출입국이민지원센터', 'Law F
 const STRINGS = {
   en: { brandName: 'Law Firm Lawyeon', brandSub: 'Immigration Center',
         siteName: SITE_NAME, siteNameAlt: SITE_NAME_ALT,
-        navExpertise: 'Expertise', navInsights: 'Insights', navCases: 'Cases & News', navConsult: 'Contact',
+        navExpertise: 'Expertise', navInsights: 'Insights', navCaseStudies: 'Case Studies', navCases: 'Newsletters & News', navConsult: 'Contact',
         navLabel: 'Main navigation' },
   ko: { brandName: '법무법인 로연', brandSub: '출입국이민지원센터',
         siteName: SITE_NAME, siteNameAlt: SITE_NAME_ALT,
-        navExpertise: '업무분야', navInsights: '인사이트', navCases: '업무사례·소식', navConsult: '문의',
+        navExpertise: '업무분야', navInsights: '인사이트', navCaseStudies: '해결사례', navCases: '뉴스레터·소식', navConsult: '문의',
         navLabel: '주요 메뉴' },
   vi: { brandName: 'Law Firm Lawyeon', brandSub: 'Trung tâm Xuất nhập cảnh & Di trú',
         siteName: SITE_NAME, siteNameAlt: SITE_NAME_ALT,
-        navExpertise: 'Lĩnh vực hoạt động', navInsights: 'Thông tin pháp lý', navCases: 'Tin tức', navConsult: 'Liên hệ',
+        navExpertise: 'Lĩnh vực hoạt động', navInsights: 'Thông tin pháp lý', navCaseStudies: 'Vụ việc', navCases: 'Bản tin & Tin tức', navConsult: 'Liên hệ',
         navLabel: 'Điều hướng chính' },
 };
 
@@ -612,6 +612,7 @@ function build() {
         '__EXPERTISE_CURRENT__': page.id === 'expertise' ? ' class="expertise-current" aria-current="page"' : (page.id.startsWith('expertise-') ? ' class="expertise-current"' : ''),
         '__PAGE_STYLES__': page.expertise ? '<link rel="stylesheet" href="__BASE__css/expertise.css?v=1">' : '',
         '__NAV_INSIGHTS__': S.navInsights,
+        '__NAV_CASE_STUDIES__': S.navCaseStudies,
         '__NAV_CASES__': S.navCases,
         '__NAV_CONSULT__': S.navConsult,
         '__NAV_LABEL__': S.navLabel,

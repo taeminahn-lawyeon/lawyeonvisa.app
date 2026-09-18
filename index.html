@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700;900&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/site.css?v=18">
+<link rel="stylesheet" href="css/site.css?v=19">
 
 
 <script type="application/ld+json">
@@ -107,8 +107,9 @@
         <div class="header-actions">
             <nav class="nav-links" aria-label="Main navigation">
                 <a href="expertise">Expertise</a>
-                <a href="/#insights">Insights</a>
-                <a href="/#cases">Cases & News</a>
+                <a href="insights">Insights</a>
+                <a href="/#case-studies">Case Studies</a>
+                <a href="/#cases">Newsletters & News</a>
                 <a href="/#consult">Contact</a>
             </nav>
             <span class="lang"><a href="/" class="active">EN</a><span class="sep">·</span><a href="/ko/">한국어</a></span>
@@ -126,8 +127,14 @@
                 <img src="images/moj-badge.jpg" alt="Ministry of Justice">
                 <span class="reg-text">Registered Immigration Agency<br>#25-SM-RG-063</span>
             </div>
-            <div class="intro-cta">
-                <a href="expertise" class="text-link">Expertise</a>
+            <div class="intro-expertise">
+                <div class="intro-expertise-head"><h2 id="intro-expertise-title">Expertise</h2><a href="expertise" class="text-link">View all</a></div>
+                <nav aria-labelledby="intro-expertise-title"><ul class="intro-practice-grid">
+                    <li><a href="expertise-criminal">Criminal &amp; Immigration Review</a></li>
+                    <li><a href="expertise-visa">Visas &amp; Immigration</a></li>
+                    <li><a href="expertise-residence">Residence &amp; Nationality</a></li>
+                    <li><a href="expertise-admin">Administrative Matters</a></li>
+                </ul></nav>
             </div>
         </div>
 
@@ -164,7 +171,7 @@
 <section id="insights" class="insights">
     <div class="wrap">
         <div class="list-head">
-            <div class="sec-title">Insights</div>
+            <h2 class="sec-title">Insights</h2>
             <div class="cat-toggle" id="insightCats">
                 <button class="ct active" data-cat="criminal">Criminal &amp; Immigration Review</button>
                 <span class="ct-div">|</span>
@@ -302,14 +309,27 @@
     </div>
 </section>
 
-<!-- ================= OUR CASES & NEWS ================= -->
+<!-- ================= CASE STUDIES ================= -->
+<section id="case-studies" class="case-studies" aria-labelledby="case-heading">
+    <div class="wrap">
+        <div class="list-head"><h2 class="sec-title" id="case-heading">Case Studies</h2></div>
+        <div class="doc-list" id="case-list">
+            <a class="doc-row" href="/ko/f6-immigration-review-no-departure-order-case-2026" hreflang="ko">
+                <div class="doc-main"><div class="doc-title">F-6 Visa Holder Fined KRW 4 Million: Continued Stay Without a Departure Order</div><div class="doc-tags"><span>Immigration Review</span><span>Marriage Immigration</span><span>Article in Korean</span></div></div>
+                <div class="doc-date">2026.08</div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ================= NEWSLETTERS & NEWS ================= -->
 <section id="cases" class="cards-news">
     <div class="wrap">
         <div class="sec-head-row">
-            <div><div class="sec-title">Our Cases &amp; News</div></div>
+            <h2 class="sec-title">Newsletters &amp; News</h2>
         </div>
         <div class="case-grid2">
-            <a class="ccard featured" href="far-east-university-student-job-fair-mou-2026">
+            <a class="ccard" href="far-east-university-student-job-fair-mou-2026">
                 <div class="cc-title">MOU with Far East University and a Visa-Roadmap Lecture &amp; Legal Clinic at the International Student Job Fair</div>
                 <div class="cc-excerpt">On 26 May 2026 we signed an MOU with Far East University and, at the international student job fair held at its SMART-K tech Center, delivered a lecture on the post-graduation visa roadmap and work-visa law and ran a free legal clinic booth.</div>
                 <div class="cc-tag">#News · Far East University</div>
@@ -347,7 +367,7 @@
 
 <script>
     (function(){
-        var tabs = document.querySelectorAll('.cat-toggle .ct');
+        var tabs = document.querySelectorAll('#insightCats .ct');
         var rows = document.querySelectorAll('#insightList .doc-row');
         var emptyEl = document.getElementById('insightEmpty');
         var moreLink = document.querySelector('.insights .more-plus');

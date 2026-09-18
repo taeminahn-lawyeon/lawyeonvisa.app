@@ -8,8 +8,14 @@
                 <img src="__BASE__images/moj-badge.jpg" alt="법무부">
                 <span class="reg-text">법무부 등록 출입국민원 대행기관<br>#25-SM-RG-063</span>
             </div>
-            <div class="intro-cta">
-                <a href="expertise" class="text-link">업무분야</a>
+            <div class="intro-expertise">
+                <div class="intro-expertise-head"><h2 id="intro-expertise-title">업무분야</h2><a href="expertise" class="text-link">전체 보기</a></div>
+                <nav aria-labelledby="intro-expertise-title"><ul class="intro-practice-grid">
+                    <li><a href="expertise-criminal">형사·사범심사</a></li>
+                    <li><a href="expertise-visa">비자·이민</a></li>
+                    <li><a href="expertise-residence">거주·국적</a></li>
+                    <li><a href="expertise-admin">행정</a></li>
+                </ul></nav>
             </div>
         </div>
 
@@ -46,7 +52,7 @@
 <section id="insights" class="insights">
     <div class="wrap">
         <div class="list-head">
-            <div class="sec-title">인사이트</div>
+            <h2 class="sec-title">인사이트</h2>
             <div class="cat-toggle" id="insightCats">
                 <button class="ct active" data-cat="criminal">형사 &amp; 사범심사</button>
                 <span class="ct-div">|</span>
@@ -184,14 +190,36 @@
     </div>
 </section>
 
-<!-- ================= OUR CASES & NEWS ================= -->
+<!-- ================= CASE STUDIES ================= -->
+<section id="case-studies" class="case-studies" aria-labelledby="case-heading">
+    <div class="wrap">
+        <div class="list-head"><h2 class="sec-title" id="case-heading">해결사례</h2>
+        <div class="cat-toggle" id="case-categories" role="group" aria-label="해결 사례 분야">
+            <button class="ct active" data-cat="all" aria-pressed="true">전체</button>
+            <span class="ct-div">|</span><button class="ct" data-cat="criminal" aria-pressed="false">형사 &amp; 사범심사</button>
+            <span class="ct-div">|</span><button class="ct" data-cat="visa" aria-pressed="false">비자·이민</button>
+            <span class="ct-div">|</span><button class="ct" data-cat="residence" aria-pressed="false">거주·국적</button>
+            <span class="ct-div">|</span><button class="ct" data-cat="admin" aria-pressed="false">행정</button>
+        </div>
+        </div>
+        <div class="doc-list" id="case-list">
+            <a class="doc-row" data-cat="criminal" href="f6-immigration-review-no-departure-order-case-2026">
+                <div class="doc-main"><div class="doc-title">벌금 400만 원을 받은 결혼이민자, 사범심사에서 출국명령 없이 계속 체류</div><div class="doc-tags"><span>#사범심사</span><span>#결혼이민</span><span>#출국명령</span></div></div>
+                <div class="doc-date">2026.08</div>
+            </a>
+        </div>
+        <div class="doc-empty" id="case-empty" style="display:none">해당 분야의 사례는 준비 중입니다.</div>
+    </div>
+</section>
+
+<!-- ================= NEWSLETTERS & NEWS ================= -->
 <section id="cases" class="cards-news">
     <div class="wrap">
         <div class="sec-head-row">
-            <div><div class="sec-title">해결 사례 · 소식</div></div>
+            <h2 class="sec-title">뉴스레터·소식</h2>
         </div>
         <div class="case-grid2">
-            <a class="ccard featured" href="far-east-university-student-job-fair-mou-2026">
+            <a class="ccard" href="far-east-university-student-job-fair-mou-2026">
                 <div class="cc-title">극동대학교 외국인 유학생 취업 박람회 업무 협약 및 비자 로드맵 특강·리걸 클리닉 운영</div>
                 <div class="cc-excerpt">2026년 5월 26일 극동대학교와 업무 협약을 체결하고, 같은 날 SMART-K tech Center 외국인 유학생 취업 박람회에서 졸업 후 비자 로드맵·워크 비자 법제도 특강과 무료 리걸 클리닉 부스를 운영했습니다.</div>
                 <div class="cc-tag">#소식 · 극동대학교</div>
@@ -207,25 +235,7 @@
     </div>
 </section>
 
-<section class="insights" aria-labelledby="case-heading">
-    <div class="wrap">
-        <div class="sec-head-row"><div class="sec-title" id="case-heading">해결 사례</div></div>
-        <div class="cat-toggle" id="case-categories" role="group" aria-label="해결 사례 분야">
-            <button class="ct active" data-cat="all" aria-pressed="true">전체</button>
-            <span class="ct-div">|</span><button class="ct" data-cat="criminal" aria-pressed="false">형사 &amp; 사범심사</button>
-            <span class="ct-div">|</span><button class="ct" data-cat="visa" aria-pressed="false">비자·이민</button>
-            <span class="ct-div">|</span><button class="ct" data-cat="residence" aria-pressed="false">거주·국적</button>
-            <span class="ct-div">|</span><button class="ct" data-cat="admin" aria-pressed="false">행정</button>
-        </div>
-        <div class="doc-list" id="case-list">
-            <a class="doc-row" data-cat="criminal" href="f6-immigration-review-no-departure-order-case-2026">
-                <div class="doc-main"><div class="doc-title">벌금 400만 원을 받은 결혼이민자, 사범심사에서 출국명령 없이 계속 체류</div><div class="doc-tags"><span>#사범심사</span><span>#결혼이민</span><span>#출국명령</span></div></div>
-                <div class="doc-date">2026.08</div>
-            </a>
-        </div>
-        <div class="doc-empty" id="case-empty" style="display:none">해당 분야의 사례는 준비 중입니다.</div>
-    </div>
-</section>
+
 <script>
 (function(){
     var tabs=document.querySelectorAll('#case-categories .ct');
@@ -261,7 +271,7 @@
 
 <script>
     (function(){
-        var tabs = document.querySelectorAll('.insights:not([aria-labelledby="case-heading"]) .cat-toggle .ct');
+        var tabs = document.querySelectorAll('#insightCats .ct');
         var rows = document.querySelectorAll('#insightList .doc-row');
         var emptyEl = document.getElementById('insightEmpty');
         var moreLink = document.querySelector('.insights .more-plus');

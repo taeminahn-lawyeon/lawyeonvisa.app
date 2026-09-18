@@ -100,8 +100,15 @@ section{padding:74px 0}
 .reg-badge{display:flex;align-items:center;gap:14px;margin:28px 0;padding:16px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
 .reg-badge img{height:60px;width:auto}
 .reg-text{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.02em;line-height:1.6}
-.intro-cta{display:flex;gap:12px;flex-wrap:wrap}
-.intro-cta-sub{margin-top:12px}
+.intro-expertise{margin-top:24px}
+.intro-expertise-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:4px}
+.intro-expertise-head h2{font-size:16px;font-weight:600;line-height:1.5;color:var(--ink)}
+.intro-expertise-head .text-link{font-size:14px;min-height:36px}
+.intro-practice-grid{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px;padding:0;margin:0}
+.intro-practice-grid li{display:flex;min-width:0;border-bottom:1px solid var(--rule-d)}
+.intro-practice-grid a{display:flex;align-items:center;width:100%;min-height:58px;padding:12px 0;font-size:15px;font-weight:500;line-height:1.6;color:var(--brown);overflow-wrap:anywhere;transition:color .15s}
+.intro-practice-grid a:hover{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
+.intro-practice-grid a:focus-visible{outline:2px solid var(--btn);outline-offset:3px}
 .intro-right{display:flex;flex-direction:column;gap:14px;min-width:0}
 .attorneys-carousel{position:relative;background:var(--brown-d);border-radius:8px;overflow:hidden;width:100%;min-width:0}
 .attorneys-track{display:flex;animation:scroll-attorneys 28s linear infinite;width:fit-content}
@@ -146,13 +153,17 @@ section{padding:74px 0}
 .more-plus{font-size:15px;font-weight:600;color:var(--ink);letter-spacing:.02em}
 .more-plus i{color:var(--btn);font-style:normal;margin-left:6px}
 
-/* ---------- Cases & News cards ---------- */
-.case-grid2{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.ccard{display:flex;flex-direction:column;background:#F4F2EE;border:2px solid transparent;border-radius:2px;padding:30px 28px;min-height:300px;transition:border-color .14s;cursor:pointer}
+/* ---------- Case studies, newsletters and news ---------- */
+.case-studies{background:#fff;border-bottom:1px solid var(--rule)}
+.case-studies .doc-list{padding:0}
+.case-studies .doc-row{padding:26px 4px}
+.cards-news{background:#F2F2F2}
+.case-grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px}
+.ccard{display:flex;flex-direction:column;min-width:0;background:transparent;border:0;border-top:1px solid var(--rule-d);border-radius:0;padding:26px 0 0;min-height:250px;cursor:pointer}
 .ccard:hover{border-color:var(--btn)}
-.ccard.featured{border-color:var(--btn)}
+
 .ccard .cc-title{font-size:19px;font-weight:500;color:var(--ink);line-height:1.45;letter-spacing:0}
-.ccard.featured .cc-title{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
+.ccard:hover .cc-title{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
 .ccard .cc-excerpt{font-size:14px;color:var(--muted);line-height:1.65;margin-top:18px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .ccard .cc-tag{font-size:13.5px;color:#9D968B;margin-top:16px}
 .ccard .cc-foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:24px}
@@ -237,7 +248,10 @@ section{padding:74px 0}
     .intro-left .intro-desc{font-size:17px;line-height:1.78;margin-top:14px}
     .reg-badge{margin:22px 0}
     .reg-text{font-size:13px}
-    .intro-cta .btn{flex:1 1 auto}
+    .intro-expertise{margin-top:20px}
+    .intro-practice-grid{gap:0 20px}
+    .intro-practice-grid a{min-height:60px;font-size:15px}
+    .intro-expertise-head .text-link{min-height:44px}
 
     .sec-title{font-size:27px}
     .sec-head-row{flex-direction:column;align-items:flex-start;gap:10px;margin-bottom:22px}
@@ -258,8 +272,8 @@ section{padding:74px 0}
     .more-plus{font-size:16px}
 
     /* Cases & News */
-    .case-grid2{grid-template-columns:1fr;gap:16px}
-    .ccard{min-height:0;padding:24px 22px}
+    .case-grid2{grid-template-columns:1fr;gap:28px}
+    .ccard{min-height:0;padding:22px 0 0}
     .ccard .cc-title{font-size:21px;line-height:1.42}
     .ccard .cc-excerpt{font-size:15.5px;line-height:1.7;margin-top:14px;-webkit-line-clamp:4}
     .ccard .cc-tag,.ccard .cc-date,.ccard .cc-act{font-size:14px}
@@ -324,6 +338,10 @@ section{padding:74px 0}
     .lang{padding-left:12px;margin-left:0}
 }
 @media (max-width:400px){
+    .header-content{padding:14px 16px;gap:8px}
+    .brand .name{font-size:17px}
+    .brand .sub{font-size:10px;letter-spacing:.08em}
+    .lang{font-size:12px;padding-left:8px}
     .intro-left h1{font-size:21px}
     .sec-title{font-size:24px}
     .doc-title,.ccard .cc-title{font-size:19.5px}
@@ -336,10 +354,11 @@ section{padding:74px 0}
 .page-head .lead{font-size:15.5px;color:var(--muted);margin-top:12px;max-width:660px;line-height:1.75}
 
 /* ---------- Insights hero (Kim&Chang-referenced) ---------- */
-.ins-hero{background:linear-gradient(180deg,#2A2118 0%,#1A150E 100%);padding:64px 0 52px;text-align:left}
-.ins-hero-kicker{font-family:var(--sans);font-size:13.5px;font-weight:400;color:rgba(255,255,255,.58);margin-bottom:15px}
-.ins-hero-title{font-family:'Lato',var(--sans);font-weight:700;font-size:clamp(38px,5.5vw,52px);letter-spacing:.005em;color:#fff;line-height:1;margin:0}
-.ins-hero-sub{font-size:15.5px;color:rgba(255,255,255,.76);margin:22px 0 0;max-width:600px;line-height:1.75}
+.ins-hero{position:relative;background:#F3F1EC url("../images/office/seoul-lounge.jpg") center 40%/cover no-repeat;min-height:220px;padding:48px 0;text-align:center;color:var(--ink);display:grid;place-items:center}
+.ins-hero::before{content:"";position:absolute;inset:0;background:rgba(246,245,242,.87)}
+.ins-hero .wrap{position:relative;width:100%}
+.ins-hero-title{font-family:'Lato',var(--sans);font-weight:700;font-size:clamp(36px,4.5vw,48px);letter-spacing:0;color:var(--ink);line-height:1.15;margin:0}
+.ins-hero-sub{font-size:16px;color:var(--brown);margin:16px auto 0;max-width:680px;line-height:1.75}
 .ins-body{background:#F2F2F2;padding:40px 0 80px}
 .ins-body .cat-toggle{border-bottom-color:var(--ink)}
 .ins-body .doc-row{border-bottom-color:#E2E1DD}
@@ -347,7 +366,7 @@ section{padding:74px 0}
 .ins-notice-contact{margin-top:12px;color:var(--ink);line-height:1.7}
 .ins-notice-contact b{font-weight:600}
 .ins-notice-contact a{color:var(--btn)}
-@media(max-width:640px){.ins-hero{padding:44px 0 38px}.ins-hero-title{font-size:36px}}
+@media(max-width:760px){.ins-hero{min-height:180px;padding:36px 0}.ins-hero-sub{font-size:15px;margin-top:12px}}
 
 /* ---------- Two-column form layout ---------- */
 .form-grid{display:grid;grid-template-columns:1fr 360px;gap:40px;padding:44px 0 80px;align-items:start}
