@@ -301,6 +301,11 @@ const PAGES = [
     }
   },
   {
+    id: 'expertise-corporate', content: 'expertise-corporate', expertise: true,
+    title: { ko: '기업 자문 — 법무법인 로연', en: 'Corporate Advisory — Law Firm Lawyeon' },
+    desc: { ko: '외국인 채용 전 검토, 고용·체류 관리, 임직원·가족 이주와 국내 사업 진출에 관한 기업 자문을 제공합니다.', en: 'Corporate advice on foreign workforce planning, employment and immigration management, employee relocation and market entry in Korea.' },
+  },
+  {
     "id": "expertise-visa",
     "content": "expertise-visa",
     "expertise": true,
