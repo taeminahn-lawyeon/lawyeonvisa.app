@@ -26,9 +26,9 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@700;900&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/site.css?v=67ea6e191c92">
-<link rel="stylesheet" href="/css/expertise.css?v=83efd3b1d578">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&family=Lato:wght@400;700;900&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css?v=de0d2921d0c2">
+<link rel="stylesheet" href="/css/expertise.css?v=a0d795c7ff0c">
 
 
 
@@ -37,24 +37,28 @@
 
 <header class="header">
     <div class="header-content">
-        <a href="/" class="brand">
+        <div class="header-tools">
+            <nav class="lang" aria-label="Language selection"><a href="ko/expertise-criminal" lang="ko" hreflang="ko" aria-label="한국어">KO</a><span class="sep" aria-hidden="true">|</span><a href="expertise-criminal" lang="en" hreflang="en" aria-label="English" class="active" aria-current="true">EN</a></nav>
+            <button class="nav-toggle" type="button" aria-label="Open navigation" aria-controls="site-navigation" aria-expanded="false"><span aria-hidden="true"></span></button>
+        </div>
+        <a href="/" class="brand" lang="en">
             <div>
-                <div class="name">Law Firm Lawyeon</div>
+                <div class="name">LAW FIRM LAWYEON</div>
                 <div class="sub">Immigration Law Center</div>
             </div>
         </a>
-        <div class="header-actions">
-            <nav class="nav-links" aria-label="Main navigation">
-                <a href="expertise" class="expertise-current">Expertise</a>
-                <a href="insights">Insights</a>
-                <a href="cases">Recent Case</a>
-                <a href="newsletters">Newsletters & News</a>
-                <a href="/#consult">Contact</a>
-            </nav>
-            <span class="lang"><a href="expertise-criminal" class="active">EN</a><span class="sep">·</span><a href="ko/expertise-criminal">한국어</a></span>
-        </div>
     </div>
 </header>
+<dialog id="site-navigation" class="site-menu" aria-label="Main navigation">
+    <button class="nav-close" type="button" aria-label="Close navigation" autofocus><span aria-hidden="true"></span></button>
+    <nav class="nav-links" aria-label="Main navigation">
+        <a href="expertise" class="expertise-current">Expertise</a>
+        <a href="insights">Insights</a>
+        <a href="cases">Recent Case</a>
+        <a href="newsletters">Newsletters & News</a>
+        <div class="nav-contact"><a href="/#consult">Contact</a></div>
+    </nav>
+</dialog>
 
 <main id="main" class="expertise-page page" data-page="criminal">
 <section class="expertise-hero detail-hero"><div class="wrap"><h1>Criminal Defense &amp; Immigration Enforcement</h1><p class="hero-caption">EXPERTISE</p></div></section>
@@ -134,6 +138,6 @@
     </div>
 </footer>
 
-<script src="js/site.js?v=15"></script>
+<script src="js/site.js?v=16"></script>
 </body>
 </html>

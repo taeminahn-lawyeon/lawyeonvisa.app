@@ -26,9 +26,9 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@700;900&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/site.css?v=67ea6e191c92">
-<link rel="stylesheet" href="/css/expertise.css?v=83efd3b1d578">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&family=Lato:wght@400;700;900&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css?v=de0d2921d0c2">
+<link rel="stylesheet" href="/css/expertise.css?v=a0d795c7ff0c">
 
 
 
@@ -37,24 +37,28 @@
 
 <header class="header">
     <div class="header-content">
-        <a href="/ko/" class="brand">
+        <div class="header-tools">
+            <nav class="lang" aria-label="언어 선택"><a href="expertise-criminal" lang="ko" hreflang="ko" aria-label="한국어" class="active" aria-current="true">KO</a><span class="sep" aria-hidden="true">|</span><a href="../expertise-criminal" lang="en" hreflang="en" aria-label="English">EN</a></nav>
+            <button class="nav-toggle" type="button" aria-label="전체 메뉴 열기" aria-controls="site-navigation" aria-expanded="false"><span aria-hidden="true"></span></button>
+        </div>
+        <a href="/ko/" class="brand" lang="en">
             <div>
-                <div class="name">법무법인 로연</div>
-                <div class="sub">출입국이민법센터</div>
+                <div class="name">LAW FIRM LAWYEON</div>
+                <div class="sub">Immigration Law Center</div>
             </div>
         </a>
-        <div class="header-actions">
-            <nav class="nav-links" aria-label="주요 메뉴">
-                <a href="/ko/expertise" class="expertise-current">업무분야</a>
-                <a href="/ko/insights">인사이트</a>
-                <a href="/ko/cases">최근 업무사례</a>
-                <a href="/ko/newsletters">뉴스레터·소식</a>
-                <a href="/ko/#consult">문의</a>
-            </nav>
-            <span class="lang"><a href="../expertise-criminal">EN</a><span class="sep">·</span><a href="expertise-criminal" class="active">한국어</a></span>
-        </div>
     </div>
 </header>
+<dialog id="site-navigation" class="site-menu" aria-label="주요 메뉴">
+    <button class="nav-close" type="button" aria-label="전체 메뉴 닫기" autofocus><span aria-hidden="true"></span></button>
+    <nav class="nav-links" aria-label="주요 메뉴">
+        <a href="/ko/expertise" class="expertise-current">업무분야</a>
+        <a href="/ko/insights">인사이트</a>
+        <a href="/ko/cases">최근 업무사례</a>
+        <a href="/ko/newsletters">뉴스레터·소식</a>
+        <div class="nav-contact"><a href="/ko/#consult">문의</a></div>
+    </nav>
+</dialog>
 
 <main id="main" class="expertise-page page" data-page="criminal">
 <section class="expertise-hero detail-hero"><div class="wrap"><h1>형사·사범심사</h1><p class="hero-caption">CRIMINAL DEFENSE &amp; IMMIGRATION ENFORCEMENT</p></div></section>
@@ -134,6 +138,6 @@
     </div>
 </footer>
 
-<script src="../js/site.js?v=15"></script>
+<script src="../js/site.js?v=16"></script>
 </body>
 </html>
