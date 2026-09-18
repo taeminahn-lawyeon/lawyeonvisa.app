@@ -168,11 +168,8 @@ button, .btn, input[type="button"], input[type="submit"] {
     z-index: 100;
     pointer-events: auto;
 }
+#language-selector-btn:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;background:#fff !important;border-color:#887668 !important;}
 
-#language-selector-btn:hover {
-    background: #f3f4f6;
-    border-color: #e5e7eb;
-}
 
 .language-btn-content {
     display: flex;
@@ -226,10 +223,8 @@ button, .btn, input[type="button"], input[type="submit"] {
     transition: background 0.2s;
     text-align: left;
 }
+.language-option:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;background:#fff !important;border-color:#887668 !important;}
 
-.language-option:hover {
-    background: #f3f4f6;
-}
 
 .language-option .language-flag {
     font-size: 20px;
@@ -395,11 +390,8 @@ button, .btn, input[type="button"], input[type="submit"] {
     transition: all 0.3s;
     flex-shrink: 0;
 }
+.toast-close:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;}
 
-.toast-close:hover {
-    color: #111827;
-    transform: scale(1.2);
-}
 
 /* ========================================
    2. 폼 검증 스타일
@@ -482,20 +474,12 @@ button, .btn, input[type="button"], input[type="submit"] {
     transition: width 0.6s, height 0.6s;
 }
 
-.btn:hover::before {
-    width: 300px;
-    height: 300px;
-}
-
 .btn-primary {
     background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
     color: white;
 }
+.btn-primary:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){background:#887668 !important;border-color:#887668 !important;color:#fff !important;}
 
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
-}
 
 .btn-primary:active {
     transform: translateY(0);
@@ -505,10 +489,8 @@ button, .btn, input[type="button"], input[type="submit"] {
     background-color: #f3f4f6;
     color: #374151;
 }
+.btn-secondary:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;background:#fff !important;border-color:#887668 !important;}
 
-.btn-secondary:hover {
-    background-color: #e5e7eb;
-}
 
 .btn-success {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
@@ -551,10 +533,6 @@ button, .btn, input[type="button"], input[type="submit"] {
 /* 버튼 아이콘 애니메이션 */
 .btn i.fa-arrow-right {
     transition: transform 0.3s;
-}
-
-.btn:hover i.fa-arrow-right {
-    transform: translateX(4px);
 }
 
 .btn:disabled {
@@ -814,12 +792,6 @@ button, .btn, input[type="button"], input[type="submit"] {
     border: 1px solid transparent;
 }
 
-.card-enhanced:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    transform: translateY(-4px);
-    border-color: #e5e7eb;
-}
-
 /* ========================================
    8. 배지
    ======================================== */
@@ -996,10 +968,8 @@ button, .btn, input[type="button"], input[type="submit"] {
         background-color: #374151;
         color: #e5e7eb;
     }
-    
-    .btn-secondary:hover {
-        background-color: #4b5563;
-    }
+.btn-secondary:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;background:#fff !important;border-color:#887668 !important;}
+
     
     .progress-bar-wrapper {
         background-color: #1f2937;
@@ -1103,7 +1073,8 @@ textarea:focus-visible {
     font-size: 14px;
     transition: background 0.2s;
 }
-.thread-banner-cta:hover { background: #d98b0c; }
+.thread-banner-cta:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){background:#887668 !important;border-color:#887668 !important;color:#fff !important;}
+
 
 @media (max-width: 600px) {
     .thread-banner-body {
@@ -1155,9 +1126,8 @@ textarea:focus-visible {
     cursor: pointer;
     white-space: nowrap;
 }
-.toast-with-retry .toast-retry:hover {
-    background: #eef4ff;
-}
+.toast-with-retry .toast-retry:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;background:#fff !important;border-color:#887668 !important;}
+
 .toast-with-retry .toast-close {
     background: none;
     border: none;
@@ -1167,7 +1137,8 @@ textarea:focus-visible {
     padding: 4px 8px;
     line-height: 1;
 }
-.toast-with-retry .toast-close:hover { color: #191f28; }
+.toast-with-retry .toast-close:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;}
+
 
 /* ============================================
  * 사업이민 쓰레드 사이드바 섹션 (기존 .thread-sidebar 내부에 인라인 배치)

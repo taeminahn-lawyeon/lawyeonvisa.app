@@ -87,7 +87,7 @@
 /* 하단 복귀 링크 */
 .legal-foot{margin-top:44px;padding-top:24px;border-top:1px solid var(--rule)}
 .legal-foot a{font-size:14.5px;color:var(--muted);border-bottom:1px solid var(--rule-d);padding-bottom:2px}
-.legal-foot a:hover{color:var(--brown);border-bottom-color:var(--btn)}
+.legal-foot a:hover{color:var(--hover);border-bottom-color:var(--btn)}
 
 @media(max-width:860px){
     .legal{padding:30px 0 64px}

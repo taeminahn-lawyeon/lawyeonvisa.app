@@ -8,7 +8,7 @@
     <link rel="icon" type="image/png" href="favicon.png?v=5">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/ui-components.css">
+    <link rel="stylesheet" href="css/ui-components.css?v=6fe91bd2fbc9">
 
     <!-- Quill Editor -->
     <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
@@ -58,10 +58,8 @@
             border: none;
             cursor: pointer;
         }
+.back-btn:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;opacity:1;background:#fff;}
 
-        .back-btn:hover {
-            opacity: 1;
-        }
 
         .header-title {
             color: white;
@@ -99,10 +97,8 @@
             gap: 6px;
             transition: all 0.2s;
         }
+.header-btn:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;background:#fff !important;border-color:#887668 !important;}
 
-        .header-btn:hover {
-            background: rgba(255,255,255,0.3);
-        }
 
         /* Container */
         .thread-container {
@@ -180,10 +176,8 @@
             color: #3182F6;
             text-decoration: none;
         }
+.info-value a:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;text-decoration:underline;}
 
-        .info-value a:hover {
-            text-decoration: underline;
-        }
 
         /* Status Controls */
         .status-controls {
@@ -237,11 +231,8 @@
             margin-bottom: 8px;
             width: 100%;
         }
+.doc-btn:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;background:#fff !important;border-color:#887668 !important;}
 
-        .doc-btn:hover {
-            background: #E5E8EB;
-            border-color: #3182F6;
-        }
 
         .doc-btn i {
             color: #3182F6;
@@ -334,11 +325,8 @@
             gap: 6px;
             transition: all 0.2s;
         }
+.admin-btn:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;background:#fff !important;border-color:#887668 !important;}
 
-        .admin-btn:hover {
-            background: #F9FAFB;
-            border-color: #D1D5DB;
-        }
 
         .admin-btn i {
             color: #6B7280;
@@ -455,10 +443,8 @@
             text-decoration: none;
             font-weight: 600;
         }
+.message-body a:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;text-decoration:underline;}
 
-        .message-body a:hover {
-            text-decoration: underline;
-        }
 
         .message-body h4 {
             font-size: 15px;
@@ -513,10 +499,8 @@
             cursor: pointer;
             transition: background 0.2s;
         }
+.attachment-item[onclick]:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;background:#fff !important;border-color:#887668 !important;}
 
-        .attachment-item:hover {
-            background: #F3F4F6;
-        }
 
         .attachment-image {
             margin-bottom: 8px;
@@ -572,11 +556,8 @@
             border-radius: 4px;
             transition: all 0.2s;
         }
+.message-edit-btn:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;background:#fff !important;border-color:#887668 !important;}
 
-        .message-edit-btn:hover {
-            background: #F3F4F6;
-            color: #374151;
-        }
 
         /* Reply Section */
         .reply-section {
@@ -654,22 +635,16 @@
             cursor: pointer;
             transition: all 0.2s;
         }
+.template-btn:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){background:#887668 !important;border-color:#887668 !important;color:#fff !important;}
 
-        .template-btn:hover {
-            background: #D97706;
-            color: white;
-        }
 
         .template-btn.survey-btn {
             background: #ECFDF5;
             border-color: #059669;
             color: #065F46;
         }
+.template-btn.survey-btn:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){background:#887668 !important;border-color:#887668 !important;color:#fff !important;}
 
-        .template-btn.survey-btn:hover {
-            background: #059669;
-            color: white;
-        }
 
         /* Styled content inside editor and messages */
         .info-box, .ql-editor .info-box {
@@ -760,10 +735,8 @@
             text-decoration: none !important;
             margin: 8px 0;
         }
+.action-link-btn:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){background:#887668 !important;border-color:#887668 !important;color:#fff !important;}
 
-        .action-link-btn:hover {
-            background: #2563EB;
-        }
 
         /* Highlight styles */
         .highlight-yellow { background-color: #FEF08A; padding: 2px 4px; border-radius: 3px; }
@@ -782,11 +755,8 @@
             transition: all 0.2s;
             background: #FAFAFA;
         }
+.file-upload-area:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;background:#fff !important;border-color:#887668 !important;}
 
-        .file-upload-area:hover {
-            border-color: #3182F6;
-            background: #F0F7FF;
-        }
 
         .file-upload-area i {
             font-size: 24px;
@@ -846,11 +816,8 @@
             gap: 8px;
             transition: all 0.2s;
         }
+.submit-btn:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){background:#887668 !important;border-color:#887668 !important;color:#fff !important;}
 
-        .submit-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
-        }
 
         .submit-btn:disabled {
             background: #D1D5DB;
@@ -1083,10 +1050,8 @@
             transition: background 0.15s;
             margin-bottom: 4px;
         }
+.sidebar-attachment-item[onclick]:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;background:#fff !important;border-color:#887668 !important;}
 
-        .sidebar-attachment-item:hover {
-            background: #F3F4F6;
-        }
 
         .sidebar-attachment-icon {
             width: 32px;
@@ -1141,11 +1106,8 @@
             font-size: 12px;
             transition: all 0.15s;
         }
+.sidebar-attachment-btn:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){background:#887668 !important;border-color:#887668 !important;color:#fff !important;}
 
-        .sidebar-attachment-btn:hover {
-            background: #3182F6;
-            color: white;
-        }
 
         /* Admin Notes */
         .notes-section {
@@ -1202,10 +1164,8 @@
             font-weight: 600;
             cursor: pointer;
         }
+.notes-save-btn:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){background:#887668 !important;border-color:#887668 !important;color:#fff !important;}
 
-        .notes-save-btn:hover {
-            background: #D97706;
-        }
 
         /* Loading */
         .loading-container {

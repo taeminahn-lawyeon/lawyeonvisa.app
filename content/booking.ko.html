@@ -16,7 +16,7 @@
 .booking-page .cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
 .booking-page .cal-day{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;font-size:14px;border:1.5px solid transparent;border-radius:3px;transition:border-color .12s,background .12s}
 .booking-page .cal-day.pick{cursor:pointer}
-.booking-page .cal-day.pick:hover{border-color:var(--btn)}
+.booking-page .cal-day.pick:hover:not(.disabled){border-color:var(--btn)}
 .booking-page .cal-day.sel{background:var(--btn);color:#fff;border-color:var(--btn);font-weight:700}
 .booking-page .cal-day.disabled{color:#CFC8BC}
 .booking-page .cal-day.empty{visibility:hidden}
@@ -58,7 +58,7 @@
 .booking-page .login-gate .lg-title{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:8px}
 .booking-page .login-gate .lg-desc{font-size:13.5px;color:var(--muted);line-height:1.7;margin:0 0 16px}
 .booking-page .btn-login-g{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--ink);border:1.5px solid var(--rule-d);border-radius:3px;padding:12px 18px;font-family:var(--sans);font-size:14.5px;font-weight:700;cursor:pointer;transition:border-color .14s,background .14s}
-.booking-page .btn-login-g:hover{border-color:var(--btn);background:#fff}
+.booking-page .btn-login-g:hover:not(:disabled){border-color:var(--btn);background:#fff}
 .booking-page .btn-login-g:disabled{opacity:.6;cursor:not-allowed}
 
 .booking-page .maps-sec{padding:6px 0 72px}

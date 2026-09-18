@@ -27,8 +27,9 @@ const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 const replaceAll = (s, find, val) => s.split(find).join(val == null ? '' : val);
 // All languages and static policy pages share one stylesheet URL. Derive the
 // cache version from its contents so a footer/style edit cannot miss a version bump.
-const SITE_CSS_URL = '/css/site.css?v=' + crypto.createHash('sha256')
-  .update(read('css/site.css')).digest('hex').slice(0, 12);
+const stylesheetUrl = (file) => '/' + file + '?v=' + crypto.createHash('sha256')
+  .update(read(file)).digest('hex').slice(0, 12);
+const SITE_CSS_URL = stylesheetUrl('css/site.css');
 
 // ---- shared partials ----
 const HEAD = read('partials/head.html');
@@ -629,7 +630,7 @@ function build() {
         '__BRAND_SUB__': S.brandSub,
         '__NAV_EXPERTISE__': S.navExpertise,
         '__EXPERTISE_CURRENT__': page.id === 'expertise' ? ' class="expertise-current" aria-current="page"' : (page.id.startsWith('expertise-') ? ' class="expertise-current"' : ''),
-        '__PAGE_STYLES__': page.expertise ? '<link rel="stylesheet" href="__BASE__css/expertise.css?v=1">' : '',
+        '__PAGE_STYLES__': page.expertise ? `<link rel="stylesheet" href="${stylesheetUrl('css/expertise.css')}">` : '',
         '__NAV_INSIGHTS__': S.navInsights,
         '__NAV_CASE_STUDIES__': S.navCaseStudies,
         '__NAV_CASES__': S.navCases,
@@ -669,7 +670,8 @@ function build() {
     const doc = read(file);
     const cssLink = /href="\/css\/site\.css(?:\?[^"]*)?"/g;
     if (!cssLink.test(doc)) throw new Error(`Missing shared stylesheet in ${file}`);
-    const updated = doc.replace(cssLink, `href="${SITE_CSS_URL}"`);
+    const updated = doc.replace(cssLink, `href="${SITE_CSS_URL}"`)
+      .replace(/href="\/css\/legal\.css(?:\?[^"]*)?"/g, `href="${stylesheetUrl('css/legal.css')}"`);
     if (updated !== doc) fs.writeFileSync(path.join(ROOT, file), updated, 'utf8');
   }
   // ---- sitemap.xml + robots.txt ----
