@@ -181,6 +181,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lawyeon-immigration.com/expertise-criminal"/>
   </url>
   <url>
+    <loc>https://www.lawyeon-immigration.com/expertise-corporate</loc>
+    <lastmod>2026-09-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeon-immigration.com/expertise-corporate"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeon-immigration.com/ko/expertise-corporate"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lawyeon-immigration.com/expertise-corporate"/>
+  </url>
+  <url>
+    <loc>https://www.lawyeon-immigration.com/ko/expertise-corporate</loc>
+    <lastmod>2026-09-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeon-immigration.com/expertise-corporate"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.lawyeon-immigration.com/ko/expertise-corporate"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lawyeon-immigration.com/expertise-corporate"/>
+  </url>
+  <url>
     <loc>https://www.lawyeon-immigration.com/expertise-visa</loc>
     <lastmod>2026-09-17</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.lawyeon-immigration.com/expertise-visa"/>
