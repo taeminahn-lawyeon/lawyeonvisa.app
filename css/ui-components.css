@@ -168,7 +168,7 @@ button, .btn, input[type="button"], input[type="submit"] {
     z-index: 100;
     pointer-events: auto;
 }
-#language-selector-btn:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;background:#fff !important;border-color:#887668 !important;}
+#language-selector-btn:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:var(--hover,#8A4F2D) !important;background:#fff !important;border-color:var(--hover,#8A4F2D) !important;}
 
 
 .language-btn-content {
@@ -223,7 +223,7 @@ button, .btn, input[type="button"], input[type="submit"] {
     transition: background 0.2s;
     text-align: left;
 }
-.language-option:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;background:#fff !important;border-color:#887668 !important;}
+.language-option:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:var(--hover,#8A4F2D) !important;background:#fff !important;border-color:var(--hover,#8A4F2D) !important;}
 
 
 .language-option .language-flag {
@@ -390,7 +390,7 @@ button, .btn, input[type="button"], input[type="submit"] {
     transition: all 0.3s;
     flex-shrink: 0;
 }
-.toast-close:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;}
+.toast-close:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:var(--hover,#8A4F2D) !important;}
 
 
 /* ========================================
@@ -478,7 +478,7 @@ button, .btn, input[type="button"], input[type="submit"] {
     background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
     color: white;
 }
-.btn-primary:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){background:#887668 !important;border-color:#887668 !important;color:#fff !important;}
+.btn-primary:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){background:var(--hover,#8A4F2D) !important;border-color:var(--hover,#8A4F2D) !important;color:#fff !important;}
 
 
 .btn-primary:active {
@@ -489,7 +489,7 @@ button, .btn, input[type="button"], input[type="submit"] {
     background-color: #f3f4f6;
     color: #374151;
 }
-.btn-secondary:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;background:#fff !important;border-color:#887668 !important;}
+.btn-secondary:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:var(--hover,#8A4F2D) !important;background:#fff !important;border-color:var(--hover,#8A4F2D) !important;}
 
 
 .btn-success {
@@ -968,7 +968,7 @@ button, .btn, input[type="button"], input[type="submit"] {
         background-color: #374151;
         color: #e5e7eb;
     }
-.btn-secondary:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;background:#fff !important;border-color:#887668 !important;}
+.btn-secondary:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:var(--hover,#8A4F2D) !important;background:#fff !important;border-color:var(--hover,#8A4F2D) !important;}
 
     
     .progress-bar-wrapper {
@@ -1073,7 +1073,7 @@ textarea:focus-visible {
     font-size: 14px;
     transition: background 0.2s;
 }
-.thread-banner-cta:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){background:#887668 !important;border-color:#887668 !important;color:#fff !important;}
+.thread-banner-cta:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){background:var(--hover,#8A4F2D) !important;border-color:var(--hover,#8A4F2D) !important;color:#fff !important;}
 
 
 @media (max-width: 600px) {
@@ -1126,7 +1126,7 @@ textarea:focus-visible {
     cursor: pointer;
     white-space: nowrap;
 }
-.toast-with-retry .toast-retry:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;background:#fff !important;border-color:#887668 !important;}
+.toast-with-retry .toast-retry:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:var(--hover,#8A4F2D) !important;background:#fff !important;border-color:var(--hover,#8A4F2D) !important;}
 
 .toast-with-retry .toast-close {
     background: none;
@@ -1137,7 +1137,7 @@ textarea:focus-visible {
     padding: 4px 8px;
     line-height: 1;
 }
-.toast-with-retry .toast-close:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:#887668 !important;}
+.toast-with-retry .toast-close:hover:not(:disabled):not([aria-disabled="true"]):not(.disabled){color:var(--hover,#8A4F2D) !important;}
 
 
 /* ============================================

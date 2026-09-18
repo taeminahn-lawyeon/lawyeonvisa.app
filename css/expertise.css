@@ -1,6 +1,7 @@
 /* Existing site.css supplies fonts, color tokens, header, buttons and footer. */
 :focus-visible{outline:2px solid var(--btn);outline-offset:5px}
 .header .nav-links a.expertise-current{color:var(--brown-d);font-weight:700;border-bottom:1px solid var(--btn);padding-bottom:5px}
+.header .nav-links a.expertise-current:is(:hover,:focus-visible){color:var(--hover);border-bottom-color:var(--hover)}
 .expertise-hero{position:relative;background:#F3F1EC url("../images/office/seoul-lounge.jpg") center 40%/cover no-repeat;min-height:220px;padding:48px 0;text-align:center;color:var(--ink);display:grid;place-items:center}
 .expertise-hero::before{content:"";position:absolute;inset:0;background:rgba(246,245,242,.87)}
 .expertise-hero .wrap{position:relative;width:100%}
@@ -56,7 +57,7 @@
 a.related-row[href]:hover .link-title{color:var(--hover)}
 .field-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
 .field-links a{padding:10px 16px;background:var(--card-2);color:var(--brown);font-size:13px;border:1px solid var(--rule)}
-.field-links a:hover{color:var(--hover);border-color:var(--btn)}
+.field-links a:hover{color:var(--hover);border-color:var(--hover)}
 .contact-strip{border-top:1px solid var(--rule-d);padding:26px 0 0;display:flex;gap:30px;justify-content:space-between;align-items:center}
 .contact-strip h2{font-size:20px;font-weight:500;margin-bottom:9px}
 .contact-strip p{font-size:14px;line-height:1.8;margin:0;color:var(--muted)}
