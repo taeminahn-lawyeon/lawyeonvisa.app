@@ -1,6 +1,6 @@
 /* Existing site.css supplies fonts, color tokens, header, buttons and footer. */
 :focus-visible{outline:2px solid var(--btn);outline-offset:5px}
-.header .nav-links a.expertise-current{color:var(--brown-d);font-weight:700;border-bottom:1px solid var(--btn);padding-bottom:5px}
+.header .nav-links a.expertise-current{color:var(--frame-ink);font-weight:700;border-bottom:1px solid var(--frame-muted);padding-bottom:5px}
 .header .nav-links a.expertise-current:is(:hover,:focus-visible){color:var(--hover);border-bottom-color:var(--hover)}
 .expertise-hero{position:relative;background:#F3F1EC url("../images/office/seoul-lounge.jpg") center 40%/cover no-repeat;min-height:220px;padding:48px 0;text-align:center;color:var(--ink);display:grid;place-items:center}
 .expertise-hero::before{content:"";position:absolute;inset:0;background:rgba(246,245,242,.87)}
