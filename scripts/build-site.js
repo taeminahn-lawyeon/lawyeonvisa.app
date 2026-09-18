@@ -11,6 +11,7 @@ const path = require('path');
 const crypto = require('crypto');
 
 const ROOT = path.resolve(__dirname, '..');
+require('./update-center-name')();
 const SITE = 'https://www.lawyeon-immigration.com';
 // 기사 하단 고지문에 도메인이 글자로 적혀 있다. 도메인을 바꿀 때 그 45곳을
 // 따로 찾아 고치면 반드시 빠뜨리는 곳이 생기므로, 본문에는 __DOMAIN__ 토큰만
