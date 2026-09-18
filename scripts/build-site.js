@@ -92,6 +92,7 @@ const STATIC_PAGES = ['terms-of-service', 'privacy-policy', 'refund-policy'];
 
 // ---- page registry (add pages here as they are migrated) ----
 const PAGES = [
+  {"id": "f4-visa-dui-departure-order-humanitarian-korea", "content": "f4-visa-dui-departure-order-humanitarian-korea", "langs": ["ko"], "title": {"ko": "재외동포 F-4 비자, 음주운전 후 출국명령과 인도적 사유 — 법무법인 로연"}, "desc": {"ko": "재외동포(F-4)의 음주운전 출국명령에서 인도적 사유가 어떻게 평가되는지 설명합니다. 한국인 배우자가 없는 가족의 국내 생활기반과 체류허용 판단의 누락, 재범 사건의 소명 쟁점을 다룹니다."}},
   {
     id: 'f6-marriage-visa-requirements-status-change-korea', content: 'f6-marriage-visa-requirements-status-change-korea', langs: ['ko'],
     title: { ko: '결혼이민 비자(F-6) 신청 요건과 체류자격 변경 — 법무법인 로연' },
@@ -385,6 +386,7 @@ const PAGES = [
 // "article" iff its id is a key here. Used for article JSON-LD, article:*
 // meta and sitemap <lastmod>.
 const ARTICLE_DATES = {
+  'f4-visa-dui-departure-order-humanitarian-korea':'2026-09-18',
   'f6-marriage-visa-requirements-status-change-korea':'2026-09-18',
   'foreigner-pension-refund-overseas-case-2026':'2026-09-18',
   'f6-immigration-review-no-departure-order-case-2026':'2026-09-18',
@@ -656,6 +658,9 @@ function build() {
       };
       for (const [k, v] of Object.entries(subs)) doc = replaceAll(doc, k, v);
       doc = replaceAll(doc, '__BASE__', base); // last: appears in head/footer/body
+      // Do not label a single-language article as an unavailable translation.
+      if (!hasEn) doc = doc.replace(/<link rel="alternate" hreflang="en"[^>]*>\n?/g, '');
+      if (!hasKo) doc = doc.replace(/<link rel="alternate" hreflang="ko"[^>]*>\n?/g, '');
 
       const dest = path.join(ROOT, out);
       fs.mkdirSync(path.dirname(dest), { recursive: true });
