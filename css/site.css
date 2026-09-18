@@ -640,3 +640,32 @@ a.ccard[href]:focus-visible .cc-title{color:var(--hover)}
  .home-practice-row p{grid-column:1;grid-row:2;font-size:16px}
  .home-practice-row>span{grid-column:2;grid-row:1 / 3}
 }
+
+/* Five practice tabs and their linked subfields, shared by home and overview. */
+.practice-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));background:#fff;border-bottom:1px solid var(--rule)}
+.practice-tabs[hidden],.practice-panel[hidden]{display:none!important}
+.practice-tabs button{appearance:none;border:0;border-bottom:3px solid transparent;background:transparent;color:var(--ink);font:500 18px/1.5 var(--sans);padding:24px 12px;cursor:pointer;min-width:0;overflow-wrap:break-word}
+.practice-tabs button[aria-selected="true"]{color:var(--hover);border-bottom-color:var(--hover);font-weight:600}
+.practice-tabs button:hover{color:var(--hover)}
+.practice-tabs button:focus-visible{outline:2px solid var(--hover);outline-offset:-5px}
+.practice-panel{padding:28px 0 0;scroll-margin-top:100px}
+.practice-panel-title{font-size:23px;font-weight:500;line-height:1.5;margin:0 0 12px;color:var(--ink)}
+.practice-browser[data-ready] .practice-panel-title{display:none}
+.practice-panel-summary{font-size:17px;line-height:1.8;color:var(--muted);margin:0 0 24px}
+.practice-subfields{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px;padding:0;margin:0}
+.practice-subfields li{min-width:0}
+.practice-subfields a{height:100%;min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:20px;background:#fff;padding:18px 24px;color:var(--ink);font-size:18px;line-height:1.6}
+.practice-subfields a>span:first-child{min-width:0}
+.practice-link-arrow{flex-shrink:0;color:var(--hover)}
+.practice-subfields a:hover,.practice-subfields a:focus-visible{color:var(--hover)}
+.practice-subfields a:focus-visible{outline:2px solid var(--hover);outline-offset:-2px}
+.practice-panel-more{display:flex;justify-content:flex-end;padding-top:20px}
+.practice-panel-more .text-link{min-height:44px;display:inline-flex;align-items:center}
+@media(max-width:760px){
+ .practice-tabs{display:flex;overflow-x:auto;scrollbar-width:thin;scroll-padding-inline:4px}
+ .practice-tabs button{flex:0 0 auto;min-width:120px;max-width:230px;font-size:16px;padding:18px 16px}
+ .practice-panel{padding-top:20px}
+ .practice-subfields{grid-template-columns:1fr;gap:8px}
+ .practice-subfields a{min-height:60px;padding:16px 18px;font-size:17px}
+ .practice-panel-summary{font-size:16px;margin-bottom:20px}
+}

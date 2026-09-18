@@ -41,15 +41,57 @@
 </section>
 
 <!-- ================= PRACTICE AREAS ================= -->
-<section id="expertise" class="home-expertise home-list" aria-labelledby="expertise-heading"><div class="wrap">
-<div class="list-head"><h2 class="sec-title" id="expertise-heading">Expertise</h2><a href="expertise" class="text-link">View all</a></div>
-<nav class="home-practice-list" aria-label="Practice areas">
-<a href="expertise-criminal" class="home-practice-row"><h3>Criminal &amp; Immigration Review</h3><p>Criminal defence, immigration review, entry restrictions and removal</p><span aria-hidden="true">↗</span></a>
-<a href="expertise-visa" class="home-practice-row"><h3>Visas &amp; Immigration</h3><p>Employment, business, family invitations and residence status</p><span aria-hidden="true">↗</span></a>
-<a href="expertise-residence" class="home-practice-row"><h3>Residence &amp; Nationality</h3><p>Long-term residence, nationality and foreigner registration</p><span aria-hidden="true">↗</span></a>
-<a href="expertise-admin" class="home-practice-row"><h3>Administrative Matters</h3><p>Administrative appeals, litigation, pension and investment refunds</p><span aria-hidden="true">↗</span></a>
-<a href="expertise-corporate" class="home-practice-row"><h3>Corporate Advisory</h3><p>Foreign workforce, employee relocation and market entry</p><span aria-hidden="true">↗</span></a>
-</nav></div></section>
+<section id="expertise" class="home-expertise home-list" aria-labelledby="expertise-heading"><div class="wrap"><div class="list-head"><h2 class="sec-title" id="expertise-heading">Expertise</h2><a href="expertise" class="text-link">View all</a></div><div class="practice-browser" data-practice-browser>
+<div class="practice-tabs" role="tablist" aria-label="Practice areas" hidden>
+<button type="button" role="tab" id="home-practice-tab-criminal" aria-controls="home-practice-panel-criminal" aria-selected="true" tabindex="0" data-practice="criminal">Criminal Defense &amp; Immigration Enforcement</button>
+<button type="button" role="tab" id="home-practice-tab-visa" aria-controls="home-practice-panel-visa" aria-selected="false" tabindex="-1" data-practice="visa">Visas &amp; Immigration</button>
+<button type="button" role="tab" id="home-practice-tab-residence" aria-controls="home-practice-panel-residence" aria-selected="false" tabindex="-1" data-practice="residence">Residence &amp; Nationality</button>
+<button type="button" role="tab" id="home-practice-tab-admin" aria-controls="home-practice-panel-admin" aria-selected="false" tabindex="-1" data-practice="admin">Administrative Disputes &amp; Claims</button>
+<button type="button" role="tab" id="home-practice-tab-corporate" aria-controls="home-practice-panel-corporate" aria-selected="false" tabindex="-1" data-practice="corporate">Corporate Advisory</button>
+</div>
+<section class="practice-panel" id="home-practice-panel-criminal" role="tabpanel" aria-labelledby="home-practice-tab-criminal" tabindex="0" data-practice-panel="criminal">
+<h3 class="practice-panel-title">Criminal Defense &amp; Immigration Enforcement</h3>
+
+<ul class="practice-subfields"><li><a href="expertise-criminal#defense"><span>Criminal defense and post-judgment immigration review</span><span class="practice-link-arrow" aria-hidden="true">→</span></a></li>
+<li><a href="expertise-criminal#entry-ban"><span>Entry-ban checks and lifting applications</span><span class="practice-link-arrow" aria-hidden="true">→</span></a></li>
+<li><a href="expertise-criminal#violation"><span>Residence and work-related violations</span><span class="practice-link-arrow" aria-hidden="true">→</span></a></li>
+<li><a href="expertise-criminal#removal"><span>Removal measures and immigration detention</span><span class="practice-link-arrow" aria-hidden="true">→</span></a></li></ul>
+<div class="practice-panel-more"><a class="text-link" href="expertise-criminal">View all Criminal Defense &amp; Immigration Enforcement<span aria-hidden="true"> →</span></a></div>
+</section>
+<section class="practice-panel" id="home-practice-panel-visa" role="tabpanel" aria-labelledby="home-practice-tab-visa" tabindex="0" data-practice-panel="visa">
+<h3 class="practice-panel-title">Visas &amp; Immigration</h3>
+
+<ul class="practice-subfields"><li><a href="expertise-visa#work"><span>Employment, job seeking and professional activities</span><span class="practice-link-arrow" aria-hidden="true">→</span></a></li>
+<li><a href="expertise-visa#business"><span>Business, start-ups and foreign investment</span><span class="practice-link-arrow" aria-hidden="true">→</span></a></li>
+<li><a href="expertise-visa#family"><span>Family sponsorship and dependent entry</span><span class="practice-link-arrow" aria-hidden="true">→</span></a></li></ul>
+<div class="practice-panel-more"><a class="text-link" href="expertise-visa">View all Visas &amp; Immigration<span aria-hidden="true"> →</span></a></div>
+</section>
+<section class="practice-panel" id="home-practice-panel-residence" role="tabpanel" aria-labelledby="home-practice-tab-residence" tabindex="0" data-practice-panel="residence">
+<h3 class="practice-panel-title">Residence &amp; Nationality</h3>
+
+<ul class="practice-subfields"><li><a href="expertise-residence#long-stay"><span>Residence, permanent residence and maintaining status</span><span class="practice-link-arrow" aria-hidden="true">→</span></a></li>
+<li><a href="expertise-residence#nationality"><span>Korean nationality and overseas Koreans</span><span class="practice-link-arrow" aria-hidden="true">→</span></a></li>
+<li><a href="expertise-residence#identity"><span>Foreign resident registration and immigration records</span><span class="practice-link-arrow" aria-hidden="true">→</span></a></li></ul>
+<div class="practice-panel-more"><a class="text-link" href="expertise-residence">View all Residence &amp; Nationality<span aria-hidden="true"> →</span></a></div>
+</section>
+<section class="practice-panel" id="home-practice-panel-admin" role="tabpanel" aria-labelledby="home-practice-tab-admin" tabindex="0" data-practice-panel="admin">
+<h3 class="practice-panel-title">Administrative Disputes &amp; Claims</h3>
+
+<ul class="practice-subfields"><li><a href="expertise-admin#appeals"><span>Administrative appeals and litigation</span><span class="practice-link-arrow" aria-hidden="true">→</span></a></li>
+<li><a href="expertise-admin#claims"><span>Pension and investment fund refunds</span><span class="practice-link-arrow" aria-hidden="true">→</span></a></li></ul>
+<div class="practice-panel-more"><a class="text-link" href="expertise-admin">View all Administrative Disputes &amp; Claims<span aria-hidden="true"> →</span></a></div>
+</section>
+<section class="practice-panel" id="home-practice-panel-corporate" role="tabpanel" aria-labelledby="home-practice-tab-corporate" tabindex="0" data-practice-panel="corporate">
+<h3 class="practice-panel-title">Corporate Advisory</h3>
+
+<ul class="practice-subfields"><li><a href="expertise-corporate#recruitment"><span>Pre-hire review and workforce planning</span><span class="practice-link-arrow" aria-hidden="true">→</span></a></li>
+<li><a href="expertise-corporate#employment"><span>Employment and immigration management</span><span class="practice-link-arrow" aria-hidden="true">→</span></a></li>
+<li><a href="expertise-corporate#mobility"><span>Business travel, assignments and family relocation</span><span class="practice-link-arrow" aria-hidden="true">→</span></a></li>
+<li><a href="expertise-corporate#investment"><span>Foreign investment and market entry</span><span class="practice-link-arrow" aria-hidden="true">→</span></a></li>
+<li><a href="expertise-corporate#institutions"><span>Universities and educational institutions</span><span class="practice-link-arrow" aria-hidden="true">→</span></a></li></ul>
+<div class="practice-panel-more"><a class="text-link" href="expertise-corporate">View all Corporate Advisory<span aria-hidden="true"> →</span></a></div>
+</section>
+</div></div></section>
 
 <!-- ================= INSIGHTS ================= -->
 <section id="insights" class="insights home-list" aria-labelledby="home-insights-title">
