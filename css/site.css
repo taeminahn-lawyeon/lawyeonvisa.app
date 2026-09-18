@@ -60,9 +60,9 @@ p,li,.intro-desc,.lead,.doc-tags{text-wrap:pretty}
 @media(prefers-reduced-transparency:reduce){.header{background:#332E2A;-webkit-backdrop-filter:none;backdrop-filter:none}}
 .header-content{position:relative;height:calc(var(--header-height) - 1px);width:100%}
 .header-tools{position:absolute;inset:8px auto auto 28px;display:flex;flex-direction:column;align-items:flex-start;gap:30px}
-.brand{position:absolute;left:50%;top:calc(50% + 12px);transform:translate(-50%,-50%);display:block;text-align:center;max-width:calc(100% - 144px);font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-synthesis:none}
-.brand .name{font-weight:400;font-size:40px;color:var(--frame-ink);letter-spacing:.025em;line-height:1.2;white-space:nowrap}
-.brand .sub{font-size:17px;font-weight:400;letter-spacing:.055em;color:var(--frame-muted);line-height:1.5;margin-top:7px;white-space:nowrap}
+.brand{position:absolute;left:50%;top:calc(50% + 12px);transform:translate(-50%,-50%);display:block;text-align:center;max-width:calc(100% - 144px);font-family:'Libre Baskerville',Georgia,serif;font-weight:400;font-synthesis:none}
+.brand .name{font-weight:400;font-size:34px;color:var(--frame-ink);letter-spacing:.025em;line-height:1.2;white-space:nowrap}
+.brand .sub{font-size:15px;font-weight:400;letter-spacing:.055em;color:var(--frame-muted);line-height:1.5;margin-top:9px;white-space:nowrap}
 .lang{display:flex;align-items:center;gap:10px;font-family:'Lato','Noto Sans KR',sans-serif;font-size:13px;letter-spacing:.03em;white-space:nowrap}
 .lang a{display:inline-flex;align-items:center;justify-content:center;min-width:28px;min-height:30px;color:var(--frame-muted)}
 .lang a.active{color:var(--frame-ink);font-weight:700}
@@ -255,8 +255,8 @@ a.ccard[href]:hover .cc-title{color:var(--hover);text-decoration:underline;text-
     .lang{gap:5px;font-size:12px}
     .lang a{min-width:38px;min-height:44px}
     .brand{max-width:calc(100% - 88px)}
-    .brand .name{font-size:clamp(21px,5.8vw,30px);letter-spacing:.01em}
-    .brand .sub{font-size:clamp(12px,3vw,16px);letter-spacing:.025em;margin-top:7px}
+    .brand .name{font-size:clamp(17px,5.3vw,28px);letter-spacing:.01em}
+    .brand .sub{font-size:clamp(12px,2.7vw,14px);letter-spacing:.025em;margin-top:7px}
     .nav-toggle{margin-left:-8px}
     .nav-toggle span,.nav-toggle span::before,.nav-toggle span::after{width:24px}
     .site-menu{padding:90px 26px 30px}
