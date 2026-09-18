@@ -129,6 +129,14 @@ section{padding:74px 0}
 .office-shots{position:relative;width:100%;height:300px;border-radius:8px;overflow:hidden;border:1px solid var(--rule);background:var(--beige)}
 .office-shots img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease}
 .office-shots img.on{opacity:1}
+/* Match English introduction columns without stretching portrait photos. */
+@media(min-width:981px){
+    html[lang="en"] .intro-grid{align-items:stretch}
+    html[lang="en"] .intro-left{display:flex;flex-direction:column}
+    html[lang="en"] .intro-expertise{margin-top:auto;padding-top:24px}
+    html[lang="en"] .intro-right{display:grid;grid-template-rows:210px minmax(220px,1fr)}
+    html[lang="en"] .office-shots{height:auto;min-height:0}
+}
 @media(max-width:560px){.office-shots{height:240px}}
 @media(prefers-reduced-motion:reduce){.office-shots img{transition:none}}
 
