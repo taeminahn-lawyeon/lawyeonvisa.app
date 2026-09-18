@@ -2,7 +2,7 @@
    site.js — shared front-end behavior for built pages.
    - Article extras: copy protection, consultation CTA bands,
      share button, related-attorney cards.
-   - Mobile hamburger menu.
+   - Shared desktop and mobile navigation drawer.
    Presentation only: no auth, no Supabase. Built pages that
    actually submit a form (pre-consultation, booking, corporate
    advisory) load supabase-client.js separately — see the
@@ -221,44 +221,32 @@
       }
     })();
 
-    // 0.5) Mobile hamburger menu — clones the desktop nav items.
-    (function buildMobileNav() {
-      var header = document.querySelector('.header');
-      var content = header && header.querySelector('.header-content');
-      var actions = content && content.querySelector('.header-actions');
-      if (!header || !content || !actions || content.querySelector('.nav-toggle')) return;
+    // The native modal keeps focus inside the drawer and makes the page inert.
+    (function buildSiteNav() {
+      var toggle = document.querySelector('.nav-toggle');
+      var menu = document.getElementById('site-navigation');
+      if (!toggle || !menu) return;
 
-      var toggle = document.createElement('button');
-      toggle.className = 'nav-toggle';
-      toggle.type = 'button';
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', isKo ? '메뉴' : 'Menu');
-      toggle.innerHTML = '<span></span>';
-      content.appendChild(toggle);
-
-      var menu = document.createElement('nav');
-      menu.className = 'mobile-menu';
-      menu.id = 'mobile-navigation';
-      menu.setAttribute('aria-label', isKo ? '모바일 메뉴' : 'Mobile navigation');
-      toggle.setAttribute('aria-controls', menu.id);
-      var inner = document.createElement('div');
-      inner.className = 'mm-inner';
-      menu.appendChild(inner);
-
-      actions.querySelectorAll('.nav-links a').forEach(function (a) {
-        inner.appendChild(a.cloneNode(true));
+      toggle.addEventListener('click', function () {
+        if (menu.open) return;
+        menu.showModal();
+        document.documentElement.classList.add('site-menu-open');
+        toggle.setAttribute('aria-expanded', 'true');
       });
-      // (EN/한국어 토글은 모바일에서도 상단 바에 상시 노출되므로 메뉴에 넣지 않음)
-      header.appendChild(menu);
-
-      function setOpen(open) {
-        menu.classList.toggle('open', open);
-        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      }
-      toggle.addEventListener('click', function () { setOpen(!menu.classList.contains('open')); });
-      inner.addEventListener('click', function (e) { if (e.target.closest('a')) setOpen(false); });
-      header.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && menu.classList.contains('open')) { setOpen(false); toggle.focus(); }
+      menu.querySelector('.nav-close').addEventListener('click', function () { menu.close(); });
+      menu.addEventListener('click', function (e) {
+        if (e.target.closest('a[href]')) { menu.close(); return; }
+        // Backdrop clicks are retargeted to the dialog; clicks in its padding stay open.
+        if (e.target === menu) {
+          var rect = menu.getBoundingClientRect();
+          if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) menu.close();
+        }
+      });
+      // Includes Escape, the close control, backdrop clicks, and navigation links.
+      menu.addEventListener('close', function () {
+        document.documentElement.classList.remove('site-menu-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.focus({ preventScroll: true });
       });
     })();
   });

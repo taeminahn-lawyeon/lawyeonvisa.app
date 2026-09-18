@@ -35,9 +35,9 @@ const SITE_CSS_URL = stylesheetUrl('css/site.css');
 const HEAD = read('partials/head.html');
 const HEADER = read('partials/header.html');
 const FOOTER = { en: read('partials/footer.en.html'), ko: read('partials/footer.ko.html'), vi: read('partials/footer.vi.html') };
-// Scripts every built page gets. site.js is presentation-only (mobile nav,
+// Scripts every built page gets. site.js is presentation-only (site navigation,
 // article CTAs, share button) — it no longer touches auth.
-const SCRIPTS = '<script src="__BASE__js/site.js?v=15"></script>';
+const SCRIPTS = '<script src="__BASE__js/site.js?v=16"></script>';
 
 // Supabase is loaded only by the pages that actually submit a form
 // (pre-consultation, visit booking, corporate advisory). Article and index
@@ -890,17 +890,18 @@ function relPath(fromLang, toLang, id) {
 
 function langToggle(lang, id, langs, isHome) {
   langs = langs || LANGS;
-  const labels = { en: 'EN', ko: '한국어', vi: 'Tiếng Việt' };
+  const labels = { en: 'EN', ko: 'KO', vi: 'VI' };
+  const names = { en: 'English', ko: '한국어', vi: 'Tiếng Việt' };
   // Always offer EN/KO (muted when a page lacks one); show Vietnamese only
   // for pages that actually have a Vietnamese version.
-  const display = ['en', 'ko'];
+  const display = ['ko', 'en'];
   if (langs.indexOf('vi') >= 0) display.push('vi');
   const muted = (t) => `<span style="color:var(--rule-d)">${t}</span>`;
   return display.map((l) => {
     if (langs.indexOf(l) < 0) return muted(labels[l]);
     const href = isHome ? HOME_URL[l] : (l === lang ? id : relPath(lang, l, id));
-    return `<a href="${href}"${l === lang ? ' class="active"' : ''}>${labels[l]}</a>`;
-  }).join('<span class="sep">·</span>');
+    return `<a href="${href}" lang="${l}" hreflang="${l}" aria-label="${names[l]}"${l === lang ? ' class="active" aria-current="true"' : ''}>${labels[l]}</a>`;
+  }).join('<span class="sep" aria-hidden="true">|</span>');
 }
 
 // Articles are published in Korean and English together. Check before writing
@@ -964,12 +965,16 @@ function build() {
         '__EXPERTISE_CURRENT__': page.id === 'expertise' ? ' class="expertise-current" aria-current="page"' : (page.id.startsWith('expertise-') ? ' class="expertise-current"' : ''),
         '__PAGE_STYLES__': page.expertise ? `<link rel="stylesheet" href="${stylesheetUrl('css/expertise.css')}">` : '',
         '__NAV_INSIGHTS__': S.navInsights,
+        '__INSIGHTS_CURRENT__': page.id === 'insights' ? ' aria-current="page"' : '',
         '__NAV_CASE_STUDIES__': S.navCaseStudies,
         '__CASE_CURRENT__': page.id === 'cases' ? ' aria-current="page"' : '',
         '__NAV_CASES__': S.navCases,
         '__NEWS_CURRENT__': ['newsletters', 'news'].includes(page.id) || ['newsletters', 'news'].includes(page.section) ? ' class="news-current"' : '',
         '__NAV_CONSULT__': S.navConsult,
         '__NAV_LABEL__': S.navLabel,
+        '__LANG_LABEL__': lang === 'ko' ? '언어 선택' : 'Language selection',
+        '__MENU_OPEN__': lang === 'ko' ? '전체 메뉴 열기' : 'Open navigation',
+        '__MENU_CLOSE__': lang === 'ko' ? '전체 메뉴 닫기' : 'Close navigation',
         '__CONTACT_CURRENT__': ['consultation', 'booking', 'corporate-advisory'].includes(page.id) ? ' class="contact-current"' : '',
         '__LANGTOGGLE__': langToggle(lang, page.id, langs, !!page.home),
         '__OG_SITE_NAME__': S.siteName,
@@ -1001,14 +1006,19 @@ function build() {
       count++;
     }
   }
-  // Policy documents are authored separately, but must use the same CSS version.
+  // Policy content is authored separately; keep its shared navigation and assets current.
+  const sharedPolicyHeader = read('ko/index.html').match(/<header class="header">[\s\S]*?<\/header>\s*<dialog id="site-navigation"[\s\S]*?<\/dialog>/)[0];
+  const sharedFonts = HEAD.match(/<link href="https:\/\/fonts\.googleapis\.com\/css2\?[^\"]+" rel="stylesheet">/)[0];
   for (const id of STATIC_PAGES) {
     const file = `${id}.html`;
     const doc = read(file);
     const cssLink = /href="\/css\/site\.css(?:\?[^"]*)?"/g;
     if (!cssLink.test(doc)) throw new Error(`Missing shared stylesheet in ${file}`);
     const updated = doc.replace(cssLink, `href="${SITE_CSS_URL}"`)
-      .replace(/href="\/css\/legal\.css(?:\?[^"]*)?"/g, `href="${stylesheetUrl('css/legal.css')}"`);
+      .replace(/href="\/css\/legal\.css(?:\?[^"]*)?"/g, `href="${stylesheetUrl('css/legal.css')}"`)
+      .replace(/<header class="header">[\s\S]*?<\/header>(?:\s*<dialog id="site-navigation"[\s\S]*?<\/dialog>)?/, sharedPolicyHeader)
+      .replace(/<link href="https:\/\/fonts\.googleapis\.com\/css2\?[^\"]+" rel="stylesheet">/, sharedFonts)
+      .replace(/<script src="\/js\/site\.js(?:\?[^\"]*)?"><\/script>/, replaceAll(SCRIPTS, '__BASE__', '/'));
     if (updated !== doc) fs.writeFileSync(path.join(ROOT, file), updated, 'utf8');
   }
   // ---- sitemap.xml + robots.txt ----
