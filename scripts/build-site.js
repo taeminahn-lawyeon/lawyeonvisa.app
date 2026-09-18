@@ -31,7 +31,7 @@ const HEADER = read('partials/header.html');
 const FOOTER = { en: read('partials/footer.en.html'), ko: read('partials/footer.ko.html'), vi: read('partials/footer.vi.html') };
 // Scripts every built page gets. site.js is presentation-only (mobile nav,
 // article CTAs, share button) — it no longer touches auth.
-const SCRIPTS = '<script src="__BASE__js/site.js?v=11"></script>';
+const SCRIPTS = '<script src="__BASE__js/site.js?v=12"></script>';
 
 // Supabase is loaded only by the pages that actually submit a form
 // (pre-consultation, visit booking, corporate advisory). Article and index
@@ -57,16 +57,16 @@ const SITE_NAME_ALT = ['법무법인 로연 출입국이민지원센터', 'Law F
 const STRINGS = {
   en: { brandName: 'Law Firm Lawyeon', brandSub: 'Immigration Center',
         siteName: SITE_NAME, siteNameAlt: SITE_NAME_ALT,
-        navExpertise: 'Expertise', navInsights: 'Insights', navCases: 'Cases & News', navConsult: 'Consultation',
-        headerCta: 'Apply for pre-consultation' },
+        navExpertise: 'Expertise', navInsights: 'Insights', navCases: 'Cases & News', navConsult: 'Contact',
+        navLabel: 'Main navigation' },
   ko: { brandName: '법무법인 로연', brandSub: '출입국이민지원센터',
         siteName: SITE_NAME, siteNameAlt: SITE_NAME_ALT,
-        navExpertise: '업무분야', navInsights: '인사이트', navCases: '사례·소식', navConsult: '상담',
-        headerCta: '사전상담 신청' },
+        navExpertise: '업무분야', navInsights: '인사이트', navCases: '업무사례·소식', navConsult: '문의',
+        navLabel: '주요 메뉴' },
   vi: { brandName: 'Law Firm Lawyeon', brandSub: 'Trung tâm Xuất nhập cảnh & Di trú',
         siteName: SITE_NAME, siteNameAlt: SITE_NAME_ALT,
-        navExpertise: 'Lĩnh vực hoạt động', navInsights: 'Thông tin pháp lý', navCases: 'Tin tức', navConsult: 'Tư vấn',
-        headerCta: 'Đăng ký tư vấn sơ bộ' },
+        navExpertise: 'Lĩnh vực hoạt động', navInsights: 'Thông tin pháp lý', navCases: 'Tin tức', navConsult: 'Liên hệ',
+        navLabel: 'Điều hướng chính' },
 };
 
 // Directory prefix each language's built pages live under (en at root).
@@ -188,9 +188,9 @@ const PAGES = [
   },
   {
     id: 'consultation', content: 'consultation', supabase: true,
-    title: { en: 'Apply for a Pre-Consultation — Law Firm Lawyeon', ko: '사전상담 신청 — 법무법인 로연' },
-    desc:  { en: 'Apply for a pre-consultation with Law Firm Lawyeon. Send us your visa, immigration or criminal matter and we will review it and reply by email.',
-             ko: '법무법인 로연 사전상담 신청. 비자·출입국·형사 사안을 남겨 주시면 검토 후 이메일로 회신드립니다.' },
+    title: { en: 'Online Inquiry — Law Firm Lawyeon', ko: '온라인 문의 — 법무법인 로연' },
+    desc:  { en: 'Contact Law Firm Lawyeon. Send us your visa, immigration or criminal matter and we will review it and reply by email.',
+             ko: '법무법인 로연 온라인 문의. 비자·출입국·형사 사안을 남겨 주시면 검토 후 이메일로 회신드립니다.' },
   },
   {
     id: 'booking', content: 'booking', supabase: true,
@@ -612,7 +612,8 @@ function build() {
         '__NAV_INSIGHTS__': S.navInsights,
         '__NAV_CASES__': S.navCases,
         '__NAV_CONSULT__': S.navConsult,
-        '__HEADER_CTA__': S.headerCta,
+        '__NAV_LABEL__': S.navLabel,
+        '__CONTACT_CURRENT__': ['consultation', 'booking', 'corporate-advisory'].includes(page.id) ? ' class="contact-current"' : '',
         '__LANGTOGGLE__': langToggle(lang, page.id, langs, !!page.home),
         '__OG_SITE_NAME__': S.siteName,
         '__JSONLD__': page.jsonld ? legalServiceJsonLd(lang) : '',

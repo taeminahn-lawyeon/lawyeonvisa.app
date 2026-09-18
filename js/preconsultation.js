@@ -6,20 +6,20 @@
         agree: '개인정보 수집·이용·제공에 동의해 주세요.',
         need: '필수 항목을 모두 선택하거나 입력해 주세요.',
         badEmail: '회신받으실 이메일 주소를 확인해 주세요.',
-        proc: '신청 중…', done: '신청 완료', cta: '사전상담 신청',
-        err: '신청을 전송하지 못했습니다. 다시 시도하시거나 02-2039-0544로 연락해 주세요.',
+        proc: '전송 중…', done: '문의 접수 완료', cta: '문의 보내기',
+        err: '문의를 전송하지 못했습니다. 다시 시도하시거나 02-2039-0544로 연락해 주세요.',
         country: '국가를 선택하세요', nationality: '국적을 선택하세요',
         second: '두 번째 국적을 선택하세요',
-        confirm: function (n,e) { return n+'님의 사전상담 신청이 접수되었습니다. 내용을 검토한 뒤 '+e+'로 회신드리겠습니다.'; }
+        confirm: function (n,e) { return n+'님의 문의가 접수되었습니다. 내용을 검토한 뒤 '+e+'로 회신드리겠습니다.'; }
     } : {
         agree: 'Please agree to the collection, use and provision of your personal information.',
         need: 'Please complete all required fields.',
         badEmail: 'Please check the email address where we will reply.',
-        proc: 'Sending…', done: 'Application received', cta: 'Apply for pre-consultation',
-        err: 'We could not send your application. Please try again, or call +82-2-2039-0544.',
+        proc: 'Sending…', done: 'Inquiry received', cta: 'Send inquiry',
+        err: 'We could not send your inquiry. Please try again, or call +82-2-2039-0544.',
         country: 'Select a country', nationality: 'Select your nationality',
         second: 'Select your second nationality',
-        confirm: function (n,e) { return n+', your pre-consultation application has been received. We will review your matter and reply to '+e+'.'; }
+        confirm: function (n,e) { return n+', your inquiry has been received. We will review your matter and reply to '+e+'.'; }
     };
     function el(id) { return document.getElementById(id); }
     var name=el('cName'), email=el('cEmail'), phone=el('cPhone'), category=el('cCategory'),

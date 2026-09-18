@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700;900&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/site.css?v=17">
+<link rel="stylesheet" href="../css/site.css?v=18">
 
 <script type="application/ld+json">
 [
@@ -121,14 +121,13 @@
             </div>
         </a>
         <div class="header-actions">
-            <nav class="nav-links">
+            <nav class="nav-links" aria-label="Điều hướng chính">
                 <a href="/expertise">Lĩnh vực hoạt động</a>
                 <a href="/#insights">Thông tin pháp lý</a>
                 <a href="/#cases">Tin tức</a>
-                <a href="/#consult">Tư vấn</a>
+                <a href="/#consult">Liên hệ</a>
             </nav>
             <span class="lang"><a href="../foreigner-divorce-f6-visa-stay-korea-2026">EN</a><span class="sep">·</span><a href="../ko/foreigner-divorce-f6-visa-stay-korea-2026">한국어</a><span class="sep">·</span><a href="foreigner-divorce-f6-visa-stay-korea-2026" class="active">Tiếng Việt</a></span>
-            <a href="/consultation" class="btn btn-primary">Đăng ký tư vấn sơ bộ</a>
         </div>
     </div>
 </header>
@@ -213,35 +212,39 @@
     <div class="wrap footer-inner">
         <div class="footer-top">
             <div class="footer-brand">
-                <div>
-                    <div class="fb-name">Law Firm Lawyeon</div>
-                    <div class="fb-sub">Trung tâm Xuất nhập cảnh &amp; Di trú</div>
-                </div>
+                <div class="fb-name">Law Firm Lawyeon</div>
+                <div class="fb-sub">Trung tâm Xuất nhập cảnh &amp; Di trú</div>
+                <div class="footer-tel"><span>Điện thoại</span> <a href="tel:+82220390544">+82-2-2039-0544</a></div>
+                <div class="footer-fax">Fax 070-8230-0545</div>
             </div>
-            <div class="footer-tel">
-                <b>+82-2-2039-0544</b> · Fax 070-8230-0545<br>
-                Văn phòng Seoul · Gwangju
+            <div class="footer-office">
+                <h3>Văn phòng Seoul</h3>
+                <address>164 Gonghang-daero, Gangseo-gu, Seoul, tầng 5 #503 (Magok-dong, Ryuma Tower)</address>
+                <p class="office-representative">Đại diện J.W. Min</p>
+            </div>
+            <div class="footer-office">
+                <h3>Văn phòng Gwangju</h3>
+                <address>1 Junbeop-ro, Dong-gu, Gwangju, tầng 3 (Jisan-dong, Choseok Bldg)</address>
+                <p class="office-representative">Đại diện S.H. Bong</p>
             </div>
         </div>
         <div class="footer-info">
-            <div class="row"><b>Pháp nhân</b>Law Firm Lawyeon</div>
-            <div class="row"><b>Văn phòng Seoul</b>164 Gonghang-daero, Gangseo-gu, Seoul, tầng 5 #503 (Magok-dong, Ryuma Tower) · Đại diện J.W. Min</div>
-            <div class="row"><b>Văn phòng Gwangju</b>1 Junbeop-ro, Dong-gu, Gwangju, tầng 3 (Jisan-dong, Choseok Bldg) · Đại diện S.H. Bong</div>
-            <div class="row"><b>Số ĐK kinh doanh</b>391-85-03007 (Văn phòng Seoul)</div>
-            <div class="row"><b>ĐK bán hàng trực tuyến</b>2025-Seoul Gangseo-3193</div>
-            <div class="row"><b>Luật sư phụ trách quảng cáo</b>D.H. Nam, J.W. Min</div>
-            <div class="footer-links">
-                <a href="../privacy-policy?v=2">Chính sách bảo mật</a><span class="sep">·</span>
-                <a href="../terms-of-service?v=2">Điều khoản dịch vụ</a><span class="sep">·</span>
-                <a href="/price-list">Bảng phí</a><span class="sep">·</span>
-                <a href="../refund-policy">Chính sách hoàn tiền</a><span class="sep">·</span>
-                <a href="https://lawyeon.com/" target="_blank" rel="noopener">Law Firm Lawyeon</a>
-            </div>
-            <p class="copyright">Mọi dịch vụ pháp lý trên trang này đều do Law Firm Lawyeon cung cấp. © Law Firm Lawyeon, Trung tâm Xuất nhập cảnh &amp; Di trú</p>
+            <div class="row"><b>Pháp nhân</b><span>Law Firm Lawyeon</span></div>
+            <div class="row"><b>Số ĐK kinh doanh</b><span>391-85-03007 (Văn phòng Seoul)</span></div>
+            <div class="row"><b>ĐK bán hàng trực tuyến</b><span>2025-Seoul Gangseo-3193</span></div>
+            <div class="row"><b>Luật sư phụ trách quảng cáo</b><span>D.H. Nam, J.W. Min</span></div>
         </div>
+        <nav class="footer-links" aria-label="Thông tin và chính sách">
+                <a href="../privacy-policy?v=2">Chính sách bảo mật</a>
+                <a href="../terms-of-service?v=2">Điều khoản dịch vụ</a>
+                <a href="/price-list">Bảng phí</a>
+                <a href="../refund-policy">Chính sách hoàn tiền</a>
+                <a href="https://lawyeon.com/" target="_blank" rel="noopener">Law Firm Lawyeon</a>
+        </nav>
+        <p class="copyright">Mọi dịch vụ pháp lý trên trang này đều do Law Firm Lawyeon cung cấp. © Law Firm Lawyeon, Trung tâm Xuất nhập cảnh &amp; Di trú</p>
     </div>
 </footer>
 
-<script src="../js/site.js?v=11"></script>
+<script src="../js/site.js?v=12"></script>
 </body>
 </html>

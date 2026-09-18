@@ -27,7 +27,7 @@
     var a1 = document.createElement('a');
     a1.className = 'btn btn-primary';
     a1.href = 'consultation';
-    a1.textContent = isKo ? '사전상담 신청' : 'Apply for pre-consultation';
+    a1.textContent = isKo ? '온라인 문의' : 'Online Inquiry';
     var a2 = document.createElement('a');
     a2.className = 'btn btn-line';
     a2.href = 'booking';
@@ -200,6 +200,9 @@
 
       var menu = document.createElement('nav');
       menu.className = 'mobile-menu';
+      menu.id = 'mobile-navigation';
+      menu.setAttribute('aria-label', isKo ? '모바일 메뉴' : 'Mobile navigation');
+      toggle.setAttribute('aria-controls', menu.id);
       var inner = document.createElement('div');
       inner.className = 'mm-inner';
       menu.appendChild(inner);
@@ -208,8 +211,6 @@
         inner.appendChild(a.cloneNode(true));
       });
       // (EN/한국어 토글은 모바일에서도 상단 바에 상시 노출되므로 메뉴에 넣지 않음)
-      var btn = actions.querySelector('.btn-primary');
-      if (btn) inner.appendChild(btn.cloneNode(true));
       header.appendChild(menu);
 
       function setOpen(open) {
@@ -218,6 +219,9 @@
       }
       toggle.addEventListener('click', function () { setOpen(!menu.classList.contains('open')); });
       inner.addEventListener('click', function (e) { if (e.target.closest('a')) setOpen(false); });
+      header.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && menu.classList.contains('open')) { setOpen(false); toggle.focus(); }
+      });
     })();
   });
 })();
