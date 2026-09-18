@@ -373,25 +373,6 @@ a.ccard[href]:hover .cc-title{color:var(--hover);text-decoration:underline;text-
     .home-list .doc-title{font-size:20px}
 }
 
-/* ---------- Homepage newsletters and news ---------- */
-.cards-news{padding:80px 0}
-.cards-news .sec-title{color:var(--brown-d)}
-.cards-news .ccard{padding:0;min-height:0;border:0}
-.news-photo{overflow:hidden;margin-bottom:24px;background:#F6F6F6;aspect-ratio:16/10}
-.news-photo img{display:block;width:100%;height:100%;object-fit:cover}
-.cards-news .cc-title{font-size:21px;line-height:1.6}
-.cards-news .cc-tag,.cards-news .cc-date{color:#776252}
-.cards-news .cc-tag{margin-bottom:22px}
-.cards-news .cc-foot{margin-top:auto;padding-top:18px;border-top:1px solid var(--sand-rule)}
-.cards-news .cc-act{color:#776252}
-.cards-news a.ccard[href]:focus-visible{outline:2px solid var(--brown);outline-offset:6px}
-@media(max-width:760px){
-    .cards-news{padding:52px 0}
-    .cards-news .case-grid2{grid-template-columns:minmax(0,1fr);gap:38px}
-    .cards-news .cc-title{font-size:21px}
-    .news-photo{margin-bottom:20px}
-}
-
 /* ---------- Sub-page head ---------- */
 .page-head{padding:54px 0 30px;border-bottom:1px solid var(--rule)}
 .page-head h1{font-size:clamp(26px,3.2vw,36px);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
@@ -547,7 +528,7 @@ a[href]:not(.btn-primary):not([aria-disabled="true"]):hover{color:var(--hover)}
 .nav-toggle:hover:not(:disabled){color:var(--hover)}
 a.ccard[href]:focus-visible .cc-title{color:var(--hover)}
 
-/* Newsletters: legal developments and judgments; firm news retains photo cards. */
+/* Newsletters and firm news share one publication card. */
 .newsletter-hero{background-color:#f6f6f6}
 .newsletter-hero::before{background:rgba(246,246,246,.88)}
 .publication-index{background:#f6f6f6;padding:0 0 80px}
@@ -558,17 +539,7 @@ a.ccard[href]:focus-visible .cc-title{color:var(--hover)}
 .publication-intro{padding:38px 0 28px}
 .publication-intro h2{font-size:26px;font-weight:600;color:#202020}
 .publication-intro p{font-size:15px;line-height:1.85;color:#666;margin-top:10px;max-width:760px}
-.newsletter-list{border-top:1px solid #333;background:#fff}
-.newsletter-list .doc-row{padding:26px 28px;border-bottom:1px solid #e2e2e2;gap:28px}
-.newsletter-list .doc-title{font-size:20px;line-height:1.6;font-weight:420;color:#202020}
-.newsletter-list .doc-tags span,.newsletter-list .doc-date{color:#757575}
-.newsletter-list a.doc-row[href]:hover .doc-title,.newsletter-list a.doc-row[href]:focus-visible .doc-title{color:var(--hover);text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
-.newsletter-list a.doc-row[href]:focus-visible,.news-tabs a[href]:focus-visible{outline:2px solid var(--hover);outline-offset:3px}
-.news-subtitle{font-size:20px;font-weight:600;color:#202020;margin:0 0 20px}
-.home-newsletter-list{margin-bottom:48px}
-.news-subhead{display:flex;justify-content:space-between;align-items:baseline;gap:20px}
-.news-subhead .text-link{font-size:14px;flex-shrink:0}
-.news-card-archive{padding:0}
+.news-tabs a[href]:focus-visible{outline:2px solid var(--hover);outline-offset:3px}
 .news-current{color:var(--btn)}
 .newsletter-article-head h1{max-width:920px;padding-right:100px}
 .newsletter-article .art-about{margin-top:48px}
@@ -585,14 +556,56 @@ a.ccard[href]:focus-visible .cc-title{color:var(--hover)}
  .news-tabs a{font-size:16px;min-height:48px}
  .publication-intro{padding:28px 0 22px}
  .publication-intro h2{font-size:23px}
- .newsletter-list .doc-row{padding:22px 18px;gap:12px;align-items:flex-start}
- .newsletter-list .doc-title{font-size:19px}
- .newsletter-list .doc-date{font-size:13px}
- .home-newsletter-list{margin-bottom:34px}
- .news-subhead{flex-wrap:wrap;gap:0 16px;margin-bottom:20px}
- .news-subhead .news-subtitle{margin-bottom:0}
  .newsletter-table th,.newsletter-table td{padding:12px 10px;font-size:14px}
  .newsletter-table th:first-child{width:36%}
 }
 :is(a,button)[aria-disabled="true"],button:disabled{cursor:default}
 @media(prefers-reduced-motion:reduce){.attorneys-track{animation:none}}
+
+/* Publication cards: category, title and date, with a brown interaction state. */
+.publication-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.publication-card{display:flex;flex-direction:column;min-width:0;min-height:294px;padding:30px 28px;background:#fff;border:3px solid #e3e3e3;color:#242424;transition:border-color .18s,color .18s}
+.publication-category{font-size:15px;font-weight:600;line-height:1.5;color:var(--hover);margin-bottom:20px}
+.publication-title{font-size:23px;line-height:1.55;font-weight:500;letter-spacing:-.025em;text-wrap:wrap;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+.publication-meta{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:auto;padding-top:30px;color:#767676;font-size:14px;font-weight:500}
+.publication-arrow{display:flex;align-items:center}
+.publication-arrow svg,.publication-controls svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7}
+.publication-card[href]:hover,.publication-card[href]:focus-visible{border-color:var(--hover);color:var(--hover)}
+.publication-card[href]:is(:hover,:focus-visible) .publication-meta{color:var(--hover)}
+.publication-card[href]:focus-visible{outline:2px solid var(--hover);outline-offset:4px}
+.publication-feature{background:linear-gradient(rgba(25,24,23,.58),rgba(25,24,23,.58)),url("../images/office/seoul-lounge.jpg") center 52%/cover no-repeat;padding:60px 0 46px;scroll-margin-top:90px}
+.publication-feature .sec-title{color:#fff}
+.publication-feature .sec-head-row{align-items:center;margin-bottom:26px}
+.publication-controls{display:flex;gap:8px;flex-shrink:0}
+.publication-controls[hidden]{display:none}
+.publication-controls button{display:grid;place-items:center;width:44px;height:44px;padding:0;background:#fff;border:1px solid #ddd;color:#555;cursor:pointer;transition:color .18s,border-color .18s}
+.publication-controls .publication-prev svg{transform:rotate(180deg)}
+.publication-controls button:not(:disabled):is(:hover,:focus-visible){color:var(--hover);border-color:var(--hover)}
+.publication-controls button:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.publication-controls button:disabled{opacity:.4;cursor:default}
+.publication-track{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 48px)/3);gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:0;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.65) transparent;padding-bottom:12px}
+.publication-track .publication-card{scroll-snap-align:start}
+.publication-track:focus-visible{outline:2px solid #fff;outline-offset:5px}
+.publication-all{display:flex;justify-content:flex-end;gap:24px;flex-wrap:wrap;margin-top:16px}
+.publication-all a{display:inline-flex;align-items:center;gap:8px;min-height:44px;color:#fff;font-size:14px;text-decoration:underline;text-underline-offset:5px}
+.publication-all a[href]:is(:hover,:focus-visible){color:var(--hover);background:#fff;outline:5px solid #fff}
+@media(max-width:1000px){
+ .publication-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .publication-track{grid-auto-columns:calc((100% - 24px)/2)}
+}
+@media(max-width:640px){
+ .publication-grid{grid-template-columns:minmax(0,1fr);gap:18px}
+ .publication-feature{padding:38px 0 30px}
+ .publication-feature .sec-title{font-size:25px}
+ .publication-feature .sec-head-row{gap:12px;margin-bottom:20px}
+ .publication-controls{gap:4px}
+ .publication-controls button{width:36px;height:44px}
+ .publication-track{grid-auto-columns:90%;gap:16px}
+ .publication-card{min-height:276px;padding:26px 24px}
+ .publication-title{font-size:21px;line-height:1.55}
+ .publication-category{font-size:14px;margin-bottom:18px}
+ .publication-meta{padding-top:26px}
+ .publication-all{justify-content:flex-start;gap:8px 20px;margin-top:10px}
+ .publication-all a{font-size:13px}
+}
+@media(prefers-reduced-motion:reduce){.publication-card,.publication-controls button{transition:none}}

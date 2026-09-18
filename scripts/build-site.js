@@ -37,7 +37,7 @@ const HEADER = read('partials/header.html');
 const FOOTER = { en: read('partials/footer.en.html'), ko: read('partials/footer.ko.html'), vi: read('partials/footer.vi.html') };
 // Scripts every built page gets. site.js is presentation-only (mobile nav,
 // article CTAs, share button) — it no longer touches auth.
-const SCRIPTS = '<script src="__BASE__js/site.js?v=13"></script>';
+const SCRIPTS = '<script src="__BASE__js/site.js?v=14"></script>';
 
 // Supabase is loaded only by the pages that actually submit a form
 // (pre-consultation, visit booking, corporate advisory). Article and index

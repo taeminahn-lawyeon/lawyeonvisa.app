@@ -37,6 +37,37 @@
   }
 
   ready(function () {
+    // Publication cards remain ordinary links; the controls scroll the native strip.
+    (function publicationCards() {
+      var track = document.querySelector('.publication-track');
+      if (!track) return;
+      var section = track.closest('.publication-feature');
+      var controls = section.querySelector('.publication-controls');
+      var previous = controls.querySelector('.publication-prev');
+      var next = controls.querySelector('.publication-next');
+      var frame = 0;
+      function update() {
+        frame = 0;
+        var maximum = track.scrollWidth - track.clientWidth;
+        controls.hidden = maximum < 2;
+        previous.disabled = track.scrollLeft <= 2;
+        next.disabled = track.scrollLeft >= maximum - 2;
+      }
+      function scheduleUpdate() {
+        if (!frame) frame = requestAnimationFrame(update);
+      }
+      function move(direction) {
+        var cards = track.querySelectorAll('.publication-card');
+        var step = cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : track.clientWidth;
+        track.scrollBy({left: direction * step, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+      }
+      previous.addEventListener('click', function () { move(-1); });
+      next.addEventListener('click', function () { move(1); });
+      track.addEventListener('scroll', scheduleUpdate, {passive: true});
+      window.addEventListener('resize', scheduleUpdate);
+      update();
+    })();
+
     // 0.0) 기사(글) 페이지 무단 복사·드래그 방지 (SEO 영향 없음: 텍스트는 DOM에 그대로 존재).
     //      CSS user-select:none 와 함께 복사/잘라내기/우클릭/드래그를 차단. 입력 요소는 예외.
     (function protectArticle() {

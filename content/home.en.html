@@ -218,32 +218,38 @@
 </section>
 
 <!-- ================= NEWSLETTERS & NEWS ================= -->
-<section id="cases" class="cards-news">
+<section id="cases" class="publication-feature" aria-labelledby="publication-heading">
     <div class="wrap">
         <div class="sec-head-row">
-            <h2 class="sec-title">Newsletters &amp; News</h2>
-            <a class="text-link" href="newsletters">View all</a>
+            <h2 class="sec-title" id="publication-heading">Newsletters &amp; News</h2>
+            <div class="publication-controls" hidden>
+                <button class="publication-prev" type="button" aria-label="Previous articles" aria-controls="publication-track" disabled><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 5 7 7-7 7"/></svg></button>
+                <button class="publication-next" type="button" aria-label="Next articles" aria-controls="publication-track"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 5 7 7-7 7"/></svg></button>
+            </div>
         </div>
-        <h3 class="news-subtitle">Newsletters</h3>
-        <div class="doc-list newsletter-list home-newsletter-list"><a class="doc-row" href="f6-visa-extension-separation-before-divorce-judgment"><div class="doc-main"><div class="doc-title">F-6 Visa Extension During Separation: Is a Final Divorce Required?</div><div class="doc-tags"><span>#Judgment</span><span>#F-6 extension</span><span>#Separation</span><span>#Marriage breakdown</span></div></div><time class="doc-date" datetime="2026-09-18">2026.09.18</time></a>
-<a class="doc-row" href="e74-e74r-combined-employment-quota-2026"><div class="doc-main"><div class="doc-title">Employing E-7-4 and E-7-4R Workers Together: How the Employer Limit Applies</div><div class="doc-tags"><span>#Manual &amp; policy</span><span>#E-7-4</span><span>#E-7-4R</span><span>#Employer recommendation</span></div></div><time class="doc-date" datetime="2026-09-18">2026.09.18</time></a></div>
-        <div class="news-subhead"><h3 class="news-subtitle">Lawyeon News</h3><a class="text-link" href="news">All firm news</a></div>
-        <div class="case-grid2">
-            <a class="ccard" href="far-east-university-student-job-fair-mou-2026">
-                <div class="news-photo"><img src="__BASE__images/kdu-mou-1.jpg" alt="Signing the MOU with Far East University" loading="lazy"></div>
-                <div class="cc-title">MOU with Far East University and a Visa-Roadmap Lecture &amp; Legal Clinic at the International Student Job Fair</div>
-                <div class="cc-excerpt">On 26 May 2026 we signed an MOU with Far East University and, at the international student job fair held at its SMART-K tech Center, delivered a lecture on the post-graduation visa roadmap and work-visa law and ran a free legal clinic booth.</div>
-                <div class="cc-tag">#News · Far East University</div>
-                <div class="cc-foot"><span class="cc-date">2026.05.26</span><span class="cc-act">Read →</span></div>
-            </a>
-            <a class="ccard" href="chosun-university-student-legal-mou-2026">
-                <div class="news-photo"><img src="__BASE__images/chosun-mou-1.jpg" alt="Signing the MOU with Chosun University" loading="lazy"></div>
-                <div class="cc-title">MOU on Legal Support for International Students at Chosun University, with a Special Lecture on Korean Law</div>
-                <div class="cc-excerpt">On 10 April 2026 we signed an MOU with Chosun University's Office of External Cooperation on legal support — including student legal education and visa changes — and delivered a special lecture on post-graduation visa pathways and Korean law, including the Immigration Control Act.</div>
-                <div class="cc-tag">#News · Chosun University</div>
-                <div class="cc-foot"><span class="cc-date">2026.04.10</span><span class="cc-act">Read →</span></div>
-            </a>
+        <div class="publication-track" id="publication-track" role="region" aria-labelledby="publication-heading" tabindex="0">
+<a class="publication-card" href="f6-visa-extension-separation-before-divorce-judgment">
+    <span class="publication-category">Newsletter</span>
+    <h3 class="publication-title">F-6 Visa Extension During Separation: Is a Final Divorce Required?</h3>
+    <div class="publication-meta"><time datetime="2026-09-18">2026.09.18</time><span class="publication-arrow"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 5 7 7-7 7"/></svg></span></div>
+</a>
+<a class="publication-card" href="e74-e74r-combined-employment-quota-2026">
+    <span class="publication-category">Newsletter</span>
+    <h3 class="publication-title">Employing E-7-4 and E-7-4R Workers Together: How the Employer Limit Applies</h3>
+    <div class="publication-meta"><time datetime="2026-09-18">2026.09.18</time><span class="publication-arrow"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 5 7 7-7 7"/></svg></span></div>
+</a>
+<a class="publication-card" href="far-east-university-student-job-fair-mou-2026">
+    <span class="publication-category">Lawyeon News</span>
+    <h3 class="publication-title">MOU with Far East University and a Visa-Roadmap Lecture &amp; Legal Clinic at the International Student Job Fair</h3>
+    <div class="publication-meta"><time datetime="2026-05-26">2026.05.26</time><span class="publication-arrow"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 5 7 7-7 7"/></svg></span></div>
+</a>
+<a class="publication-card" href="chosun-university-student-legal-mou-2026">
+    <span class="publication-category">Lawyeon News</span>
+    <h3 class="publication-title">MOU on Legal Support for International Students at Chosun University, with a Special Lecture on Korean Law</h3>
+    <div class="publication-meta"><time datetime="2026-04-10">2026.04.10</time><span class="publication-arrow"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 5 7 7-7 7"/></svg></span></div>
+</a>
         </div>
+        <nav class="publication-all" aria-label="Newsletters &amp; News"><a href="newsletters">All newsletters<span aria-hidden="true"> →</span></a><a href="news">All firm news<span aria-hidden="true"> →</span></a></nav>
     </div>
 </section>
 
