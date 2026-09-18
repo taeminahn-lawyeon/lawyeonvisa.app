@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700;900&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/site.css?v=20">
+<link rel="stylesheet" href="../css/site.css?v=21">
 
 
 <script type="application/ld+json">
@@ -168,8 +168,8 @@
 </section>
 
 <!-- ================= INSIGHTS ================= -->
-<section id="insights" class="insights home-insights" aria-labelledby="home-insights-title">
-    <div class="wrap insight-layout">
+<section id="insights" class="insights home-list" aria-labelledby="home-insights-title">
+    <div class="wrap">
         <div class="list-head">
             <h2 class="sec-title" id="home-insights-title">인사이트</h2>
             <div class="cat-toggle" id="insightCats" role="group" aria-label="인사이트 분야">
@@ -183,7 +183,6 @@
             </div>
         </div>
 
-        <div class="insight-content">
         <div class="doc-list" id="insightList">
         <a class="doc-row hidden" data-cat="residence" href="nationality-reinstatement-procedure-korea-2026">
             <div class="doc-main">
@@ -199,7 +198,7 @@
             </div>
             <div class="doc-date">2026.07</div>
         </a>
-        <a class="doc-row is-lead" data-cat="criminal" href="foreigner-entry-ban-check-lift-korea-2026">
+        <a class="doc-row" data-cat="criminal" href="foreigner-entry-ban-check-lift-korea-2026">
             <div class="doc-main">
                 <div class="doc-title">출국명령·강제퇴거 후 입국규제 해제와 불복 절차</div>
                 <div class="doc-tags"><span>#출입국사범</span><span>#입국규제</span><span>#강제퇴거</span><span>#입국금지해제</span></div>
@@ -227,21 +226,21 @@
                 </div>
                 <div class="doc-date">2026.06</div>
             </a>
-            <a class="doc-row hidden" data-cat="criminal" href="foreigner-unlawful-stay-voluntary-departure-korea-2026">
+            <a class="doc-row" data-cat="criminal" href="foreigner-unlawful-stay-voluntary-departure-korea-2026">
                 <div class="doc-main">
                     <div class="doc-title">불법체류 자진출국 신고와 단속 적발의 차이</div>
                     <div class="doc-tags"><span>#형사</span><span>#자진출국</span><span>#불법체류</span><span>#입국금지</span></div>
                 </div>
                 <div class="doc-date">2026.06</div>
             </a>
-            <a class="doc-row hidden" data-cat="criminal" href="foreigner-immigration-detention-temporary-release-korea-2026">
+            <a class="doc-row" data-cat="criminal" href="foreigner-immigration-detention-temporary-release-korea-2026">
                 <div class="doc-main">
                     <div class="doc-title">외국인 보호조치와 보호일시해제 청구</div>
                     <div class="doc-tags"><span>#형사</span><span>#보호일시해제</span><span>#강제퇴거</span><span>#보호소</span></div>
                 </div>
                 <div class="doc-date">2026.06</div>
             </a>
-            <a class="doc-row hidden" data-cat="criminal" href="visa-extension-change-denial-reapply-appeal-korea-2026">
+            <a class="doc-row" data-cat="criminal" href="visa-extension-change-denial-reapply-appeal-korea-2026">
                 <div class="doc-main">
                     <div class="doc-title">체류기간 연장·자격 변경 불허 후 재신청과 불복</div>
                     <div class="doc-tags"><span>#형사</span><span>#사범심사</span><span>#불허</span><span>#재신청</span><span>#불복</span></div>
@@ -307,15 +306,12 @@
         </div>
         <div class="doc-empty" id="insightEmpty" style="display:none">해당 카테고리의 글은 준비 중입니다.</div>
         <div class="more-row"><a href="insights?cat=criminal" class="more-plus">더 보기 <i>+</i></a></div>
-        </div>
     </div>
 </section>
 
 <!-- ================= CASE STUDIES ================= -->
-<section id="case-studies" class="case-studies" aria-labelledby="case-heading">
-    <div class="wrap case-layout">
-        <div class="case-photo"><img src="../images/office/seoul-meeting.jpg" alt="법무법인 로연 서울사무소 회의실" loading="lazy" width="1200" height="1200"></div>
-        <div class="case-content">
+<section id="case-studies" class="case-studies home-list" aria-labelledby="case-heading">
+    <div class="wrap">
         <div class="list-head"><h2 class="sec-title" id="case-heading">해결사례</h2>
         <div class="cat-toggle" id="case-categories" role="group" aria-label="해결 사례 분야">
             <button class="ct active" data-cat="all" aria-pressed="true">전체</button>
@@ -328,11 +324,10 @@
         <div class="doc-list" id="case-list">
             <a class="doc-row" data-cat="criminal" href="f6-immigration-review-no-departure-order-case-2026">
                 <div class="doc-main"><div class="doc-title">벌금 400만 원을 받은 결혼이민자, 사범심사에서 출국명령 없이 계속 체류</div><div class="doc-tags"><span>#사범심사</span><span>#결혼이민</span><span>#출국명령</span></div></div>
-                <div class="case-meta"><span class="doc-date">2026.08</span><span class="case-read">사례 읽기 <span aria-hidden="true">→</span></span></div>
+                <div class="doc-date">2026.08</div>
             </a>
         </div>
         <div class="doc-empty" id="case-empty" style="display:none">해당 분야의 사례는 준비 중입니다.</div>
-        </div>
     </div>
 </section>
 
@@ -408,9 +403,7 @@
             tabs.forEach(function(t){ var active = t.getAttribute('data-cat') === cat; t.classList.toggle('active', active); t.setAttribute('aria-pressed', String(active)); });
             rows.forEach(function(row){
                 var match = row.getAttribute('data-cat') === cat;
-                var visible = match && shown < 4;
-                row.classList.toggle('hidden', !visible);
-                row.classList.toggle('is-lead', visible && shown === 0);
+                row.classList.toggle('hidden', !match);
                 if(match) shown++;
             });
             if(emptyEl) emptyEl.style.display = shown ? 'none' : '';

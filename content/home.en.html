@@ -49,8 +49,8 @@
 </section>
 
 <!-- ================= INSIGHTS ================= -->
-<section id="insights" class="insights home-insights" aria-labelledby="home-insights-title">
-    <div class="wrap insight-layout">
+<section id="insights" class="insights home-list" aria-labelledby="home-insights-title">
+    <div class="wrap">
         <div class="list-head">
             <h2 class="sec-title" id="home-insights-title">Insights</h2>
             <div class="cat-toggle" id="insightCats" role="group" aria-label="Insight categories">
@@ -64,9 +64,8 @@
             </div>
         </div>
 
-        <div class="insight-content">
         <div class="doc-list" id="insightList">
-        <a class="doc-row is-lead" data-cat="criminal" href="foreigner-entry-ban-check-lift-korea-2026">
+        <a class="doc-row" data-cat="criminal" href="foreigner-entry-ban-check-lift-korea-2026">
             <div class="doc-main">
                 <div class="doc-title">Entry-Ban Relief and Appeals After a Departure Order or Deportation</div>
                 <div class="doc-tags"><span>#Criminal</span><span>#EntryBan</span><span>#Deportation</span><span>#Reentry</span></div>
@@ -108,21 +107,21 @@
                 </div>
                 <div class="doc-date">2026.06</div>
             </a>
-            <a class="doc-row hidden" data-cat="criminal" href="foreigner-unlawful-stay-voluntary-departure-korea-2026">
+            <a class="doc-row" data-cat="criminal" href="foreigner-unlawful-stay-voluntary-departure-korea-2026">
                 <div class="doc-main">
                     <div class="doc-title">Voluntary Departure vs. Being Caught: Unlawful Stay in Korea</div>
                     <div class="doc-tags"><span>#Criminal</span><span>#VoluntaryDeparture</span><span>#UnlawfulStay</span><span>#EntryBan</span></div>
                 </div>
                 <div class="doc-date">2026.06</div>
             </a>
-            <a class="doc-row hidden" data-cat="criminal" href="foreigner-immigration-detention-temporary-release-korea-2026">
+            <a class="doc-row" data-cat="criminal" href="foreigner-immigration-detention-temporary-release-korea-2026">
                 <div class="doc-main">
                     <div class="doc-title">Immigration Detention and Temporary Release in Korea</div>
                     <div class="doc-tags"><span>#Criminal</span><span>#Detention</span><span>#TemporaryRelease</span><span>#Deportation</span></div>
                 </div>
                 <div class="doc-date">2026.06</div>
             </a>
-            <a class="doc-row hidden" data-cat="criminal" href="visa-extension-change-denial-reapply-appeal-korea-2026">
+            <a class="doc-row" data-cat="criminal" href="visa-extension-change-denial-reapply-appeal-korea-2026">
                 <div class="doc-main">
                     <div class="doc-title">After a Stay Extension or Status Change Denial: Reapplication and Appeal</div>
                     <div class="doc-tags"><span>#Criminal</span><span>#Denial</span><span>#Reapply</span><span>#Appeal</span></div>
@@ -188,22 +187,18 @@
         </div>
         <div class="doc-empty" id="insightEmpty" style="display:none">Articles in this category are coming soon.</div>
         <div class="more-row"><a href="insights?cat=criminal" class="more-plus">View all <i>+</i></a></div>
-        </div>
     </div>
 </section>
 
 <!-- ================= CASE STUDIES ================= -->
-<section id="case-studies" class="case-studies" aria-labelledby="case-heading">
-    <div class="wrap case-layout">
-        <div class="case-photo"><img src="__BASE__images/office/seoul-meeting.jpg" alt="Meeting room at Law Firm Lawyeon’s Seoul office" loading="lazy" width="1200" height="1200"></div>
-        <div class="case-content">
+<section id="case-studies" class="case-studies home-list" aria-labelledby="case-heading">
+    <div class="wrap">
         <div class="list-head"><h2 class="sec-title" id="case-heading">Case Studies</h2></div>
         <div class="doc-list" id="case-list">
             <a class="doc-row" href="/ko/f6-immigration-review-no-departure-order-case-2026" hreflang="ko">
                 <div class="doc-main"><div class="doc-title">F-6 Visa Holder Fined KRW 4 Million: Continued Stay Without a Departure Order</div><div class="doc-tags"><span>Immigration Review</span><span>Marriage Immigration</span><span>Article in Korean</span></div></div>
-                <div class="case-meta"><span class="doc-date">2026.08</span><span class="case-read">Read case study <span aria-hidden="true">→</span></span></div>
+                <div class="doc-date">2026.08</div>
             </a>
-        </div>
         </div>
     </div>
 </section>
@@ -266,9 +261,7 @@
             tabs.forEach(function(t){ var active = t.getAttribute('data-cat') === cat; t.classList.toggle('active', active); t.setAttribute('aria-pressed', String(active)); });
             rows.forEach(function(row){
                 var match = row.getAttribute('data-cat') === cat;
-                var visible = match && shown < 4;
-                row.classList.toggle('hidden', !visible);
-                row.classList.toggle('is-lead', visible && shown === 0);
+                row.classList.toggle('hidden', !match);
                 if(match) shown++;
             });
             if(emptyEl) emptyEl.style.display = shown ? 'none' : '';
