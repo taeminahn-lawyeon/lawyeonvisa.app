@@ -375,11 +375,11 @@ a.ccard[href]:hover .cc-title{color:var(--hover);text-decoration:underline;text-
 .home-list a.doc-row[href]:hover .doc-title,.home-list a.doc-row[href]:focus-visible .doc-title{color:var(--hover);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
 .home-list .doc-tags{margin-top:8px}
 .home-list .doc-tags span,.home-list .doc-date{color:#757575}
-.home-list .more-plus{display:inline-flex;align-items:center;min-height:44px;color:#202020}
-.home-list .more-plus i{color:var(--hover)}
+.home-list .more-plus,.publication-feature .more-plus{display:inline-flex;align-items:center;min-height:44px;color:#202020}
+.home-list .more-plus i,.publication-feature .more-plus i{color:var(--hover)}
 .home-list .cat-toggle .ct-div{color:#D5D5D5}
 .home-list .doc-empty{color:#666}
-.home-list a.doc-row[href]:focus-visible,.home-list .more-plus:focus-visible,.home-list .ct:focus-visible{outline:2px solid #333;outline-offset:3px}
+.home-list a.doc-row[href]:focus-visible,.home-list .more-plus:focus-visible,.publication-feature .more-plus:focus-visible,.home-list .ct:focus-visible{outline:2px solid #333;outline-offset:3px}
 @media(max-width:640px){
     .home-list .list-head{gap:10px;padding-bottom:4px}
     .home-list .cat-toggle .ct{min-height:44px}
@@ -535,7 +535,7 @@ a[href]:not(.btn-primary):not([aria-disabled="true"]):hover{color:var(--hover)}
 .nav-links a[href]:hover,.nav-links a[href]:focus-visible,
 .mobile-menu a[href]:hover,.lang a[href]:hover,
 .intro-practice-grid a[href]:hover,.footer a[href]:hover,
-.home-list .more-plus[href]:hover,.member-mail[href]:hover,
+.home-list .more-plus[href]:hover,.publication-feature .more-plus[href]:hover,.member-mail[href]:hover,
 .related a[href]:hover .rt,.toc a[href]:hover{color:var(--hover)}
 .cat-toggle .ct:hover:not(:disabled):not([aria-disabled="true"]),
 .home-list .cat-toggle .ct:hover:not(:disabled):not([aria-disabled="true"]),
