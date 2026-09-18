@@ -1,7 +1,5 @@
 /* Existing site.css supplies fonts, color tokens, header, buttons and footer. */
 :focus-visible{outline:2px solid var(--btn);outline-offset:5px}
-.header .nav-links a.expertise-current{color:var(--frame-ink);font-weight:700;border-bottom:1px solid var(--frame-muted);padding-bottom:5px}
-.header .nav-links a.expertise-current:is(:hover,:focus-visible){color:var(--hover);border-bottom-color:var(--hover)}
 .expertise-hero{position:relative;background:#F3F1EC url("../images/office/seoul-lounge.jpg") center 40%/cover no-repeat;min-height:220px;padding:48px 0;text-align:center;color:var(--ink);display:grid;place-items:center}
 .expertise-hero::before{content:"";position:absolute;inset:0;background:rgba(246,245,242,.87)}
 .expertise-hero .wrap{position:relative;width:100%}
@@ -40,12 +38,12 @@
 .sidebar-menu a.active{border-bottom-color:var(--btn)}
 .sidebar-menu a:hover{color:var(--hover)}
 .detail-body{min-width:0;width:100%;background:#fff;padding:36px}
-.detail-section{padding:0;margin:0 0 48px;scroll-margin-top:108px}
+.detail-section{padding:0;margin:0 0 48px;scroll-margin-top:0}
 .detail-section>h2{font-size:28px;font-weight:500;line-height:1.4;color:var(--ink);margin-bottom:20px;letter-spacing:0;transition:color .14s}
 .detail-body p{font-size:17px;line-height:1.85;color:#3A332A;margin-bottom:18px;font-weight:350}
 .detail-section>p:last-child{margin-bottom:0}
 .service-list{border-top:2px solid var(--ink)}
-.service-item{padding:26px 0 28px;border-bottom:1px solid var(--rule);scroll-margin-top:108px}
+.service-item{padding:26px 0 28px;border-bottom:1px solid var(--rule);scroll-margin-top:0}
 .service-item h3{font-size:21px;font-weight:500;line-height:1.5;margin-bottom:14px;color:var(--ink)}
 .service-item p{font-size:17px;line-height:1.85}
 .service-scope{background:var(--card-2);padding:12px 16px;color:var(--taupe);font-size:14px;line-height:1.8;margin-top:18px}
