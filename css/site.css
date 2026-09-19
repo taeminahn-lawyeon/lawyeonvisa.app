@@ -646,8 +646,8 @@ a.ccard[href]:focus-visible .cc-title{color:var(--hover)}
 }
 
 /* Mobile reading rules follow the desktop article rules so they win the cascade.
-   Justify prose, with natural Korean character breaks and an unstretched last line.
-   Headings, navigation, captions and compact labels keep their own alignment. */
+   Only Korean article and practice paragraphs use justification. English prose,
+   introductions and supporting notes use natural spacing and word wrapping. */
 @media(max-width:760px){
  :root{--reading-size:18px;--reading-leading:1.8;--reading-gap:24px}
  .wrap:has(>.art-head),.wrap:has(>.art-layout){padding-inline:20px}
@@ -660,10 +660,11 @@ a.ccard[href]:focus-visible .cc-title{color:var(--hover)}
  .body p,.body .callout,.body .qa .a,.body .num-item .ni-text,
  .detail-section p,.intro-left .intro-desc{
   font-size:var(--reading-size);font-weight:400;line-height:var(--reading-leading);
-  letter-spacing:0;color:#302C28;text-align:justify;text-align-last:start;
-  word-break:normal;overflow-wrap:break-word;text-wrap:wrap;hyphens:auto;
+  letter-spacing:0;word-spacing:normal;color:#302C28;text-align:start;text-align-last:start;
+  word-break:normal;overflow-wrap:break-word;text-wrap:pretty;hyphens:manual;
  }
- html[lang="ko"] :is(.body p,.body .callout,.body .qa .a,.body .num-item .ni-text,.detail-section p,.intro-left .intro-desc){text-justify:inter-character;hyphens:none}
+ .body>p:lang(ko):not(.disclaimer),.detail-section>p:lang(ko),.service-item>p:lang(ko){text-align:justify;text-justify:auto;text-wrap:wrap;hyphens:none}
+ .intro .intro-left .intro-desc{word-break:keep-all;text-wrap:pretty;hyphens:manual}
  .body p,.body .callout{margin-bottom:var(--reading-gap)}
  .body h2{font-size:23px;line-height:1.45;margin:40px 0 18px;padding-top:0}
  .body h2:first-child{margin-top:0}
