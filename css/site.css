@@ -319,35 +319,6 @@ a.ccard[href]:hover .cc-title{color:var(--hover);text-decoration:underline;text-
     .page-head h1{font-size:29px}
     .page-head .lead{font-size:17px}
 
-    /* Article (insights detail) — comfortable long-form reading */
-    .art-head{padding:30px 0 24px}
-    .art-head h1{font-size:28px;line-height:1.34}
-    .art-kicker{font-size:13.5px}
-    .art-meta{font-size:14px}
-    .disclaimer{font-size:15px;line-height:1.75}
-    .art-layout{padding:30px 0 60px}
-    .body{max-width:none}
-    .body h2{font-size:23px;margin:36px 0 14px}
-    .body p,.body .callout{font-size:17.5px;line-height:1.9;margin-bottom:17px}
-    .body ul li,.body ol li{font-size:17px;line-height:1.85}
-    .body h3{font-size:19.5px}
-    .body .qa .q{font-size:17px}
-    .num-item .ni-title{font-size:17px}
-    .num-item .ni-text,.body .qa .a{font-size:16.5px;line-height:1.85}
-    .body .callout.warn,.body .callout.ok,.body .callout.info{font-size:16px}
-    .cta-band .cta-text{font-size:16px}
-
-    /* Tables scroll sideways instead of overflowing the viewport */
-    .tbl{overflow-x:auto;-webkit-overflow-scrolling:touch}
-    table{font-size:15px}
-    thead th{font-size:14px}
-    thead th,tbody td{padding:11px 12px}
-    tbody td:first-child{white-space:normal}
-    .tbl-cap{font-size:14px}
-    .related a{flex-direction:column;gap:6px}
-    .related .rt{font-size:17px}
-    .related .rtag{font-size:13.5px}
-
     /* Forms */
     .panel{padding:22px 18px}
     .btn{font-size:16px}
@@ -367,7 +338,6 @@ a.ccard[href]:hover .cc-title{color:var(--hover);text-decoration:underline;text-
     .intro-left h1{font-size:21px}
     .sec-title{font-size:24px}
     .doc-title,.ccard .cc-title{font-size:19.5px}
-    .body p,.body .callout{font-size:17px}
 }
 
 /* ---------- Homepage article and case lists ---------- */
@@ -673,4 +643,45 @@ a.ccard[href]:focus-visible .cc-title{color:var(--hover)}
  .practice-subfields{grid-template-columns:1fr;gap:8px}
  .practice-subfields a{min-height:60px;padding:16px 18px;font-size:17px}
  .practice-panel-summary{font-size:16px;margin-bottom:20px}
+}
+
+/* Mobile reading rules follow the desktop article rules so they win the cascade.
+   Justify prose, with natural Korean character breaks and an unstretched last line.
+   Headings, navigation, captions and compact labels keep their own alignment. */
+@media(max-width:760px){
+ :root{--reading-size:18px;--reading-leading:1.8;--reading-gap:24px}
+ .wrap:has(>.art-head),.wrap:has(>.art-layout){padding-inline:20px}
+ .art-head{padding:32px 0 24px}
+ .art-head h1{font-size:28px;line-height:1.4;letter-spacing:-.02em}
+ .art-kicker{font-size:13.5px}
+ .art-meta{font-size:14px}
+ .art-layout{padding:30px 0 60px}
+ .body{max-width:none}
+ .body p,.body .callout,.body .qa .a,.body .num-item .ni-text,
+ .detail-section p,.intro-left .intro-desc{
+  font-size:var(--reading-size);font-weight:400;line-height:var(--reading-leading);
+  letter-spacing:0;color:#302C28;text-align:justify;text-align-last:start;
+  word-break:normal;overflow-wrap:break-word;text-wrap:wrap;hyphens:auto;
+ }
+ html[lang="ko"] :is(.body p,.body .callout,.body .qa .a,.body .num-item .ni-text,.detail-section p,.intro-left .intro-desc){text-justify:inter-character;hyphens:none}
+ .body p,.body .callout{margin-bottom:var(--reading-gap)}
+ .body h2{font-size:23px;line-height:1.45;margin:40px 0 18px;padding-top:0}
+ .body h2:first-child{margin-top:0}
+ .body h3{font-size:20px;line-height:1.5;margin:30px 0 14px}
+ .body ul li,.body ol li{font-size:18px;font-weight:400;line-height:1.8;word-break:normal;overflow-wrap:break-word;margin-bottom:10px}
+ .body .qa .q,.num-item .ni-title{font-size:18px;line-height:1.6}
+ .body .callout.warn,.body .callout.ok,.body .callout.info{font-size:17px;line-height:1.8}
+ .body .art-about p,.body p.disclaimer,.disclaimer{font-size:15px;line-height:1.8;color:var(--muted)}
+ .body .art-about p{margin-bottom:16px}
+ .body .art-about p:last-child{margin-bottom:0}
+ .cta-band .cta-text{font-size:16px}
+ .tbl{overflow-x:auto;-webkit-overflow-scrolling:touch}
+ .body table{font-size:15px}
+ .body thead th{font-size:14px}
+ .body thead th,.body tbody td{padding:11px 12px}
+ .body tbody td:first-child{white-space:normal}
+ .tbl-cap{font-size:14px}
+ .related a{flex-direction:column;gap:6px}
+ .related .rt{font-size:17px}
+ .related .rtag{font-size:13.5px}
 }
