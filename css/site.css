@@ -647,7 +647,9 @@ a.ccard[href]:focus-visible .cc-title{color:var(--hover)}
 
 /* Mobile reading rules follow the desktop article rules so they win the cascade.
    Only Korean article and practice paragraphs use justification. English prose,
-   introductions and supporting notes use natural spacing and word wrapping. */
+   introductions and supporting notes use natural spacing and word wrapping.
+   Korean reading text wraps at word boundaries; emergency wrapping is reserved
+   for a single unbroken token wider than the text column. */
 @media(max-width:760px){
  :root{--reading-size:18px;--reading-leading:1.8;--reading-gap:24px}
  .wrap:has(>.art-head),.wrap:has(>.art-layout){padding-inline:20px}
@@ -663,13 +665,16 @@ a.ccard[href]:focus-visible .cc-title{color:var(--hover)}
   letter-spacing:0;word-spacing:normal;color:#302C28;text-align:start;text-align-last:start;
   word-break:normal;overflow-wrap:break-word;text-wrap:pretty;hyphens:manual;
  }
- .body>p:lang(ko):not(.disclaimer),.detail-section>p:lang(ko),.service-item>p:lang(ko){text-align:justify;text-justify:auto;text-wrap:wrap;hyphens:none}
+ .body>p:lang(ko):not(.disclaimer),.detail-section>p:lang(ko),.service-item>p:lang(ko){text-align:justify;text-justify:inter-character;letter-spacing:normal;text-wrap:wrap;hyphens:none}
  .intro .intro-left .intro-desc{word-break:keep-all;text-wrap:pretty;hyphens:manual}
  .body p,.body .callout{margin-bottom:var(--reading-gap)}
  .body h2{font-size:23px;line-height:1.45;margin:40px 0 18px;padding-top:0}
  .body h2:first-child{margin-top:0}
  .body h3{font-size:20px;line-height:1.5;margin:30px 0 14px}
  .body ul li,.body ol li{font-size:18px;font-weight:400;line-height:1.8;word-break:normal;overflow-wrap:break-word;margin-bottom:10px}
+ .body p:lang(ko),.body li:lang(ko),.body .callout:lang(ko),
+ .body .qa .a:lang(ko),.body .num-item .ni-text:lang(ko),
+ .detail-section p:lang(ko),.service-scope:lang(ko){word-break:keep-all;overflow-wrap:break-word;hyphens:none}
  .body .qa .q,.num-item .ni-title{font-size:18px;line-height:1.6}
  .body .callout.warn,.body .callout.ok,.body .callout.info{font-size:17px;line-height:1.8}
  .body .art-about p,.body p.disclaimer,.disclaimer{font-size:15px;line-height:1.8;color:var(--muted)}
