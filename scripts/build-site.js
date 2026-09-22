@@ -655,12 +655,12 @@ const PAGES = [
       "en"
     ],
     "title": {
-      "ko": "외국 시민권 취득 후 한국 국적회복 절차",
-      "en": "Reinstatement of Korean nationality after acquiring foreign citizenship"
+      "ko": "한국 국적회복과 외국 시민권 유지",
+      "en": "Korean nationality reinstatement and retaining foreign citizenship"
     },
     "desc": {
-      "ko": "한국 국적회복의 신청 경로와 심사, 65세 이상 영주귀국자의 복수국적 요건, 성명·생년월일 불일치의 처리 방법을 설명합니다.",
-      "en": "Korean nationality reinstatement, applications in Korea or abroad, dual nationality for permanent returnees aged 65 or older, and identity discrepancies."
+      "ko": "외국 시민권을 유지하며 한국에 정착하려는 동포를 위해 65세 국적회복 요건, F-4 체류 후 신청, 영주귀국 심사와 신원 기록 불일치의 대응을 설명합니다.",
+      "en": "Retaining foreign citizenship through Korean nationality reinstatement: returning before 65 on F-4 status, permanent settlement and conflicting identity records."
     },
     "modified": "2026-09-22"
   },
