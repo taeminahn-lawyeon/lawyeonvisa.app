@@ -659,10 +659,10 @@ const PAGES = [
       "en": "Reinstatement of Korean nationality after acquiring foreign citizenship"
     },
     "desc": {
-      "ko": "외국 시민권 취득 후 한국 국적을 회복하려면 국적상실 기록과 체류자격을 정리해야 합니다. 외국 서류와 한국 가족관계등록부의 성명·생년월일 불일치가 신청에 미치는 영향을 설명합니다.",
-      "en": "Restoring Korean nationality involves loss-of-nationality records and lawful stay. Differences in names or birth dates between foreign documents and Korean records can delay the process."
+      "ko": "한국 국적회복의 신청 경로와 심사, 65세 이상 영주귀국자의 복수국적 요건, 성명·생년월일 불일치의 처리 방법을 설명합니다.",
+      "en": "Korean nationality reinstatement, applications in Korea or abroad, dual nationality for permanent returnees aged 65 or older, and identity discrepancies."
     },
-    "modified": "2026-09-18"
+    "modified": "2026-09-22"
   },
   {
     "id": "foreigner-entry-ban-check-lift-korea-2026",
