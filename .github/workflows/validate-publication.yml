@@ -1,0 +1,27 @@
+name: Validate Public Pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, codex/exclude-source-deployment]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Build with the GitHub Pages renderer
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+      - name: Verify public files and exclude sources
+        run: node scripts/validate-publication.js

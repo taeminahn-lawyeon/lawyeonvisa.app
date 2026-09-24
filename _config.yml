@@ -1,0 +1,23 @@
+# Finished HTML is copied as static files; article sources remain in git only.
+theme: null
+plugins: []
+exclude:
+  - content
+  - partials
+  - archive
+  - previews
+  - templates
+  - scripts
+  - docs
+  - migrations
+  - sql
+  - supabase
+  - node_modules
+  - dist
+  - build
+  - captures
+  - package.json
+  - package-lock.json
+  - README.md
+  - CLAUDE.md
+  - BUSINESS_IMMIGRATION_SPEC.md
