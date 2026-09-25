@@ -598,7 +598,7 @@ const PAGES = [
       "ko": "외국인의 국민연금 반환일시금은 국적·체류자격과 가입 이력에 따라 지급 여부를 판단합니다. 해외에서의 대리 청구와 가입기간 확인, 소멸시효에 따른 청구기한을 설명합니다.",
       "en": "Eligibility for a Korean National Pension refund depends on nationality, immigration status and contribution history. The article covers overseas claims, qualifying periods and limitation deadlines."
     },
-    "modified": "2026-09-18"
+    "modified": "2026-09-26"
   },
   {
     "id": "far-east-university-student-job-fair-mou-2026",
