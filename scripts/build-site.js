@@ -648,6 +648,23 @@ const PAGES = [
     }
   },
   {
+    "id": "korean-nationality-reinstatement-under-65",
+    "content": "korean-nationality-reinstatement-under-65",
+    "langs": [
+      "ko",
+      "en"
+    ],
+    "title": {
+      "ko": "65세 미만 국적회복의 허가 기준과 외국 국적 포기",
+      "en": "Korean nationality reinstatement before 65: eligibility and renouncing foreign citizenship"
+    },
+    "desc": {
+      "ko": "65세 미만 국적회복 신청의 병역기피 목적·품행단정 심사 기준, 외국 국적 포기의무와 예외, 관련 판결 및 신청 시기를 설명합니다.",
+      "en": "Nationality reinstatement before 65: military-service evasion, good conduct, court decisions, foreign-nationality renunciation and application timing."
+    },
+    "modified": "2026-09-28"
+  },
+  {
     "id": "nationality-reinstatement-procedure-korea-2026",
     "content": "nationality-reinstatement-procedure-korea-2026",
     "langs": [
@@ -687,6 +704,7 @@ const PAGES = [
 // "article" iff its id is a key here. Used for article JSON-LD, article:*
 // meta and sitemap <lastmod>.
 const ARTICLE_DATES = {
+  'korean-nationality-reinstatement-under-65': '2026-09-28',
   'g1-visa-refusal-after-departure-order-cancellation-korea': '2026-09-18',
   'foreigner-drug-use-allegation-non-prosecution-korea': '2026-09-18',
   'f4-visa-dui-departure-order-humanitarian-korea':'2026-09-18',
