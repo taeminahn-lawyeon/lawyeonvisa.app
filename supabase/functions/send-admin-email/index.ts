@@ -181,11 +181,14 @@ serve(async (req) => {
       if (c.message) lines.push(`· Message: ${c.message}`)
       const messageText = lines.join('\n')
       // 본문의 신청자 주소는 눌러서 바로 새 메일을 쓸 수 있게 mailto 로 건다.
+      const replySubject = c.lang === 'en'
+        ? `[Law Firm Lawyeon] Reply for Inquiry — ${c.name}`
+        : `[법무법인 로연] 사전상담 회신 — ${c.name} 님`
       const htmlBody = messageText
         .replace(/\n/g, '<br>')
         .replace(
           `· Email: ${c.email}`,
-          `· Email: <a href="mailto:${c.email}?subject=${encodeURIComponent('[법무법인 로연] 사전상담 회신 — ' + c.name)}">${c.email}</a>`
+          `· Email: <a href="mailto:${c.email}?subject=${encodeURIComponent(replySubject)}">${c.email}</a>`
         )
       const html = buildHtml(htmlBody, adminUrl)
       const text = buildText(messageText, adminUrl)
