@@ -7,7 +7,7 @@
         need: '필수 항목을 모두 선택하거나 입력해 주세요.',
         badEmail: '회신받으실 이메일 주소를 확인해 주세요.',
         proc: '전송 중…', done: '문의 접수 완료', cta: '문의 보내기',
-        err: '문의를 전송하지 못했습니다. 다시 시도하시거나 02-2039-0544로 연락해 주세요.',
+        err: '문의를 전송하지 못했습니다. 다시 시도하시거나 02-2039-3735 또는 seoul@lawyeon.com으로 연락해 주세요.',
         country: '국가를 선택하세요', nationality: '국적을 선택하세요',
         second: '두 번째 국적을 선택하세요',
         confirm: function (n,e) { return n+'님의 문의가 접수되었습니다. 내용을 검토한 뒤 '+e+'로 회신드리겠습니다.'; }
@@ -16,7 +16,7 @@
         need: 'Please complete all required fields.',
         badEmail: 'Please check the email address where we will reply.',
         proc: 'Sending…', done: 'Inquiry received', cta: 'Send inquiry',
-        err: 'We could not send your inquiry. Please try again, or call +82-2-2039-0544.',
+        err: 'We could not send your inquiry. Please try again, or call +82-2-2039-3735 or email seoul@lawyeon.com.',
         country: 'Select a country', nationality: 'Select your nationality',
         second: 'Select your second nationality',
         confirm: function (n,e) { return n+', your inquiry has been received. We will review your matter and reply to '+e+'.'; }

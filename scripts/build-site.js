@@ -866,7 +866,8 @@ function legalServiceJsonLd(lang) {
     alternateName: SITE_NAME_ALT,
     // 홈이 /main 에서 도메인 루트로 옮겨졌다.
     url: SITE + HOME_URL[lang],
-    telephone: '+82-2-2039-0544',
+    telephone: '+82-2-2039-3735',
+    email: 'seoul@lawyeon.com',
     image: SITE + '/images/og-image.png',
     areaServed: { '@type': 'Country', name: lang === 'en' ? 'South Korea' : '대한민국' },
     address: [
